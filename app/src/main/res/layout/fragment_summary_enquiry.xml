@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+        <variable
+            name="viewModel"
+            type="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.bottomnav.account.raiseEnquiry.SummaryEnquiryFragment">
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/details_enquiry_tv"
+            style="@style/heading_bold_text_style"
+            android:text="@string/details_of_enquiry"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/contact_details_tv"
+            style="@style/normal_text_style"
+            android:text="@string/str_check_your_answer_before_enquiry"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_enquiry_tv" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/category_cv"
+            style="@style/cardView_style"
+            android:layout_marginLeft="@dimen/margin_2dp"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginRight="@dimen/margin_2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact_details_tv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/category_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_15dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/category_tv"
+                    style="@style/heading_bold_text_style"
+                    android:layout_width="@dimen/margin_0dp"
+                    android:text="@string/str_category"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/category_data_tv"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:text="@{viewModel.enquiryModel.category.value}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/barrier"
+                    app:layout_constraintTop_toBottomOf="@id/category_tv" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="category_edit_iv" />
+
+                <ImageView
+                    android:id="@+id/category_edit_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_0dp"
+                    android:paddingLeft="@dimen/margin_10dp"
+                    android:src="@drawable/edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sub_category_cv"
+            style="@style/cardView_style"
+            android:layout_marginLeft="@dimen/margin_2dp"
+            android:layout_marginTop="@dimen/margin_2dp"
+            android:layout_marginRight="@dimen/margin_2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/category_cv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/sub_category_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_15dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/sub_category_tv"
+                    style="@style/heading_bold_text_style"
+                    android:layout_width="@dimen/margin_0dp"
+                    android:text="@string/str_sub_category"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/sub_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/sub_category_data_tv"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:text="@{viewModel.enquiryModel.subCategory.value}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/sub_barrier"
+                    app:layout_constraintTop_toBottomOf="@id/sub_category_tv" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/sub_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="subcategory_edit_iv" />
+
+                <ImageView
+                    android:id="@+id/subcategory_edit_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_0dp"
+                    android:paddingLeft="@dimen/margin_10dp"
+                    android:src="@drawable/edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/sub_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/contact_message_cv"
+            style="@style/cardView_style"
+            android:layout_marginLeft="@dimen/margin_2dp"
+            android:layout_marginTop="@dimen/margin_2dp"
+            android:layout_marginRight="@dimen/margin_2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sub_category_cv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contact_message_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_15dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/contact_message_tv"
+                    style="@style/heading_bold_text_style"
+                    android:layout_width="@dimen/margin_0dp"
+                    android:text="@string/contact_message"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/contact_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/contact_message_data_tv"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:text="@{viewModel.enquiryModel.comments}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/contact_barrier"
+                    app:layout_constraintTop_toBottomOf="@id/contact_message_tv" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/contact_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="contact_message_edit_iv" />
+
+                <ImageView
+                    android:id="@+id/contact_message_edit_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_0dp"
+                    android:paddingLeft="@dimen/margin_10dp"
+                    android:src="@drawable/edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/contact_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/personal_details_tv"
+            style="@style/heading_bold_text_style"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:text="@string/personal_details"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact_message_cv" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/name_cv"
+            style="@style/cardView_style"
+            android:layout_marginLeft="@dimen/margin_2dp"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginRight="@dimen/margin_2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/personal_details_tv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/name_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_15dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/name_tv"
+                    style="@style/heading_bold_text_style"
+                    android:layout_width="@dimen/margin_0dp"
+                    android:text="@string/str_name"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/name_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/name_data_tv"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:text="@{viewModel.enquiryModel.name}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/name_barrier"
+                    app:layout_constraintTop_toBottomOf="@id/name_tv" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/name_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="name_edit_iv" />
+
+                <ImageView
+                    android:id="@+id/name_edit_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_0dp"
+                    android:paddingLeft="@dimen/margin_10dp"
+                    android:src="@drawable/edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/name_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/email_cv"
+            style="@style/cardView_style"
+            android:layout_marginLeft="@dimen/margin_2dp"
+            android:layout_marginTop="@dimen/margin_2dp"
+            android:layout_marginRight="@dimen/margin_2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name_cv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/email_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_15dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/email_tv"
+                    style="@style/heading_bold_text_style"
+                    android:layout_width="@dimen/margin_0dp"
+                    android:text="@string/email_address"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/email_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/email_data_tv"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:text="@{viewModel.enquiryModel.email}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/email_barrier"
+                    app:layout_constraintTop_toBottomOf="@id/email_tv" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/email_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="email_edit_iv" />
+
+                <ImageView
+                    android:id="@+id/email_edit_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_0dp"
+                    android:paddingLeft="@dimen/margin_10dp"
+                    android:src="@drawable/edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/email_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/mobile_cv"
+            style="@style/cardView_style"
+            android:layout_marginLeft="@dimen/margin_2dp"
+            android:layout_marginTop="@dimen/margin_2dp"
+            android:layout_marginRight="@dimen/margin_2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_cv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mobile_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_15dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/mobile_tv"
+                    style="@style/heading_bold_text_style"
+                    android:layout_width="@dimen/margin_0dp"
+                    android:text="@string/str_mobile_number"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/mobile_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/mobile_data_tv"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:text="@{viewModel.enquiryModel.countryCode+' ' +viewModel.enquiryModel.mobileNumber}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/mobile_barrier"
+                    app:layout_constraintTop_toBottomOf="@id/mobile_tv" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/mobile_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="mobile_edit_iv" />
+
+                <ImageView
+                    android:id="@+id/mobile_edit_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_0dp"
+                    android:paddingLeft="@dimen/margin_10dp"
+                    android:src="@drawable/edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/mobile_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/vehicle_number_cv"
+            style="@style/cardView_style"
+            android:layout_marginLeft="@dimen/margin_2dp"
+            android:layout_marginTop="@dimen/margin_2dp"
+            android:layout_marginRight="@dimen/margin_2dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mobile_cv">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vehicle_number_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_15dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/vehicle_number_tv"
+                    style="@style/heading_bold_text_style"
+                    android:layout_width="@dimen/margin_0dp"
+                    android:text="@string/vehicle_reg_number"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/vehicle_number_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/vehicle_number_data_tv"
+                    style="@style/normal_text_style"
+                    android:layout_width="0dp"
+                    android:text="@{viewModel.enquiryModel.vehicleRegistration}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/vehicle_number_barrier"
+                    app:layout_constraintTop_toBottomOf="@id/vehicle_number_tv" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/vehicle_number_barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="vehicle_number_edit_iv" />
+
+                <ImageView
+                    android:id="@+id/vehicle_number_edit_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_0dp"
+                    android:paddingLeft="@dimen/margin_10dp"
+                    android:src="@drawable/edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/vehicle_number_barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnNext"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/str_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vehicle_number_cv"
+            app:radius="@dimen/margin_5dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

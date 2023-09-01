@@ -592,8 +592,8 @@
     <string name="str_select_sub_category">Sub-category : </string>
     <string name="str_please_provide_additional_information_txt">please provide additional information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
     <string name="str_description">Descritption</string>
-    <string name="str_you_have_chars_remain">You have 895 characters remaining</string>
-    <string name="str_upload_file">Upload file (Optional)</string>
+    <string name="str_you_have_chars_remain">You have %1$s characters remaining</string>
+    <string name="str_upload_file_optional">Upload file (Optional)</string>
     <string name="str_upto_four_files_uploaded">\u25CF Up to 4 files can be uploaded</string>
     <string name="str_file_size_may_be">\u25CF File size can be up to 8mb each</string>
     <string name="str_permitted_file_types_are_doc_docx_xls">\u25CF Permitted file types are \n .doc/.docx, .xls/.xlsx, .pdf, .jpg, .mbp, .tiff, .csv</string>
@@ -1420,6 +1420,27 @@
     <string name="payment_incorrect">Payment method is incorrect</string>
     <string name="str_on">on</string>
     <string name="back_to_main_menu">BACK TO MAIN MENU</string>
+
+
+    <string name="can_provide_more_detail">Can you provide more detail?</string>
+    <string name="str_dont_include_personal_text">Do not include personal or financial information, like your credit card details.</string>
+    <string name="str_500_characters_remaining">You have 500 characters remaining.</string>
+    <string name="str_upload_file_">Upload file</string>
+    <string name="str_allowed_file_types">Allowed file types are JPG, PDF, BMP or TIF.</string>
+    <string name="str_file_size_not_morethan_8mb">File size should be no more than 8MB.</string>
+
+    <string name="what_contact_details">What are your contact details?</string>
+    <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
+    <string name="vehicle_registration_number_plate_optional">Vehicle Registration (number plate) Optionsl</string>
+    <string name="country_code">Country code</string>
+    <string name="details_of_enquiry">Details of enquiry</string>
+    <string name="str_check_your_answer_before_enquiry">Check your answers before sending your enquiry.</string>
+    <string name="contact_message">Contact message</string>
+    <string name="str_name">Name</string>
+    <string name="str_choose_file">Choose file</string>
+    <string name="non_UK_number_invalid">The non-UK phone number entered is invalid, please try again</string>
+
+
 </resources>
 
 

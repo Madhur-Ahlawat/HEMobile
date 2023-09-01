@@ -151,11 +151,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 "splash",
                 sessionManager.getLoggedInUser()
             )
-            findNavController().navigate(R.id.action_landingFragment_to_startNow)
 
-
-
+//            findNavController().navigate(R.id.action_landingFragment_to_dartChargeAccountTypeSelectionFragment)
+            findNavController().navigate(R.id.action_landingFragment_to_raiseNewEnquiryFragment)
         }
+
         binding.btnSignIn.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "login",

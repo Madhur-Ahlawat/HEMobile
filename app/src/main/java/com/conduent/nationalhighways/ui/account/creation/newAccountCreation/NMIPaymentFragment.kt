@@ -51,16 +51,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnClickListener {
 
-
     private val viewModel: CreateAccountViewModel by viewModels()
     private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
     private val oneOfPaymentViewModel: MakeOneOfPaymentViewModel by viewModels()
     private var crossingDetailModelResponse: CrossingDetailsModelsResponse? = null
 
-
     @Inject
     lateinit var sessionManager: SessionManager
-
 
     val vehicle: ArrayList<VehicleItem> = ArrayList()
     private var expMonth: String = ""
@@ -517,12 +514,17 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
         }
         model.referenceId = data.referenceId
-        model.eveningPhone = data.mobileNumber
+        if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
+            model.eveningPhone = data.mobileNumber
+            model.eveningPhoneCountryCode = data.countryCode?.let { getRequiredText(it) }
+        } else {
+            model.eveningPhone = data.telephoneNumber
+            model.eveningPhoneCountryCode = data.telephone_countryCode?.let { getRequiredText(it) }
+        }
         model.address1 = data.addressline1
         model.billingAddressLine1 = data.addressline1
         model.emailAddress = data.emailAddress
         model.creditCExpMonth = expMonth
-        model.eveningPhoneCountryCode = data.countryCode?.let { getRequiredText(it) }
         model.creditCExpYear = expYear
         if (isTrusted) {
             model.cardholderAuth =
