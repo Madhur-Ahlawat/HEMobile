@@ -19,12 +19,6 @@
         <action
             android:id="@+id/action_landingFragment_to_startNow"
             app:destination="@id/startNow" />
-        <action
-            android:id="@+id/action_landingFragment_to_dartChargeAccountTypeSelectionFragment"
-            app:destination="@id/dartChargeAccountTypeSelectionFragment" />
-        <action
-            android:id="@+id/action_landingFragment_to_raiseNewEnquiryFragment"
-            app:destination="@id/raiseNewEnquiryFragment" />
     </fragment>
 
     <fragment

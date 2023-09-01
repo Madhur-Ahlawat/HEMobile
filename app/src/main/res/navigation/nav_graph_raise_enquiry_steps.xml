@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_raise_enquiry"
+    app:startDestination="@id/enquiryCategoryFragment">
+
+    <fragment
+        android:id="@+id/enquiryCategoryFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryCategoryFragment"
+        android:label="EnquiryCategoryFragment"
+        tools:layout="@layout/fragment_enquiry_category">
+        <action
+            android:id="@+id/action_enquiryCategoryFragment_to_enquiryCommentsFragment"
+            app:destination="@id/enquiryCommentsFragment" />
+        <action
+            android:id="@+id/action_enquiryCategoryFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquiryCommentsFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryCommentsFragment"
+        android:label="EnquiryCommentsFragment"
+        tools:layout="@layout/fragment_enquiry_comments">
+        <action
+            android:id="@+id/action_enquiryCommentsFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquiryCommentsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment" />
+        <action
+            android:id="@+id/action_enquiryCommentsFragment_to_enquiryContactDetailsFragment"
+            app:destination="@id/enquiryContactDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquiryContactDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryContactDetailsFragment"
+        android:label="EnquiryContactDetailsFragment"
+        tools:layout="@layout/fragment_enquiry_contact_details">
+        <action
+            android:id="@+id/action_enquiryContactDetailsFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquiryContactDetailsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquirySummaryFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.SummaryEnquiryFragment"
+        android:label="SummaryEnquiryFragment"
+        tools:layout="@layout/fragment_summary_enquiry">
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryCommentsFragment"
+            app:destination="@id/enquiryCommentsFragment" />
+    </fragment>
+</navigation>

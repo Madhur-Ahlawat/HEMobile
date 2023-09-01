@@ -6,10 +6,6 @@
     app:startDestination="@id/createAccountPrerequisite">
 
 
-    <fragment android:label="RaiseNewEnquiryFragment"
-        android:id="@+id/raiseNewEnquiryFragment"
-        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseNewEnquiryFragment"
-       tools:layout="@layout/fragment_raise_new_enquiry" />
     <!-- Step 5 -->
 
     <fragment

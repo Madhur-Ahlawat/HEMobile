@@ -5,11 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentDartChargeAccountTypeEnquiryBinding
 import com.conduent.nationalhighways.databinding.FragmentDashboardBinding
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
+import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,7 +44,16 @@ class DartChargeAccountTypeEnquiryFragment : BaseFragment<FragmentDartChargeAcco
             checkContinue()
         }
         binding.btnNext.setOnClickListener {
-
+            if(dartChargeSelectStatus==Constants.NO){
+                findNavController().navigate(R.id.action_dartChargeAccountTypeEnquiryFragment_to_raiseNewEnquiryFragment)
+            }else{
+                requireActivity().openActivityWithDataBack(LoginActivity::class.java) {
+                    putString(
+                        Constants.FROM_LOGIN_TO_CASES,
+                        Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
+                    )
+                }
+            }
         }
     }
 

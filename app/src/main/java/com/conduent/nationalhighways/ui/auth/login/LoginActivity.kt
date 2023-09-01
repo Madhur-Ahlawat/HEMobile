@@ -64,7 +64,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
-
+private var from:String=""
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -220,6 +220,11 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun init() {
+        intent?.apply {
+            from = getStringExtra(Constants.FROM_LOGIN_TO_CASES)?:""
+        }
+
+
         materialToolbar = findViewById(R.id.tool_bar_lyt)
         materialToolbar?.visibility = View.GONE
         loader = LoaderDialog()

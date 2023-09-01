@@ -41,23 +41,25 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             val subcategorySplit = viewModel.enquiryModel.value?.subCategory?.name?.split("~")
             var selectSubArea = ""
             var seletedArea = ""
-            Log.e("TAG", "init: subCategory--> "+viewModel.enquiryModel.value?.subCategory?.name )
-            Log.e("TAG", "init: subCategory size--> "+subcategorySplit.orEmpty().size )
+            Log.e("TAG", "init: subCategory--> " + viewModel.enquiryModel.value?.subCategory?.name)
+            Log.e("TAG", "init: subCategory size--> " + subcategorySplit.orEmpty().size)
             if (subcategorySplit.orEmpty().size > 0) {
                 selectSubArea = subcategorySplit?.get(0).toString()
             }
             if (subcategorySplit.orEmpty().size > 1) {
                 seletedArea = subcategorySplit?.get(1).toString()
             }
-            val enquiryRequestModel=EnquiryRequest( viewModel.enquiryModel.value?.name.toString(),
-            viewModel.enquiryModel.value?.name.toString(),
-            viewModel.enquiryModel.value?.email.toString(),
-            viewModel.enquiryModel.value?.mobileNumber.toString(),
-            viewModel.enquiryModel.value?.countryCode.toString(),
-            viewModel.enquiryModel.value?.comments.toString(),
-            selectSubArea,
-            seletedArea,
-            ArrayList())
+            val enquiryRequestModel = EnquiryRequest(
+                viewModel.enquiryModel.value?.name.toString(),
+                viewModel.enquiryModel.value?.name.toString(),
+                viewModel.enquiryModel.value?.email.toString(),
+                viewModel.enquiryModel.value?.mobileNumber.toString(),
+                viewModel.enquiryModel.value?.countryCode.toString(),
+                viewModel.enquiryModel.value?.comments.toString(),
+                seletedArea,
+                selectSubArea,
+                ArrayList()
+            )
             viewModel.raiseEnquiryApi(
                 enquiryRequestModel
             )
@@ -81,7 +83,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         observe(viewModel.enquiryResponseLiveData, ::enquiryResponseModel)
 
 
-
     }
 
     fun enquiryResponseModel(resource: Resource<EnquiryResponseModel?>?) {
@@ -90,7 +91,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         }
         when (resource) {
             is Resource.Success -> {
-                Log.e("TAG", "enquiryResponseModel: --> "+resource.data.toString() )
+                Log.e("TAG", "enquiryResponseModel: --> " + resource.data.toString())
             }
 
             is Resource.DataError -> {

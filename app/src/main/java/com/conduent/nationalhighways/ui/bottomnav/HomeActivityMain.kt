@@ -135,8 +135,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             if (navController.currentDestination?.id != R.id.accountFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding?.fragmentContainerView?.findNavController()
-                                    ?.navigate(R.id.accountFragment)
+                                dataBinding?.fragmentContainerView?.findNavController()?.navigate(R.id.accountFragment)
                             }
                         }
                     }
