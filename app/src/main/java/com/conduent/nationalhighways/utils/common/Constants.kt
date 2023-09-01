@@ -261,6 +261,7 @@ object Constants {
     const val EDIT_SUMMARY = "editSummary"
     const val PAY_FOR_CROSSINGS = "payForCrossings"
     const val PAID_CROSSINGS = "paidCrossings"
+    const val TRANSFER_CROSSINGS = "transferCrossings"
     const val EDIT_ACCOUNT_TYPE = "editAccountType"
     const val EDIT_PROFILE = "editProfile"
     const val VEHICLE_MANAGEMENT = "vehicleManagement"

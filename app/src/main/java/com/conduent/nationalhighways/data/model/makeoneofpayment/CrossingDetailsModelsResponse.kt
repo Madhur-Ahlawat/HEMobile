@@ -26,5 +26,13 @@ data class CrossingDetailsModelsResponse(
     var additionalCharge:Double=0.0,
     var veicleUKnonUK:Boolean=false,
     var vehicleInformationCheckbox:Boolean=false,
+    val accountNo: String="",
+    val accountTypeCd: String="",
+    val accountType: String="",
+    val accountActStatus: String="",
+    val accountStatusCd: String="",
+    val unusedTrip: String="",
+    val expirationDate: String="",
+    var referenceNumber: String = ""
 ) : Parcelable
 

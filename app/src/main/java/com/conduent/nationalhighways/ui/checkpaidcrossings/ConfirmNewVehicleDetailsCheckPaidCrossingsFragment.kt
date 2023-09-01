@@ -62,15 +62,15 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         binding?.apply {
             vehicleRegisration.text = (navData as CrossingDetailsModelsResponse).plateNumber
             creditRemaining.text =
-                (navData as CrossingDetailsModelsResponse).unSettledTrips.toString()
-            txtCreditWillExpireOn.text =
-                (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
-            val charge = (navData as CrossingDetailsModelsResponse).chargingRate?.toDouble()
-            val unSettledTrips = (navData as CrossingDetailsModelsResponse).unSettledTrips
-            crossingsList = emptyList<String>().toMutableList()
-            if(unSettledTrips != null && charge != null){
-                totalAmountOfUnsettledTrips = charge*unSettledTrips
-            }
+                (navData as CrossingDetailsModelsResponse).unusedTrip.toString()
+            creditAdditionalCrossings.text =
+                (navData as CrossingDetailsModelsResponse).expirationDate
+//            val charge = (navData as CrossingDetailsModelsResponse).chargingRate?.toDouble()
+//            val unSettledTrips = (navData as CrossingDetailsModelsResponse).unSettledTrips
+//            crossingsList = emptyList<String>().toMutableList()
+//            if(unSettledTrips != null && charge != null){
+//                totalAmountOfUnsettledTrips = charge*unSettledTrips
+//            }
         }
     }
 

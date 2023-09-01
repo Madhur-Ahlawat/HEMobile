@@ -14,7 +14,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
-import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.FragmentCrossingDetailsBinding
 import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
@@ -43,7 +43,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     private var mLayoutManager: LinearLayoutManager? = null
     private var topup: String? = null
     private var loader: LoaderDialog? = null
-    private var data: CheckPaidCrossingsResponse? = null
+    private var data: CrossingDetailsModelsResponse? = null
     private val countPerPage = 10
     private var startIndex = 1
     private var noOfPages = 1
@@ -61,7 +61,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
 
 
         navData?.let {
-            data = it as CheckPaidCrossingsResponse
+            data = it as CrossingDetailsModelsResponse
         }
 
         data.let {
@@ -75,7 +75,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                 )
             }
             val current = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd h:mm:ss", Locale.ENGLISH)
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S", Locale.ENGLISH)
             val date = LocalDateTime.parse(it?.expirationDate, formatter)
             if(date.isBefore(current)){
                 binding.errorTxt.visible()

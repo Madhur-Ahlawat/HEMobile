@@ -11,10 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsOptionsModel
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsRequest
-import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
-import com.conduent.nationalhighways.databinding.FragmentPaidCrossingCheckBinding
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentPaidPreviousCrossingsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -101,7 +99,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 
     }
 
-    private fun loginWithRefHeader(status: Resource<CheckPaidCrossingsResponse?>?) {
+    private fun loginWithRefHeader(status: Resource<CrossingDetailsModelsResponse?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }

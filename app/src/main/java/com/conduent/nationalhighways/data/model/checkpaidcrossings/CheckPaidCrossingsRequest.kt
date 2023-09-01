@@ -10,20 +10,6 @@ data class CheckPaidCrossingsRequest(
 ) : Parcelable
 
 @Parcelize
-data class CheckPaidCrossingsResponse(
-    val accountNo: String?,
-    val accountTypeCd: String?,
-    val accountType: String?,
-    val accountActStatus: String?,
-    val accountStatusCd: String?,
-    val plateCountry: String?,
-    val unusedTrip: String?,
-    val expirationDate: String?,
-    var referenceNumber: String = "",
-    var plateNumber: String = ""
-) : Parcelable
-
-@Parcelize
 data class UsedTollTransactionsRequest(
     val startIndex: String? = "0",
     val transactionType: String? = "TOLL",

@@ -476,7 +476,7 @@ interface ApiService {
         @Body request: CheckPaidCrossingsRequest?,
         @Query("Value") value: Boolean? = true,
         @Query("agencyId") agencyId: String? = AGENCY_ID
-    ): Response<CheckPaidCrossingsResponse?>?
+    ): Response<CrossingDetailsModelsResponse?>?
 
     @POST(GET_TOLL_TRANSACTIONS)
     suspend fun getTollTransactions(

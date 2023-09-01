@@ -297,7 +297,28 @@
             android:id="@+id/action_crossingCheckAnswersFragment_to_additionalCrossingsFragment"
             app:destination="@id/additionalCrossingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+        android:label="ConfirmNewVehicleDetailsCheckPaidCrossingsFragment"
+        tools:layout="@layout/fragment_confirm_new_vehicle_details_check_paid_crossings_fragment">
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+            app:destination="@id/payCrossingsFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_AdditionalCrossingsFragment"
+            app:destination="@id/additionalCrossingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmNewVehicleDetailsCheckPaidCrossingsFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.ConfirmNewVehicleDetailsCheckPaidCrossingsFragment"
+        android:label="confirmNewVehicleDetailsCheckPaidCrossingsFragment"
+        tools:layout="@layout/fragment_confirm_new_vehicle_details_check_paid_crossings_fragment">
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+            app:destination="@id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment" />
 
+    </fragment>
     <fragment
         android:id="@+id/addNewVehicleDetailsFragment"
         android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
@@ -305,6 +326,9 @@
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment"
+            app:destination="@id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />
 
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment"

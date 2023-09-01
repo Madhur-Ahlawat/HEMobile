@@ -668,6 +668,22 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
                     viewModel.getCrossingDetails(model)
                 }
+                Constants.TRANSFER_CROSSINGS -> {
+                    (navData as CrossingDetailsModelsResponse).apply {
+                        plateNumber=newVehicleInfoDetails.plateNumber
+                        customerClass = newVehicleInfoDetails.vehicleClass
+                        plateCountry = "UK"
+                        vehicleMake = newVehicleInfoDetails.vehicleMake
+                        vehicleModel = newVehicleInfoDetails.vehicleModel
+                        vehicleColor = newVehicleInfoDetails.vehicleColor
+                    }
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundle.putParcelable(Constants.NAV_DATA_KEY,navData as CrossingDetailsModelsResponse)
+                    findNavController().navigate(
+                        R.id.action_addVehicleDetailsFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment,
+                        bundle
+                    )
+                }
 
                 else -> {
                     val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
@@ -694,7 +710,12 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     override fun onItemSlected(position: Int, selectedItem: String) {
         typeOfVehicleChecked = true
         vehicleClassSelected = selectedItem
-        (navData as CrossingDetailsModelsResponse).vehicleType = selectedItem
+        if(navData is CrossingDetailsModelsResponse){
+            (navData as CrossingDetailsModelsResponse).vehicleType = selectedItem
+        }
+        if(navData is CrossingDetailsModelsResponse){
+            (navData as CrossingDetailsModelsResponse).vehicleType = selectedItem
+        }
         validateAllFields()
         checkButton()
     }
