@@ -34,7 +34,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     private val viewModel: PaymentMethodViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var paymentList: CardListResponseModel? = null
-
+    private var isViewCreated:Boolean=false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -45,9 +45,13 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
     override fun initCtrl() {
         flow = arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED) ?: ""
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        if (!isViewCreated){
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
+
+        }
+        isViewCreated=false
 
         if (arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA) != null) {
             paymentList = arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA)

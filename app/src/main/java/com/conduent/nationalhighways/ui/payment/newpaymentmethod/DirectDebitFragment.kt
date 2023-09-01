@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
@@ -36,8 +37,6 @@ import java.util.regex.Pattern
 @AndroidEntryPoint
 class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
 
-    private var loader: LoaderDialog? = null
-    private var personalInformation: PersonalInformation? = null
     private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
 
 
@@ -48,14 +47,8 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
 
 
     override fun initCtrl() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
-            personalInformation =
-                arguments?.getParcelable(Constants.PERSONALDATA)
 
-        }
         setupWebView()
 
     }
@@ -166,34 +159,19 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
                     val encodedschemeid = uri.getQueryParameter("encodedschemeid")
                     val mandateid = uri.getQueryParameter("mandateid")
 
-                    val bundle=Bundle()
-                    bundle.putString(
-                        Constants.CARD_IS_ALREADY_REGISTERED,
-                        Constants.DIRECT_DEBIT
-                    )
 
-
-                    findNavController().navigate(
-                        R.id.directDebitFragment_to_paymentSuccessFragment2,
-                        bundle
-                    )
-/*
                     if (encodedschemeid != null && mandateid != null) {
-                        val bundle=Bundle()
+                        val bundle = Bundle()
                         bundle.putString(
                             Constants.CARD_IS_ALREADY_REGISTERED,
                             Constants.DIRECT_DEBIT
                         )
 
 
-                        findNavController().navigate(
-                            R.id.directDebitFragment_to_paymentSuccessFragment2,
-                            bundle
-                        )
-                       // addNewCardApi(encodedschemeid, mandateid)
+
+                        addNewCardApi(encodedschemeid, mandateid)
 
                     }
-*/
                 }
 
                 super.onPageStarted(view, url, favicon)
@@ -219,13 +197,13 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
     }
 
     private fun showLoader() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        binding.progressBar.visibility = View.VISIBLE
+
     }
 
     private fun hideLoader() {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        binding.progressBar.visibility = View.GONE
+
     }
 
 }
