@@ -22,6 +22,7 @@ import com.conduent.nationalhighways.databinding.FragmentPaymentSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
@@ -33,6 +34,9 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils.convertDateForTransferCrossingsScreen
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.openActivityWithData
+import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
+import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -42,11 +46,10 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
     View.OnClickListener {
     private var isClicked: Boolean = false
     private var loader: LoaderDialog? = null
-    private var mData: CrossingDetailsModelsResponse?=null
     private var additionalCrossings: Int? = 0
     private var additionalCrossingsCharge: Double? = 0.0
     private val checkPaidCrossingViewModel: CheckPaidCrossingViewModel by viewModels()
-
+    private var data: CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -54,23 +57,11 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         FragmentConfirmNewVehicleDetailsCheckPaidCrossingsFragmentBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
-                navData = arguments?.getParcelable(
-
-                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
-                )
-            }
-        } else {
-            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
-                navData = arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                )
-            }
+        navData?.let {
+            data = it as CrossingDetailsModelsResponse
         }
-        mData=navData as CrossingDetailsModelsResponse
-        additionalCrossings = mData?.additionalCrossingCount
-        additionalCrossingsCharge = mData?.additionalCharge
+        additionalCrossings = data?.additionalCrossingCount
+        additionalCrossingsCharge = data?.additionalCharge
         setData()
         setClickListeners()
         initLoader()
@@ -83,13 +74,13 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
 
     private fun setData() {
         binding?.apply {
-            vehicleRegisration.text = mData?.plateNumber
+            vehicleRegisration.text = data?.plateNumber
             creditRemaining.text =
-                mData?.unusedTrip
-            creditAdditionalCrossings.text = convertDateForTransferCrossingsScreen(mData?.expirationDate)
+                data?.unusedTrip
+            creditAdditionalCrossings.text = convertDateForTransferCrossingsScreen(data?.expirationDate)
 
-//            val charge = mData?.chargingRate?.toDouble()
-//            val unSettledTrips = mData?.unSettledTrips
+//            val charge = data?.chargingRate?.toDouble()
+//            val unSettledTrips = data?.unSettledTrips
 //            crossingsList = emptyList<String>().toMutableList()
 //            if(unSettledTrips != null && charge != null){
 //                totalAmountOfUnsettledTrips = charge*unSettledTrips
@@ -126,7 +117,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                 is Resource.Success -> {
                     var bundle=Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                    bundle.putParcelable(Constants.NAV_DATA_KEY,navData as CrossingDetailsModelsResponse)
+                    bundle.putParcelable(Constants.NAV_DATA_KEY,data)
                     findNavController().clearBackStack(R.id.landingFragment)
                     findNavController().navigate(
                         R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment,
@@ -134,7 +125,12 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                     )
                 }
                 is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
+                    if(status.errorModel?.status?.toInt()==500){
+                        var bundle = Bundle()
+                        bundle.putParcelable(Constants.NAV_DATA_KEY,data)
+                        requireActivity().openActivityWithData(MakeOffPaymentActivity::class.java,bundle)
+                        requireActivity().finish()
+                    }
                 }
                 else -> {
                 }
@@ -150,18 +146,18 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
 
             R.id.btnContinue -> {
                     val bundle = Bundle()
-                    bundle.putDouble(Constants.DATA, mData?.totalAmount?:0.0)
+                    bundle.putDouble(Constants.DATA, data?.totalAmount?:0.0)
                     bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-                    bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
+                    bundle.putParcelable(NAV_DATA_KEY, data)
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 isClicked = true
-                checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = mData?.accountNumber, plateCountry = mData?.plateCountry, plateNumber = mData?.plateNumber, transferInfo = TransferInfo(mData?.unusedTrip, plateNumber = mData?.plateNumber,plateState = "HE", plateCountry = mData?.plateCountry, vehicleClass = mData?.vehicleClass, vehicleMake = mData?.vehicleMake, vehicleModel = mData?.vehicleModel, vehicleYear = mData?.vehicleYear)))
+                checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = data?.accountNo, plateCountry = data?.plateCountry, plateNumber = data?.plateNumber, transferInfo = TransferInfo(tripCount = data?.unusedTrip, plateNumber = data?.plateNumber,plateState = "HE", plateCountry = data?.plateCountry, vehicleClass = data?.customerClass, vehicleMake = data?.vehicleMake, vehicleModel = data?.vehicleModel, vehicleYear = data?.vehicleMake)))
             }
             R.id.btnCancel -> {
                 val bundle = Bundle()
-                bundle.putDouble(Constants.DATA, mData?.totalAmount?:0.0)
+                bundle.putDouble(Constants.DATA, data?.totalAmount?:0.0)
                 bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-                bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
+                bundle.putParcelable(NAV_DATA_KEY, data)
                 findNavController().navigate(
                     R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
                     bundle
@@ -189,8 +185,8 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-        bundle.putString(PLATE_NUMBER, mData?.plateNumber?.trim())
-        bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
+        bundle.putString(PLATE_NUMBER, data?.plateNumber?.trim())
+        bundle.putParcelable(NAV_DATA_KEY, data)
         return bundle
     }
 

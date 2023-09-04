@@ -253,20 +253,16 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                     } else {
                         binding.rvRecenrTransactions.gone()
                         binding.tvNoHistory.visible()
-//                        binding.paginationLayout.gone()
                     }
                 } ?: run {
                     binding.rvRecenrTransactions.gone()
                     binding.tvNoHistory.visible()
-//                    binding.paginationLayout.gone()
                 }
             }
 
             is Resource.DataError -> {
                 binding.rvRecenrTransactions.gone()
                 binding.tvNoHistory.visible()
-//                binding.paginationLayout.gone()
-                ErrorUtil.showError(binding.root, resource.errorMsg)
             }
 
             else -> {

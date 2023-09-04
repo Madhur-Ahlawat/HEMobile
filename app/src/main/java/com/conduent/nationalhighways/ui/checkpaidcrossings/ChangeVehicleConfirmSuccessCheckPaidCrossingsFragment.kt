@@ -30,6 +30,7 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
     private var additionalCrossingsCharge: Double? = 0.0
     private var totalAmountOfUnsettledTrips: Double?=0.0
     private var crossingsList: MutableList<String>? = mutableListOf()
+    private var data: CrossingDetailsModelsResponse? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -38,22 +39,11 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
         FragmentChangeVehicleSuccessConfirmCheckPaidCrossingsFragmentBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
-                navData = arguments?.getParcelable(
-
-                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
-                )
-            }
-        } else {
-            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
-                navData = arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                )
-            }
+        navData?.let {
+            data = it as CrossingDetailsModelsResponse
         }
-        additionalCrossings = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
-        additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
+        additionalCrossings = data?.additionalCrossingCount
+        additionalCrossingsCharge = data?.additionalCharge
         setData()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)

@@ -410,7 +410,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             crossingDetailModelResponse?.chargingRate,
             crossingDetailModelResponse?.customerClass,
             crossingDetailModelResponse?.customerClassRate,
-            crossingDetailModelResponse?.accountNumber,
+            crossingDetailModelResponse?.accountNo,
             crossingDetailModelResponse?.unSettledTrips.toString(),
             crossingDetailModelResponse?.chargingRate
         )

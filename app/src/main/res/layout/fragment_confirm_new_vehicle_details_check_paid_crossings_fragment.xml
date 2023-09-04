@@ -166,7 +166,7 @@
                             android:layout_marginTop="@dimen/margin_5dp"
                             android:gravity="left|center"
                             android:text="1"
-                            app:layout_constraintEnd_toStartOf="@+id/txtCreditWillExpireOn"
+                            app:layout_constraintEnd_toEndOf="@+id/txtCreditWillExpireOn"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn" />
 

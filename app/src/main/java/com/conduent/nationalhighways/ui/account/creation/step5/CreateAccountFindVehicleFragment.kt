@@ -38,7 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicleBinding>(),
     View.OnClickListener {
-
+    private var data: CrossingDetailsModelsResponse? = null
     private var isViewCreated = false
     private var plateNumber = ""
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
@@ -59,23 +59,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         isCrossingCall = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS, true)
         arguments?.getString(Constants.PLATE_NUMBER, "").toString()
             .let { plateNumber = it.replace("null", "") }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                    CrossingDetailsModelsResponse::class.java
-                ) != null
-            ) {
-                navData = arguments?.getParcelable(
-
-                    Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse::class.java
-                )
-            }
-        } else {
-            if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
-                navData = arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                )
-            }
+        navData?.let {
+            data = it as CrossingDetailsModelsResponse
         }
         binding.editNumberPlate.setText(plateNumber.trim().replace(" ", "").replace("-", ""))
         val filter = InputFilter.AllCaps()

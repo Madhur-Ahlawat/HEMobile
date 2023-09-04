@@ -52,8 +52,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 //        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.editReferenceNumber.setText("1-97286682")
-        binding.editNumberPlate.setText("GC65UES")
+        binding.editReferenceNumber.setText("1-97832991")
+        binding.editNumberPlate.setText("DF4654")
         isEnable()
     }
 
@@ -111,7 +111,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                     dataObj?.plateNumber = binding.editNumberPlate.getText().toString()
                     val bundle = Bundle().apply {
                         putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        putParcelable(Constants.NAV_DATA_KEY, dataObj)
+                        putParcelable(Constants.NAV_DATA_KEY, dataObj as CrossingDetailsModelsResponse)
                     }
                     findNavController().navigate(
                         R.id.action_crossingCheck_to_crossing_details,
