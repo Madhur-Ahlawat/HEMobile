@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdap
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
@@ -49,6 +50,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.editAccountType.setOnClickListener(this)
         binding.editCommunications.setOnClickListener(this)
         binding.editTwoStepVerification.setOnClickListener(this)
+        binding.editAccount.setOnClickListener(this)
         val dataModel = NewCreateAccountRequestModel
         (dataModel.firstName + " " + dataModel.lastName).also { binding.fullName.text = it }
         if(!dataModel.personalAccount){
@@ -97,13 +99,14 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         if (dataModel.personalAccount) {
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
-                binding.accountType.text = getString(R.string.str_prepay)
+                binding.typeofAccount.text = getString(R.string.str_prepay)
             } else {
-                binding.accountType.text = getString(R.string.pay_as_you_go)
+                binding.typeofAccount.text = getString(R.string.str_payg_account)
             }
 
         } else {
             binding.accountType.text = getString(R.string.business)
+            binding.accountTypeCard.visibility=View.GONE
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -148,7 +151,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
     }
 
-    fun getRequiredText(text: String) = text.substringAfter(' ')
+    private fun getRequiredText(text: String) = text.substringAfter('(').replace(")", "")
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
     }
@@ -242,6 +245,15 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_twoStepCommunicationFragment,
                     enableEditMode()
+                )
+            }
+            R.id.editAccount->{
+                val bundle = Bundle()
+                bundle.putString(NAV_FLOW_KEY, EDIT_ACCOUNT_TYPE)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,
+                   bundle
                 )
             }
         }

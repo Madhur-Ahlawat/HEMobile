@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.data.model.accountpayment.AccountGetThresho
 import com.conduent.nationalhighways.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.conduent.nationalhighways.databinding.FragmentTopUpBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.topup.AccountTopUpPaymentViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog

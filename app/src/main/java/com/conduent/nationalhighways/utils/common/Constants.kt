@@ -291,6 +291,7 @@ object Constants {
     const val CARD_IS_ALREADY_REGISTERED="card_is_already_registered"
     const val SECONDARY_CARD_DELETE="secondary_card_delete"
     const val NOT_SECONDARY_CARD_DELETE="not_secondary_card_delete"
+    const val ACCOUNT_NUMBER="account_number"
 
     const val TOP_UP_BALANCE="top_up_balance"
 
