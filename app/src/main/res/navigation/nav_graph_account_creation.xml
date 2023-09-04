@@ -14,6 +14,9 @@
         tools:layout="@layout/fragment_create_account_find_vehicle">
 
         <action
+            android:id="@+id/action_findYourVehicleFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment"
+            app:destination="@id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />
+        <action
             android:id="@+id/action_findVehicleFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment" />
         <action
@@ -272,6 +275,9 @@
         <action
             android:id="@+id/action_yourVehicleFragment_to_addVehicleFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
+        <action
+            android:id="@+id/action_findYourVehicleFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment"
+            app:destination="@id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/crossingRecieptFragment"
@@ -326,6 +332,9 @@
         <action
             android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
             app:destination="@id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment" />
+        <action
+            android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_addNewVehicleDetailsFragment"
+            app:destination="@id/addNewVehicleDetailsFragment" />
 
     </fragment>
     <fragment
@@ -335,6 +344,9 @@
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_yourVehicleFragment"
+            app:destination="@id/yourVehicleFragment" />
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment"
             app:destination="@id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />

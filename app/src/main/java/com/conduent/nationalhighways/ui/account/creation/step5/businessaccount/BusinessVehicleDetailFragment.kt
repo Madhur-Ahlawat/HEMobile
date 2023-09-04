@@ -216,7 +216,9 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse()?.apply {
                         plateNumber=data?.plateNumber
-                        plateNo=plateNumber!!
+                        plateNo=data?.plateNumber!!
+                        expirationDate= data?.expirationDate!!
+                        unusedTrip=data?.unusedTrip!!
                     })
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
