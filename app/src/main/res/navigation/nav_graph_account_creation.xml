@@ -286,6 +286,9 @@
             android:id="@+id/action_accountSummaryFragment_to_PayForCrossingsFragment"
             app:destination="@id/payCrossingsFragment" />
         <action
+            android:id="@+id/action_accountSummaryFragment_to_AdditionalCrossingsFragment"
+            app:destination="@id/additionalCrossingsFragment" />
+        <action
             android:id="@+id/action_crossingCheckAnswersFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
         <action
@@ -295,7 +298,28 @@
             android:id="@+id/action_crossingCheckAnswersFragment_to_additionalCrossingsFragment"
             app:destination="@id/additionalCrossingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+        android:label="ConfirmNewVehicleDetailsCheckPaidCrossingsFragment"
+        tools:layout="@layout/fragment_confirm_new_vehicle_details_check_paid_crossings_fragment">
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+            app:destination="@id/payCrossingsFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_AdditionalCrossingsFragment"
+            app:destination="@id/additionalCrossingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmNewVehicleDetailsCheckPaidCrossingsFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.ConfirmNewVehicleDetailsCheckPaidCrossingsFragment"
+        android:label="confirmNewVehicleDetailsCheckPaidCrossingsFragment"
+        tools:layout="@layout/fragment_confirm_new_vehicle_details_check_paid_crossings_fragment">
+        <action
+            android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+            app:destination="@id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment" />
 
+    </fragment>
     <fragment
         android:id="@+id/addNewVehicleDetailsFragment"
         android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
@@ -303,6 +327,9 @@
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment"
+            app:destination="@id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />
 
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment"
@@ -743,10 +770,28 @@
         tools:layout="@layout/fragment_paid_previous_crossings">
 
         <action
-            android:id="@+id/action_crossingCheck_to_checkChargesOption"
-            app:destination="@id/checkChargesOption" />
+            android:id="@+id/action_crossingCheck_to_crossing_details"
+            app:destination="@id/crossing_details" />
 
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/crossing_details"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CrossingDetailsFragment"
+        tools:layout="@layout/fragment_crossing_details">
+        <action
+            android:id="@+id/action_crossing_details_to_tollDetails"
+            app:destination="@id/tollDetails" />
+        <action
+            android:id="@+id/action_crossing_details_to_topUpDetails"
+            app:destination="@id/topUpDetails" />
+        <action
+            android:id="@+id/action_crossing_details_to_find_vehicles"
+            app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_crossing_details_to_create_account"
+            app:destination="@id/createAccountPrerequisite" />
     </fragment>
     <fragment
         android:id="@+id/make_one_off_payment_successfully"

@@ -285,6 +285,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
 
                 binding.apply {
+                    inputCountry.dataSet.clear()
                     inputCountry.dataSet.addAll(fullCountryNameWithCode)
                     inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
                     requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true

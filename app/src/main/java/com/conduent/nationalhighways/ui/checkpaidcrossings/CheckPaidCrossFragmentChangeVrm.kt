@@ -142,7 +142,7 @@ class CheckPaidCrossFragmentChangeVrm : BaseFragment<FragmentCheckPaidCrossingCh
         val mBalRequest =
             BalanceTransferRequest(
                 viewModel.paidCrossingOption.value?.vrm,
-                viewModel.paidCrossingResponse.value?.plateCountry,
+                viewModel.paidCrossingResponse.value?.plateCountry,"",
                 mTransferInfo
             )
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)

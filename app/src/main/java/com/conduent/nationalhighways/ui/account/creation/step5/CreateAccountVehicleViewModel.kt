@@ -33,7 +33,7 @@ class CreateAccountVehicleViewModel @Inject constructor(
     fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.launch {
             try {
-                findVehicleMutData.postValue(
+                findVehicleMutData.setValue(
                     ResponseHandler.success(
                         repo.getVehicleDetail(
                             vehicleNumber,
@@ -42,7 +42,7 @@ class CreateAccountVehicleViewModel @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
-                findVehicleMutData.postValue(ResponseHandler.failure(e))
+                findVehicleMutData.setValue(ResponseHandler.failure(e))
             }
         }
     }

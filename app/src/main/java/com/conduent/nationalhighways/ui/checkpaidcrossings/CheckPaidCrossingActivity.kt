@@ -52,7 +52,7 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>() {
         val destination = R.id.crossingCheck
         navGraph.setStartDestination(destination)
         val bundle = Bundle()
-        bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAID_CROSSINGS)
+        bundle.putString(Constants.NAV_FLOW_KEY, Constants.TRANSFER_CROSSINGS)
         navController.setGraph(navGraph, bundle)
 
     }

@@ -31,6 +31,12 @@ fun <A : Activity> Activity.openActivityWithDataBack(it: Class<A>, extras: Bundl
         startActivity(this)
     }
 }
+fun <A : Activity> Activity.openActivityWithData(it: Class<A>, extras: Bundle) {
+    Intent(this, it).run {
+        putExtras(extras)
+        startActivity(this)
+    }
+}
 
 fun <A : Activity> Activity.startNormalActivity(activity: Class<A>) {
     Intent(this, activity).run {

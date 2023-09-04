@@ -436,6 +436,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun showPayGUI(data: AccountResponse) {
         binding.apply {
             tvAvailableBalanceHeading.gone()
+            tvAvailableBalance.gone()
 //            tvAvailableBalance.apply {
 //                visible()
 //                text = data.replenishmentInformation?.currentBalance?.run {
@@ -499,11 +500,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
         }
+        getPaymentHistoryList(startIndex)
     }
 
     private fun showNonPayGUI(data: AccountResponse) {
         binding.apply {
             tvAvailableBalanceHeading.visible()
+            tvAvailableBalance.visible()
             tvAvailableBalance.apply {
                 visible()
                 text = data.replenishmentInformation?.currentBalance?.run {

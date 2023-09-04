@@ -51,14 +51,14 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.editCommunications.setOnClickListener(this)
         binding.editTwoStepVerification.setOnClickListener(this)
         binding.editAccount.setOnClickListener(this)
+        binding.editAccountSubType.setOnClickListener(this)
         val dataModel = NewCreateAccountRequestModel
         (dataModel.firstName + " " + dataModel.lastName).also { binding.fullName.text = it }
-        if(!dataModel.personalAccount){
+        if (!dataModel.personalAccount) {
             binding.companyNameCard.visible()
             binding.companyName.text = dataModel.companyName
             binding.editCompanyName.setOnClickListener(this)
-        }
-        else{
+        } else {
             binding.companyNameCard.gone()
 
         }
@@ -78,15 +78,15 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             dataModel.addressline1 + "\n" + dataModel.townCity + "\n" + dataModel.zipCode
         binding.emailAddress.text = dataModel.emailAddress
         if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
-            if (dataModel.mobileNumber?.isEmpty() ?: true ) {
+            if (dataModel.mobileNumber?.isEmpty() ?: true) {
                 binding.phoneCard.gone()
             } else {
                 binding.phoneCard.visible()
                 binding.mobileNumber.text =
                     dataModel.countryCode?.let { getRequiredText(it) } + " " + dataModel.mobileNumber
             }
-        }else{
-            if (dataModel.telephoneNumber?.isEmpty() ?: true ) {
+        } else {
+            if (dataModel.telephoneNumber?.isEmpty() ?: true) {
                 binding.phoneCard.gone()
             } else {
                 binding.phoneCard.visible()
@@ -97,16 +97,20 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
 
         if (dataModel.personalAccount) {
+            binding.accountSubType.visible()
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
                 binding.typeofAccount.text = getString(R.string.str_prepay)
+                binding.textAccountSubType.text = getString(R.string.str_prepay)
             } else {
                 binding.typeofAccount.text = getString(R.string.str_payg_account)
+                binding.textAccountSubType.text = getString(R.string.pay_as_you_go)
             }
 
         } else {
             binding.accountType.text = getString(R.string.business)
             binding.accountTypeCard.visibility=View.GONE
+            binding.accountSubType.gone()
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -188,6 +192,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                     enableEditMode()
                 )
             }
+
             R.id.editCompanyName -> {
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_personalInfoFragment,
@@ -241,9 +246,17 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
 
             R.id.editTwoStepVerification -> {
-
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_twoStepCommunicationFragment,
+                    enableEditMode()
+                )
+            }
+            R.id.editAccountSubType -> {
+                val bundle = Bundle()
+                bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                findNavController().navigate(
+                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,
                     enableEditMode()
                 )
             }

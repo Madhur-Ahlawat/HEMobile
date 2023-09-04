@@ -6,8 +6,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsOptionsModel
-import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.UnUsedChargesModel
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentUnusedChargesBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.checkpaidcrossings.adapter.OnChangeClickListener
@@ -45,7 +45,7 @@ class UnUsedChargesFragment : BaseFragment<FragmentUnusedChargesBinding>(), OnCh
         )
 
         val mData =
-            arguments?.getParcelable<CheckPaidCrossingsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)
+            arguments?.getParcelable<CrossingDetailsModelsResponse?>(Constants.CHECK_PAID_CHARGE_DATA_KEY)
         val mDataVrmRef =
             arguments?.getParcelable<CheckPaidCrossingsOptionsModel?>(Constants.CHECK_PAID_REF_VRM_DATA_KEY)
 
