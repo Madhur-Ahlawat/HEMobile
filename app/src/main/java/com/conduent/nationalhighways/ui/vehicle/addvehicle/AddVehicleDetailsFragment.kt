@@ -93,7 +93,15 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
 
         navData?.let {
-            data = it as CrossingDetailsModelsResponse
+            try{
+                data = it as CrossingDetailsModelsResponse
+            }
+            catch(e:Exception){
+                mVehicleDetails = it as VehicleResponse
+            }
+        }
+        if(data==null){
+            data = CrossingDetailsModelsResponse()
         }
 
         accountData = NewCreateAccountRequestModel
@@ -111,16 +119,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         setPreSelectedVehicleType()
         binding.typeVehicle.dropDownItemSelectListener = this
         binding.model = false
-        try {
-            mVehicleDetails = arguments?.getParcelable(Constants.NAV_DATA_KEY) as? VehicleResponse?
-            navData = CrossingDetailsModelsResponse()
-        } catch (e: Exception) {
-            navData = arguments?.getParcelable(
-                Constants.NAV_DATA_KEY)
-        } finally {
-
-        }
-
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
@@ -128,7 +126,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId ->
             radioButtonChecked = R.id.radioButtonYes == checkedId || R.id.radioButtonNo == checkedId
 
-            (navData as CrossingDetailsModelsResponse).veicleUKnonUK=radioButtonChecked
+            data?.veicleUKnonUK=radioButtonChecked
             checkButton()
         }
 
@@ -172,8 +170,22 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 binding.cardView.visibility = View.GONE
 
 
-                binding.typeOfVehicleInputLayout.setText(nonUKVehicleModel?.plateNumber.toString())
+                if(navFlowCall.equals(Constants.TRANSFER_CROSSINGS)){
+                    binding?.apply {
+                        typeOfVehicleInputLayout.setText(data?.plateNumber.toString())
+                        makeInputLayout.setText("")
+                        makeInputLayout.removeError()
+                        modelInputLayout.setText("")
+                        modelInputLayout.removeError()
+                        colorInputLayout.setText("")
+                        colorInputLayout.removeError()
 
+                    }
+
+                }
+                else{
+                    binding.typeOfVehicleInputLayout.setText(nonUKVehicleModel?.plateNumber.toString())
+                }
 
             }
 
@@ -726,9 +738,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     override fun onItemSlected(position: Int, selectedItem: String) {
         typeOfVehicleChecked = true
         vehicleClassSelected = selectedItem
-        if(navData is CrossingDetailsModelsResponse){
-            (navData as CrossingDetailsModelsResponse).vehicleType = selectedItem
-        }
         if(navData is CrossingDetailsModelsResponse){
             (navData as CrossingDetailsModelsResponse).vehicleType = selectedItem
         }

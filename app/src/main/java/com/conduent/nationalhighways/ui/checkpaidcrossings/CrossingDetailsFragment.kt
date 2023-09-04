@@ -75,7 +75,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                 )
             }
             val current = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S", Locale.ENGLISH)
+            val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH)
             val date = LocalDateTime.parse(it?.expirationDate, formatter)
             if(date.isBefore(current)){
                 binding.errorTxt.visible()

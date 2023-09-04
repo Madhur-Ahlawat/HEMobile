@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
+import com.conduent.nationalhighways.data.model.account.LoginWithPlateAndReferenceNumberResponseModel
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.*
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
@@ -34,8 +35,8 @@ class CheckPaidCrossingViewModel @Inject constructor(
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _loginWithRefAndPlateNumber = MutableLiveData<Resource<CrossingDetailsModelsResponse?>?>()
-    val loginWithRefAndPlateNumber: LiveData<Resource<CrossingDetailsModelsResponse?>?> get() = _loginWithRefAndPlateNumber
+    private val _loginWithRefAndPlateNumber = MutableLiveData<Resource<LoginWithPlateAndReferenceNumberResponseModel?>?>()
+    val loginWithRefAndPlateNumber: LiveData<Resource<LoginWithPlateAndReferenceNumberResponseModel?>?> get() = _loginWithRefAndPlateNumber
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

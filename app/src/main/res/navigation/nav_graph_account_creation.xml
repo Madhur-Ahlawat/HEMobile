@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_findVehicleFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment" />
+        <action
+            android:id="@+id/action_findVehicleFragment_to_businessVehicleDetailFragment"
+            app:destination="@+id/businessVehicleDetailFragment" />
 
         <action
             android:id="@+id/action_findVehicleFragment_to_accountSummaryFragment"
@@ -166,6 +169,12 @@
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment" />
+        <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment"
+            app:destination="@+id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />
+        <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_addNewVehicleDetailsFragment"
+            app:destination="@+id/addNewVehicleDetailsFragment" />
 
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_accountSummaryFragment"

@@ -151,7 +151,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                     bundle.putParcelable(NAV_DATA_KEY, data)
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 isClicked = true
-                checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = data?.accountNo, plateCountry = data?.plateCountry, plateNumber = data?.plateNumber, transferInfo = TransferInfo(tripCount = data?.unusedTrip, plateNumber = data?.plateNumber,plateState = "HE", plateCountry = data?.plateCountry, vehicleClass = data?.customerClass, vehicleMake = data?.vehicleMake, vehicleModel = data?.vehicleModel, vehicleYear = data?.vehicleMake)))
+                checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = data?.accountNo, plateCountry = data?.plateCountry, plateNumber = data?.plateNumber, transferInfo = TransferInfo(tripCount = data?.unusedTrip, plateNumber = data?.plateNumber,plateState = "HE", plateCountry = data?.plateCountry, vehicleClass = data?.vehicleClass, vehicleMake = data?.vehicleMake, vehicleModel = data?.vehicleModel, vehicleYear = "2023")))
             }
             R.id.btnCancel -> {
                 val bundle = Bundle()
