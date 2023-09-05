@@ -44,20 +44,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title">
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-                android:id="@+id/typeOfVehicleInputLayout"
-                style="@style/input_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:labelText="@string/vehicle_registration_number_plate"
-                app:inputType="text"
-                android:visibility="gone"
-
-                app:imeOptions="actionNext"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/margin_80dp"
@@ -94,6 +80,7 @@
                     <TextView
                         android:id="@+id/vehiclePlateNumber"
                         style="@style/RegularTextBlack"
+                        android:text="sdsdsd"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:textAllCaps="true"
                         app:layout_constraintStart_toStartOf="parent"

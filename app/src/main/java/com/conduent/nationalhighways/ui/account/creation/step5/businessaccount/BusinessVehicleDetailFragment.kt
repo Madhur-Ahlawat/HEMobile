@@ -171,10 +171,19 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                         arguments?.getInt(Constants.VEHICLE_INDEX)
                             ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                        findNavController().navigate(
-                            R.id.action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,
-                            bundle
-                        )
+                        if(data?.isExempted?.toLowerCase().equals("y")){
+                            findNavController().navigate(
+                                R.id.action_businessVehicleDetailFragment_to_vehicleIsExemptFromDartChargesFragment,
+                                bundle
+                            )
+                        }
+                        else{
+                            findNavController().navigate(
+                                R.id.action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,
+                                bundle
+                            )
+                        }
+
                     }
 
                     else -> {

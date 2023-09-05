@@ -26,7 +26,8 @@
                 android:layout_height="73.33dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="127dp"
-                android:src="@drawable/ic_tick_blue" />
+                android:tint="@color/new_btn_color"
+                android:src="@drawable/error" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
@@ -55,12 +56,12 @@
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/btnFeedback"
+            android:layout_above="@id/btnCancel"
             android:text="@string/transfer_to_another_vehicle"
             app:radius="5dp" />
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
-            android:id="@+id/btnFeedback"
+            android:id="@+id/btnCancel"
             style="@style/secondaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

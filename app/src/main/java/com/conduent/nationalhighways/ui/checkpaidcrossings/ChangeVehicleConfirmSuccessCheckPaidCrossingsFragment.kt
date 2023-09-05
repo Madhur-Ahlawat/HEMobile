@@ -55,17 +55,17 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
 
     private fun setData() {
         binding?.apply {
-            vehicleRegisration.text = (navData as CrossingDetailsModelsResponse).plateNumber
+            vehicleRegisration.text = if(!data?.plateNumber.isNullOrEmpty()) data?.plateNumber else data?.plateNo
             creditRemaining.text =
-                (navData as CrossingDetailsModelsResponse).unSettledTrips.toString()
+                data?.unSettledTrips.toString()
             txtCreditWillExpireOn.text =
-                (navData as CrossingDetailsModelsResponse).additionalCrossingCount.toString()
-            val charge = (navData as CrossingDetailsModelsResponse).chargingRate?.toDouble()
-            val unSettledTrips = (navData as CrossingDetailsModelsResponse).unSettledTrips
-            crossingsList = emptyList<String>().toMutableList()
-            if(unSettledTrips != null && charge != null){
-                totalAmountOfUnsettledTrips = charge*unSettledTrips
-            }
+                data?.additionalCrossingCount.toString()
+//            val charge = data?.chargingRate?.toDouble()
+//            val unSettledTrips = data?.unSettledTrips
+//            crossingsList = emptyList<String>().toMutableList()
+//            if(unSettledTrips != null && charge != null){
+//                totalAmountOfUnsettledTrips = charge*unSettledTrips
+//            }
 
 //            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
 //                totalAmountOfAdditionalCrossings = totalAmountOfAdditionalCrossings?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
@@ -94,18 +94,11 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
         when (v?.id) {
 
             R.id.btnOk -> {
-                    val bundle = Bundle()
-                    bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount?:0.0)
-                    bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-                    bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
-                    findNavController().navigate(
-                        R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
-                        bundle
-                    )
+                   findNavController().popBackStack(R.id.landingFragment,false)
             }
             R.id.btnFeedback -> {
                 val bundle = Bundle()
-                bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount?:0.0)
+                bundle.putDouble(Constants.DATA, data?.totalAmount?:0.0)
                 bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
                 bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
                 findNavController().navigate(
@@ -119,7 +112,7 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-        bundle.putString(PLATE_NUMBER, (navData as CrossingDetailsModelsResponse).plateNumber?.trim())
+        bundle.putString(PLATE_NUMBER, data?.plateNumber?.trim())
         bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
         return bundle
     }
