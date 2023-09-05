@@ -1414,6 +1414,7 @@
     <string name="pay_new_amount">PAY NEW AMOUNT</string>
     <string name="purchase_no_crossings">Purchase No Crossings</string>
     <string name="to_continue_you_must_pay_for_at_least_one_recent_additional_crossing">To continue, you must pay for at least one recent/additional crossing.</string>
+    <string name="payment_method_deleted">Payment method deleted</string>
 
 
     <string name="incorrect_email">Incorrect email. Try again.</string>
@@ -1436,6 +1437,10 @@
     <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
     <string name="you_have_no_credit_left_you_must_pay_for_any_further_crossings_you_intend_to_make">You have no credit left. You must pay for any further crossings you intend to make.</string>
     <string name="no_crossings_have_been_made_against_this_payment_reference">No crossings have been made against this payment reference.</string>
+    <string name="str_terms_condition">Terms &amp; Conditions</string>
+    <string name="str_remove_payment_method">Remove Payment Method</string>
+    <string name="str_are_you_sure_you_want_to_remove_payment_method">Are you sure you want to remove\n payment method %s with expiry date %s?</string>
+    <string name="str_are_you_sure_you_want_to_remove_direct_payment_method">Are you sure you want to remove\n payment method %s</string>
 </resources>
 
 

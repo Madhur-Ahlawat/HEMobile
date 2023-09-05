@@ -91,9 +91,9 @@
 
         <com.conduent.nationalhighways.ui.customviews.BottomNavigationView
             android:orientation="horizontal"
-            app:active_color="@color/dark_blue_color"
-            app:passive_color="@color/bottomPassiveColor"
-            app:pressed_color="@color/dark_blue_color"
+            app:active_color="@color/hyperlink_blue2"
+            app:passive_color="@color/new_btn_color"
+            app:pressed_color="@color/hyperlink_blue2"
             app:item_text_size="@dimen/_10ssp"
             app:item_padding="@dimen/_4sdp"
             app:animation_duration="300"

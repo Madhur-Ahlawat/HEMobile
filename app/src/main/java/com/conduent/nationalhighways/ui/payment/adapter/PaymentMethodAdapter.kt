@@ -42,43 +42,69 @@ class PaymentMethodAdapter(
         } else if (paymentList?.get(position)?.cardType.equals("maestro", true)) {
             holder.binding.ivCardType.setImageResource(R.drawable.maestro)
 
-        }else if(paymentList?.get(position)?.cardType.equals(Constants.DIRECT_DEBIT, true)){
-            holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
-
-
         } else {
             holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
 
         }
 
-        if (paymentList?.get(position)?.cardType.equals(Constants.DIRECT_DEBIT, true)){
-            holder.binding.tvSelectPaymentMethod.text = context.getString(R.string.str_your_direct_debit_for,paymentList?.get(position)?.cardNumber)
+        if (paymentList?.get(position)?.emandateStatus == "PENDING" && paymentList?.get(position)?.bankAccount == true) {
+            holder.binding.tvSelectPaymentMethod.text = context.getString(
+                R.string.str_your_direct_debit_for,
+                paymentList?.get(position)?.bankAccountNumber
+            )
+            holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
+            holder.binding.delete.visibility = View.GONE
 
-        }else{
+
+        } else if (paymentList?.get(position)?.emandateStatus == "ACTIVE" && paymentList?.get(
+                position
+            )?.bankAccount == true
+        ) {
             val htmlText =
-                Html.fromHtml(paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber?.let {
-                    Utils.maskCardNumber(
-                        it
-                    )
-                })
+                Html.fromHtml(
+                    "Direct Debit" + "<br>" + paymentList?.get(
+                        position
+                    )?.bankAccountNumber?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    })
 
             holder.binding.tvSelectPaymentMethod.text = htmlText
+            holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
+            holder.binding.delete.visibility = View.VISIBLE
+
+
+        } else {
+            val htmlText =
+                Html.fromHtml(
+                    paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(
+                        position
+                    )?.cardNumber?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    })
+
+            holder.binding.tvSelectPaymentMethod.text = htmlText
+            holder.binding.delete.visibility = View.VISIBLE
+
         }
 
 
 
         if (paymentList?.get(position)?.primaryCard == true) {
             holder.binding.textDefault.visibility = View.VISIBLE
-            holder.binding.textMakeDefault.visibility=View.GONE
+            holder.binding.textMakeDefault.visibility = View.GONE
 
         } else {
             holder.binding.textDefault.visibility = View.GONE
-            holder.binding.textMakeDefault.visibility=View.VISIBLE
+            holder.binding.textMakeDefault.visibility = View.VISIBLE
 
 
         }
 
-        holder.binding.textMakeDefault.setOnClickListener{
+        holder.binding.textMakeDefault.setOnClickListener {
             paymentMethodCallback.paymentMethodCallback(
                 position,
                 Constants.MAKE_DEFAULT
@@ -86,12 +112,12 @@ class PaymentMethodAdapter(
         }
 
         holder.binding.delete.setOnClickListener {
-            if (paymentList?.get(position)?.cardType.equals(Constants.DIRECT_DEBIT, true)){
+            if (paymentList?.get(position)?.bankAccount == true && paymentList?.get(position)?.emandateStatus == "ACTIVE") {
                 paymentMethodCallback.paymentMethodCallback(
                     position,
                     Constants.DIRECT_DEBIT
                 )
-            }else{
+            } else {
                 paymentMethodCallback.paymentMethodCallback(
                     position,
                     Constants.DELETE_CARD

@@ -50,6 +50,8 @@ class AccountCreationRequest {
     var mfaFlag: String? = null
     var planType:String?=null
     var companyName:String?=null
+    var cellPhoneCountryCode:String?=null
+    var cellPhone:String?=null
 
 }
 

@@ -85,6 +85,7 @@
         <action
             android:id="@+id/action_accountSummaryFragment_to_typeAccountFragment"
             app:destination="@id/fragment_choose_account_type" />
+
         <action
             android:id="@+id/action_accountSummaryFragment_to_createAccountTypesFragment"
             app:destination="@id/createAccountTypes" />
