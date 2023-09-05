@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+        <variable
+            name="item"
+            type="com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_62dp"
+        android:elevation="@dimen/margin_1dp"
+        app:cardCornerRadius="@dimen/margin_5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/cl_main"
+            android:layout_height="@dimen/_62dp">
+
+            <View
+                android:id="@+id/vertical_strip_transaction_type"
+                android:layout_width="@dimen/margin_4dp"
+                android:layout_height="match_parent"
+                android:background="@color/green_status"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/indicator_icon_transaction_type"
+                android:layout_width="17.002dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:src="@drawable/ic_euro_circular_green"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/vertical_strip_transaction_type"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/indicator_icon_euro"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="£"
+                android:textColor="@color/white"
+                android:elevation="1dp"
+                android:textSize="@dimen/_12sp"
+                android:gravity="center"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/indicator_icon_transaction_type"
+                app:layout_constraintBottom_toBottomOf="@id/indicator_icon_transaction_type"
+                app:layout_constraintEnd_toEndOf="@+id/indicator_icon_transaction_type"
+                app:layout_constraintTop_toTopOf="@id/indicator_icon_transaction_type" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_transaction_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                app:layout_constraintVertical_bias=".47"
+                android:layout_marginStart="@dimen/margin_14dp"
+                android:gravity="center"
+                android:text="@string/top_up"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/indicator_icon_transaction_type"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/icon_arrow"
+                android:layout_width="@dimen/_16dp"
+                android:layout_height="@dimen/_16dp"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:src="@drawable/ic_right_purple"
+                android:layout_marginEnd="@dimen/margin_12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/value_current_balance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/_14sp"
+                android:textColor="@color/black"
+                app:layout_constraintVertical_bias=".4"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="@dimen/margin_14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/icon_arrow"
+                app:layout_constraintEnd_toStartOf="@id/icon_arrow"
+                tools:text="£13.50" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/value_top_up_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/_12sp"
+                app:layout_constraintVertical_bias=".5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/label_color"
+                android:layout_marginRight="@dimen/margin_14dp"
+                app:layout_constraintTop_toTopOf="@+id/icon_arrow"
+                app:layout_constraintEnd_toStartOf="@id/icon_arrow"
+                tools:text="£13.50" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

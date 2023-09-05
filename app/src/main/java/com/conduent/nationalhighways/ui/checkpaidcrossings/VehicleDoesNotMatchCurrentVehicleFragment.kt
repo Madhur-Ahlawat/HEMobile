@@ -126,7 +126,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment : BaseFragment<FragmentVehicleDo
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-        bundle.putString(PLATE_NUMBER, (navData as CrossingDetailsModelsResponse).plateNumber?.trim())
+        bundle.putString(PLATE_NUMBER, (navData as CrossingDetailsModelsResponse).plateNo?.trim())
         bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
         return bundle
     }

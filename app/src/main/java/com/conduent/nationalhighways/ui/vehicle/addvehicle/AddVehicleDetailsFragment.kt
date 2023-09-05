@@ -159,7 +159,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
             if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS)) {
                 binding?.apply {
-                    vehiclePlateNumber.setText(data?.plateNumber.toString())
+                    vehiclePlateNumber.setText(data?.plateNo.toString())
                 }
 
             } else {
@@ -221,7 +221,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 binding.apply {
                     typeVehicle.dataSet.clear()
                     typeVehicle.dataSet.addAll(typeOfVehicle)
-                    vehiclePlateNumber.setText(data?.plateNumber.toString())
+                    vehiclePlateNumber.setText(data?.plateNo.toString())
 
                 }
 //                if (NewCreateAccountRequestModel.isExempted) {
@@ -659,18 +659,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    if(data?.vehicleType?.toLowerCase().equals("a")){
-                        findNavController().navigate(
-                            R.id.action_addNewVehicleDetailsFragment_to_vehicleIsExemptFromDartChargesFragment,
-                            bundle
-                        )
-                    }
-                    else{
-                        findNavController().navigate(
-                            R.id.action_addVehicleDetailsFragment_to_yourVehicleFragment,
-                            bundle
-                        )
-                    }
+                    findNavController().navigate(
+                        R.id.action_addVehicleDetailsFragment_to_yourVehicleFragment,
+                        bundle
+                    )
 
                 }
 
@@ -714,8 +706,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
                 Constants.TRANSFER_CROSSINGS -> {
                     data?.apply {
-                        plateNumber = newVehicleInfoDetails.plateNumber
-                        customerClass = newVehicleInfoDetails.vehicleClass
+                        plateNo = newVehicleInfoDetails.plateNumber.toString()
+                        vehicleClass = newVehicleInfoDetails.vehicleClass
                         plateCountry = "UK"
                         vehicleMake = newVehicleInfoDetails.vehicleMake
                         vehicleModel = newVehicleInfoDetails.vehicleModel

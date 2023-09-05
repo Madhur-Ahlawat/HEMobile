@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:overScrollMode="never">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -18,8 +12,7 @@
                 android:layout_above="@id/btnOk"
                 android:id="@+id/llCheckvehicleDetails"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_2dp"
                 android:layout_marginStart="@dimen/_24dp"
                 android:layout_marginEnd="@dimen/_24dp"
@@ -28,7 +21,6 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_marginTop="127dp"
                     android:id="@+id/tick_blue"
                     android:layout_width="73.33dp"
                     android:layout_height="73.33dp"
@@ -152,7 +144,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_5dp"
                             android:gravity="left|center"
-                            android:text="1"
+                            android:text="Date"
                             app:layout_constraintStart_toStartOf="@id/txtCreditWillExpireOn"
                             app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn" />
 
@@ -183,7 +175,5 @@
                 android:text="@string/str_feedback_to_improve_the_service"
                 app:radius="5dp" />
         </RelativeLayout>
-
-    </ScrollView>
 
 </layout>

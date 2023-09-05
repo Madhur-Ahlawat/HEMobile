@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.data.repository.dashboard
 
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
+import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingTransactionsRequestModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -10,6 +11,8 @@ import javax.inject.Inject
 class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
     suspend fun getAccountPayment(requestParam: AccountPaymentHistoryRequest?) =
         apiService.getPaymentHistoryData(requestParam)
+    suspend fun getAccountPaymentCheckCrossings(requestParam: CheckedCrossingTransactionsRequestModel?) =
+        apiService.getTransactionsListCheckCrossings(requestParam)
     suspend fun logout() = apiService.logout()
     suspend fun getThresholdAmount() = apiService.getThresholdValuePayment()
     suspend fun getVehicleData() = apiService.getVehicleData(startIndex = "1", count = "100")

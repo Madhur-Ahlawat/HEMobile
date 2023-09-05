@@ -118,16 +118,6 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtCreditRemaining" />
 
-                        <ImageView
-                            android:id="@+id/editCreditRemaining"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/margin_20dp"
-                            android:src="@drawable/edit"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -169,16 +159,6 @@
                             app:layout_constraintEnd_toEndOf="@+id/txtCreditWillExpireOn"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn" />
-
-                        <ImageView
-                            android:id="@+id/editCreditWillExpireOn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/margin_20dp"
-                            android:src="@drawable/edit"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

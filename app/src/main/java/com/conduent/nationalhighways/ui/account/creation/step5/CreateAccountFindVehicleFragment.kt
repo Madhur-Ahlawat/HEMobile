@@ -64,6 +64,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
+        if(data==null){
+            data=CrossingDetailsModelsResponse()
+        }
         binding.editNumberPlate.setText(plateNumber.trim().replace(" ", "").replace("-", ""))
         val filter = InputFilter.AllCaps()
         binding.editNumberPlate.editText.filters = arrayOf(filter)
@@ -280,7 +283,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 val bundle = Bundle()
                 if (navData == null) {
                     navData =
-                        CrossingDetailsModelsResponse(plateNumber = binding.editNumberPlate.editText.text.toString())
+                        CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString())
                 }
                 bundle.putParcelable(
                     Constants.NAV_DATA_KEY,
@@ -330,11 +333,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         isExempted=vehicleItem.isExempted
                         isRUCEligible=vehicleItem.isRUCEligible
                         plateCountry=vehicleItem.plateCountry
-                        plateNumber=vehicleItem.plateNumber
                         vehicleColor=vehicleItem.vehicleColor
                         vehicleClass=vehicleItem.vehicleClass
                         vehicleMake=vehicleItem.vehicleMake
                         vehicleModel=vehicleItem.vehicleModel
+                        plateNo=binding?.editNumberPlate?.editText?.getText().toString()
                     }
 //                        var crossingDetailsModelsResponse=CrossingDetailsModelsResponse().apply {
 //                            referenceNumber = data?.referenceNumber!!
@@ -371,13 +374,12 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         isVehicleExist = true
                     }
                 }
-                if (navData == null) {
-                    navData =
-                        CrossingDetailsModelsResponse(plateNumber = binding.editNumberPlate.editText.text.toString())
-                }
                 bundle.putParcelable(
                     Constants.NAV_DATA_KEY,
-                    navData as CrossingDetailsModelsResponse
+                    data?.apply {
+                        plateNo=binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                            .replace("-", "")
+                    }
                 )
                 if (isVehicleExist) {
                     accountData.isVehicleAlreadyAddedLocal = true
@@ -389,7 +391,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     )
                 } else {
                     NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
-                    bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                    bundle.putString(Constants.OLD_PLATE_NUMBER, binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                        .replace("-", ""))
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
@@ -461,7 +464,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                             if (navData == null) {
                                 navData =
-                                    CrossingDetailsModelsResponse(plateNumber = binding?.editNumberPlate?.editText?.text.toString())
+                                    CrossingDetailsModelsResponse(plateNo = binding?.editNumberPlate?.editText?.text.toString())
                             }
                             bundle.putParcelable(
                                 Constants.NAV_DATA_KEY,
@@ -507,7 +510,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     val bundle = Bundle()
                     if (navData == null) {
                         navData =
-                            CrossingDetailsModelsResponse(plateNumber = binding.editNumberPlate.editText.text.toString())
+                            CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString())
                     }
                     bundle.putParcelable(
                         Constants.NAV_DATA_KEY,

@@ -398,7 +398,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             future toll payment =Additional Crossing Selected * Charging Rate
         * */
         val vehicleList = VehicleList(
-            crossingDetailModelResponse?.plateNumber,
+            crossingDetailModelResponse?.plateNo,
             crossingDetailModelResponse?.vehicleMake,
             crossingDetailModelResponse?.vehicleModel,
             crossingDetailModelResponse?.dvlaclass,

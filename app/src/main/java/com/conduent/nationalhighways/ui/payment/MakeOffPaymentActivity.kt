@@ -62,7 +62,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>() {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAY_FOR_CROSSINGS)
         if(data!=null && data is CrossingDetailsModelsResponse){
-            bundle.putString(Constants.PLATE_NUMBER, (data as CrossingDetailsModelsResponse).plateNumber)
+            bundle.putString(Constants.PLATE_NUMBER, (data as CrossingDetailsModelsResponse).plateNo)
             bundle.putParcelable(Constants.NAV_DATA_KEY, data as CrossingDetailsModelsResponse)
         }
         navController.setGraph(navGraph, bundle)

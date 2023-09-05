@@ -165,5 +165,6 @@
     <dimen name="_77dp">77dp</dimen>
     <dimen name="_80dp">80dp</dimen>
     <dimen name="_79dp">79dp</dimen>
+    <dimen name="_48dp">48dp</dimen>
     />
 </resources>

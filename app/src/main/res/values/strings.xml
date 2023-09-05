@@ -1423,7 +1423,7 @@
     <string name="back_to_main_menu">BACK TO MAIN MENU</string>
     <string name="transfer_remaining_credit">TRANSFER REMAINING CREDIT</string>
     <string name="your_crossing_details">Your crossing details</string>
-    <string name="credit_remaining">Credit remaining</string>
+    <string name="credit_remaining">Credits remaining</string>
     <string name="credit_expiry_date">Credit expiry date</string>
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
@@ -1435,6 +1435,7 @@
     <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
     <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
     <string name="you_have_no_credit_left_you_must_pay_for_any_further_crossings_you_intend_to_make">You have no credit left. You must pay for any further crossings you intend to make.</string>
+    <string name="no_crossings_have_been_made_against_this_payment_reference">No crossings have been made against this payment reference.</string>
 </resources>
 
 

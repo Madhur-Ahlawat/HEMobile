@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CrossingDetailsModelsResponse(
-    var plateNumber: String?="",
+    var plateNumberToTransfer: String?="",
     var customerClass: String?="",
     var customerClassRate: String?="",
     var chargingRate: String?="",
@@ -39,6 +39,7 @@ data class CrossingDetailsModelsResponse(
     var plateState: String?="HE",
     var isExempted: String?="",
     var isRUCEligible: String?="",
-    var vehicleClass: String?=""
+    var vehicleClass: String?="",
+    var vehicleClassBalanceTransfer: String?=""
 ) : Parcelable
 

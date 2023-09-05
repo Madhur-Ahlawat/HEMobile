@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 
@@ -55,11 +56,11 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
 
     private fun setData() {
         binding?.apply {
-            vehicleRegisration.text = if(!data?.plateNumber.isNullOrEmpty()) data?.plateNumber else data?.plateNo
+            vehicleRegisration.text = data?.plateNo
             creditRemaining.text =
-                data?.unSettledTrips.toString()
-            txtCreditWillExpireOn.text =
-                data?.additionalCrossingCount.toString()
+                data?.unusedTrip.toString()
+            creditWillExpireOn.text =
+                Utils.convertDateForTransferCrossingsScreen(data?.expirationDate.toString())
 //            val charge = data?.chargingRate?.toDouble()
 //            val unSettledTrips = data?.unSettledTrips
 //            crossingsList = emptyList<String>().toMutableList()
@@ -99,7 +100,7 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
             R.id.btnFeedback -> {
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, data?.totalAmount?:0.0)
-                bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
+                bundle.putString(NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
                 findNavController().navigate(
                     R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
@@ -111,8 +112,8 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
 
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
-        bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-        bundle.putString(PLATE_NUMBER, data?.plateNumber?.trim())
+        bundle.putString(NAV_FLOW_KEY, navFlowCall)
+        bundle.putString(PLATE_NUMBER, data?.plateNo?.trim())
         bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
         return bundle
     }
