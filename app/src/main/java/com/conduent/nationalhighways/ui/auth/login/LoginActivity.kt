@@ -49,7 +49,6 @@ import javax.inject.Inject
 class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener {
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
-    private var btnEnabled: Boolean=false
     private val viewModel: LoginViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private lateinit var biometricPrompt: BiometricPrompt

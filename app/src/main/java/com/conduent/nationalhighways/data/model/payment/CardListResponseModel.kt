@@ -25,6 +25,8 @@ data class CardListResponseModel(
     val state: String?,
     val zipCode: String?,
     var isSelected:Boolean=false,
-    val emandateStatus:String=""
+    val emandateStatus:String="",
+    val expMonth:String="",
+    val expYear:String=""
 
 ) : Parcelable

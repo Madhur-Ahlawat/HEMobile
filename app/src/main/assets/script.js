@@ -213,8 +213,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 threeDSecureInterface.on('complete', function(e) {
                     var apiResponse = JSON.stringify(e, null, "");
-                    invokeCommand("threeDSecure","{\"threeDSecure\":"+apiResponse+"}")
-                   // window.appInterface.postMessage(apiResponse);
+                    //invokeCommand("threeDSecure","{\"threeDSecure\":"+apiResponse+"}")
+                    window.appInterface.postMessage(apiResponse);
                 });
                 
                 threeDSecureInterface.on('failure', function(e) {

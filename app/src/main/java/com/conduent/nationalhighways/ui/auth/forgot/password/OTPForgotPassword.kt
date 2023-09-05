@@ -264,7 +264,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                        confirmEmailCode()
+                          val bundle = Bundle()
+                          findNavController().navigate(
+                              R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                              bundle
+                          )
+                       // confirmEmailCode()
                     }
 
                 }
@@ -362,6 +367,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             ) + "."
 
                     }
+
                     Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                         binding.messageReceivedTxt.text =
                             getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
@@ -369,6 +375,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             ) + "."
 
                     }
+
                     else -> {
                         binding.messageReceivedTxt.text =
                             getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue + "."
@@ -578,6 +585,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                 bundle
                             )
                         }
+
                         Constants.TwoStepVerification -> {
 
                             findNavController().navigate(
@@ -585,6 +593,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                 bundle
                             )
                         }
+
                         else -> {
                             findNavController().navigate(
                                 R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
@@ -650,12 +659,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                     bundle
                                 )
                             }
+
                             Constants.TwoStepVerification -> {
                                 findNavController().navigate(
                                     R.id.action_twoStep_forgotOtpFragment_to_createAccountSummaryFragment,
                                     bundle
                                 )
                             }
+
                             else -> {
                                 findNavController().navigate(
                                     R.id.action_email_forgotOtpFragment_to_createAccountSummaryFragment,

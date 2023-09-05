@@ -1,21 +1,18 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.content.Intent
-import android.net.Uri
+
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
-import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
-import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
@@ -26,12 +23,12 @@ import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
 import com.conduent.nationalhighways.utils.extn.visible
-import com.google.gson.Gson
 
 
 class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener {
+    private lateinit var title: TextView
 
     private lateinit var vehicleAdapter: VehicleListAdapter
 
@@ -50,8 +47,9 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.editAccountType.setOnClickListener(this)
         binding.editCommunications.setOnClickListener(this)
         binding.editTwoStepVerification.setOnClickListener(this)
-        binding.editAccount.setOnClickListener(this)
         binding.editAccountSubType.setOnClickListener(this)
+        title = requireActivity().findViewById(R.id.title_txt)
+
         val dataModel = NewCreateAccountRequestModel
         (dataModel.firstName + " " + dataModel.lastName).also { binding.fullName.text = it }
         if (!dataModel.personalAccount) {
@@ -78,7 +76,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             dataModel.addressline1 + "\n" + dataModel.townCity + "\n" + dataModel.zipCode
         binding.emailAddress.text = dataModel.emailAddress
         if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
-            if (dataModel.mobileNumber?.isEmpty() ?: true) {
+            if (dataModel.mobileNumber?.isEmpty() != false) {
                 binding.phoneCard.gone()
             } else {
                 binding.phoneCard.visible()
@@ -86,7 +84,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                     dataModel.countryCode?.let { getRequiredText(it) } + " " + dataModel.mobileNumber
             }
         } else {
-            if (dataModel.telephoneNumber?.isEmpty() ?: true) {
+            if (dataModel.telephoneNumber?.isEmpty() != false) {
                 binding.phoneCard.gone()
             } else {
                 binding.phoneCard.visible()
@@ -100,16 +98,13 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             binding.accountSubType.visible()
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
-                binding.typeofAccount.text = getString(R.string.str_prepay)
                 binding.textAccountSubType.text = getString(R.string.str_prepay)
             } else {
-                binding.typeofAccount.text = getString(R.string.str_payg_account)
                 binding.textAccountSubType.text = getString(R.string.pay_as_you_go)
             }
 
         } else {
             binding.accountType.text = getString(R.string.business)
-            binding.accountTypeCard.visibility=View.GONE
             binding.accountSubType.gone()
         }
 
@@ -141,6 +136,8 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
             }
             val bundle = Bundle()
+            title.text=getString(R.string.str_terms_condition)
+
             bundle.putString(Constants.TERMSCONDITIONURL, url)
             findNavController().navigate(
                 R.id.action_accountSummaryFragment_to_termsConditionFragment,
@@ -251,24 +248,16 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                     enableEditMode()
                 )
             }
+
             R.id.editAccountSubType -> {
-                val bundle = Bundle()
-                bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,
-                    enableEditMode()
-                )
-            }
-            R.id.editAccount->{
                 val bundle = Bundle()
                 bundle.putString(NAV_FLOW_KEY, EDIT_ACCOUNT_TYPE)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                 findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,
-                   bundle
+                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,bundle
                 )
             }
+
         }
     }
 
@@ -317,6 +306,14 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
         }
 
+    }
+
+    override fun onResume() {
+        if (requireActivity() is CreateAccountActivity){
+            title.text=getString(R.string.str_create_an_account)
+
+        }
+        super.onResume()
     }
 
 }
