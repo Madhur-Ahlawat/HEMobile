@@ -247,6 +247,11 @@ interface ApiService {
         @Query("agencyId") agencyId: Int?
     ): Response<VehicleInfoDetails?>?
     @GET(FIND_VEHICLE_ACCOUNT)
+    suspend fun getVehiclePlateInfo(
+        @Path("vehicleNumber") vehicleNumber: String?,
+        @Query("agencyId") agencyId: Int?
+    ): Response<GetPlateInfoResponseModel?>?
+    @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getNewAccountFindVehicle(
         @Path("vehicleNumber") vehicleNumber: String?,
         @Query("agencyId") agencyId: Int?
@@ -474,9 +479,8 @@ interface ApiService {
     @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
     suspend fun loginWithRefAndPlateNumber(
         @Body request: CheckPaidCrossingsRequest?,
-        @Query("Value") value: Boolean? = true,
-        @Query("agencyId") agencyId: String? = AGENCY_ID
-    ): Response<CrossingDetailsModelsResponse?>?
+        @Query("returnReferenceInformation") value: Boolean? = true,
+    ): Response<LoginWithPlateAndReferenceNumberResponseModel?>?
 
     @POST(GET_TOLL_TRANSACTIONS)
     suspend fun getTollTransactions(

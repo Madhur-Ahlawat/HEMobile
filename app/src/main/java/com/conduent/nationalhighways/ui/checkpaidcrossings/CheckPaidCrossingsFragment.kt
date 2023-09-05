@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.LoginWithPlateAndReferenceNumberResponseModel
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentPaidPreviousCrossingsBinding
@@ -99,7 +100,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 
     }
 
-    private fun loginWithRefHeader(status: Resource<CrossingDetailsModelsResponse?>?) {
+    private fun loginWithRefHeader(status: Resource<LoginWithPlateAndReferenceNumberResponseModel?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -107,11 +108,22 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             when (status) {
                 is Resource.Success -> {
                     val dataObj = status.data
-                    dataObj?.referenceNumber = binding.editReferenceNumber.getText().toString()
-                    dataObj?.plateNumber = binding.editNumberPlate.getText().toString()
                     val bundle = Bundle().apply {
                         putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        putParcelable(Constants.NAV_DATA_KEY, dataObj as CrossingDetailsModelsResponse)
+                        var crossingDetailsModelsResponse=CrossingDetailsModelsResponse().apply {
+                            referenceNumber = binding.editReferenceNumber.getText().toString()
+                            plateNumber = binding.editNumberPlate.getText().toString()
+                            accountActStatus= dataObj?.get(0)?.accountActStatus!!
+                            accountBalance= dataObj?.get(0)?.accountBalance!!
+                            accountNo= dataObj?.get(0)?.accountNo!!
+                            accountTypeCd=dataObj?.get(0)?.accountStatusCd!!
+                            expirationDate=dataObj?.get(0)?.expirationDate!!
+                            plateCountry=dataObj?.get(0)?.plateCountry
+                            plateNo=dataObj?.get(0)?.plateNo!!
+                            unusedTrip=dataObj?.get(0)?.unusedTrip!!
+                            vehicleClass=dataObj?.get(0)?.vehicleClass
+                        }
+                        putParcelable(Constants.NAV_DATA_KEY, crossingDetailsModelsResponse)
                     }
                     findNavController().navigate(
                         R.id.action_crossingCheck_to_crossing_details,

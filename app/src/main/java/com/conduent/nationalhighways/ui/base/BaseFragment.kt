@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
@@ -83,7 +84,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
+        if(navData!=null && navData is CrossingDetailsModelsResponse){
+            Log.e("EXPIRY",(navData as CrossingDetailsModelsResponse).expirationDate)
+        }
     }
 
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B

@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.databinding.FragmentChangeVehicleSuccessCon
 import com.conduent.nationalhighways.databinding.FragmentConfirmNewVehicleDetailsCheckPaidCrossingsFragmentBinding
 import com.conduent.nationalhighways.databinding.FragmentPaymentSummaryBinding
 import com.conduent.nationalhighways.databinding.FragmentVehicleDoesNotMatchBinding
+import com.conduent.nationalhighways.databinding.FragmentVehicleIsExemptFromDartChargesBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
@@ -24,37 +25,28 @@ import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 
-class VehicleIsExemptFromDartChargesFragment : BaseFragment<FragmentVehicleDoesNotMatchBinding>(),
+class VehicleIsExemptFromDartChargesFragment :
+    BaseFragment<FragmentVehicleIsExemptFromDartChargesBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener {
     private var additionalCrossings: Int? = 0
     private var additionalCrossingsCharge: Double? = 0.0
-    private var totalAmountOfUnsettledTrips: Double?=0.0
+    private var totalAmountOfUnsettledTrips: Double? = 0.0
     private var crossingsList: MutableList<String>? = mutableListOf()
-
+    private var data: CrossingDetailsModelsResponse? = null
+    val bundle = Bundle()
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentVehicleDoesNotMatchBinding =
-        FragmentVehicleDoesNotMatchBinding.inflate(inflater, container, false)
+    ): FragmentVehicleIsExemptFromDartChargesBinding =
+        FragmentVehicleIsExemptFromDartChargesBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
-                navData = arguments?.getParcelable(
-
-                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
-                )
-            }
-        } else {
-            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
-                navData = arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                )
-            }
+        navData?.let {
+            data = it as CrossingDetailsModelsResponse
         }
-        additionalCrossings = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
-        additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
+        additionalCrossings = data?.additionalCrossingCount
+        additionalCrossingsCharge = data?.additionalCharge
         setData()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)
@@ -70,8 +62,8 @@ class VehicleIsExemptFromDartChargesFragment : BaseFragment<FragmentVehicleDoesN
             val charge = (navData as CrossingDetailsModelsResponse).chargingRate?.toDouble()
             val unSettledTrips = (navData as CrossingDetailsModelsResponse).unSettledTrips
             crossingsList = emptyList<String>().toMutableList()
-            if(unSettledTrips != null && charge != null){
-                totalAmountOfUnsettledTrips = charge*unSettledTrips
+            if (unSettledTrips != null && charge != null) {
+                totalAmountOfUnsettledTrips = charge * unSettledTrips
             }
 
 //            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
@@ -83,8 +75,8 @@ class VehicleIsExemptFromDartChargesFragment : BaseFragment<FragmentVehicleDoesN
 
     private fun setClickListeners() {
         binding?.apply {
-            btnOk.setOnClickListener(this@VehicleIsExemptFromDartChargesFragment)
-            btnFeedback.setOnClickListener(this@VehicleIsExemptFromDartChargesFragment)
+            btnTransfer.setOnClickListener(this@VehicleIsExemptFromDartChargesFragment)
+            btnCancel.setOnClickListener(this@VehicleIsExemptFromDartChargesFragment)
         }
     }
 
@@ -100,25 +92,19 @@ class VehicleIsExemptFromDartChargesFragment : BaseFragment<FragmentVehicleDoesN
 
         when (v?.id) {
 
-            R.id.btnOk -> {
-                    val bundle = Bundle()
-                    bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount?:0.0)
-                    bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-                    bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
-                    findNavController().navigate(
-                        R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
-                        bundle
-                    )
-            }
             R.id.btnTransfer -> {
-                val bundle = Bundle()
-                bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount?:0.0)
-                bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-                bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
+                bundle.putString(NAV_FLOW_KEY, navFlowCall)
+                bundle.putParcelable(NAV_DATA_KEY, data)
                 findNavController().navigate(
-                    R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
+                    R.id.action_vehicleIsExemptFromDartChargesFragment_to_findYourVehicleFragment,
                     bundle
                 )
+            }
+
+            R.id.btnCancel -> {
+                bundle.putString(NAV_FLOW_KEY, navFlowCall)
+                bundle.putParcelable(NAV_DATA_KEY, data)
+                findNavController().popBackStack(R.id.businessVehicleDetailFragment, false)
             }
         }
     }
@@ -126,7 +112,10 @@ class VehicleIsExemptFromDartChargesFragment : BaseFragment<FragmentVehicleDoesN
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-        bundle.putString(PLATE_NUMBER, (navData as CrossingDetailsModelsResponse).plateNumber?.trim())
+        bundle.putString(
+            PLATE_NUMBER,
+            (navData as CrossingDetailsModelsResponse).plateNumber?.trim()
+        )
         bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
         return bundle
     }

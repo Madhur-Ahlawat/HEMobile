@@ -16,6 +16,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModel
+import com.conduent.nationalhighways.data.model.account.LoginWithPlateAndReferenceNumberResponseModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
@@ -140,14 +142,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     }
 
-    private fun removeError() {
-        binding.editNumberPlate.removeError()
-        binding.findVehicle.isEnabled = true
-    }
-
     override fun observer() {
         if (!isViewCreated) {
             observe(viewModel.findVehicleLiveData, ::apiResponseDVRM1)
+            observe(viewModel.findVehiclePlateLiveData, ::apiResponsePlateInfo)
 
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
             observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
@@ -237,7 +235,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 //                            )
                         } else {
                             if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS, true)) {
-                                viewModel.getVehicleData(numberPlate, Constants.AGENCY_ID.toInt())
+                                viewModel.getVehiclePlateData(numberPlate, Constants.AGENCY_ID.toInt())
                             } else {
                                 checkForDuplicateVehicle(numberPlate)
                             }
@@ -280,6 +278,99 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     }
                 }
                 val bundle = Bundle()
+                if (navData == null) {
+                    navData =
+                        CrossingDetailsModelsResponse(plateNumber = binding.editNumberPlate.editText.text.toString())
+                }
+                bundle.putParcelable(
+                    Constants.NAV_DATA_KEY,
+                    navData as CrossingDetailsModelsResponse
+                )
+                if (isVehicleExist) {
+                    accountData.isVehicleAlreadyAddedLocal = true
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                    findNavController().navigate(
+                        R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                        bundle
+                    )
+                } else {
+                    NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
+                    bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    arguments?.getInt(Constants.VEHICLE_INDEX)
+                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                    findNavController().navigate(
+                        R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,
+                        bundle
+                    )
+                }
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+                isObserverBack = false
+            }
+
+            else -> {}
+        }
+    }
+    private fun apiResponsePlateInfo(resource: Resource<GetPlateInfoResponseModel?>?) {
+        val bundle = Bundle()
+
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        val accountData = NewCreateAccountRequestModel
+        val vehicleList = accountData.vehicleList
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.let { it1 ->
+                    var vehicleItem=it1.get(0)
+                    NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    data?.apply {
+                        isExempted=vehicleItem.isExempted
+                        isRUCEligible=vehicleItem.isRUCEligible
+                        plateCountry=vehicleItem.plateCountry
+                        plateNumber=vehicleItem.plateNumber
+                        vehicleColor=vehicleItem.vehicleColor
+                        vehicleClass=vehicleItem.vehicleClass
+                        vehicleMake=vehicleItem.vehicleMake
+                        vehicleModel=vehicleItem.vehicleModel
+                    }
+//                        var crossingDetailsModelsResponse=CrossingDetailsModelsResponse().apply {
+//                            referenceNumber = data?.referenceNumber!!
+//                            plateNumber = data?.plateNumber
+//                            accountActStatus= resource.data?.get(0)?.accountActStatus!!
+//                            accountBalance= resource.data?.get(0)?.accountBalance!!
+//                            accountNo= resource.data?.get(0)?.accountNo!!
+//                            accountTypeCd=resource.data?.get(0)?.accountStatusCd!!
+//                            expirationDate=resource.data?.get(0)?.expirationDate!!
+//                            plateCountry=resource.data?.get(0)?.plateCountry
+//                            plateNo=resource.data?.get(0)?.plateNo!!
+//                            unusedTrip=resource.data?.get(0)?.unusedTrip!!
+//                            vehicleClass=resource.data?.get(0)?.vehicleClass
+//                        }
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    arguments?.getInt(Constants.VEHICLE_INDEX)
+                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                    findNavController().navigate(
+                        R.id.action_findVehicleFragment_to_businessVehicleDetailFragment,
+                        bundle
+                    )
+                }
+
+            }
+
+            is Resource.DataError -> {
+                isObserverBack = false
+                var isVehicleExist = false
+                val numberPlate =
+                    binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                        .replace("-", "")
+                for (obj in vehicleList) {
+                    if (obj.plateNumber.equals(numberPlate, true)) {
+                        isVehicleExist = true
+                    }
+                }
                 if (navData == null) {
                     navData =
                         CrossingDetailsModelsResponse(plateNumber = binding.editNumberPlate.editText.text.toString())

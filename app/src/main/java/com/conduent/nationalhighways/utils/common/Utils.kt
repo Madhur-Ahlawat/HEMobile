@@ -19,6 +19,7 @@ import java.lang.reflect.Field
 import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -155,7 +156,7 @@ object Utils {
     }
 
     fun convertDateForTransferCrossingsScreen(inputDate: String?): String {
-        var inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S")
+        var inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a")
         var date: Date = inputFormat.parse(inputDate);
         var outputFormat = SimpleDateFormat("dd-MM-yyyy")
         return outputFormat.format(date);

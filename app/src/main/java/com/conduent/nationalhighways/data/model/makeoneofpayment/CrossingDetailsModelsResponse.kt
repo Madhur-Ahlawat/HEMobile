@@ -30,12 +30,15 @@ data class CrossingDetailsModelsResponse(
     var accountType: String="",
     var accountActStatus: String="",
     var accountBalance: String="",
+    var plateNo: String="",
     var accountStatusCd: String="",
     var unusedTrip: String="",
     var expirationDate: String="",
     var referenceNumber: String = "",
     var tripCount: String?="0",
     var plateState: String?="HE",
+    var isExempted: String?="",
+    var isRUCEligible: String?="",
     var vehicleClass: String?=""
 ) : Parcelable
 
