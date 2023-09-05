@@ -474,13 +474,11 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
 
                         EDIT_SUMMARY -> {
                             if (navFlowFrom.equals(EDIT_FROM_POST_CODE)) {
-                                Log.e("TAG", "handleLrdsApiResponse: data " )
                                 findNavController().navigate(
                                     R.id.action_manualaddressfragment_to_createAccountSummary,
                                     bundle()
                                 )
                             } else {
-                                Log.e("TAG", "handleLrdsApiResponse: popbackstack " )
                                 findNavController().popBackStack()
                             }
 

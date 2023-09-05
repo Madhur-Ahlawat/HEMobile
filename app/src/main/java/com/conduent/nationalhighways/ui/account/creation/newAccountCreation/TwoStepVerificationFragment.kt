@@ -136,9 +136,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
-                        Log.e("TAG", "onClick: oldtwoStepVerification "+oldtwoStepVerification )
-                        Log.e("TAG", "onClick: twoStepVerification "+NewCreateAccountRequestModel.twoStepVerification )
-                        NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
+                          NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
 
                         if (binding.twoFactor.isChecked == oldtwoStepVerification) {
                             findNavController().popBackStack()
