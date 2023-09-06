@@ -702,7 +702,9 @@
 
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
-            app:destination="@+id/findYourVehicleFragment" />
+            app:destination="@+id/findYourVehicleFragment"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
 
         <action
             android:id="@+id/action_maximumFragment_to_addVehicleFragment"

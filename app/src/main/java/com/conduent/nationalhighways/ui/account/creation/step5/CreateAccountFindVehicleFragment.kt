@@ -1,30 +1,25 @@
 package com.conduent.nationalhighways.ui.account.creation.step5
 
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Html
 import android.text.InputFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModel
-import com.conduent.nationalhighways.data.model.account.LoginWithPlateAndReferenceNumberResponseModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicleBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -112,15 +107,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             binding.editNumberPlate.removeError()
         } else {
             if (Utils.countOccurenceOfChar(
-                    binding.editNumberPlate.editText.getText().toString().trim(), '-'
-                ) > 1 || binding.editNumberPlate.editText.getText().toString().trim().contains(
+                    binding.editNumberPlate.editText.text.toString().trim(), '-'
+                ) > 1 || binding.editNumberPlate.editText.text.toString().trim().contains(
                     Utils.TWO_OR_MORE_HYPEN
-                ) || (binding.editNumberPlate.editText.getText().toString().trim().last()
-                    .toString().equals(".") || binding.editNumberPlate.editText.getText()
-                    .toString().first().toString().equals("."))
-                || (binding.editNumberPlate.editText.getText().toString().trim().last().toString()
-                    .equals("-") || binding.editNumberPlate.editText.getText().toString().first()
-                    .toString().equals("-"))
+                ) || (binding.editNumberPlate.editText.text.toString().trim().last()
+                    .toString() == "." || binding.editNumberPlate.editText.text
+                    .toString().first().toString() == ".")
+                || (binding.editNumberPlate.editText.text.toString().trim().last().toString() == "-" || binding.editNumberPlate.editText.text.toString().first()
+                    .toString() == "-")
             ) {
                 binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
                 binding.findVehicle.isEnabled = false
@@ -257,7 +251,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-//TODO
+
                     resource.data.retrievePlateInfoDetails?.let { it1 ->
                         checkForDuplicateVehicle(
                             it1.plateNumber!!
@@ -323,7 +317,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let { it1 ->
-                    var vehicleItem=it1.get(0)
+                    val vehicleItem= it1[0]
                     NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     data?.apply {
@@ -461,7 +455,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                             if (navData == null) {
                                 navData =
-                                    CrossingDetailsModelsResponse(plateNumber = binding?.editNumberPlate?.editText?.text.toString())
+                                    CrossingDetailsModelsResponse(plateNumber = binding.editNumberPlate.editText.text.toString())
                             }
                             bundle.putParcelable(
                                 Constants.NAV_DATA_KEY,

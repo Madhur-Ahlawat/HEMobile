@@ -143,7 +143,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             false
         } else {
             binding.edtOtp.removeError()
-             true
+            true
         }
 
 
@@ -264,12 +264,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                          val bundle = Bundle()
-                          findNavController().navigate(
-                              R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                              bundle
-                          )
-                       // confirmEmailCode()
+                       /* val bundle = Bundle()
+                        findNavController().navigate(
+                            R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                            bundle
+                        )*/
+
+                        confirmEmailCode()
                     }
 
                 }
@@ -586,14 +587,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             R.id.action_twoStep_forgotOtpFragment_to_createAccountSummaryFragment,
                             bundle
                         )
-                    }else{
+                    } else {
                         findNavController().navigate(
                             R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
                         )
 
-                        }
                     }
-                else {
+                } else {
                     findNavController().navigate(
                         R.id.action_otpForgotFragment_to_createVehicleFragment
                     )

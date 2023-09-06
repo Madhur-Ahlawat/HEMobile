@@ -348,11 +348,20 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             )
                         }else{
                             assignNumbers(mobileNumber,countryCode)
-                            bundle.putString(NAV_FLOW_FROM, AccountType_MobileNumber)
-                            findNavController().navigate(
-                                R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
-                                bundle
-                            )
+
+                            if (isItMobileNumber){
+                                bundle.putString(NAV_FLOW_FROM, AccountType_MobileNumber)
+                                findNavController().navigate(
+                                    R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
+                                    bundle
+                                )
+                            }else{
+                                findNavController().navigate(
+                                    R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
+                                    bundle
+                                )
+                            }
+
 
                         }
                     }

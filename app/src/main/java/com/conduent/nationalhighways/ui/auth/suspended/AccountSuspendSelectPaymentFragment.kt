@@ -7,11 +7,9 @@ import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -98,7 +96,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.rvPaymentMethods.layoutManager = linearLayoutManager
 
         suspendPaymentMethodAdapter =
-            SuspendPaymentMethodAdapter(requireContext(), paymentList, this)
+            SuspendPaymentMethodAdapter(requireContext(), paymentList, this,navFlow)
         binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
 
         binding.lowBalance.setText("£10.00")
@@ -264,7 +262,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 paymentList = status.data?.creditCardListType?.cardsList
                 if (paymentList?.isNotEmpty() == true) {
 
-                    suspendPaymentMethodAdapter.updateList(paymentList)
+                    suspendPaymentMethodAdapter.updateList(paymentList,navFlow)
                     binding.rvPaymentMethods.visible()
                     binding.btnContinue.visible()
 

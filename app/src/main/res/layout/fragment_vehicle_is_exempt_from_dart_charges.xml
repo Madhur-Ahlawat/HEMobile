@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_2dp"
             android:layout_marginBottom="@dimen/_79dp"
-            android:layout_above="@id/btnOk"
             android:layout_marginStart="@dimen/_24dp"
             android:layout_marginEnd="@dimen/_24dp"
             android:gravity="center"
@@ -26,8 +25,7 @@
                 android:layout_height="73.33dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="127dp"
-                android:tint="@color/new_btn_color"
-                android:src="@drawable/error" />
+                android:src="@drawable/warningicon" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"

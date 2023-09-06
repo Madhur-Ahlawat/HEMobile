@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
-import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
@@ -157,9 +156,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             binding.vehicleRegisteredLayout.visibility = View.GONE
             radioButtonChecked = true
 
-            if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS)) {
-                binding?.apply {
-                    vehiclePlateNumber.setText(data?.plateNumber.toString())
+            if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
+                binding.apply {
+                    vehiclePlateNumber.text = data?.plateNumber.toString()
                 }
 
             } else {
@@ -221,7 +220,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 binding.apply {
                     typeVehicle.dataSet.clear()
                     typeVehicle.dataSet.addAll(typeOfVehicle)
-                    vehiclePlateNumber.setText(data?.plateNumber.toString())
+                    vehiclePlateNumber.text = data?.plateNumber.toString()
 
                 }
 //                if (NewCreateAccountRequestModel.isExempted) {
@@ -244,7 +243,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun setPreSelectedVehicleType() {
-        if (typeOfVehicle.size > 0 && data != null) {
+        if (typeOfVehicle.size > 0 && data != null&& data?.plateNumber?.isNotEmpty() == true) {
             binding.typeVehicle.setSelectedValue(data?.vehicleType!!)
             typeOfVehicleChecked = true
         }
@@ -258,32 +257,30 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             is Resource.Success -> {
                 resource.data?.let {
                     it.let {
-                        val mUnSettledTrips = it.unSettledTrips?.toInt()
-                        if (mUnSettledTrips != null) {
-                            val bundle = Bundle()
-                            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                            bundle.putParcelable(
-                                Constants.NAV_DATA_KEY,
-                                resource.data.apply {
-                                    vehicleColor =
-                                        data?.vehicleColor
-                                    unSettledTrips = mUnSettledTrips
-                                    vehicleType =
-                                        data?.vehicleType
-                                })
-                            if (mUnSettledTrips > 0) {
+                        val mUnSettledTrips = it.unSettledTrips
+                        val bundle = Bundle()
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(
+                            Constants.NAV_DATA_KEY,
+                            resource.data.apply {
+                                vehicleColor =
+                                    data?.vehicleColor
+                                unSettledTrips = mUnSettledTrips
+                                vehicleType =
+                                    data?.vehicleType
+                            })
+                        if (mUnSettledTrips > 0) {
 
-                                findNavController().navigate(
-                                    R.id.action_addVehicleDetailFragment_to_pay_for_crossingFragment,
-                                    bundle
-                                )
+                            findNavController().navigate(
+                                R.id.action_addVehicleDetailFragment_to_pay_for_crossingFragment,
+                                bundle
+                            )
 
-                            } else {
-                                findNavController().navigate(
-                                    R.id.action_addVehicleDetailFragment_to_additional_crossingFragment,
-                                    bundle
-                                )
-                            }
+                        } else {
+                            findNavController().navigate(
+                                R.id.action_addVehicleDetailFragment_to_additional_crossingFragment,
+                                bundle
+                            )
                         }
 
                     }
@@ -303,9 +300,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private fun updateView(nonUKVehicleModel: NewVehicleInfoDetails?) {
         binding.vehiclePlateNumber.text = nonUKVehicleModel?.plateNumber
         binding.makeInputLayout.setText(nonUKVehicleModel?.vehicleMake.toString())
-        binding.modelInputLayout.setText(nonUKVehicleModel?.vehicleModel.toString())
         binding.colorInputLayout.setText(nonUKVehicleModel?.vehicleColor.toString())
         binding.typeVehicle.setSelectedValue(Utils.getVehicleType(nonUKVehicleModel?.vehicleClass.toString()))
+        binding.modelInputLayout.setText(nonUKVehicleModel?.vehicleModel.toString())
+
         if (nonUKVehicleModel?.vehicleClass.equals("D", true)) {
             typeOfVehicle.clear()
             typeOfVehicle.add("Bus, coach or other goods vehicle with 2 axles")
@@ -333,7 +331,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         validateAllFields()
         navData?.let {
             if (it is CrossingDetailsModelsResponse) {
-                it?.apply {
+                it.apply {
                     binding.makeInputLayout.editText.setText(vehicleMake)
                     binding.modelInputLayout.editText.setText(vehicleModel)
                     binding.colorInputLayout.editText.setText(vehicleColor)
@@ -353,7 +351,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     validateAllFields()
                     binding.makeInputLayout.removeError()
                     data?.vehicleMake =
-                        binding.makeInputLayout.editText.getText().toString().trim()
+                        binding.makeInputLayout.editText.text.toString().trim()
                     true
                 }
             } else {
@@ -379,7 +377,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     validateAllFields()
                     binding.modelInputLayout.removeError()
                     data?.vehicleModel =
-                        binding.modelInputLayout.editText.getText().toString().trim()
+                        binding.modelInputLayout.editText.text.toString().trim()
                     true
                 }
             } else {
@@ -391,7 +389,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
         binding.colorInputLayout.editText.onTextChanged {
 
-            colourInputCheck = if (it != null && it.trim().length > 0) {
+            colourInputCheck = if (it.trim().isNotEmpty()) {
                 if (hasDigits(it) || hasSpecialCharacters(it.trim(), Utils.splCharVehicleColor)) {
                     binding.colorInputLayout.setErrorText(getString(R.string.str_colour_error_message))
                     false
@@ -399,7 +397,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     validateAllFields()
                     binding.colorInputLayout.removeError()
                     data?.vehicleColor =
-                        binding.colorInputLayout.editText.getText().toString().trim()
+                        binding.colorInputLayout.editText.text.toString().trim()
                     true
                 }
             } else {
@@ -416,11 +414,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private fun validateAllFields() {
         radioButtonChecked = (binding.radioButtonYes.isChecked || binding.radioButtonNo.isChecked)
         checkBoxChecked = binding.checkBoxTerms.isChecked
-        modelInputCheck = if (binding.modelInputLayout.editText.getText()!!.isNotEmpty()) {
-            if (binding.modelInputLayout.editText.getText()!!.toString().trim().length > 50) {
+        modelInputCheck = if (binding.modelInputLayout.editText.text!!.isNotEmpty()) {
+            if (binding.modelInputLayout.editText.text!!.toString().trim().length > 50) {
                 false
             } else if (hasSpecialCharacters(
-                    binding.modelInputLayout.editText.getText()!!.toString().trim()
+                    binding.modelInputLayout.editText.text!!.toString().trim()
                         .replace(" ", ""), Utils.splCharVehicleModel
                 )
             ) {
@@ -428,7 +426,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             } else {
                 binding.modelInputLayout.removeError()
                 data?.vehicleModel =
-                    binding.modelInputLayout.editText.getText().toString().trim()
+                    binding.modelInputLayout.editText.text.toString().trim()
                 true
             }
         } else {
@@ -436,13 +434,13 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
 
-        makeInputCheck = if (binding.makeInputLayout.editText.getText().toString().isNotEmpty()) {
-            if (binding.makeInputLayout.editText.getText().toString().trim().length > 50) {
+        makeInputCheck = if (binding.makeInputLayout.editText.text.toString().isNotEmpty()) {
+            if (binding.makeInputLayout.editText.text.toString().trim().length > 50) {
                 false
             } else if (hasDigits(
-                    binding.makeInputLayout.editText.getText().toString()
+                    binding.makeInputLayout.editText.text.toString()
                 ) || hasSpecialCharacters(
-                    binding.makeInputLayout.editText.getText().toString(),
+                    binding.makeInputLayout.editText.text.toString(),
                     Utils.splCharVehicleMake
                 )
             ) {
@@ -450,7 +448,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             } else {
                 binding.makeInputLayout.removeError()
                 data?.vehicleMake =
-                    binding.makeInputLayout.editText.getText().toString().trim()
+                    binding.makeInputLayout.editText.text.toString().trim()
                 true
             }
         } else {
@@ -461,9 +459,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 .trim().isNotEmpty()
         ) {
             if (hasDigits(
-                    binding.colorInputLayout.editText.getText().toString()
+                    binding.colorInputLayout.editText.text.toString()
                 ) || hasSpecialCharacters(
-                    binding.colorInputLayout.editText.getText().toString().trim(),
+                    binding.colorInputLayout.editText.text.toString().trim(),
                     Utils.splCharVehicleColor
                 )
             ) {
@@ -471,7 +469,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             } else {
                 binding.colorInputLayout.removeError()
                 data?.vehicleColor =
-                    binding.colorInputLayout.editText.getText().toString().trim()
+                    binding.colorInputLayout.editText.text.toString().trim()
                 true
             }
         } else {
@@ -496,7 +494,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             } else {
                 if (makeInputCheck
                     && modelInputCheck
-                    && colourInputCheck && binding.vehiclePlateNumber.getText().toString()
+                    && colourInputCheck && binding.vehiclePlateNumber.text.toString()
                         .isNotEmpty() && binding.typeVehicle.getSelectedDescription().toString()
                         .isNotEmpty() && checkBoxChecked
                 ) {
@@ -546,11 +544,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
             R.id.next_btn -> {
                 data?.vehicleMake =
-                    binding.makeInputLayout.editText.getText().toString().trim()
+                    binding.makeInputLayout.editText.text.toString().trim()
                 data?.vehicleModel =
-                    binding.modelInputLayout.editText.getText().toString().trim()
+                    binding.modelInputLayout.editText.text.toString().trim()
                 data?.vehicleColor =
-                    binding.colorInputLayout.editText.getText().toString().trim()
+                    binding.colorInputLayout.editText.text.toString().trim()
 
                 if (oldPlateNumber.isNotEmpty()) {
                     val index = arguments?.getInt(Constants.VEHICLE_INDEX)
@@ -565,10 +563,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     if (vehicleList?.contains(nonUKVehicleModel) == true) {
                         accountData?.isVehicleAlreadyAddedLocal = true
 
-                        nonUKVehicleModel.let {
+                        nonUKVehicleModel.let { it1 ->
                             bundle.putString(
                                 Constants.PLATE_NUMBER,
-                                it?.plateNumber
+                                it1?.plateNumber
                             )
                         }
                         findNavController().navigate(
@@ -578,7 +576,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     } else {
                         val dataModel = NewVehicleInfoDetails()
                         dataModel.isUK = binding.radioButtonYes.isChecked
-                        dataModel.plateNumber = binding.vehiclePlateNumber.getText().toString()
+                        dataModel.plateNumber = binding.vehiclePlateNumber.text.toString()
                         dataModel.vehicleMake =
                             binding.makeInputLayout.getText().toString()
                         dataModel.vehicleModel =
@@ -653,13 +651,13 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
 
                 }
-                else if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS)) {
-                    var bundle = Bundle()
+                else if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
+                    val bundle = Bundle()
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    if(data?.vehicleType?.toLowerCase().equals("a")){
+                    if(data?.vehicleType?.lowercase().equals("a")){
                         findNavController().navigate(
                             R.id.action_addNewVehicleDetailsFragment_to_vehicleIsExemptFromDartChargesFragment,
                             bundle
