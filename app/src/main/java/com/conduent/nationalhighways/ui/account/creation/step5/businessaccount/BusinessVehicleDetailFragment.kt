@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.account.creation.step5.businessaccount
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,7 +49,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
         Log.d("vehicleData", Gson().toJson(nonUKVehicleModel))
-        if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS)) {
+        if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
             binding.apply {
                 regNum.text = data?.plateNo
                 typeOfVehicle.text = Utils.getVehicleType(data?.vehicleClass.toString())
@@ -97,32 +96,30 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         it.vehicleModel = nonUKVehicleModel?.vehicleModel
                         it.vehicleMake = nonUKVehicleModel?.vehicleMake
                         it.vehicleColor = nonUKVehicleModel?.vehicleColor
-                        val unSettledTrips = it.unSettledTrips?.toDouble()
+                        val unSettledTrips = it.unSettledTrips.toDouble()
                         val chargingRate = it.chargingRate?.toDouble()
                         val customerClassRate = it.customerClassRate?.toDouble()
-                        if (unSettledTrips != null) {
-                            val bundle = Bundle()
-                            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                            bundle.putParcelable(Constants.NAV_DATA_KEY, resource.data)
-                            if (chargingRate != customerClassRate) {
+                        val bundle = Bundle()
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, resource.data)
+                        if (chargingRate != customerClassRate) {
+                            findNavController().navigate(
+                                R.id.action_businessVehicleDetailFragment_to_deletePaymentMethodFragment,
+                                bundle
+                            )
+                        } else {
+                            if (unSettledTrips > 0) {
+
                                 findNavController().navigate(
-                                    R.id.action_businessVehicleDetailFragment_to_deletePaymentMethodFragment,
+                                    R.id.action_businessVehicleDetailFragment_to_pay_for_crossingFragment,
                                     bundle
                                 )
+
                             } else {
-                                if (unSettledTrips > 0) {
-
-                                    findNavController().navigate(
-                                        R.id.action_businessVehicleDetailFragment_to_pay_for_crossingFragment,
-                                        bundle
-                                    )
-
-                                } else {
-                                    findNavController().navigate(
-                                        R.id.action_businessVehicleDetailFragment_to_additional_crossingFragment,
-                                        bundle
-                                    )
-                                }
+                                findNavController().navigate(
+                                    R.id.action_businessVehicleDetailFragment_to_additional_crossingFragment,
+                                    bundle
+                                )
                             }
                         }
 
@@ -171,7 +168,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                         arguments?.getInt(Constants.VEHICLE_INDEX)
                             ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                        if(data?.isExempted?.toLowerCase().equals("y")){
+                        if(data?.isExempted?.lowercase().equals("y")){
                             findNavController().navigate(
                                 R.id.action_businessVehicleDetailFragment_to_vehicleIsExemptFromDartChargesFragment,
                                 bundle
@@ -221,7 +218,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
 
             R.id.notVehicle -> {
-                if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS)) {
+                if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse()?.apply {
                         plateNo=data?.plateNo!!

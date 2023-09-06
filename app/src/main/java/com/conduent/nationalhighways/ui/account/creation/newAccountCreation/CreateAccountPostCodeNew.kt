@@ -135,9 +135,6 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             } else if (finalString.length < 4 || finalString.length > 10) {
                 binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
             } else {
-                Log.e("TAG", "validation: zipCode  "+NewCreateAccountRequestModel.zipCode  )
-                Log.e("TAG", "validation: selectedAddressId  "+NewCreateAccountRequestModel.selectedAddressId  )
-                Log.e("TAG", "validation: navFlowCall  "+navFlowCall  )
                 if (NewCreateAccountRequestModel.zipCode != binding.inputPostCode.getText()
                         .toString()
                 ) {

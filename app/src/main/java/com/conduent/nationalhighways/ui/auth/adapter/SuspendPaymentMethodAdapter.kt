@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.auth.adapter
 
-import android.R.attr.text
 import android.content.Context
 import android.text.Html
 import android.view.LayoutInflater
@@ -9,13 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.ItemPaymentMethodBinding
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 
 
 class SuspendPaymentMethodAdapter(
     private var context: Context,
     var list: MutableList<CardListResponseModel?>?,
-    private val paymentMethod: paymentMethodSelectCallBack
+    private val paymentMethod: paymentMethodSelectCallBack,
+    var navFlow: String
 ) :
     RecyclerView.Adapter<SuspendPaymentMethodAdapter.SuspendedViewHolder>() {
     override fun onCreateViewHolder(
@@ -49,6 +50,13 @@ class SuspendPaymentMethodAdapter(
             )
         })
 
+        if (navFlow== Constants.PAYMENT_TOP_UP){
+            list?.get(position)?.isSelected=true
+
+            holder.binding.radioButtonPaymentMethod.isChecked = list?.get(position)?.primaryCard==true
+        }else{
+        }
+
         holder.binding.tvSelectPaymentMethod.text = htmlText
 
 
@@ -73,8 +81,9 @@ class SuspendPaymentMethodAdapter(
         return list?.size ?: 0
     }
 
-    fun updateList(paymentList: MutableList<CardListResponseModel?>?) {
+    fun updateList(paymentList: MutableList<CardListResponseModel?>?, navFlow: String) {
         this.list = paymentList
+        this.navFlow=navFlow
         notifyDataSetChanged()
 
     }
