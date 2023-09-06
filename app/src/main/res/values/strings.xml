@@ -1109,6 +1109,7 @@
     <string name="str_security_code_must_be_6_characters">Security code must be 6 characters</string>
     <string name="str_security_code_expired_message">Security code has expired</string>
 
+
     <!--Create Password Error Message-->
     <string name="str_enter_your_password">Enter your password</string>
     <string name="password_must_be_8_characters">Password must be 8 characters or more</string>
