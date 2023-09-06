@@ -255,7 +255,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             viewModel.verifyRequestCode(mVerifyRequestOtpReq)
 
                         } else {
-                            showError(binding.root, getString(R.string.error_otp_time_expire))
+                            showError(binding.root, getString(R.string.str_security_code_expired_message))
                         }
                     }
 
