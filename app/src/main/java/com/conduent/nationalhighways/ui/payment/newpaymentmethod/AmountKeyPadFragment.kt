@@ -60,7 +60,7 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
         binding.cmKeypad.currentValue = value.replace("£", "").replace(".00", "")
         binding.cmKeypad.bindView(binding.txtPaymentAmount)
 
-        binding.txtPaymentAmount.text = binding.txtPaymentAmount.text.toString().replace("$", "£")
+        binding.txtPaymentAmount.text = binding.txtPaymentAmount.getText().toString().replace("$", "£")
 
 
         var isPreviousValueCleared = false
@@ -74,7 +74,7 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
 
                 }
                 binding.txtPaymentAmount.text =
-                    binding.txtPaymentAmount.text.toString().replace("$", "£")
+                    binding.txtPaymentAmount.getText().toString().replace("$", "£")
 
             }
 
@@ -92,7 +92,7 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
         when (v?.id) {
 
             R.id.btn_continue_reload -> {
-                val text = binding.txtPaymentAmount.text.toString().trim()
+                val text = binding.txtPaymentAmount.getText().toString().trim()
                 var updatedText: String = ""
                 updatedText = if (text.contains("$")) {
                     text.replace("$", "")

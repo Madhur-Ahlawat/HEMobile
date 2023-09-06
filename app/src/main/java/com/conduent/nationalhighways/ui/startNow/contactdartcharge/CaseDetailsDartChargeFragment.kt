@@ -64,8 +64,8 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
     private fun checkButton() {
         binding.apply {
             model = AccountTypeSelectionModel(
-                binding.etCaseNumber.text.toString().trim().isNotEmpty() &&
-                        binding.etLastName.text.toString().trim().isNotEmpty()
+                binding.etCaseNumber.getText().toString().trim().isNotEmpty() &&
+                        binding.etLastName.getText().toString().trim().isNotEmpty()
             )
         }
     }
@@ -88,8 +88,8 @@ class CaseDetailsDartChargeFragment : BaseFragment<FragmentCaseDetailsDartCharge
                     )
 
                     val bundle = Bundle().apply {
-                        putString(Constants.CASE_NUMBER, binding.etCaseNumber.text.toString().trim())
-                        putString(Constants.LAST_NAME, binding.etLastName.text.toString().trim())
+                        putString(Constants.CASE_NUMBER, binding.etCaseNumber.getText().toString().trim())
+                        putString(Constants.LAST_NAME, binding.etLastName.getText().toString().trim())
                         putParcelable(Constants.CASES_PROVIDE_DETAILS_KEY,arguments?.getParcelable(Constants.CASES_PROVIDE_DETAILS_KEY))
                     }
                     findNavController().navigate(R.id.action_caseDetailsDartChargeFragment_to_caseHistoryDartChargeFragment, bundle)

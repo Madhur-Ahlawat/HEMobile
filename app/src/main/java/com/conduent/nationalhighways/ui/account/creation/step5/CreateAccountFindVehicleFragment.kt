@@ -110,13 +110,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             binding.editNumberPlate.removeError()
         } else {
             if (Utils.countOccurenceOfChar(
-                    binding.editNumberPlate.editText.text.toString().trim(), '-'
-                ) > 1 || binding.editNumberPlate.editText.text.toString().trim().contains(
+                    binding.editNumberPlate.editText.getText().toString().trim(), '-'
+                ) > 1 || binding.editNumberPlate.editText.getText().toString().trim().contains(
                     Utils.TWO_OR_MORE_HYPEN
-                ) || (binding.editNumberPlate.editText.text.toString().trim().last()
+                ) || (binding.editNumberPlate.editText.getText().toString().trim().last()
                     .toString() == "." || binding.editNumberPlate.editText.text
                     .toString().first().toString() == ".")
-                || (binding.editNumberPlate.editText.text.toString().trim().last().toString() == "-" || binding.editNumberPlate.editText.text.toString().first()
+                || (binding.editNumberPlate.editText.getText().toString().trim().last().toString() == "-" || binding.editNumberPlate.editText.getText().toString().first()
                     .toString() == "-")
             ) {
                 binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")

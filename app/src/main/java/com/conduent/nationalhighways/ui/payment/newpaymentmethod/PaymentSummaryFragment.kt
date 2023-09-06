@@ -31,6 +31,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     private var crossingsList: MutableList<String>? = mutableListOf()
     private var totalAmount: Double? = 0.00
     private lateinit var vehicleAdapter: VehicleListAdapter
+    private var data: CrossingDetailsModelsResponse? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -39,23 +40,8 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         FragmentPaymentSummaryBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                    CrossingDetailsModelsResponse::class.java
-                ) != null
-            ) {
-                navData = arguments?.getParcelable(
-
-                    Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse::class.java
-                )
-            }
-        } else {
-            if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
-                navData = arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                )
-            }
+        navData?.let {
+            data = it as CrossingDetailsModelsResponse
         }
         setData()
         setClickListeners()
@@ -68,10 +54,10 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     private fun setData() {
         binding?.apply {
-            additionalCrossingsCount = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
-            val charge = (navData as CrossingDetailsModelsResponse).chargingRate?.toDouble()
-            val unSettledTrips = (navData as CrossingDetailsModelsResponse).unSettledTrips
-            vehicleRegisration.text = (navData as CrossingDetailsModelsResponse).plateNo
+            additionalCrossingsCount = data?.additionalCrossingCount
+            val charge = data?.chargingRate?.toDouble()
+            val unSettledTrips = data?.unSettledTrips
+            vehicleRegisration.text = data?.plateNo
             recentCrossings.text =
                 unSettledTrips.toString()
             creditAdditionalCrossings.text =
@@ -86,7 +72,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                 additionalCrossingsAmount = charge!! * additionalCrossingsCount!!
             }
             val total = recentCrossingsAmount + additionalCrossingsAmount
-            (navData as CrossingDetailsModelsResponse).totalAmount=total
+            data?.totalAmount=total
             crossingsList = emptyList<String>().toMutableList()
 
 //            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
@@ -139,7 +125,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                 val bundle = Bundle()
                 bundle.putDouble(
                     Constants.DATA,
-                    (navData as CrossingDetailsModelsResponse).totalAmount ?: 0.0
+                    data?.totalAmount ?: 0.0
                 )
                 bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
                 bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
@@ -172,7 +158,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             }
 
             R.id.editPaymentAmount -> {
-                if ((navData as CrossingDetailsModelsResponse).unSettledTrips > 0) {
+                if (data?.unSettledTrips!! > 0) {
                     findNavController().navigate(
                         R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
                         enableEditMode()
@@ -193,7 +179,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
         bundle.putString(
             PLATE_NUMBER,
-            (navData as CrossingDetailsModelsResponse).plateNo?.trim()
+            data?.plateNo?.trim()
         )
         bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
         return bundle

@@ -145,9 +145,9 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             R.id.btn_submit -> {
                 hideKeyboard()
                 val validation = viewModel.checkPassword(
-                    newPassword = binding.edtNewPassword.editText.text.toString().trim(),
-                    currentPassword = binding.edtCurrentPassword.editText.text.toString().trim(),
-                    confirmPassword = binding.edtConfirmPassword.editText.text.toString().trim()
+                    newPassword = binding.edtNewPassword.editText.getText().toString().trim(),
+                    currentPassword = binding.edtCurrentPassword.editText.getText().toString().trim(),
+                    confirmPassword = binding.edtConfirmPassword.editText.getText().toString().trim()
                 )
                 if (validation.first) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)

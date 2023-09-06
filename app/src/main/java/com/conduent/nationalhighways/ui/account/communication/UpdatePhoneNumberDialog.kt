@@ -84,7 +84,7 @@ class UpdatePhoneNumberDialog : DialogFragment() {
         setBtnNormal()
 
 //        dataBinding.addVrmInput.addTextChangedListener {
-//            if (dataBinding.addVrmInput.text.toString().isNotEmpty()) {
+//            if (dataBinding.addVrmInput.getText().toString().isNotEmpty()) {
 //                setBtnActivated()
 //
 //            } else {

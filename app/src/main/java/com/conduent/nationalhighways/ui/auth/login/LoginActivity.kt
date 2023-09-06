@@ -242,36 +242,36 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
     private fun isEnable() {
-        emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
-            if (binding.edtEmail.editText.text.toString().trim().length < 8) {
+        emailCheck = if (binding.edtEmail.editText.getText().toString().trim().isNotEmpty()) {
+            if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
                 false
             } else {
-                if (binding.edtEmail.editText.text.toString().length > 100) {
+                if (binding.edtEmail.editText.getText().toString().length > 100) {
                     binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                     false
                 } else {
                     if (!Utils.isLastCharOfStringACharacter(
-                            binding.edtEmail.editText.text.toString().trim()
+                            binding.edtEmail.editText.getText().toString().trim()
                         ) || Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.text.toString().trim(), '@'
-                        ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
+                            binding.edtEmail.editText.getText().toString().trim(), '@'
+                        ) > 1 || binding.edtEmail.editText.getText().toString().trim().contains(
                             Utils.TWO_OR_MORE_DOTS
-                        ) || (binding.edtEmail.editText.text.toString().trim().last()
+                        ) || (binding.edtEmail.editText.getText().toString().trim().last()
                             .toString() == "." || binding.edtEmail.editText.text
                             .toString().first().toString() == ".")
-                        || (binding.edtEmail.editText.text.toString().trim().last().toString() == "-" || binding.edtEmail.editText.text.toString().first()
+                        || (binding.edtEmail.editText.getText().toString().trim().last().toString() == "-" || binding.edtEmail.editText.getText().toString().first()
                             .toString() == "-")
                         || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.text.toString().trim(), '.'
+                            binding.edtEmail.editText.getText().toString().trim(), '.'
                         ) < 1) || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.text.toString().trim(), '@'
+                            binding.edtEmail.editText.getText().toString().trim(), '@'
                         ) < 1)
                     ) {
                         binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                         false
                     } else {
                         if (Utils.hasSpecialCharacters(
-                                binding.edtEmail.editText.text.toString().trim(),
+                                binding.edtEmail.editText.getText().toString().trim(),
                                 Utils.splCharEmailCode
                             )
                         ) {
@@ -311,7 +311,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                                 true
                             }
                         } else if (Utils.countOccurenceOfChar(
-                                binding.edtEmail.editText.text.toString().trim(), '@'
+                                binding.edtEmail.editText.getText().toString().trim(), '@'
                             ) !in (1..1)
                         ) {
                             binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))

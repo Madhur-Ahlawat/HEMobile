@@ -68,7 +68,7 @@ class FragmentProfileConfirmEmailSecurityCode : BaseFragment<FragmentProfileConf
         binding.apply {
             enable = false
             etCode.onTextChanged {
-                enable = etCode.text.toString().trim().isNotEmpty() && etCode.text.toString()
+                enable = etCode.getText().toString().trim().isNotEmpty() && etCode.text.toString()
                     .trim().length > 5
             }
 //            etCode.editText.addTextChangedListener {

@@ -330,11 +330,11 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
 
     private fun clickApplyBtn() {
         if (binding.edtCaseNumber.text?.isNotEmpty() == true) {
-            dateRangeModel.caseNumber = binding.edtCaseNumber.text.toString().trim()
+            dateRangeModel.caseNumber = binding.edtCaseNumber.getText().toString().trim()
         }
         if (binding.rbSpecificDay.isChecked) {
             if (binding.edSpecificDay.text?.isNotEmpty() == true) {
-                val date = binding.edSpecificDay.text.toString().trim()
+                val date = binding.edSpecificDay.getText().toString().trim()
                 dateRangeModel.startDate = DateUtils.convertDateToMonth(date)
                 dateRangeModel.endDate = DateUtils.convertDateToMonth(date)
             }
@@ -343,8 +343,8 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
             if (binding.edFrom.text?.isNotEmpty() == true &&
                 binding.edTo.text?.isNotEmpty() == true
             ) {
-                val startDate = binding.edFrom.text.toString().trim()
-                val endDate = binding.edTo.text.toString().trim()
+                val startDate = binding.edFrom.getText().toString().trim()
+                val endDate = binding.edTo.getText().toString().trim()
                 dateRangeModel.startDate = DateUtils.convertDateToMonth(startDate)
                 dateRangeModel.endDate = DateUtils.convertDateToMonth(endDate)
             }

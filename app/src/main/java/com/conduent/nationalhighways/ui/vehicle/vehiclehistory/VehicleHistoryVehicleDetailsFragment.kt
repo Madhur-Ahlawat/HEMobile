@@ -62,7 +62,7 @@ class VehicleHistoryVehicleDetailsFragment :
                 mVehicleDetails?.let {
                     val request = it.apply {
                         newPlateInfo = plateInfo
-                        newPlateInfo?.vehicleComments = binding.edtNote.text.toString().trim()
+                        newPlateInfo?.vehicleComments = binding.edtNote.getText().toString().trim()
                         vehicleInfo?.vehicleClassDesc =
                             VehicleClassTypeConverter.toClassCode(vehicleInfo?.vehicleClassDesc)
                     }
@@ -114,7 +114,7 @@ class VehicleHistoryVehicleDetailsFragment :
                 requireContext().showToast("Vehicle updated successfully")
                 setBtnDisabled()
                 mVehicleDetails?.let {
-                    it.plateInfo?.vehicleComments = binding.edtNote.text.toString().trim()
+                    it.plateInfo?.vehicleComments = binding.edtNote.getText().toString().trim()
                 }
             }
             is Resource.DataError -> {

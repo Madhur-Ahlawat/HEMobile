@@ -385,6 +385,9 @@
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
         <action
+            android:id="@+id/action_addNewVehicleDetailsFragment_to_vehicleIsExemptFromDartChargesFragment"
+            app:destination="@id/vehicleIsExemptFromDartChargesFragment" />
+        <action
             android:id="@+id/action_addVehicleDetailsFragment_to_yourVehicleFragment"
             app:destination="@id/yourVehicleFragment" />
         <action
