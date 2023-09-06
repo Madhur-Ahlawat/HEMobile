@@ -467,12 +467,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode?.toString().equals("2051")) {
-                    binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
-                } else {
-                    binding.edtOtp.setErrorText(status.errorMsg)
-
-                }
                 Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
                 AdobeAnalytics.setActionTrack1(
@@ -495,6 +489,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
                     5260 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
+                    }
+                    else->{
+                        binding.edtOtp.setErrorText(status.errorMsg)
                     }
                 }
             }
