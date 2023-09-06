@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -42,7 +43,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         var dateRangeModel: PaymentDateRangeModel? = null
         var accountDetailsData: AccountResponse? = null
         var crossing: TransactionData? = null
+        var checkedCrossing: CheckedCrossingRecentTransactionsResponseModelItem? = null
         var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
+        var paymentHistoryListDataCheckedCrossings: MutableList<CheckedCrossingRecentTransactionsResponseModelItem?> = ArrayList()
     }
 
     fun showHideToolbar(isShown: Boolean) {

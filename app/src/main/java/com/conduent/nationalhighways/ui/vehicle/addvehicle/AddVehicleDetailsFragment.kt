@@ -712,8 +712,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
                 Constants.TRANSFER_CROSSINGS -> {
                     data?.apply {
-                        plateNumber = newVehicleInfoDetails.plateNumber
-                        customerClass = newVehicleInfoDetails.vehicleClass
+                        plateNo = newVehicleInfoDetails.plateNumber.toString()
+                        vehicleClass = newVehicleInfoDetails.vehicleClass
                         plateCountry = "UK"
                         vehicleMake = newVehicleInfoDetails.vehicleMake
                         vehicleModel = newVehicleInfoDetails.vehicleModel

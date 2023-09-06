@@ -27,7 +27,6 @@ import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
-import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -74,7 +73,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
 
     private fun setData() {
         binding?.apply {
-            vehicleRegisration.text = data?.plateNumber
+            vehicleRegisration.text = data?.plateNo
             creditRemaining.text =
                 data?.unusedTrip
             creditAdditionalCrossings.text = convertDateForTransferCrossingsScreen(data?.expirationDate)
@@ -92,8 +91,6 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         binding?.apply {
             btnContinue.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
             btnCancel.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
-            editCreditRemaining.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
-            editCreditWillExpireOn.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
 
         }
     }
@@ -116,8 +113,8 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
             when (status) {
                 is Resource.Success -> {
                     var bundle=Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                    bundle.putParcelable(Constants.NAV_DATA_KEY,data)
+                    bundle.putString(NAV_FLOW_KEY,navFlowCall)
+                    bundle.putParcelable(NAV_DATA_KEY,data)
                     findNavController().clearBackStack(R.id.landingFragment)
                     findNavController().navigate(
                         R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment,
@@ -125,7 +122,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                     )
                 }
                 is Resource.DataError -> {
-                    if(status.errorModel?.status?.toInt()==500){
+                    if(status.errorModel?.status==500){
                         var bundle = Bundle()
                         bundle.putParcelable(Constants.NAV_DATA_KEY,data)
                         requireActivity().openActivityWithData(MakeOffPaymentActivity::class.java,bundle)
@@ -145,17 +142,32 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         when (v?.id) {
 
             R.id.btnContinue -> {
-                    val bundle = Bundle()
-                    bundle.putDouble(Constants.DATA, data?.totalAmount?:0.0)
-                    bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-                    bundle.putParcelable(NAV_DATA_KEY, data)
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                isClicked = true
-                checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = data?.accountNo, plateCountry = data?.plateCountry, plateNumber = data?.plateNumber, transferInfo = TransferInfo(tripCount = data?.unusedTrip, plateNumber = data?.plateNumber,plateState = "HE", plateCountry = data?.plateCountry, vehicleClass = data?.vehicleClass, vehicleMake = data?.vehicleMake, vehicleModel = data?.vehicleModel, vehicleYear = "2023")))
+                val bundle = Bundle()
+                bundle.putDouble(Constants.DATA, data?.totalAmount?:0.0)
+                bundle.putString(NAV_FLOW_KEY, navFlowCall)
+                bundle.putParcelable(NAV_DATA_KEY, data)
+                if(data?.vehicleClass?.equals("A",true) == true){
+                    findNavController().navigate(
+                        R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_vehicleIsExemptFromDartChargesFragment,
+                        bundle
+                    )
+                }
+                else if(data?.vehicleClass?.equals(data?.vehicleClassBalanceTransfer) == false){
+                    findNavController().navigate(
+                        R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_vehicleDoesNotMatchCurrentVehicleFragment,
+                        bundle
+                    )
+                }
+                else{
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    isClicked = true
+                    checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = data?.accountNo, plateCountry = data?.plateCountry, plateNumber = data?.plateNumberToTransfer, transferInfo = TransferInfo(tripCount = data?.unusedTrip, plateNumber = data?.plateNo,plateState = "HE", plateCountry = data?.plateCountry, vehicleClass = data?.vehicleClassBalanceTransfer, vehicleMake = data?.vehicleMake, vehicleModel = data?.vehicleModel, vehicleYear = "2023")))
+                }
+
             }
             R.id.btnCancel -> {
                 val bundle = Bundle()
-                bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
+                bundle.putString(NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(NAV_DATA_KEY, data)
                 findNavController().popBackStack(R.id.addNewVehicleDetailsFragment,false)
 //                findNavController().navigate(
@@ -164,28 +176,13 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
 //                )
             }
 
-            R.id.editCreditRemaining -> {
-                findNavController().navigate(
-                    R.id.action_crossingCheckAnswersFragment_to_findYourVehicleFragment,
-                    enableEditMode()
-                )
-            }
-
-            R.id.editCreditWillExpireOn -> {
-                findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
-                    enableEditMode()
-                )
-
-            }
-
         }
     }
 
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
-        bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-        bundle.putString(PLATE_NUMBER, data?.plateNumber?.trim())
+        bundle.putString(NAV_FLOW_KEY, navFlowCall)
+        bundle.putString(PLATE_NUMBER, data?.plateNo?.trim())
         bundle.putParcelable(NAV_DATA_KEY, data)
         return bundle
     }

@@ -53,8 +53,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 //        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.editReferenceNumber.setText("1-97832991")
-        binding.editNumberPlate.setText("DF4654")
+        binding.editReferenceNumber.setText("1-97969061")
+        binding.editNumberPlate.setText("VBNM")
         isEnable()
     }
 
@@ -112,16 +112,15 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                         putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         var crossingDetailsModelsResponse=CrossingDetailsModelsResponse().apply {
                             referenceNumber = binding.editReferenceNumber.getText().toString()
-                            plateNumber = binding.editNumberPlate.getText().toString()
                             accountActStatus= dataObj?.get(0)?.accountActStatus!!
                             accountBalance= dataObj?.get(0)?.accountBalance!!
                             accountNo= dataObj?.get(0)?.accountNo!!
                             accountTypeCd=dataObj?.get(0)?.accountStatusCd!!
                             expirationDate=dataObj?.get(0)?.expirationDate!!
                             plateCountry=dataObj?.get(0)?.plateCountry
-                            plateNo=dataObj?.get(0)?.plateNo!!
+                            plateNumberToTransfer=dataObj?.get(0)?.plateNo!!
                             unusedTrip=dataObj?.get(0)?.unusedTrip!!
-                            vehicleClass=dataObj?.get(0)?.vehicleClass
+                            vehicleClassBalanceTransfer=dataObj?.get(0)?.vehicleClass
                         }
                         putParcelable(Constants.NAV_DATA_KEY, crossingDetailsModelsResponse)
                     }

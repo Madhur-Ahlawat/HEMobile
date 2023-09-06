@@ -309,6 +309,10 @@ interface ApiService {
     suspend fun getPaymentHistoryData(
         @Body request: AccountPaymentHistoryRequest?
     ): Response<AccountPaymentHistoryResponse?>?
+    @POST(PAYMENT_HISTORY_TRANSACTION_LIST_CHECK_CROSSINGS)
+    suspend fun getTransactionsListCheckCrossings(
+        @Body request: CheckedCrossingTransactionsRequestModel?
+    ): Response<CheckedCrossingRecentTransactionsResponseModel?>?
 
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData(): Response<AccountResponse?>?

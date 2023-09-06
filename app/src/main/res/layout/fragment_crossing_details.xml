@@ -179,7 +179,15 @@
 
             </androidx.cardview.widget.CardView>
 
-
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15dp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:id="@+id/errorTxt"
+                android:text="ssssss"
+                android:textColor="@color/red_color"
+                android:textSize="@dimen/font_16sp" />
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/vehicleHeading"
                 android:layout_width="match_parent"
@@ -206,30 +214,22 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_recent_tansactions" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/tvNoHistory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:elevation="1dp"
-                    android:text="@string/no_payment_history"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/no_crossings_have_been_made_against_this_payment_reference"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_18sp"
+                    android:textSize="@dimen/_14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:visibility="gone"
-                android:id="@+id/errorTxt"
-                android:textColor="@color/red_color"
-                android:textSize="@dimen/font_16sp" />
+
 
 
             <com.conduent.nationalhighways.utils.widgets.NHButton

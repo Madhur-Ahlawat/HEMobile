@@ -71,7 +71,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         } else {
-            if (responseModel?.phone != null) {
+            if (!responseModel?.phone.isNullOrEmpty() && !responseModel?.phone.equals("null",true)) {
                 binding.radioSms.text = getString(R.string.str_radio_sms, responseModel?.phone)
                 binding.radioSms.visibility = View.VISIBLE
             } else {
@@ -222,10 +222,12 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 } else {
                     responseModel = status.data
                     binding.root.post {
-                        binding.radioSms.text =
-                            getString(R.string.str_radio_sms, status.data?.phone)
-
-
+                        if (!status.data?.phone.isNullOrEmpty() && !status.data?.phone.equals("null",true)) {
+                            binding.radioSms.text = getString(R.string.str_radio_sms, status.data?.phone)
+                            binding.radioSms.visibility = View.VISIBLE
+                        } else {
+                            binding.radioSms.visibility = View.GONE
+                        }
 
                         binding.radioEmail.text =
                             getString(R.string.str_radio_email, status.data?.email)

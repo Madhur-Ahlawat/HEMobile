@@ -51,7 +51,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         Log.d("vehicleData", Gson().toJson(nonUKVehicleModel))
         if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
             binding.apply {
-                regNum.text = data?.plateNumber
+                regNum.text = data?.plateNo
                 typeOfVehicle.text = Utils.getVehicleType(data?.vehicleClass.toString())
                 vehicleModel.text = data?.vehicleModel
                 vehicleMake.text = data?.vehicleMake
@@ -220,9 +220,8 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             R.id.notVehicle -> {
                 if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse().apply {
-                        plateNumber=data?.plateNumber
-                        plateNo=data?.plateNumber!!
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse()?.apply {
+                        plateNo=data?.plateNo!!
                         expirationDate= data?.expirationDate!!
                         unusedTrip=data?.unusedTrip!!
                     })

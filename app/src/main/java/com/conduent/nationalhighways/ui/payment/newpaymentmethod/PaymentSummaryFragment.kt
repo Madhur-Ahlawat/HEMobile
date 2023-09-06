@@ -71,7 +71,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             additionalCrossingsCount = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
             val charge = (navData as CrossingDetailsModelsResponse).chargingRate?.toDouble()
             val unSettledTrips = (navData as CrossingDetailsModelsResponse).unSettledTrips
-            vehicleRegisration.text = (navData as CrossingDetailsModelsResponse).plateNumber
+            vehicleRegisration.text = (navData as CrossingDetailsModelsResponse).plateNo
             recentCrossings.text =
                 unSettledTrips.toString()
             creditAdditionalCrossings.text =
@@ -193,7 +193,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
         bundle.putString(
             PLATE_NUMBER,
-            (navData as CrossingDetailsModelsResponse).plateNumber?.trim()
+            (navData as CrossingDetailsModelsResponse).plateNo?.trim()
         )
         bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
         return bundle

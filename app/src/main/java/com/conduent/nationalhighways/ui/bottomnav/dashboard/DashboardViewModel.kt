@@ -10,6 +10,8 @@ import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.ThresholdAmountApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
+import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModel
+import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingTransactionsRequestModel
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
@@ -60,6 +62,10 @@ class DashboardViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val accountPaymentMutLiveData =
         MutableLiveData<Resource<AccountPaymentHistoryResponse?>?>()
+    val paymentHistoryLiveDataCheckedCrossing: LiveData<Resource<CheckedCrossingRecentTransactionsResponseModel?>?> get() = accountPaymentMutLiveDataCheckedCrossing
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val accountPaymentMutLiveDataCheckedCrossing =
+        MutableLiveData<Resource<CheckedCrossingRecentTransactionsResponseModel?>?>()
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _alertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
@@ -75,6 +81,21 @@ class DashboardViewModel @Inject constructor(
                 accountPaymentMutLiveData.postValue(
                     ResponseHandler.success(
                         repository.getAccountPayment(
+                            request
+                        ), errorManager
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                accountPaymentMutLiveData.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+    fun paymentHistoryDetailsCheckCrossings(request: CheckedCrossingTransactionsRequestModel) {
+        viewModelScope.launch {
+            try {
+                accountPaymentMutLiveDataCheckedCrossing.postValue(
+                    ResponseHandler.success(
+                        repository.getAccountPaymentCheckCrossings(
                             request
                         ), errorManager
                     )

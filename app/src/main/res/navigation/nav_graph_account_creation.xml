@@ -350,6 +350,25 @@
         android:label="confirmNewVehicleDetailsCheckPaidCrossingsFragment"
         tools:layout="@layout/fragment_confirm_new_vehicle_details_check_paid_crossings_fragment">
         <action
+            android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_vehicleIsExemptFromDartChargesFragment"
+            app:destination="@+id/vehicleIsExemptFromDartChargesFragment" />
+        <action
+            android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_vehicleDoesNotMatchCurrentVehicleFragment"
+            app:destination="@+id/VehicleDoesNotMatchCurrentVehicleFragment" />
+        <action
+            android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
+            app:destination="@id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment" />
+        <action
+            android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_addNewVehicleDetailsFragment"
+            app:destination="@id/addNewVehicleDetailsFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/vehicleDoesNotMatchCurrentVehicleFragment"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.VehicleDoesNotMatchCurrentVehicleFragment"
+        android:label="VehicleDoesNotMatchCurrentVehicleFragment"
+        tools:layout="@layout/fragment_vehicle_does_not_match">
+        <action
             android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
             app:destination="@id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment" />
         <action
@@ -361,9 +380,7 @@
         android:id="@+id/addNewVehicleDetailsFragment"
         android:name="com.conduent.nationalhighways.ui.vehicle.addvehicle.AddVehicleDetailsFragment"
         tools:layout="@layout/fragment_new_add_vehicle_details">
-        <action
-            android:id="@+id/action_addNewVehicleDetailsFragment_to_vehicleIsExemptFromDartChargesFragment"
-            app:destination="@+id/vehicleIsExemptFromDartChargesFragment" />
+
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
@@ -835,7 +852,16 @@
 
 
     </fragment>
-
+    <fragment
+        android:id="@+id/tollDetails"
+        android:name="com.conduent.nationalhighways.ui.transactions.TollDetailsFragment"
+        android:label="Transaction Details"
+        tools:layout="@layout/fragment_toll_details" />
+    <fragment
+        android:id="@+id/topUpDetails"
+        android:name="com.conduent.nationalhighways.ui.transactions.TopUpDetailsFragment"
+        android:label="Transaction Details"
+        tools:layout="@layout/fragment_toll_details" />
     <fragment
         android:id="@+id/crossing_details"
         android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CrossingDetailsFragment"

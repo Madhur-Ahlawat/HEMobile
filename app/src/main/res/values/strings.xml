@@ -1108,7 +1108,6 @@
     <string name="str_code_empty">Enter the 6-digit security code</string>
     <string name="str_security_code_must_be_6_characters">Security code must be 6 characters</string>
     <string name="str_security_code_expired_message">Security code has expired</string>
-    <string name="str_security_code_not_correct">Security code must contain correct numbers </string>
 
     <!--Create Password Error Message-->
     <string name="str_enter_your_password">Enter your password</string>
@@ -1190,7 +1189,7 @@
     <string name="card_number_must_be_16_digits_or_more">Card number must be 16 digits or more</string>
     <string name="expiry_date_cannot_be_in_the_past">Expiry date cannot be in the past</string>
     <string name="str_your_pay_as_you_go">Your pay-as-you-go payment will get taken each time you make a crossing.</string>
-    <string name="str_radio_sms">Text %s\n Message and data rates may apply</string>
+    <string name="str_radio_sms">Text %s\n <i>Message and data rates may apply</i></string>
     <string name="str_radio_email">Email %s</string>
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
     <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
@@ -1424,7 +1423,7 @@
     <string name="back_to_main_menu">BACK TO MAIN MENU</string>
     <string name="transfer_remaining_credit">TRANSFER REMAINING CREDIT</string>
     <string name="your_crossing_details">Your crossing details</string>
-    <string name="credit_remaining">Credit remaining</string>
+    <string name="credit_remaining">Credits remaining</string>
     <string name="credit_expiry_date">Credit expiry date</string>
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
@@ -1436,6 +1435,7 @@
     <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
     <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
     <string name="you_have_no_credit_left_you_must_pay_for_any_further_crossings_you_intend_to_make">You have no credit left. You must pay for any further crossings you intend to make.</string>
+    <string name="no_crossings_have_been_made_against_this_payment_reference">No crossings have been made against this payment reference.</string>
     <string name="str_terms_condition">Terms &amp; Conditions</string>
     <string name="str_remove_payment_method">Remove Payment Method</string>
     <string name="str_are_you_sure_you_want_to_remove_payment_method">Are you sure you want to remove\n payment method %s with expiry date %s?</string>
