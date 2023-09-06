@@ -71,7 +71,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         } else {
-            if (responseModel?.phone != null) {
+            if (responseModel?.phone != null && !responseModel?.phone.isNullOrEmpty() && !responseModel?.phone.equals("null",true)) {
                 binding.radioSms.text = getString(R.string.str_radio_sms, responseModel?.phone)
                 binding.radioSms.visibility = View.VISIBLE
             } else {

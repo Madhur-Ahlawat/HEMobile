@@ -378,7 +378,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                     else -> {
                         binding.messageReceivedTxt.text =
-                            getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue + "."
+                            getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
+                                data?.optionValue.toString()) + "."
 
                     }
                 }
@@ -394,7 +395,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 } else {
                     binding.messageReceivedTxt.text =
-                        getString(R.string.wehavesentanemail) + " " + data!!.optionValue
+                        getString(R.string.wehavesentanemail) + " " + Utils.maskEmail(data?.optionValue.toString())
 
                 }
             }
@@ -487,8 +488,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 when (status.errorModel?.errorCode) {
                     2051 -> {
-                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_not_correct))
-
+                        binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
+                    }
+                    2050 -> {
+                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
+                    }
+                    5260 -> {
+                        binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                     }
                 }
             }
@@ -547,7 +553,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             is Resource.DataError -> {
                 when (resource.errorModel?.errorCode) {
                     1 -> {
-                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_not_correct))
+                        binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
 
                     }
 

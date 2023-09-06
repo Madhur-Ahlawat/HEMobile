@@ -53,8 +53,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 //        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.editReferenceNumber.setText("1-97286812")
-        binding.editNumberPlate.setText("ER54UMK")
+        binding.editReferenceNumber.setText("1-97969061")
+        binding.editNumberPlate.setText("VBNM")
         isEnable()
     }
 

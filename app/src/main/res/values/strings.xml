@@ -1108,7 +1108,6 @@
     <string name="str_code_empty">Enter the 6-digit security code</string>
     <string name="str_security_code_must_be_6_characters">Security code must be 6 characters</string>
     <string name="str_security_code_expired_message">Security code has expired</string>
-    <string name="str_security_code_not_correct">Security code must contain correct numbers </string>
 
     <!--Create Password Error Message-->
     <string name="str_enter_your_password">Enter your password</string>
