@@ -52,11 +52,13 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
             binding?.apply {
                 tvStatus.gone()
                 tvStatusValue.gone()
-                crossingAmount.text = checkedCrossing?.balance
+                tvAccountNumberHeading.gone()
+                tvAccountNumberValue.gone()
+                crossingAmount.text = checkedCrossing?.amount
                 tvAccountNumberValue.text = accountDetailsData?.accountInformation?.number
-                tvVehicleRegistrationValue.text = dateRangeModel?.vehicleNumber
+                tvVehicleRegistrationValue.text = checkedCrossing?.plateNumber
                 tvTimeValue.text = checkedCrossing?.exitTime
-                tvLocationValue.text = checkedCrossing?.entryPlazaName
+                tvLocationValue.text = checkedCrossing?.exitPlazaName
             }
 
         }
@@ -64,7 +66,9 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
             binding?.apply {
                 tvStatus.visible()
                 tvStatusValue.visible()
-                crossingAmount.text = crossing?.balance
+                tvAccountNumberHeading.visible()
+                tvAccountNumberValue.visible()
+                crossingAmount.text = crossing?.amount
                 tvAccountNumberValue.text = accountDetailsData?.accountInformation?.number
                 tvVehicleRegistrationValue.text = dateRangeModel?.vehicleNumber
                 tvTimeValue.text = crossing?.exitTime

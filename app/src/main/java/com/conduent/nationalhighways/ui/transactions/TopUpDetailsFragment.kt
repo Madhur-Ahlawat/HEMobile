@@ -62,7 +62,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
                 tvPaymentMethodValue.gone()
                 tvLastFourDigitsOfTheCard.gone()
                 tvFourDigitsOfTheCardValue.gone()
-                crossingAmount.text = checkedCrossing?.balance
+                crossingAmount.text = checkedCrossing?.amount
                 tvPaymentDateValue.text = checkedCrossing?.entryDate
                 tvPaymentTimeValue.text = checkedCrossing?.exitTime
                 tvTypeOfPaymentValue.text = checkedCrossing?.activity

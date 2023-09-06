@@ -113,8 +113,8 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
             when (status) {
                 is Resource.Success -> {
                     var bundle=Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                    bundle.putParcelable(Constants.NAV_DATA_KEY,data)
+                    bundle.putString(NAV_FLOW_KEY,navFlowCall)
+                    bundle.putParcelable(NAV_DATA_KEY,data)
                     findNavController().clearBackStack(R.id.landingFragment)
                     findNavController().navigate(
                         R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment,
@@ -122,7 +122,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                     )
                 }
                 is Resource.DataError -> {
-                    if(status.errorModel?.status?.toInt()==500){
+                    if(status.errorModel?.status==500){
                         var bundle = Bundle()
                         bundle.putParcelable(Constants.NAV_DATA_KEY,data)
                         requireActivity().openActivityWithData(MakeOffPaymentActivity::class.java,bundle)

@@ -180,7 +180,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         onBind = { recentTransactionItem, viewDataBinding, _ ->
             with(viewDataBinding as ItemRecentTansactionsCheckedCrossingsBinding) {
                 viewDataBinding.apply {
-                    valueCurrentBalance.text = recentTransactionItem.balance
+                    tvDate.text = recentTransactionItem.entryDate+" "+recentTransactionItem.exitTime
                     tvTransactionType.text =
                         recentTransactionItem.activity?.substring(0, 1)!!.toUpperCase().plus(
                             recentTransactionItem.activity?.substring(
@@ -192,14 +192,10 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
                         indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
                         topup = "+" + recentTransactionItem.amount
-                        valueTopUpAmount.text = topup
-                        valueTopUpAmount.setTextColor(resources.getColor(R.color.green_status))
                     } else {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
                         indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_car_grey))
                         topup = "-" + recentTransactionItem.amount
-                        valueTopUpAmount.text = topup
-                        valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
                     }
                     root.setOnClickListener {
                         HomeActivityMain.checkedCrossing = recentTransactionItem
