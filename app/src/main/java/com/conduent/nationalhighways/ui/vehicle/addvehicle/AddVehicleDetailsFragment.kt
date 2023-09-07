@@ -667,6 +667,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             R.id.action_addNewVehicleDetailsFragment_to_vehicleIsExemptFromDartChargesFragment,
                             bundle
                         )
+
                     }
                     else{
                         findNavController().navigate(
