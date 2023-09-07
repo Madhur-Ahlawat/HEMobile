@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav
 
-import android.os.Bundle
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
@@ -13,7 +11,6 @@ import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
-import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
 import com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
@@ -60,7 +57,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     fun viewAllTransactions(){
         dataBinding?.apply {
-            bottomNavigationView?.setActiveNavigationIndex(1)
+            bottomNavigationView.setActiveNavigationIndex(1)
         }
     }
 
@@ -69,30 +66,24 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
+
         dataBinding?.titleTxt?.text = getString(R.string.dashboard)
         dataBinding?.idToolBarLyt?.gone()
         dataBinding?.backButton?.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-        navController.addOnDestinationChangedListener(object:NavController.OnDestinationChangedListener{
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-                if(destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment){
-                    dataBinding?.idToolBarLyt?.visible()
-                    dataBinding?.titleTxt?.text =
-                        getString(R.string.str_close_account)
-                }
-                if(destination.id == R.id.changePasswordProfile || destination.id == R.id.changePasswordSuccessProfile){
-                    dataBinding?.idToolBarLyt?.visible()
-                    dataBinding?.titleTxt?.text =
-                        getString(R.string.str_close_account)
-                }
-
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment) {
+                dataBinding?.idToolBarLyt?.visible()
+                dataBinding?.titleTxt?.text =
+                    getString(R.string.str_close_account)
             }
-        })
+            if (destination.id == R.id.changePasswordProfile || destination.id == R.id.changePasswordSuccessProfile) {
+                dataBinding?.idToolBarLyt?.visible()
+                dataBinding?.titleTxt?.text =
+                    getString(R.string.str_close_account)
+            }
+        }
 
         dataBinding?.bottomNavigationView?.setOnNavigationItemChangedListener(
             object : OnNavigationItemChangeListener {

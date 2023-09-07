@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,25 +14,19 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
-import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
-import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
-import kotlin.properties.Delegates
 
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
@@ -51,7 +44,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     ): View? {
         binding = getFragmentBinding(inflater, container)
         navFlowCall = arguments?.getString(NAV_FLOW_KEY, "").toString()
-        Log.e("TAG", "onCreateView: navFlowCall --> "+navFlowCall )
+        Log.e("TAG", "onCreateView: navFlowCall --> $navFlowCall")
         if (arguments?.containsKey(NAV_FLOW_FROM) == true) {
             navFlowFrom = arguments?.getString(NAV_FLOW_FROM, "").toString()
         }
@@ -73,12 +66,10 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                Log.e("TAG", "handleOnBackPressed: backButton " + backButton)
+                Log.e("TAG", "handleOnBackPressed: backButton $backButton")
                 if (backButton) {
                     isEnabled = false
-                    requireActivity().onBackPressed()
-                    // Implement your custom back navigation logic
-                } else {
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
 
                 }
             }
@@ -101,7 +92,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
         val backIcon: ImageView? = requireActivity().findViewById(R.id.back_button)
-        if (backButton == false) {
+        if (!backButton) {
             backIcon?.visibility = View.GONE
         } else {
             backIcon?.visibility = View.VISIBLE
@@ -133,7 +124,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
         val titleText = customTitleView.findViewById<TextView>(R.id.alert_dialog_title_text)
 
-        titleText.text = fTitle?.let { it }
+        titleText.text = fTitle
 
 
         alertDialog.setCustomTitle(customTitleView)
@@ -141,11 +132,11 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         alertDialog.setButton(
             AlertDialog.BUTTON_POSITIVE,
             positiveBtnTxt
-        ) { dialog, which -> pListener?.positiveBtnClick(dialog) }
+        ) { dialog, _ -> pListener?.positiveBtnClick(dialog) }
         alertDialog.setButton(
             AlertDialog.BUTTON_NEGATIVE,
             negativeBtnTxt
-        ) { dialog, which -> nListener?.negativeBtnClick(dialog) }
+        ) { dialog, _ -> nListener?.negativeBtnClick(dialog) }
         alertDialog.setOnShowListener {
             val button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             button.setTextColor(
@@ -154,8 +145,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
                     R.color.blue
                 )
             )
-            val nbutton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-            nbutton.setTextColor(
+            val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            negativeButton.setTextColor(
                 ContextCompat.getColor(
                     requireActivity(),
                     R.color.red
