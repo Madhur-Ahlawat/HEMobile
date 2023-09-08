@@ -1449,6 +1449,7 @@
     <string name="str_stay_signed_in">Stay signed In</string>
 
 
+    <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>
 </resources>
 
 

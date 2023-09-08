@@ -97,7 +97,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:text="abc098@tyss.com"
+                android:text="businesstp@gmai.com"
                 app:labelText="@string/email_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
