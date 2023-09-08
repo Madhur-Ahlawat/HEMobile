@@ -5,13 +5,27 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
+        android:padding="@dimen/margin_20dp"
         tools:context=".ui.bottomnav.account.raiseEnquiry.EnquiryCommentsFragment">
+
+        <include
+            android:id="@+id/include_enquiry_status"
+            layout="@layout/include_enquiry_status_radiogroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/provide_more_tv"
@@ -24,7 +38,7 @@
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/include_enquiry_status" />
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/dont_include_personal_tv"
@@ -65,7 +79,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_5dp"
             android:fontFamily="@font/open_sans"
-            android:text="@string/str_you_have_chars_remain"
             android:textColor="@color/black"
             android:textSize="@dimen/font_16sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -104,13 +117,13 @@
             android:id="@+id/allowed_file_types_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/margin_10dp"
+            android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dont_include_personal1_tv" >
+            app:layout_constraintTop_toBottomOf="@+id/dont_include_personal1_tv">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_dot1"
                 android:layout_width="@dimen/margin_6dp"
                 android:layout_height="@dimen/margin_6dp"
@@ -124,21 +137,21 @@
                 android:fontFamily="@font/open_sans"
                 android:text="@string/str_allowed_file_types"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_16sp"
-                />
+                android:textSize="@dimen/font_16sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/filesize_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/margin_5dp"
+            android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/allowed_file_types_ll" >
+            app:layout_constraintTop_toBottomOf="@+id/allowed_file_types_ll">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_dot2"
                 android:layout_width="@dimen/margin_6dp"
                 android:layout_height="@dimen/margin_6dp"
@@ -152,31 +165,82 @@
                 android:fontFamily="@font/open_sans"
                 android:text="@string/str_file_size_not_morethan_8mb"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_16sp"
-                />
+                android:textSize="@dimen/font_16sp" />
 
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/file_cv"
+            style="@style/cardView_style"
+            android:layout_marginLeft="@dimen/margin_2dp"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginRight="@dimen/margin_2dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filesize_ll"
+            tools:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/file_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_15dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/file_name_tv"
+                    style="@style/SemiBoldTextBlack"
+                    android:layout_width="@dimen/margin_0dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="file_delete_iv" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/file_delete_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_0dp"
+                    android:paddingStart="@dimen/margin_10dp"
+                    android:src="@drawable/delete"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/choose_file_bt"
             style="@style/secondaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/str_choose_file"
-            app:backgroundColor="@color/white"
-            android:textColor="@color/new_btn_color"
             android:layout_marginBottom="@dimen/margin_20dp"
+            android:text="@string/str_choose_file"
+            android:textColor="@color/new_btn_color"
+            android:visibility="@{viewModel.edit_enquiryModel.fileName.empty?View.VISIBLE:View.GONE,default=visible}"
+            app:backgroundColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filesize_ll"
+            app:layout_constraintTop_toBottomOf="@id/file_cv"
             app:radius="@dimen/margin_5dp" />
+
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnNext"
             style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/str_continue"
-            android:enabled="false"
             android:layout_marginBottom="@dimen/margin_20dp"
+            android:enabled="@{viewModel.edit_enquiryModel.comments.empty?false:true}"
+            android:text="@string/str_continue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/choose_file_bt"

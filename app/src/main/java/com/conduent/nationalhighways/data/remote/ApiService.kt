@@ -36,8 +36,10 @@ import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResp
 import com.conduent.nationalhighways.data.model.payment.*
 import com.conduent.nationalhighways.data.model.profile.*
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryListResponseModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryStatusRequest
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.model.vehicle.*
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
@@ -49,6 +51,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PHONE_COUNTRY_CODE
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -526,6 +529,16 @@ interface ApiService {
     suspend fun raiseEnquiry(
         @Body request: EnquiryRequest
     ): Response<EnquiryResponseModel?>?
+
+    @POST(GET_ACCOUNT_SR_LIST)
+    suspend fun GET_ACCOUNT_SR_LIST(
+        @Body body: JSONObject
+    ): Response<EnquiryListResponseModel?>?
+
+    @POST(GET_GENERAL_ACCOUNT_SR_DETAILS)
+    suspend fun GET_GENERAL_ACCOUNT_SR_DETAILS(
+        @Body request: EnquiryStatusRequest
+    ): Response<EnquiryListResponseModel?>?
 
 
 }

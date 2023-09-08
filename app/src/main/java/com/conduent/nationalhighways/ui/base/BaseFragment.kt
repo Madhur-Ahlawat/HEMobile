@@ -54,6 +54,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         if (arguments?.containsKey(NAV_FLOW_FROM) == true) {
             navFlowFrom = arguments?.getString(NAV_FLOW_FROM, "").toString()
         }
+        Log.e("TAG", "onCreateView: navFlowFrom " + navFlowFrom)
         navData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(NAV_DATA_KEY, Any::class.java)
         } else {
@@ -70,9 +71,16 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         initCtrl()
         init()
 
+        backClickListener()
+    }
+
+    private fun backClickListener() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                Log.e("TAG", "handleOnBackPressed: backButton " + backButton)
+                Log.e("TAG", "onCreateView: handleOnBackPressed: backButton " + backButton)
+
+                (requireActivity() as? BackPressListener)?.onBackButtonPressed()
+
                 if (backButton) {
                     isEnabled = false
                     requireActivity().onBackPressed()
@@ -207,4 +215,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     }
 
+}
+
+interface BackPressListener {
+    fun onBackButtonPressed()
 }

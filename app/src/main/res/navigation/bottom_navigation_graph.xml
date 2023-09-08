@@ -32,6 +32,7 @@
             app:destination="@id/accountSuspendedPaymentFragment" />
     </fragment>
 
+
     <fragment
         android:id="@+id/vehicleFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.vehicle.VehicleFragment"
@@ -603,7 +604,7 @@
         tools:layout="@layout/fragment_payment_method2">
         <action
             android:id="@+id/paymentMethodFragment_to_action_paymentSuccessFragment"
-            app:destination="@id/paymentSuccessFragment"/>
+            app:destination="@id/paymentSuccessFragment" />
 
 
         <action
@@ -620,14 +621,14 @@
             app:destination="@id/deletePaymentMethodFragment" />
         <action
             android:id="@+id/action_paymentMethodFragment_to_nmiPaymentFragment"
-            app:destination="@+id/nmiPaymentFragment"/>
+            app:destination="@+id/nmiPaymentFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/selectPaymentMethodFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.SelectPaymentMethodFragment"
         android:label="SelectPaymentFragment"
-        tools:layout="@layout/fragment_select_payment_method" >
+        tools:layout="@layout/fragment_select_payment_method">
         <action
             android:id="@+id/action_selectPaymentMethodFragment_to_directDebitFragment"
             app:destination="@id/directDebitFragment" />
@@ -649,7 +650,7 @@
             app:destination="@+id/deletePaymentMethodSuccessFragment" />
         <action
             android:id="@+id/action_topUpFragment_to_paymentSuccessFragment"
-            app:destination="@+id/paymentSuccessFragment"/>
+            app:destination="@+id/paymentSuccessFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountSuspendedPaymentFragment"
@@ -696,7 +697,7 @@
             app:destination="@id/paymentSuccessFragment" />
         <action
             android:id="@+id/action_nmiPaymentFragment_to_tryPaymentAgainFragment"
-            app:destination="@id/tryPaymentAgainFragment"/>
+            app:destination="@id/tryPaymentAgainFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountSuspendReOpenFragment"
@@ -734,7 +735,7 @@
         android:id="@+id/amountKeyPadFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.AmountKeyPadFragment"
         android:label="AmountKeyPadFragment"
-        tools:layout="@layout/fragment_amount_key_pad" >
+        tools:layout="@layout/fragment_amount_key_pad">
         <action
             android:id="@+id/action_amountKeyPadFragment_to_topUpFragment"
             app:destination="@id/topUpFragment" />
@@ -753,18 +754,18 @@
     <fragment
         android:id="@+id/paymentSuccessFragment"
         android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment"
-        tools:layout="@layout/fragment_new_card_success_screen"
-        android:label="Add New Card Success">
+        android:label="Add New Card Success"
+        tools:layout="@layout/fragment_new_card_success_screen">
         <action
             android:id="@+id/action_paymentSuccessFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment"
             app:popUpTo="@id/paymentMethodFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/paymentMethodFragment"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_paymentSuccessFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment"
             app:popUpTo="@id/nmiPaymentFragment"
-            app:popUpToInclusive="true"
-            app:destination="@id/nmiPaymentFragment"/>
+            app:popUpToInclusive="true" />
 
 
     </fragment>
@@ -772,8 +773,125 @@
         android:id="@+id/tryPaymentAgainFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TryPaymentAgainFragment"
         android:label="TryPaymentAgainFragment"
-        tools:layout="@layout/fragment_try_payment_again"/>
+        tools:layout="@layout/fragment_try_payment_again" />
 
+
+    <fragment
+        android:id="@+id/enquiryCategoryFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryCategoryFragment"
+        android:label="EnquiryCategoryFragment"
+        tools:layout="@layout/fragment_enquiry_category">
+
+        <action
+            android:id="@+id/action_enquiryCategoryFragment_to_enquiryCommentsFragment"
+            app:destination="@id/enquiryCommentsFragment" />
+        <action
+            android:id="@+id/action_enquiryCategoryFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquirySummaryFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquiryCommentsFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryCommentsFragment"
+        android:label="EnquiryCommentsFragment"
+        tools:layout="@layout/fragment_enquiry_comments">
+        <action
+            android:id="@+id/action_enquiryCommentsFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquiryCommentsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquirySummaryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_enquiryCommentsFragment_to_enquiryContactDetailsFragment"
+            app:destination="@id/enquiryContactDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquiryContactDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryContactDetailsFragment"
+        android:label="EnquiryContactDetailsFragment"
+        tools:layout="@layout/fragment_enquiry_contact_details">
+        <action
+            android:id="@+id/action_enquiryContactDetailsFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquiryContactDetailsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment" />
+        <action
+            android:id="@+id/action_categoryChange_enquiryContactDetailsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquiryCategoryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_commentsChange_enquiryContactDetailsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquiryCommentsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquirySummaryFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.SummaryEnquiryFragment"
+        android:label="SummaryEnquiryFragment"
+        tools:layout="@layout/fragment_summary_enquiry">
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryCommentsFragment"
+            app:destination="@id/enquiryCommentsFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryContactDetailsFragment"
+            app:destination="@id/enquiryContactDetailsFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquirySuccessFragment"
+            app:destination="@id/enquirySuccessFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/enquirySuccessFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquirySuccessFragment"
+        android:label="EnquirySuccessFragment"
+        tools:layout="@layout/fragment_enquiry_success">
+
+        <action
+            android:id="@+id/action_enquirySuccessFragment_to_caseEnquiryHistoryListFragment"
+            app:destination="@id/caseEnquiryHistoryListFragment" />
+        <action
+            android:id="@+id/action_enquirySuccessFragment_to_enquiryStatusFragment"
+            app:destination="@id/enquiryStatusFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/caseEnquiryHistoryListFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.CasesEnquiryHistoryListFragment"
+        android:label="CasesEnquiryHistoryListFragment"
+        tools:layout="@layout/fragment_cases_enquiry_history_list">
+        <action
+            android:id="@+id/action_caseEnquiryHistoryListFragment_to_casesEnquiryDetailsFragment"
+            app:destination="@id/casesEnquiryDetailsFragment" />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/casesEnquiryDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.CasesEnquiryDetailsFragment"
+        android:label="CasesEnquiryDetailsFragment"
+        tools:layout="@layout/fragment_cases_enquiry_details">
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/enquirySuccessFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquirySuccessFragment"
+        android:label="EnquirySuccessFragment"
+        tools:layout="@layout/fragment_enquiry_success">
+
+
+    </fragment>
 
 
 </navigation>

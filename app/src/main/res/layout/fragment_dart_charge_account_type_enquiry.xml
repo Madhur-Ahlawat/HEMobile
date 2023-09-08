@@ -10,8 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/margin_20dp"
         android:background="@color/white"
+        android:padding="@dimen/margin_20dp"
         tools:context=".ui.bottomnav.account.raiseEnquiry.DartChargeAccountTypeEnquiryFragment">
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/str_do_you_have"
-            android:layout_marginLeft="@dimen/margin_20dp"
             app:layout_constraintTop_toTopOf="parent"
             android:textStyle="bold"
             android:fontFamily="@font/open_sans_semibold"
@@ -33,7 +32,6 @@
             android:id="@+id/radioGroupYesNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_10dp"
             android:layout_marginTop="@dimen/margin_35dp"
             app:layout_constraintTop_toBottomOf="@+id/title_tv"
             app:layout_constraintBottom_toTopOf="@id/btnNext">
@@ -61,8 +59,6 @@
             android:layout_height="wrap_content"
             android:text="@string/str_continue"
             android:enabled="false"
-            android:layout_marginLeft="@dimen/margin_20dp"
-            android:layout_marginRight="@dimen/margin_20dp"
             android:layout_marginTop="@dimen/margin_35dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -406,16 +406,16 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     (requireActivity().applicationContext as BaseApplication).setAccountSavedData(
                         this
                     )
-                    if (accountInformation?.accountType.equals("BUSINESS", true)
-                        || ((accountInformation?.accSubType.equals(
+                    if (accountInformation.accountType.equals("BUSINESS", true)
+                        || ((accountInformation.accSubType.equals(
                             "STANDARD",
                             true
-                        ) && accountInformation?.accountType.equals(
+                        ) && accountInformation.accountType.equals(
                             "PRIVATE", true
                         )))
                     ) {
                         showNonPayGUI(this)
-                    } else if (accountInformation?.accSubType.equals(Constants.PAYG)) {
+                    } else if (accountInformation.accSubType.equals(Constants.PAYG)) {
                         showPayGUI(this)
                     }
                 }

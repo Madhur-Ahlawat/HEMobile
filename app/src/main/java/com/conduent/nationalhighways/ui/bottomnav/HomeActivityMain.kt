@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav
 
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -18,6 +19,7 @@ import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
@@ -37,6 +39,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     lateinit var api: ApiService
     var dataBinding: ActivityHomeMainBinding? = null
     private lateinit var navController: NavController
+    var from: String = ""
 
     companion object {
         var dateRangeModel: PaymentDateRangeModel? = null
@@ -55,14 +58,18 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         setView()
     }
 
-    fun viewAllTransactions(){
+    fun viewAllTransactions() {
         dataBinding?.apply {
             bottomNavigationView?.setActiveNavigationIndex(1)
         }
     }
 
     private fun setView() {
-        dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
+        if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
+            from = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+        }
+        Log.e("TAG", "setView: from --> " + from)
+
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
@@ -71,18 +78,35 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding?.backButton?.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-        navController.addOnDestinationChangedListener(object:NavController.OnDestinationChangedListener{
+
+        if (from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
+            dataBinding?.idToolBarLyt?.visible()
+            navController.popBackStack(R.id.bottom_navigation_graph, true)
+            dataBinding?.backButton?.gone()
+            dataBinding?.titleTxt?.text =
+                getString(R.string.str_raise_new_enquiry)
+            navController.navigate(R.id.enquiryCategoryFragment)
+            dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
+
+        } else {
+            dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
+        }
+
+
+        navController.addOnDestinationChangedListener(object :
+            NavController.OnDestinationChangedListener {
             override fun onDestinationChanged(
                 controller: NavController,
                 destination: NavDestination,
                 arguments: Bundle?
             ) {
-                if(destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment){
+
+                if (destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment) {
                     dataBinding?.idToolBarLyt?.visible()
                     dataBinding?.titleTxt?.text =
                         getString(R.string.str_close_account)
                 }
-                if(destination.id == R.id.changePasswordProfile || destination.id == R.id.changePasswordSuccessProfile){
+                if (destination.id == R.id.changePasswordProfile || destination.id == R.id.changePasswordSuccessProfile) {
                     dataBinding?.idToolBarLyt?.visible()
                     dataBinding?.titleTxt?.text =
                         getString(R.string.str_close_account)
@@ -96,6 +120,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 override fun onNavigationItemChanged(
                     navigationItem: BottomNavigationView.NavigationItem
                 ) {
+                    Log.e("TAG", "onNavigationItemChanged: position--> " + navigationItem.position)
+                    dataBinding?.backButton?.visible()
 
                     when (navigationItem.position) {
                         0 -> {
@@ -135,13 +161,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             if (navController.currentDestination?.id != R.id.accountFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding?.fragmentContainerView?.findNavController()?.navigate(R.id.accountFragment)
+                                dataBinding?.fragmentContainerView?.findNavController()
+                                    ?.navigate(R.id.accountFragment)
                             }
                         }
                     }
                 }
             }
         )
+
     }
 
     override fun observeViewModel() {}
@@ -170,14 +198,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
     }
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
-            navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
-                if (fragment is DeletePaymentMethodSuccessFragment||fragment is AccountSuspendReOpenFragment||fragment is NewCardSuccessScreenFragment){
+            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                if (fragment is DeletePaymentMethodSuccessFragment || fragment is AccountSuspendReOpenFragment || fragment is NewCardSuccessScreenFragment) {
 
-                }else{
+                } else {
                     onBackPressedDispatcher.onBackPressed()
                 }
 

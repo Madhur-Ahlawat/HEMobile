@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/margin_20dp"
+        tools:context=".ui.bottomnav.account.raiseEnquiry.EnquiryStatusFragment">
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/enquiry_reference_number_et"
+            style="@style/input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:padding="0dp"
+            app:imeOptions="actionNext"
+            app:inputType="text"
+            app:labelText="@string/str_enquiry_reference_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxLength="50" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/last_name_et"
+            style="@style/input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:padding="0dp"
+            app:imeOptions="actionNext"
+
+            app:inputType="text"
+            app:labelText="@string/last_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enquiry_reference_number_et"
+            app:maxLength="12" />
+
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btnNext"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_30dp"
+            android:enabled="@{(viewModel.enquiry_status_number.trim().empty||viewModel.enquiry_status_number.length() &lt; 3||viewModel.enquiry_last_name.trim().empty)?false:true}"
+            android:text="@string/str_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/last_name_et" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

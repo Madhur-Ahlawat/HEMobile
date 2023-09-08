@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.bottomnav.account
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,6 +62,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         isSecondaryUser = sessionManager.getSecondaryUser()
         setPaymentsVisibility()
         initUI()
+        binding.contactUs.visible()
+
     }
 
     private fun initUI() {
@@ -85,8 +88,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
             valueName.text = sessionManager.fetchName()
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
+            Log.e("TAG", "initUI: fetchAccountStatus "+sessionManager.fetchAccountStatus() )
             DashboardUtils.setAccountStatusNew(
-                sessionManager.fetchAccountStatus()!!,
+                sessionManager.fetchAccountStatus()?:"",
                 indicatorAccountStatus,
                 binding.cardIndicatorAccountStatus
             )
@@ -178,12 +182,13 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.contact_us -> {
-                requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
+                findNavController().navigate(R.id.raiseNewEnquiryFragment)
+                /*requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
                     putInt(
                         Constants.FROM_LOGIN_TO_CASES,
                         Constants.FROM_LOGIN_TO_CASES_VALUE
                     )
-                }
+                }*/
             }
 
 //            R.id.rl_account_statement -> {

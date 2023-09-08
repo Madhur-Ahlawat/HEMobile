@@ -143,7 +143,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             false
         } else {
             binding.edtOtp.removeError()
-             true
+            true
         }
 
 
@@ -361,6 +361,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             ) + "."
 
                     }
+
                     Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                         binding.messageReceivedTxt.text =
                             getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
@@ -368,6 +369,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             ) + "."
 
                     }
+
                     else -> {
                         binding.messageReceivedTxt.text =
                             getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue + "."
@@ -579,14 +581,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             R.id.action_twoStep_forgotOtpFragment_to_createAccountSummaryFragment,
                             bundle
                         )
-                    }else{
+                    } else {
                         findNavController().navigate(
                             R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
                         )
 
-                        }
                     }
-                else {
+                } else {
                     findNavController().navigate(
                         R.id.action_otpForgotFragment_to_createVehicleFragment
                     )

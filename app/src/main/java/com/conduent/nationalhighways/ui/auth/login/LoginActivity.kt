@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -49,7 +50,7 @@ import javax.inject.Inject
 class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener {
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
-    private var btnEnabled: Boolean=false
+    private var btnEnabled: Boolean = false
     private val viewModel: LoginViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private lateinit var biometricPrompt: BiometricPrompt
@@ -64,7 +65,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
-private var from:String=""
+    private var from: String = ""
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -150,11 +151,13 @@ private var from:String=""
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    if (it.transactionList!=null){
-                        navigateWithCrossing(it.transactionList.count?:0)
+                    if (it.transactionList != null) {
+                        navigateWithCrossing(it.transactionList.count ?: 0)
 
-                    }else{
-                        startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    } else {
+                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, from)
+                        }
 
                     }
 
@@ -165,7 +168,9 @@ private var from:String=""
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
-                startNewActivityByClearingStack(HomeActivityMain::class.java)
+                startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                    putString(Constants.NAV_FLOW_FROM, from)
+                }
             }
 
             else -> {
@@ -191,7 +196,10 @@ private var from:String=""
             startActivity(intent)
 
         } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java)
+            Log.e("TAG", "navigateWithCrossing: from--> " + from)
+            startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                putString(Constants.NAV_FLOW_FROM, from)
+            }
         }
 
 
@@ -220,8 +228,10 @@ private var from:String=""
 
 
     private fun init() {
-        intent?.apply {
-            from = getStringExtra(Constants.FROM_LOGIN_TO_CASES)?:""
+        if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
+            intent?.apply {
+                from = getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+            }
         }
 
 
@@ -247,6 +257,7 @@ private var from:String=""
 
 
     }
+
     private fun isEnable() {
         emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
             if (binding.edtEmail.editText.text.toString().trim().length < 8) {
@@ -265,7 +276,8 @@ private var from:String=""
                         ) || (binding.edtEmail.editText.text.toString().trim().last()
                             .toString() == "." || binding.edtEmail.editText.text
                             .toString().first().toString() == ".")
-                        || (binding.edtEmail.editText.text.toString().trim().last().toString() == "-" || binding.edtEmail.editText.text.toString().first()
+                        || (binding.edtEmail.editText.text.toString().trim().last()
+                            .toString() == "-" || binding.edtEmail.editText.text.toString().first()
                             .toString() == "-")
                         || (Utils.countOccurenceOfChar(
                             binding.edtEmail.editText.text.toString().trim(), '.'
@@ -381,7 +393,7 @@ private var from:String=""
             }
 
             is Resource.DataError -> {
-                binding.btnLogin.isEnabled=true
+                binding.btnLogin.isEnabled = true
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
@@ -409,7 +421,7 @@ private var from:String=""
             }
 
             else -> {
-                binding.btnLogin.isEnabled=true
+                binding.btnLogin.isEnabled = true
             }
         }
 
@@ -543,7 +555,7 @@ private var from:String=""
                     "success",
                     sessionManager.getLoggedInUser()
                 )
-                NewCreateAccountRequestModel.emailAddress=""
+                NewCreateAccountRequestModel.emailAddress = ""
                 val intent = Intent(this, AuthActivity::class.java)
                 intent.putExtra(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
 

@@ -1,24 +1,46 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.contactdartcharge.UploadFileResponseModel
 import com.conduent.nationalhighways.databinding.FragmentEnquiryCommentsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.utils.FilePath
+import com.conduent.nationalhighways.utils.StorageHelper
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.showToast
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 @AndroidEntryPoint
 class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>() {
 
     lateinit var viewModel: RaiseNewEnquiryViewModel
+    var file: File? = null
+    private var loader: LoaderDialog? = null
+    var previousComments: String = ""
+    var previousFile: String = ""
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -26,14 +48,40 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>() {
         FragmentEnquiryCommentsBinding.inflate(inflater, container, false)
 
     override fun init() {
+        binding.includeEnquiryStatus.commentsRb.isChecked=true
 
-        binding.charactersRemTv.text = resources.getString(
-            R.string.str_you_have_chars_remain,
-            "500"
-        )
-
+        saveEditData()
         binding.btnNext.setOnClickListener {
-            findNavController().navigate(R.id.action_enquiryCommentsFragment_to_enquiryContactDetailsFragment)
+            if (navFlowFrom == Constants.EDIT_SUMMARY &&
+                previousComments == viewModel.edit_enquiryModel.value?.comments &&
+                previousFile == viewModel.edit_enquiryModel.value?.fileName
+            ) {
+                findNavController().navigate(
+                    R.id.action_enquiryCommentsFragment_to_enquirySummaryFragment, getBundleData()
+                )
+
+            } else {
+                if (navFlowFrom.isEmpty()) {
+                    saveData()
+                }
+                saveData()
+                findNavController().navigate(
+                    R.id.action_enquiryCommentsFragment_to_enquiryContactDetailsFragment,
+                    getBundleData()
+                )
+            }
+        }
+
+        binding.chooseFileBt.setOnClickListener {
+            checkPermission()
+        }
+
+        binding.fileDeleteIv.setOnClickListener {
+            file = null
+            viewModel.edit_enquiryModel.value?.fileName = ""
+            viewModel.edit_enquiryModel.value?.file = File("")
+
+            visibleChooseFileBt()
         }
 
         binding.commentsEt.addTextChangedListener(object : TextWatcher {
@@ -42,26 +90,96 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                if (p0.toString().isEmpty()) {
-                    binding.btnNext.isEnabled = false
-                } else {
-                    binding.btnNext.isEnabled = true
-                }
-                binding.charactersRemTv.text = resources.getString(
-                    R.string.str_you_have_chars_remain,
-                    "" + (500 - p0.toString().length)
+                viewModel.edit_enquiryModel.value?.comments = p0.toString()
+                binding.charactersRemTv.setText(
+                    requireActivity().resources.getString(
+                        R.string.str_you_have_chars_remain,
+                        ("" + (500 - binding.commentsEt.text.toString().length))
+                    )
                 )
-                viewModel.enquiryModel.value?.comments = p0.toString()
+                if (binding.commentsEt.text.toString().isEmpty()) {
+                    binding.btnNext.disable()
+                } else {
+                    binding.btnNext.enable()
+                }
             }
 
             override fun afterTextChanged(p0: Editable?) {
 
             }
         })
+//        backListener()
+    }
+
+    private fun visibleChooseFileBt() {
+        binding.chooseFileBt.visible()
+        binding.fileCv.gone()
+        binding.fileNameTv.setText("")
     }
 
     override fun initCtrl() {
+
+    }
+
+    private fun backListener() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if(navFlowFrom.isNotEmpty()){
+                    saveEditData()
+                }
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+    }
+
+    private fun getBundleData(): Bundle {
+        val bundle: Bundle = Bundle()
+        if (navFlowFrom == Constants.EDIT_SUMMARY) {
+            bundle.putString(Constants.NAV_FLOW_FROM, Constants.EDIT_COMMENTS_DATA)
+        } else {
+            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+        }
+        return bundle
+    }
+
+
+    private fun saveData() {
+        viewModel.enquiryModel.value?.comments =
+            viewModel.edit_enquiryModel.value?.comments ?: ""
+        viewModel.enquiryModel.value?.file =
+            viewModel.edit_enquiryModel.value?.file ?: File("")
+        viewModel.enquiryModel.value?.fileName =
+            viewModel.edit_enquiryModel.value?.fileName ?: ""
+    }
+
+    private fun saveEditData() {
+        viewModel.edit_enquiryModel.value?.comments =
+            viewModel.enquiryModel.value?.comments ?: ""
+        viewModel.edit_enquiryModel.value?.file =
+            viewModel.enquiryModel.value?.file ?: File("")
+        viewModel.edit_enquiryModel.value?.fileName =
+            viewModel.enquiryModel.value?.fileName ?: ""
+
+        previousComments = viewModel.edit_enquiryModel.value?.comments ?: ""
+        previousFile = viewModel.edit_enquiryModel.value?.fileName ?: ""
+
+        if (previousFile.isNotEmpty()) {
+            hideChooseFileBt()
+        } else {
+            visibleChooseFileBt()
+        }
+
+        binding.commentsEt.setText("")
+        binding.commentsEt.setText(viewModel.edit_enquiryModel.value?.comments.toString())
+        binding.charactersRemTv.setText(
+            requireActivity().resources.getString(
+                R.string.str_you_have_chars_remain,
+                ("" + (500 - binding.commentsEt.text.toString().length))
+            )
+        )
+
 
     }
 
@@ -70,6 +188,123 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>() {
             RaiseNewEnquiryViewModel::class.java
         )
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        viewModel = ViewModelProvider(requireActivity()).get(
+            RaiseNewEnquiryViewModel::class.java
+        )
+        observe(viewModel.uploadFileLiveData, ::uploadFileResponse)
+
     }
+
+    private fun uploadFileResponse(resource: Resource<UploadFileResponseModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+
+        when (resource) {
+            is Resource.Success -> {
+                viewModel.edit_enquiryModel.value?.fileName = resource.data?.fileName ?: ""
+                viewModel.edit_enquiryModel.value?.file = file ?: File("")
+
+                hideChooseFileBt()
+            }
+
+            is Resource.DataError -> {
+
+            }
+
+            else -> {
+
+            }
+        }
+
+    }
+
+    private fun hideChooseFileBt() {
+        binding.fileNameTv.setText(viewModel.edit_enquiryModel.value?.fileName)
+        binding.chooseFileBt.gone()
+        binding.fileCv.visible()
+    }
+
+    private fun checkPermission() {
+        if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+            StorageHelper.requestStoragePermission(
+                requireActivity(),
+                onScopeResultLaucher = onScopeResultLauncher,
+                onPermissionlaucher = onPermissionLauncher
+            )
+        } else {
+            openFileManager()
+        }
+    }
+
+    private fun openFileManager() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, Utils.getFileUploadMIMETypes())
+        fileManagerResult.launch(intent)
+    }
+
+    private val fileManagerResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result?.data?.data?.let {
+                    val path: String? = FilePath.getPath(requireContext(), it)
+                    path?.let { pat ->
+                        val file = File(pat)
+                        if (file.length()
+                                .toFloat() / (1000 * 1000) <= 8.0
+                        ) { //checking file size which should be less than 8mb
+
+
+                            this.file = file
+                            viewModel.uploadFileApi(file)
+                            loader?.show(
+                                requireActivity().supportFragmentManager,
+                                Constants.LOADER_DIALOG
+                            )
+
+                        } else {
+                            ErrorUtil.showError(binding.root, "File size must be less than 8MB")
+                        }
+                    } ?: run {
+                        ErrorUtil.showError(binding.root, "Unable to upload the selected file")
+                    }
+                }
+            }
+        }
+
+
+    private var onScopeResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                binding.chooseFileBt.performClick()
+            }
+        }
+
+
+    private var onPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            var permission = true
+            permissions.entries.forEach {
+                if (!it.value) {
+                    permission = it.value
+                }
+            }
+            when (permission) {
+                true -> {
+                    binding.chooseFileBt.performClick()
+                }
+
+                else -> {
+                    requireActivity().showToast("Please enable permission")
+                }
+            }
+        }
 
 }

@@ -3,7 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_raise_enquiry"
-    app:startDestination="@id/dartChargeAccountTypeEnquiryFragment">
+    app:startDestination="@id/guidanceDocumentsFragment">
+
+    <fragment
+        android:id="@+id/guidanceDocumentsFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.GuidanceDocumentsFragment"
+        android:label="GuidanceDocumentsFragment"
+        tools:layout="@layout/fragment_guidance_documents">
+        <action
+            android:id="@+id/action_guidanceDocumentsFragment_to_contactDartChargeFragment"
+            app:destination="@id/contactDartChargeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactDartChargeFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.ContactDartChargeFragment"
+        android:label="ContactDartChargeFragment"
+        tools:layout="@layout/fragment_contact_dart_charge2">
+        <action
+            android:id="@+id/action_contactDartChargeFragment_to_dartChargeAccountTypeEnquiryFragment"
+            app:destination="@id/dartChargeAccountTypeEnquiryFragment" />
+        <action
+            android:id="@+id/action_contactDartChargeFragment_to_enquiryStatusFragment"
+            app:destination="@id/enquiryStatusFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquiryStatusFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryStatusFragment"
+        android:label="EnquiryStatusFragment"
+        tools:layout="@layout/fragment_dart_charge_account_type_enquiry">
+        <action
+            android:id="@+id/action_enquiryStatusFragment_to_casesEnquiryDetailsFragment"
+            app:destination="@id/casesEnquiryDetailsFragment" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/dartChargeAccountTypeEnquiryFragment"
@@ -13,11 +45,127 @@
         <action
             android:id="@+id/action_dartChargeAccountTypeEnquiryFragment_to_raiseNewEnquiryFragment"
             app:destination="@id/raiseNewEnquiryFragment" />
+        <action
+            android:id="@+id/action_dartChargeAccountTypeEnquiryFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/raiseNewEnquiryFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseNewEnquiryFragment"
         android:label="RaiseNewEnquiryFragment"
-        tools:layout="@layout/fragment_raise_new_enquiry" />
+        tools:layout="@layout/fragment_raise_new_enquiry">
+
+        <action
+            android:id="@+id/action_raiseNewEnquiryFragment_to_enquirySuccessFragment"
+            app:destination="@id/enquirySuccessFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/enquiryCategoryFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryCategoryFragment"
+        android:label="EnquiryCategoryFragment"
+        tools:layout="@layout/fragment_enquiry_category">
+        <action
+            android:id="@+id/action_enquiryCategoryFragment_to_enquiryCommentsFragment"
+            app:destination="@id/enquiryCommentsFragment" />
+        <action
+            android:id="@+id/action_enquiryCategoryFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquirySummaryFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquiryCommentsFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryCommentsFragment"
+        android:label="EnquiryCommentsFragment"
+        tools:layout="@layout/fragment_enquiry_comments">
+        <action
+            android:id="@+id/action_enquiryCommentsFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquiryCommentsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquirySummaryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_enquiryCommentsFragment_to_enquiryContactDetailsFragment"
+            app:destination="@id/enquiryContactDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquiryContactDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryContactDetailsFragment"
+        android:label="EnquiryContactDetailsFragment"
+        tools:layout="@layout/fragment_enquiry_contact_details">
+        <action
+            android:id="@+id/action_enquiryContactDetailsFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquiryContactDetailsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment" />
+        <action
+            android:id="@+id/action_categoryChange_enquiryContactDetailsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquiryCategoryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_commentsChange_enquiryContactDetailsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquiryCommentsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquirySummaryFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.SummaryEnquiryFragment"
+        android:label="SummaryEnquiryFragment"
+        tools:layout="@layout/fragment_summary_enquiry">
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryCommentsFragment"
+            app:destination="@id/enquiryCommentsFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryContactDetailsFragment"
+            app:destination="@id/enquiryContactDetailsFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquirySuccessFragment"
+            app:destination="@id/enquirySuccessFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/enquirySuccessFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquirySuccessFragment"
+        android:label="EnquirySuccessFragment"
+        tools:layout="@layout/fragment_enquiry_success">
+
+        <action
+            android:id="@+id/action_enquirySuccessFragment_to_caseEnquiryHistoryListFragment"
+            app:destination="@id/caseEnquiryHistoryListFragment" />
+        <action
+            android:id="@+id/action_enquirySuccessFragment_to_enquiryStatusFragment"
+            app:destination="@id/enquiryStatusFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/caseEnquiryHistoryListFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.CasesEnquiryHistoryListFragment"
+        android:label="CasesEnquiryHistoryListFragment"
+        tools:layout="@layout/fragment_cases_enquiry_history_list">
+        <action
+            android:id="@+id/action_caseEnquiryHistoryListFragment_to_casesEnquiryDetailsFragment"
+            app:destination="@id/casesEnquiryDetailsFragment" />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/casesEnquiryDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.CasesEnquiryDetailsFragment"
+        android:label="CasesEnquiryDetailsFragment"
+        tools:layout="@layout/fragment_cases_enquiry_details">
+
+
+    </fragment>
 
 </navigation>

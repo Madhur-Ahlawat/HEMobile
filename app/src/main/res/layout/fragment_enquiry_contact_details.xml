@@ -5,12 +5,17 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
+        android:padding="@dimen/margin_20dp"
         tools:context=".ui.bottomnav.account.raiseEnquiry.EnquiryContactDetailsFragment">
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -96,19 +101,6 @@
             app:layout_constraintTop_toBottomOf="@+id/countrycode_et"
             app:maxLength="15" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-            android:id="@+id/vehicle_registration_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15dp"
-            android:textColor="@color/black"
-            app:imeOptions="actionDone"
-            app:inputType="text"
-            app:labelText="@string/vehicle_registration_number_plate_optional"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mobileNumber_et"
-           />
 
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
@@ -120,7 +112,7 @@
             android:text="@string/str_continue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vehicle_registration_et"
+            app:layout_constraintTop_toBottomOf="@+id/mobileNumber_et"
             app:radius="@dimen/margin_5dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

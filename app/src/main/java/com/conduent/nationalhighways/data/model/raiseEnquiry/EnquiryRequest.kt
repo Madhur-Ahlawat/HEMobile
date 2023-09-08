@@ -11,6 +11,6 @@ data class EnquiryRequest(
     val otherDetails: String,
     val selectSubArea: String,
     val seletedArea: String,
-    val fileNames: ArrayList<File> = ArrayList()
+    val fileNames: ArrayList<String> = ArrayList()
 ) {
 }
