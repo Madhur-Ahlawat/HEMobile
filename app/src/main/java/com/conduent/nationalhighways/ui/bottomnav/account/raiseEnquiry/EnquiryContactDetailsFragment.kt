@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -14,23 +15,32 @@ import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
+import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
 import com.conduent.nationalhighways.databinding.FragmentEnquiryContactDetailsBinding
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
+import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetailsBinding>(),
-    DropDownItemSelectListener {
+    DropDownItemSelectListener, BackPressListener {
+
+    @Inject
+    lateinit var sm: SessionManager
     private val createAccount_viewModel: CreateAccountPostCodeViewModel by viewModels()
     lateinit var viewModel: RaiseNewEnquiryViewModel
+//    lateinit var createAccount_viewModel: CreateAccountPostCodeViewModel
 
     private var fullCountryNameWithCode: MutableList<String> = ArrayList()
     private var requiredCountryCode = false
@@ -43,6 +53,8 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     private var requiredMobileNumber: Boolean = true
     private var countriesList: MutableList<String> = ArrayList()
     private var countriesModel: List<CountriesModel?>? = ArrayList()
+    var isViewCreated: Boolean = false
+    private var editRequest: String = ""
 
 
     override fun getFragmentBinding(
@@ -51,17 +63,54 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         FragmentEnquiryContactDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if(arguments?.containsKey(Constants.Edit_REQUEST_KEY)==true){
+            editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
+        }
+
+        setBackPressListener(this)
+
         createAccount_viewModel.getCountries()
         binding.btnNext.setOnClickListener {
-            viewModel.enquiryModel.value?.name = binding.fullnameEt.getText().toString()
-            viewModel.enquiryModel.value?.email = binding.emailEt.getText().toString()
-            viewModel.enquiryModel.value?.mobileNumber = binding.mobileNumberEt.getText().toString()
-            viewModel.enquiryModel.value?.vehicleRegistration =
-                binding.vehicleRegistrationEt.getText().toString()
-            findNavController().navigate(R.id.action_enquiryContactDetailsFragment_to_enquirySummaryFragment)
+
+            saveData()
+            if (editRequest == Constants.EDIT_SUMMARY) {
+                findNavController().navigate(
+                    R.id.action_enquiryContactDetailsFragment_to_enquirySummaryFragment,getBundleData()
+                )
+            } else if (editRequest == Constants.EDIT_CATEGORY_DATA) {
+                findNavController().navigate(
+                    R.id.action_categoryChange_enquiryContactDetailsFragment_to_enquirySummaryFragment,getBundleData()
+                )
+            } else if (editRequest == Constants.EDIT_COMMENTS_DATA) {
+                findNavController().navigate(
+                    R.id.action_commentsChange_enquiryContactDetailsFragment_to_enquirySummaryFragment,getBundleData()
+                )
+            } else {
+                findNavController().navigate(
+                    R.id.action_enquiryContactDetailsFragment_to_enquirySummaryFragment,
+                    getBundleData()
+                )
+
+            }
         }
         binding.countrycodeEt.dropDownItemSelectListener = this
         listeners()
+    }
+
+    private fun saveData() {
+        viewModel.edit_enquiryModel.value?.name = binding.fullnameEt.getText().toString()
+        viewModel.edit_enquiryModel.value?.email = binding.emailEt.getText().toString()
+        viewModel.edit_enquiryModel.value?.mobileNumber =
+            binding.mobileNumberEt.getText().toString()
+    }
+
+    private fun getBundleData(): Bundle {
+        val bundle: Bundle = Bundle()
+        if (editRequest == Constants.EDIT_SUMMARY) {
+            bundle.putString(Constants.Edit_REQUEST_KEY, Constants.EDIT_CONTACT_DETAILS_DATA)
+        }
+        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+        return bundle
     }
 
     private fun listeners() {
@@ -218,8 +267,8 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     true
                 } else {
                     if ((binding.countrycodeEt.getSelectedDescription().equals(
-                                "UK +44", true
-                            ) || binding.countrycodeEt.getSelectedDescription()
+                            "UK +44", true
+                        ) || binding.countrycodeEt.getSelectedDescription()
                             .equals(Constants.UNITED_KINGDOM, true))
                     ) {
                         binding.mobileNumberEt.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
@@ -237,14 +286,11 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     private fun checkButton() {
-
-
         if (requiredEmail && requiredFirstName && requiredMobileNumber) {
             binding.btnNext.enable()
         } else {
             binding.btnNext.disable()
         }
-
     }
 
     override fun initCtrl() {
@@ -252,16 +298,22 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     override fun observer() {
-        viewModel = ViewModelProvider(requireActivity()).get(
-            RaiseNewEnquiryViewModel::class.java
-        )
+        if (!isViewCreated) {
+//        createAccount_viewModel =
+//            ViewModelProvider(this).get(CreateAccountPostCodeViewModel::class.java)
+            viewModel = ViewModelProvider(requireActivity()).get(
+                RaiseNewEnquiryViewModel::class.java
+            )
+            binding.viewModel = viewModel
+            binding.lifecycleOwner = this
 
-
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        observe(createAccount_viewModel.countriesCodeList, ::getCountryCodesList)
-        observe(createAccount_viewModel.countriesList, ::getCountriesList)
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            observe(createAccount_viewModel.countriesCodeList, ::getCountryCodesList)
+            observe(createAccount_viewModel.countriesList, ::getCountriesList)
+        }
+        isViewCreated = true
 
     }
 
@@ -330,13 +382,28 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     fullCountryNameWithCode.remove(Constants.UNITED_KINGDOM)
                     fullCountryNameWithCode.add(0, Constants.UNITED_KINGDOM)
                 }
-                binding.apply {
-                    countrycodeEt.dataSet.addAll(fullCountryNameWithCode)
-                    countrycodeEt.setSelectedValue(Constants.UNITED_KINGDOM)
-                    viewModel.enquiryModel.value?.countryCode = getCountryCode(Constants.UNITED_KINGDOM)
+                binding.countrycodeEt.dataSet.addAll(fullCountryNameWithCode)
 
+                var countryCode = viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
+                Log.e("TAG", "getCountryCodesList: countryCode >> " + countryCode)
+                if (viewModel.edit_enquiryModel.value?.fullcountryCode?.isEmpty() == true) {
+                    countryCode = Constants.UNITED_KINGDOM
+                    binding.apply {
+                        countrycodeEt.setSelectedValue(Constants.UNITED_KINGDOM)
+                        requiredCountryCode = binding.countrycodeEt.getText()?.isNotEmpty() == true
+                    }
+                } else {
+                    binding.countrycodeEt.setSelectedValue(
+                        viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
+                    )
                     requiredCountryCode = binding.countrycodeEt.getText()?.isNotEmpty() == true
+
+
                 }
+                viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(countryCode)
+                viewModel.edit_enquiryModel.value?.fullcountryCode = countryCode
+
+                setSavedData()
 
             }
 
@@ -350,6 +417,21 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         }
     }
 
+    private fun setSavedData() {
+        if (editRequest == Constants.EDIT_SUMMARY || viewModel.edit_enquiryModel.value?.name?.isNotEmpty() == true) {
+            binding.fullnameEt.setText(viewModel.edit_enquiryModel.value?.name ?: "")
+            binding.emailEt.setText(viewModel.edit_enquiryModel.value?.email ?: "")
+            binding.mobileNumberEt.setText(viewModel.edit_enquiryModel.value?.mobileNumber ?: "")
+            binding.countrycodeEt.setSelectedValue(
+                viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
+            )
+        } else {
+            binding.fullnameEt.setText(sm.fetchName() ?: "")
+            binding.emailEt.setText(sm.fetchAccountEmailId() ?: "")
+
+        }
+    }
+
     override fun onHashMapItemSelected(key: String?, value: Any?) {
 
     }
@@ -357,13 +439,14 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     override fun onItemSlected(position: Int, selectedItem: String) {
 
 
-        viewModel.enquiryModel.value?.countryCode = getCountryCode(selectedItem)
+        viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(selectedItem)
+        viewModel.edit_enquiryModel.value?.fullcountryCode = selectedItem
 
         binding.mobileNumberEt.setText("")
         binding.mobileNumberEt.removeError()
     }
 
-    private fun getCountryCode(selectedItem:String):String {
+    private fun getCountryCode(selectedItem: String): String {
         var data = selectedItem
         val openingParenIndex = selectedItem.indexOf("(")
         val closingParenIndex = selectedItem.indexOf(")")
@@ -375,6 +458,36 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 ""
             }
         return extractedText
+    }
+
+    override fun onBackButtonPressed() {
+        saveOriginalDataToEditModel()
+    }
+
+    private fun saveOriginalDataToEditModel() {
+        if (editRequest == Constants.EDIT_SUMMARY) {
+
+            viewModel.edit_enquiryModel.value?.name = viewModel.enquiryModel.value?.name ?: ""
+            viewModel.edit_enquiryModel.value?.email = viewModel.enquiryModel.value?.email ?: ""
+            viewModel.edit_enquiryModel.value?.mobileNumber =
+                viewModel.enquiryModel.value?.mobileNumber ?: ""
+            viewModel.edit_enquiryModel.value?.countryCode =
+                viewModel.enquiryModel.value?.countryCode ?: ""
+            viewModel.edit_enquiryModel.value?.fullcountryCode =
+                viewModel.enquiryModel.value?.fullcountryCode ?: ""
+
+            viewModel.edit_enquiryModel.value?.category =
+                viewModel.enquiryModel.value?.category ?: CaseCategoriesModel("", "")
+            viewModel.edit_enquiryModel.value?.subCategory =
+                viewModel.enquiryModel.value?.subCategory ?: CaseCategoriesModel("", "")
+
+            viewModel.edit_enquiryModel.value?.comments =
+                viewModel.enquiryModel.value?.comments ?: ""
+            viewModel.edit_enquiryModel.value?.file =
+                viewModel.enquiryModel.value?.file ?: File("")
+            viewModel.edit_enquiryModel.value?.fileName =
+                viewModel.enquiryModel.value?.fileName ?: ""
+        }
     }
 
 

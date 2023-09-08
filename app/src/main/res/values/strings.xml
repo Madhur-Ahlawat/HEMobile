@@ -212,7 +212,7 @@
     <string name="str_confirm_password">Confirm password</string>
     <string name="str_password_reset_successfull">Password Reset Successfully</string>
     <string name="str_pay_dart_ford_crossing_charge">Pay the Dartford Crossing charge (Dart Charge)</string>
-    <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossings in various ways.</string>
+    <string name="str_pay_dart_ford_crossing_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossings in various ways.</string>
     <string name="str_about_this_service">About this service</string>
     <string name="str_crossing_service_update">Crossing service updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
@@ -599,11 +599,13 @@
     <string name="str_permitted_file_types_are_doc_docx_xls">\u25CF Permitted file types are \n .doc/.docx, .xls/.xlsx, .pdf, .jpg, .mbp, .tiff, .csv</string>
     <string name="str_duplicate_statements">Duplicate Statments</string>
     <string name="str_transaction">Transaction</string>
-    <string name="str_Your_enquiry_submitted">Your enquiry has been submitted successfully</string>
+    <string name="str_Your_enquiry_submitted">Your enquiry has been\nsubmitted successfully</string>
+    <string name="str_Your_complaint_submitted">Your complaint has been\nsubmitted successfully</string>
     <string name="str_we_will_get_back_to_you">\u25CF We will get back to you with in 7 working days</string>
     <string name="str_email_conformation">\u25CF We will send an email confirmation to %1$s post verification</string>
     <string name="str_check_enquiry_status">Check enquiry status</string>
-    <string name="str_enquiry_status">Cases enquiry status</string>
+    <string name="str_check_complaint_status">Check complaint status</string>
+    <string name="str_case_enquiry_status">Cases enquiry status</string>
     <string name="str_go_to_start_menu">Go to start menu</string>
     <string name="str_case_number">Case number</string>
     <string name="str_date">Date</string>
@@ -659,6 +661,7 @@
                 \n\u25CF 1 number \n</string>
     <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsuccessfully</string>
     <string name="sent_email">We have sent a confirmation email to %s</string>
+    <string name="sent_email_line">We have sent a confirmation email to\n%s</string>
     <string name="str_threshold_val_msg">You have chosen to top-up by %s, when your balance falls below %s.</string>
     <string name="str_threshold_val_update_msg">Change your low balance and auto top-up</string>
 
@@ -1434,11 +1437,39 @@
     <string name="vehicle_registration_number_plate_optional">Vehicle Registration (number plate) Optionsl</string>
     <string name="country_code">Country code</string>
     <string name="details_of_enquiry">Details of enquiry</string>
+    <string name="details_of_complaint">Details of complaint</string>
     <string name="str_check_your_answer_before_enquiry">Check your answers before sending your enquiry.</string>
+    <string name="str_check_your_answer_before_complaint">Check your answers before sending your complaint.</string>
     <string name="contact_message">Contact message</string>
     <string name="str_name">Name</string>
     <string name="str_choose_file">Choose file</string>
     <string name="non_UK_number_invalid">The non-UK phone number entered is invalid, please try again</string>
+    <string name="reference_number">Reference Number</string>
+    <string name="respond_enquiry_1day">We will respond to your enquiry within 1 day.</string>
+    <string name="respond_complaint_5days">We will respond to your complaint within 5 days.</string>
+    <string name="str_enquiry">Enquiry</string>
+    <string name="str_date_time_submitted">Date &amp; time submitted </string>
+    <string name="str_status_of_enquiry">Status of enquiry</string>
+    <string name="str_date_enquiry_closed">Date enquiry closed</string>
+    <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
+    <string name="str_terms_conditions">Terms &amp; Conditions</string>
+    <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
+    <string name="str_third_party_software">Third party software</string>
+    <string name="str_dart_charge_contact_centre">Dart charge contact centre</string>
+    <string name="str_contact_dart_charge_team">Contact the Dart Charge team</string>
+    <string name="str_find_out_about_call_charges"><u>Find out about call charges</u></string>
+    <string name="str_get_in_touch_about">Get in touch about:</string>
+    <string name="str_charges">charges</string>
+    <string name="str_fines">fines(Penalty Charge Notice)</string>
+    <string name="str_refunds">refunds</string>
+    <string name="str_dart_charge_accounts">dart Charge accounts</string>
+    <string name="str_complaints">complaints</string>
+    <string name="str_general_enquiries">general enquiries</string>
+    <string name="str_get_in_touch">Get in touch</string>
+    <string name="str_enquiry_status">Enquiry status</string>
+    <string name="str_incorrect_enquiry">Incorrect enquiry reference number or last name. Please try again.</string>
+    <string name="str_reference_3_charac">Enter an enquiry reference number that is 3 characters or more</string>
+    <string name="str_reference_validations">Enquiry reference number must only include letters a to z, and numbers 0 to 9.</string>
 
 
 </resources>

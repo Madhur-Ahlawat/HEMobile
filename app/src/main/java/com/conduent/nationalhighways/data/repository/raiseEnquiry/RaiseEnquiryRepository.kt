@@ -1,10 +1,10 @@
 package com.conduent.nationalhighways.data.repository.raiseEnquiry
 
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryStatusRequest
 import com.conduent.nationalhighways.data.remote.ApiService
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import javax.inject.Inject
 
 class RaiseEnquiryRepository @Inject constructor(private val apiService: ApiService) {
@@ -15,8 +15,17 @@ class RaiseEnquiryRepository @Inject constructor(private val apiService: ApiServ
         enquiryRequest: EnquiryRequest
     ) =
         apiService.raiseEnquiry(
-            enquiryRequest  )
+            enquiryRequest
+        )
 
+    suspend fun uploadFile(data: MultipartBody.Part?) =
+        apiService.uploadFile(data)
+
+    suspend fun getAccountSRList() =
+        apiService.GET_ACCOUNT_SR_LIST(JSONObject())
+
+    suspend fun getGeneralAccountSRList(jsonObject: EnquiryStatusRequest) =
+        apiService.GET_GENERAL_ACCOUNT_SR_DETAILS(jsonObject)
 
 
 }

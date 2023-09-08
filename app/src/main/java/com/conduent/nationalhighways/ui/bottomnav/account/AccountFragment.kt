@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.bottomnav.account
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     private val logOutViewModel: LogoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
+
     @Inject
     lateinit var sessionManager: SessionManager
     private var title: TextView? = null
@@ -61,6 +63,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         isSecondaryUser = sessionManager.getSecondaryUser()
         setPaymentsVisibility()
         initUI()
+        binding.contactUs.visible()
+
     }
 
     private fun initUI() {
@@ -85,8 +89,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
             valueName.text = sessionManager.fetchName()
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
+            Log.e("TAG", "initUI: fetchAccountStatus " + sessionManager.fetchAccountStatus())
             DashboardUtils.setAccountStatusNew(
-                sessionManager.fetchAccountStatus()!!,
+                sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
                 binding.cardIndicatorAccountStatus
             )
@@ -115,7 +120,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     override fun onResume() {
-        title?.text  = getString(R.string.txt_my_account)
+        title?.text = getString(R.string.txt_my_account)
 
         super.onResume()
     }
@@ -162,8 +167,14 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             R.id.communication_preferences -> {
                 title?.text = getString(R.string.communication_preferences)
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
-                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment,bundle)
+                bundle.putString(
+                    Constants.NAV_FLOW_KEY,
+                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
+                )
+                findNavController().navigate(
+                    R.id.action_accountFragment_to_optForSmsFragment,
+                    bundle
+                )
             }
 
             R.id.vehicle_management -> {
@@ -178,12 +189,15 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.contact_us -> {
-                requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
+                val bundle:Bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_FROM,Constants.ACCOUNT_CONTACT_US)
+                findNavController().navigate(R.id.caseEnquiryHistoryListFragment,bundle)
+                /*requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
                     putInt(
                         Constants.FROM_LOGIN_TO_CASES,
                         Constants.FROM_LOGIN_TO_CASES_VALUE
                     )
-                }
+                }*/
             }
 
 //            R.id.rl_account_statement -> {
@@ -263,7 +277,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        (requireActivity() as HomeActivityMain).showHideToolbar(true)
 
 
     }
