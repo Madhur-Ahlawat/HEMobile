@@ -102,7 +102,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             SuspendPaymentMethodAdapter(requireContext(), paymentList, this, navFlow)
         binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
 
-        binding.lowBalance.setText("£10")
+        binding.lowBalance.setText("£10.00")
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
         cursorPosition = binding.lowBalance.editText.selectionStart
         edtLength = binding.lowBalance.editText.getText()?.length
@@ -195,6 +195,10 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
             checkButton()
             checkNewPaymentMethodButton()
+            Selection.setSelection(
+                binding.lowBalance.getText(),
+                binding.lowBalance.getText().toString().length
+            )
             cursorPosition = binding.lowBalance.editText.selectionStart
             edtLength = binding.lowBalance.editText.getText().toString().length
         }
