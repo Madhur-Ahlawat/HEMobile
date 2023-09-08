@@ -72,7 +72,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.btnAddNewPaymentMethod.setOnClickListener(this)
         binding.btnAddNewPayment.setOnClickListener(this)
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
-          binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
+        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
 
 
@@ -96,7 +96,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.rvPaymentMethods.layoutManager = linearLayoutManager
 
         suspendPaymentMethodAdapter =
-            SuspendPaymentMethodAdapter(requireContext(), paymentList, this,navFlow)
+            SuspendPaymentMethodAdapter(requireContext(), paymentList, this, navFlow)
         binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
 
         binding.lowBalance.setText("£10.00")
@@ -221,7 +221,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
 
             R.id.btnAddNewPaymentMethod -> {
-                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "").replace(".","").replace("$","")
+                val topUpAmount =
+                    binding.lowBalance.getText().toString().trim().replace("£", "").replace(".", "")
+                        .replace("$", "")
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
@@ -258,11 +260,23 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
         when (status) {
             is Resource.Success -> {
-                // paymentList?.clear()
                 paymentList = status.data?.creditCardListType?.cardsList
                 if (paymentList?.isNotEmpty() == true) {
 
-                    suspendPaymentMethodAdapter.updateList(paymentList,navFlow)
+                    if (navFlow == Constants.PAYMENT_TOP_UP) {
+                        for (i in 0 until (paymentList?.size ?: 0)) {
+                            if (paymentList?.get(i)?.primaryCard == true && paymentList?.get(i)?.bankAccount == false) {
+                                position = i
+                                cardSelection = true
+                                checkButton()
+
+                            }
+
+                        }
+                    }
+
+
+                    suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
                     binding.rvPaymentMethods.visible()
                     binding.btnContinue.visible()
 
@@ -293,7 +307,15 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     override fun paymentMethodCallback(position: Int) {
         this.position = position
-        suspendPaymentMethodAdapter?.notifyDataSetChanged()
+        for (i in 0 until (paymentList?.size ?: 0)) {
+            paymentList?.get(i)?.isSelected = false
+            paymentList?.get(i)?.primaryCard = false
+        }
+        if (navFlow == Constants.PAYMENT_TOP_UP) {
+            paymentList?.get(position)?.primaryCard = true
+        }
+        paymentList?.get(position)?.isSelected = true
+        suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
         cardSelection = paymentList?.get(position)?.isSelected == true
         checkButton()
 
@@ -301,11 +323,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
-
-
 
 
     }

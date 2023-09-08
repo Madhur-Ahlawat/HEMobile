@@ -51,10 +51,12 @@ class SuspendPaymentMethodAdapter(
         })
 
         if (navFlow== Constants.PAYMENT_TOP_UP){
-            list?.get(position)?.isSelected=true
 
-            holder.binding.radioButtonPaymentMethod.isChecked = list?.get(position)?.primaryCard==true
-        }else{
+            if (list?.get(position)?.bankAccount==false){
+                holder.binding.radioButtonPaymentMethod.isChecked = list?.get(position)?.primaryCard==true
+                list?.get(position)?.isSelected=true
+            }
+
         }
 
         holder.binding.tvSelectPaymentMethod.text = htmlText

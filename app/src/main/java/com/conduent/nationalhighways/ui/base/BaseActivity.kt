@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.ui.base
 
 import android.app.Dialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -19,9 +21,13 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.logout.LogoutListener
 
 
-abstract class BaseActivity<T> : AppCompatActivity() {
+abstract class BaseActivity<T> : AppCompatActivity(),LogoutListener {
 
     abstract fun observeViewModel()
     protected abstract fun initViewBinding()
@@ -108,6 +114,7 @@ abstract class BaseActivity<T> : AppCompatActivity() {
         val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(this))
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(true)
 
 
 
@@ -134,6 +141,39 @@ abstract class BaseActivity<T> : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+         // BaseApplication.registerSessionListener(this)
+    }
+
+    override fun onLogout() {
+        displayCustomMessage(getString(R.string.str_timeout),
+            getString(R.string.str_for_your_security),
+            getString(R.string.str_sign_out),
+            getString(R.string.str_stay_signed_in),
+            object : DialogPositiveBtnListener {
+                override fun positiveBtnClick(dialog: DialogInterface) {
+
+
+
+                    //dialog.dismiss()
+
+
+                }
+            },
+            object : DialogNegativeBtnListener {
+                override fun negativeBtnClick(dialog: DialogInterface) {
+
+
+                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                }
+            })
+    }
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+       // BaseApplication.resetSession()
+    }
 
 }
 
@@ -145,6 +185,10 @@ fun AppCompatActivity.onBackPressed(callback: () -> Unit){
         }
     })
 }
+
+
+
+
 
 fun FragmentActivity.onBackPressed(callback: () -> Unit){
     onBackPressedDispatcher.addCallback(this,

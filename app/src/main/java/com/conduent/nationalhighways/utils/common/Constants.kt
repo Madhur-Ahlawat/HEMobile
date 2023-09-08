@@ -23,6 +23,8 @@ object Constants {
     const val VISA = "VISA"
     const val RETRY_COUNT = 3
     const val ITEM_COUNT : Long = 20
+    const val LOCAL_APP_SESSION_TIMEOUT = 1000 * 60 * 15L
+
     const val SPLASH_TIME_OUT = 500L
     const val COUNTRY_TYPE = "country_type"
     const val CHECK_PAID_CROSSING_VRM_ENTERED = "CHECK_PAID_CROSSING_VRM_ENTERED"

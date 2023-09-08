@@ -380,7 +380,7 @@
     <string name="error_password_not_match">Confirm password does not match</string>
     <string name="error_postal_code">Please enter post code</string>
     <string name="check_sms">Check your SMS</string>
-    <string name="str_check_sms">Check your text messages for a security code.</string>
+    <string name="str_check_sms">Check your phone for a security code.</string>
     <string name="enter_otp">Please enter correct otp</string>
 
     <string name="str_log_out">Logout</string>
@@ -923,7 +923,7 @@
     <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information: <a href="https://www.google.com/">Click Here</a></string>
     <string name="str_free">Free</string>
     <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder.\n\n The code will expire after 15 minutes.</string>
-    <string name="resend_code_text">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
+    <string name="resend_code_text">A text will be sent to %s. \n\nYour text message might take a few minutes to arrive.\n\n The code will expire after 15 minutes.</string>
     <string name="resend_code_expire">We’ll send a text message to %s. \n\nThe code will expire after 15 minutes.</string>
 
 
@@ -1190,8 +1190,8 @@
     <string name="card_number_must_be_16_digits_or_more">Card number must be 16 digits or more</string>
     <string name="expiry_date_cannot_be_in_the_past">Expiry date cannot be in the past</string>
     <string name="str_your_pay_as_you_go">Your pay-as-you-go payment will get taken each time you make a crossing.</string>
-    <string name="str_radio_sms">Text %s\n <i>Message and data rates may apply</i></string>
-    <string name="str_radio_email">Email %s</string>
+    <string name="str_radio_sms"><Data><![CDATA[<b>Mobile</b> %s<br><i>Message and data rates may apply</i></b>]]></Data></string>
+    <string name="str_radio_email"><Data><![CDATA[<b>Email</b> %s]]></Data></string>
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
     <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
     <string name="str_enable_face_ID">Enable Biometric</string>
@@ -1441,6 +1441,14 @@
     <string name="str_remove_payment_method">Remove Payment Method</string>
     <string name="str_are_you_sure_you_want_to_remove_payment_method">Are you sure you want to remove\n payment method %s with expiry date %s?</string>
     <string name="str_are_you_sure_you_want_to_remove_direct_payment_method">Are you sure you want to remove\n payment method %s</string>
+    <string name="str_signed_out">Signed out</string>
+    <string name="str_you_have_signed_out">You\'ve signed out of your account</string>
+    <string name="str_timeout">Timeout</string>
+    <string name="str_for_your_security">For your security,you\'ll be signed out in %s minutes</string>
+    <string name="str_sign_out">Sign out</string>
+    <string name="str_stay_signed_in">Stay signed In</string>
+
+
 </resources>
 
 

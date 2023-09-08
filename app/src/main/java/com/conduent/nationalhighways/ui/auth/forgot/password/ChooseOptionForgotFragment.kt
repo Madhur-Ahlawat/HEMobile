@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
+import android.text.Html
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -72,14 +73,18 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
         } else {
             if (!responseModel?.phone.isNullOrEmpty() && !responseModel?.phone.equals("null",true)) {
-                binding.radioSms.text = getString(R.string.str_radio_sms, responseModel?.phone)
+                val htmlText =
+                    Html.fromHtml(getString(R.string.str_radio_sms, responseModel?.phone)
+                        )
+                binding.radioSms.text = htmlText
                 binding.radioSms.visibility = View.VISIBLE
             } else {
                 binding.radioSms.visibility = View.GONE
             }
 
-
-            binding.radioEmail.text = getString(R.string.str_radio_email, responseModel?.email)
+            val htmlText =
+                Html.fromHtml(getString(R.string.str_radio_email, responseModel?.email))
+            binding.radioEmail.text =htmlText
         }
 
 
@@ -223,14 +228,18 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                     responseModel = status.data
                     binding.root.post {
                         if (!status.data?.phone.isNullOrEmpty() && !status.data?.phone.equals("null",true)) {
-                            binding.radioSms.text = getString(R.string.str_radio_sms, status.data?.phone)
+                            val htmlText =
+                                Html.fromHtml(getString(R.string.str_radio_sms, status.data?.phone)
+                                )
+                            binding.radioSms.text = htmlText
                             binding.radioSms.visibility = View.VISIBLE
                         } else {
                             binding.radioSms.visibility = View.GONE
                         }
 
-                        binding.radioEmail.text =
-                            getString(R.string.str_radio_email, status.data?.email)
+                        val htmlText =
+                            Html.fromHtml(getString(R.string.str_radio_email, status.data?.email))
+                        binding.radioEmail.text =htmlText
 
                     }
                 }
