@@ -19,6 +19,7 @@ class SuspendPaymentMethodAdapter(
     var navFlow: String
 ) :
     RecyclerView.Adapter<SuspendPaymentMethodAdapter.SuspendedViewHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -35,6 +36,7 @@ class SuspendPaymentMethodAdapter(
         holder: SuspendPaymentMethodAdapter.SuspendedViewHolder,
         position: Int
     ) {
+        var pos=-1
         if (list?.get(position)?.cardType.equals("visa", true)) {
             holder.binding.ivCardType.setImageResource(R.drawable.visablue)
         } else if (list?.get(position)?.cardType.equals("maestro", true)) {
@@ -61,19 +63,34 @@ class SuspendPaymentMethodAdapter(
 
 
         holder.binding.layout.setOnClickListener {
-            if (list?.get(position)?.isSelected == true){
-                list?.get(position)?.isSelected=false
+            pos=position
+            if (list?.get(pos!!)?.isSelected == true){
+                list?.get(pos!!)?.isSelected=false
                 holder.binding.radioButtonPaymentMethod.isChecked=false
 
             }else{
-                list?.get(position)?.isSelected=true
+                list?.get(pos!!)?.isSelected=true
                 holder.binding.radioButtonPaymentMethod.isChecked=true
 
 
             }
-
-            paymentMethod.paymentMethodCallback(position)
             notifyDataSetChanged()
+            paymentMethod.paymentMethodCallback(pos!!)
+        }
+        holder.binding.radioButtonPaymentMethod.setOnClickListener {
+            pos=position
+            if (list?.get(pos!!)?.isSelected == true){
+                list?.get(pos!!)?.isSelected=false
+                holder.binding.radioButtonPaymentMethod.isChecked=false
+
+            }else{
+                list?.get(pos!!)?.isSelected=true
+                holder.binding.radioButtonPaymentMethod.isChecked=true
+
+
+            }
+            notifyDataSetChanged()
+            paymentMethod.paymentMethodCallback(pos!!)
         }
     }
 

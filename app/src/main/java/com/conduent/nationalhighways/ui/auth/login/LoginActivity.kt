@@ -149,10 +149,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    if (it.transactionList!=null){
-                        navigateWithCrossing(it.transactionList.count?:0)
+                    if (it.transactionList != null) {
+                        navigateWithCrossing(it.transactionList.count ?: 0)
 
-                    }else{
+                    } else {
                         startNewActivityByClearingStack(HomeActivityMain::class.java)
 
                     }
@@ -238,9 +238,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             "login",
             sessionManager.getLoggedInUser()
         )
-
-
+        binding.edtEmail.setText("businesstp@gmai.com")
+        binding.edtPwd.setText("Welcome1")
+        binding.btnLogin.isEnabled = true
+        binding.btnLogin.performClick()
+        binding.btnLogin.performClick()
     }
+
     private fun isEnable() {
         emailCheck = if (binding.edtEmail.editText.getText().toString().trim().isNotEmpty()) {
             if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
@@ -259,7 +263,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         ) || (binding.edtEmail.editText.getText().toString().trim().last()
                             .toString() == "." || binding.edtEmail.editText.text
                             .toString().first().toString() == ".")
-                        || (binding.edtEmail.editText.getText().toString().trim().last().toString() == "-" || binding.edtEmail.editText.getText().toString().first()
+                        || (binding.edtEmail.editText.getText().toString().trim().last()
+                            .toString() == "-" || binding.edtEmail.editText.getText().toString()
+                            .first()
                             .toString() == "-")
                         || (Utils.countOccurenceOfChar(
                             binding.edtEmail.editText.getText().toString().trim(), '.'
@@ -375,7 +381,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                binding.btnLogin.isEnabled=true
+                binding.btnLogin.isEnabled = true
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
@@ -403,7 +409,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             else -> {
-                binding.btnLogin.isEnabled=true
+                binding.btnLogin.isEnabled = true
             }
         }
 
@@ -537,7 +543,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     "success",
                     sessionManager.getLoggedInUser()
                 )
-                NewCreateAccountRequestModel.emailAddress=""
+                NewCreateAccountRequestModel.emailAddress = ""
                 val intent = Intent(this, AuthActivity::class.java)
                 intent.putExtra(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
 

@@ -1441,6 +1441,7 @@
     <string name="str_remove_payment_method">Remove Payment Method</string>
     <string name="str_are_you_sure_you_want_to_remove_payment_method">Are you sure you want to remove\n payment method %s with expiry date %s?</string>
     <string name="str_are_you_sure_you_want_to_remove_direct_payment_method">Are you sure you want to remove\n payment method %s</string>
+    <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>
 </resources>
 
 
