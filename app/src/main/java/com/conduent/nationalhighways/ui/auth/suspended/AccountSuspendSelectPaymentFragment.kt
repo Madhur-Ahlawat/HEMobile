@@ -32,10 +32,14 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+
 
 @AndroidEntryPoint
 class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendHaltBinding>(),
     View.OnClickListener, SuspendPaymentMethodAdapter.paymentMethodSelectCallBack {
+    private var edtLength: Int? = 0
+    private var cursorPosition: Int? = 0
     private lateinit var suspendPaymentMethodAdapter: SuspendPaymentMethodAdapter
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var lowBalance: Boolean = true
@@ -71,8 +75,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.btnContinue.setOnClickListener(this)
         binding.btnAddNewPaymentMethod.setOnClickListener(this)
         binding.btnAddNewPayment.setOnClickListener(this)
-        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
-          binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
+        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
 
 
@@ -96,20 +99,23 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.rvPaymentMethods.layoutManager = linearLayoutManager
 
         suspendPaymentMethodAdapter =
-            SuspendPaymentMethodAdapter(requireContext(), paymentList, this,navFlow)
+            SuspendPaymentMethodAdapter(requireContext(), paymentList, this, navFlow)
         binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
 
-        binding.lowBalance.setText("£10.00")
-
-
+        binding.lowBalance.setText("£10")
+        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
+        cursorPosition = binding.lowBalance.editText.selectionStart
+        edtLength = binding.lowBalance.editText.getText()?.length
+        Selection.setSelection(binding.lowBalance.editText.getText(),edtLength!!-1)
     }
 
     private fun topBalanceDecimal(b: Boolean) {
         if (b.not()) {
             val text = binding.lowBalance.getText().toString().trim()
             val updatedText = text.replace("£", "")
-            if (updatedText.isNotEmpty() && updatedText.contains(".").not()) {
-                binding.lowBalance.setText(String.format("%.2f", updatedText.toDouble()))
+            if (updatedText.isNotEmpty().not()) {
+                val formatter = DecimalFormat("#,###.00")
+                binding.lowBalance.setText(formatter.format(updatedText))
             }
         }
     }
@@ -138,26 +144,45 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             count: Int
         ) {
 
-
             val text = binding.lowBalance.getText().toString().trim()
-            var updatedText: String = ""
-            updatedText = if (text.contains("$")) {
-                text.replace("$", "")
-            } else {
-                text.replace("£", "")
-            }
-
-
-
+            var updatedText: String =
+                text.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+                    .replace(" ", "")
             if (updatedText.isNotEmpty()) {
-                val str: String = updatedText.substringBeforeLast(".")
-                lowBalance = if (str.length < 8) {
-                    if (updatedText.toDouble() < 10) {
+                lowBalance = if (updatedText.length < 8) {
+                    if (updatedText.toInt() < 10) {
                         binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                         false
 
+                    } else if (updatedText.toInt() > 80000) {
+                        binding.lowBalance.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
+                        false
                     } else {
+                        lowBalance=true
                         binding.lowBalance.removeError()
+                        val formatter = DecimalFormat("#,###.00")
+                        binding.lowBalance.editText.removeTextChangedListener(this)
+                        binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
+//                        if (binding.lowBalance.editText.getText().toString().length > edtLength!!) {
+//                            Selection.setSelection(
+//                                binding.lowBalance.editText.getText(),
+//                                cursorPosition!!+1
+//                            )
+//                        } else if (binding.lowBalance.editText.getText()
+//                                .toString().length < edtLength!!
+//                        ) {
+//                            Selection.setSelection(
+//                                binding.lowBalance.editText.getText(),
+//                                cursorPosition!! - 1
+//                            )
+//                        }
+//                        else if(binding.lowBalance.editText.getText().toString().length == edtLength!!){
+//                            Selection.setSelection(
+//                                binding.lowBalance.editText.getText(),
+//                                cursorPosition!!
+//                            )
+//                        }
+                        binding.lowBalance.editText.addTextChangedListener(this)
                         true
                     }
                 } else {
@@ -168,19 +193,10 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             } else {
                 binding.lowBalance.removeError()
             }
-            binding.lowBalance.editText.removeTextChangedListener(this)
-            if (updatedText.isNotEmpty())
-                binding.lowBalance.setText("£$updatedText")
-            Selection.setSelection(
-                binding.lowBalance.getText(),
-                binding.lowBalance.getText().toString().length
-            )
-            binding.lowBalance.editText.addTextChangedListener(this)
-
-
-
             checkButton()
             checkNewPaymentMethodButton()
+            cursorPosition = binding.lowBalance.editText.selectionStart
+            edtLength = binding.lowBalance.editText.getText().toString().length
         }
 
         override fun afterTextChanged(editable: Editable?) {
@@ -204,7 +220,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         when (v?.id) {
 
             R.id.btnContinue -> {
-                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
+                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "").replace(".00", "")
+                    .replace("$", "").replace(",","")
 
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
@@ -221,7 +238,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
 
             R.id.btnAddNewPaymentMethod -> {
-                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "").replace(".","").replace("$","")
+                val topUpAmount =
+                    binding.lowBalance.getText().toString().trim().replace("£", "").replace(".00", "")
+                        .replace("$", "").replace(",","")
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
@@ -262,7 +281,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 paymentList = status.data?.creditCardListType?.cardsList
                 if (paymentList?.isNotEmpty() == true) {
 
-                    suspendPaymentMethodAdapter.updateList(paymentList,navFlow)
+                    suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
                     binding.rvPaymentMethods.visible()
                     binding.btnContinue.visible()
 
@@ -292,16 +311,15 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     override fun paymentMethodCallback(position: Int) {
-        this.position = position
-        suspendPaymentMethodAdapter?.notifyDataSetChanged()
         cardSelection = paymentList?.get(position)?.isSelected == true
         checkButton()
 
     }
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
 
