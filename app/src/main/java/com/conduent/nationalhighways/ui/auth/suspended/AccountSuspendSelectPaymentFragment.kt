@@ -144,9 +144,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             count: Int
         ) {
 
-            val text = binding.lowBalance.getText().toString().trim()
-            val updatedText: String =
-                text.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+            var mText = binding.lowBalance.getText().toString()
+            var updatedText: String =
+                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
                     .replace(" ", "")
             if (updatedText.isNotEmpty()) {
                 lowBalance = if (updatedText.length < 8) {
@@ -163,25 +163,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                         val formatter = DecimalFormat("#,###.00")
                         binding.lowBalance.editText.removeTextChangedListener(this)
                         binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
-//                        if (binding.lowBalance.editText.getText().toString().length > edtLength!!) {
-//                            Selection.setSelection(
-//                                binding.lowBalance.editText.getText(),
-//                                cursorPosition!!+1
-//                            )
-//                        } else if (binding.lowBalance.editText.getText()
-//                                .toString().length < edtLength!!
-//                        ) {
-//                            Selection.setSelection(
-//                                binding.lowBalance.editText.getText(),
-//                                cursorPosition!! - 1
-//                            )
-//                        }
-//                        else if(binding.lowBalance.editText.getText().toString().length == edtLength!!){
-//                            Selection.setSelection(
-//                                binding.lowBalance.editText.getText(),
-//                                cursorPosition!!
-//                            )
-//                        }
                         binding.lowBalance.editText.addTextChangedListener(this)
                         true
                     }
@@ -199,8 +180,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 binding.lowBalance.getText(),
                 binding.lowBalance.getText().toString().length
             )
-            cursorPosition = binding.lowBalance.editText.selectionStart
-            edtLength = binding.lowBalance.editText.text.toString().length
         }
 
         override fun afterTextChanged(editable: Editable?) {
