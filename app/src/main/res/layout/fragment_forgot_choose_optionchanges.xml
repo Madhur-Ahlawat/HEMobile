@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/new_btn_color"
                 android:gravity="top"
+                tools:text="@string/str_dummy_2fa_options_email"
                 android:paddingStart="5dp"
                 android:paddingTop="3dp"
                 android:paddingEnd="5dp"
@@ -60,6 +62,7 @@
                 android:layout_marginTop="30dp"
                 android:buttonTint="@color/new_btn_color"
                 android:gravity="top"
+                tools:text="@string/str_dummy_text_2fa_options_sms"
                 android:paddingStart="5dp"
                 android:paddingTop="3dp"
                 android:paddingEnd="5dp"

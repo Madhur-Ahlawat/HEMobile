@@ -36,7 +36,7 @@ class SuspendPaymentMethodAdapter(
         holder: SuspendPaymentMethodAdapter.SuspendedViewHolder,
         position: Int
     ) {
-        var pos=-1
+        var pos = -1
         if (list?.get(position)?.cardType.equals("visa", true)) {
             holder.binding.ivCardType.setImageResource(R.drawable.visablue)
         } else if (list?.get(position)?.cardType.equals("maestro", true)) {
@@ -46,46 +46,59 @@ class SuspendPaymentMethodAdapter(
             holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
 
         }
-        val htmlText = Html.fromHtml(list?.get(position)?.cardType+"<br>"+ list?.get(position)?.cardNumber?.let {
-            Utils.maskCardNumber(
-                it
-            )
-        })
+        val htmlText =
+            Html.fromHtml(list?.get(position)?.cardType + "<br>" + list?.get(position)?.cardNumber?.let {
+                Utils.maskCardNumber(
+                    it
+                )
+            })
 
-        if (navFlow== Constants.PAYMENT_TOP_UP){
-            list?.get(position)?.isSelected=true
+        if (navFlow == Constants.PAYMENT_TOP_UP) {
+            list?.get(position)?.isSelected = true
 
-            holder.binding.radioButtonPaymentMethod.isChecked = list?.get(position)?.primaryCard==true
-        }else{
+            holder.binding.radioButtonPaymentMethod.isChecked =
+                list?.get(position)?.primaryCard == true
+        } else {
         }
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
-
+        if (list?.get(position)!!.isSelected) {
+            holder.binding.radioButtonPaymentMethod.isChecked = true
+        } else {
+            holder.binding.radioButtonPaymentMethod.isChecked = false
+        }
 
         holder.binding.layout.setOnClickListener {
-            pos=position
-            if (list?.get(pos!!)?.isSelected == true){
-                list?.get(pos!!)?.isSelected=false
-                holder.binding.radioButtonPaymentMethod.isChecked=false
-
-            }else{
-                list?.get(pos!!)?.isSelected=true
-                holder.binding.radioButtonPaymentMethod.isChecked=true
-
-
+            pos = position
+            if (list?.get(pos!!)?.isSelected == true) {
+                list?.forEachIndexed { index, cardListResponseModel ->
+                    if (index == pos) {
+                        list?.get(pos!!)?.isSelected = false
+                    } else {
+                        list?.get(pos!!)?.isSelected = true
+                    }
+                }
+            } else {
+                list?.forEachIndexed { index, cardListResponseModel ->
+                    if (index == pos) {
+                        list?.get(pos!!)?.isSelected = true
+                    } else {
+                        list?.get(pos!!)?.isSelected = false
+                    }
+                }
             }
             notifyDataSetChanged()
             paymentMethod.paymentMethodCallback(pos!!)
         }
         holder.binding.radioButtonPaymentMethod.setOnClickListener {
-            pos=position
-            if (list?.get(pos!!)?.isSelected == true){
-                list?.get(pos!!)?.isSelected=false
-                holder.binding.radioButtonPaymentMethod.isChecked=false
+            pos = position
+            if (list?.get(pos!!)?.isSelected == true) {
+                list?.get(pos!!)?.isSelected = false
+                holder.binding.radioButtonPaymentMethod.isChecked = false
 
-            }else{
-                list?.get(pos!!)?.isSelected=true
-                holder.binding.radioButtonPaymentMethod.isChecked=true
+            } else {
+                list?.get(pos!!)?.isSelected = true
+                holder.binding.radioButtonPaymentMethod.isChecked = true
 
 
             }
@@ -100,7 +113,7 @@ class SuspendPaymentMethodAdapter(
 
     fun updateList(paymentList: MutableList<CardListResponseModel?>?, navFlow: String) {
         this.list = paymentList
-        this.navFlow=navFlow
+        this.navFlow = navFlow
         notifyDataSetChanged()
 
     }

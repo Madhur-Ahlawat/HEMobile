@@ -1190,8 +1190,6 @@
     <string name="card_number_must_be_16_digits_or_more">Card number must be 16 digits or more</string>
     <string name="expiry_date_cannot_be_in_the_past">Expiry date cannot be in the past</string>
     <string name="str_your_pay_as_you_go">Your pay-as-you-go payment will get taken each time you make a crossing.</string>
-    <string name="str_radio_sms">Text %s\n <i>Message and data rates may apply</i></string>
-    <string name="str_radio_email">Email %s</string>
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
     <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
     <string name="str_enable_face_ID">Enable Biometric</string>
@@ -1442,6 +1440,10 @@
     <string name="str_are_you_sure_you_want_to_remove_payment_method">Are you sure you want to remove\n payment method %s with expiry date %s?</string>
     <string name="str_are_you_sure_you_want_to_remove_direct_payment_method">Are you sure you want to remove\n payment method %s</string>
     <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>
+    <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
+    <string name="str_dummy_text_2fa_options_sms">Text <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
+    <string name="str_radio_sms">Text <b>%s</b>\n<i>Message and data rates may apply</i></string>
+    <string name="str_radio_email">Email <b>%s</b></string>
 </resources>
 
 
