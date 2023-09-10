@@ -90,9 +90,10 @@
             android:text="@string/str_pay"
             android:textSize="@dimen/font_14sp"
             app:isEnabled="false"
+            android:layout_marginBottom="@dimen/_30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardView" />
+            app:layout_constraintBottom_toTopOf="@id/btnCancel"/>
 
 
         <com.conduent.apollo.ui.CMButton
@@ -106,7 +107,7 @@
             app:isEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnPay" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

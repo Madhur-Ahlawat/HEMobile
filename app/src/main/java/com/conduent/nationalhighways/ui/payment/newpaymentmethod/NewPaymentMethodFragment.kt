@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +27,7 @@ import com.conduent.nationalhighways.databinding.FragmentPaymentMethod2Binding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -54,7 +56,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
-    private lateinit var title: TextView
+    private lateinit var title: AppCompatTextView
     private var position: Int = 0
     private var accountNumber:String=""
 
@@ -71,7 +73,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        title = requireActivity().findViewById(R.id.title_txt)
+        title = (requireActivity() as HomeActivityMain).dataBinding?.titleTxt!!
 
 
         if (!isViewCreated) {
