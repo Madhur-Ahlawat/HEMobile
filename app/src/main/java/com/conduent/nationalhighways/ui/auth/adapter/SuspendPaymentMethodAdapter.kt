@@ -53,52 +53,42 @@ class SuspendPaymentMethodAdapter(
                 )
             })
 
-        if (navFlow == Constants.PAYMENT_TOP_UP) {
-            list?.get(position)?.isSelected = true
+        if (navFlow== Constants.PAYMENT_TOP_UP){
 
-            holder.binding.radioButtonPaymentMethod.isChecked =
-                list?.get(position)?.primaryCard == true
-        } else {
+            if (list?.get(position)?.bankAccount==false){
+                holder.binding.radioButtonPaymentMethod.isChecked = list?.get(position)?.primaryCard==true
+                list?.get(position)?.isSelected=true
+            }
+
         }
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
-        if (list?.get(position)!!.isSelected) {
-            holder.binding.radioButtonPaymentMethod.isChecked = true
-        } else {
-            holder.binding.radioButtonPaymentMethod.isChecked = false
-        }
+
 
         holder.binding.layout.setOnClickListener {
-            pos = position
-            if (list?.get(pos!!)?.isSelected == true) {
-                list?.forEachIndexed { index, cardListResponseModel ->
-                    if (index == pos) {
-                        list?.get(pos!!)?.isSelected = false
-                    } else {
-                        list?.get(pos!!)?.isSelected = true
-                    }
-                }
-            } else {
-                list?.forEachIndexed { index, cardListResponseModel ->
-                    if (index == pos) {
-                        list?.get(pos!!)?.isSelected = true
-                    } else {
-                        list?.get(pos!!)?.isSelected = false
-                    }
-                }
+            pos=position
+            if (list?.get(pos!!)?.isSelected == true){
+                list?.get(pos!!)?.isSelected=false
+                holder.binding.radioButtonPaymentMethod.isChecked=false
+
+            }else{
+                list?.get(pos!!)?.isSelected=true
+                holder.binding.radioButtonPaymentMethod.isChecked=true
+
+
             }
             notifyDataSetChanged()
             paymentMethod.paymentMethodCallback(pos!!)
         }
         holder.binding.radioButtonPaymentMethod.setOnClickListener {
-            pos = position
-            if (list?.get(pos!!)?.isSelected == true) {
-                list?.get(pos!!)?.isSelected = false
-                holder.binding.radioButtonPaymentMethod.isChecked = false
+            pos=position
+            if (list?.get(pos!!)?.isSelected == true){
+                list?.get(pos!!)?.isSelected=false
+                holder.binding.radioButtonPaymentMethod.isChecked=false
 
-            } else {
-                list?.get(pos!!)?.isSelected = true
-                holder.binding.radioButtonPaymentMethod.isChecked = true
+            }else{
+                list?.get(pos!!)?.isSelected=true
+                holder.binding.radioButtonPaymentMethod.isChecked=true
 
 
             }
@@ -113,7 +103,7 @@ class SuspendPaymentMethodAdapter(
 
     fun updateList(paymentList: MutableList<CardListResponseModel?>?, navFlow: String) {
         this.list = paymentList
-        this.navFlow = navFlow
+        this.navFlow=navFlow
         notifyDataSetChanged()
 
     }

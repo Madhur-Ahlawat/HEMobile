@@ -1,12 +1,10 @@
 package com.conduent.nationalhighways.ui.landing
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentSessionExpireBinding
-import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -26,15 +24,15 @@ class SessionExpireFragment : BaseFragment<FragmentSessionExpireBinding>(), View
         when (type) {
 
             Constants.LOGIN -> {
-                binding.tvLabel.text =
-                    getString(R.string.select_the_sign_in_button_to_log_in_to_your_account)
+               /* binding.tvLabel.text =
+                    getString(R.string.select_the_sign_in_button_to_log_in_to_your_account)*/
                 binding.btn.text = getString(R.string.txt_sign_in)
             }
 
             Constants.REFRESH_TOKEN -> {
                 // to do refresh token ("Start Again" button click )
-                binding.tvLabel.text =
-                    getString(R.string.select_the_start_now_button_to_restart_your_session)
+             /*   binding.tvLabel.text =
+                    getString(R.string.select_the_start_now_button_to_restart_your_session)*/
                 binding.btn.text = getString(R.string.start_again)
             }
         }

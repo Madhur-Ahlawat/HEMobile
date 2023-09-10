@@ -1,25 +1,36 @@
 package com.conduent.nationalhighways.utils.common
 
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Build.VERSION_CODES
+import android.os.CountDownTimer
 import android.provider.Settings
-import android.util.Log
+import android.view.LayoutInflater
+import android.view.Window
+import android.view.WindowManager
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.databinding.CustomDialogBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.extn.changeBackgroundColor
 import com.conduent.nationalhighways.utils.extn.changeTextColor
 import java.lang.reflect.Field
 import java.text.DateFormat
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -113,27 +124,27 @@ object Utils {
 
     fun countOccurenceOfChar(s: String, c: Char): Int {
         var res = 0
-        for (i in 0 until s.length) {
+        for (element in s) {
             // checking character in string
-            if (s[i] == c) res++
+            if (element == c) res++
         }
         return res
     }
 
     fun hiddenEmailText(email: String): String {
-        var indexOfAtSymbol = email.indexOf('@')
-        var indexOfDot = email.indexOf('.')
+        val indexOfAtSymbol = email.indexOf('@')
+        val indexOfDot = email.indexOf('.')
         var hiddenEmailText = ""
 
         email.forEachIndexed { index, c ->
             if (index == 0) {
-                hiddenEmailText = hiddenEmailText + c.toString()
+                hiddenEmailText += c.toString()
             } else if (index > 0) {
                 if (index < indexOfAtSymbol || (index > (indexOfAtSymbol + 1) && index < indexOfDot)) {
-                    hiddenEmailText = hiddenEmailText + "*"
+                    hiddenEmailText += "*"
 
                 } else if ((index == indexOfAtSymbol) || (index == indexOfAtSymbol + 1) || (index >= indexOfDot)) {
-                    hiddenEmailText = hiddenEmailText + c.toString()
+                    hiddenEmailText += c.toString()
                 }
             }
         }
@@ -156,9 +167,9 @@ object Utils {
     }
 
     fun convertDateForTransferCrossingsScreen(inputDate: String?): String {
-        var inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a")
-        var date: Date = inputFormat.parse(inputDate);
-        var outputFormat = SimpleDateFormat("dd-MM-yyyy")
+        val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a")
+        val date: Date = inputFormat.parse(inputDate);
+        val outputFormat = SimpleDateFormat("dd-MM-yyyy")
         return outputFormat.format(date);
     }
 
@@ -236,14 +247,10 @@ object Utils {
         return hasDigit
     }
 
-    fun hasAlphabets(str: String): Boolean {
+    private fun hasAlphabets(str: String): Boolean {
         var hasSpecialChar = false
         str.forEach { char ->
-            if (ALPHABETS.contains(char)) {
-                hasSpecialChar = true
-            } else {
-                hasSpecialChar = false
-            }
+            hasSpecialChar = ALPHABETS.contains(char)
         }
         return hasSpecialChar
     }
@@ -353,8 +360,97 @@ object Utils {
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtra(Constants.TYPE, Constants.LOGIN)
         )
-    }
 
+
+       /* displayCustomMessage(context,context.getString(R.string.str_timeout),
+            context.getString(R.string.str_for_your_security,"2"),
+            context.getString(R.string.str_stay_signed_in),
+            context.getString(R.string.str_sign_out),
+
+            object : DialogPositiveBtnListener {
+                override fun positiveBtnClick(dialog: DialogInterface) {
+
+
+
+                    //dialog.dismiss()
+
+
+                }
+            },
+            object : DialogNegativeBtnListener {
+                override fun negativeBtnClick(dialog: DialogInterface) {
+
+
+                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                }
+            })*/
+    }
+/*
+    private fun countDownTimer(context: Context, message: TextView) {
+        object : CountDownTimer(120000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val f: NumberFormat = DecimalFormat("00")
+                val hour = millisUntilFinished / 3600000 % 24
+                val min = millisUntilFinished / 60000 % 60
+                val sec = millisUntilFinished / 1000 % 60
+
+                message.text =context.getString(R.string.str_for_your_security, f.format(min) + ":" + f.format(sec))
+
+            }
+
+            // When the task is over it will print 00:00:00 there
+            override fun onFinish() {
+                //textView.setText("00:00:00")
+            }
+        }.start()
+    }
+*/
+
+   /* fun displayCustomMessage(context: Context,
+        fTitle: String?,
+        message: String,
+        positiveBtnTxt: String,
+        negativeBtnTxt: String,
+        pListener: DialogPositiveBtnListener?,
+        nListener: DialogNegativeBtnListener?
+    ) {
+
+        val dialog = Dialog(context)
+        dialog.setCancelable(false)
+
+
+
+        val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(context))
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+
+
+
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT) //Controlling width and height.
+
+           countDownTimer(context,binding.message)
+        binding.title.text = fTitle
+        binding.message.text = message
+        binding.cancelBtn.text = negativeBtnTxt
+        binding.okBtn.text = positiveBtnTxt
+        binding.cancelBtn.setOnClickListener {
+            nListener?.negativeBtnClick(dialog)
+            dialog.dismiss()
+        }
+
+        binding.okBtn.setOnClickListener {
+            pListener?.positiveBtnClick(dialog)
+            dialog.dismiss()
+        }
+        dialog.show()
+
+
+    }
+*/
     fun removeGivenStringCharactersFromString(characterString: String, input: String): String {
         var input = input
         characterString.forEach {

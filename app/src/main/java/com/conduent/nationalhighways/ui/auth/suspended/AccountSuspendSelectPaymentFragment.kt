@@ -81,7 +81,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
-                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+                arguments?.getParcelable(Constants.PERSONALDATA)
 
         }
         if (arguments?.getString(Constants.NAV_FLOW_KEY) != null) {
@@ -105,8 +105,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.lowBalance.setText("£10.00")
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
         cursorPosition = binding.lowBalance.editText.selectionStart
-        edtLength = binding.lowBalance.editText.getText()?.length
-        Selection.setSelection(binding.lowBalance.editText.getText(),edtLength!!-1)
+        edtLength = binding.lowBalance.editText.text?.length
+        Selection.setSelection(binding.lowBalance.editText.text,edtLength!!-1)
     }
 
     private fun topBalanceDecimal(b: Boolean) {
@@ -127,7 +127,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
     }
 
-    inner class GenericTextWatcher() : TextWatcher {
+    inner class GenericTextWatcher : TextWatcher {
 
         override fun beforeTextChanged(
             charSequence: CharSequence?,
@@ -145,7 +145,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         ) {
 
             val text = binding.lowBalance.getText().toString().trim()
-            var updatedText: String =
+            val updatedText: String =
                 text.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
                     .replace(" ", "")
             if (updatedText.isNotEmpty()) {
@@ -200,7 +200,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 binding.lowBalance.getText().toString().length
             )
             cursorPosition = binding.lowBalance.editText.selectionStart
-            edtLength = binding.lowBalance.editText.getText().toString().length
+            edtLength = binding.lowBalance.editText.text.toString().length
         }
 
         override fun afterTextChanged(editable: Editable?) {
@@ -281,9 +281,21 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
         when (status) {
             is Resource.Success -> {
-                // paymentList?.clear()
                 paymentList = status.data?.creditCardListType?.cardsList
                 if (paymentList?.isNotEmpty() == true) {
+
+                    if (navFlow == Constants.PAYMENT_TOP_UP) {
+                        for (i in 0 until (paymentList?.size ?: 0)) {
+                            if (paymentList?.get(i)?.primaryCard == true && paymentList?.get(i)?.bankAccount == false) {
+                                position = i
+                                cardSelection = true
+                                checkButton()
+
+                            }
+
+                        }
+                    }
+
 
                     suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
                     binding.rvPaymentMethods.visible()
@@ -315,6 +327,16 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     override fun paymentMethodCallback(position: Int) {
+        this.position = position
+        for (i in 0 until (paymentList?.size ?: 0)) {
+            paymentList?.get(i)?.isSelected = false
+            paymentList?.get(i)?.primaryCard = false
+        }
+        if (navFlow == Constants.PAYMENT_TOP_UP) {
+            paymentList?.get(position)?.primaryCard = true
+        }
+        paymentList?.get(position)?.isSelected = true
+        suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
         cardSelection = paymentList?.get(position)?.isSelected == true
         checkButton()
 
@@ -326,8 +348,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
-
-
 
 
     }
