@@ -21,10 +21,12 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.VEHICLE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBinding>(),
@@ -33,6 +35,8 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
     private var totalCount: Int = 0
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
 
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     private var plateNumber = ""
     private var nonUKVehicleModel: NewVehicleInfoDetails? = null
@@ -55,7 +59,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 NewCreateAccountRequestModel.plateNumber
             )
             binding.maximumVehicleAddedNote.visibility = View.GONE
-            when(navFlowCall) {
+            when (navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
                     binding.textMaximumVehicle.text = getString(
@@ -66,7 +70,8 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     binding.cancelBtn.visibility = View.VISIBLE
                     binding.cancelBtn.text = getString(R.string.vehicle_no_longer_exempt)
                 }
-                else ->{
+
+                else -> {
                     binding.textMaximumVehicle.text = getString(
                         R.string.str_vehicle_exempt_detail_message,
                         NewCreateAccountRequestModel.plateNumber
@@ -88,7 +93,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             binding.maximumVehicleAddedNote.visibility = View.GONE
             binding.cancelBtn.visibility = View.VISIBLE
             binding.btnContinue.text = getString(R.string.str_add_to_account)
-            when(navFlowCall) {
+            when (navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
                     binding.inCorrectVehicleNumber.visibility = View.VISIBLE
@@ -132,7 +137,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             binding.btnContinue.text = getString(R.string.str_continue)
             binding.textMaximumVehicle.gravity = Gravity.CENTER
         }
-        vehicleMgmtViewModel.getVehicleInformationApi("0","20")
+        if (sessionManager.getLoggedInUser()) {
+            vehicleMgmtViewModel.getVehicleInformationApi("0", "20")
+        }
     }
 
     override fun initCtrl() {
@@ -145,6 +152,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
     override fun observer() {
         observe(vehicleMgmtViewModel.vehicleListVal, ::handleVehicleListData)
     }
+
     private fun handleVehicleListData(resource: Resource<List<VehicleResponse?>?>?) {
         when (resource) {
             is Resource.Success -> {
@@ -152,36 +160,45 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     val response = resource.data
                     totalCount = response.size
                     mList.addAll(response)
-                    NewCreateAccountRequestModel.addedVehicleList2=mList
+                    NewCreateAccountRequestModel.addedVehicleList2 = mList
 
                 }
             }
+
             is Resource.DataError -> {
                 if (resource.errorModel?.errorCode != Constants.NO_DATA_FOR_GIVEN_INDEX) {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
+
             else -> {
             }
         }
     }
 
     override fun onClick(view: View?) {
-        val navCall = navFlowCall.equals(VEHICLE_MANAGEMENT,true)
+        val navCall = navFlowCall.equals(VEHICLE_MANAGEMENT, true)
         when (view?.id) {
             R.id.btnContinue -> {
 
                 when (binding.btnContinue.text) {
-                    getString(R.string.str_add_another) -> findNavController().navigate(R.id.action_maximumFragment_to_findYourVehicleFragment,bundle())
+                    getString(R.string.str_add_another) -> findNavController().navigate(
+                        R.id.action_maximumFragment_to_findYourVehicleFragment,
+                        bundle()
+                    )
 
                     getString(R.string.str_continue) ->
 
-                        when(navFlowCall) {
+                        when (navFlowCall) {
 
                             Constants.PAY_FOR_CROSSINGS -> {
-                                findNavController().navigate(R.id.action_maximumFragment_to_landingFragment,bundle())
+                                findNavController().navigate(
+                                    R.id.action_maximumFragment_to_landingFragment,
+                                    bundle()
+                                )
                             }
-                            else ->{
+
+                            else -> {
                                 if (NewCreateAccountRequestModel.vehicleList.size == 0) {
 
                                     if (NewCreateAccountRequestModel.isExempted || navCall) {
@@ -190,7 +207,10 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                                         noVehicleAddedDialog()
                                     }
                                 } else {
-                                    findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment,bundle())
+                                    findNavController().navigate(
+                                        R.id.action_maximumFragment_to_vehicleListFragment,
+                                        bundle()
+                                    )
 
                                 }
                             }
@@ -204,7 +224,10 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         nonUKVehicleModel?.let {
 
                             vehicleList.add(it)
-                            findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment,bundle())
+                            findNavController().navigate(
+                                R.id.action_maximumFragment_to_vehicleListFragment,
+                                bundle()
+                            )
 
 
                         }
@@ -223,22 +246,42 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         bundle()
                     )
 
-                    else->{
-                        when(navFlowCall) {
+                    else -> {
+                        when (navFlowCall) {
 
                             Constants.PAY_FOR_CROSSINGS -> {
                                 findNavController().popBackStack()
                             }
 
                             else -> {
-                                if(NewCreateAccountRequestModel.addedVehicleList2.isEmpty()) {
-                                    if(navCall) {
+                                if (NewCreateAccountRequestModel.addedVehicleList2.isEmpty()) {
+                                    if (navCall) {
                                         findNavController().popBackStack()
-                                    }else{
-                                        noVehicleAddedDialog()
+                                    } else {
+                                        if (NewCreateAccountRequestModel.isVehicleAlreadyAdded) {
+                                            if (NewCreateAccountRequestModel.vehicleList.size == 0) {
+                                                noVehicleAddedDialog()
+
+                                            }
+
+                                        } else {
+                                            if (NewCreateAccountRequestModel.isRucEligible){
+                                                findNavController().navigate(
+                                                    R.id.action_maximumFragment_to_findYourVehicleFragment,
+                                                    bundle()
+                                                )
+                                            }else{
+                                                findNavController().popBackStack()
+
+                                            }
+
+                                        }
                                     }
-                                }else{
-                                    findNavController().navigate(R.id.action_maximumFragment_to_vehicleListFragment,bundle())
+                                } else {
+                                    findNavController().navigate(
+                                        R.id.action_maximumFragment_to_vehicleListFragment,
+                                        bundle()
+                                    )
                                 }
 
                                 NewCreateAccountRequestModel.isMaxVehicleAdded = false
@@ -249,13 +292,14 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
 
             }
+
             R.id.inCorrectVehicleNumber -> {
                 findNavController().popBackStack()
             }
         }
     }
 
-    private fun bundle() : Bundle {
+    private fun bundle(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)

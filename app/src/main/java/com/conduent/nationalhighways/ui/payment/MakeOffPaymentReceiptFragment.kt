@@ -109,12 +109,12 @@ class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceipt
         when (v?.id) {
             R.id.btnContinue -> {
                 if (mOption == Constants.EMAIL_ADDRESS && binding.tieEmail.text.toString()
-                        .trim() != binding.tieConfirmEmail.text.toString().trim()
+                        .trim() != binding.tieConfirmEmail.getText().toString().trim()
                 ) {
                     binding.tilConfirmEmail.error =
                         "The confirmed email address entered do not match"
                 } else if (mOption == Constants.PHONE_NUMBER && binding.tieEmail.text.toString()
-                        .trim() != binding.tieConfirmEmail.text.toString().trim()
+                        .trim() != binding.tieConfirmEmail.getText().toString().trim()
                 ) {
                     binding.tilConfirmEmail.error = "The confirmed mobile entered do not match"
                 } else {
@@ -126,13 +126,13 @@ class MakeOffPaymentReceiptFragment : BaseFragment<FragmentMakeOffPaymentReceipt
 
     private fun checkButton() {
         if (mOption == Constants.EMAIL_ADDRESS) {
-            val first = binding.tieEmail.text.toString().trim()
-            val second = binding.tieConfirmEmail.text.toString().trim()
+            val first = binding.tieEmail.getText().toString().trim()
+            val second = binding.tieConfirmEmail.getText().toString().trim()
             binding.model = Utils.isEmailValid(first) && Utils.isEmailValid(second)
                     && binding.appCompatCheckBox.isChecked
         } else {
-            binding.model = (binding.tieEmail.text.toString().trim().length >= 10
-                    && binding.tieConfirmEmail.text.toString().trim().length >= 10
+            binding.model = (binding.tieEmail.getText().toString().trim().length >= 10
+                    && binding.tieConfirmEmail.getText().toString().trim().length >= 10
                     && binding.appCompatCheckBox.isChecked)
         }
     }

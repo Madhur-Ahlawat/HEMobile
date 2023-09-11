@@ -150,7 +150,7 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
                 ds.isUnderlineText = true
             }
         }
-        startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
+        startIndexOfLink = this.getText().toString().indexOf(link.first, startIndexOfLink + 1)
         spannableString.setSpan(
             clickableSpan,
             startIndexOfLink,
@@ -181,7 +181,7 @@ fun TextView.makeLinksWhite(vararg links: Pair<String, View.OnClickListener>) {
                 ds.isUnderlineText = true
             }
         }
-        startIndexOfLink = this.text.toString().indexOf(link.first, startIndexOfLink + 1)
+        startIndexOfLink = this.getText().toString().indexOf(link.first, startIndexOfLink + 1)
         spannableString.setSpan(
             clickableSpan,
             startIndexOfLink,

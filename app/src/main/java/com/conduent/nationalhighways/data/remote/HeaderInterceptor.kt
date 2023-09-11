@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.data.remote
 
 import android.os.Build
 import android.util.Log
+import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils.getVersionName
 import com.google.gson.Gson
@@ -25,7 +26,7 @@ class HeaderInterceptor @Inject constructor(
 
         sessionManager.let {
             it.fetchAuthToken()?.let { accessToken ->
-                if (!chain.request().url.encodedPath.contains("bosuser/api/account/vehicle/getPlateInfo/")) {
+                if (!chain.request().url.encodedPath.contains("account/vehicle/getPlateInfo")) {
                     requestBuilder.addHeader("Authorization", "Bearer $accessToken")
                 }
                 requestBuilder.addHeader(

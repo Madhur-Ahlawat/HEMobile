@@ -256,6 +256,11 @@ interface ApiService {
     ): Response<VehicleInfoDetails?>?
 
     @GET(FIND_VEHICLE_ACCOUNT)
+    suspend fun getVehiclePlateInfo(
+        @Path("vehicleNumber") vehicleNumber: String?,
+        @Query("agencyId") agencyId: Int?
+    ): Response<GetPlateInfoResponseModel?>?
+    @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getNewAccountFindVehicle(
         @Path("vehicleNumber") vehicleNumber: String?,
         @Query("agencyId") agencyId: Int?
@@ -313,6 +318,10 @@ interface ApiService {
     suspend fun getPaymentHistoryData(
         @Body request: AccountPaymentHistoryRequest?
     ): Response<AccountPaymentHistoryResponse?>?
+    @POST(PAYMENT_HISTORY_TRANSACTION_LIST_CHECK_CROSSINGS)
+    suspend fun getTransactionsListCheckCrossings(
+        @Body request: CheckedCrossingTransactionsRequestModel?
+    ): Response<CheckedCrossingRecentTransactionsResponseModel?>?
 
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData(): Response<AccountResponse?>?
@@ -483,9 +492,8 @@ interface ApiService {
     @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
     suspend fun loginWithRefAndPlateNumber(
         @Body request: CheckPaidCrossingsRequest?,
-        @Query("Value") value: Boolean? = true,
-        @Query("agencyId") agencyId: String? = AGENCY_ID
-    ): Response<CheckPaidCrossingsResponse?>?
+        @Query("returnReferenceInformation") value: Boolean? = true,
+    ): Response<LoginWithPlateAndReferenceNumberResponseModel?>?
 
     @POST(GET_TOLL_TRANSACTIONS)
     suspend fun getTollTransactions(

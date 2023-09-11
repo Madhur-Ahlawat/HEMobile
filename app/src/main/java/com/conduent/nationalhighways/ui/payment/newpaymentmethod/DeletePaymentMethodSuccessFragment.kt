@@ -16,6 +16,7 @@ class DeletePaymentMethodSuccessFragment :
     private var navFlow: String = ""
     private var lowBalance: String =""
     private var topUpBalance: String = ""
+    private var accountNumber:String=""
 
 
     override fun getFragmentBinding(
@@ -32,6 +33,7 @@ class DeletePaymentMethodSuccessFragment :
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
         lowBalance = arguments?.getString(Constants.THRESHOLD_AMOUNT) ?:""
         topUpBalance = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
+        accountNumber=arguments?.getString(Constants.ACCOUNT_NUMBER)?:""
         var lBalance=0.0
         var tBalance=0.0
         if (lowBalance.isNotEmpty()){
@@ -66,6 +68,9 @@ class DeletePaymentMethodSuccessFragment :
 
 
             binding.cancelBtn.visibility = View.GONE
+        }else if (navFlow==Constants.DELETE_CARD){
+            binding.maximumVehicleAdded.text=getString(R.string.payment_method_deleted)
+
         }
 
         binding.btnContinue.setOnClickListener(this)

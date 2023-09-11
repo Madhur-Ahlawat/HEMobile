@@ -58,7 +58,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
                 binding.switchCommunication.isChecked =
                     NewCreateAccountRequestModel.communicationTextMessage
-                binding.checkBoxTerms.visibility = View.GONE
+              //  binding.checkBoxTerms.visibility = View.GONE
                 binding.btnNext.enable()
 
             }
@@ -70,19 +70,19 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
         binding.switchCommunication.setOnClickListener {
             if (binding.switchCommunication.isChecked) {
-                binding.checkBoxTerms.visibility = View.VISIBLE
-                binding.btnNext.disable()
-                binding.checkBoxTerms.isChecked = false
-//                NewCreateAccountRequestModel.communicationTextMessage = true
+              //  binding.checkBoxTerms.visibility = View.VISIBLE
+                binding.btnNext.enable()
+               // binding.checkBoxTerms.isChecked = false
+                NewCreateAccountRequestModel.communicationTextMessage = true
             } else {
-//                NewCreateAccountRequestModel.communicationTextMessage = false
-                binding.checkBoxTerms.visibility = View.GONE
+               NewCreateAccountRequestModel.communicationTextMessage = false
+             //   binding.checkBoxTerms.visibility = View.GONE
                 binding.btnNext.enable()
             }
         }
 
 
-        binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
+       /* binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.btnNext.enable()
                 NewCreateAccountRequestModel.termsCondition = true
@@ -91,11 +91,12 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 NewCreateAccountRequestModel.termsCondition = false
                 binding.btnNext.disable()
             }
-        }
+        }*/
+
         binding.btnNext.setOnClickListener(this)
 
 
-        binding.checkBoxTerms.makeLinks(Pair("terms and conditions", View.OnClickListener {
+      /*  binding.checkBoxTerms.makeLinks(Pair("terms and conditions", View.OnClickListener {
             var url = ""
             url = if (NewCreateAccountRequestModel.prePay) {
                 "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
@@ -108,7 +109,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 R.id.action_optForSmsFragment_to_termsConditionFragment,
                 bundle
             )
-        }))
+        }))*/
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
@@ -199,7 +200,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                                 binding.switchCommunication.isChecked = true
                                 smsFlag = "Y"
                             }
-                            binding.checkBoxTerms.visibility = View.GONE
+                           // binding.checkBoxTerms.visibility = View.GONE
                             binding.btnNext.enable()
                         }
 

@@ -12,7 +12,9 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
@@ -52,16 +54,18 @@ import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
+import com.google.android.gms.common.internal.AccountType
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener,View.OnClickListener {
+class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener,
+    View.OnClickListener {
 
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
-    private val dashboardViewModel: DashboardViewModel by viewModels()
+    private var personalInformation: PersonalInformation? = null
     private var loader: LoaderDialog? = null
     private val countPerPage = 10
     private var startIndex = 1
@@ -73,7 +77,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     @Inject
     lateinit var api: ApiService
-    private var personalInformation: PersonalInformation? = null
+    private val dashboardViewModel: DashboardViewModel by activityViewModels()
 
     fun createPaymentsHistoryListAdapter() = GenericRecyclerViewAdapter(
         getViewLayout = { R.layout.item_recent_tansactions },
@@ -163,55 +167,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    fun hitAPIs(): () -> Unit? {
-        getDashBoardAllData()
-        dashboardViewModel.getAlertsApi()
-        return {}
-    }
 
     override fun onResume() {
         super.onResume()
-        BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
         (requireActivity() as HomeActivityMain).showHideToolbar(false)
 
     }
 
-    private fun getDashBoardAllData() {
-        binding.loaderPlaceholder.visibility = View.GONE
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        val request = CrossingHistoryRequest(
-            startIndex = 1,
-            count = 5,
-            transactionType = Constants.ALL_TRANSACTION,
-            searchDate = Constants.TRANSACTION_DATE,
-            startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
-            endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
-        )
-        Log.e("XJ220", Gson().toJson(request))
-        dashboardViewModel.getDashboardAllData(request)
-    }
-
-    private fun getPaymentHistoryList(
-        index: Int
-    ) {
-        if (loader?.isVisible == false && loader?.isAdded == true) {
-            loader?.showsDialog
-        }
-        dateRangeModel =
-            PaymentDateRangeModel(
-                filterType = Constants.PAYMENT_FILTER_SPECIFIC,
-                DateUtils.lastPriorDate(-30), DateUtils.currentDate(), ""
-            )
-        val request = AccountPaymentHistoryRequest(
-            index,
-            Constants.PAYMENT,
-            countPerPage,
-            dateRangeModel?.startDate,
-            dateRangeModel?.endDate,
-            dateRangeModel?.vehicleNumber
-        )
-        dashboardViewModel.paymentHistoryDetails(request)
-    }
 
     override fun initCtrl() {
         binding.labelViewAll.setOnClickListener {
@@ -232,10 +194,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun observer() {
-        observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
-        observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
         observe(dashboardViewModel.logout, ::handleLogout)
+        observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
         observe(dashboardViewModel.alertLivData, ::handleAlertResponse)
+        dashboardViewModel.accountType.observe(this@DashboardFragmentNew, Observer { it ->
+            handleAccountType(it)
+        })
     }
 
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
@@ -248,14 +212,33 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                 }
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
 //                binding.notificationsRecyclerview.gone()
 //                binding.noNotificationsTxt.visible()
 
             }
+
             else -> {
                 // do nothing
+            }
+        }
+    }
+
+    private fun handleAccountType(accountResponse: AccountResponse) {
+        accountResponse?.apply {
+            if (accountInformation?.accountType.equals("BUSINESS", true)
+                || ((accountInformation?.accSubType.equals(
+                    "STANDARD",
+                    true
+                ) && accountInformation?.accountType.equals(
+                    "PRIVATE", true
+                )))
+            ) {
+                showNonPayGUI(this)
+            } else if (accountInformation?.accSubType.equals(Constants.PAYG)) {
+                showPayGUI(this)
             }
         }
     }
@@ -336,6 +319,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
         return transactionListSorted
     }
+
     private fun handleAlertsData(status: Resource<AlertMessageApiResponse?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -376,6 +360,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
 
     }
+
     private fun hideNotification() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).dataBinding!!.bottomNavigationView.navigationItems.let { list ->
@@ -386,56 +371,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (status) {
-            is Resource.Success -> {
-                binding.loaderPlaceholder.visibility == View.GONE
-                personalInformation = status.data?.personalInformation
-
-                status.data?.apply {
-
-                    accountDetailsData = this
-                    sessionManager.saveAccountStatus(accountInformation?.status?:"")
-                    sessionManager.saveName(personalInformation?.customerName?:"")
-                    sessionManager.saveZipCode(personalInformation?.zipCode?:"")
-                    sessionManager.savePhoneNumber(personalInformation?.phoneNumber?:"")
-                    sessionManager.saveAccountNumber(accountInformation?.number!!)
-                    (requireActivity().applicationContext as BaseApplication).setAccountSavedData(
-                        this
-                    )
-                    if (accountInformation.accountType.equals("BUSINESS", true)
-                        || ((accountInformation.accSubType.equals(
-                            "STANDARD",
-                            true
-                        ) && accountInformation.accountType.equals(
-                            "PRIVATE", true
-                        )))
-                    ) {
-                        showNonPayGUI(this)
-                    } else if (accountInformation.accSubType.equals(Constants.PAYG)) {
-                        showPayGUI(this)
-                    }
-                }
-            }
-
-            is Resource.DataError -> {
-                binding.loaderPlaceholder.visibility == View.GONE
-
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
-
-            else -> {
-
-            }
-        }
-    }
-
     private fun showPayGUI(data: AccountResponse) {
         binding.apply {
             tvAvailableBalanceHeading.gone()
+            tvAvailableBalance.gone()
 //            tvAvailableBalance.apply {
 //                visible()
 //                text = data.replenishmentInformation?.currentBalance?.run {
@@ -499,11 +438,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
         }
+        getPaymentHistoryList(startIndex)
     }
 
     private fun showNonPayGUI(data: AccountResponse) {
         binding.apply {
             tvAvailableBalanceHeading.visible()
+            tvAvailableBalance.visible()
             tvAvailableBalance.apply {
                 visible()
                 text = data.replenishmentInformation?.currentBalance?.run {
@@ -523,7 +464,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupMethod.visible()
 
             buttonTopup.visible()
-            binding.buttonTopup.setOnClickListener{
+            binding.buttonTopup.setOnClickListener {
                 val title = requireActivity().findViewById<TextView>(R.id.title_txt)
 
                 title.text = getString(R.string.top_up)
@@ -535,7 +476,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 findNavController().navigate(
                     R.id.action_dashBoardFragment_to_accountSuspendedPaymentFragment,
                     bundle
-                )        }
+                )
+            }
 
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
@@ -586,6 +528,28 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
+    private fun getPaymentHistoryList(
+        index: Int
+    ) {
+        if (loader?.isVisible == false && loader?.isAdded == true) {
+            loader?.showsDialog
+        }
+        dateRangeModel =
+            PaymentDateRangeModel(
+                filterType = Constants.PAYMENT_FILTER_SPECIFIC,
+                DateUtils.lastPriorDate(-30), DateUtils.currentDate(), ""
+            )
+        val request = AccountPaymentHistoryRequest(
+            index,
+            Constants.PAYMENT,
+            countPerPage,
+            dateRangeModel?.startDate,
+            dateRangeModel?.endDate,
+            dateRangeModel?.vehicleNumber
+        )
+        dashboardViewModel.paymentHistoryDetails(request)
+    }
+
     private fun handleLogout(status: Resource<AuthResponseModel?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -620,9 +584,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
 
-            R.id.button_topup->{
+            R.id.button_topup -> {
 
             }
         }

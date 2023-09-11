@@ -145,7 +145,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
                 bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
                 bundle.putParcelable(Constants.NON_UK_VEHICLE_DATA, nonUKVehicleModel)
                 isObserverBack = false
-                (navData as CrossingDetailsModelsResponse).plateNumber=retrieveVehicle?.plateNumber
+                (navData as CrossingDetailsModelsResponse).plateNo=retrieveVehicle?.plateNumber!!
                 bundle.putParcelable(Constants.NAV_DATA_KEY,
                     navData as CrossingDetailsModelsResponse
                 )

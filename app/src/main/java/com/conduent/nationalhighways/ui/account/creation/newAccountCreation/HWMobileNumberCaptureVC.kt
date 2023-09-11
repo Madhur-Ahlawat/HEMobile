@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -82,6 +81,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         binding.inputCountry.dropDownItemSelectListener = this
+        Log.e(
+            "TAG",
+            "init: *communicationTextMessage* " + NewCreateAccountRequestModel.communicationTextMessage + " *twoStepVerification* " + NewCreateAccountRequestModel.twoStepVerification
+        )
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
             setTelephoneView()
         } else {
@@ -91,13 +94,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.btnNext.setOnClickListener(this)
         when (navFlowCall) {
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
-                if(!isViewCreated){
-                    oldMobileNumber=NewCreateAccountRequestModel.mobileNumber?:""
-                    oldMobileCountryCode=NewCreateAccountRequestModel.countryCode?:""
-                    oldTelephoneNumber=NewCreateAccountRequestModel.telephoneNumber?:""
-                    oldTelephoneCountryCode=NewCreateAccountRequestModel.telephone_countryCode?:""
+                if (!isViewCreated) {
+                    oldMobileNumber = NewCreateAccountRequestModel.mobileNumber ?: ""
+                    oldMobileCountryCode = NewCreateAccountRequestModel.countryCode ?: ""
+                    oldTelephoneNumber = NewCreateAccountRequestModel.telephoneNumber ?: ""
+                    oldTelephoneCountryCode =
+                        NewCreateAccountRequestModel.telephone_countryCode ?: ""
                 }
-                if(isItMobileNumber){
+                if (isItMobileNumber) {
                     NewCreateAccountRequestModel.mobileNumber?.let {
                         binding.inputMobileNumber.setText(
                             it
@@ -108,7 +112,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             it
                         )
                     }
-                }else{
+                } else {
                     NewCreateAccountRequestModel.telephoneNumber?.let {
                         binding.inputMobileNumber.setText(
                             it
@@ -163,7 +167,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
     }
 
-    override fun onResume() {
+   /* override fun onResume() {
+
         NewCreateAccountRequestModel.mobileNumber?.let {
             binding.inputMobileNumber.setText(
                 it
@@ -175,7 +180,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             )
         }
         super.onResume()
-    }
+    }*/
 
     private fun setTelephoneView() {
         isItMobileNumber = false
@@ -282,6 +287,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
 
                 binding.apply {
+                    inputCountry.dataSet.clear()
                     inputCountry.dataSet.addAll(fullCountryNameWithCode)
                     inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
                     requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
@@ -342,11 +348,20 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             )
                         }else{
                             assignNumbers(mobileNumber,countryCode)
-                            bundle.putString(NAV_FLOW_FROM, AccountType_MobileNumber)
-                            findNavController().navigate(
-                                R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
-                                bundle
-                            )
+
+                            if (isItMobileNumber){
+                                bundle.putString(NAV_FLOW_FROM, AccountType_MobileNumber)
+                                findNavController().navigate(
+                                    R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
+                                    bundle
+                                )
+                            }else{
+                                findNavController().navigate(
+                                    R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
+                                    bundle
+                                )
+                            }
+
 
                         }
                     }
@@ -372,8 +387,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                                 ) {
                                     findNavController().popBackStack()
                                 } else {
-                                    val data = navData as ProfileDetailModel?
-                                    if (data?.accountInformation?.accountType.equals(
+                                    if (data.accountInformation?.accountType.equals(
                                             Constants.PERSONAL_ACCOUNT,
                                             true
                                         )
@@ -401,18 +415,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
     }
 
-    fun assignNumbers(mobileNumber: String,countryCode: String){
-        if(isItMobileNumber){
+    private fun assignNumbers(mobileNumber: String, countryCode: String) {
+        if (isItMobileNumber) {
             NewCreateAccountRequestModel.mobileNumber = mobileNumber
             NewCreateAccountRequestModel.countryCode = countryCode
-        }else{
+        } else {
             NewCreateAccountRequestModel.telephoneNumber = mobileNumber
             NewCreateAccountRequestModel.telephone_countryCode = countryCode
         }
     }
 
     private fun handleNavFlow(mobileNumber: String, countryCode: String, bundle: Bundle, res: Int) {
-        assignNumbers(mobileNumber,countryCode)
+        assignNumbers(mobileNumber, countryCode)
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
             findNavController().navigate(res, bundle)
         } else {
@@ -477,7 +491,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 requiredMobileNumber = index == 0
             } else {
                 val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
-                if (isItMobileNumber &&( binding.inputCountry.getSelectedDescription()
+                if (isItMobileNumber && (binding.inputCountry.getSelectedDescription()
                         .equals("UK +44", true) || binding.inputCountry.getSelectedDescription()
                         .equals(Constants.UNITED_KINGDOM, true))
                 ) {
@@ -588,7 +602,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
                 }
 
-                bundle.putString(Constants.NAV_FLOW_FROM,navFlowFrom)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,

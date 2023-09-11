@@ -70,17 +70,17 @@ class CheckPaidCrossAddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleD
         }
 
         binding.nextBtn.setOnClickListener {
-            if (binding.makeInputEditText.text.toString().trim().isNotEmpty()
-                && binding.modelInputEditText.text.toString().trim().isNotEmpty()
-                && binding.colorInputEditText.text.toString().trim().isNotEmpty()
+            if (binding.makeInputEditText.getText().toString().trim().isNotEmpty()
+                && binding.modelInputEditText.getText().toString().trim().isNotEmpty()
+                && binding.colorInputEditText.getText().toString().trim().isNotEmpty()
             ) {
 
                 val mPlateInfo = RetrievePlateInfoDetails(
                     vrm,
                     "",
-                    binding.makeInputEditText.text.toString().trim(),
-                    binding.modelInputEditText.text.toString().trim(),
-                    binding.colorInputEditText.text.toString().trim()
+                    binding.makeInputEditText.getText().toString().trim(),
+                    binding.modelInputEditText.getText().toString().trim(),
+                    binding.colorInputEditText.getText().toString().trim()
                 )
                 val mVrmDetailsDvla = VehicleInfoDetails(mPlateInfo)
                 arguments?.putParcelable(
@@ -94,9 +94,9 @@ class CheckPaidCrossAddVehicleDetailsFragment : BaseFragment<FragmentAddVehicleD
     }
 
     private fun checkButton() {
-        binding.model = (binding.makeInputEditText.text.toString().trim().isNotEmpty()
-                && binding.modelInputEditText.text.toString().trim().isNotEmpty()
-                && binding.colorInputEditText.text.toString().trim().isNotEmpty())
+        binding.model = (binding.makeInputEditText.getText().toString().trim().isNotEmpty()
+                && binding.modelInputEditText.getText().toString().trim().isNotEmpty()
+                && binding.colorInputEditText.getText().toString().trim().isNotEmpty())
     }
 
 }

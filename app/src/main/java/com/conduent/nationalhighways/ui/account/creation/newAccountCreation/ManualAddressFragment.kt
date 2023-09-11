@@ -236,6 +236,7 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                 }
 
                 binding.apply {
+                    country.dataSet.clear()
                     country.dataSet.addAll(countriesList)
                 }
             }

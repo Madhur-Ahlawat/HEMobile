@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
+import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModel
+import com.conduent.nationalhighways.data.model.account.LoginWithPlateAndReferenceNumberResponseModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.repository.auth.CreateAccountRespository
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
@@ -24,6 +27,9 @@ class CreateAccountVehicleViewModel @Inject constructor(
     private val findVehicleMutData = MutableLiveData<Resource<VehicleInfoDetails?>?>()
     val findVehicleLiveData: LiveData<Resource<VehicleInfoDetails?>?> get() = findVehicleMutData
 
+    private val findVehiclePlateMutData = MutableLiveData<Resource<GetPlateInfoResponseModel?>?>()
+    val findVehiclePlateLiveData: LiveData<Resource<GetPlateInfoResponseModel?>?> get() = findVehiclePlateMutData
+
     private val findNewVehicleMutData = MutableLiveData<Resource<List<NewVehicleInfoDetails?>?>> ()
     val findNewVehicleLiveData: LiveData<Resource<List<NewVehicleInfoDetails?>?>> get() = findNewVehicleMutData
 
@@ -33,7 +39,7 @@ class CreateAccountVehicleViewModel @Inject constructor(
     fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.launch {
             try {
-                findVehicleMutData.postValue(
+                findVehicleMutData.setValue(
                     ResponseHandler.success(
                         repo.getVehicleDetail(
                             vehicleNumber,
@@ -42,7 +48,23 @@ class CreateAccountVehicleViewModel @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
-                findVehicleMutData.postValue(ResponseHandler.failure(e))
+                findVehicleMutData.setValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+    fun getVehiclePlateData(vehicleNumber: String?, agencyId: Int?) {
+        viewModelScope.launch {
+            try {
+                findVehiclePlateMutData.setValue(
+                    ResponseHandler.success(
+                        repo.getVehiclePlateInfo(
+                            vehicleNumber,
+                            agencyId
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                findVehicleMutData.setValue(ResponseHandler.failure(e))
             }
         }
     }

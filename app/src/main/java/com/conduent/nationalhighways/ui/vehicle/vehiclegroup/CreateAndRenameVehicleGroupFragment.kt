@@ -64,7 +64,7 @@ class CreateAndRenameVehicleGroupFragment : BaseFragment<FragmentCreateRenameVeh
     override fun initCtrl() {
         binding.apply {
             edVehicleGroup.onTextChanged {
-                binding.btnModel = edVehicleGroup.text.toString().trim()
+                binding.btnModel = edVehicleGroup.getText().toString().trim()
                     .isNotEmpty() && edVehicleGroup.text.toString()
                     .trim() != vehicleGroup?.groupName
             }
@@ -125,14 +125,14 @@ class CreateAndRenameVehicleGroupFragment : BaseFragment<FragmentCreateRenameVeh
     private fun clickNext() {
         if (isCreate) {
             val request =
-                AddDeleteVehicleGroup(binding.edVehicleGroup.text.toString().trim())
+                AddDeleteVehicleGroup(binding.edVehicleGroup.getText().toString().trim())
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             vehicleGroupMgmtViewModel.addVehicleGroupApi(request)
         } else {
             vehicleGroup?.let {
                 val request = RenameVehicleGroup(
                     it.groupId,
-                    binding.edVehicleGroup.text.toString().trim()
+                    binding.edVehicleGroup.getText().toString().trim()
                 )
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 vehicleGroupMgmtViewModel.renameVehicleGroupApi(request)

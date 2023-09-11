@@ -22,7 +22,6 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +33,8 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     private val viewModel: PaymentMethodViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var paymentList: CardListResponseModel? = null
+    private var isViewCreated: Boolean = false
+    private var accountNumber: String = ""
 
 
     override fun getFragmentBinding(
@@ -45,14 +46,24 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
     override fun initCtrl() {
         flow = arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED) ?: ""
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        if (!isViewCreated) {
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-
-        if (arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA) != null) {
-            paymentList = arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA)
 
         }
+        isViewCreated = false
+
+        if (arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA) != null) {
+            paymentList = arguments?.getParcelable(Constants.PAYMENT_DATA)
+
+        }
+
+        if (arguments?.getString(Constants.ACCOUNT_NUMBER) != null) {
+            accountNumber = arguments?.getString(Constants.ACCOUNT_NUMBER) ?: ""
+        }
+
+
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
             responseModel = arguments?.getParcelable(Constants.DATA)
 
@@ -91,24 +102,25 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
         } else if (flow == Constants.DELETE_CARD) {
             binding.maximumVehicleAdded.text =
-                getString(R.string.str_payment_method_deleted, paymentList?.cardNumber)
+                getString(R.string.str_payment_method_deleted, accountNumber)
             binding.textDefault.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.GONE
 
             if (paymentList?.primaryCard == true) {
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.saveCardList()
-                binding.textMaximumVehicle.text = getString(R.string.str_your_default_payment_method)
+                binding.textMaximumVehicle.text =
+                    getString(R.string.str_your_default_payment_method)
 
             } else {
                 binding.cardView.visibility = View.GONE
-                binding.textMaximumVehicle.visibility =View.GONE
+                binding.textMaximumVehicle.visibility = View.GONE
 
             }
 
         } else if (flow == Constants.DIRECT_DEBIT_DELETE) {
             binding.maximumVehicleAdded.text =
-                getString(R.string.your_direct_debit_has_been_removed, paymentList?.cardNumber)
+                getString(R.string.your_direct_debit_has_been_removed, accountNumber)
             binding.textMaximumVehicle.text = getString(R.string.str_your_default_payment_method)
             binding.textDefault.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.GONE

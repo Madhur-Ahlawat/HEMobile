@@ -24,6 +24,8 @@ class CreateAccountRespository @Inject constructor(private val apiService: ApiSe
 
     suspend fun getVehicleDetail(vehicleNumber: String?, agencyId: Int?) =
         apiService.getAccountFindVehicle(vehicleNumber, agencyId)
+    suspend fun getVehiclePlateInfo(vehicleNumber: String?, agencyId: Int?) =
+        apiService.getVehiclePlateInfo(vehicleNumber, agencyId)
 
     suspend fun getNewVehicleDetail(vehicleNumber: String?, agencyId: Int?) =
         apiService.getNewAccountFindVehicle(vehicleNumber, agencyId)

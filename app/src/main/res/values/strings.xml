@@ -380,7 +380,7 @@
     <string name="error_password_not_match">Confirm password does not match</string>
     <string name="error_postal_code">Please enter post code</string>
     <string name="check_sms">Check your SMS</string>
-    <string name="str_check_sms">Check your text messages for a security code.</string>
+    <string name="str_check_sms">Check your phone for a security code.</string>
     <string name="enter_otp">Please enter correct otp</string>
 
     <string name="str_log_out">Logout</string>
@@ -474,7 +474,7 @@
         \n \u25CF Register for a personal account if your company is not registered with Companies house</string>
     <string name="str_business_account_desc">To create a business account you will need \n\u25CF Your company details \n\u25CF Details of the vehicles you are registering \n\u25CF A valid debit or credit card</string>
     <string name="str_business_account_desc_info">\u25CF An initial deposit of £10.00 \n\u25CF Company details and details of the primary vehicle which you are registering \n\u25CF A valid debit or credit card</string>
-    <string name="str_prepay">Pre-pay</string>
+    <string name="str_prepay">Pre-Pay</string>
     <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your   balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
     <string name="str_payg_account">Pay as you go</string>
     <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
@@ -624,7 +624,7 @@
     <string name="select_account_type">Please select account type</string>
     <string name="pin">PIN</string>
     <string name="in_progress">Work in Progress</string>
-    <string name="pay_as_you_go">Personal - Pay as you go</string>
+    <string name="pay_as_you_go">Pay as you go</string>
     <string name="change">Change</string>
     <string name="top_up_my_account_by_10_00_when_my_balance_falls_below_10_00">Top-up my account by £10.00 when\nmy balance falls below £10.00</string>
     <string name="top_up_my_account_by_05_00_when_my_balance_falls_below_10_00">Top-up my account by £5.00 when\nmy balance falls below £10.00</string>
@@ -748,7 +748,7 @@
     <string name="str_A">A</string>
     <string name="business_topup_recommendation">Business Topup Recommendation</string>
     <string name="company_reg_no">Company registration number</string>
-    <string name="company_name">Company Name</string>
+    <string name="company_name">Company name</string>
     <string name="str_account_holder_profile">Account holder profile</string>
     <string name="str_additional_details">Additional details (optional)</string>
     <string name="str_profile_updated_successfully">Profile updated successfully</string>
@@ -1047,6 +1047,7 @@
     <string name="address">Address</string>
     <string name="mobile_phone_number">Mobile phone number</string>
     <string name="personal_details">Personal Details</string>
+    <string name="check_your_answers_before_confirming_vehicle">Check your answers before confirming\nyour new vehicle</string>
     <string name="check_your_answers_before_making_a_payment">Check your answers before making a payment.</string>
     <string name="account_details">Account Details</string>
     <string name="type_of_account">Type of account</string>
@@ -1064,7 +1065,7 @@
     <string name="str_make_error_message">Vehicle make must only include letters a to z, and special characters such as hyphens</string>
     <string name="str_model_error_message">Vehicle model must only include letters a to z, numbers 0 to 9, and special characters such as hyphens</string>
     <string name="str_colour_error_message">Vehicle colour must only include letters a to z, and the special character forward slash</string>
-    <string name="str_vehicle_exempt_message">Vehicle %s is exempt from Dart Charge payment</string>
+    <string name="str_vehicle_exempt_message">Vehicle %s is not charged\nNo Dart Charge payment is due</string>
     <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
     <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
@@ -1110,7 +1111,7 @@
     <string name="str_code_empty">Enter the 6-digit security code</string>
     <string name="str_security_code_must_be_6_characters">Security code must be 6 characters</string>
     <string name="str_security_code_expired_message">Security code has expired</string>
-    <string name="str_security_code_not_correct">Security code must contain correct numbers </string>
+
 
     <!--Create Password Error Message-->
     <string name="str_enter_your_password">Enter your password</string>
@@ -1192,8 +1193,8 @@
     <string name="card_number_must_be_16_digits_or_more">Card number must be 16 digits or more</string>
     <string name="expiry_date_cannot_be_in_the_past">Expiry date cannot be in the past</string>
     <string name="str_your_pay_as_you_go">Your pay-as-you-go payment will get taken each time you make a crossing.</string>
-    <string name="str_radio_sms">Text %s\n Message and data rates may apply</string>
-    <string name="str_radio_email">Email %s</string>
+    <string name="str_radio_sms">Text <b>%s</b>\n<i>Message and data rates may apply</i></string>
+    <string name="str_radio_email">Email <b>%s</b></string>
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
     <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
     <string name="str_enable_face_ID">Enable Biometric</string>
@@ -1416,6 +1417,7 @@
     <string name="pay_new_amount">PAY NEW AMOUNT</string>
     <string name="purchase_no_crossings">Purchase No Crossings</string>
     <string name="to_continue_you_must_pay_for_at_least_one_recent_additional_crossing">To continue, you must pay for at least one recent/additional crossing.</string>
+    <string name="payment_method_deleted">Payment method deleted</string>
 
 
     <string name="incorrect_email">Incorrect email. Try again.</string>
@@ -1472,6 +1474,36 @@
     <string name="str_reference_validations">Enquiry reference number must only include letters a to z, and numbers 0 to 9.</string>
 
 
+    <string name="transfer_remaining_credit">TRANSFER REMAINING CREDIT</string>
+    <string name="your_crossing_details">Your crossing details</string>
+    <string name="credit_remaining">Credits remaining</string>
+    <string name="credit_expiry_date">Credit expiry date</string>
+    <string name="previous_crossings_paid_for">Previous crossings paid for</string>
+    <string name="credit_will_expire_on">Credit will expire on</string>
+    <string name="vehicle_changed">Vehicle changed</string>
+    <string name="our_records_show_the_numberplate_is_a_type_nof_vehicle_on_record_rather_than_a_type_of_nvehicle_entered_this_type_of_vehicle_has_a_ndifferent_charge_of_amount"><![CDATA[Our records show the %s is a %s rather than a {type of\nvehicle entered}. This type of vehicle has a\ndifferent charge of <amount>.]]></string>
+    <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from Dart\nCharge payment</string>
+    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment_and_your_remaining_credit_cannot_be_transferred_contact_the_dart_charge_contact_centre_for_help_telephone_0300_300_0120_every_day_8am_to_8pm">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\nContact the Dart Charge contact centre for help.\nTelephone: 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
+    <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
+    <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
+    <string name="you_have_no_credit_left_you_must_pay_for_any_further_crossings_you_intend_to_make">You have no credit left. You must pay for any further crossings you intend to make.</string>
+    <string name="no_crossings_have_been_made_against_this_payment_reference">No crossings have been made against this payment reference.</string>
+    <string name="str_terms_condition">Terms &amp; Conditions</string>
+    <string name="str_remove_payment_method">Remove Payment Method</string>
+    <string name="str_are_you_sure_you_want_to_remove_payment_method">Are you sure you want to remove\n payment method %s with expiry date %s?</string>
+    <string name="str_are_you_sure_you_want_to_remove_direct_payment_method">Are you sure you want to remove\n payment method %s</string>
+    <string name="str_signed_out">Signed out</string>
+    <string name="str_you_have_signed_out">You\'ve signed out of your account</string>
+    <string name="str_timeout">Timeout</string>
+    <string name="str_for_your_security">For your security,you\'ll be signed out in %s minutes</string>
+    <string name="str_sign_out">Sign out</string>
+    <string name="str_stay_signed_in">Stay signed In</string>
+
+
+    <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>
+    <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
+    <string name="str_dummy_text_2fa_options_sms">Text <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
 </resources>
 
 

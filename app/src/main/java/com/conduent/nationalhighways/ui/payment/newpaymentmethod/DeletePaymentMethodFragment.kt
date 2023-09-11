@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -33,6 +34,8 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
     private var loader: LoaderDialog? = null
     private var paymentList: CardListResponseModel? = null
     private var data : CrossingDetailsModelsResponse? = null
+    private var accountNumber:String=""
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -50,6 +53,10 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         binding.btnContinue.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
 
+
+        accountNumber=arguments?.getString(Constants.ACCOUNT_NUMBER)?:""
+
+
         if (arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA) != null) {
             paymentList = arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA)
 
@@ -61,7 +68,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
                 val data = navData as CrossingDetailsModelsResponse?
                 binding.maximumVehicleAdded.text = getString(R.string.your_type_of_vehicle_does_not_match_what_we_have_on_record)
                 binding.textMaximumVehicle.text = getString(R.string.our_records_show_the_numberplate,
-                    data?.plateNumber, data?.dvlaclass?.let { Utils.getVehicleType(it) },
+                    data?.plateNo, data?.dvlaclass?.let { Utils.getVehicleType(it) },
                     data?.customerClass?.let { Utils.getVehicleType(it) },
                     data?.customerClassRate)
                 binding.btnContinue.text = getString(R.string.pay_new_amount)
@@ -96,6 +103,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
                 }
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.DELETE_CARD)
+                bundle.putString(Constants.ACCOUNT_NUMBER,accountNumber)
                 bundle.putBoolean(SHOW_BACK_BUTTON,false)
 
                 findNavController().navigate(

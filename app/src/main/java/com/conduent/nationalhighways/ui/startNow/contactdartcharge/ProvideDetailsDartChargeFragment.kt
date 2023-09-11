@@ -68,9 +68,9 @@ class ProvideDetailsDartChargeFragment : BaseFragment<FragmentProvideDetailsDart
     private fun checkButton() {
         binding.apply {
             model = AccountTypeSelectionModel(
-                binding.etFistName.text.toString().trim().isNotEmpty() &&
-                        binding.etLastName.text.toString().trim()
-                            .isNotEmpty() && Utils.isEmailValid(binding.etEmail.text.toString().trim())
+                binding.etFistName.getText().toString().trim().isNotEmpty() &&
+                        binding.etLastName.getText().toString().trim()
+                            .isNotEmpty() && Utils.isEmailValid(binding.etEmail.getText().toString().trim())
             )
         }
     }

@@ -131,7 +131,7 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
             upload4.setOnClickListener(this@NewCaseCommentsFragment)
 
             binding.tfDescriptionInput.onTextChanged {
-                binding.model = binding.tfDescriptionInput.text.toString().isNotEmpty()
+                binding.model = binding.tfDescriptionInput.getText().toString().isNotEmpty()
             }
         }
     }

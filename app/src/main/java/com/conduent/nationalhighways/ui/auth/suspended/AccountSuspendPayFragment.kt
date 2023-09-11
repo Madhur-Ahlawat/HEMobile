@@ -37,6 +37,7 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -53,7 +54,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private var currentBalance: String = ""
     private var paymentSuccessResponse: PaymentSuccessResponse? = null
     private var navFlow: String = ""
-
+    private val formatter = DecimalFormat("#,###.00")
     private var cardModel: PaymentWithNewCardModel? = null
 
     private var topUpAmount = 0.0
@@ -122,7 +123,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         binding.btnPay.setOnClickListener(this)
         binding.btnCancel.setOnClickListener(this)
-        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
         binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
         binding.lowBalance.setText("£" + String.format("%.2f", topUpAmount))
@@ -149,9 +150,10 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private fun topBalanceDecimal(b: Boolean) {
         if (b.not()) {
             val text = binding.lowBalance.getText().toString().trim()
-            val updatedText = text.replace("£", "")
-            if (updatedText.isNotEmpty() && updatedText.contains(".").not()) {
-                binding.lowBalance.setText(String.format("%.2f", updatedText.toDouble()))
+            val updatedText = text.replace("£", "").replace(".", "").replace(",", "")
+            if (updatedText.isNotEmpty().not()) {
+                val formatter = DecimalFormat("#,###.00")
+                binding.lowBalance.setText(formatter.format(updatedText))
             }
         }
     }
@@ -275,7 +277,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         manualTopUpViewModel.paymentWithExistingCard(model)
     }
 
-    inner class GenericTextWatcher(private val index: Int) : TextWatcher {
+    inner class GenericTextWatcher() : TextWatcher {
 
         override fun beforeTextChanged(
             charSequence: CharSequence?,
@@ -292,47 +294,41 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             count: Int
         ) {
 
-            if (index == 0) {
-
-                val text = binding.lowBalance.getText().toString().trim()
-                var updatedText: String = ""
-                updatedText = if (text.contains("$")) {
-                    text.replace("$", "")
-                } else {
-                    text.replace("£", "")
-                }
-
-                if (updatedText.isNotEmpty()) {
-                    val str: String = updatedText.substringBeforeLast(".")
-                    lowBalance = if (str.length < 8) {
-                        if (updatedText.toDouble() < 10) {
-                            binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
-                            false
-
-                        } else {
-                            binding.lowBalance.removeError()
-                            true
-                        }
-                    } else {
-                        binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_8_characters))
+            var mText = binding.lowBalance.getText().toString()
+            var updatedText: String =
+                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+                    .replace(" ", "")
+            if (updatedText.isNotEmpty()) {
+                lowBalance = if (updatedText.length < 6) {
+                    if (updatedText.toInt() < 10) {
+                        binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                         false
-                    }
 
+                    } else if (updatedText.toInt() > 80000) {
+                        binding.lowBalance.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
+                        false
+                    } else {
+                        lowBalance = true
+                        binding.lowBalance.removeError()
+                        binding.lowBalance.editText.removeTextChangedListener(this)
+                        binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
+                        binding.lowBalance.editText.addTextChangedListener(this)
+                        true
+                    }
                 } else {
-                    binding.lowBalance.removeError()
+                    binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_8_characters))
+                    false
                 }
-                binding.lowBalance.editText.removeTextChangedListener(this)
-                if (updatedText.isNotEmpty())
-                    binding.lowBalance.setText("£$updatedText")
-                Selection.setSelection(
-                    binding.lowBalance.getText(),
-                    binding.lowBalance.getText().toString().length
-                )
-                binding.lowBalance.editText.addTextChangedListener(this)
+
+            } else {
+                binding.lowBalance.removeError()
             }
 
-
             checkButton()
+            Selection.setSelection(
+                binding.lowBalance.getText(),
+                binding.lowBalance.getText().toString().length
+            )
         }
 
         override fun afterTextChanged(editable: Editable?) {

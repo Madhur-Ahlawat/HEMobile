@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.AccountInformation
+import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
@@ -35,7 +37,9 @@ import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
@@ -77,6 +81,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var replenishmentInformation: ReplenishmentInformation? = null
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
     private val viewModelProfile: ProfileViewModel by viewModels()
+    private val dashboardViewModel: DashboardViewModel by viewModels()
+
 
 
     override fun getFragmentBinding(
@@ -166,6 +172,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 ::updateCommunicationSettingsPrefs
             )
             observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
+
+            observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
+            observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
+
+
         }
 
         isViewCreated = true
@@ -255,7 +266,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             viewModel.verifyRequestCode(mVerifyRequestOtpReq)
 
                         } else {
-                            showError(binding.root, getString(R.string.error_otp_time_expire))
+                            showError(binding.root, getString(R.string.str_security_code_expired_message))
                         }
                     }
 
@@ -264,6 +275,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
+                       /* val bundle = Bundle()
+                        findNavController().navigate(
+                            R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                            bundle
+                        )*/
+
                         confirmEmailCode()
                     }
 
@@ -372,7 +389,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                     else -> {
                         binding.messageReceivedTxt.text =
-                            getString(R.string.wehavesentatextmessageto) + " " + data!!.optionValue + "."
+                            getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
+                                data?.optionValue.toString()) + "."
 
                     }
                 }
@@ -388,7 +406,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 } else {
                     binding.messageReceivedTxt.text =
-                        getString(R.string.wehavesentanemail) + " " + data!!.optionValue
+                        getString(R.string.wehavesentanemail) + " " + Utils.maskEmail(data?.optionValue.toString())
 
                 }
             }
@@ -405,21 +423,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 val bundle = Bundle()
 
                 if (navFlowCall == TWOFA) {
-                    if (accountInformation?.status.equals(Constants.SUSPENDED)) {
-
-                        val intent = Intent(requireContext(), AuthActivity::class.java)
-                        intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                        intent.putExtra(
-                            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                        )
-                        startActivity(intent)
-                        requireActivity().finish()
-
-                    } else {
-                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-                    }
+                    dashboardViewModel.getAccountDetailsData()
 
 
                 } else {
@@ -460,12 +464,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode?.toString().equals("2051")) {
-                    binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
-                } else {
-                    binding.edtOtp.setErrorText(status.errorMsg)
-
-                }
                 Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
                 AdobeAnalytics.setActionTrack1(
@@ -481,8 +479,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 when (status.errorModel?.errorCode) {
                     2051 -> {
-                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_not_correct))
-
+                        binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
+                    }
+                    2050 -> {
+                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
+                    }
+                    5260 -> {
+                        binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
+                    }
+                    else->{
+                        binding.edtOtp.setErrorText(status.errorMsg)
                     }
                 }
             }
@@ -539,15 +545,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                otpSuccessRedirection()
+                when (resource.errorModel?.status) {
+                    500 -> {
+                        binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
 
-                when (resource.errorModel?.errorCode) {
-                    1 -> {
-                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_not_correct))
                     }
 
-                    2 -> {
+                    900 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
+
                     }
 
                     else -> {
@@ -736,6 +742,129 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
             viewModelProfile.updateUserDetails(request)
         }
+
+    }
+
+    private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
+
+
+        when (status) {
+            is Resource.Success -> {
+                personalInformation = status.data?.personalInformation
+                accountInformation = status.data?.accountInformation
+                replenishmentInformation = status.data?.replenishmentInformation
+
+
+                if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                    if (loader?.isVisible == true) {
+                        loader?.dismiss()
+                    }
+
+
+                    val intent = Intent(requireActivity(), AuthActivity::class.java)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    intent.putExtra(Constants.CROSSINGCOUNT, "")
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+
+
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                    )
+                    startActivity(intent)
+
+
+                } else {
+                    crossingHistoryApi()
+                }
+
+
+            }
+
+            is Resource.DataError -> {
+                if (loader?.isVisible == true) {
+                    loader?.dismiss()
+                }
+
+
+                AdobeAnalytics.setLoginActionTrackError(
+                    "login",
+                    "login",
+                    "login",
+                    "english",
+                    "login",
+                    "",
+                    "true",
+                    "manual",
+                    sessionManager.getLoggedInUser()
+                )
+            }
+
+            else -> {
+
+            }
+        }
+
+    }
+
+    private fun crossingHistoryApi() {
+        val request = CrossingHistoryRequest(
+            startIndex = 1,
+            count = 0,
+            transactionType = Constants.TOLL_TRANSACTION,
+            searchDate = Constants.TRANSACTION_DATE,
+            startDate = DateUtils.lastPriorDate(-90) ?: "",
+            endDate = DateUtils.currentDate() ?: ""
+        )
+        dashboardViewModel.crossingHistoryApiCall(request)
+    }
+
+    private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.let {
+                    if (it.transactionList != null) {
+                        navigateWithCrossing(it.transactionList.count ?: 0)
+
+                    } else {
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                    }
+
+                }
+            }
+
+            is Resource.DataError -> {
+                requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+            }
+
+            else -> {
+            }
+        }
+    }
+    private fun navigateWithCrossing(count: Int) {
+
+
+        if (count > 0) {
+
+
+            val intent = Intent(requireActivity(), AuthActivity::class.java)
+            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+            intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
+            intent.putExtra(Constants.PERSONALDATA, personalInformation)
+
+
+            intent.putExtra(
+                Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+            )
+            startActivity(intent)
+
+        } else {
+            requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+        }
+
 
     }
 

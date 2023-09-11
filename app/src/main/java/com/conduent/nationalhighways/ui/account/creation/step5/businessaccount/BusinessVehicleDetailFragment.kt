@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.account.creation.step5.businessaccount
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,36 +36,36 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentBusinessVehicleDetailChangesBinding.inflate(inflater, container, false)
 
+    private var data: CrossingDetailsModelsResponse? = null
     private var requestModel: CreateAccountRequestModel? = null
     private var nonUKVehicleModel: NewVehicleInfoDetails? = null
 
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        navData?.let {
+            data = it as CrossingDetailsModelsResponse
+        }
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
-                navData = arguments?.getParcelable(
-
-                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
-                )
+        Log.d("vehicleData", Gson().toJson(nonUKVehicleModel))
+        if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
+            binding.apply {
+                regNum.text = data?.plateNo
+                typeOfVehicle.text = Utils.getVehicleType(data?.vehicleClass.toString())
+                vehicleModel.text = data?.vehicleModel
+                vehicleMake.text = data?.vehicleMake
+                vehicleColor.text = data?.vehicleColor
             }
         } else {
-            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
-                navData = arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
-                )
+            binding.apply {
+                regNum.text = nonUKVehicleModel?.plateNumber
+                typeOfVehicle.text =
+                    Utils.getVehicleType(nonUKVehicleModel?.vehicleClass.toString())
+                vehicleModel.text = nonUKVehicleModel?.vehicleModel
+                vehicleMake.text = nonUKVehicleModel?.vehicleMake
+                vehicleColor.text = nonUKVehicleModel?.vehicleColor
             }
-        }
-        Log.d("vehicleData", Gson().toJson(nonUKVehicleModel))
-
-        binding.apply {
-            regNum.text = nonUKVehicleModel?.plateNumber
-            typeOfVehicle.text = Utils.getVehicleType(nonUKVehicleModel?.vehicleClass.toString())
-            vehicleModel.text = nonUKVehicleModel?.vehicleModel
-            vehicleMake.text = nonUKVehicleModel?.vehicleMake
-            vehicleColor.text = nonUKVehicleModel?.vehicleColor
         }
 
 
@@ -96,42 +95,42 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     it.let {
                         it.vehicleModel = nonUKVehicleModel?.vehicleModel
                         it.vehicleMake = nonUKVehicleModel?.vehicleMake
-                        it.vehicleColor= nonUKVehicleModel?.vehicleColor
-                        val unSettledTrips = it.unSettledTrips?.toDouble()
+                        it.vehicleColor = nonUKVehicleModel?.vehicleColor
+                        val unSettledTrips = it.unSettledTrips.toDouble()
                         val chargingRate = it.chargingRate?.toDouble()
                         val customerClassRate = it.customerClassRate?.toDouble()
-                        if (unSettledTrips != null) {
-                            val bundle = Bundle()
-                            bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                            bundle.putParcelable(Constants.NAV_DATA_KEY,resource.data)
-                            if(chargingRate != customerClassRate){
+                        val bundle = Bundle()
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, resource.data)
+                        if (chargingRate != customerClassRate) {
+                            findNavController().navigate(
+                                R.id.action_businessVehicleDetailFragment_to_deletePaymentMethodFragment,
+                                bundle
+                            )
+                        } else {
+                            if (unSettledTrips > 0) {
+
                                 findNavController().navigate(
-                                    R.id.action_businessVehicleDetailFragment_to_deletePaymentMethodFragment,
+                                    R.id.action_businessVehicleDetailFragment_to_pay_for_crossingFragment,
                                     bundle
                                 )
-                            }else {
-                                if (unSettledTrips > 0) {
 
-                                    findNavController().navigate(
-                                        R.id.action_businessVehicleDetailFragment_to_pay_for_crossingFragment,
-                                        bundle
-                                    )
-
-                                } else {
-                                    findNavController().navigate(
-                                        R.id.action_businessVehicleDetailFragment_to_additional_crossingFragment,
-                                        bundle
-                                    )
-                                }
+                            } else {
+                                findNavController().navigate(
+                                    R.id.action_businessVehicleDetailFragment_to_additional_crossingFragment,
+                                    bundle
+                                )
                             }
                         }
 
                     }
                 }
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+
             else -> {
             }
         }
@@ -140,16 +139,19 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
     override fun onClick(view: View?) {
         val bundle = Bundle()
-        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         when (view?.id) {
             R.id.confirmBtn -> {
                 val accountData = NewCreateAccountRequestModel
                 val vehicleList = accountData.vehicleList
-                when(navFlowCall) {
+                when (navFlowCall) {
 
                     Constants.PAY_FOR_CROSSINGS -> {
                         nonUKVehicleModel?.let { vehicleList.add(it) }
-                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                        loader?.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.LOADER_DIALOG
+                        )
                         val model = CrossingDetailsModelsRequest(
                             nonUKVehicleModel?.plateNumber,
                             nonUKVehicleModel?.vehicleClass,
@@ -161,9 +163,30 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         viewModel.getCrossingDetails(model)
                     }
 
+                    Constants.TRANSFER_CROSSINGS -> {
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                        arguments?.getInt(Constants.VEHICLE_INDEX)
+                            ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                        if(data?.isExempted?.lowercase().equals("y")){
+                            findNavController().navigate(
+                                R.id.action_businessVehicleDetailFragment_to_vehicleIsExemptFromDartChargesFragment,
+                                bundle
+                            )
+                        }
+                        else{
+                            findNavController().navigate(
+                                R.id.action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,
+                                bundle
+                            )
+                        }
+
+                    }
+
                     else -> {
 
-                        val oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER,"").toString()
+                        val oldPlateNumber =
+                            arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
                         if (oldPlateNumber.isNotEmpty()) {
                             val index = arguments?.getInt(Constants.VEHICLE_INDEX)
                             if (index != null) {
@@ -173,11 +196,17 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         nonUKVehicleModel?.let {
 
                             vehicleList.add(it)
-                            val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY,true)
-                            if(editCall){
-                                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment,bundle)
-                            }else {
-                                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_vehicleListFragment,bundle)
+                            val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
+                            if (editCall) {
+                                findNavController().navigate(
+                                    R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment,
+                                    bundle
+                                )
+                            } else {
+                                findNavController().navigate(
+                                    R.id.action_businessVehicleDetailFragment_to_vehicleListFragment,
+                                    bundle
+                                )
                             }
 
                         }
@@ -186,20 +215,37 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                 }
 
 
-
-
             }
 
             R.id.notVehicle -> {
-                bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
-                findNavController().navigate(
-                    R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
-                    bundle
-                )
+                if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse()?.apply {
+                        plateNo=data?.plateNo!!
+                        expirationDate= data?.expirationDate!!
+                        unusedTrip=data?.unusedTrip!!
+                    })
+                    arguments?.getInt(Constants.VEHICLE_INDEX)
+                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                    findNavController().navigate(
+                        R.id.action_businessVehicleDetailFragment_to_addNewVehicleDetailsFragment,
+                        bundle
+                    )
+
+                } else {
+                    bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
+                    findNavController().navigate(
+                        R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
+                        bundle
+                    )
+                }
             }
 
             R.id.inCorrectVehicleNumber -> {
-                findNavController().navigate(R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment,
+                    bundle
+                )
             }
         }
     }

@@ -243,10 +243,10 @@ class ProfilePinFragment : BaseFragment<FragmentProfilePinBinding>(), View.OnCli
     }
 
     private fun checkButton() {
-        binding.enable = binding.tvPinOne.text.toString().isNotEmpty() &&
-                binding.tvPinTwo.text.toString().isNotEmpty() &&
-                binding.tvPinThree.text.toString().isNotEmpty() &&
-                binding.tvPinFour.text.toString().isNotEmpty()
+        binding.enable = binding.tvPinOne.getText().toString().isNotEmpty() &&
+                binding.tvPinTwo.getText().toString().isNotEmpty() &&
+                binding.tvPinThree.getText().toString().isNotEmpty() &&
+                binding.tvPinFour.getText().toString().isNotEmpty()
     }
 
 

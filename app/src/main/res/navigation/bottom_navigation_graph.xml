@@ -124,6 +124,14 @@
 
     </fragment>
     <fragment
+        android:id="@+id/crossing_details"
+        android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.CrossingDetailsFragment"
+        tools:layout="@layout/fragment_crossing_details">
+        <action
+            android:id="@+id/action_crossing_details_to_find_vehicles"
+            app:destination="@id/findYourVehicleFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/findYourVehicleFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountFindVehicleFragment"
         android:label="Find Your Vehicle"

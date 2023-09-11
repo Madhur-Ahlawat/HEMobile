@@ -8,7 +8,6 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
@@ -54,24 +53,32 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         }
         navData = data
         binding.apply {
+            numberAdditionalCrossings.dataSet.clear()
             numberAdditionalCrossings.dataSet.addAll(resources.getStringArray(R.array.crossings))
-            numberAdditionalCrossings.setSelectedValue("1")
+            if(data?.additionalCrossingCount!!>0){
+                numberAdditionalCrossings.setSelectedValue(data?.additionalCrossingCount.toString())
+            }
+            else{
+                numberAdditionalCrossings.setSelectedValue("0")
+                data?.additionalCrossingCount=0
+            }
             val charge = data?.chargingRate?.replace("£","")?.replace("$","")?.toDouble()
             if(charge != null) {
-                val mUnSettledTrips = data?.unSettledTrips?.toInt()
-                var recent = 0.0
-                if (mUnSettledTrips != null && mUnSettledTrips != 0) {
-                    recent = charge * mUnSettledTrips
+                val mUnSettledTrips = data?.unSettledTrips
+                val additionalCrossingsCount = data?.additionalCrossingCount
+                var recentCrossingsAmount = 0.0
+                var additionalCrossingsAmount = 0.0
+                if (mUnSettledTrips != null && mUnSettledTrips > 0) {
+                    recentCrossingsAmount = charge * mUnSettledTrips
                 }
-                val total = recent + charge
-                recentCrossing.setText(getString(R.string.currency_symbol) +  String.format("%.2f", recent))
-                paymentCrossing.setText(getString(R.string.currency_symbol) +  String.format("%.2f", charge))
+                if(additionalCrossingsCount !=null && additionalCrossingsCount >0){
+                    additionalCrossingsAmount = charge * additionalCrossingsCount
+                }
+                val total = recentCrossingsAmount + additionalCrossingsAmount
+                recentCrossing.setText(getString(R.string.currency_symbol) +  String.format("%.2f", recentCrossingsAmount))
+                paymentCrossing.setText(getString(R.string.currency_symbol) +  String.format("%.2f", additionalCrossingsAmount))
                 totalAmount.setText(getString(R.string.currency_symbol) +  String.format("%.2f", total))
-                val additional = charge*numberAdditionalCrossings.selectedItemValue!!.toInt()
                 data?.totalAmount=total
-                data?.additionalCrossingCount = numberAdditionalCrossings.selectedItemValue!!.toInt()
-                data?.additionalCharge=additional
-
             }
             recentCrossing.isEnabled = false
             paymentCrossing.isEnabled = false
@@ -83,7 +90,16 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             getString(R.string.only_use_this_option_for_crossings_planned),
         getString(R.string.str_continue),"",null,null,View.GONE)
 
+    checkButton()
+    }
 
+    private fun checkButton() {
+        if(binding.totalAmount.editText.getText().toString().trim().replace("£","").replace("$","").replace(" ","").toDouble()>0){
+            binding.btnNext.isEnabled=true
+        }
+        else{
+            binding.btnNext.isEnabled=false
+        }
     }
 
     override fun initCtrl() {
@@ -119,22 +135,27 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     override fun onItemSlected(position: Int, selectedItem: String) {
         val charge = data?.chargingRate?.toDouble()
         if(charge != null){
+            data?.additionalCrossingCount = selectedItem.toInt()
 //            val total = charge*selectedItem.toInt()
 //            binding.paymentCrossing.setText(getString(R.string.currency_symbol)+total)
-            val unSettledTrips = data?.unSettledTrips?.toInt()
-            var recent = 0.0
-            if(unSettledTrips != null){
-                 recent = charge*unSettledTrips
+            val mUnSettledTrips = data?.unSettledTrips
+            val additionalCrossingsCount = data?.additionalCrossingCount
+            var recentCrossingsAmount = 0.0
+            var additionalCrossingsAmount = 0.0
+            if (mUnSettledTrips != null && mUnSettledTrips > 0) {
+                recentCrossingsAmount = charge * mUnSettledTrips
             }
-            val additional = charge*selectedItem.toInt()
-            val total = recent+additional
+            if(additionalCrossingsCount !=null && additionalCrossingsCount >0){
+                additionalCrossingsAmount = charge * additionalCrossingsCount
+            }
+            val total = recentCrossingsAmount + additionalCrossingsAmount
+            binding?.recentCrossing?.setText(getString(R.string.currency_symbol) +  String.format("%.2f", recentCrossingsAmount))
+            binding?.paymentCrossing?.setText(additionalCrossingsCount.toString())
             data?.totalAmount=total
-            data?.additionalCharge=additional
-            data?.additionalCrossingCount = selectedItem.toInt()
-            binding.recentCrossing.setText(getString(R.string.currency_symbol)+ String.format("%.2f", recent))
-            binding.paymentCrossing.setText(getString(R.string.currency_symbol)+ String.format("%.2f", additional))
+            data?.additionalCharge=additionalCrossingsAmount
             binding.totalAmount.setText(getString(R.string.currency_symbol)+ String.format("%.2f", data?.totalAmount))
         }
+        checkButton()
     }
 
     fun showError(view: View?, message: String?) {

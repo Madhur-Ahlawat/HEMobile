@@ -51,13 +51,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnClickListener {
 
+
     private val viewModel: CreateAccountViewModel by viewModels()
     private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
     private val oneOfPaymentViewModel: MakeOneOfPaymentViewModel by viewModels()
     private var crossingDetailModelResponse: CrossingDetailsModelsResponse? = null
 
+
     @Inject
     lateinit var sessionManager: SessionManager
+
 
     val vehicle: ArrayList<VehicleItem> = ArrayList()
     private var expMonth: String = ""
@@ -77,6 +80,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var currentBalance: String = ""
     private var checkBox: Boolean = false
     private var paymentListSize: Int = 0
+    private var threeDStarted:Boolean=false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -279,8 +283,15 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         "3DStarted" -> showLoader()
                         "3DSNotIntiated" -> showErrorPopup(resources.getString(R.string.payment_failed))
                         "cardtypeerror" -> showErrorPopup(resources.getString(R.string.payment_incorrect))
+                         "3DStarted1"-> threeDStarted=true
 
                         else -> {
+                            if (data == "paymentFailed" && threeDStarted) {
+                                hideLoader()
+                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+
+                            }
+
                             if (data.startsWith("amounttoIncrease")) {
                                 htmlTopUpAmount = data.replace("amounttoIncrease", "")
                             } else if (data == "true") {
@@ -395,7 +406,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             future toll payment =Additional Crossing Selected * Charging Rate
         * */
         val vehicleList = VehicleList(
-            crossingDetailModelResponse?.plateNumber,
+            crossingDetailModelResponse?.plateNo,
             crossingDetailModelResponse?.vehicleMake,
             crossingDetailModelResponse?.vehicleModel,
             crossingDetailModelResponse?.dvlaclass,
@@ -407,7 +418,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             crossingDetailModelResponse?.chargingRate,
             crossingDetailModelResponse?.customerClass,
             crossingDetailModelResponse?.customerClassRate,
-            crossingDetailModelResponse?.accountNumber,
+            crossingDetailModelResponse?.accountNo,
             crossingDetailModelResponse?.unSettledTrips.toString(),
             crossingDetailModelResponse?.chargingRate
         )
@@ -510,13 +521,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.countryType = "UK"
 
         } else {
-            model.countryType = "UK"
+            model.countryType = "NON-UK"
 
         }
         model.referenceId = data.referenceId
         if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
-            model.eveningPhone = data.mobileNumber
-            model.eveningPhoneCountryCode = data.countryCode?.let { getRequiredText(it) }
+            model.cellPhone = data.mobileNumber
+            model.cellPhoneCountryCode = data.countryCode?.let { getRequiredText(it) }
         } else {
             model.eveningPhone = data.telephoneNumber
             model.eveningPhoneCountryCode = data.telephone_countryCode?.let { getRequiredText(it) }
@@ -679,7 +690,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
-                            view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+                            // view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('payment').innerText  ='You chose to pay as you go. We’ll collect payment from your card each time you cross.';})()")
+
 
                         }
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
