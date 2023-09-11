@@ -149,8 +149,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 override fun onNavigationItemChanged(
                     navigationItem: BottomNavigationView.NavigationItem
                 ) {
-                    Log.e("TAG", "onNavigationItemChanged: position--> " + navigationItem.position)
-                    dataBinding?.backButton?.visible()
 
                     when (navigationItem.position) {
                         0 -> {
@@ -247,12 +245,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     fun redirectToDashBoardFragment() {
         Log.e("TAG", "redirectToDashBoardFragment: ")
         dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
-        navController.navigate(R.id.action_enquiryCategoryFragment_to_dashBoardFragment)
     }
 
     fun redirectToAccountFragment() {
         Log.e("TAG", "redirectToAccountFragment: ", )
         dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
-        navController.navigate(R.id.action_enquiryCategoryFragment_to_accountFragment)
     }
 }

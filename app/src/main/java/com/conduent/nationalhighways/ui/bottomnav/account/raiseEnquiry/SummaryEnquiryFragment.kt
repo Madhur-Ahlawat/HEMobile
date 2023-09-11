@@ -58,6 +58,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             val subcategorySplit = viewModel.enquiryModel.value?.subCategory?.name?.split("~")
             var selectSubArea = ""
             var seletedArea = ""
+            Log.e("TAG", "init: subCategory--> " + viewModel.enquiryModel.value?.subCategory?.name)
+            Log.e("TAG", "init: subCategory size--> " + subcategorySplit.orEmpty().size)
             if (subcategorySplit.orEmpty().size > 0) {
                 selectSubArea = subcategorySplit?.get(0).toString()
             }
@@ -194,26 +196,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 }
 
                 is Resource.DataError -> {
-                    resource.data?.email = binding.emailDataTv.getText().toString()
-                    resource.data?.category = viewModel.enquiryModel.value?.category?.value ?: ""
-                    val bundle = Bundle()
-                    bundle.putParcelable(
-                        Constants.EnquiryResponseModel,
-                        resource.data ?: EnquiryResponseModel()
-                    )
-                    bundle.putBoolean(
-                        Constants.SHOW_BACK_BUTTON,
-                        false
-                    )
-                    bundle.putString(
-                        Constants.NAV_FLOW_FROM,
-                        navFlowFrom
-                    )
 
-                    findNavController().navigate(
-                        R.id.action_enquirySummaryFragment_to_enquirySuccessFragment,
-                        bundle
-                    )
                 }
 
                 else -> {
@@ -223,7 +206,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         }
         apiSuccess = true
     }
-
 }
 
 

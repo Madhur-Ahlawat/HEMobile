@@ -66,9 +66,9 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
         }
 
         if(requireActivity() is RaiseEnquiryActivity){
-            binding.btnGotoStartMenu.gone()
-        }else{
             binding.btnGotoStartMenu.visible()
+        }else{
+            binding.btnGotoStartMenu.gone()
         }
 
         binding.btnGotoStartMenu.setOnClickListener {
@@ -114,7 +114,7 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 viewModel.enquiry_status_number.value = charSequence.toString()
 
                 when {
-                    charSequence.toString().length < 3 -> {
+                    charSequence.toString().length>1 && charSequence.toString().length < 3 -> {
                         referenceNumberValidations = false
                         binding.enquiryReferenceNumberEt.setErrorText(resources.getString(R.string.str_reference_3_charac))
                     }

@@ -32,7 +32,6 @@
             app:destination="@id/accountSuspendedPaymentFragment" />
     </fragment>
 
-
     <fragment
         android:id="@+id/vehicleFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.vehicle.VehicleFragment"
@@ -790,16 +789,7 @@
             app:destination="@id/enquirySummaryFragment"
             app:popUpTo="@id/enquirySummaryFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_enquiryCategoryFragment_to_dashBoardFragment"
-            app:destination="@id/dashBoardFragment"
-            app:popUpTo="@id/dashBoardFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_enquiryCategoryFragment_to_accountFragment"
-            app:destination="@id/accountFragment"
-            app:popUpTo="@id/accountFragment"
-            app:popUpToInclusive="true" />
+
     </fragment>
     <fragment
         android:id="@+id/enquiryCommentsFragment"

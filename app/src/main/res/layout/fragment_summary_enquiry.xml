@@ -43,7 +43,7 @@
                     android:id="@+id/details_enquiry_tv"
                     style="@style/SemiBoldTextBlack"
                     android:layout_width="@dimen/margin_0dp"
-                    android:text="@string/details_of_enquiry"
+                    tools:text="@string/details_of_enquiry"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/contact_details_tv"
                     style="@style/RegularTextBlack"
-                    android:text="@string/str_check_your_answer_before_enquiry"
+                    tools:text="@string/str_check_your_answer_before_enquiry"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_enquiry_tv" />

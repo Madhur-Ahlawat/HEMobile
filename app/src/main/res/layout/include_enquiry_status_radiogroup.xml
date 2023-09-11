@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_60dp">
+
         <com.conduent.nationalhighways.utils.widgets.NHRadioGroup
             android:id="@+id/raise_request_radio"
             android:layout_width="match_parent"
@@ -39,6 +41,7 @@
                 android:longClickable="false"
                 android:text="@string/str_category"
                 android:textColor="@drawable/radio_text_color" />
+
 
             <com.conduent.nationalhighways.utils.widgets.NHRadioButton
                 android:id="@+id/comments_rb"
@@ -71,5 +74,8 @@
                 android:textColor="@drawable/radio_text_color" />
         </com.conduent.nationalhighways.utils.widgets.NHRadioGroup>
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>

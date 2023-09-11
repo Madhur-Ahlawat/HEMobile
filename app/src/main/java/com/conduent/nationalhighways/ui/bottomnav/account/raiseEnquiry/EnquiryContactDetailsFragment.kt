@@ -76,6 +76,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             if (editRequest == Constants.EDIT_SUMMARY) {
                 findNavController().navigate(
                     R.id.action_enquiryContactDetailsFragment_to_enquirySummaryFragment,getBundleData()
+
                 )
             } else if (editRequest == Constants.EDIT_CATEGORY_DATA) {
                 findNavController().navigate(

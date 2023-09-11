@@ -89,7 +89,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
             valueName.text = sessionManager.fetchName()
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
-            Log.e("TAG", "initUI: fetchAccountStatus " + sessionManager.fetchAccountStatus())
             DashboardUtils.setAccountStatusNew(
                 sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
@@ -189,9 +188,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.contact_us -> {
-                val bundle:Bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_FROM,Constants.ACCOUNT_CONTACT_US)
-                findNavController().navigate(R.id.caseEnquiryHistoryListFragment,bundle)
+                val bundle: Bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_FROM, Constants.ACCOUNT_CONTACT_US)
+                findNavController().navigate(R.id.caseEnquiryHistoryListFragment, bundle)
                 /*requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
                     putInt(
                         Constants.FROM_LOGIN_TO_CASES,
