@@ -114,7 +114,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             val text = binding.lowBalance.getText().toString().trim()
             val updatedText = text.replace("£", "")
             if (updatedText.isNotEmpty().not()) {
-                val formatter = DecimalFormat("#,###.00")
                 binding.lowBalance.setText(formatter.format(updatedText))
             }
         }

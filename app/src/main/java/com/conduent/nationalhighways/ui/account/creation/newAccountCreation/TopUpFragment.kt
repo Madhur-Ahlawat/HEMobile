@@ -61,26 +61,19 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         if (navFlow == Constants.THRESHOLD) {
             if (!isViewCreated) {
                 getThresholdAmount()
-
             }
-
         }
         isViewCreated = true
-
-
-
-
-
         binding.topUpBtn.setOnClickListener(this)
-
-
-
+        binding.lowBalance.setText("£5.00")
+        binding.top.setText("£10.00")
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
-
         binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
         binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
-
+        lowBalance=true
+        topUpBalance=true
+        checkButton()
     }
 
     private fun getThresholdAmount() {
@@ -108,10 +101,10 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
                 if (navFlow == Constants.THRESHOLD) {
                     val amount = binding.top.editText.text.toString().trim().replace("$", "£")
-                        .replace("£", "")
+                        .replace("£", "").replace(",","").replace(" ","")
                     val thresholdAmount =
                         binding.lowBalance.editText.text.toString().trim().replace("$", "£")
-                            .replace("£", "")
+                            .replace("£", "").replace(",","").replace(" ","")
                     val request = AccountTopUpUpdateThresholdRequest(
                         amount,
                         thresholdAmount
@@ -226,8 +219,14 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                             binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_more))
                             false
 
-                        } else {
+                        }
+                        else if (updatedText.toInt() > 80000) {
+                            binding.lowBalance.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
+                            false
+                        }
+                        else {
                             binding.lowBalance.removeError()
+                            binding.lowBalance.editText.removeTextChangedListener(this)
                             binding.lowBalance.editText.removeTextChangedListener(this)
                             binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
                             binding.lowBalance.editText.addTextChangedListener(this)
@@ -241,14 +240,10 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 } else {
                     binding.lowBalance.removeError()
                 }
-                binding.lowBalance.editText.removeTextChangedListener(this)
-                if (updatedText.isNotEmpty())
-                    binding.lowBalance.setText("£$updatedText")
                 Selection.setSelection(
                     binding.lowBalance.editText.text,
                     binding.lowBalance.editText.text.toString().length
                 )
-                binding.lowBalance.editText.addTextChangedListener(this)
             } else if (index == 1) {
                 val mText = binding.top.editText.text.toString().trim()
                 var updatedText: String =
@@ -260,7 +255,11 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                             binding.top.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                             false
 
-                        } else {
+                        } else if (updatedText.toInt() > 80000) {
+                            binding.top.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
+                            false
+                        }
+                        else {
                             binding.top.removeError()
                             binding.top.editText.removeTextChangedListener(this)
                             binding.top.setText("£" + formatter.format(updatedText.toInt()))
@@ -274,14 +273,10 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 } else {
                     binding.top.removeError()
                 }
-                binding.top.editText.removeTextChangedListener(this)
-                if (updatedText.isNotEmpty())
-                    binding.top.setText("£$updatedText")
                 Selection.setSelection(
                     binding.top.editText.text,
                     binding.top.editText.text.toString().length
                 )
-                binding.top.editText.addTextChangedListener(this)
             }
 
             checkButton()
