@@ -1,27 +1,44 @@
 package com.conduent.nationalhighways.ui.bottomnav
 
+import android.util.Log
+import android.view.View
+import androidx.activity.viewModels
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
+import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
+import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
 import com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.base.BaseApplication
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment
+import com.conduent.nationalhighways.utils.DateUtils
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -30,12 +47,13 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     @Inject
     lateinit var sessionManager: SessionManager
-
+    private val dashboardViewModel: DashboardViewModel by viewModels()
+    private var personalInformation: PersonalInformation? = null
     @Inject
     lateinit var api: ApiService
     var dataBinding: ActivityHomeMainBinding? = null
     private lateinit var navController: NavController
-
+    private var loader: LoaderDialog? = null
     companion object {
         var dateRangeModel: PaymentDateRangeModel? = null
         var accountDetailsData: AccountResponse? = null
@@ -54,13 +72,34 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         setContentView(dataBinding?.root)
         setView()
     }
-
+    private fun initLoaderDialog() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+    }
     fun viewAllTransactions(){
         dataBinding?.apply {
             bottomNavigationView.setActiveNavigationIndex(1)
         }
     }
+    private fun getDashBoardAllData() {
+        loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
+        val request = CrossingHistoryRequest(
+            startIndex = 1,
+            count = 5,
+            transactionType = Constants.ALL_TRANSACTION,
+            searchDate = Constants.TRANSACTION_DATE,
+            startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
+            endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
+        )
+        Log.e("XJ220", Gson().toJson(request))
+        dashboardViewModel.getDashboardAllData(request)
+    }
 
+    fun hitAPIs(): () -> Unit? {
+        getDashBoardAllData()
+        dashboardViewModel.getAlertsApi()
+        return {}
+    }
     private fun setView() {
         dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
         navController = (supportFragmentManager.findFragmentById(
@@ -94,6 +133,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     when (navigationItem.position) {
                         0 -> {
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
+                                getDashBoardAllData()
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
                                     getString(R.string.txt_dashboard)
@@ -139,8 +179,46 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         )
     }
 
-    override fun observeViewModel() {}
+    override fun observeViewModel() {
+        observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
+    }
+    private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (status) {
+            is Resource.Success -> {
+                personalInformation = status.data?.personalInformation
 
+                status.data?.apply {
+
+                    accountDetailsData = this
+                    sessionManager.saveAccountStatus(accountInformation?.status?:"")
+                    sessionManager.saveName(personalInformation?.customerName?:"")
+                    sessionManager.saveZipCode(personalInformation?.zipCode?:"")
+                    sessionManager.savePhoneNumber(personalInformation?.phoneNumber?:"")
+                    sessionManager.saveAccountNumber(accountInformation?.number!!)
+                    (applicationContext as BaseApplication).setAccountSavedData(
+                        this
+                    )
+                    dashboardViewModel?.setAccountType(this)
+                }
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(dataBinding?.root, status.errorMsg)
+            }
+
+            else -> {
+
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
+    }
     override fun onStart() {
         super.onStart()
         loadSession()

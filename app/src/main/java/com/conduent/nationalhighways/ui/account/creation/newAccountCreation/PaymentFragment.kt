@@ -95,11 +95,10 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
             when(index){
                 0->{
 
-                    val text = binding.paymentAmount.getText().toString().trim()
-                    val updatedText = text.replace("£","")
+                    val mText = binding.paymentAmount.getText().toString().trim()
+                    val updatedText = mText.replace("£","")
                     if (updatedText.isNotEmpty()) {
-                        val str: String = updatedText.substringBeforeLast(".")
-                        topUpBalance = if (updatedText.length < 8) {
+                        topUpBalance = if (updatedText.length < 6) {
                             if (updatedText.toDouble() < 10) {
                                 binding.paymentAmount.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                                 false

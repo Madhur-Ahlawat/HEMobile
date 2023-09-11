@@ -54,7 +54,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private var currentBalance: String = ""
     private var paymentSuccessResponse: PaymentSuccessResponse? = null
     private var navFlow: String = ""
-
+    private val formatter = DecimalFormat("#,###.00")
     private var cardModel: PaymentWithNewCardModel? = null
 
     private var topUpAmount = 0.0
@@ -299,7 +299,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
                     .replace(" ", "")
             if (updatedText.isNotEmpty()) {
-                lowBalance = if (updatedText.length < 8) {
+                lowBalance = if (updatedText.length < 6) {
                     if (updatedText.toInt() < 10) {
                         binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                         false
@@ -310,7 +310,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     } else {
                         lowBalance = true
                         binding.lowBalance.removeError()
-                        val formatter = DecimalFormat("#,###.00")
                         binding.lowBalance.editText.removeTextChangedListener(this)
                         binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
                         binding.lowBalance.editText.addTextChangedListener(this)

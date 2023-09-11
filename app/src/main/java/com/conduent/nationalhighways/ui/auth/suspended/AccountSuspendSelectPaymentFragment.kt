@@ -51,7 +51,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var personalInformation: PersonalInformation? = null
     private var currentBalance: String = ""
     private var navFlow: String = ""
-
+    private val formatter = DecimalFormat("#,###.00")
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -149,7 +149,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
                     .replace(" ", "")
             if (updatedText.isNotEmpty()) {
-                lowBalance = if (updatedText.length < 8) {
+                lowBalance = if (updatedText.length < 6) {
                     if (updatedText.toInt() < 10) {
                         binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                         false
@@ -160,7 +160,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     } else {
                         lowBalance=true
                         binding.lowBalance.removeError()
-                        val formatter = DecimalFormat("#,###.00")
                         binding.lowBalance.editText.removeTextChangedListener(this)
                         binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
                         binding.lowBalance.editText.addTextChangedListener(this)

@@ -27,6 +27,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener {
@@ -41,7 +42,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     private var apiLowBalanceAmount: String = ""
     private var apiTopUpAmountBalance: String = ""
     private var isClick = false
-
+    val formatter = DecimalFormat("#,###.00")
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -214,22 +215,22 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
             if (index == 0) {
 
-                val text = binding.lowBalance.editText.text.toString().trim()
-                val updatedText: String = if (text.contains("$")) {
-                    text.replace("$", "").replace(",", "")
-                } else {
-                    text.replace("£", "").replace(",", "")
-                }
+                val mText = binding.lowBalance.editText.text.toString().trim()
+                var updatedText: String =
+                    mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+                        .replace(" ", "")
 
                 if (updatedText.isNotEmpty()) {
-                    val str: String = updatedText.substringBeforeLast(".")
-                    lowBalance = if (str.length < 8) {
+                    lowBalance = if (updatedText.length < 6) {
                         if (updatedText.toDouble() < 5) {
                             binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_more))
                             false
 
                         } else {
                             binding.lowBalance.removeError()
+                            binding.lowBalance.editText.removeTextChangedListener(this)
+                            binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
+                            binding.lowBalance.editText.addTextChangedListener(this)
                             true
                         }
                     } else {
@@ -249,24 +250,21 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 )
                 binding.lowBalance.editText.addTextChangedListener(this)
             } else if (index == 1) {
-                val text = binding.top.editText.text.toString().trim()
-                val updatedText: String = if (text.contains("$")) {
-                    text.replace("$", "").replace(",", "")
-                } else {
-                    text.replace("£", "").replace(",", "")
-                }
-                if (updatedText.trim() == ".") {
-                    updatedText.replace(".", "")
-                }
+                val mText = binding.top.editText.text.toString().trim()
+                var updatedText: String =
+                    mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+                        .replace(" ", "")
                 if (updatedText.isNotEmpty()) {
-                    val str: String = updatedText.substringBeforeLast(".")
-                    topUpBalance = if (str.length < 8) {
+                    topUpBalance = if (updatedText.length < 6) {
                         if (updatedText.toDouble() < 10) {
                             binding.top.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                             false
 
                         } else {
                             binding.top.removeError()
+                            binding.top.editText.removeTextChangedListener(this)
+                            binding.top.setText("£" + formatter.format(updatedText.toInt()))
+                            binding.top.editText.addTextChangedListener(this)
                             true
                         }
                     } else {
