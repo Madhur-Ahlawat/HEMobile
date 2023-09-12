@@ -177,30 +177,27 @@
 
         </androidx.cardview.widget.CardView>
 
-        <com.conduent.apollo.ui.CMButton
-            android:elevation="@dimen/_1dp"
+        <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/confirmBtn"
             style="@style/PrimaryButton"
-            android:layout_marginTop="@dimen/_24dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24dp"
+            android:elevation="@dimen/_1dp"
             android:text="@string/str_remove_vehicle"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toBottomOf="@id/cardView" />
 
-        <com.conduent.apollo.ui.CMButton
-            android:elevation="@dimen/_1dp"
+        <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/notVehicle"
             style="@style/secondaryButton"
-            android:layout_marginTop="@dimen/_15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15dp"
+            android:elevation="@dimen/_1dp"
             android:text="@string/str_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmBtn" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

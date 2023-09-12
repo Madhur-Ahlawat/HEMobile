@@ -51,7 +51,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var personalInformation: PersonalInformation? = null
     private var currentBalance: String = ""
     private var navFlow: String = ""
-
+    private val formatter = DecimalFormat("#,###.00")
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -114,7 +114,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             val text = binding.lowBalance.getText().toString().trim()
             val updatedText = text.replace("£", "")
             if (updatedText.isNotEmpty().not()) {
-                val formatter = DecimalFormat("#,###.00")
                 binding.lowBalance.setText(formatter.format(updatedText))
             }
         }
@@ -145,12 +144,22 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             count: Int
         ) {
 
-            val text = binding.lowBalance.getText().toString().trim()
-            val updatedText: String =
-                text.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+            var mText = binding.lowBalance.getText().toString()
+            var updatedText: String =
+                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
+                    .replace("0.","0")
+                    .replace("1.","1")
+                    .replace("2.","2")
+                    .replace("3.","3")
+                    .replace("4.","4")
+                    .replace("5.","5")
+                    .replace("6.","6")
+                    .replace("7.","7")
+                    .replace("8.","8")
+                    .replace("9.","9")
                     .replace(" ", "")
             if (updatedText.isNotEmpty()) {
-                lowBalance = if (updatedText.length < 8) {
+                lowBalance = if (updatedText.length < 6) {
                     if (updatedText.toInt() < 10) {
                         binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                         false
@@ -161,28 +170,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     } else {
                         lowBalance = true
                         binding.lowBalance.removeError()
-                        val formatter = DecimalFormat("#,###.00")
                         binding.lowBalance.editText.removeTextChangedListener(this)
                         binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
-//                        if (binding.lowBalance.editText.getText().toString().length > edtLength!!) {
-//                            Selection.setSelection(
-//                                binding.lowBalance.editText.getText(),
-//                                cursorPosition!!+1
-//                            )
-//                        } else if (binding.lowBalance.editText.getText()
-//                                .toString().length < edtLength!!
-//                        ) {
-//                            Selection.setSelection(
-//                                binding.lowBalance.editText.getText(),
-//                                cursorPosition!! - 1
-//                            )
-//                        }
-//                        else if(binding.lowBalance.editText.getText().toString().length == edtLength!!){
-//                            Selection.setSelection(
-//                                binding.lowBalance.editText.getText(),
-//                                cursorPosition!!
-//                            )
-//                        }
                         binding.lowBalance.editText.addTextChangedListener(this)
                         true
                     }
@@ -200,8 +189,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 binding.lowBalance.getText(),
                 binding.lowBalance.getText().toString().length
             )
-            cursorPosition = binding.lowBalance.editText.selectionStart
-            edtLength = binding.lowBalance.editText.text.toString().length
         }
 
         override fun afterTextChanged(editable: Editable?) {

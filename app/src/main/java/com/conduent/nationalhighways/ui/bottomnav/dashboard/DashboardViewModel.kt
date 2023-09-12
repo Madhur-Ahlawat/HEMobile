@@ -40,6 +40,11 @@ class DashboardViewModel @Inject constructor(
     val errorManager: ErrorManager
 ) : ViewModel() {
     private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
+    val accountType: LiveData<AccountResponse> get() = _accountType
+    private val _accountType = MutableLiveData<AccountResponse>()
+    fun setAccountType(accountResponse: AccountResponse){
+        _accountType.postValue(accountResponse)
+    }
     val alertLivData: LiveData<Resource<AlertMessageApiResponse?>?> get() = alertMutData
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
