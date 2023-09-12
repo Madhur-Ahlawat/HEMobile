@@ -145,7 +145,17 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             var mText = binding.lowBalance.getText().toString()
             var updatedText: String =
-                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
+                    .replace("0.","0")
+                    .replace("1.","1")
+                    .replace("2.","2")
+                    .replace("3.","3")
+                    .replace("4.","4")
+                    .replace("5.","5")
+                    .replace("6.","6")
+                    .replace("7.","7")
+                    .replace("8.","8")
+                    .replace("9.","9")
                     .replace(" ", "")
             if (updatedText.isNotEmpty()) {
                 lowBalance = if (updatedText.length < 6) {
@@ -157,7 +167,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                         binding.lowBalance.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
                         false
                     } else {
-                        lowBalance=true
+                        lowBalance = true
                         binding.lowBalance.removeError()
                         binding.lowBalance.editText.removeTextChangedListener(this)
                         binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
