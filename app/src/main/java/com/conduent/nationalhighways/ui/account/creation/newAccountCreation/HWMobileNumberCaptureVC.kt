@@ -35,7 +35,6 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
-import com.conduent.nationalhighways.utils.common.Constants.AccountType_MobileNumber
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
@@ -90,8 +89,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         } else {
             setMobileView()
         }
-
         binding.btnNext.setOnClickListener(this)
+
         when (navFlowCall) {
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
                 if (!isViewCreated) {
@@ -167,20 +166,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
     }
 
-   /* override fun onResume() {
-
-        NewCreateAccountRequestModel.mobileNumber?.let {
-            binding.inputMobileNumber.setText(
-                it
-            )
-        }
-        NewCreateAccountRequestModel.countryCode?.let {
-            binding.inputCountry.setSelectedValue(
-                it
-            )
-        }
-        super.onResume()
-    }*/
 
     private fun setTelephoneView() {
         isItMobileNumber = false
@@ -317,11 +302,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
 
-                var noChanges  = false
-                if(isItMobileNumber){
-                    noChanges= countryCode == oldMobileCountryCode && mobileNumber == oldMobileNumber
+                val noChanges: Boolean = if(isItMobileNumber){
+                    countryCode == oldMobileCountryCode && mobileNumber == oldMobileNumber
                 }else{
-                    noChanges= countryCode == oldTelephoneCountryCode && mobileNumber == oldTelephoneNumber
+                    countryCode == oldTelephoneCountryCode && mobileNumber == oldTelephoneNumber
                 }
                 when (navFlowCall) {
 
@@ -350,11 +334,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             assignNumbers(mobileNumber,countryCode)
 
                             if (isItMobileNumber){
-                                bundle.putString(NAV_FLOW_FROM, AccountType_MobileNumber)
-                                findNavController().navigate(
-                                    R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
-                                    bundle
-                                )
+                                hitApi()
                             }else{
                                 findNavController().navigate(
                                     R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
@@ -601,8 +581,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
                     }
                 }
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
 
-                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putString(NAV_FLOW_FROM, navFlowFrom)
 
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,

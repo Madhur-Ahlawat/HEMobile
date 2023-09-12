@@ -226,7 +226,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             primaryCard = "Y",
             saveCard = s,
             state = "HE",
-            transactionAmount = "10.0"/*binding.lowBalance.getText().toString().trim().replace("£", "")*/,
+            transactionAmount = binding.lowBalance.getText().toString().trim().replace("£", "").replace(",","").replace(" ",""),
             useAddressCheck = "N",
             personalInformation?.zipcode.toString().replace(" ", ""),
             "",

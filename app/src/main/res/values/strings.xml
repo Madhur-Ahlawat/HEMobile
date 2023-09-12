@@ -906,7 +906,7 @@
     <string name="free">Free</string>
 
     <string name="ifyoudidnotreceivethecode">If you did not get a code, or it has expired, select resend security code.</string>
-    <string name="resendcode">Resend code</string>
+    <string name="resendcode">Resend Security Code</string>
     <string name="wehavesentanemail">We\'ve sent an email to</string>
     <string name="wehavesentatextmessageto">We\'ve sent a text message to</string>
     <string name="ifyoudidnot">If you did not get a code, or it has expired, select Resend code.</string>
@@ -923,7 +923,7 @@
     <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information: <a href="https://www.google.com/">Click Here</a></string>
     <string name="str_free">Free</string>
     <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder.\n\n The code will expire after 15 minutes.</string>
-    <string name="resend_code_text">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
+    <string name="resend_code_text">A text will be sent to %s. \n\nYour text message might take a few minutes to arrive.\n\n The code will expire after 15 minutes.</string>
     <string name="resend_code_expire">We’ll send a text message to %s. \n\nThe code will expire after 15 minutes.</string>
 
 
@@ -1190,8 +1190,8 @@
     <string name="card_number_must_be_16_digits_or_more">Card number must be 16 digits or more</string>
     <string name="expiry_date_cannot_be_in_the_past">Expiry date cannot be in the past</string>
     <string name="str_your_pay_as_you_go">Your pay-as-you-go payment will get taken each time you make a crossing.</string>
-    <string name="str_radio_sms">Text <b>%s</b>\n<i>Message and data rates may apply</i></string>
-    <string name="str_radio_email">Email <b>%s</b></string>
+    <string name="str_radio_sms"><Data><![CDATA[<b>Mobile</b> %s<br><i>Message and data rates may apply</i></b>]]></Data></string>
+    <string name="str_radio_email"><Data><![CDATA[<b>Email</b> %s]]></Data></string>
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
     <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
     <string name="str_enable_face_ID">Enable Biometric</string>
