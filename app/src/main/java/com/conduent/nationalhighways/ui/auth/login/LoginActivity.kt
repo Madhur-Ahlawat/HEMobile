@@ -243,7 +243,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun isEnable() {
-        emailCheck = if (binding.edtEmail.editText.getText().toString().trim().isNotEmpty()) {
+        emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
             if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
                 false
             } else {
