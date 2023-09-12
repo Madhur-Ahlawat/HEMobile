@@ -238,9 +238,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             "login",
             sessionManager.getLoggedInUser()
         )
-        binding.edtEmail.setText("businesstp@gmai.com")
-        binding.edtPwd.setText("Welcome1")
-        binding.btnLogin.isEnabled = true
         binding.btnLogin.performClick()
         binding.btnLogin.performClick()
     }
@@ -409,6 +406,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             else -> {
+                status?.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
+
                 binding.btnLogin.isEnabled = true
             }
         }
