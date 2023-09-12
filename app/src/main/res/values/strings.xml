@@ -906,7 +906,7 @@
     <string name="free">Free</string>
 
     <string name="ifyoudidnotreceivethecode">If you did not get a code, or it has expired, select resend security code.</string>
-    <string name="resendcode">Resend code</string>
+    <string name="resendcode">Resend Security Code</string>
     <string name="wehavesentanemail">We\'ve sent an email to</string>
     <string name="wehavesentatextmessageto">We\'ve sent a text message to</string>
     <string name="ifyoudidnot">If you did not get a code, or it has expired, select Resend code.</string>
