@@ -238,15 +238,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             "login",
             sessionManager.getLoggedInUser()
         )
-        binding.edtEmail.setText("businesstp@gmai.com")
-        binding.edtPwd.setText("Welcome1")
-        binding.btnLogin.isEnabled = true
         binding.btnLogin.performClick()
         binding.btnLogin.performClick()
     }
 
     private fun isEnable() {
-        emailCheck = if (binding.edtEmail.editText.getText().toString().trim().isNotEmpty()) {
+        emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
             if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
                 false
             } else {
@@ -409,6 +406,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             else -> {
+                status?.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
+
                 binding.btnLogin.isEnabled = true
             }
         }

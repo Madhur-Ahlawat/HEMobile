@@ -8,11 +8,9 @@ import android.text.Selection
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,14 +24,15 @@ import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendPayBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentSingletonClass
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -78,7 +77,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         }
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
-                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+                arguments?.getParcelable(Constants.PERSONALDATA)
 
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
@@ -89,7 +88,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
 
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
-            responseModel = arguments?.getParcelable<CardResponseModel>(Constants.DATA)
+            responseModel = arguments?.getParcelable(Constants.DATA)
 
             if (responseModel?.card?.type.equals("visa", true)) {
                 binding.ivCardType.setImageResource(R.drawable.visablue)
@@ -105,7 +104,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     Utils.maskCardNumber(
                         it
                     )
-                })
+                }, Html.FROM_HTML_MODE_COMPACT)
 
             binding.tvSelectPaymentMethod.text = htmlText
 
@@ -138,7 +137,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
             }
             val htmlText = Html.fromHtml(
-                paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber
+                paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber,
+                Html.FROM_HTML_MODE_COMPACT
             )
 
             binding.tvSelectPaymentMethod.text = htmlText
@@ -174,7 +174,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         when (v?.id) {
 
             R.id.btnPay -> {
-                val bundle = Bundle()
 
                 if (responseModel != null) {
                     if (responseModel?.checkCheckBox == true) {
@@ -183,34 +182,24 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         newPaymentMethod("N")
                     }
 
-                    /* bundle.putParcelable(Constants.DATA, responseModel)
-                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                     bundle.putString(Constants.TRANSACTIONID, "541232435465")
-                     bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
-
-                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)*/
-
 
                 } else {
                     payWithExistingCard()
-                    //  bundle.putParcelable(Constants.DATA, status.data)
-                    /* bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
-                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                     bundle.putString(Constants.TRANSACTIONID, "761234567892")
-                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)*/
+
 
                 }
-                /* findNavController().navigate(
-                     R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
-                     bundle
-                 )*/
+
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             }
 
             R.id.btnCancel -> {
-                findNavController().popBackStack()
+                if (navFlow == Constants.PAYMENT_TOP_UP) {
+                    findNavController().navigate(R.id.action_accountSuspendedFinalPayFragment_to_newPaymentMethodFragment)
+                } else {
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                }
+
             }
         }
     }
@@ -219,14 +208,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private fun newPaymentMethod(s: String) {
         cardModel = PaymentWithNewCardModel(
             addressLine1 = personalInformation?.addressLine1.toString(),
-            addressLine2 = personalInformation?.addressLine2.toString(),
+            addressLine2 = personalInformation?.addressLine1.toString(),
             bankRoutingNumber = "",
             cardNumber = responseModel?.token,
             cardType = responseModel?.card?.type?.uppercase(Locale.ROOT),
             city = personalInformation?.city,
-            country = "GB",
+            country = "UK",
             cvv = "",
-            easyPay = "N",
+            easyPay = "Y",
             expMonth = responseModel?.card?.exp?.substring(0, 2),
             expYear = "20${responseModel?.card?.exp?.substring(2, 4)}",
             firstName = responseModel?.check?.name ?: "",
@@ -234,17 +223,17 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             lastName = "",
             maskedNumber = Utils.maskCardNumber(responseModel?.card?.number.toString()),
             paymentType = "card",
-            primaryCard = "N",
+            primaryCard = "Y",
             saveCard = s,
             state = "HE",
-            transactionAmount = binding.lowBalance.getText().toString().trim().replace("£", ""),
+            transactionAmount = "10.0"/*binding.lowBalance.getText().toString().trim().replace("£", "")*/,
             useAddressCheck = "N",
             personalInformation?.zipcode.toString().replace(" ", ""),
             "",
-            directoryServerId = paymentSuccessResponse?.directoryServerId.toString(),
+            directoryServerID = paymentSuccessResponse?.directoryServerId.toString(),
             cavv = paymentSuccessResponse?.cavv.toString(),
-            threeDsVersion = paymentSuccessResponse?.threeDsVersion.toString(),
-            cardHolderAuth = paymentSuccessResponse?.cardHolderAuth.toString(),
+            threeDsVer = paymentSuccessResponse?.threeDsVersion.toString(),
+            cardholderAuth = paymentSuccessResponse?.cardHolderAuth.toString(),
             eci = paymentSuccessResponse?.eci.toString()
 
 

@@ -8,14 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.ItemPaymentMethodBinding
-import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 
 
 class SuspendPaymentMethodAdapter(
     private var context: Context,
     var list: MutableList<CardListResponseModel?>?,
-    private val paymentMethod: paymentMethodSelectCallBack,
+    private val paymentMethod: PaymentMethodSelectCallBack,
     var navFlow: String
 ) :
     RecyclerView.Adapter<SuspendPaymentMethodAdapter.SuspendedViewHolder>() {
@@ -33,10 +32,10 @@ class SuspendPaymentMethodAdapter(
 
 
     override fun onBindViewHolder(
-        holder: SuspendPaymentMethodAdapter.SuspendedViewHolder,
+        holder: SuspendedViewHolder,
         position: Int
     ) {
-        var pos = -1
+        var pos: Int
         if (list?.get(position)?.cardType.equals("visa", true)) {
             holder.binding.ivCardType.setImageResource(R.drawable.visablue)
         } else if (list?.get(position)?.cardType.equals("maestro", true)) {
@@ -46,54 +45,52 @@ class SuspendPaymentMethodAdapter(
             holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
 
         }
-        val htmlText =
-            Html.fromHtml(list?.get(position)?.cardType + "<br>" + list?.get(position)?.cardNumber?.let {
-                Utils.maskCardNumber(
-                    it
-                )
-            })
+        val htmlText = Html.fromHtml(list?.get(position)?.cardType+"<br>"+ list?.get(position)?.cardNumber?.let {
+            Utils.maskCardNumber(
+                it
+            )
+        },Html.FROM_HTML_MODE_COMPACT)
 
-        if (navFlow== Constants.PAYMENT_TOP_UP){
 
             if (list?.get(position)?.bankAccount==false){
                 holder.binding.radioButtonPaymentMethod.isChecked = list?.get(position)?.primaryCard==true
                 list?.get(position)?.isSelected=true
             }
 
-        }
+
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
 
 
         holder.binding.layout.setOnClickListener {
             pos=position
-            if (list?.get(pos!!)?.isSelected == true){
-                list?.get(pos!!)?.isSelected=false
+            if (list?.get(pos)?.isSelected == true){
+                list?.get(pos)?.isSelected=false
                 holder.binding.radioButtonPaymentMethod.isChecked=false
 
             }else{
-                list?.get(pos!!)?.isSelected=true
+                list?.get(pos)?.isSelected=true
                 holder.binding.radioButtonPaymentMethod.isChecked=true
 
 
             }
             notifyDataSetChanged()
-            paymentMethod.paymentMethodCallback(pos!!)
+            paymentMethod.paymentMethodCallback(pos)
         }
         holder.binding.radioButtonPaymentMethod.setOnClickListener {
             pos=position
-            if (list?.get(pos!!)?.isSelected == true){
-                list?.get(pos!!)?.isSelected=false
+            if (list?.get(pos)?.isSelected == true){
+                list?.get(pos)?.isSelected=false
                 holder.binding.radioButtonPaymentMethod.isChecked=false
 
             }else{
-                list?.get(pos!!)?.isSelected=true
+                list?.get(pos)?.isSelected=true
                 holder.binding.radioButtonPaymentMethod.isChecked=true
 
 
             }
             notifyDataSetChanged()
-            paymentMethod.paymentMethodCallback(pos!!)
+            paymentMethod.paymentMethodCallback(pos)
         }
     }
 
@@ -109,11 +106,9 @@ class SuspendPaymentMethodAdapter(
     }
 
     class SuspendedViewHolder(val binding: ItemPaymentMethodBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root)
 
-    }
-
-    interface paymentMethodSelectCallBack {
+    interface PaymentMethodSelectCallBack {
         fun paymentMethodCallback(position: Int)
     }
 

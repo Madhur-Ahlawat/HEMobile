@@ -150,6 +150,9 @@
         android:label="NMIFragment"
         tools:layout="@layout/nmi_payment_fragment">
 
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_tryPaymentAgainFragment"
+            app:destination="@id/tryPaymentAgainFragment" />
 
         <action
             android:id="@+id/action_nmiPaymentFragment_to_accountSuspendedFinalPayFragment"
@@ -160,6 +163,13 @@
         android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment"
         android:label="AccountSuspendReOpen"
         tools:layout="@layout/fragment_account_suspend_halt_reopened">
+    </fragment>
+
+    <fragment
+        android:id="@+id/tryPaymentAgainFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TryPaymentAgainFragment"
+        android:label="TryPaymentAgainFragment"
+        tools:layout="@layout/fragment_try_payment_again">
     </fragment>
 
 

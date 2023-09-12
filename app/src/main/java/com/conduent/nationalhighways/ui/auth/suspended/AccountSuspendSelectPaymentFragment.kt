@@ -37,7 +37,7 @@ import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendHaltBinding>(),
-    View.OnClickListener, SuspendPaymentMethodAdapter.paymentMethodSelectCallBack {
+    View.OnClickListener, SuspendPaymentMethodAdapter.PaymentMethodSelectCallBack {
     private var edtLength: Int? = 0
     private var cursorPosition: Int? = 0
     private lateinit var suspendPaymentMethodAdapter: SuspendPaymentMethodAdapter
@@ -106,7 +106,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
         cursorPosition = binding.lowBalance.editText.selectionStart
         edtLength = binding.lowBalance.editText.text?.length
-        Selection.setSelection(binding.lowBalance.editText.text,edtLength!!-1)
+        Selection.setSelection(binding.lowBalance.editText.text, edtLength!! - 1)
     }
 
     private fun topBalanceDecimal(b: Boolean) {
@@ -118,6 +118,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
         }
     }
+
 
     override fun observer() {
         lifecycleScope.launch {
@@ -211,8 +212,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         when (v?.id) {
 
             R.id.btnContinue -> {
-                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "").replace(".00", "")
-                    .replace("$", "").replace(",","")
+                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
+                    .replace(".00", "")
+                    .replace("$", "").replace(",", "")
 
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
@@ -230,8 +232,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             R.id.btnAddNewPaymentMethod -> {
                 val topUpAmount =
-                    binding.lowBalance.getText().toString().trim().replace("£", "").replace(".00", "")
-                        .replace("$", "").replace(",","")
+                    binding.lowBalance.getText().toString().trim().replace("£", "")
+                        .replace(".00", "")
+                        .replace("$", "").replace(",", "")
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
@@ -271,17 +274,16 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 paymentList = status.data?.creditCardListType?.cardsList
                 if (paymentList?.isNotEmpty() == true) {
 
-                    if (navFlow == Constants.PAYMENT_TOP_UP) {
-                        for (i in 0 until (paymentList?.size ?: 0)) {
-                            if (paymentList?.get(i)?.primaryCard == true && paymentList?.get(i)?.bankAccount == false) {
-                                position = i
-                                cardSelection = true
-                                checkButton()
-
-                            }
+                    for (i in 0 until (paymentList?.size ?: 0)) {
+                        if (paymentList?.get(i)?.primaryCard == true && paymentList?.get(i)?.bankAccount == false) {
+                            position = i
+                            cardSelection = true
+                            checkButton()
 
                         }
+
                     }
+
 
 
                     suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
@@ -319,9 +321,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             paymentList?.get(i)?.isSelected = false
             paymentList?.get(i)?.primaryCard = false
         }
-        if (navFlow == Constants.PAYMENT_TOP_UP) {
-            paymentList?.get(position)?.primaryCard = true
-        }
+        paymentList?.get(position)?.primaryCard = true
+
         paymentList?.get(position)?.isSelected = true
         suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
         cardSelection = paymentList?.get(position)?.isSelected == true

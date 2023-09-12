@@ -84,7 +84,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                     Utils.maskCardNumber(
                         it
                     )
-                })
+                },Html.FROM_HTML_MODE_COMPACT)
 
             binding.tvSelectPaymentMethod.text = htmlText
 
@@ -136,6 +136,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             )
             binding.tvYouWillAlsoNeed.visibility = View.GONE
             binding.btnTopUpNow.text = getString(R.string.str_continue)
+            binding.layout.visibility=View.GONE
             binding.tvPaymentReference.visibility=View.GONE
 
         } else {
@@ -145,6 +146,8 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             binding.btnTopUpNow.text = getString(R.string.str_go_to_dashboard)
 
             binding.tvAccountSuspended.text = getString(R.string.str_account_reopened)
+            binding.layout.visibility=View.VISIBLE
+            binding.tvPaymentReference.visibility=View.VISIBLE
         }
 
     }
