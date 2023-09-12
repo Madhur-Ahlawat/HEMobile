@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickList
 class VrmHistoryAdapter(private val context: Context?, private val onItemClick: ItemClickListener) :
     RecyclerView.Adapter<VrmHistoryAdapter.VehicleListViewHolder>() {
 
+    private var pos: Int=-1
     var vehicleList: List<VehicleResponse?> = mutableListOf()
 
     fun setList(list: ArrayList<VehicleResponse?>) {
@@ -32,18 +33,22 @@ class VrmHistoryAdapter(private val context: Context?, private val onItemClick: 
     )
 
     override fun onBindViewHolder(holder: VehicleListViewHolder, position: Int) {
+        pos=-1
         val plateNumber = vehicleList.get(position)?.plateInfo?.number
         holder.binding.vehiclePlateNumber.text = plateNumber
         holder.binding.cardView.setOnClickListener{
+            pos=position
             onItemClick.onItemClick(vehicleList.get(position),position)
 
         }
         holder.binding.deleteVehicle.setOnClickListener{
+            pos=position
             onItemClick.onItemDeleteClick(vehicleList.get(position),position)
 
         }
         holder.binding.updateVehicle.setImageDrawable(context?.let { ContextCompat.getDrawable(it, R.drawable.baseline_keyboard_arrow_right_24) });
         holder.binding.updateVehicle.setOnClickListener{
+            pos=position
             onItemClick.onItemClick(vehicleList.get(position),position)
         }
 
