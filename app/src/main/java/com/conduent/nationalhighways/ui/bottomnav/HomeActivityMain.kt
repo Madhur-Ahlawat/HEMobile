@@ -1,11 +1,13 @@
 package com.conduent.nationalhighways.ui.bottomnav
 
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
@@ -22,6 +24,7 @@ import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
 import com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -76,7 +79,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         setView()
     }
 
-    fun viewAllTransactions() {
     private fun initLoaderDialog() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -191,13 +193,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     when (navigationItem.position) {
                         0 -> {
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
-                                getDashBoardAllData()
-                                dataBinding?.idToolBarLyt?.visible()
-                                dataBinding?.titleTxt?.text =
-                                    getString(R.string.txt_dashboard)
-                                navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding?.fragmentContainerView?.findNavController()
-                                    ?.navigate(R.id.dashBoardFragment)
+                                dashboardClick()
                             }
                         }
 
@@ -225,16 +221,44 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
                         3 -> {
                             if (navController.currentDestination?.id != R.id.accountFragment) {
-                                dataBinding?.idToolBarLyt?.visible()
-                                navController.popBackStack(R.id.bottom_navigation_graph, true)
-                                dataBinding?.fragmentContainerView?.findNavController()
-                                    ?.navigate(R.id.accountFragment)
+                               accountFragmentClick()
                             }
                         }
                     }
                 }
             }
         )
+    }
+
+    private fun accountFragmentClick() {
+        if(!this::navController.isInitialized){
+            navController = (supportFragmentManager.findFragmentById(
+                R.id.fragmentContainerView
+            ) as NavHostFragment).navController
+        }
+
+        dataBinding?.idToolBarLyt?.visible()
+        navController.popBackStack(R.id.bottom_navigation_graph, true)
+        dataBinding?.fragmentContainerView?.findNavController()
+            ?.navigate(R.id.accountFragment)
+    }
+
+    private fun dashboardClick() {
+/*
+        if(!this::navController.isInitialized){
+            navController = (supportFragmentManager.findFragmentById(
+                R.id.fragmentContainerView
+            ) as NavHostFragment).navController
+        }
+*/
+        dataBinding?.idToolBarLyt?.visible()
+        dataBinding?.titleTxt?.text =
+            getString(R.string.txt_dashboard)
+//        navController.popBackStack(R.id.bottom_navigation_graph, true)
+        dataBinding?.fragmentContainerView?.findNavController()
+            ?.navigate(R.id.dashBoardFragment)
+        getDashBoardAllData()
+
     }
 
     override fun observeViewModel() {
@@ -321,10 +345,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     fun redirectToDashBoardFragment() {
         Log.e("TAG", "redirectToDashBoardFragment: ")
         dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
+        dashboardClick()
     }
 
     fun redirectToAccountFragment() {
-        Log.e("TAG", "redirectToAccountFragment: ", )
+        Log.e("TAG", "redirectToAccountFragment: ")
         dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
+        accountFragmentClick()
     }
 }

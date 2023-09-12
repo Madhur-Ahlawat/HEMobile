@@ -74,11 +74,11 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
             Log.e("TAG", "init: navFlowFrom "+navFlowFrom )
             if (navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                 if(requireActivity() is HomeActivityMain){
-                    HomeActivityMain().redirectToDashBoardFragment()
+                    (requireActivity() as HomeActivityMain).redirectToDashBoardFragment()
                 }
             } else if (navFlowFrom == Constants.ACCOUNT_CONTACT_US) {
                 if(requireActivity() is HomeActivityMain){
-                    HomeActivityMain().redirectToAccountFragment()
+                    (requireActivity() as HomeActivityMain).redirectToAccountFragment()
                 }
             } else {
                 val intent = Intent(requireActivity(), LandingActivity::class.java)

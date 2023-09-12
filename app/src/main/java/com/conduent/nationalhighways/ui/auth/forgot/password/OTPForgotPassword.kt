@@ -28,6 +28,8 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyReque
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsResp
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
+import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
+import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.ui.account.communication.CommunicationPrefsViewModel
