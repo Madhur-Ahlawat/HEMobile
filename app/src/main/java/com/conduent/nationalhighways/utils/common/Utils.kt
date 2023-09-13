@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.CountDownTimer
 import android.provider.Settings
+import android.text.Selection
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
@@ -26,6 +27,7 @@ import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.extn.changeBackgroundColor
 import com.conduent.nationalhighways.utils.extn.changeTextColor
+import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import java.lang.reflect.Field
 import java.text.DateFormat
 import java.text.DecimalFormat
@@ -39,6 +41,7 @@ import java.util.regex.Pattern
 
 
 object Utils {
+    private val amountFormatter = DecimalFormat("#,###.00")
     private var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-"
     private var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-"
     private var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
@@ -91,6 +94,65 @@ object Utils {
     val splCharPostCode: String by lazy {
         ALLOWED_CHARS_POSTCODE
 //        getSplCharString(ALLOWED_CHARS_POSTCODE)
+    }
+    fun validateAmount(nhTextInputCell: NHTextInputCell,minimumAmount:Int,isTopUp:Boolean):Boolean{
+        var isValid:Boolean=false
+        val mText = nhTextInputCell.editText.text.toString().trim()
+        var updatedText: String =
+            mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
+                .replace("0.","0")
+                .replace("1.","1")
+                .replace("2.","2")
+                .replace("3.","3")
+                .replace("4.","4")
+                .replace("5.","5")
+                .replace("6.","6")
+                .replace("7.","7")
+                .replace("8.","8")
+                .replace("9.","9")
+                .replace(" ", "")
+        if (updatedText.isNotEmpty()) {
+            isValid = if (updatedText.length < 6) {
+                if (updatedText.toDouble() < minimumAmount) {
+                    if(isTopUp){
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_more))
+                    }
+                    else{
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_more))
+                    }
+                    false
+
+                } else if (updatedText.toInt() > 80000) {
+                    if(isTopUp){
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
+                    }
+                    else{
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.low_balance_amount_must_be_80_000_or_less))
+                    }
+                    false
+                }
+                else {
+                    nhTextInputCell.removeError()
+                    nhTextInputCell.setText("£" + amountFormatter.format(updatedText.toInt()))
+                    true
+                }
+            } else {
+                if(isTopUp){
+                    nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_8_characters))
+                }
+                else{
+                    nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_8_characters))
+                }
+                false
+            }
+        } else {
+            nhTextInputCell.removeError()
+        }
+        Selection.setSelection(
+            nhTextInputCell.editText.text,
+            nhTextInputCell.editText.text.toString().length
+        )
+        return isValid
     }
 
     val splCharEmailCode: String by lazy {

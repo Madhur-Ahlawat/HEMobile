@@ -421,6 +421,9 @@
             android:id="@+id/action_profileManagementFragment_to_changePassword"
             app:destination="@id/changePasswordProfile" />
         <action
+            android:id="@+id/action_profileManagementFragment_to_createAccountTypes"
+            app:destination="@id/createAccountTypes" />
+        <action
             android:id="@+id/action_profileManagementFragment_to_personalInfoFragment"
             app:destination="@id/createAccountPersonalInfo" />
         <action

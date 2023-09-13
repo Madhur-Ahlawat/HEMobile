@@ -142,6 +142,8 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             binding.companyNameCard.visible()
                             binding.companyName.text = personalInformation?.customerName
                         }
+                        binding.passwordCard.visible()
+                        binding.password.text=accountInformation?.password
                     }
                 }
 
@@ -199,16 +201,16 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 )
             }
 
-//            R.id.editPassword -> {
-//                findNavController().navigate(
-//                    R.id.action_profileManagementFragment_to_changePassword,
-//                    bundle()
-//                )
-//            }
-            R.id.editAccountType -> {
+            R.id.editPassword -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_changePassword,
-                    bundle()
+                    bundle
+                )
+            }
+            R.id.editAccountType -> {
+                findNavController().navigate(
+                    R.id.action_profileManagementFragment_to_createAccountTypes,
+                    bundle
                 )
             }
 

@@ -50,7 +50,7 @@
     <string name="txt_account_number">Account number</string>
     <string name="txt_error_account_number">Please enter account number</string>
     <string name="txt_error_zip_code">Please enter postal code</string>
-    <string name="txt_postcode">Building Number and Street</string>
+    <string name="txt_postcode"><b>Building Number and Street</b></string>
     <string name="txt_next">Next</string>
     <string name="txt_login">Log in</string>
     <string name="txt_your_username"><b>Your username</b></string>
@@ -569,7 +569,7 @@
     <string name="personal_pre_pay_account">Personal Pre-pay account</string>
     <string name="personal_pre_pay_account_info">Personal Pre-pay account \n information</string>
     <string name="in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information">In order to set up your Dart Charge account, please provide the below information.</string>
-    <string name="postcode">Postcode</string>
+    <string name="postcode"><b>Postcode</b></string>
     <string name="underline_postcode"><u>Postcode</u></string>
     <string name="password">Password</string>
     <string name="underline_password"><u>Password</u></string>
@@ -844,7 +844,7 @@
     <string name="str_house_number">House Number</string>
     <string name="str_town_city_state_province">Town/City/State/Province</string>
     <string name="str_street_name">Street Name</string>
-    <string name="str_country">Country</string>
+    <string name="str_country"><b>Country</b></string>
     <string name="failed_retry_title">Sorry, there is a problem with the service.</string>
     <string name="failed_retry_desc">Your requested action may not have completed successfully.</string>
     <string name="failed_retry_desc2">If you need help with your account or want to make a payment, you can call us on :</string>
@@ -986,8 +986,8 @@
     <string name="str_personal_account_description"><b>Personal Account</b>\nIf you live in Dartford or Thurrock, you may qualify for a local resident discount with this account</string>
     <string name="str_personal_business_account_description"><b>Business Account</b>\nIf you need to add more than 10 vehicles we recommend you create your account on the website not in the app</string>
     <string name="str_building_number">Building Number and Street</string>
-    <string name="str_address_line2">Address line 2 (optional)</string>
-    <string name="str_town_city">Town or City</string>
+    <string name="str_address_line2"><b>Address line 2 (optional)</b></string>
+    <string name="str_town_city"><b>Town or City</b></string>
     <string name="str_address_example">For example 46, Flat 2a or Rose Cottage</string>
     <string name="primary_account_contact_first_name">Primary account contact first name</string>
     <string name="primary_account_contact_last_name">Primary account contact last name</string>
@@ -1264,10 +1264,11 @@
     <string name="name_change_successful">Name change successful</string>
     <string name="address_change_successful">Address change successful</string>
     <string name="communication_change_successful">Communication preference change successful</string>
-    <string name="mobile_change_successful">Mobile phone change successful</string>
+    <string name="mobile_change_successful">Mobile number change successful</string>
     <string name="telephone_change_successful">Telephone number change successful</string>
     <string name="two_factor_change_successful">Two Factor Authentication \n change successful</string>
     <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="you_will_recieve_a_confirmation_email">You'll recieve a confirmation email at <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
     <string name="email_receipt_send_successful">Email receipt send successful</string>
@@ -1450,6 +1451,7 @@
 
 
     <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>
+    <string name="low_balance_amount_must_be_80_000_or_less">Low Balance amount must be £80,000 or less</string>
     <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
     <string name="str_dummy_text_2fa_options_sms">Text <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
 </resources>
