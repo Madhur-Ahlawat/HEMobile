@@ -51,7 +51,7 @@ class CaseHistoryDartChargeFragment : BaseFragment<FragmentCaseHistoryDartCharge
         lastName = arguments?.getString(Constants.LAST_NAME)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        requireActivity().customToolbar(getString(R.string.str_enquiry_status))
+        requireActivity().customToolbar(getString(R.string.str_case_enquiry_status))
 
         if ((requireActivity() as ContactDartChargeActivity).mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
             binding.btnGoStart.gone()

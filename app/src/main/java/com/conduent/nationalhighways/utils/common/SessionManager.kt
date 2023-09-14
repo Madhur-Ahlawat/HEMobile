@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import java.security.PublicKey
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -36,9 +35,12 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val NC_ID = "nc_id"
         const val PUSH_TOKEN = "firebase_notification_token"
         const val USER_NAME = "username"
-        const val NAME = "name"
-        const val ZIPCODE="zipcode"
-        const val PHONE_NUMBER="phoneNumber"
+        const val USER_COUNTRYCODE = "usercountrycode"
+        const val USER_MOBILENUMBER = "usermobilenumber"
+        const val FIRST_NAME = "first_name"
+        const val LAST_NAME = "last_name"
+        const val ZIPCODE = "zipcode"
+        const val PHONE_NUMBER = "phoneNumber"
 
         val BIOMETRICTOKEN: String = "ACSInrixTrafficApp"
         val TOUCH_ID_ENABLED: String = "touch_ID"
@@ -108,14 +110,23 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         }.apply()
     }
 
-    fun saveName(name: String) {
+    fun saveFirstName(name: String) {
         prefs.edit().apply {
-            putString(NAME, name)
+            putString(FIRST_NAME, name)
         }.apply()
     }
 
-    fun fetchName(): String? {
-        return prefs.getString(NAME, null)
+    fun fetchFirstName(): String? {
+        return prefs.getString(FIRST_NAME, null)
+    }
+  fun saveLastName(name: String) {
+        prefs.edit().apply {
+            putString(LAST_NAME, name)
+        }.apply()
+    }
+
+    fun fetchLastName(): String? {
+        return prefs.getString(LAST_NAME, null)
     }
 
     fun fetchAccountStatus(): String? {
@@ -266,6 +277,25 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         return prefs.getString(USER_NAME, null)
     }
 
+    fun saveUserCountryCode(countrycode: String?) {
+        prefs.edit().apply {
+            putString(USER_COUNTRYCODE, countrycode)
+        }.apply()
+    }
+
+    fun fetchUserCountryCode(): String? {
+        return prefs.getString(USER_COUNTRYCODE, null)
+    }
+
+    fun saveUserMobileNumber(mobilenumber: String?) {
+        prefs.edit().apply {
+            putString(USER_MOBILENUMBER, mobilenumber)
+        }.apply()
+    }
+
+    fun fetchUserMobileNUmber(): String? {
+        return prefs.getString(USER_MOBILENUMBER, null)
+    }
 
 
     fun saveTouchIdEnabled(privateKey: Boolean) {

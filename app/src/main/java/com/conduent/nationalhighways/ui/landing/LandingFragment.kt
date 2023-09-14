@@ -1,6 +1,3 @@
-
-
-
 package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
@@ -21,6 +18,7 @@ import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccoun
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -37,10 +35,9 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var isChecked =false
+    private var isChecked = false
     private var isPushNotificationChecked = true
     private var count = 1
-
 
 
     @Inject
@@ -50,7 +47,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentNewLandingBinding {
-        binding=FragmentNewLandingBinding.inflate(inflater, container, false)
+        binding = FragmentNewLandingBinding.inflate(inflater, container, false)
 
         return binding
     }
@@ -60,10 +57,10 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         if (!isChecked) {
-           // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-          //  webServiceViewModel.checkServiceStatus()
+            // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            //  webServiceViewModel.checkServiceStatus()
         }
-        isChecked=true
+        isChecked = true
         if (isPushNotificationChecked) {
             //callPushNotificationApi()
         }
@@ -151,11 +148,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 "splash",
                 sessionManager.getLoggedInUser()
             )
-            findNavController().navigate(R.id.action_landingFragment_to_startNow)
-
-
-
+            requireActivity().startNormalActivity(
+                RaiseEnquiryActivity::class.java
+            )
         }
+
         binding.btnSignIn.setOnClickListener {
             AdobeAnalytics.setActionTrack(
                 "login",
@@ -188,9 +185,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 is Resource.Success -> {
                     ErrorUtil.showError(binding.root, "Push notifications allowed successfully")
                 }
+
                 is Resource.DataError -> {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
+
                 else -> {
                     // do nothing
                 }
@@ -201,12 +200,12 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     private fun handleMaintenanceNotification(resource: Resource<WebSiteStatus?>) {
 
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
-            when (resource) {
-                is Resource.Success -> {
-                    resource.data?.apply {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.apply {
 /*
                         if (!state.equals(Constants.LIVE, true) && title != null) {
                             binding.maintainanceLyt.visible()
@@ -217,26 +216,28 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                             binding.maintainanceLyt.gone()
                         }
 */
-                    }
-                }
-                is Resource.DataError -> {
-                    if (resource.errorMsg.contains("Connect your VPN", true)) {
-                        if (count > Constants.RETRY_COUNT) {
-                            requireActivity().startActivity(
-                                Intent(context, LandingActivity::class.java)
-                                    .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
-                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            )
-                        }
-                        ErrorUtil.showRetry(this)
-                    } else {
-                        ErrorUtil.showError(binding.root, resource.errorMsg)
-                    }
-                }
-                else -> {
-                    // do nothing
                 }
             }
+
+            is Resource.DataError -> {
+                if (resource.errorMsg.contains("Connect your VPN", true)) {
+                    if (count > Constants.RETRY_COUNT) {
+                        requireActivity().startActivity(
+                            Intent(context, LandingActivity::class.java)
+                                .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                    }
+                    ErrorUtil.showRetry(this)
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+            }
+
+            else -> {
+                // do nothing
+            }
+        }
 
 
     }
@@ -254,8 +255,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         webServiceViewModel.checkServiceStatus()
     }
-
-
 
 
 }

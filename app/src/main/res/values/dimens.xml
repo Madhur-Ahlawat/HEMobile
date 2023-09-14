@@ -54,6 +54,7 @@
     <dimen name="margin_250dp">250dp</dimen>
     <dimen name="margin_65dp">65dp</dimen>
     <dimen name="dimen_106dp">106dp</dimen>
+    <dimen name="margin_230dp">230dp</dimen>
     <dimen name="_12dp">12dp</dimen>
     <dimen name="_26_68dp">26.68dp</dimen>
     <dimen name="_26_69dp">26.69dp</dimen>

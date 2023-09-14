@@ -44,5 +44,14 @@
         android:name="com.conduent.nationalhighways.ui.landing.FailedRetryFragment"
         android:label="FailedRetryFragment"
         tools:layout="@layout/fragment_failed_retry"/>
+    <fragment
+        android:id="@+id/dartChargeAccountTypeSelectionFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.DartChargeAccountTypeEnquiryFragment"
+        android:label="DartChargeAccountTypeEnquiryFragment"
+        tools:layout="@layout/fragment_dart_charge_account_type_enquiry"/>
+    <fragment android:label="RaiseNewEnquiryFragment"
+        android:id="@+id/raiseNewEnquiryFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseNewEnquiryFragment"
+        tools:layout="@layout/fragment_raise_new_enquiry" />
 
 </navigation>

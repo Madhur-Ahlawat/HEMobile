@@ -263,6 +263,10 @@ object Constants {
     const val OPTSMS = "optSms"
     const val TwoStepVerification = "twoStepVerification"
     const val EDIT_SUMMARY = "editSummary"
+    const val EDIT_CATEGORY_DATA = "editCategoryData"
+    const val EDIT_CATEGORY_DATA_NOCHANGES = "editCategoryDataNoChanges"
+    const val EDIT_COMMENTS_DATA = "editCommentsData"
+    const val EDIT_CONTACT_DETAILS_DATA = "editContactDetailsData"
     const val PAY_FOR_CROSSINGS = "payForCrossings"
     const val PAID_CROSSINGS = "paidCrossings"
     const val TRANSFER_CROSSINGS = "transferCrossings"
@@ -299,6 +303,10 @@ object Constants {
     const val ACCOUNT_NUMBER="account_number"
 
     const val TOP_UP_BALANCE="top_up_balance"
+    const val EnquiryResponseModel="EnquiryResponseModel"
+    const val HISTORY_LIST="history_list"
+    const val ENQUIRY_STATUS="enquiry_status"
+    const val ACCOUNT_CONTACT_US="account_contact_us"
 
 
 

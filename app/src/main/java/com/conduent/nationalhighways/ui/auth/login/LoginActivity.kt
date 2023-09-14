@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -49,6 +50,7 @@ import javax.inject.Inject
 class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener {
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
+    private var btnEnabled: Boolean = false
     private val viewModel: LoginViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private lateinit var biometricPrompt: BiometricPrompt
@@ -63,7 +65,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
-
+    private var from: String = ""
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -99,8 +101,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                     intent.putExtra(Constants.CROSSINGCOUNT, "")
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
-
-
+                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
                     intent.putExtra(
                         Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                     )
@@ -153,7 +154,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         navigateWithCrossing(it.transactionList.count ?: 0)
 
                     } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java)
+                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, from)
+                        }
 
                     }
 
@@ -164,7 +167,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
-                startNewActivityByClearingStack(HomeActivityMain::class.java)
+                startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                    putString(Constants.NAV_FLOW_FROM, from)
+                }
             }
 
             else -> {
@@ -182,6 +187,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
             intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
             intent.putExtra(Constants.PERSONALDATA, personalInformation)
+            intent.putExtra(Constants.NAV_FLOW_FROM, from)
 
 
             intent.putExtra(
@@ -190,7 +196,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             startActivity(intent)
 
         } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java)
+            startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                putString(Constants.NAV_FLOW_FROM, from)
+            }
         }
 
 
@@ -219,6 +227,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun init() {
+        if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
+            intent?.apply {
+                from = getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+            }
+        }
+
+
         materialToolbar = findViewById(R.id.tool_bar_lyt)
         materialToolbar?.visibility = View.GONE
         loader = LoaderDialog()
@@ -238,9 +253,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             "login",
             sessionManager.getLoggedInUser()
         )
+        binding.edtEmail.setText("prepay123@conduent.com")
+        binding.edtPwd.setText("Welcome1")
+        binding.btnLogin.isEnabled = true
         binding.btnLogin.performClick()
         binding.btnLogin.performClick()
     }
+
 
     private fun isEnable() {
         emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
@@ -314,7 +333,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                                 true
                             }
                         } else if (Utils.countOccurenceOfChar(
-                                binding.edtEmail.editText.getText().toString().trim(), '@'
+                                binding.edtEmail.editText.text.toString().trim(), '@'
                             ) !in (1..1)
                         ) {
                             binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
@@ -484,6 +503,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                     )
+                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
+
                     startActivity(intent)
 
 
@@ -497,6 +518,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     if (twoFAEnable) {
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
                         startActivity(intent)
                     } else {
                         dashboardViewModel.getAccountDetailsData()

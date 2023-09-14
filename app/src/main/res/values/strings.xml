@@ -212,7 +212,7 @@
     <string name="str_confirm_password">Confirm password</string>
     <string name="str_password_reset_successfull">Password Reset Successfully</string>
     <string name="str_pay_dart_ford_crossing_charge">Pay the Dartford Crossing charge (Dart Charge)</string>
-    <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossings in various ways.</string>
+    <string name="str_pay_dart_ford_crossing_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossings in various ways.</string>
     <string name="str_about_this_service">About this service</string>
     <string name="str_crossing_service_update">Crossing service updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
@@ -592,18 +592,20 @@
     <string name="str_select_sub_category">Sub-category : </string>
     <string name="str_please_provide_additional_information_txt">please provide additional information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
     <string name="str_description">Descritption</string>
-    <string name="str_you_have_chars_remain">You have 895 characters remaining</string>
-    <string name="str_upload_file">Upload file (Optional)</string>
+    <string name="str_you_have_chars_remain">You have %1$s characters remaining</string>
+    <string name="str_upload_file_optional">Upload file (Optional)</string>
     <string name="str_upto_four_files_uploaded">\u25CF Up to 4 files can be uploaded</string>
     <string name="str_file_size_may_be">\u25CF File size can be up to 8mb each</string>
     <string name="str_permitted_file_types_are_doc_docx_xls">\u25CF Permitted file types are \n .doc/.docx, .xls/.xlsx, .pdf, .jpg, .mbp, .tiff, .csv</string>
     <string name="str_duplicate_statements">Duplicate Statments</string>
     <string name="str_transaction">Transaction</string>
-    <string name="str_Your_enquiry_submitted">Your enquiry has been submitted successfully</string>
+    <string name="str_Your_enquiry_submitted">Your enquiry has been\nsubmitted successfully</string>
+    <string name="str_Your_complaint_submitted">Your complaint has been\nsubmitted successfully</string>
     <string name="str_we_will_get_back_to_you">\u25CF We will get back to you with in 7 working days</string>
     <string name="str_email_conformation">\u25CF We will send an email confirmation to %1$s post verification</string>
     <string name="str_check_enquiry_status">Check enquiry status</string>
-    <string name="str_enquiry_status">Cases enquiry status</string>
+    <string name="str_check_complaint_status">Check complaint status</string>
+    <string name="str_case_enquiry_status">Cases enquiry status</string>
     <string name="str_go_to_start_menu">Go to start menu</string>
     <string name="str_case_number">Case number</string>
     <string name="str_date">Date</string>
@@ -659,6 +661,7 @@
                 \n\u25CF 1 number \n</string>
     <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsuccessfully</string>
     <string name="sent_email">We have sent a confirmation email to %s</string>
+    <string name="sent_email_line">We have sent a confirmation email to\n%s</string>
     <string name="str_threshold_val_msg">You have chosen to top-up by %s, when your balance falls below %s.</string>
     <string name="str_threshold_val_update_msg">Change your low balance and auto top-up</string>
 
@@ -1423,6 +1426,58 @@
     <string name="payment_incorrect">Payment method is incorrect</string>
     <string name="str_on">on</string>
     <string name="back_to_main_menu">BACK TO MAIN MENU</string>
+
+
+    <string name="can_provide_more_detail">Can you provide more detail?</string>
+    <string name="str_dont_include_personal_text">Do not include personal or financial information, like your credit card details.</string>
+    <string name="str_500_characters_remaining">You have 500 characters remaining.</string>
+    <string name="str_upload_file_">Upload file</string>
+    <string name="str_allowed_file_types">Allowed file types are JPG, PDF, BMP or TIF.</string>
+    <string name="str_file_size_not_morethan_8mb">File size should be no more than 8MB.</string>
+
+    <string name="what_contact_details">What are your contact details?</string>
+    <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
+    <string name="vehicle_registration_number_plate_optional">Vehicle Registration (number plate) Optionsl</string>
+    <string name="country_code">Country code</string>
+    <string name="details_of_enquiry">Details of enquiry</string>
+    <string name="details_of_complaint">Details of complaint</string>
+    <string name="str_check_your_answer_before_enquiry">Check your answers before sending your enquiry.</string>
+    <string name="str_check_your_answer_before_complaint">Check your answers before sending your complaint.</string>
+    <string name="contact_message">Contact message</string>
+    <string name="str_name">Name</string>
+    <string name="str_choose_file">Choose file</string>
+    <string name="non_UK_number_invalid">The non-UK phone number entered is invalid, please try again</string>
+    <string name="reference_number">Reference Number</string>
+    <string name="respond_enquiry_1day">We will respond to your enquiry within 1 day.</string>
+    <string name="respond_complaint_5days">We will respond to your complaint within 5 days.</string>
+    <string name="str_enquiry">Enquiry</string>
+    <string name="str_complaint">Complaint</string>
+    <string name="str_date_time_submitted">Date &amp; time submitted </string>
+    <string name="str_status_of_enquiry">Status of enquiry</string>
+    <string name="str_status_of_complaint">Status of complaint</string>
+    <string name="str_date_enquiry_closed">Date enquiry closed</string>
+    <string name="str_date_complaint_closed">Date complaint closed</string>
+    <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
+    <string name="str_terms_conditions">Terms &amp; Conditions</string>
+    <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
+    <string name="str_third_party_software">Third party software</string>
+    <string name="str_dart_charge_contact_centre">Dart charge contact centre</string>
+    <string name="str_contact_dart_charge_team">Contact the Dart Charge team</string>
+    <string name="str_find_out_about_call_charges"><u>Find out about call charges</u></string>
+    <string name="str_get_in_touch_about">Get in touch about:</string>
+    <string name="str_charges">charges</string>
+    <string name="str_fines">fines(Penalty Charge Notice)</string>
+    <string name="str_refunds">refunds</string>
+    <string name="str_dart_charge_accounts">dart Charge accounts</string>
+    <string name="str_complaints">complaints</string>
+    <string name="str_general_enquiries">general enquiries</string>
+    <string name="str_get_in_touch">Get in touch</string>
+    <string name="str_enquiry_status">Enquiry status</string>
+    <string name="str_incorrect_enquiry">Incorrect enquiry reference number or last name. Please try again.</string>
+    <string name="str_reference_3_charac">Enter an enquiry reference number that is 3 characters or more</string>
+    <string name="str_reference_validations">Enquiry reference number must only include letters a to z, and numbers 0 to 9.</string>
+
+
     <string name="transfer_remaining_credit">TRANSFER REMAINING CREDIT</string>
     <string name="your_crossing_details">Your crossing details</string>
     <string name="credit_remaining">Credits remaining</string>
@@ -1448,6 +1503,7 @@
     <string name="str_for_your_security">For your security,you\'ll be signed out in %s minutes</string>
     <string name="str_sign_out">Sign out</string>
     <string name="str_stay_signed_in">Stay signed In</string>
+    <string name="str_no_enquiries_have_been_raised">No enquiries have been raised</string>
 
 
     <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>

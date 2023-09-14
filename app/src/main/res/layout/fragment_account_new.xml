@@ -346,8 +346,7 @@
                         android:layout_width="@dimen/_25dp"
                         android:layout_height="@dimen/_25dp"
                         android:layout_marginStart="@dimen/margin_17dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_car_grey"
+                        android:src="@drawable/ic_voice_over_record"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
