@@ -925,6 +925,7 @@
     <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder.\n\n The code will expire after 15 minutes.</string>
     <string name="resend_code_text">A text will be sent to %s. \n\nYour text message might take a few minutes to arrive.\n\n The code will expire after 15 minutes.</string>
     <string name="resend_code_expire">We’ll send a text message to %s. \n\nThe code will expire after 15 minutes.</string>
+    <string name="a_text_will_be_sent_to_code_expire">A text will be sent to %s.\n\nYour text message might take a few minutes to arrive.\n\nThe code will expire after 15 minutes.</string>
 
 
     <string name="resend_code_text_message">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
@@ -962,6 +963,7 @@
     <string name="what_is_your_address">What is your registered office address?</string>
     <string name="this_should_be_the_address_were_the_vehicle_is_registered">This should be the address were the vehicle is registered.</string>
     <string name="enter_address_manually">Enter address manually</string>
+    <string name="enter_your_address_manually">Enter your address manually</string>
     <string name="what_is_your_name">What is your name?</string>
     <string name="what_is_your_company_name">What is your company name?</string>
     <string name="primary_account_holder_first_name">Primary account holder’s first name</string>
@@ -1267,8 +1269,8 @@
     <string name="mobile_change_successful">Mobile number change successful</string>
     <string name="telephone_change_successful">Telephone number change successful</string>
     <string name="two_factor_change_successful">Two Factor Authentication \n change successful</string>
-    <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
-    <string name="you_will_recieve_a_confirmation_email">You'll recieve a confirmation email at <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="we_ve_sent_a_confirmation_email_to_s">We\'ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="you_will_recieve_a_confirmation_email">You\'ll recieve a confirmation email at <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
     <string name="email_receipt_send_successful">Email receipt send successful</string>

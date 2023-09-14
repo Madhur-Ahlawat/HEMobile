@@ -26,7 +26,7 @@
             android:id="@+id/inputCountry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/_24dp"
             app:labelText="Country code"
             android:padding="0dp"
             app:inputType="number"
@@ -54,7 +54,7 @@
             android:id="@+id/txtBottom"
             style="@style/RegularTextBlack"
             android:layout_width="0dp"
-            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_18dp"
             android:text="We’ll use this to send you a security code by text message."
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/black"
@@ -68,9 +68,10 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/str_continue"
+            android:layout_marginBottom="@dimen/_29dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtBottom"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:radius="@dimen/margin_5dp" />
 
 

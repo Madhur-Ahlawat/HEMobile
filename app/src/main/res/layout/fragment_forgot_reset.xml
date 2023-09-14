@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
+        android:layout_above="@id/btn_submit"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:gravity="center"
@@ -89,15 +92,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-            <com.conduent.apollo.ui.CMButton
-                android:id="@+id/btn_submit"
-                style="@style/PrimaryButton"
-                android:layout_marginHorizontal="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_50sdp"
-                android:layout_marginBottom="@dimen/_30sdp"
-                android:gravity="center"
-                android:text="@string/str_continue_login" />
+
 
     </LinearLayout>
+    <com.conduent.apollo.ui.CMButton
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_submit"
+        style="@style/PrimaryButton"
+        android:layout_marginTop="0dp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_94dp"
+        android:gravity="center"
+        android:text="@string/str_continue_login" />
+</RelativeLayout>
 
 </layout>

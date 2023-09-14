@@ -70,7 +70,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 title?.text = getString(R.string.profile_address)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.address_change_successful)
-                binding.subTitle.text = Html.fromHtml(getString(R.string.we_ve_sent_a_confirmation_email_to_s,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
+                binding.subTitle.text = Html.fromHtml(getString(R.string.you_will_recieve_a_confirmation_email,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
             PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
