@@ -50,7 +50,7 @@
     <string name="txt_account_number">Account number</string>
     <string name="txt_error_account_number">Please enter account number</string>
     <string name="txt_error_zip_code">Please enter postal code</string>
-    <string name="txt_postcode"><b>Building Number and Street</b></string>
+    <string name="txt_building_number_and_street"><b>Building Number and Street</b></string>
     <string name="txt_next">Next</string>
     <string name="txt_login">Log in</string>
     <string name="txt_your_username"><b>Your username</b></string>

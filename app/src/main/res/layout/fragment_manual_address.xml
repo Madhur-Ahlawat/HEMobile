@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:labelText="@string/txt_postcode"
+            app:labelText="@string/txt_building_number_and_street"
             style="@style/input_text"
             app:maxLength="200"
             app:layout_constraintEnd_toEndOf="parent"

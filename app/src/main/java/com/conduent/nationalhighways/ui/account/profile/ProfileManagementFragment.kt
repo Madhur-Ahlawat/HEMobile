@@ -87,6 +87,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editBiometrics.setOnClickListener(this)
         binding.editAccountType.setOnClickListener(this)
         binding.editCompanyName.setOnClickListener(this)
+        binding.editPassword.setOnClickListener(this)
 
 
     }

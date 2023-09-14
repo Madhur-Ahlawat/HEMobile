@@ -32,6 +32,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.splCharCompanyName
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -86,8 +87,8 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
     }
 
     private fun enablePersonalView() {
-        binding.txtCompanyName.visibility = View.GONE
-        binding.inputCompanyName.visibility = View.GONE
+        binding.txtCompanyName.gone()
+        binding.inputCompanyName.gone()
         binding.inputFirstName.setLabel(getString(R.string.primary_account_holder_first_name))
         binding.inputLastName.setLabel(getString(R.string.primary_account_holder_last_name))
     }
