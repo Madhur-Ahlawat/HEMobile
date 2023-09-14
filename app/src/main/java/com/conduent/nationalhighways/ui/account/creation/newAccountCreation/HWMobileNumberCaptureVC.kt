@@ -133,7 +133,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 setMobileView()
             }
 
-            PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+            Constants.PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                 val data = navData as ProfileDetailModel?
 
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
@@ -356,7 +356,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         }
                     }
 
-                    PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT -> {
+                    PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         val data = navData as ProfileDetailModel?
                         if (data != null) {
                             if (isItMobileNumber) {
@@ -582,7 +582,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
 
-                    PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+                    PROFILE_MANAGEMENT_MOBILE_CHANGE , Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         val data = navData as ProfileDetailModel?
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
