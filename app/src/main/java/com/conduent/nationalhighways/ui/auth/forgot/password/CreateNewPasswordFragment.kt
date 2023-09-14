@@ -271,6 +271,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                      )*/
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                     if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
                         findNavController().navigate(
                             R.id.action_createPasswordFragment_to_resetFragment,

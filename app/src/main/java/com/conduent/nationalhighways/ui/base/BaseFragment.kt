@@ -36,6 +36,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     var navFlowFrom: String = ""
     var navData: Any? = null
     var backButton: Boolean = true
+    private var backPressListener: BackPressListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,8 +44,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = getFragmentBinding(inflater, container)
+
         navFlowCall = arguments?.getString(NAV_FLOW_KEY, "").toString()
-        Log.e("TAG", "onCreateView: navFlowCall --> $navFlowCall")
         if (arguments?.containsKey(NAV_FLOW_FROM) == true) {
             navFlowFrom = arguments?.getString(NAV_FLOW_FROM, "").toString()
         }
@@ -64,12 +65,25 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         initCtrl()
         init()
 
+        backClickListener()
+    }
+
+    fun setBackPressListener(listener: BackPressListener) {
+        backPressListener = listener
+    }
+
+    private fun backClickListener() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                Log.e("TAG", "handleOnBackPressed: backButton $backButton")
+                Log.e("TAG", "onCreateView: handleOnBackPressed: backButton " + backButton)
+
+                backPressListener?.onBackButtonPressed()
+
                 if (backButton) {
                     isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                    requireActivity().onBackPressed()
+                    // Implement your custom back navigation logic
+                } else {
 
                 }
             }
@@ -201,4 +215,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     }
 
+}
+
+interface BackPressListener {
+    fun onBackButtonPressed()
 }

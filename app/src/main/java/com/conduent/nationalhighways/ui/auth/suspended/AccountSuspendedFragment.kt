@@ -95,6 +95,7 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                 bundle.putString(Constants.NAV_FLOW_KEY,navFlow)
+                bundle.putString(Constants.NAV_FLOW_FROM,navFlowFrom)
                 findNavController().navigate(
                     R.id.action_accountSuspendedFragment_to_accountSuspendedPaymentFragment,
                     bundle
@@ -102,7 +103,9 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
             }
 
             R.id.cancel_btn -> {
-                requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+                requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java){
+                    putString(Constants.NAV_FLOW_FROM,navFlowFrom)
+                }
 
             }
 

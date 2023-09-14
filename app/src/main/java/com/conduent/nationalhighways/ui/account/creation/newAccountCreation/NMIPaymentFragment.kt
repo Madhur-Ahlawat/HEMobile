@@ -350,6 +350,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                                 bundle.putString(Constants.NAV_FLOW_KEY, flow)
+                                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                                 findNavController().navigate(
                                     R.id.action_nmiPaymentFragment_to_accountSuspendedFinalPayFragment,
                                     bundle

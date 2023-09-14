@@ -264,6 +264,13 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
+    <style name="RegularTextGrey">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_14sp</item>
+        <item name="android:textColor">@color/grayColorIcon</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+    </style>
     <style name="MediumText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -378,5 +385,18 @@
         <item name="windowMinWidthMajor">0dp</item>
         <item name="windowMinWidthMinor">0dp</item>
     </style>
+
+
+
+    <style name="cardView_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_1dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_1dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_1dp</item>
+        <item name="android:elevation">@dimen/margin_3dp</item>
+        <item name="cornerRadius">@dimen/margin_5dp</item>
+    </style>
+
 
 </resources>

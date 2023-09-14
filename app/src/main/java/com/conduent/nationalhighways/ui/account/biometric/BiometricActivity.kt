@@ -59,7 +59,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
-
+    var navFlowFrom: String = ""
 
     override fun initViewBinding() {
         binding = ActivityBiometricBinding.inflate(layoutInflater)
@@ -70,6 +70,9 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     }
 
     private fun initCtrl() {
+        if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
+            navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+        }
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -265,6 +268,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             if (twoFA) {
                 val intent = Intent(this, AuthActivity::class.java)
                 intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
                 startActivity(intent)
             } else {
                 loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
@@ -297,10 +301,9 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
                     val intent = Intent(this, AuthActivity::class.java)
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
                     intent.putExtra(Constants.CROSSINGCOUNT, "")
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
-
-
                     intent.putExtra(
                         Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                     )
@@ -363,7 +366,9 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                         navigateWithCrossing(it.transactionList.count ?: 0)
 
                     } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java)
+                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                        }
 
                     }
 
@@ -371,7 +376,9 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             is Resource.DataError -> {
-                startNewActivityByClearingStack(HomeActivityMain::class.java)
+                startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                    putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                }
             }
 
             else -> {
@@ -387,6 +394,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
             val intent = Intent(this, AuthActivity::class.java)
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+            intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
             intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
             intent.putExtra(Constants.PERSONALDATA, personalInformation)
 
@@ -397,7 +405,9 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             startActivity(intent)
 
         } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java)
+            startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            }
         }
 
 

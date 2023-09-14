@@ -50,5 +50,7 @@ data class AccountInformation(
     @SerializedName("smsOption") val smsOption:String?,
     @SerializedName("accSubType") val accSubType:String?,
     @SerializedName("paymentTypeInfo") val paymentTypeInfo: String?,
-    @SerializedName("stmtDelivaryType") val stmtDelivaryType: String?
+    @SerializedName("stmtDelivaryType") val stmtDelivaryType: String?,
+    @SerializedName("phoneDayCountryCode") val phoneDayCountryCode: String?,
+    @SerializedName("phoneCell") val phoneCell: String?
 ) : Parcelable

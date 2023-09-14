@@ -14,16 +14,16 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.nominatedcontacts.list.NominatedContactListViewModel
-import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -31,7 +31,6 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -42,9 +41,11 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     OnLogOutListener {
 
     private val viewModel: NominatedContactListViewModel by viewModels()
+    private val raise_viewModel: RaiseNewEnquiryViewModel by viewModels()
     private val logOutViewModel: LogoutViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
+
     @Inject
     lateinit var sessionManager: SessionManager
     private var title: TextView? = null
@@ -61,6 +62,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         isSecondaryUser = sessionManager.getSecondaryUser()
         setPaymentsVisibility()
         initUI()
+        binding.contactUs.visible()
+
     }
 
     private fun initUI() {
@@ -83,10 +86,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             ) {
                 paymentManagement.gone()
             }
-            valueName.text = sessionManager.fetchName()
+            valueName.text = sessionManager.fetchFirstName()
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
             DashboardUtils.setAccountStatusNew(
-                sessionManager.fetchAccountStatus()!!,
+                sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
                 binding.cardIndicatorAccountStatus
             )
@@ -115,7 +118,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     override fun onResume() {
-        title?.text  = getString(R.string.txt_my_account)
+        title?.text = getString(R.string.txt_my_account)
 
         super.onResume()
     }
@@ -162,8 +165,14 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             R.id.communication_preferences -> {
                 title?.text = getString(R.string.communication_preferences)
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
-                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment,bundle)
+                bundle.putString(
+                    Constants.NAV_FLOW_KEY,
+                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
+                )
+                findNavController().navigate(
+                    R.id.action_accountFragment_to_optForSmsFragment,
+                    bundle
+                )
             }
 
             R.id.vehicle_management -> {
@@ -178,12 +187,20 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.contact_us -> {
-                requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
+
+                raise_viewModel.enquiryModel.value= EnquiryModel()
+                raise_viewModel.edit_enquiryModel.value= EnquiryModel()
+
+
+                val bundle: Bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_FROM, Constants.ACCOUNT_CONTACT_US)
+                findNavController().navigate(R.id.caseEnquiryHistoryListFragment, bundle)
+                /*requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
                     putInt(
                         Constants.FROM_LOGIN_TO_CASES,
                         Constants.FROM_LOGIN_TO_CASES_VALUE
                     )
-                }
+                }*/
             }
 
 //            R.id.rl_account_statement -> {
@@ -263,7 +280,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        (requireActivity() as HomeActivityMain).showHideToolbar(true)
 
 
     }

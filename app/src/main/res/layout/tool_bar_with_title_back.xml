@@ -55,7 +55,7 @@
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                tools:text="@string/str_make_one_of_payment" />
+                tools:text="@string/app_name" />
 
 
         </RelativeLayout>

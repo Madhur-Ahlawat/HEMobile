@@ -31,6 +31,7 @@ class AuthActivity : BaseActivity<Any?>() {
     private var accountInformation: AccountInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var crossingCount: String = ""
+    private var navFlowFrom: String = ""
 
 
     @Inject
@@ -41,6 +42,9 @@ class AuthActivity : BaseActivity<Any?>() {
         if (intent.getStringExtra(Constants.NAV_FLOW_KEY) != null) {
             navFlow = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
 
+        }
+        if(intent.hasExtra(Constants.NAV_FLOW_FROM)){
+            navFlowFrom=intent.getStringExtra(Constants.NAV_FLOW_FROM)?:""
         }
         if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -102,6 +106,7 @@ class AuthActivity : BaseActivity<Any?>() {
 
         } else if (navFlow == Constants.TWOFA) {
             bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
             bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_sign_in_validation)
@@ -112,7 +117,7 @@ class AuthActivity : BaseActivity<Any?>() {
 
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
             bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-
+            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
             bundle.putString(Constants.CURRENTBALANCE, currentBalance)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
             bundle.putString(Constants.CROSSINGCOUNT,crossingCount)

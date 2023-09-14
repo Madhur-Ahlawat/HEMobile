@@ -35,5 +35,7 @@ data class UpdateProfileRequest(
     @SerializedName("businessName") val businessName: String?=null,
     @SerializedName("fein") var fein: String?=null,
     @SerializedName("mfaEnabled") var mfaEnabled: String?=null,
+    @SerializedName("phoneCellCountryCode") var phoneCellCountryCode:String?=null,
+    @SerializedName("phoneDayCountryCode") var phoneDayCountryCode:String?=null
 
     ) : Parcelable
