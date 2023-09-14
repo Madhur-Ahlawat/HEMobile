@@ -65,8 +65,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         }
         isViewCreated = true
         binding.topUpBtn.setOnClickListener(this)
-        binding.lowBalance.setText("£5.00")
-        binding.top.setText("£10.00")
+
         binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
@@ -209,7 +208,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             if (index == 0) {
 
                 val mText = binding.lowBalance.editText.text.toString().trim()
-                var updatedText: String =
+                val updatedText: String =
                     mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
                         .replace("0.","0")
                         .replace("1.","1")
@@ -255,7 +254,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 )
             } else if (index == 1) {
                 val mText = binding.top.editText.text.toString().trim()
-                var updatedText: String =
+                val updatedText: String =
                     mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
                         .replace("0.","0")
                         .replace("1.","1")

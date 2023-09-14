@@ -85,11 +85,13 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
             valueName.text = sessionManager.fetchName()
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
-            DashboardUtils.setAccountStatusNew(
-                sessionManager.fetchAccountStatus()!!,
-                indicatorAccountStatus,
-                binding.cardIndicatorAccountStatus
-            )
+            sessionManager.fetchAccountStatus()?.let {
+                DashboardUtils.setAccountStatusNew(
+                    it,
+                    indicatorAccountStatus,
+                    binding.cardIndicatorAccountStatus
+                )
+            }
         }
     }
 

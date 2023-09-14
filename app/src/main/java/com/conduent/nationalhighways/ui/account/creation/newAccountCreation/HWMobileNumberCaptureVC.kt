@@ -37,7 +37,6 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
-import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
@@ -89,8 +88,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         } else {
             setMobileView()
         }
-        binding.btnNext.setOnClickListener(this)
 
+        binding.btnNext.setOnClickListener(this)
         when (navFlowCall) {
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
                 if (!isViewCreated) {
@@ -135,9 +134,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+                val data = navData as ProfileDetailModel?
+
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
-                title?.text = getString(R.string.profile_mobile_number)
-                setMobileView()
+                if (data?.personalInformation?.phoneCell.isNullOrEmpty()){
+                    title?.text = getString(R.string.profile_telephone_number)
+
+                    setTelephoneView()
+                }else{
+                    title?.text = getString(R.string.profile_mobile_number)
+                    setMobileView()
+
+                }
                 setData()
             }
         }
@@ -168,12 +176,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
 
     private fun setTelephoneView() {
+        val data = navData as ProfileDetailModel?
+
         isItMobileNumber = false
         binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
         binding.inputMobileNumber.setLabel(getString(R.string.str_telephone_number_optional))
         binding.txtBottom.visibility = View.GONE
         requiredMobileNumber = true
-        if (NewCreateAccountRequestModel.prePay) {
+        if (NewCreateAccountRequestModel.prePay||data?.accountInformation?.accSubType.equals(Constants.PAYG).not()) {
             binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
         } else {
             binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
@@ -547,6 +557,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         Constants.SMS, binding.inputMobileNumber.getText().toString().trim()
                     )
                 )
+                bundle.putString(Constants.PHONE_COUNTRY_CODE,
+                    binding.inputCountry.selectedItemDescription?.let { getRequiredText(it) })
 
                 bundle.putParcelable(
                     "response", SecurityCodeResponseModel(
@@ -581,9 +593,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         bundle.putString(Constants.Edit_REQUEST_KEY, navFlowCall)
                     }
                 }
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
 
-                bundle.putString(NAV_FLOW_FROM, navFlowFrom)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
@@ -601,6 +612,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
         }
     }
+
+    private fun getRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
     override fun onHashMapItemSelected(key: String?, value: Any?) {
     }

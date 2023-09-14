@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
@@ -84,7 +85,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
     private val viewModelProfile: ProfileViewModel by viewModels()
     private val dashboardViewModel: DashboardViewModel by viewModels()
-
+    private var phoneCountryCode: String = ""
 
 
     override fun getFragmentBinding(
@@ -96,9 +97,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
 
-        binding.isEnable = false
         loadUI()
 
 
@@ -116,6 +115,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     override fun initCtrl() {
+        editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
+        phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
+
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
@@ -268,7 +270,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             viewModel.verifyRequestCode(mVerifyRequestOtpReq)
 
                         } else {
-                            showError(binding.root, getString(R.string.str_security_code_expired_message))
+                            showError(
+                                binding.root,
+                                getString(R.string.str_security_code_expired_message)
+                            )
                         }
                     }
 
@@ -277,11 +282,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                       /* val bundle = Bundle()
-                        findNavController().navigate(
-                            R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                            bundle
-                        )*/
+                        /* val bundle = Bundle()
+                         findNavController().navigate(
+                             R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                             bundle
+                         )*/
 
                         confirmEmailCode()
                     }
@@ -290,6 +295,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             R.id.btn_Resend -> {
+                val bundle = Bundle()
+
                 when (navFlowCall) {
                     Constants.ACCOUNT_CREATION_EMAIL_FLOW -> {
                         AdobeAnalytics.setActionTrack(
@@ -324,11 +331,18 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             sessionManager.getLoggedInUser()
                         )
                     }
+                    Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+                        val data = navData as ProfileDetailModel?
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    }
                 }
 
-                val bundle = Bundle()
                 bundle.putParcelable("data", data)
+
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
@@ -392,7 +406,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     else -> {
                         binding.messageReceivedTxt.text =
                             getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
-                                data?.optionValue.toString()) + "."
+                                data?.optionValue.toString()
+                            ) + "."
 
                     }
                 }
@@ -483,13 +498,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     2051 -> {
                         binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
                     }
+
                     2050 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
                     }
+
                     5260 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                     }
-                    else->{
+
+                    else -> {
                         binding.edtOtp.setErrorText(status.errorMsg)
                     }
                 }
@@ -708,7 +726,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 smsOption = "Y",
                 phoneEvening = "",
                 fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName
+                businessName = personalInformation?.customerName,
+                phoneCellCountryCode = phoneCountryCode
+
             )
 
             viewModelProfile.updateUserDetails(request)
@@ -739,7 +759,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = "Y",
-                phoneEvening = ""
+                phoneEvening = "",
+                phoneCellCountryCode = phoneCountryCode
             )
 
             viewModelProfile.updateUserDetails(request)
@@ -846,6 +867,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
         }
     }
+
     private fun navigateWithCrossing(count: Int) {
 
 

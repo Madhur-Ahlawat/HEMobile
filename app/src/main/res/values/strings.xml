@@ -908,7 +908,7 @@
     <string name="ifyoudidnotreceivethecode">If you did not get a code, or it has expired, select resend security code.</string>
     <string name="resendcode">Resend Security Code</string>
     <string name="wehavesentanemail">We\'ve sent an email to</string>
-    <string name="wehavesentatextmessageto">We\'ve sent a text message to</string>
+    <string name="wehavesentatextmessageto">You will receive a text message at</string>
     <string name="ifyoudidnot">If you did not get a code, or it has expired, select Resend code.</string>
     <string name="str_your_password_must">Your password must:</string>
     <string name="dotunicode">\u25CF</string>
@@ -1291,6 +1291,7 @@
     <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be 50 characters or fewer</string>
     <string name="password_must_not_have_special_characters">Password must not have special characters!</string>
     <string name="profile_mobile_number">Profile mobile number</string>
+    <string name="profile_telephone_number">Profile telephone number</string>
     <string name="would_you_like_to_opt_in_to_two_step_verification">Would you like to opt in to two-step verification?</string>
     <string name="this_will_make_access_to_your_account_more_secure">This will make access to your account more secure.</string>
     <string name="two_factor_verification">Two Factor Verification</string>

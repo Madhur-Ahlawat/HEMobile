@@ -85,6 +85,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editEmailAddress.setOnClickListener(this)
         binding.editBiometrics.setOnClickListener(this)
         binding.editAccountType.setOnClickListener(this)
+        binding.editCompanyName.setOnClickListener(this)
 
 
     }
@@ -97,6 +98,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         }
         super.onStart()
     }
+
     override fun observer() {
         observe(viewModel.accountDetail, ::handleAccountDetail)
     }
@@ -134,13 +136,29 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             }
                         } else if (personalInformation?.phoneDay.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
-                            personalInformation?.phoneDay?.let { binding.mobileNumber.text = it }
+
+                            personalInformation?.phoneDay?.let {
+                                binding.mobileNumber.text =
+                                    personalInformation?.phoneDayCountryCode + " " + it
+                            }
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
-                        if (accountInformation?.accountType.equals(Constants.BUSINESS_ACCOUNT,true)) {
-                            binding.companyNameCard.visible()
+
+
+                        if (accountInformation?.accountType.equals(
+                                Constants.BUSINESS_ACCOUNT,
+                                true
+                            )
+                        ) {
                             binding.companyName.text = personalInformation?.customerName
+                            binding.accountSubType.visibility = View.GONE
+                            binding.companyNameCard.visibility = View.VISIBLE
+                        } else {
+                            binding.accountSubType.visibility = View.VISIBLE
+                            binding.companyNameCard.visibility = View.GONE
+
+
                         }
                     }
                 }
@@ -161,7 +179,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         bundle.putParcelable(NAV_DATA_KEY, profileDetailModel)
         when (v?.id) {
 
-            R.id.editCompanyName,R.id.editFullName -> {
+            R.id.editCompanyName, R.id.editFullName -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_personalInfoFragment,
                     bundle()
