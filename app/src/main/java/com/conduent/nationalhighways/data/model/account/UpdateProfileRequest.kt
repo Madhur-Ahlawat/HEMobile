@@ -36,6 +36,7 @@ data class UpdateProfileRequest(
     @SerializedName("fein") var fein: String?=null,
     @SerializedName("mfaEnabled") var mfaEnabled: String?=null,
     @SerializedName("phoneCellCountryCode") var phoneCellCountryCode:String?=null,
-    @SerializedName("phoneDayCountryCode") var phoneDayCountryCode:String?=null
+    @SerializedName("phoneDayCountryCode") var phoneDayCountryCode:String?=null,
+    @SerializedName("pushNotFlag") var pushNotFlag:String?=null
 
     ) : Parcelable

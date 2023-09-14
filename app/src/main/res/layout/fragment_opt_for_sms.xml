@@ -40,6 +40,26 @@
 
 
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            style="@style/MediumTextBlack"
+            android:textColor="@color/black"
+            android:text="@string/would_you_like_to_receive_push"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/notification_txt"
+            style="@style/RegularText"
+            android:textColor="@color/txt_grey"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/this_will_be_in_addition_push"
+            />
+
+
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnNext"
             style="@style/PrimaryButton"

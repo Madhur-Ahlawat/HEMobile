@@ -132,8 +132,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 title?.text = getString(R.string.communication_preferences)
                 setMobileView()
             }
+            Constants.PROFILE_MANAGEMENT_2FA_CHANGE->{
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.str_profile_two_factor_verification)
+            }
 
-            Constants.PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+             PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                 val data = navData as ProfileDetailModel?
 
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)

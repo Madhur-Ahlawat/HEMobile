@@ -160,7 +160,13 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                         NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
                         val data = navData as ProfileDetailModel?
                         if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
-                            verifyMobileNumber(data)
+                            if (binding.twoFactor.isChecked){
+                                verifyMobileNumber(data)
+
+                            }else{
+                                updateStandardUserProfile(data)
+
+                            }
                         } else {
                             loader?.show(
                                 requireActivity().supportFragmentManager,

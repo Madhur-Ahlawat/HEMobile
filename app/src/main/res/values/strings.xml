@@ -1502,6 +1502,7 @@
     <string name="str_sign_out">Sign out</string>
     <string name="str_stay_signed_in">Stay signed In</string>
     <string name="str_no_enquiries_have_been_raised">No enquiries have been raised</string>
+    <string name="str_profile_two_factor_verification">Profile Two Factor Verification</string>
 
 
     <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>

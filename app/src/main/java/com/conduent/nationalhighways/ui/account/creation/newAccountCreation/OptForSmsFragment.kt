@@ -29,7 +29,9 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +44,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     private var mAccountResp: AccountResponse? = null
     private val mCommunicationsList = ArrayList<CommunicationPrefsModel>()
     private var smsFlag = "N"
+    private var notificationFlag="N"
     private var isViewCreated: Boolean = false
 
     override fun getFragmentBinding(
@@ -50,6 +53,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     ): FragmentOptForSmsBinding = FragmentOptForSmsBinding.inflate(inflater, container, false)
 
     override fun init() {
+        binding.btnNext.setOnClickListener(this)
         when (navFlowCall) {
             EDIT_SUMMARY , EDIT_ACCOUNT_TYPE-> {
                 if(!isViewCreated){
@@ -58,7 +62,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
                 binding.switchCommunication.isChecked =
                     NewCreateAccountRequestModel.communicationTextMessage
-              //  binding.checkBoxTerms.visibility = View.GONE
                 binding.btnNext.enable()
 
             }
@@ -70,57 +73,38 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
         binding.switchCommunication.setOnClickListener {
             if (binding.switchCommunication.isChecked) {
-              //  binding.checkBoxTerms.visibility = View.VISIBLE
                 binding.btnNext.enable()
-               // binding.checkBoxTerms.isChecked = false
                 NewCreateAccountRequestModel.communicationTextMessage = true
             } else {
                NewCreateAccountRequestModel.communicationTextMessage = false
-             //   binding.checkBoxTerms.visibility = View.GONE
                 binding.btnNext.enable()
             }
         }
 
-
-       /* binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                binding.btnNext.enable()
-                NewCreateAccountRequestModel.termsCondition = true
+        binding.switchNotification.setOnClickListener {
+            if (binding.switchNotification.isChecked) {
 
             } else {
-                NewCreateAccountRequestModel.termsCondition = false
-                binding.btnNext.disable()
             }
-        }*/
-
-        binding.btnNext.setOnClickListener(this)
+        }
 
 
-      /*  binding.checkBoxTerms.makeLinks(Pair("terms and conditions", View.OnClickListener {
-            var url = ""
-            url = if (NewCreateAccountRequestModel.prePay) {
-                "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
-            } else {
-                "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
-            }
-            val bundle = Bundle()
-            bundle.putString(Constants.TERMSCONDITIONURL, url)
-            findNavController().navigate(
-                R.id.action_optForSmsFragment_to_termsConditionFragment,
-                bundle
-            )
-        }))*/
+
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
                 binding.switchCommunication.isChecked = oldCommunicationTextMessage
+                binding.switchNotification.gone()
+                binding.notificationTxt.gone()
             }
 
             Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                binding.switchNotification.visible()
+                binding.notificationTxt.visible()
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 val data = navData as ProfileDetailModel?
-//                binding.pushCommunication.isChecked = data?.personalInformation?.pushNotifications == true
+                binding.switchNotification.isChecked = data?.personalInformation?.pushNotifications == true
                 loader = LoaderDialog()
                 loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -200,9 +184,13 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                                 binding.switchCommunication.isChecked = true
                                 smsFlag = "Y"
                             }
-                           // binding.checkBoxTerms.visibility = View.GONE
+                            if (it?.pushNotFlag.equals("Y",true)){
+                                binding.switchNotification.isChecked=true
+                                notificationFlag="Y"
+                            }
                             binding.btnNext.enable()
                         }
+
 
                     }
                 }
@@ -273,8 +261,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
                     Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         val communication = if (binding.switchCommunication.isChecked) "Y" else "N"
-//                        val push = binding.pushCommunication.isChecked
-                        if (smsFlag.equals(communication, true)) {
+                        val push=if(binding.switchNotification.isChecked) "Y" else "N"
+                        if (smsFlag.equals(communication, true)&&notificationFlag.equals(push,true)) {
                             findNavController().popBackStack()
                         } else {
                             NewCreateAccountRequestModel.communicationTextMessage=binding.switchCommunication.isChecked
@@ -292,14 +280,23 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                                         communication,
                                         it.defVoice,
                                         it.voiceFlag,
-                                        it.pushNotFlag
+                                        push
                                     )
                                     mList.add(mListModel)
 
                                 }
                                 val model = CommunicationPrefsRequestModel(mList)
                                 if (mAccountResp?.personalInformation?.phoneCell.isNullOrEmpty()) {
-                                    verifyMobileNumber(model)
+                                    if (binding.switchCommunication.isChecked){
+                                        verifyMobileNumber(model)
+
+                                    }else{
+                                        loader?.show(
+                                            requireActivity().supportFragmentManager,
+                                            Constants.LOADER_DIALOG
+                                        )
+                                        communicationPrefsViewModel.updateCommunicationPrefs(model)
+                                    }
                                 } else {
                                     loader?.show(
                                         requireActivity().supportFragmentManager,
@@ -310,7 +307,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
                             }
                         }
-                        /*if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
+                      /*  if (data?.accountInformation?.accountType.equals(Constants.PERSONAL_ACCOUNT,true)) {
                             updateStandardUserProfile(data,communication,push)
                         }else{
                             updateBusinessUserProfile(data,communication,push)
