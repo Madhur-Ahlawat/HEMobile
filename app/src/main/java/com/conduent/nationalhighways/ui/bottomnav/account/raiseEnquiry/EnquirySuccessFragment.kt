@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,15 +44,24 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
         setData()
 
         binding.checkStatusBt.setOnClickListener {
-            findNavController().navigate(R.id.action_enquirySuccessFragment_to_enquiryStatusFragment,getBundleData())
+            findNavController().navigate(
+                R.id.action_enquirySuccessFragment_to_enquiryStatusFragment,
+                getBundleData()
+            )
         }
         binding.btnNext.setOnClickListener {
+            Log.e("TAG", "init: navFlowFrom --> " + navFlowFrom)
             if (requireActivity() is HomeActivityMain) {
-                if(navFlowFrom==Constants.ACCOUNT_CONTACT_US){
-                    findNavController().navigate(R.id.action_contact_us_enquirySuccessFragment_to_caseEnquiryHistoryListFragment,getBundleData())
-
-                }else{
-                    findNavController().navigate(R.id.action_enquirySuccessFragment_to_caseEnquiryHistoryListFragment,getBundleData())
+                if (navFlowFrom == Constants.ACCOUNT_CONTACT_US) {
+                    findNavController().navigate(
+                        R.id.action_contact_us_enquirySuccessFragment_to_caseEnquiryHistoryListFragment,
+                        getBundleData()
+                    )
+                } else {
+                    findNavController().navigate(
+                        R.id.action_contact_us_enquirySuccessFragment_to_caseEnquiryHistoryListFragment,
+                        getBundleData()
+                    )
 
                 }
             } else {
@@ -62,12 +72,11 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
     }
 
 
-
     private fun setData() {
         binding.referenceNumberTv.text = enquiryModel?.srNumber ?: ""
         binding.descTv.text =
             resources.getString(R.string.sent_email_line, enquiryModel?.email ?: "")
-        if (enquiryModel?.category.equals("A general enquiry")) {
+        if (enquiryModel?.category.toString().contains("enquiry")) {
             binding.titleTv.setText(resources.getString(R.string.str_Your_enquiry_submitted))
             binding.checkStatusBt.setText(resources.getString(R.string.str_check_enquiry_status))
             binding.respondEnquiryTv.setText(resources.getString(R.string.respond_enquiry_1day))

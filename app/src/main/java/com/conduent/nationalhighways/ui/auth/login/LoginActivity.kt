@@ -101,8 +101,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                     intent.putExtra(Constants.CROSSINGCOUNT, "")
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
-
-
+                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
                     intent.putExtra(
                         Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                     )
@@ -188,6 +187,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
             intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
             intent.putExtra(Constants.PERSONALDATA, personalInformation)
+            intent.putExtra(Constants.NAV_FLOW_FROM, from)
 
 
             intent.putExtra(
@@ -253,7 +253,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             "login",
             sessionManager.getLoggedInUser()
         )
-        binding.edtEmail.setText("businesstp@gmai.com")
+        binding.edtEmail.setText("prepay123@conduent.com")
         binding.edtPwd.setText("Welcome1")
         binding.btnLogin.isEnabled = true
         binding.btnLogin.performClick()
@@ -501,6 +501,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                     )
+                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
+
                     startActivity(intent)
 
 
@@ -514,6 +516,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     if (twoFAEnable) {
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
                         startActivity(intent)
                     } else {
                         dashboardViewModel.getAccountDetailsData()

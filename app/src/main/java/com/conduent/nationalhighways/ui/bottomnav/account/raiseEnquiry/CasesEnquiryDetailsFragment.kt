@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
@@ -24,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBinding>() {
 
-    lateinit var viewModel: RaiseNewEnquiryViewModel
+    val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     var serviceRequest: ServiceRequest? = null
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -85,9 +86,6 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     }
 
     override fun observer() {
-        viewModel = ViewModelProvider(requireActivity()).get(
-            RaiseNewEnquiryViewModel::class.java
-        )
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
     }

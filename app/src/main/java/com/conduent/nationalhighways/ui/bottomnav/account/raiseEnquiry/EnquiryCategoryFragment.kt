@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
@@ -30,7 +29,7 @@ import java.io.File
 class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     DropDownItemSelectListener, BackPressListener {
 
-    lateinit var viewModel: RaiseNewEnquiryViewModel
+    val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
 
     private var categoryList: ArrayList<CaseCategoriesModel> = ArrayList()
     private var subcategoryList: ArrayList<CaseCategoriesModel> = ArrayList()
@@ -51,9 +50,9 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         if (arguments?.containsKey(Constants.Edit_REQUEST_KEY) == true) {
             editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         }
+        Log.e("TAG", "init: editRequest "+editRequest )
         setBackPressListener(this)
 
-        binding.includeEnquiryStatus.categoryRb.isChecked = true
         saveEditData()
 
         binding.categoryDropdown.dropDownItemSelectListener = this
@@ -71,13 +70,13 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
         }
         binding.cancelMb.setOnClickListener {
-            Log.e("TAG", "init: navFlowFrom "+navFlowFrom )
+            Log.e("TAG", "init: navFlowFrom " + navFlowFrom)
             if (navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
-                if(requireActivity() is HomeActivityMain){
+                if (requireActivity() is HomeActivityMain) {
                     (requireActivity() as HomeActivityMain).redirectToDashBoardFragment()
                 }
             } else if (navFlowFrom == Constants.ACCOUNT_CONTACT_US) {
-                if(requireActivity() is HomeActivityMain){
+                if (requireActivity() is HomeActivityMain) {
                     (requireActivity() as HomeActivityMain).redirectToAccountFragment()
                 }
             } else {
@@ -103,6 +102,27 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     private fun saveEditData() {
         previousCategory = viewModel.edit_enquiryModel.value?.category?.value ?: ""
         previousSubCategory = viewModel.edit_enquiryModel.value?.subCategory?.value ?: ""
+
+        if (previousCategory.isNotEmpty() == true) {
+            binding.apply {
+                categoryDropdown.setSelectedValue(
+                    previousCategory
+                )
+            }
+        }
+        if (previousSubCategory.isNotEmpty() == true) {
+            binding.apply {
+                subcategoryDropdown.setSelectedValue(
+                    previousSubCategory
+                )
+            }
+        }
+
+        if (previousCategory.isNotEmpty() == true && previousSubCategory.isNotEmpty() == true) {
+            binding.btnNext.enable()
+        } else {
+            binding.btnNext.disable()
+        }
     }
 
     override fun initCtrl() {
@@ -118,12 +138,6 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         if (!isViewCreated) {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-
-            viewModel = ViewModelProvider(requireActivity()).get(
-                RaiseNewEnquiryViewModel::class.java
-            )
-
             getCategoriesApiCall()
             observe(viewModel.categoriesLiveData, ::categoriesData)
             observe(viewModel.subcategoriesLiveData, ::subCategoriesData)
@@ -184,18 +198,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
                         categoryDropdown.dataSet.addAll(categoryNameList)
                     }
 
-                    if (viewModel.edit_enquiryModel.value?.category?.value != null || viewModel.edit_enquiryModel.value?.category?.value?.isNotEmpty() == true) {
-                        binding.apply {
-                            categoryDropdown.setSelectedValue(
-                                viewModel.edit_enquiryModel.value?.category?.value ?: ""
-                            )
-                        }
-//                        loader?.show(
-//                            requireActivity().supportFragmentManager, Constants.LOADER_DIALOG
-//                        )
 
-                        viewModel.getSubCategories(viewModel.edit_enquiryModel.value?.category?.name.toString())
-                    }
                 }
             }
 
@@ -222,6 +225,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
             binding.apply {
                 subcategoryDropdown.dataSet.clear()
             }
+            binding.subcategoryDropdown.setSelectedValue("")
             viewModel.edit_enquiryModel.value?.subCategory = CaseCategoriesModel("", "")
         } else {
             viewModel.edit_enquiryModel.value?.subCategory = subcategoryList.get(position)
@@ -243,7 +247,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         Log.e("TAG", "saveOriginalDataToEditModel: editRequest " + editRequest)
         if (editRequest == Constants.EDIT_SUMMARY) {
 
-            viewModel.edit_enquiryModel.value?.name = viewModel.enquiryModel.value?.name ?: ""
+            viewModel.edit_enquiryModel.value?.firstname = viewModel.enquiryModel.value?.firstname ?: ""
             viewModel.edit_enquiryModel.value?.email = viewModel.enquiryModel.value?.email ?: ""
             viewModel.edit_enquiryModel.value?.mobileNumber =
                 viewModel.enquiryModel.value?.mobileNumber ?: ""

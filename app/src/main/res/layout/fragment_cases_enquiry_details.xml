@@ -35,7 +35,7 @@
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/enquiry_tv"
                     style="@style/SemiBoldTextBlack"
-                    android:text="@string/str_enquiry"
+                    android:text="@{viewModel.enquiryDetailsModel.category.equals(&quot;COMPLAINT&quot;) ? @string/str_complaint : @string/str_enquiry}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -207,7 +207,7 @@
                             android:id="@+id/status_enquiry_tv"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
-                            android:text="@string/str_status_of_enquiry"
+                            android:text="@{viewModel.enquiryDetailsModel.category.equals(&quot;COMPLAINT&quot;) ? @string/str_status_of_complaint : @string/str_status_of_enquiry}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -215,10 +215,10 @@
                             android:id="@+id/status_enquiry_data_tv"
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
-                            app:textAllCaps="true"
                             android:text="@{viewModel.enquiryDetailsModel.status}"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/status_enquiry_tv" />
+                            app:layout_constraintTop_toBottomOf="@id/status_enquiry_tv"
+                            app:textAllCaps="true" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -245,7 +245,7 @@
                             android:id="@+id/date_enquiry_closed_tv"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
-                            android:text="@string/str_date_enquiry_closed"
+                            android:text="@{viewModel.enquiryDetailsModel.category.equals(&quot;COMPLAINT&quot;) ? @string/str_date_complaint_closed : @string/str_date_enquiry_closed}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -276,12 +276,11 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
 
-
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/details_enquiry_tv"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
-                            android:text="@string/details_of_enquiry"
+                            android:text="@{viewModel.enquiryDetailsModel.category.equals(&quot;COMPLAINT&quot;) ? @string/details_of_complaint : @string/details_of_enquiry}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 

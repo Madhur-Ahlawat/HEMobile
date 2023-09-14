@@ -83,15 +83,22 @@
         <action
             android:id="@+id/action_enquiryContactDetailsFragment_to_enquirySummaryFragment"
             app:destination="@id/enquirySummaryFragment" />
+
+        <action
+            android:id="@+id/action_contactdetails_enquiryContactDetailsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquirySummaryFragment"
+            app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_categoryChange_enquiryContactDetailsFragment_to_enquirySummaryFragment"
             app:destination="@id/enquirySummaryFragment"
-            app:popUpTo="@id/enquiryCategoryFragment"
+            app:popUpTo="@id/enquirySummaryFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_commentsChange_enquiryContactDetailsFragment_to_enquirySummaryFragment"
             app:destination="@id/enquirySummaryFragment"
-            app:popUpTo="@id/enquiryCommentsFragment"
+            app:popUpTo="@id/enquirySummaryFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

@@ -358,6 +358,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putString(Constants.TRANSACTIONID, status.data?.transactionId)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
                     findNavController().navigate(
                         R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
@@ -391,6 +392,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                     bundle.putString(Constants.TRANSACTIONID, status.data.transactionId)
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
 
                     findNavController().navigate(

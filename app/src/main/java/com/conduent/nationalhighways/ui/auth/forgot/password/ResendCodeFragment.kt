@@ -165,6 +165,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                     response = status.data
                     bundle.putParcelable("response", response)
                     bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                    bundle.putString(Constants.NAV_FLOW_FROM,navFlowFrom)
                     bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                     bundle.putParcelable(Constants.ACCOUNTINFORMATION,accountInformation)
                     bundle.putParcelable(Constants.REPLENISHMENTINFORMATION,replenishmentInformation)

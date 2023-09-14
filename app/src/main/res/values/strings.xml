@@ -1450,9 +1450,12 @@
     <string name="respond_enquiry_1day">We will respond to your enquiry within 1 day.</string>
     <string name="respond_complaint_5days">We will respond to your complaint within 5 days.</string>
     <string name="str_enquiry">Enquiry</string>
+    <string name="str_complaint">Complaint</string>
     <string name="str_date_time_submitted">Date &amp; time submitted </string>
     <string name="str_status_of_enquiry">Status of enquiry</string>
+    <string name="str_status_of_complaint">Status of complaint</string>
     <string name="str_date_enquiry_closed">Date enquiry closed</string>
+    <string name="str_date_complaint_closed">Date complaint closed</string>
     <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
     <string name="str_terms_conditions">Terms &amp; Conditions</string>
     <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
@@ -1499,6 +1502,7 @@
     <string name="str_for_your_security">For your security,you\'ll be signed out in %s minutes</string>
     <string name="str_sign_out">Sign out</string>
     <string name="str_stay_signed_in">Stay signed In</string>
+    <string name="str_no_enquiries_have_been_raised">No enquiries have been raised</string>
 
 
     <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>

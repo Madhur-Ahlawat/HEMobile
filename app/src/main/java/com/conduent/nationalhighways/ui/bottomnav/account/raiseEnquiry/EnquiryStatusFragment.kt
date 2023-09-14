@@ -3,9 +3,11 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -31,7 +33,7 @@ import org.json.JSONObject
 @AndroidEntryPoint
 class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
 
-    lateinit var viewModel: RaiseNewEnquiryViewModel
+    val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     var isViewCreated: Boolean = false
     var isApiCalled: Boolean = false
@@ -84,10 +86,6 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
 
     override fun observer() {
         if (!isViewCreated) {
-            viewModel = ViewModelProvider(requireActivity()).get(
-                RaiseNewEnquiryViewModel::class.java
-            )
-
             binding.viewModel = viewModel
             binding.lifecycleOwner = this
 
@@ -114,7 +112,12 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 viewModel.enquiry_status_number.value = charSequence.toString()
 
                 when {
-                    charSequence.toString().length>1 && charSequence.toString().length < 3 -> {
+                    charSequence.toString().trim().length==0->{
+                        referenceNumberValidations=false
+                        binding.enquiryReferenceNumberEt.removeError()
+
+                    }
+                    charSequence.toString().trim().length>1 && charSequence.toString().trim().length < 3 -> {
                         referenceNumberValidations = false
                         binding.enquiryReferenceNumberEt.setErrorText(resources.getString(R.string.str_reference_3_charac))
                     }
@@ -133,7 +136,11 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 }
             } else {
                 viewModel.enquiry_last_name.value = charSequence.toString()
-                if (Utils.hasDigits(charSequence.toString()) || Utils.hasSpecialCharacters(
+                if(charSequence.toString().trim().isEmpty()){
+                    lastNameValidations = false
+                    binding.lastNameEt.removeError()
+
+                }else  if (Utils.hasDigits(charSequence.toString()) || Utils.hasSpecialCharacters(
                         charSequence.toString(),
                         Utils.splCharVehicleMake
                     )
@@ -155,6 +162,8 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
     }
 
     private fun checkButtonEnable() {
+        Log.e("TAG", "checkButtonEnable: referenceNumberValidations "+referenceNumberValidations )
+        Log.e("TAG", "checkButtonEnable: lastNameValidations "+lastNameValidations )
         if (referenceNumberValidations && lastNameValidations) {
             binding.btnNext.enable()
         } else {

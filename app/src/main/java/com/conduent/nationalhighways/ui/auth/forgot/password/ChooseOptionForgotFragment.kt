@@ -187,6 +187,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 bundle.putParcelable("response", response)
                 bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
                 AdobeAnalytics.setActionTrack2(
                     "continue",

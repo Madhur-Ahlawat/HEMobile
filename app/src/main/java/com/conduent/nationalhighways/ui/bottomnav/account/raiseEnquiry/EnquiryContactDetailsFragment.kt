@@ -8,8 +8,8 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
@@ -39,14 +39,14 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     @Inject
     lateinit var sm: SessionManager
     private val createAccount_viewModel: CreateAccountPostCodeViewModel by viewModels()
-    lateinit var viewModel: RaiseNewEnquiryViewModel
-//    lateinit var createAccount_viewModel: CreateAccountPostCodeViewModel
+    val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
 
     private var fullCountryNameWithCode: MutableList<String> = ArrayList()
     private var requiredCountryCode = false
     private var countriesCodeList: MutableList<String> = ArrayList()
     private var loader: LoaderDialog? = null
     private var requiredFirstName = false
+    private var requiredLastName = false
     private var requiredEmail = false
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
@@ -63,7 +63,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         FragmentEnquiryContactDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if(arguments?.containsKey(Constants.Edit_REQUEST_KEY)==true){
+        if (arguments?.containsKey(Constants.Edit_REQUEST_KEY) == true) {
             editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         }
 
@@ -73,18 +73,21 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         binding.btnNext.setOnClickListener {
 
             saveData()
+            Log.e("TAG", "init: editRequest " + editRequest)
             if (editRequest == Constants.EDIT_SUMMARY) {
                 findNavController().navigate(
-                    R.id.action_enquiryContactDetailsFragment_to_enquirySummaryFragment,getBundleData()
-
+                    R.id.action_contactdetails_enquiryContactDetailsFragment_to_enquirySummaryFragment,
+                    getBundleData()
                 )
             } else if (editRequest == Constants.EDIT_CATEGORY_DATA) {
                 findNavController().navigate(
-                    R.id.action_categoryChange_enquiryContactDetailsFragment_to_enquirySummaryFragment,getBundleData()
+                    R.id.action_categoryChange_enquiryContactDetailsFragment_to_enquirySummaryFragment,
+                    getBundleData()
                 )
             } else if (editRequest == Constants.EDIT_COMMENTS_DATA) {
                 findNavController().navigate(
-                    R.id.action_commentsChange_enquiryContactDetailsFragment_to_enquirySummaryFragment,getBundleData()
+                    R.id.action_commentsChange_enquiryContactDetailsFragment_to_enquirySummaryFragment,
+                    getBundleData()
                 )
             } else {
                 findNavController().navigate(
@@ -99,7 +102,8 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     private fun saveData() {
-        viewModel.edit_enquiryModel.value?.name = binding.fullnameEt.getText().toString()
+        viewModel.edit_enquiryModel.value?.firstname = binding.firstnameEt.getText().toString()
+        viewModel.edit_enquiryModel.value?.lastname = binding.lastnameEt.getText().toString()
         viewModel.edit_enquiryModel.value?.email = binding.emailEt.getText().toString()
         viewModel.edit_enquiryModel.value?.mobileNumber =
             binding.mobileNumberEt.getText().toString()
@@ -109,13 +113,16 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         val bundle: Bundle = Bundle()
         if (editRequest == Constants.EDIT_SUMMARY) {
             bundle.putString(Constants.Edit_REQUEST_KEY, Constants.EDIT_CONTACT_DETAILS_DATA)
+        } else {
+            bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)
         }
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         return bundle
     }
 
     private fun listeners() {
-        binding.fullnameEt.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.firstnameEt.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.lastnameEt.editText.addTextChangedListener(GenericTextWatcher(3))
         binding.emailEt.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(2))
     }
@@ -147,24 +154,48 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     ) {
         if (index == 0) {
 
-            if (binding.fullnameEt.getText().toString().trim().isEmpty()) {
-                binding.fullnameEt.removeError()
+            if (binding.firstnameEt.getText().toString().trim().isEmpty()) {
+                binding.firstnameEt.removeError()
                 requiredFirstName = false
             } else {
-                if (binding.fullnameEt.getText().toString().trim().length <= 50) {
-                    if (binding.fullnameEt.getText().toString().trim().replace(" ", "").matches(
+                if (binding.firstnameEt.getText().toString().trim().length <= 50) {
+                    if (binding.firstnameEt.getText().toString().trim().replace(" ", "").matches(
                             Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME
                         )
                     ) {
-                        binding.fullnameEt.removeError()
+                        binding.firstnameEt.removeError()
                         requiredFirstName = true
                     } else {
-                        binding.fullnameEt.setErrorText(getString(R.string.str_first_name_error_message))
+                        binding.firstnameEt.setErrorText(getString(R.string.str_first_name_error_message))
                         requiredFirstName = false
                     }
                 } else {
                     requiredFirstName = false
-                    binding.fullnameEt.setErrorText(getString(R.string.str_first_name_length_error_message))
+                    binding.firstnameEt.setErrorText(getString(R.string.str_first_name_length_error_message))
+                }
+            }
+
+            checkButton()
+        } else if (index == 3) {
+
+            if (binding.lastnameEt.getText().toString().trim().isEmpty()) {
+                binding.lastnameEt.removeError()
+                requiredLastName = false
+            } else {
+                if (binding.lastnameEt.getText().toString().trim().length <= 50) {
+                    if (binding.lastnameEt.getText().toString().trim().replace(" ", "").matches(
+                            Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME
+                        )
+                    ) {
+                        binding.lastnameEt.removeError()
+                        requiredLastName = true
+                    } else {
+                        binding.lastnameEt.setErrorText(getString(R.string.str_last_name_error_message))
+                        requiredLastName = false
+                    }
+                } else {
+                    requiredLastName = false
+                    binding.lastnameEt.setErrorText(getString(R.string.str_last_name_length_error_message))
                 }
             }
 
@@ -287,7 +318,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     private fun checkButton() {
-        if (requiredEmail && requiredFirstName && requiredMobileNumber) {
+        if (requiredEmail && requiredFirstName && requiredMobileNumber && requiredLastName) {
             binding.btnNext.enable()
         } else {
             binding.btnNext.disable()
@@ -300,11 +331,6 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
     override fun observer() {
         if (!isViewCreated) {
-//        createAccount_viewModel =
-//            ViewModelProvider(this).get(CreateAccountPostCodeViewModel::class.java)
-            viewModel = ViewModelProvider(requireActivity()).get(
-                RaiseNewEnquiryViewModel::class.java
-            )
             binding.viewModel = viewModel
             binding.lifecycleOwner = this
 
@@ -318,8 +344,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
     }
 
-    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
-        /* if (loader?.isVisible == true) {
+    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {/* if (loader?.isVisible == true) {
              loader?.dismiss()
          }*/
         when (response) {
@@ -331,9 +356,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 response.data?.forEach {
                     it?.countryName?.let { it1 -> countriesList.add(it1) }
                 }
-                countriesList.sortWith(
-                    compareBy(String.CASE_INSENSITIVE_ORDER) { it }
-                )
+                countriesList.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
 
 
                 if (countriesList.contains(Constants.UK_COUNTRY)) {
@@ -419,16 +442,20 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     private fun setSavedData() {
-        if (editRequest == Constants.EDIT_SUMMARY || viewModel.edit_enquiryModel.value?.name?.isNotEmpty() == true) {
-            binding.fullnameEt.setText(viewModel.edit_enquiryModel.value?.name ?: "")
+        if (editRequest == Constants.EDIT_SUMMARY || viewModel.edit_enquiryModel.value?.firstname?.isNotEmpty() == true) {
+            binding.firstnameEt.setText(viewModel.edit_enquiryModel.value?.firstname ?: "")
+            binding.lastnameEt.setText(viewModel.edit_enquiryModel.value?.lastname ?: "")
             binding.emailEt.setText(viewModel.edit_enquiryModel.value?.email ?: "")
             binding.mobileNumberEt.setText(viewModel.edit_enquiryModel.value?.mobileNumber ?: "")
             binding.countrycodeEt.setSelectedValue(
                 viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
             )
         } else {
-            binding.fullnameEt.setText(sm.fetchName() ?: "")
+            binding.firstnameEt.setText(sm.fetchFirstName() ?: "")
+            binding.lastnameEt.setText(sm.fetchLastName() ?: "")
             binding.emailEt.setText(sm.fetchAccountEmailId() ?: "")
+            binding.mobileNumberEt.setText(sm.fetchUserMobileNUmber() ?: "")
+
 
         }
     }
@@ -468,7 +495,10 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     private fun saveOriginalDataToEditModel() {
         if (editRequest == Constants.EDIT_SUMMARY) {
 
-            viewModel.edit_enquiryModel.value?.name = viewModel.enquiryModel.value?.name ?: ""
+            viewModel.edit_enquiryModel.value?.firstname =
+                viewModel.enquiryModel.value?.firstname ?: ""
+            viewModel.edit_enquiryModel.value?.lastname =
+                viewModel.enquiryModel.value?.lastname ?: ""
             viewModel.edit_enquiryModel.value?.email = viewModel.enquiryModel.value?.email ?: ""
             viewModel.edit_enquiryModel.value?.mobileNumber =
                 viewModel.enquiryModel.value?.mobileNumber ?: ""
@@ -484,8 +514,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
             viewModel.edit_enquiryModel.value?.comments =
                 viewModel.enquiryModel.value?.comments ?: ""
-            viewModel.edit_enquiryModel.value?.file =
-                viewModel.enquiryModel.value?.file ?: File("")
+            viewModel.edit_enquiryModel.value?.file = viewModel.enquiryModel.value?.file ?: File("")
             viewModel.edit_enquiryModel.value?.fileName =
                 viewModel.enquiryModel.value?.fileName ?: ""
         }

@@ -42,6 +42,37 @@
             tools:itemCount="15"
             tools:listitem="@layout/adapter_cases_enquiry_list" />
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/no_data_cl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/margin_30dp"
+            app:layout_constraintBottom_toTopOf="@id/btnNext"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enquiry_history_tv">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/warning_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/warningicon"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                style="@style/BoldText"
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:text="@string/str_no_enquiries_have_been_raised"
+                android:textColor="@color/dark_blue_color"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/warning_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnNext"
             style="@style/PrimaryButton"

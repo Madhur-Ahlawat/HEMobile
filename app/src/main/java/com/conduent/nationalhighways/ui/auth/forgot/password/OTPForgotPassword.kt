@@ -86,7 +86,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
 
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -268,7 +267,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             viewModel.verifyRequestCode(mVerifyRequestOtpReq)
 
                         } else {
-                            showError(binding.root, getString(R.string.str_security_code_expired_message))
+                            showError(
+                                binding.root,
+                                getString(R.string.str_security_code_expired_message)
+                            )
                         }
                     }
 
@@ -277,11 +279,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                       /* val bundle = Bundle()
-                        findNavController().navigate(
-                            R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                            bundle
-                        )*/
+                        /* val bundle = Bundle()
+                         findNavController().navigate(
+                             R.id.action_forgotOtpFragment_to_createPasswordFragment,
+                             bundle
+                         )*/
 
                         confirmEmailCode()
                     }
@@ -329,6 +331,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 val bundle = Bundle()
                 bundle.putParcelable("data", data)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
@@ -392,7 +395,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     else -> {
                         binding.messageReceivedTxt.text =
                             getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
-                                data?.optionValue.toString()) + "."
+                                data?.optionValue.toString()
+                            ) + "."
 
                     }
                 }
@@ -483,13 +487,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     2051 -> {
                         binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
                     }
+
                     2050 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
                     }
+
                     5260 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                     }
-                    else->{
+
+                    else -> {
                         binding.edtOtp.setErrorText(status.errorMsg)
                     }
                 }
@@ -641,6 +648,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 response?.code = binding.edtOtp.getText().toString()
                 bundle.putParcelable("data", response)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 NewCreateAccountRequestModel.emailSecurityCode =
                     binding.edtOtp.editText.text.toString()
 
@@ -765,6 +773,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                     val intent = Intent(requireActivity(), AuthActivity::class.java)
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
                     intent.putExtra(Constants.CROSSINGCOUNT, "")
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
 
@@ -831,7 +840,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         navigateWithCrossing(it.transactionList.count ?: 0)
 
                     } else {
-                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                        }
 
                     }
 
@@ -839,13 +850,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+                requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                    putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                }
             }
 
             else -> {
             }
         }
     }
+
     private fun navigateWithCrossing(count: Int) {
 
 
@@ -856,6 +870,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
             intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
             intent.putExtra(Constants.PERSONALDATA, personalInformation)
+            intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
 
 
             intent.putExtra(
@@ -864,7 +879,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             startActivity(intent)
 
         } else {
-            requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+            requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            }
         }
 
 

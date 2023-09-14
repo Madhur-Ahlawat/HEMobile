@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
@@ -24,15 +24,14 @@ import java.util.ArrayList
 
 @AndroidEntryPoint
 class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
-    lateinit var viewModel: RaiseNewEnquiryViewModel
+    val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     var apiSuccess: Boolean = false
     var isViewCreated: Boolean = false
     private var editRequest: String = ""
 
     override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
+        inflater: LayoutInflater, container: ViewGroup?
     ): FragmentSummaryEnquiryBinding =
         FragmentSummaryEnquiryBinding.inflate(inflater, container, false)
 
@@ -42,14 +41,16 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         }
 
         saveData()
-        if (viewModel.enquiryModel.value?.category?.equals("A general enquiry")==true) {
+        Log.e("TAG", "init:category " + viewModel.enquiryModel.value?.category)
+        if (viewModel.enquiryModel.value?.category.toString().contains("enquiry")) {
+            Log.e("TAG", "init: enquiry")
             binding.contactDetailsTv.setText(resources.getString(R.string.str_check_your_answer_before_enquiry))
             binding.detailsEnquiryTv.setText(resources.getString(R.string.details_of_enquiry))
-        }else{
+        } else {
+            Log.e("TAG", "init: complaint")
             binding.contactDetailsTv.setText(resources.getString(R.string.str_check_your_answer_before_complaint))
             binding.detailsEnquiryTv.setText(resources.getString(R.string.details_of_complaint))
         }
-        binding.includeEnquiryStatus.summaryRb.isChecked = true
 
 
         binding.btnNext.setOnClickListener {
@@ -72,8 +73,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             }
 
             val enquiryRequestModel = EnquiryRequest(
-                viewModel.enquiryModel.value?.name.toString(),
-                viewModel.enquiryModel.value?.name.toString(),
+                viewModel.enquiryModel.value?.firstname.toString(),
+                viewModel.enquiryModel.value?.lastname.toString(),
                 viewModel.enquiryModel.value?.email.toString(),
                 viewModel.enquiryModel.value?.mobileNumber.toString(),
                 viewModel.enquiryModel.value?.countryCode.toString(),
@@ -88,35 +89,27 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             )
         }
 
-        binding.categoryEditIv.setOnClickListener {
+        binding.setCategoryClickListener {
             findNavController().navigate(
-                R.id.action_enquirySummaryFragment_to_enquiryCategoryFragment,
-                getBundleData()
+                R.id.action_enquirySummaryFragment_to_enquiryCategoryFragment, getBundleData()
             )
         }
-        binding.subcategoryEditIv.setOnClickListener {
+        binding.setCommentsClickListener {
             findNavController().navigate(
-                R.id.action_enquirySummaryFragment_to_enquiryCategoryFragment,
-                getBundleData()
+                R.id.action_enquirySummaryFragment_to_enquiryCommentsFragment, getBundleData()
             )
         }
-        binding.contactMessageEditIv.setOnClickListener {
+        binding.setContactDetailsClickListener {
             findNavController().navigate(
-                R.id.action_enquirySummaryFragment_to_enquiryCommentsFragment,
-                getBundleData()
-            )
-        }
-        binding.nameEditIv.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_enquirySummaryFragment_to_enquiryContactDetailsFragment,
-                getBundleData()
+                R.id.action_enquirySummaryFragment_to_enquiryContactDetailsFragment, getBundleData()
             )
         }
     }
 
     private fun saveData() {
 
-        viewModel.enquiryModel.value?.name = viewModel.edit_enquiryModel.value?.name ?: ""
+        viewModel.enquiryModel.value?.firstname = viewModel.edit_enquiryModel.value?.firstname ?: ""
+        viewModel.enquiryModel.value?.lastname = viewModel.edit_enquiryModel.value?.lastname ?: ""
         viewModel.enquiryModel.value?.email = viewModel.edit_enquiryModel.value?.email ?: ""
         viewModel.enquiryModel.value?.mobileNumber =
             viewModel.edit_enquiryModel.value?.mobileNumber ?: ""
@@ -130,12 +123,9 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         viewModel.enquiryModel.value?.subCategory =
             viewModel.edit_enquiryModel.value?.subCategory ?: CaseCategoriesModel("", "")
 
-        viewModel.enquiryModel.value?.comments =
-            viewModel.edit_enquiryModel.value?.comments ?: ""
-        viewModel.enquiryModel.value?.file =
-            viewModel.edit_enquiryModel.value?.file ?: File("")
-        viewModel.enquiryModel.value?.fileName =
-            viewModel.edit_enquiryModel.value?.fileName ?: ""
+        viewModel.enquiryModel.value?.comments = viewModel.edit_enquiryModel.value?.comments ?: ""
+        viewModel.enquiryModel.value?.file = viewModel.edit_enquiryModel.value?.file ?: File("")
+        viewModel.enquiryModel.value?.fileName = viewModel.edit_enquiryModel.value?.fileName ?: ""
     }
 
 
@@ -151,18 +141,13 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
     override fun observer() {
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         if (!isViewCreated) {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-            viewModel = ViewModelProvider(requireActivity()).get(
-                RaiseNewEnquiryViewModel::class.java
-            )
-            binding.viewModel = viewModel
-            binding.lifecycleOwner = this
-
             observe(viewModel.enquiryResponseLiveData, ::enquiryResponseModel)
-
         }
         isViewCreated = true
     }
@@ -178,20 +163,16 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                     resource.data?.category = viewModel.enquiryModel.value?.category?.value ?: ""
                     val bundle = Bundle()
                     bundle.putParcelable(
-                        Constants.EnquiryResponseModel,
-                        resource.data ?: EnquiryResponseModel()
+                        Constants.EnquiryResponseModel, resource.data ?: EnquiryResponseModel()
                     )
                     bundle.putBoolean(
-                        Constants.SHOW_BACK_BUTTON,
-                        false
+                        Constants.SHOW_BACK_BUTTON, false
                     )
                     bundle.putString(
-                        Constants.NAV_FLOW_FROM,
-                        navFlowFrom
+                        Constants.NAV_FLOW_FROM, navFlowFrom
                     )
                     findNavController().navigate(
-                        R.id.action_enquirySummaryFragment_to_enquirySuccessFragment,
-                        bundle
+                        R.id.action_enquirySummaryFragment_to_enquirySuccessFragment, bundle
                     )
                 }
 
@@ -207,5 +188,3 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         apiSuccess = true
     }
 }
-
-

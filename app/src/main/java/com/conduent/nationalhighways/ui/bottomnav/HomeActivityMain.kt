@@ -2,10 +2,8 @@ package com.conduent.nationalhighways.ui.bottomnav
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -13,11 +11,11 @@ import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
-import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
@@ -52,6 +50,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     lateinit var sessionManager: SessionManager
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
+
     @Inject
     lateinit var api: ApiService
     var dataBinding: ActivityHomeMainBinding? = null
@@ -66,7 +65,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         var crossing: TransactionData? = null
         var checkedCrossing: CheckedCrossingRecentTransactionsResponseModelItem? = null
         var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
-        var paymentHistoryListDataCheckedCrossings: MutableList<CheckedCrossingRecentTransactionsResponseModelItem?> = ArrayList()
+        var paymentHistoryListDataCheckedCrossings: MutableList<CheckedCrossingRecentTransactionsResponseModelItem?> =
+            ArrayList()
     }
 
     fun showHideToolbar(isShown: Boolean) {
@@ -83,11 +83,13 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
-    fun viewAllTransactions(){
+
+    fun viewAllTransactions() {
         dataBinding?.apply {
             bottomNavigationView.setActiveNavigationIndex(1)
         }
     }
+
     private fun getDashBoardAllData() {
         loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
         val request = CrossingHistoryRequest(
@@ -107,11 +109,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dashboardViewModel.getAlertsApi()
         return {}
     }
+
     private fun setView() {
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             from = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
-        Log.e("TAG", "setView: from --> " + from)
 
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
@@ -119,10 +121,18 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding?.titleTxt?.text = getString(R.string.dashboard)
         dataBinding?.idToolBarLyt?.gone()
         dataBinding?.backButton?.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            val currentDestination = navController.currentDestination
+            if (currentDestination?.id == R.id.caseEnquiryHistoryListFragment) {
+                Log.e("TAG", "setView: --> ")
+                redirectToAccountFragment()
+            } else {
+                onBackPressedDispatcher.onBackPressed()
+            }
         }
 
         if (from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
+            viewModel.enquiryModel.value = EnquiryModel()
+            viewModel.edit_enquiryModel.value = EnquiryModel()
             dataBinding?.idToolBarLyt?.visible()
             navController.popBackStack(R.id.bottom_navigation_graph, true)
             dataBinding?.backButton?.gone()
@@ -175,12 +185,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         getString(R.string.str_cases_and_enquiries)
                 }
                 Log.e("TAG", "onDestinationChanged: displayName --> " + destination.displayName)
-                if (destination.id == R.id.enquirySuccessFragment) {
+                if (destination.id == R.id.enquirySuccessFragment || (destination.id == R.id.enquiryCategoryFragment && from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
                     dataBinding?.backButton?.gone()
                 } else {
                     dataBinding?.backButton?.visible()
                 }
-
             }
         })
 
@@ -221,7 +230,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
                         3 -> {
                             if (navController.currentDestination?.id != R.id.accountFragment) {
-                               accountFragmentClick()
+                                accountFragmentClick()
                             }
                         }
                     }
@@ -231,7 +240,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun accountFragmentClick() {
-        if(!this::navController.isInitialized){
+        if (!this::navController.isInitialized) {
             navController = (supportFragmentManager.findFragmentById(
                 R.id.fragmentContainerView
             ) as NavHostFragment).navController
@@ -244,13 +253,13 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun dashboardClick() {
-/*
-        if(!this::navController.isInitialized){
-            navController = (supportFragmentManager.findFragmentById(
-                R.id.fragmentContainerView
-            ) as NavHostFragment).navController
-        }
-*/
+        /*
+                if(!this::navController.isInitialized){
+                    navController = (supportFragmentManager.findFragmentById(
+                        R.id.fragmentContainerView
+                    ) as NavHostFragment).navController
+                }
+        */
         dataBinding?.idToolBarLyt?.visible()
         dataBinding?.titleTxt?.text =
             getString(R.string.txt_dashboard)
@@ -264,6 +273,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     override fun observeViewModel() {
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
     }
+
     private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -275,11 +285,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 status.data?.apply {
 
                     accountDetailsData = this
-                    sessionManager.saveAccountStatus(accountInformation?.status?:"")
-                    sessionManager.saveName(personalInformation?.customerName?:"")
-                    sessionManager.saveZipCode(personalInformation?.zipCode?:"")
-                    sessionManager.savePhoneNumber(personalInformation?.phoneNumber?:"")
-                    sessionManager.saveAccountNumber(accountInformation?.number!!)
+                    sessionManager.saveAccountStatus(accountInformation?.status ?: "")
+                    sessionManager.saveFirstName(personalInformation?.firstName ?: "")
+                    sessionManager.saveLastName(personalInformation?.lastName ?: "")
+                    sessionManager.saveAccountEmailId(personalInformation?.emailAddress ?: "")
+                    sessionManager.saveZipCode(personalInformation?.zipCode ?: "")
+                    sessionManager.savePhoneNumber(personalInformation?.phoneNumber ?: "")
+                    sessionManager.saveAccountNumber(accountInformation?.number?:"")
+                    sessionManager.saveUserCountryCode(accountInformation?.phoneDayCountryCode?:"")
+                    sessionManager.saveUserMobileNumber(accountInformation?.phoneCell?:"")
                     (applicationContext as BaseApplication).setAccountSavedData(
                         this
                     )
@@ -301,6 +315,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         super.onResume()
         BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
     }
+
     override fun onStart() {
         super.onStart()
         loadSession()

@@ -57,12 +57,8 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>() {
                     }
 
 
-                    R.id.enquiryStatusFragment -> {
-                        binding.toolBarLyt.titleTxt.text = getString(R.string.str_enquiry_status)
-                    }
-
-                    R.id.casesEnquiryDetailsFragment -> {
-                        binding.toolBarLyt.titleTxt.text = getString(R.string.str_enquiry_status)
+                    R.id.enquiryStatusFragment  or R.id.casesEnquiryDetailsFragment-> {
+                        binding.toolBarLyt.titleTxt.text = getString(R.string.cases_and_enquiry)
                     }
 
                     else -> {

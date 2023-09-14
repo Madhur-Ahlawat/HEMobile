@@ -46,7 +46,7 @@
 
 
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-            android:id="@+id/fullname_et"
+            android:id="@+id/firstname_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20dp"
@@ -54,10 +54,24 @@
             android:textColor="@color/black"
             app:imeOptions="actionNext"
             app:inputType="text"
-            app:labelText="@string/full_name"
+            app:labelText="@string/first_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dont_include_personal_tv"
+            app:maxLength="50" />
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/lastname_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:maxLength="50"
+            android:textColor="@color/black"
+            app:imeOptions="actionNext"
+            app:inputType="text"
+            app:labelText="@string/last_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstname_et"
             app:maxLength="50" />
 
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
@@ -67,10 +81,11 @@
             android:layout_marginTop="@dimen/margin_15dp"
             android:textColor="@color/black"
             app:imeOptions="actionNext"
+
             app:labelText="@string/email_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fullname_et"
+            app:layout_constraintTop_toBottomOf="@+id/lastname_et"
             />
 
         <com.conduent.apollo.ui.CMDropDownView

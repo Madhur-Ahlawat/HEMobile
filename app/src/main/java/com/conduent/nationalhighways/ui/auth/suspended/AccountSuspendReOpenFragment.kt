@@ -164,10 +164,14 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                 when (binding.btnTopUpNow.text) {
                     getString(R.string.str_go_to_dashboard) ->
 
-                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java){
+                            putString(Constants.NAV_FLOW_FROM,navFlowFrom)
+                        }
 
-                    getString(R.string.str_continue) ->
+                    getString(R.string.str_continue) ->{
                         findNavController().navigate(R.id.accountSuspendReOpenFragment_to_paymentMethodFragment)
+
+                    }
                 }
 
 
