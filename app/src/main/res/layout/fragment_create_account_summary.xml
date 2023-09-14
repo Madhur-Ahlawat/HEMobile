@@ -260,7 +260,6 @@
                         android:id="@+id/password"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
-                        android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="left|center"
