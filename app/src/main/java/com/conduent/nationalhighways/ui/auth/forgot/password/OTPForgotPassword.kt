@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -120,12 +123,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
+                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
         }
 
         if (arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION) != null) {
             replenishmentInformation =
-                arguments?.getParcelable(Constants.REPLENISHMENTINFORMATION)
+                arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)
         }
 
         if (arguments != null) {
@@ -253,49 +256,18 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                     FORGOT_PASSWORD_FLOW -> {
                         if (!timeFinish) {
-                            if(binding.edtOtp.editText.getText().toString().equals("123456")){
-                                val bundle = Bundle()
+                            loader?.show(
+                                requireActivity().supportFragmentManager,
+                                Constants.LOADER_DIALOG
+                            )
 
-                                if (navFlowCall == TWOFA) {
-                                    dashboardViewModel.getAccountDetailsData()
-
-
-                                } else {
-                                    response?.code = binding.edtOtp.getText().toString()
-                                    bundle.putParcelable("data", response)
-                                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-
-                                    Logg.logging("NewPassword", "response $response")
-                                    AdobeAnalytics.setActionTrack(
-                                        "verify",
-                                        "login:forgot password:choose options:otp",
-                                        "forgot password",
-                                        "english",
-                                        "login",
-                                        (requireActivity() as AuthActivity).previousScreen,
-                                        sessionManager.getLoggedInUser()
-                                    )
-
-
-                                    findNavController().navigate(
-                                        R.id.action_otpFragment_to_createPasswordFragment,
-                                        bundle
-                                    )
-                                }
-                            }
-                            else{
-                                loader?.show(
-                                    requireActivity().supportFragmentManager,
-                                    Constants.LOADER_DIALOG
+                            val mVerifyRequestOtpReq =
+                                VerifyRequestOtpReq(
+                                    binding.edtOtp.getText().toString(),
+                                    response?.referenceId
                                 )
+                            viewModel.verifyRequestCode(mVerifyRequestOtpReq)
 
-                                val mVerifyRequestOtpReq =
-                                    VerifyRequestOtpReq(
-                                        binding.edtOtp.getText().toString(),
-                                        response?.referenceId
-                                    )
-                                viewModel.verifyRequestCode(mVerifyRequestOtpReq)
-                            }
                         } else {
                             showError(
                                 binding.root,
@@ -305,39 +277,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     TWOFA -> {
-                        if(binding.edtOtp.editText.getText().toString().equals("123456")){
-                            val bundle = Bundle()
-
-                            if (navFlowCall == TWOFA) {
-                                dashboardViewModel.getAccountDetailsData()
-
-
-                            } else {
-                                response?.code = binding.edtOtp.getText().toString()
-                                bundle.putParcelable("data", response)
-                                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-
-                                Logg.logging("NewPassword", "response $response")
-                                AdobeAnalytics.setActionTrack(
-                                    "verify",
-                                    "login:forgot password:choose options:otp",
-                                    "forgot password",
-                                    "english",
-                                    "login",
-                                    (requireActivity() as AuthActivity).previousScreen,
-                                    sessionManager.getLoggedInUser()
-                                )
-
-
-                                findNavController().navigate(
-                                    R.id.action_otpFragment_to_createPasswordFragment,
-                                    bundle
-                                )
-                            }
-                        }
-                        else{
-                            hitTWOFAVerifyAPI()
-                        }
+                        hitTWOFAVerifyAPI()
                     }
 
                     else -> {
@@ -346,12 +286,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                              R.id.action_forgotOtpFragment_to_createPasswordFragment,
                              bundle
                          )*/
-                        if(binding.edtOtp.editText.getText().toString().equals("123456")){
-                            otpSuccessRedirection()
-                        }
-                        else{
-                            confirmEmailCode()
-                        }
+
+                        confirmEmailCode()
                     }
 
                 }
@@ -372,7 +308,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         )
                     }
 
-                    ACCOUNT_CREATION_MOBILE_FLOW -> {
+                    Constants.ACCOUNT_CREATION_MOBILE_FLOW -> {
                         AdobeAnalytics.setActionTrack(
                             "resend",
                             "login:forgot password:choose options:otp",
