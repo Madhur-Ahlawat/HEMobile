@@ -97,6 +97,10 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 binding.switchNotification.gone()
                 binding.notificationTxt.gone()
             }
+            Constants.ACCOUNT_CREATION_EMAIL_FLOW->{
+                binding.switchNotification.gone()
+                binding.notificationTxt.gone()
+            }
 
             Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                 binding.switchNotification.visible()
