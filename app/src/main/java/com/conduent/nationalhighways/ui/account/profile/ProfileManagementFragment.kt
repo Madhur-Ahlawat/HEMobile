@@ -60,6 +60,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.btnNext.gone()
         binding.emailCardProfile.visible()
         binding.biometricsCard.visible()
+        binding.passwordCard.visible()
 
 
         loader = LoaderDialog()

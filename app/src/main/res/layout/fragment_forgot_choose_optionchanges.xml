@@ -36,7 +36,6 @@
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_30dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enter_details_txt">
@@ -45,6 +44,7 @@
                 android:id="@+id/radio_sms"
                 style="@style/RegularTextBlack"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/margin_30dp"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/new_btn_color"
                 android:gravity="top"
@@ -64,9 +64,10 @@
                 android:layout_marginTop="30dp"
                 tools:text="@string/str_dummy_2fa_options_email"
                 android:paddingStart="5dp"
-                android:paddingTop="3dp"
+                android:paddingTop="5dp"
                 android:paddingEnd="5dp"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+               />
 
 
 
@@ -77,6 +78,7 @@
             android:id="@+id/btn"
             style="@style/PrimaryButton"
             android:enabled="false"
+            android:layout_marginTop="@dimen/_40dp"
             android:text="@string/str_continue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/radioGroup" />

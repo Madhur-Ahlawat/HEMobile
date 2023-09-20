@@ -60,6 +60,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             binding.companyNameCard.gone()
 
         }
+        binding.passwordCard.gone()
         if (dataModel.communicationTextMessage) {
             binding.communications.text = getString(R.string.yes)
         } else {

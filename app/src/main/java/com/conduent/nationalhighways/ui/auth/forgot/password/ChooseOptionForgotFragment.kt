@@ -76,6 +76,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                         )
                 binding.radioSms.text = htmlText
                 binding.radioSms.visibility = View.VISIBLE
+                binding.enterDetailsTxt.text=getString(R.string.str_choose_method_to_get_ur_link)
+
             } else {
                 binding.radioSms.visibility = View.GONE
                 binding.enterDetailsTxt.text=getString(R.string.str_choose_method_to_get_email_code)
