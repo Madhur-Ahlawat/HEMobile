@@ -253,11 +253,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             "login",
             sessionManager.getLoggedInUser()
         )
-        binding.edtEmail.setText("prepay123@conduent.com")
-        binding.edtPwd.setText("Welcome1")
         binding.btnLogin.isEnabled = true
-        binding.btnLogin.performClick()
-        binding.btnLogin.performClick()
     }
 
 

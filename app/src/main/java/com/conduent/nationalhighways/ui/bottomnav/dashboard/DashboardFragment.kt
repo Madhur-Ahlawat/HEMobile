@@ -87,7 +87,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
         binding.viewAllNotifi.setOnClickListener {
             if (requireActivity() is HomeActivityMain) {
-                (requireActivity() as HomeActivityMain)
+                HomeActivityMain
                     .dataBinding?.bottomNavigationView?.setActiveNavigationIndex(2)
             }
         }
@@ -169,7 +169,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 //                            getString(R.string.str_view_all, alerts.size.toString())
 //                        binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
                         if (requireActivity() is HomeActivityMain) {
-                            (requireActivity() as HomeActivityMain).dataBinding?.bottomNavigationView?.navigationItems.let { list ->
+                            HomeActivityMain.dataBinding?.bottomNavigationView?.navigationItems.let { list ->
                                 val badgeCountBtn =
                                     list!!.get(2).view.findViewById<AppCompatButton>(R.id.badge_btn)
                                 if (badgeCountBtn != null) {
@@ -199,7 +199,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     private fun hideNotification() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).dataBinding!!.bottomNavigationView.navigationItems.let { list ->
+            HomeActivityMain.dataBinding!!.bottomNavigationView.navigationItems.let { list ->
                 val badgeCountBtn =
                     list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
                 badgeCountBtn.gone()

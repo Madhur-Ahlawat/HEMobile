@@ -75,7 +75,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
     override fun init() {
-
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        viewModel.getCountries()
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         binding.inputCountry.dropDownItemSelectListener = this
@@ -207,22 +210,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     override fun observer() {
-        if (!isViewCreated) {
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
-            viewModel.getCountries()
-
-
             observe(viewModel.countriesList, ::getCountriesList)
-
             observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
             observe(viewModel.countriesCodeList, ::getCountryCodesList)
             observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
         }
-
-    }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
         if (loader?.isVisible == true) {

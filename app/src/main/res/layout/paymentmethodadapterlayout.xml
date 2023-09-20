@@ -24,7 +24,7 @@
                 android:id="@+id/ivCardType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_18dp"
+                android:layout_marginStart="@dimen/margin_16dp"
                 android:src="@drawable/visablue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -34,50 +34,63 @@
                 android:id="@+id/tv_select_payment_method"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_18dp"
-                android:layout_marginEnd="18dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginEnd="@dimen/_16dp"
                 android:fontFamily="@font/open_sans"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/delete"
+                app:layout_constraintEnd_toStartOf="@id/cl_card_status"
                 app:layout_constraintStart_toEndOf="@+id/ivCardType"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/text_default"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_card_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_18dp"
-                android:fontFamily="@font/open_sans"
-                android:text="@string/str_default"
-                android:textColor="@color/label_color"
-                android:textSize="14sp"
-                android:visibility="gone"
+                android:layout_marginEnd="@dimen/_13dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/delete"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/tv_select_payment_method"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/text_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:padding="0dp"
+                    android:text="@string/str_default"
+                    android:textColor="@color/label_color"
+                    android:textSize="@dimen/_14sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-            <TextView
-                android:id="@+id/text_make_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_18dp"
-                android:fontFamily="@font/open_sans"
-                android:text="@string/str_make_default"
-                android:textColor="@color/radioButtonIconColor"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/delete"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                <TextView
+                    android:id="@+id/text_make_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:padding="0dp"
+                    android:text="@string/str_make_default"
+                    android:textColor="@color/radioButtonIconColor"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="18dp"
+                android:layout_marginEnd="@dimen/_11dp"
+                android:padding="5dp"
                 android:src="@drawable/delete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/forward"
@@ -88,8 +101,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="18dp"
-                android:visibility="gone"
                 android:src="@drawable/ic_right_arrow"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

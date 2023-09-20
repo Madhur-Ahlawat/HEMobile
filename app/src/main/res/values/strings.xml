@@ -66,7 +66,7 @@
     <string name="str_account_number">Account number</string>
     <string name="str_post_cde">Post code</string>
     <string name="str_next">Next</string>
-    <string name="str_choose_method_to_get_ur_link">A code will be sent to your email address or mobile.</string>
+    <string name="str_choose_method_to_get_ur_link">A code will be sent to your mobile or email address.</string>
     <string name="str_choose_method_to_get_email_code">A code will be sent to your email address.</string>
     <string name="str_continue">Continue</string>
     <string name="str_check_your_mail">Check your email for a security code</string>
@@ -1267,8 +1267,7 @@
     <string name="mobile_change_successful">Mobile number change successful</string>
     <string name="telephone_change_successful">Telephone number change successful</string>
     <string name="two_factor_change_successful">Two Factor Authentication \n change successful</string>
-    <string name="we_ve_sent_a_confirmation_email_to_s">We\'ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
-    <string name="you_will_recieve_a_confirmation_email">You\'ll recieve a confirmation email at <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="you_will_recieve_a_confirmation_email">You\'ll receive a confirmation email at\n<Data><![CDATA[<b><br>%s</b>]]></Data> </string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
     <string name="email_receipt_send_successful">Email receipt send successful</string>
@@ -1508,7 +1507,7 @@
     <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>
     <string name="low_balance_amount_must_be_80_000_or_less">Low Balance amount must be £80,000 or less</string>
     <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
-    <string name="str_dummy_text_2fa_options_sms">Text <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
+    <string name="str_dummy_text_2fa_options_sms">Mobile <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
 </resources>
 
 

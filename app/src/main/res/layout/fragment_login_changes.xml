@@ -97,7 +97,6 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:text="businesstp@gmai.com"
                 app:labelText="@string/email_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -110,7 +109,6 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:text="Welcome1"
                 app:imeOptions="actionDone"
                 app:inputType="textPassword"
                 app:labelText="@string/password"

@@ -73,7 +73,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        title = (requireActivity() as HomeActivityMain).dataBinding?.titleTxt!!
+        title = HomeActivityMain.dataBinding?.titleTxt!!
 
 
         if (!isViewCreated) {
