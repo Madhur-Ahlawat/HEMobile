@@ -253,9 +253,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             "login",
             sessionManager.getLoggedInUser()
         )
-        binding.edtEmail.setText("prepay123@conduent.com")
-        binding.edtPwd.setText("Welcome1")
-        binding.btnLogin.isEnabled = true
+
         binding.btnLogin.performClick()
         binding.btnLogin.performClick()
     }
@@ -360,8 +358,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginActivity)
             backButton.setOnClickListener(this@LoginActivity)
-//            edtEmail.editText.setText("abc098@tyss.com")
-//            edtPwd.editText.setText("Welcome1")
+
         }
 
         if (displayFingerPrintPopup()) {

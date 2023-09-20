@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,8 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -123,12 +120,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
 
         if (arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION) != null) {
             replenishmentInformation =
-                arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)
+                arguments?.getParcelable(Constants.REPLENISHMENTINFORMATION)
         }
 
         if (arguments != null) {
@@ -308,7 +305,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         )
                     }
 
-                    Constants.ACCOUNT_CREATION_MOBILE_FLOW -> {
+                    ACCOUNT_CREATION_MOBILE_FLOW -> {
                         AdobeAnalytics.setActionTrack(
                             "resend",
                             "login:forgot password:choose options:otp",

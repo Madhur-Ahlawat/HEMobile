@@ -39,17 +39,18 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var isViewCreated = false
     private var plateNumber = ""
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
-    private var isObserverBack = false
     private var loader: LoaderDialog? = null
     private var time = (1 * 1000).toLong()
     private var isCrossingCall = false
+    private var isClicked: Boolean = false
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isObserverBack = true
+       // isObserverBack = true
     }
 
     override fun init() {
@@ -153,7 +154,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
-
+                isClicked=true
 
                 val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
 
@@ -187,7 +188,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 }, time)
 
 
-                isObserverBack = true
 
                 val addedVehicleList = NewCreateAccountRequestModel.addedVehicleList
                 var isVehicleExist = false
@@ -264,7 +264,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                isObserverBack = false
                 var isVehicleExist = false
                 val numberPlate =
                     binding.editNumberPlate.getText().toString().trim().replace(" ", "")
@@ -303,7 +302,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     )
                 }
                 ErrorUtil.showError(binding.root, resource.errorMsg)
-                isObserverBack = false
             }
 
             else -> {}
@@ -358,7 +356,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                isObserverBack = false
                 var isVehicleExist = false
                 val numberPlate =
                     binding.editNumberPlate.getText().toString().trim().replace(" ", "")
@@ -396,7 +393,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     )
                 }
                 ErrorUtil.showError(binding.root, resource.errorMsg)
-                isObserverBack = false
             }
 
             else -> {}
@@ -404,15 +400,16 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
-
+       Log.d("response how many time","two times")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
         val accountData = NewCreateAccountRequestModel
         val vehicleList = accountData.vehicleList
-        if (isObserverBack) {
+        if (isClicked){
             when (resource) {
                 is Resource.Success -> {
+
                     resource.data?.let { apiData ->
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -443,10 +440,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
                             )
-
+                            return
                         }
 
-                        if (apiData[0]?.isRUCEligible?.equals("y", true) == true) {
+                        if (apiData[0]?.isRUCEligible?.equals("N", true) == true) {
                             if (apiData.isNotEmpty()) {
                                 bundle.putParcelable(
                                     Constants.VEHICLE_DETAIL,
@@ -458,7 +455,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                             if (navData == null) {
                                 navData =
-                                    CrossingDetailsModelsResponse(plateNo = binding?.editNumberPlate?.editText?.text.toString())
+                                    CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate?.editText?.text.toString())
                             }
                             bundle.putParcelable(
                                 Constants.NAV_DATA_KEY,
@@ -468,7 +465,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
                                 bundle
                             )
-                        } else if (apiData[0]?.isRUCEligible?.equals("N", true) == true) {
+                        } else if (apiData[0]?.isRUCEligible?.equals("Y", true) == true) {
                             NewCreateAccountRequestModel.isRucEligible = true
                             if (apiData.isNotEmpty()) {
                                 bundle.putParcelable(
@@ -480,7 +477,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
                             )
-
+                            return
                         }
 
 
@@ -491,7 +488,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                 is Resource.DataError -> {
 
-                    isObserverBack = false
                     var isVehicleExist = false
                     val numberPlate =
                         binding.editNumberPlate.getText().toString().trim().replace(" ", "")
@@ -536,6 +532,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 }
             }
         }
+
+        isClicked=false
+
+
+
     }
 
     private fun checkForDuplicateVehicle(plateNumber: String) {

@@ -66,7 +66,7 @@
     <string name="str_account_number">Account number</string>
     <string name="str_post_cde">Post code</string>
     <string name="str_next">Next</string>
-    <string name="str_choose_method_to_get_ur_link">A code will be sent to your email address or mobile.</string>
+    <string name="str_choose_method_to_get_ur_link">A code will be sent to your mobile or email address.</string>
     <string name="str_choose_method_to_get_email_code">A code will be sent to your email address.</string>
     <string name="str_continue">Continue</string>
     <string name="str_check_your_mail">Check your email for a security code</string>
@@ -911,7 +911,7 @@
     <string name="ifyoudidnotreceivethecode">If you did not get a code, or it has expired, select resend security code.</string>
     <string name="resendcode">Resend Security Code</string>
     <string name="wehavesentanemail">We\'ve sent an email to</string>
-    <string name="wehavesentatextmessageto">You will receive a text message at</string>
+    <string name="wehavesentatextmessageto">We’ve sent a text message to</string>
     <string name="ifyoudidnot">If you did not get a code, or it has expired, select Resend code.</string>
     <string name="str_your_password_must">Your password must:</string>
     <string name="dotunicode">\u25CF</string>
