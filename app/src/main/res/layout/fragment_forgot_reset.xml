@@ -37,7 +37,7 @@
             android:layout_marginTop="@dimen/_9sdp"
             android:fontFamily="@font/open_sans"
             android:textColor="@color/black"
-            android:text="@string/you_will_recieve_a_confirmation_email"
+            android:text="@string/you_will_receive_a_confirmation_email"
             android:textSize="14sp" />
 
         <androidx.appcompat.widget.AppCompatTextView

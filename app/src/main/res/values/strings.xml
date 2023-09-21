@@ -1267,7 +1267,8 @@
     <string name="mobile_change_successful">Mobile number change successful</string>
     <string name="telephone_change_successful">Telephone number change successful</string>
     <string name="two_factor_change_successful">Two Factor Authentication \n change successful</string>
-    <string name="you_will_recieve_a_confirmation_email">You\'ll receive a confirmation email at\n<Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="we_ve_sent_a_confirmation_email_to_s">We\'ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="you_will_receive_a_confirmation_email">You\'ll receive a confirmation email at <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
     <string name="email_receipt_send_successful">Email receipt send successful</string>

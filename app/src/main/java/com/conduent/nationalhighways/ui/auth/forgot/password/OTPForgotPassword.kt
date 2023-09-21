@@ -281,11 +281,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                        /* val bundle = Bundle()
-                         findNavController().navigate(
-                             R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                             bundle
-                         )*/
+
 
                         confirmEmailCode()
                     }
