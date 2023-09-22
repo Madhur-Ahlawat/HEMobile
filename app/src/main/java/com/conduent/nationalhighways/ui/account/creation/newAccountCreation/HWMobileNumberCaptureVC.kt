@@ -75,7 +75,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
     override fun init() {
-
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        viewModel.getCountries()
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         binding.inputCountry.dropDownItemSelectListener = this
@@ -129,15 +132,20 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 setMobileView()
             }
 
-            Constants.PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+            Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
+                title?.text = getString(R.string.str_profile_two_factor_verification)
+            }
+
+            PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                 val data = navData as ProfileDetailModel?
 
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
-                if (data?.personalInformation?.phoneCell.isNullOrEmpty()){
-                    title?.text = getString(R.string.profile_telephone_number)
+                if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
+                    title?.text = getString(R.string.profile_phone_number)
 
                     setTelephoneView()
-                }else{
+                } else {
                     title?.text = getString(R.string.profile_mobile_number)
                     setMobileView()
 
@@ -179,8 +187,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.inputMobileNumber.setLabel(getString(R.string.str_telephone_number_optional))
         binding.txtBottom.visibility = View.GONE
         requiredMobileNumber = true
-        if (NewCreateAccountRequestModel.prePay||data?.accountInformation?.accSubType.equals(Constants.PAYG).not()) {
+        if (NewCreateAccountRequestModel.prePay) {
             binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+        } else if (data!=null&&data?.accountInformation?.accSubType.equals(Constants.PAYG).not()) {
+            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+
         } else {
             binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
         }
@@ -199,22 +210,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     override fun observer() {
-        if (!isViewCreated) {
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
-            viewModel.getCountries()
-
-
             observe(viewModel.countriesList, ::getCountriesList)
-
             observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
             observe(viewModel.countriesCodeList, ::getCountryCodesList)
             observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
         }
-
-    }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
         if (loader?.isVisible == true) {
@@ -308,9 +308,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
 
-                val noChanges: Boolean = if(isItMobileNumber){
+                val noChanges: Boolean = if (isItMobileNumber) {
                     countryCode == oldMobileCountryCode && mobileNumber == oldMobileNumber
-                }else{
+                } else {
                     countryCode == oldTelephoneCountryCode && mobileNumber == oldTelephoneNumber
                 }
                 when (navFlowCall) {
@@ -336,12 +336,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                                 R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
                                 bundle
                             )
-                        }else{
-                            assignNumbers(mobileNumber,countryCode)
+                        } else {
+                            assignNumbers(mobileNumber, countryCode)
 
-                            if (isItMobileNumber){
+                            if (isItMobileNumber) {
                                 hitApi()
-                            }else{
+                            } else {
                                 findNavController().navigate(
                                     R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
                                     bundle
@@ -578,7 +578,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
 
-                    PROFILE_MANAGEMENT_MOBILE_CHANGE , Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                    PROFILE_MANAGEMENT_MOBILE_CHANGE, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         val data = navData as ProfileDetailModel?
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)

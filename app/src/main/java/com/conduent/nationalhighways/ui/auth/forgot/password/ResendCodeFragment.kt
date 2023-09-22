@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -83,13 +85,13 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
         if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
             if (data?.optionType == Constants.EMAIL) {
                 binding.subTitle.text = getString(
-                    R.string.resend_code,
+                    R.string.resend_code_email,
                     Utils.hiddenEmailText(data?.optionValue.toString())
                 )
 
             } else {
                 binding.subTitle.text = getString(
-                    R.string.resend_code_expire,
+                    R.string.resend_code_text,
                     Utils.maskPhoneNumber(data?.optionValue.toString())
                 )
 
@@ -98,7 +100,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
         } else {
             if (data?.optionType == Constants.EMAIL) {
                 binding.subTitle.text = getString(
-                    R.string.resend_code,
+                    R.string.resend_code_email,
                     Utils.hiddenEmailText(data?.optionValue.toString())
                 )
 
@@ -251,6 +253,19 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
                 if (navFlowCall == Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE) {
                     val data = navData as ProfileDetailModel?
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+
+                }else if(navFlowCall==Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
+                 {
+                    val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        arguments?.getParcelable(
+                            Constants.NAV_DATA_KEY,
+                            CommunicationPrefsRequestModel::class.java
+                        )
+                    } else {
+                        arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                    }
+
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
                 }

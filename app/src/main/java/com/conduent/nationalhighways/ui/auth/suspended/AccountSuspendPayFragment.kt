@@ -2,10 +2,8 @@ package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
 import android.text.Html
 import android.text.Selection
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -122,9 +120,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         binding.btnPay.setOnClickListener(this)
         binding.btnCancel.setOnClickListener(this)
-        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
-        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
-
         binding.lowBalance.setText("£" + String.format("%.2f", topUpAmount))
         if (paymentList?.isNotEmpty() == true) {
             if (paymentList?.get(position)?.cardType.equals("visa", true)) {
@@ -144,18 +139,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             binding.tvSelectPaymentMethod.text = htmlText
 
         }
-
-    }
-
-    private fun topBalanceDecimal(b: Boolean) {
-        if (b.not()) {
-            val text = binding.lowBalance.getText().toString().trim()
-            val updatedText = text.replace("£", "").replace(".", "").replace(",", "")
-            if (updatedText.isNotEmpty().not()) {
-                val formatter = DecimalFormat("#,###.00")
-                binding.lowBalance.setText(formatter.format(updatedText))
-            }
-        }
     }
 
     override fun observer() {
@@ -174,21 +157,19 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         when (v?.id) {
 
             R.id.btnPay -> {
+                if (Utils.validateAmount(binding.lowBalance, 10, true)) {
+                    if (responseModel != null) {
+                        if (responseModel?.checkCheckBox == true) {
+                            newPaymentMethod("Y")
+                        } else {
+                            newPaymentMethod("N")
+                        }
 
-                if (responseModel != null) {
-                    if (responseModel?.checkCheckBox == true) {
-                        newPaymentMethod("Y")
+
                     } else {
-                        newPaymentMethod("N")
+                        payWithExistingCard()
                     }
-
-
-                } else {
-                    payWithExistingCard()
-
-
                 }
-
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             }
 
@@ -226,7 +207,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             primaryCard = "Y",
             saveCard = s,
             state = "HE",
-            transactionAmount = binding.lowBalance.getText().toString().trim().replace("£", "").replace(",","").replace(" ",""),
+            transactionAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
+                .replace(",", "").replace(" ", ""),
             useAddressCheck = "N",
             personalInformation?.zipcode.toString().replace(" ", ""),
             "",
@@ -264,80 +246,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         )
         Log.d("paymentRequest", Gson().toJson(model))
         manualTopUpViewModel.paymentWithExistingCard(model)
-    }
-
-    inner class GenericTextWatcher() : TextWatcher {
-
-        override fun beforeTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            count: Int,
-            after: Int
-        ) {
-        }
-
-        override fun onTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            before: Int,
-            count: Int
-        ) {
-
-            var mText = binding.lowBalance.getText().toString()
-            var updatedText: String =
-                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
-                    .replace("0.","0")
-                    .replace("1.","1")
-                    .replace("2.","2")
-                    .replace("3.","3")
-                    .replace("4.","4")
-                    .replace("5.","5")
-                    .replace("6.","6")
-                    .replace("7.","7")
-                    .replace("8.","8")
-                    .replace("9.","9")
-                    .replace(" ", "")
-            if (updatedText.isNotEmpty()) {
-                lowBalance = if (updatedText.length < 6) {
-                    if (updatedText.toInt() < 10) {
-                        binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
-                        false
-
-                    } else if (updatedText.toInt() > 80000) {
-                        binding.lowBalance.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
-                        false
-                    } else {
-                        lowBalance = true
-                        binding.lowBalance.removeError()
-                        binding.lowBalance.editText.removeTextChangedListener(this)
-                        binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
-                        binding.lowBalance.editText.addTextChangedListener(this)
-                        true
-                    }
-                } else {
-                    binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_8_characters))
-                    false
-                }
-
-            } else {
-                binding.lowBalance.removeError()
-            }
-
-            checkButton()
-            Selection.setSelection(
-                binding.lowBalance.getText(),
-                binding.lowBalance.getText().toString().length
-            )
-        }
-
-        override fun afterTextChanged(editable: Editable?) {
-
-        }
-    }
-
-    private fun checkButton() {
-        binding.btnPay.isEnabled = lowBalance
-
     }
 
     private fun handlePaymentWithExistingCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
@@ -411,6 +319,5 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
         }
     }
-
-
 }
+

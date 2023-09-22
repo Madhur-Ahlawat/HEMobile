@@ -47,21 +47,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/edit"
+            android:padding="@dimen/_8dp"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/update_vehicle"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="12dp"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/_8dp"
             android:src="@drawable/delete"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/update_vehicle"
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/delete_vehicle"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="12dp"/>
 
 
 

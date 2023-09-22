@@ -24,6 +24,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -65,9 +66,6 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         }
         isViewCreated = true
         binding.topUpBtn.setOnClickListener(this)
-
-        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(0))
-        binding.top.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
         binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
         lowBalance=true
@@ -168,140 +166,15 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
     }
 
-    private fun lowBalanceDecimal(b: Boolean) {
-        if (b.not()) {
-            val text = binding.lowBalance.editText.text.toString().trim()
-            val updatedText = text.replace("£", "")
-            if (updatedText.isNotEmpty() && updatedText.contains(".").not()) {
-                binding.lowBalance.setText(String.format("%.2f", updatedText.toDouble()))
-            }
-        }
-    }
-
     private fun topBalanceDecimal(b: Boolean) {
         if (b.not()) {
-            val text = binding.top.editText.text.toString().trim()
-            val updatedText = text.replace("£", "")
-            if (updatedText.isNotEmpty() && updatedText.contains(".").not()) {
-                binding.top.setText(String.format("%.2f", updatedText.toDouble()))
-            }
+            topUpBalance= Utils.validateAmount(binding.top,10,true)
         }
     }
 
-    inner class GenericTextWatcher(private val index: Int) : TextWatcher {
-
-        override fun beforeTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            count: Int,
-            after: Int
-        ) {
-        }
-
-        override fun onTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            before: Int,
-            count: Int
-        ) {
-
-            if (index == 0) {
-
-                val mText = binding.lowBalance.editText.text.toString().trim()
-                val updatedText: String =
-                    mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
-                        .replace("0.","0")
-                        .replace("1.","1")
-                        .replace("2.","2")
-                        .replace("3.","3")
-                        .replace("4.","4")
-                        .replace("5.","5")
-                        .replace("6.","6")
-                        .replace("7.","7")
-                        .replace("8.","8")
-                        .replace("9.","9")
-                        .replace(" ", "")
-
-                if (updatedText.isNotEmpty()) {
-                    lowBalance = if (updatedText.length < 6) {
-                        if (updatedText.toDouble() < 5) {
-                            binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_more))
-                            false
-
-                        }
-                        else if (updatedText.toInt() > 80000) {
-                            binding.lowBalance.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
-                            false
-                        }
-                        else {
-                            binding.lowBalance.removeError()
-                            binding.lowBalance.editText.removeTextChangedListener(this)
-                            binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
-                            binding.lowBalance.editText.addTextChangedListener(this)
-                            true
-                        }
-                    } else {
-                        binding.lowBalance.setErrorText(getString(R.string.str_low_balance_must_be_8_characters))
-                        false
-                    }
-
-                } else {
-                    binding.lowBalance.removeError()
-                }
-                Selection.setSelection(
-                    binding.lowBalance.editText.text,
-                    binding.lowBalance.editText.text.toString().length
-                )
-            } else if (index == 1) {
-                val mText = binding.top.editText.text.toString().trim()
-                val updatedText: String =
-                    mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
-                        .replace("0.","0")
-                        .replace("1.","1")
-                        .replace("2.","2")
-                        .replace("3.","3")
-                        .replace("4.","4")
-                        .replace("5.","5")
-                        .replace("6.","6")
-                        .replace("7.","7")
-                        .replace("8.","8")
-                        .replace("9.","9")
-                        .replace(" ", "")
-                if (updatedText.isNotEmpty()) {
-                    topUpBalance = if (updatedText.length < 6) {
-                        if (updatedText.toDouble() < 10) {
-                            binding.top.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
-                            false
-
-                        } else if (updatedText.toInt() > 80000) {
-                            binding.top.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
-                            false
-                        }
-                        else {
-                            binding.top.removeError()
-                            binding.top.editText.removeTextChangedListener(this)
-                            binding.top.setText("£" + formatter.format(updatedText.toInt()))
-                            binding.top.editText.addTextChangedListener(this)
-                            true
-                        }
-                    } else {
-                        binding.top.setErrorText(getString(R.string.str_top_up_amount_must_be_8_characters))
-                        false
-                    }
-                } else {
-                    binding.top.removeError()
-                }
-                Selection.setSelection(
-                    binding.top.editText.text,
-                    binding.top.editText.text.toString().length
-                )
-            }
-
-            checkButton()
-        }
-
-        override fun afterTextChanged(editable: Editable?) {
-
+    private fun lowBalanceDecimal(b: Boolean) {
+        if (b.not()) {
+            lowBalance= Utils.validateAmount(binding.lowBalance,5,false)
         }
     }
 

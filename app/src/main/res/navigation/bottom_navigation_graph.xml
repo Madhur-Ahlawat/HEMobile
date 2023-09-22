@@ -60,9 +60,7 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.RemoveVehicleFragment"
         android:label="Remove Vehicle"
         tools:layout="@layout/fragment_remove_vehicle">
-        <argument
-            android:name="vehicle_position"
-            app:argType="integer" />
+
         <action
             android:id="@+id/action_removeVehicleFragment_to_findVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
@@ -110,9 +108,12 @@
         <action
             android:id="@+id/action_maximumFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment" />
-        <argument
-            android:name="plateNumber"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_maximumFragment_to_vehicleHomeListFragment"
+            app:destination="@+id/vehicleHomeListFragment"
+            app:popUpTo="@id/vehicleHomeListFragment"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
@@ -212,9 +213,6 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.YourVehicleRegisteredFragment"
         android:label="Your Vehicle Screen"
         tools:layout="@layout/fragment_your_vehicle_registered">
-        <argument
-            android:name="vehicle detail"
-            app:argType="com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails" />
         <action
             android:id="@+id/action_yourVehicleFragment_to_addVehicleFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
@@ -382,6 +380,9 @@
             android:id="@+id/action_profileManagementFragment_to_changePassword"
             app:destination="@id/changePasswordProfile" />
         <action
+            android:id="@+id/action_profileManagementFragment_to_createAccountTypes"
+            app:destination="@id/createAccountTypes" />
+        <action
             android:id="@+id/action_profileManagementFragment_to_personalInfoFragment"
             app:destination="@id/createAccountPersonalInfo" />
         <action
@@ -503,8 +504,7 @@
         android:id="@+id/notificationFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment"
         android:label="Notifications"
-        tools:layout="@layout/fragment_notification">
-    </fragment>
+        tools:layout="@layout/fragment_notification"></fragment>
 
     <fragment
         android:id="@+id/vehicleListFragment2"
@@ -853,7 +853,6 @@
 
 
     </fragment>
-
 
 
 </navigation>

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
+        android:layout_above="@id/btn_submit"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:gravity="center"
@@ -33,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_9sdp"
             android:fontFamily="@font/open_sans"
-            android:text="@string/we_ve_sent_a_confirmation_email_to_s"
             android:textColor="@color/black"
+            android:text="@string/you_will_receive_a_confirmation_email"
             android:textSize="14sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -54,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_20sdp"
-            android:id="@+id/cardView"
+            android:id="@+id/cardViewPlateNumber"
             android:visibility="gone"
             app:cardCornerRadius="5dp"
             android:elevation="3dp">
@@ -89,15 +92,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-            <com.conduent.apollo.ui.CMButton
-                android:id="@+id/btn_submit"
-                style="@style/PrimaryButton"
-                android:layout_marginHorizontal="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_50sdp"
-                android:layout_marginBottom="@dimen/_30sdp"
-                android:gravity="center"
-                android:text="@string/str_continue_login" />
+
 
     </LinearLayout>
+    <com.conduent.apollo.ui.CMButton
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_submit"
+        style="@style/PrimaryButton"
+        android:layout_marginTop="0dp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_94dp"
+        android:gravity="center"
+        android:text="@string/str_continue_login" />
+</RelativeLayout>
 
 </layout>

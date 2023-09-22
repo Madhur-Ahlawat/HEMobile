@@ -13,6 +13,7 @@ import android.os.Build.VERSION_CODES
 import android.os.CountDownTimer
 import android.provider.Settings
 import android.util.Log
+import android.text.Selection
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
@@ -31,6 +32,7 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import okhttp3.Interceptor
+import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import java.lang.reflect.Field
 import java.text.DateFormat
 import java.text.DecimalFormat
@@ -44,6 +46,7 @@ import java.util.regex.Pattern
 
 
 object Utils {
+    private val amountFormatter = DecimalFormat("#,###.00")
     private var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-"
     private var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-"
     private var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
@@ -96,6 +99,65 @@ object Utils {
     val splCharPostCode: String by lazy {
         ALLOWED_CHARS_POSTCODE
 //        getSplCharString(ALLOWED_CHARS_POSTCODE)
+    }
+    fun validateAmount(nhTextInputCell: NHTextInputCell,minimumAmount:Int,isTopUp:Boolean):Boolean{
+        var isValid:Boolean=false
+        val mText = nhTextInputCell.editText.text.toString().trim()
+        var updatedText: String =
+            mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
+                .replace("0.","0")
+                .replace("1.","1")
+                .replace("2.","2")
+                .replace("3.","3")
+                .replace("4.","4")
+                .replace("5.","5")
+                .replace("6.","6")
+                .replace("7.","7")
+                .replace("8.","8")
+                .replace("9.","9")
+                .replace(" ", "")
+        if (updatedText.isNotEmpty()) {
+            isValid = if (updatedText.length < 6) {
+                if (updatedText.toDouble() < minimumAmount) {
+                    if(isTopUp){
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_more))
+                    }
+                    else{
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_more))
+                    }
+                    false
+
+                } else if (updatedText.toInt() > 80000) {
+                    if(isTopUp){
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
+                    }
+                    else{
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.low_balance_amount_must_be_80_000_or_less))
+                    }
+                    false
+                }
+                else {
+                    nhTextInputCell.removeError()
+                    nhTextInputCell.setText("£" + amountFormatter.format(updatedText.toInt()))
+                    true
+                }
+            } else {
+                if(isTopUp){
+                    nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_8_characters))
+                }
+                else{
+                    nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_8_characters))
+                }
+                false
+            }
+        } else {
+            nhTextInputCell.removeError()
+        }
+        Selection.setSelection(
+            nhTextInputCell.editText.text,
+            nhTextInputCell.editText.text.toString().length
+        )
+        return isValid
     }
 
     val splCharEmailCode: String by lazy {
@@ -295,7 +357,8 @@ object Utils {
     }
 
     private val EMAIL = Pattern.compile(
-        "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE
+        "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+        Pattern.CASE_INSENSITIVE
     )
     private const val MIN_PASSWORD_LENGTH = 6
 
@@ -357,93 +420,72 @@ object Utils {
         }
     }
 
-    fun redirectToSignoutPage(context: Activity) {
+    fun sessionExpired(context: AppCompatActivity) {
         context.startActivity(
-            Intent(context, LandingActivity::class.java).putExtra(
-                Constants.SHOW_SCREEN, Constants.SESSION_TIME_OUT
-            ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            Intent(context, LandingActivity::class.java)
+                .putExtra(Constants.SHOW_SCREEN, Constants.SESSION_TIME_OUT)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtra(Constants.TYPE, Constants.LOGIN)
         )
+
+
+       /* displayCustomMessage(context,context.getString(R.string.str_timeout),
+            context.getString(R.string.str_for_your_security,"2"),
+            context.getString(R.string.str_stay_signed_in),
+            context.getString(R.string.str_sign_out),
+
+            object : DialogPositiveBtnListener {
+                override fun positiveBtnClick(dialog: DialogInterface) {
+
+
+
+                    //dialog.dismiss()
+
+
+                }
+            },
+            object : DialogNegativeBtnListener {
+                override fun negativeBtnClick(dialog: DialogInterface) {
+
+
+                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
+
+                }
+            })*/
     }
-
-    fun sessionExpired(
-        context: Activity, listener: LogoutListener? = null, sessionManager: SessionManager
-    ) {
-        if (sessionManager.getLoggedInUser()) {
-            displayCustomMessage(
-                context,
-                context,
-                context.resources.getString(R.string.str_timeout),
-                context.getString(R.string.str_for_your_security_account_holder, "2"),
-                context.getString(R.string.str_stay_signed_in),
-                context.getString(R.string.str_sign_out),
-                listener,
-                sessionManager
-            )
-
-        } else {
-            displayCustomMessage(
-                context,
-                context,
-                context.resources.getString(R.string.str_timeout),
-                context.getString(R.string.str_for_your_security_non_account_holder, "2"),
-                context.getString(R.string.str_stay_on_the_app),
-                context.getString(R.string.str_delete_my_answers),
-                listener,
-                sessionManager
-            )
-
-        }
-    }
-
-    private fun countDownTimer(
-        activity: Activity, sessionManager: SessionManager, message: TextView
-    ): CountDownTimer {
-
-        val countDownTimer = object : CountDownTimer(120000, 1000) {
+/*
+    private fun countDownTimer(context: Context, message: TextView) {
+        object : CountDownTimer(120000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                val f = DecimalFormat("00") // Two-digit format
-
+                val f: NumberFormat = DecimalFormat("00")
                 val hour = millisUntilFinished / 3600000 % 24
                 val min = millisUntilFinished / 60000 % 60
                 val sec = millisUntilFinished / 1000 % 60
 
-                message.text = activity.resources.getString(
-                    R.string.str_for_your_security_account_holder,
-                    f.format(min) + ":" + f.format(sec)
-                )
-
+                message.text =context.getString(R.string.str_for_your_security, f.format(min) + ":" + f.format(sec))
 
             }
 
             // When the task is over it will print 00:00:00 there
             override fun onFinish() {
                 //textView.setText("00:00:00")
-                if (sessionManager.getLoggedInUser()) {
-                    sessionManager.clearAll()
-                    redirectToSignoutPage(activity)
-                } else {
-                    activity.startNewActivityByClearingStack(LandingActivity::class.java)
-                }
             }
-        }
-        countDownTimer.start()
-        return countDownTimer
+        }.start()
     }
+*/
 
-    fun displayCustomMessage(
-        activity: Activity,
-        context: Context,
+   /* fun displayCustomMessage(context: Context,
         fTitle: String?,
         message: String,
         positiveBtnTxt: String,
         negativeBtnTxt: String,
-        listener: LogoutListener? = null,
-        sessionManager: SessionManager
+        pListener: DialogPositiveBtnListener?,
+        nListener: DialogNegativeBtnListener?
     ) {
 
         val dialog = Dialog(context)
         dialog.setCancelable(false)
+
 
 
         val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(context))
@@ -455,94 +497,27 @@ object Utils {
 
         dialog.setContentView(binding.root)
 
-        dialog.window?.setLayout(
-            WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT
-        ) //Controlling width and height.
+        dialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT) //Controlling width and height.
 
-        val countDownTimer = countDownTimer(activity, sessionManager, binding.message)
+           countDownTimer(context,binding.message)
         binding.title.text = fTitle
         binding.message.text = message
         binding.cancelBtn.text = negativeBtnTxt
         binding.okBtn.text = positiveBtnTxt
         binding.cancelBtn.setOnClickListener {
-//            nListener?.negativeBtnClick(dialog)
-            countDownTimer.cancel()
-            if (sessionManager.getLoggedInUser()) {
-                sessionManager.clearAll()
-                redirectToSignoutPage(activity)
-            } else {
-                activity.startNewActivityByClearingStack(LandingActivity::class.java)
-            }
+            nListener?.negativeBtnClick(dialog)
             dialog.dismiss()
         }
 
         binding.okBtn.setOnClickListener {
-//            pListener?.positiveBtnClick(dialog)
-            countDownTimer.cancel()
-            LogoutUtil.stopLogoutTimer()
-            LogoutUtil.startLogoutTimer(listener)
+            pListener?.positiveBtnClick(dialog)
             dialog.dismiss()
         }
         dialog.show()
 
 
     }
-
-    fun displayRetryDialog(
-        activity: Activity,
-        listener: OnRetryClickListener? = null,
-        api_URL: String
-    ) {
-
-        val dialog = Dialog(activity)
-        dialog.setCancelable(false)
-        val binding: DialogRetryBinding = DialogRetryBinding.inflate(LayoutInflater.from(activity))
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setContentView(binding.root)
-
-        dialog.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
-        ) //Controlling width and height.
-
-
-        binding.retryBtn.setOnClickListener {
-            listener?.onRetryClick(api_URL)
-            dialog.cancel()
-        }
-        dialog.show()
-
-
-    }
-
-    fun displayRetryDialog(
-        activity: Context,
-        chain: Interceptor.Chain?=null
-    ) {
-
-        val dialog = Dialog(activity)
-        dialog.setCancelable(false)
-        val binding: DialogRetryBinding = DialogRetryBinding.inflate(LayoutInflater.from(activity))
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setContentView(binding.root)
-
-        dialog.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
-        ) //Controlling width and height.
-
-
-        binding.retryBtn.setOnClickListener {
-//            chain.proceed(chain.request())
-            dialog.cancel()
-        }
-        dialog.show()
-
-
-    }
-
+*/
     fun removeGivenStringCharactersFromString(characterString: String, input: String): String {
         var input = input
         characterString.forEach {
@@ -562,7 +537,8 @@ object Utils {
         }
         if (output1.contains(',')) {
             return output1.substring(0, output1.lastIndexOf(',')) + " and" + output1.substring(
-                output1.lastIndexOf(',') + 1, output1.length
+                output1.lastIndexOf(',') + 1,
+                output1.length
             )
         } else {
             return output1
@@ -695,7 +671,8 @@ object Utils {
     }
 
     fun validateString(target: String, pattern: String): Boolean {
-        val mPattern = Pattern.compile(pattern)
+        val mPattern =
+            Pattern.compile(pattern)
         return mPattern.matcher(target).matches()
     }
 

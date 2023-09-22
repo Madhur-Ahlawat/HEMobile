@@ -281,11 +281,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                        /* val bundle = Bundle()
-                         findNavController().navigate(
-                             R.id.action_forgotOtpFragment_to_createPasswordFragment,
-                             bundle
-                         )*/
+
 
                         confirmEmailCode()
                     }
@@ -330,10 +326,26 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             sessionManager.getLoggedInUser()
                         )
                     }
+
                     Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                         val data = navData as ProfileDetailModel?
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    }
+
+                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            arguments?.getParcelable(
+                                Constants.NAV_DATA_KEY,
+                                CommunicationPrefsRequestModel::class.java
+                            )
+                        } else {
+                            arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                        }
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+
                     }
                 }
 
@@ -727,7 +739,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 phoneEvening = "",
                 fein = accountInformation?.fein,
                 businessName = personalInformation?.customerName,
-                phoneCellCountryCode = phoneCountryCode
+                phoneCellCountryCode = phoneCountryCode,
+                mfaEnabled = dataModel.accountInformation?.mfaEnabled
 
             )
 
@@ -760,7 +773,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
-                phoneCellCountryCode = phoneCountryCode
+                phoneCellCountryCode = phoneCountryCode,
+                mfaEnabled =  dataModel.accountInformation?.mfaEnabled
             )
 
             viewModelProfile.updateUserDetails(request)

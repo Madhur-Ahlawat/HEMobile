@@ -65,6 +65,7 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
 
                 if (id == R.id.radio_personal_account) {
                     NewCreateAccountRequestModel.personalAccount = true
+                    NewCreateAccountRequestModel.companyName=""
                 } else {
                     NewCreateAccountRequestModel.prePay = true
                     NewCreateAccountRequestModel.personalAccount = false

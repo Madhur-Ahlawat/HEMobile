@@ -15,9 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/margin_20dp"
-            android:paddingTop="@dimen/margin_18dp"
-            android:paddingEnd="@dimen/margin_20dp"
-            android:paddingBottom="@dimen/margin_18dp">
+            android:paddingTop="@dimen/margin_20dp"
+            android:paddingEnd="@dimen/margin_20dp">
 
             <TextView
                 android:id="@+id/txtSignUp"
@@ -33,7 +32,7 @@
                 style="@style/input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:padding="0dp"
                 app:maxLength="50"
                 app:imeOptions="actionNext"
@@ -89,12 +88,12 @@
                 style="@style/PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_30dp"
+                android:layout_marginBottom="@dimen/_93dp"
                 android:text="@string/str_continue"
                 app:isEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputCompanyName" />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

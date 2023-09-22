@@ -50,6 +50,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     override fun init() {
         binding.accountCard.gone()
+        binding.accountSubType.gone()
         binding.emailCard.gone()
         binding.title.gone()
         binding.communicationCard.gone()
@@ -59,6 +60,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.btnNext.gone()
         binding.emailCardProfile.visible()
         binding.biometricsCard.visible()
+        binding.passwordCard.visible()
 
 
         loader = LoaderDialog()
@@ -86,6 +88,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editBiometrics.setOnClickListener(this)
         binding.editAccountType.setOnClickListener(this)
         binding.editCompanyName.setOnClickListener(this)
+        binding.editPassword.setOnClickListener(this)
 
 
     }
@@ -98,7 +101,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         }
         super.onStart()
     }
-
     override fun observer() {
         observe(viewModel.accountDetail, ::handleAccountDetail)
     }
@@ -125,7 +127,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
                         binding.address.text =
                             personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
-//                        binding.password.text = accountInformation?.password
                         binding.emailAddressProfile.text = personalInformation?.emailAddress
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
@@ -144,22 +145,19 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
-
+                        binding.accountType.text=accountInformation!!.accountType
 
                         if (accountInformation?.accountType.equals(
                                 Constants.BUSINESS_ACCOUNT,
                                 true
                             )
                         ) {
+                            binding.companyNameCard.visible()
                             binding.companyName.text = personalInformation?.customerName
-                            binding.accountSubType.visibility = View.GONE
-                            binding.companyNameCard.visibility = View.VISIBLE
                         } else {
-                            binding.accountSubType.visibility = View.VISIBLE
-                            binding.companyNameCard.visibility = View.GONE
-
-
+                            binding.companyNameCard.gone()
                         }
+                        binding.password.text = accountInformation?.password
                     }
                 }
 
@@ -217,16 +215,17 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 )
             }
 
-//            R.id.editPassword -> {
-//                findNavController().navigate(
-//                    R.id.action_profileManagementFragment_to_changePassword,
-//                    bundle()
-//                )
-//            }
-            R.id.editAccountType -> {
+            R.id.editPassword -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_changePassword,
-                    bundle()
+                    bundle
+                )
+            }
+
+            R.id.editAccountType -> {
+                findNavController().navigate(
+                    R.id.action_profileManagementFragment_to_createAccountTypes,
+                    bundle
                 )
             }
 

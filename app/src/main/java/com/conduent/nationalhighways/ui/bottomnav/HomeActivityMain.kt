@@ -55,13 +55,13 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     @Inject
     lateinit var api: ApiService
-    var dataBinding: ActivityHomeMainBinding? = null
     private lateinit var navController: NavController
     private var loader: LoaderDialog? = null
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     var from: String = ""
 
     companion object {
+        var dataBinding: ActivityHomeMainBinding? = null
         var dateRangeModel: PaymentDateRangeModel? = null
         var accountDetailsData: AccountResponse? = null
         var crossing: TransactionData? = null
@@ -69,6 +69,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
         var paymentHistoryListDataCheckedCrossings: MutableList<CheckedCrossingRecentTransactionsResponseModelItem?> =
             ArrayList()
+        fun setTitle(title:String){
+            dataBinding?.titleTxt?.text=title
+        }
     }
 
     fun showHideToolbar(isShown: Boolean) {

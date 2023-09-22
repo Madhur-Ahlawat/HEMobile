@@ -89,7 +89,7 @@
             android:layout_marginTop="@dimen/_30dp"
             android:text="@string/str_pay"
             android:textSize="@dimen/font_14sp"
-            app:isEnabled="false"
+            app:isEnabled="true"
             android:layout_marginBottom="@dimen/_30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

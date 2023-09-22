@@ -50,7 +50,7 @@
     <string name="txt_account_number">Account number</string>
     <string name="txt_error_account_number">Please enter account number</string>
     <string name="txt_error_zip_code">Please enter postal code</string>
-    <string name="txt_postcode">Building Number and Street</string>
+    <string name="txt_building_number_and_street"><b>Building Number and Street</b></string>
     <string name="txt_next">Next</string>
     <string name="txt_login">Log in</string>
     <string name="txt_your_username"><b>Your username</b></string>
@@ -66,7 +66,7 @@
     <string name="str_account_number">Account number</string>
     <string name="str_post_cde">Post code</string>
     <string name="str_next">Next</string>
-    <string name="str_choose_method_to_get_ur_link">A code will be sent to your email address or mobile.</string>
+    <string name="str_choose_method_to_get_ur_link">A code will be sent to your mobile or email address.</string>
     <string name="str_choose_method_to_get_email_code">A code will be sent to your email address.</string>
     <string name="str_continue">Continue</string>
     <string name="str_check_your_mail">Check your email for a security code</string>
@@ -534,7 +534,7 @@
     <string name="account_created_successfully">Account Created Successfully</string>
 
     <string name="cases_history">Case history</string>
-    <string name="enquiry_history">Enquiry history</string>
+    <string name="enquiry_history">Enquiry History</string>
     <string name="cases_details">Case details</string>
     <string name="check_enquiry_status">Check enquiry status</string>
     <string name="provide_below_details">Provide below details</string>
@@ -569,7 +569,7 @@
     <string name="personal_pre_pay_account">Personal Pre-pay account</string>
     <string name="personal_pre_pay_account_info">Personal Pre-pay account \n information</string>
     <string name="in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information">In order to set up your Dart Charge account, please provide the below information.</string>
-    <string name="postcode">Postcode</string>
+    <string name="postcode"><b>Postcode</b></string>
     <string name="underline_postcode"><u>Postcode</u></string>
     <string name="password">Password</string>
     <string name="underline_password"><u>Password</u></string>
@@ -592,7 +592,7 @@
     <string name="str_select_sub_category">Sub-category : </string>
     <string name="str_please_provide_additional_information_txt">please provide additional information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
     <string name="str_description">Descritption</string>
-    <string name="str_you_have_chars_remain">You have %1$s characters remaining.</string>
+    <string name="str_you_have_chars_remain">You have %1$s characters remaining</string>
     <string name="str_upload_file_optional">Upload file (Optional)</string>
     <string name="str_upto_four_files_uploaded">\u25CF Up to 4 files can be uploaded</string>
     <string name="str_file_size_may_be">\u25CF File size can be up to 8mb each</string>
@@ -850,6 +850,8 @@
     <string name="str_country">Country</string>
     <string name="failed_problem_with_service">Problem with the service</string>
     <string name="failed_retry_title">Sorry, there is a problem with the service</string>
+    <string name="str_country"><b>Country</b></string>
+    <string name="failed_retry_title">Sorry, there is a problem with the service.</string>
     <string name="failed_retry_desc">Your requested action may not have completed successfully.</string>
     <string name="failed_retry_desc2">If you need help with your account or want to make a payment, you can call us on :</string>
     <string name="failed_retry_desc3">0300 300 0120 (from abroad +44 300 300 0120)</string>
@@ -857,8 +859,6 @@
     <string name="failed_retry_num2">+44 300 300 0120</string>
     <string name="failed_retry_desc4">Lines are open from Mon to Sun 08:00 to 20:00</string>
     <string name="try_again_later">Try again later.</string>
-    <string name="try_again_later_did_not_save_changes">Try again later. We did not save your changes</string>
-    <string name="try_again_later_signin_account">Try again later or sign into your account.</string>
 
 
     // account status
@@ -914,7 +914,7 @@
     <string name="ifyoudidnotreceivethecode">If you did not get a code, or it has expired, select resend security code.</string>
     <string name="resendcode">Resend Security Code</string>
     <string name="wehavesentanemail">We\'ve sent an email to</string>
-    <string name="wehavesentatextmessageto">You will receive a text message at</string>
+    <string name="wehavesentatextmessageto">We’ve sent a text message to</string>
     <string name="ifyoudidnot">If you did not get a code, or it has expired, select Resend code.</string>
     <string name="str_your_password_must">Your password must:</string>
     <string name="dotunicode">\u25CF</string>
@@ -928,12 +928,8 @@
     <string name="str_enter_six_digit_code">Enter 6-digit security code</string>
     <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information: <a href="https://www.google.com/">Click Here</a></string>
     <string name="str_free">Free</string>
-    <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder.\n\n The code will expire after 15 minutes.</string>
-    <string name="resend_code_text">A text will be sent to %s. \n\nYour text message might take a few minutes to arrive.\n\n The code will expire after 15 minutes.</string>
-    <string name="resend_code_expire">We’ll send a text message to %s. \n\nThe code will expire after 15 minutes.</string>
-
-
-    <string name="resend_code_text_message">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
+    <string name="resend_code_email">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder.\n\n The code will expire after 15 minutes.</string>
+    <string name="resend_code_text">A text will be sent to %s.\n\nYour text message might take a few minutes to arrive.\n\nThe code will expire after 15 minutes.</string>
     <string name="str_request_new_security_code">Request a new security code</string>
     <string name="requestanewsecuritycode">Send a new code</string>
     <string name="str_message_data_rates">Message and data rates may apply.</string>
@@ -968,6 +964,8 @@
     <string name="what_is_your_address">What is your registered office address?</string>
     <string name="this_should_be_the_address_were_the_vehicle_is_registered">This should be the address were the vehicle is registered.</string>
     <string name="enter_address_manually">Enter address manually</string>
+    <string name="enter_your_address_manually">Enter your address manually</string>
+    <string name="update_address_manually">Update address manually</string>
     <string name="what_is_your_name">What is your name?</string>
     <string name="what_is_your_company_name">What is your company name?</string>
     <string name="primary_account_holder_first_name">Primary account holder’s first name</string>
@@ -992,8 +990,8 @@
     <string name="str_personal_account_description"><b>Personal Account</b>\nIf you live in Dartford or Thurrock, you may qualify for a local resident discount with this account</string>
     <string name="str_personal_business_account_description"><b>Business Account</b>\nIf you need to add more than 10 vehicles we recommend you create your account on the website not in the app</string>
     <string name="str_building_number">Building Number and Street</string>
-    <string name="str_address_line2">Address line 2 (optional)</string>
-    <string name="str_town_city">Town or City</string>
+    <string name="str_address_line2"><b>Address line 2 (optional)</b></string>
+    <string name="str_town_city"><b>Town or City</b></string>
     <string name="str_address_example">For example 46, Flat 2a or Rose Cottage</string>
     <string name="primary_account_contact_first_name">Primary account contact first name</string>
     <string name="primary_account_contact_last_name">Primary account contact last name</string>
@@ -1049,7 +1047,7 @@
     <string name="email_address">Email address</string>
     <string name="address">Address</string>
     <string name="mobile_phone_number">Mobile phone number</string>
-    <string name="personal_details">Personal details</string>
+    <string name="personal_details">Personal Details</string>
     <string name="check_your_answers_before_confirming_vehicle">Check your answers before confirming\nyour new vehicle</string>
     <string name="check_your_answers_before_making_a_payment">Check your answers before making a payment.</string>
     <string name="account_details">Account Details</string>
@@ -1216,7 +1214,7 @@
     <string name="str_go_to_dashboard">GO TO DASHBOARD</string>
     <string name="str_feedback_to_improve_the_service"><u>FEEDBACK_TO_IMPROVE_THE_SERVICE</u></string>
     <string name="str_check_your_answers_before_making_payment">Check your answers before making a payment.</string>
-    <string name="str_personal_details">Personal details</string>
+    <string name="str_personal_details">Personal Details</string>
     <string name="str_play">Play</string>
     <string name="str_account_suspended">Account Suspended</string>
     <string name="str_sign_in_validation">Sign in Validation</string>
@@ -1270,10 +1268,11 @@
     <string name="name_change_successful">Name change successful</string>
     <string name="address_change_successful">Address change successful</string>
     <string name="communication_change_successful">Communication preference change successful</string>
-    <string name="mobile_change_successful">Mobile phone change successful</string>
+    <string name="mobile_change_successful">Mobile number change successful</string>
     <string name="telephone_change_successful">Telephone number change successful</string>
     <string name="two_factor_change_successful">Two Factor Authentication \n change successful</string>
-    <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="we_ve_sent_a_confirmation_email_to_s">We\'ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="you_will_receive_a_confirmation_email">You\'ll receive a confirmation email at <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
     <string name="email_receipt_send_successful">Email receipt send successful</string>
@@ -1298,6 +1297,7 @@
     <string name="password_must_not_have_special_characters">Password must not have special characters!</string>
     <string name="profile_mobile_number">Profile mobile number</string>
     <string name="profile_telephone_number">Profile telephone number</string>
+    <string name="profile_phone_number">Profile phone number</string>
     <string name="would_you_like_to_opt_in_to_two_step_verification">Would you like to opt in to two-step verification?</string>
     <string name="this_will_make_access_to_your_account_more_secure">This will make access to your account more secure.</string>
     <string name="two_factor_verification">Two Factor Verification</string>
@@ -1450,7 +1450,7 @@
     <string name="str_name">Name</string>
     <string name="str_choose_file">Choose file</string>
     <string name="non_UK_number_invalid">The non-UK phone number entered is invalid, please try again</string>
-    <string name="reference_number">Reference number</string>
+    <string name="reference_number">Reference Number</string>
     <string name="respond_enquiry_1day">We will respond to your enquiry within 1 day.</string>
     <string name="respond_complaint_5days">We will respond to your complaint within 5 days.</string>
     <string name="str_enquiry">Enquiry</string>
@@ -1460,7 +1460,7 @@
     <string name="str_status_of_complaint">Status of complaint</string>
     <string name="str_date_enquiry_closed">Date enquiry closed</string>
     <string name="str_date_complaint_closed">Date complaint closed</string>
-    <string name="str_enquiry_reference_number">Enquiry reference number</string>
+    <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
     <string name="str_terms_conditions">Terms &amp; Conditions</string>
     <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
     <string name="str_third_party_software">Third party software</string>
@@ -1479,6 +1479,7 @@
     <string name="str_incorrect_enquiry">Incorrect enquiry reference number or last name. Please try again.</string>
     <string name="str_reference_3_charac">Enter an enquiry reference number that is 3 characters or more</string>
     <string name="str_reference_validations">Enquiry reference number must only include letters a to z, and numbers 0 to 9.</string>
+
 
     <string name="transfer_remaining_credit">TRANSFER REMAINING CREDIT</string>
     <string name="your_crossing_details">Your crossing details</string>
@@ -1502,16 +1503,15 @@
     <string name="str_signed_out">Signed out</string>
     <string name="str_you_have_signed_out">You\'ve signed out of your account</string>
     <string name="str_timeout">Timeout</string>
-    <string name="str_for_your_security_account_holder">For your security,you\'ll be signed out in %s minutes</string>
-    <string name="str_for_your_security_non_account_holder">For your security, your session will expire and your answers will be deleted in %s minutes</string>
-    <string name="str_delete_my_answers">Delete my answers</string>
-    <string name="str_stay_on_the_app">Stay on the app</string>
+    <string name="str_for_your_security">For your security,you\'ll be signed out in %s minutes</string>
     <string name="str_sign_out">Sign out</string>
     <string name="str_stay_signed_in">Stay signed In</string>
     <string name="str_no_enquiries_have_been_raised">No enquiries have been raised</string>
+    <string name="str_profile_two_factor_verification">Profile Two Factor Verification</string>
 
 
     <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>
+    <string name="low_balance_amount_must_be_80_000_or_less">Low Balance amount must be £80,000 or less</string>
     <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
     <string name="str_dummy_text_2fa_options_sms">Text <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
     <string name="file_not_more_than_8mb">Selected file type should be no more than 8MB</string>
@@ -1522,6 +1522,7 @@
     <string name="str_go_to_website">Go to website</string>
     <string name="str_local_resident_discount_scheme">You account contains a Local Resident Discount Scheme</string>
     <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>
+    <string name="str_dummy_text_2fa_options_sms">Mobile <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
 </resources>
 
 

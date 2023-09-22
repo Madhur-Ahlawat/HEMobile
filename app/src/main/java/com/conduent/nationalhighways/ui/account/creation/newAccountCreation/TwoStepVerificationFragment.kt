@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.databinding.FragmentTwoStepVerificationBind
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
@@ -86,10 +87,10 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 
         }
         isViewCreated=true
-
     }
 
     override fun initCtrl() {
+        HomeActivityMain.setTitle(Constants.PROFILE_TWO_FACTOR_VERIFICATION)
     }
 
     override fun observer() {
@@ -160,7 +161,13 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                         NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
                         val data = navData as ProfileDetailModel?
                         if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
-                            verifyMobileNumber(data)
+                            if (binding.twoFactor.isChecked){
+                                verifyMobileNumber(data)
+
+                            }else{
+                                updateStandardUserProfile(data)
+
+                            }
                         } else {
                             loader?.show(
                                 requireActivity().supportFragmentManager,

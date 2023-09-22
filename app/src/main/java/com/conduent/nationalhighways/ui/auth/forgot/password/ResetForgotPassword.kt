@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
-import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.view.LayoutInflater
@@ -14,6 +13,7 @@ import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
@@ -51,8 +51,8 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
             REMOVE_VEHICLE -> {
                 binding.subTitle.gone()
                 binding.title.text = getString(R.string.vehicle_deleted)
-                binding.deleteTitle.visible()
-                binding.cardView.visible()
+                binding.deleteTitle.gone()
+                binding.cardViewPlateNumber.visible()
                 val data = navData as VehicleResponse?
                 binding.vehiclePlateNumber.text = data?.plateInfo?.number.toString()
                 binding.btnSubmit.text = getString(R.string.str_continue)
@@ -63,14 +63,14 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 title?.text = getString(R.string.profile_name)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.name_change_successful)
-                binding.subTitle.text = Html.fromHtml(getString(R.string.we_ve_sent_a_confirmation_email_to_s,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
+                binding.subTitle.text = Html.fromHtml(getString(R.string.you_will_receive_a_confirmation_email,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
             PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
                 title?.text = getString(R.string.profile_address)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.address_change_successful)
-                binding.subTitle.text = Html.fromHtml(getString(R.string.we_ve_sent_a_confirmation_email_to_s,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
+                binding.subTitle.text = Html.fromHtml(getString(R.string.you_will_receive_a_confirmation_email,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
             PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
@@ -85,17 +85,19 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 val isMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER,true)
                 if(isMobileNumber == false){
                     binding.title.text = getString(R.string.telephone_change_successful)
+                    HomeActivityMain.setTitle(getString(R.string.profile_phone_number))
                 }else {
                     binding.title.text = getString(R.string.mobile_change_successful)
+                    HomeActivityMain.setTitle(getString(R.string.profile_mobile_number))
                 }
-                binding.subTitle.text = Html.fromHtml(getString(R.string.we_ve_sent_a_confirmation_email_to_s,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
+                binding.subTitle.text = Html.fromHtml(getString(R.string.you_will_receive_a_confirmation_email,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
             PROFILE_MANAGEMENT_2FA_CHANGE -> {
                 title?.text = getString(R.string.profile_2fa)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.two_factor_change_successful)
-                binding.subTitle.text = Html.fromHtml(getString(R.string.we_ve_sent_a_confirmation_email_to_s,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
+                binding.subTitle.text = Html.fromHtml(getString(R.string.you_will_receive_a_confirmation_email,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
         }
@@ -119,7 +121,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                         findNavController().popBackStack()
                     }
 
-                    PROFILE_MANAGEMENT_2FA_CHANGE,PROFILE_MANAGEMENT_MOBILE_CHANGE,
+                    PROFILE_MANAGEMENT_2FA_CHANGE,PROFILE_MANAGEMENT_MOBILE_CHANGE,PROFILE_MANAGEMENT,
                     PROFILE_MANAGEMENT_ADDRESS_CHANGED,PROFILE_MANAGEMENT -> {
                         findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
                     }
