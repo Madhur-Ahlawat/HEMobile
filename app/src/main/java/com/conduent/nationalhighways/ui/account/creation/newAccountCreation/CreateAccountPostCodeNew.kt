@@ -28,7 +28,9 @@ import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import org.bouncycastle.jce.provider.BrokenPBE.Util
 
@@ -51,6 +53,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
+                binding.btnEnterAddressManually.visible()
+                binding.btnUpdateAddressManually.gone()
                 binding.inputPostCode.setText(NewCreateAccountRequestModel.zipCode)
                 if(NewCreateAccountRequestModel.personalAccount){
                     setPersonalView()
@@ -58,6 +62,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             }
 
             PROFILE_MANAGEMENT -> {
+                binding.btnEnterAddressManually.gone()
+                binding.btnUpdateAddressManually.visible()
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
                 val data = navData as ProfileDetailModel?
@@ -106,7 +112,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 //                }
             }
 
-            R.id.btnEnterAddressManually -> {
+            R.id.btnEnterAddressManually,R.id.btnUpdateAddressManually -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 if (navFlowCall.equals(PROFILE_MANAGEMENT, true) && navData != null) {

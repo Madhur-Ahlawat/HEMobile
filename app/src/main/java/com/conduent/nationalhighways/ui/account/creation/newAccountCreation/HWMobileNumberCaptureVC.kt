@@ -146,7 +146,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
-                    title?.text = getString(R.string.profile_telephone_number)
+                    title?.text = getString(R.string.profile_phone_number)
 
                     setTelephoneView()
                 } else {
