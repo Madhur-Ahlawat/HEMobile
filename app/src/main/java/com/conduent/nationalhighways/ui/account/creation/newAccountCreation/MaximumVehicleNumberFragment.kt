@@ -55,7 +55,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         if (NewCreateAccountRequestModel.isExempted) {
 
             binding.maximumVehicleAdded.text = getString(
-                R.string.str_vehicle_exempt_message,
+                R.string.vehicle_number_plate_is_exempt_from_dart_ncharge_payment,
                 NewCreateAccountRequestModel.plateNumber
             )
             binding.maximumVehicleAddedNote.visibility = View.GONE
@@ -278,10 +278,18 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                                         }
                                     }
                                 } else {
-                                    findNavController().navigate(
-                                        R.id.action_maximumFragment_to_vehicleListFragment,
-                                        bundle()
-                                    )
+                                    if (sessionManager.getLoggedInUser()){
+                                        findNavController().navigate(
+                                            R.id.action_maximumFragment_to_vehicleHomeListFragment,
+                                            bundle()
+                                        )
+                                    }else{
+                                        findNavController().navigate(
+                                            R.id.action_maximumFragment_to_vehicleListFragment,
+                                            bundle()
+                                        )
+                                    }
+
                                 }
 
                                 NewCreateAccountRequestModel.isMaxVehicleAdded = false
