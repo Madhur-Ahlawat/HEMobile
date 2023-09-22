@@ -10,10 +10,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPostCodeNewBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
@@ -38,17 +40,14 @@ import org.bouncycastle.jce.provider.BrokenPBE.Util
 class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBinding>(),
     View.OnClickListener, OnRetryClickListener {
     private var requiredPostCode = false
+    private var data: CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.inputPostCode.editText
-            .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
-
-
-
+        binding.btnUpdateAddressManually.setOnClickListener(this)
         binding.inputPostCode.setMaxLength(10)
         when (navFlowCall) {
 
@@ -86,6 +85,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             }
 
         }
+        binding.inputPostCode.editText
+            .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
     }
 
     private fun setPersonalView() {
