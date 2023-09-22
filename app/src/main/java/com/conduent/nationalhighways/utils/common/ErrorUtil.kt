@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.loader.ErrorDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -40,7 +41,7 @@ object ErrorUtil {
 
     fun showRetry(view: Fragment?) {
         try {
-            val dialog = RetryDialog()
+            val dialog = RetryDialog(BuildConfig.LOGIN)
             dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
             dialog.listener = view as OnRetryClickListener
 

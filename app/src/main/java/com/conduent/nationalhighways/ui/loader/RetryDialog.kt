@@ -10,7 +10,7 @@ import com.conduent.nationalhighways.ui.base.BaseDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RetryDialog : BaseDialog<DialogRetryBinding>(), View.OnClickListener {
+class RetryDialog(val api_URL: String) : BaseDialog<DialogRetryBinding>(), View.OnClickListener {
 
     var listener: OnRetryClickListener? = null
 
@@ -19,7 +19,9 @@ class RetryDialog : BaseDialog<DialogRetryBinding>(), View.OnClickListener {
         container: ViewGroup?
     ) = DialogRetryBinding.inflate(inflater, container, false)
 
-    override fun init() {}
+    override fun init() {
+
+    }
 
     override fun initCtrl() {
         binding.retryBtn.setOnClickListener(this)
@@ -31,13 +33,16 @@ class RetryDialog : BaseDialog<DialogRetryBinding>(), View.OnClickListener {
         when (v?.id) {
             R.id.retryBtn -> {
                 dismiss()
-                listener?.onRetryClick()
+                listener?.onRetryClick(apiUrl =api_URL )
             }
         }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = parentFragment as OnRetryClickListener
+        try {
+            listener = context as OnRetryClickListener
+        } catch (e: ClassCastException) {
+        }
     }
 }

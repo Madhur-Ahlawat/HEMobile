@@ -214,6 +214,8 @@
                                 android:id="@+id/contact_message_data_tv"
                                 style="@style/RegularTextBlack"
                                 android:layout_width="0dp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
                                 android:text="@{viewModel.enquiryModel.comments}"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/contact_barrier"

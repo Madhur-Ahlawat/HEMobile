@@ -78,7 +78,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         }
     }
 
-    override fun onRetryClick() {
+    override fun onRetryClick(apiUrl: String){
 
     }
 }

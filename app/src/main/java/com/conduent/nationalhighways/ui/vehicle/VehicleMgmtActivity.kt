@@ -26,7 +26,7 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
     private lateinit var navHost: NavController
 
     @Inject
-    lateinit var sessionManager : SessionManager
+    lateinit var sessionManager: SessionManager
 
     override fun initViewBinding() {
         binding = ActivityVehicleMgmtBinding.inflate(layoutInflater)
@@ -35,23 +35,7 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
         setView()
     }
 
-    override fun onStart() {
-        super.onStart()
-        loadSession()
-    }
-
-    override fun onUserInteraction() {
-        super.onUserInteraction()
-        loadSession()
-    }
-
-    private fun loadSession(){
-        LogoutUtil.stopLogoutTimer()
-        LogoutUtil.startLogoutTimer(this)
-    }
-
-
-    override fun observeViewModel() { }
+    override fun observeViewModel() {}
 
     private fun initCtrl() {
         binding.idToolBarLyt.backButton.setOnClickListener {
@@ -61,7 +45,8 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
 
     private fun setView() {
         mType = intent.extras?.getInt(Constants.VEHICLE_SCREEN_KEY)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         mType?.let {
             when (it) {
                 Constants.VEHICLE_SCREEN_TYPE_LIST -> {
@@ -70,19 +55,21 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
                     navHost = navHostFragment.navController
                     navHost.setGraph(R.navigation.navigation_vehicle_list)
                 }
+
                 Constants.VEHICLE_SCREEN_TYPE_ADD -> {
                     binding.idToolBarLyt.titleTxt.text = getString(R.string.str_add_vehicles)
                     binding.chipLayout.gone()
                     navHost = navHostFragment.navController
                     navHost.setGraph(R.navigation.navigation_add_vehicle)
                 }
+
                 Constants.VEHICLE_SCREEN_TYPE_HISTORY -> {
                     binding.idToolBarLyt.titleTxt.text = getString(R.string.str_vehicle_history)
                     navHost = navHostFragment.navController
                     navHost.setGraph(R.navigation.navigation_vehicle_history)
 
                     navHost.addOnDestinationChangedListener { _, destination, _ ->
-                        when(destination.id){
+                        when (destination.id) {
                             R.id.vehicleHistoryVehicleDetailsFragment -> {
                                 makeVehicleDetailsButton()
                                 binding.chipLayout.visible()
@@ -92,6 +79,7 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
                                 makeCrossingHistoryButton()
                                 binding.chipLayout.visible()
                             }
+
                             else -> {
                                 binding.chipLayout.gone()
                             }
@@ -124,7 +112,7 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
 
     }
 
-    private fun makeVehicleDetailsButton(){
+    private fun makeVehicleDetailsButton() {
         binding.chipButtonVehicle = true
     }
 
@@ -132,9 +120,26 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
         binding.chipButtonVehicle = false
     }
 
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
     override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this)
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
     }
 
 }

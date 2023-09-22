@@ -5,7 +5,6 @@ import com.conduent.nationalhighways.databinding.ActivityManualTopUpBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.extn.toolbar
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,14 +39,20 @@ class ManualTopUpActivity : BaseActivity<Any>(), LogoutListener {
         loadSession()
     }
 
-    private fun loadSession(){
+    private fun loadSession() {
         LogoutUtil.stopLogoutTimer()
         LogoutUtil.startLogoutTimer(this)
     }
 
     override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this)
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
     }
 
     override fun observeViewModel() {

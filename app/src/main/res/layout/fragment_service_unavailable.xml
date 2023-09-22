@@ -40,7 +40,7 @@
                 android:id="@+id/decs1_tv"
                 style="@style/SemiBoldTextBlack_14sp"
                 android:layout_marginTop="@dimen/margin_20dp"
-                android:text="@string/try_again_later"
+                android:text="@string/try_again_later_did_not_save_changes"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_tv" />
 
@@ -75,7 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_30dp"
-            android:text="@string/sign_in"
+            android:text="@string/back_to_main_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

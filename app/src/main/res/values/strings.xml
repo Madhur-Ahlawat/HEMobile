@@ -534,7 +534,7 @@
     <string name="account_created_successfully">Account Created Successfully</string>
 
     <string name="cases_history">Case history</string>
-    <string name="enquiry_history">Enquiry History</string>
+    <string name="enquiry_history">Enquiry history</string>
     <string name="cases_details">Case details</string>
     <string name="check_enquiry_status">Check enquiry status</string>
     <string name="provide_below_details">Provide below details</string>
@@ -592,7 +592,7 @@
     <string name="str_select_sub_category">Sub-category : </string>
     <string name="str_please_provide_additional_information_txt">please provide additional information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
     <string name="str_description">Descritption</string>
-    <string name="str_you_have_chars_remain">You have %1$s characters remaining</string>
+    <string name="str_you_have_chars_remain">You have %1$s characters remaining.</string>
     <string name="str_upload_file_optional">Upload file (Optional)</string>
     <string name="str_upto_four_files_uploaded">\u25CF Up to 4 files can be uploaded</string>
     <string name="str_file_size_may_be">\u25CF File size can be up to 8mb each</string>
@@ -848,7 +848,8 @@
     <string name="str_town_city_state_province">Town/City/State/Province</string>
     <string name="str_street_name">Street Name</string>
     <string name="str_country">Country</string>
-    <string name="failed_retry_title">Sorry, there is a problem with the service.</string>
+    <string name="failed_problem_with_service">Problem with the service</string>
+    <string name="failed_retry_title">Sorry, there is a problem with the service</string>
     <string name="failed_retry_desc">Your requested action may not have completed successfully.</string>
     <string name="failed_retry_desc2">If you need help with your account or want to make a payment, you can call us on :</string>
     <string name="failed_retry_desc3">0300 300 0120 (from abroad +44 300 300 0120)</string>
@@ -856,6 +857,8 @@
     <string name="failed_retry_num2">+44 300 300 0120</string>
     <string name="failed_retry_desc4">Lines are open from Mon to Sun 08:00 to 20:00</string>
     <string name="try_again_later">Try again later.</string>
+    <string name="try_again_later_did_not_save_changes">Try again later. We did not save your changes</string>
+    <string name="try_again_later_signin_account">Try again later or sign into your account.</string>
 
 
     // account status
@@ -1046,7 +1049,7 @@
     <string name="email_address">Email address</string>
     <string name="address">Address</string>
     <string name="mobile_phone_number">Mobile phone number</string>
-    <string name="personal_details">Personal Details</string>
+    <string name="personal_details">Personal details</string>
     <string name="check_your_answers_before_confirming_vehicle">Check your answers before confirming\nyour new vehicle</string>
     <string name="check_your_answers_before_making_a_payment">Check your answers before making a payment.</string>
     <string name="account_details">Account Details</string>
@@ -1213,7 +1216,7 @@
     <string name="str_go_to_dashboard">GO TO DASHBOARD</string>
     <string name="str_feedback_to_improve_the_service"><u>FEEDBACK_TO_IMPROVE_THE_SERVICE</u></string>
     <string name="str_check_your_answers_before_making_payment">Check your answers before making a payment.</string>
-    <string name="str_personal_details">Personal Details</string>
+    <string name="str_personal_details">Personal details</string>
     <string name="str_play">Play</string>
     <string name="str_account_suspended">Account Suspended</string>
     <string name="str_sign_in_validation">Sign in Validation</string>
@@ -1447,7 +1450,7 @@
     <string name="str_name">Name</string>
     <string name="str_choose_file">Choose file</string>
     <string name="non_UK_number_invalid">The non-UK phone number entered is invalid, please try again</string>
-    <string name="reference_number">Reference Number</string>
+    <string name="reference_number">Reference number</string>
     <string name="respond_enquiry_1day">We will respond to your enquiry within 1 day.</string>
     <string name="respond_complaint_5days">We will respond to your complaint within 5 days.</string>
     <string name="str_enquiry">Enquiry</string>
@@ -1457,7 +1460,7 @@
     <string name="str_status_of_complaint">Status of complaint</string>
     <string name="str_date_enquiry_closed">Date enquiry closed</string>
     <string name="str_date_complaint_closed">Date complaint closed</string>
-    <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
+    <string name="str_enquiry_reference_number">Enquiry reference number</string>
     <string name="str_terms_conditions">Terms &amp; Conditions</string>
     <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
     <string name="str_third_party_software">Third party software</string>
@@ -1476,7 +1479,6 @@
     <string name="str_incorrect_enquiry">Incorrect enquiry reference number or last name. Please try again.</string>
     <string name="str_reference_3_charac">Enter an enquiry reference number that is 3 characters or more</string>
     <string name="str_reference_validations">Enquiry reference number must only include letters a to z, and numbers 0 to 9.</string>
-
 
     <string name="transfer_remaining_credit">TRANSFER REMAINING CREDIT</string>
     <string name="your_crossing_details">Your crossing details</string>
@@ -1500,7 +1502,10 @@
     <string name="str_signed_out">Signed out</string>
     <string name="str_you_have_signed_out">You\'ve signed out of your account</string>
     <string name="str_timeout">Timeout</string>
-    <string name="str_for_your_security">For your security,you\'ll be signed out in %s minutes</string>
+    <string name="str_for_your_security_account_holder">For your security,you\'ll be signed out in %s minutes</string>
+    <string name="str_for_your_security_non_account_holder">For your security, your session will expire and your answers will be deleted in %s minutes</string>
+    <string name="str_delete_my_answers">Delete my answers</string>
+    <string name="str_stay_on_the_app">Stay on the app</string>
     <string name="str_sign_out">Sign out</string>
     <string name="str_stay_signed_in">Stay signed In</string>
     <string name="str_no_enquiries_have_been_raised">No enquiries have been raised</string>
@@ -1509,6 +1514,14 @@
     <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>
     <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
     <string name="str_dummy_text_2fa_options_sms">Text <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
+    <string name="file_not_more_than_8mb">Selected file type should be no more than 8MB</string>
+    <string name="str_contact_dart_charge_contact_centre">Contact the Dart Charge contact centre for help.</string>
+    <string name="str_contact_every_day">Every day: 8am to 8pm</string>
+    <string name="str_contact_telephone">Telephone: 0300 300 0120</string>
+    <string name="str_able_to_use_service">You will be able to use the service from %1$s</string>
+    <string name="str_go_to_website">Go to website</string>
+    <string name="str_local_resident_discount_scheme">You account contains a Local Resident Discount Scheme</string>
+    <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>
 </resources>
 
 

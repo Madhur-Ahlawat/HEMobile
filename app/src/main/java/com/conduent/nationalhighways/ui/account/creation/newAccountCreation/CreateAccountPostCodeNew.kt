@@ -158,7 +158,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
     }
 
 
-    override fun onRetryClick() {
+    override fun onRetryClick(apiUrl: String){
 
     }
 

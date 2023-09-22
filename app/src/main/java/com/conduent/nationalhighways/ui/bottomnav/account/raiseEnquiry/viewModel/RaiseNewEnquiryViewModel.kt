@@ -26,6 +26,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.json.JSONObject
 import java.io.File
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,6 +56,10 @@ class RaiseNewEnquiryViewModel @Inject constructor(
     var enquiryDetailsModel = MutableLiveData<ServiceRequest>()
     var enquiry_status_number = MutableLiveData<String>()
     var enquiry_last_name = MutableLiveData<String>()
+
+    val retryEvent = MutableLiveData<Unit>()
+    val noOfApiTries = MutableLiveData<Int>()
+
     init {
         enquiryModel.value = EnquiryModel()
         edit_enquiryModel.value = EnquiryModel()
@@ -162,6 +167,13 @@ class RaiseNewEnquiryViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 _uploadFileModel.postValue(ResponseHandler.failure(e))
+                if (e is SocketTimeoutException) {
+//                    noOfApiTries.value = noOfApiTries.value!! + 1
+                    // Handle timeout exception here.
+//                    retryEvent.postValue(Unit) // Trigger the retry popup.
+                } else {
+                    // Handle other exceptions.
+                }
             }
         }
     }

@@ -77,17 +77,17 @@ interface ApiService {
         @Field("refresh_token") refresh_token: String
     ): Call<LoginResponse>
 
-    @FormUrlEncoded
-    @POST(LOGIN)
-    suspend fun login(
-        @Field("client_id") clientId: String? = CLIENT_ID,
-        @Field("grant_type") grant_type: String? = GRANT_TYPE,
-        @Field("agencyID") agencyID: String? = AGENCY_ID,
-        @Field("client_secret") client_secret: String? = CLIENT_SECRET,
-        @Field("value") value: String?,
-        @Field("password") password: String?,
-        @Field("validatePasswordCompliance") validatePasswordCompliance: String?
-    ): Response<LoginResponse?>?
+        @FormUrlEncoded
+        @POST(LOGIN)
+        suspend fun login(
+            @Field("client_id") clientId: String? = CLIENT_ID,
+            @Field("grant_type") grant_type: String? = GRANT_TYPE,
+            @Field("agencyID") agencyID: String? = AGENCY_ID,
+            @Field("client_secret") client_secret: String? = CLIENT_SECRET,
+            @Field("value") value: String?,
+            @Field("password") password: String?,
+            @Field("validatePasswordCompliance") validatePasswordCompliance: String?
+        ): Response<LoginResponse?>?
 
     @DELETE(LOGOUT)
     suspend fun logout(): Response<AuthResponseModel?>

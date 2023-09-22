@@ -74,8 +74,14 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
     }
 
     override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this)
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
     }
 
     private fun setFragmentInView() {

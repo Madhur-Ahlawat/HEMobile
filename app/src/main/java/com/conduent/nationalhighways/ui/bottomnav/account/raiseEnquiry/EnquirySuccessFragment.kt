@@ -2,15 +2,10 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
 import com.conduent.nationalhighways.databinding.FragmentEnquirySuccessBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -50,7 +45,6 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
             )
         }
         binding.btnNext.setOnClickListener {
-            Log.e("TAG", "init: navFlowFrom --> " + navFlowFrom)
             if (requireActivity() is HomeActivityMain) {
                 if (navFlowFrom == Constants.ACCOUNT_CONTACT_US) {
                     findNavController().navigate(

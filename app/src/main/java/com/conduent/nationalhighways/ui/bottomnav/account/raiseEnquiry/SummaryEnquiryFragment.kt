@@ -41,13 +41,10 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         }
 
         saveData()
-        Log.e("TAG", "init:category " + viewModel.enquiryModel.value?.category)
         if (viewModel.enquiryModel.value?.category.toString().contains("enquiry")) {
-            Log.e("TAG", "init: enquiry")
             binding.contactDetailsTv.setText(resources.getString(R.string.str_check_your_answer_before_enquiry))
             binding.detailsEnquiryTv.setText(resources.getString(R.string.details_of_enquiry))
         } else {
-            Log.e("TAG", "init: complaint")
             binding.contactDetailsTv.setText(resources.getString(R.string.str_check_your_answer_before_complaint))
             binding.detailsEnquiryTv.setText(resources.getString(R.string.details_of_complaint))
         }
@@ -59,8 +56,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             val subcategorySplit = viewModel.enquiryModel.value?.subCategory?.name?.split("~")
             var selectSubArea = ""
             var seletedArea = ""
-            Log.e("TAG", "init: subCategory--> " + viewModel.enquiryModel.value?.subCategory?.name)
-            Log.e("TAG", "init: subCategory size--> " + subcategorySplit.orEmpty().size)
             if (subcategorySplit.orEmpty().size > 0) {
                 selectSubArea = subcategorySplit?.get(0).toString()
             }
@@ -132,6 +127,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     private fun getBundleData(): Bundle {
         val bundle: Bundle = Bundle()
         bundle.putString(Constants.Edit_REQUEST_KEY, Constants.EDIT_SUMMARY)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         return bundle
     }

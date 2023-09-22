@@ -9,11 +9,14 @@ import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.logout.LogoutListener
+import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>() {
+class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), LogoutListener {
 
     private lateinit var binding: ActivityCreateAccountBinding
 
@@ -45,7 +48,8 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>() {
             onBackPressedDispatcher.onBackPressed()
 
         }
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val graphInflater = navHostFragment.navController.navInflater
         val navGraph = graphInflater.inflate(R.navigation.nav_graph_account_creation)
         val navController = navHostFragment.navController
@@ -64,17 +68,13 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        sessionManager.clearAll()
-    }
     override fun onBackPressed() {
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
-            navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
-                if (fragment is AccountSuccessfullyCreationFragment){
+            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                if (fragment is AccountSuccessfullyCreationFragment) {
 
-                }else{
+                } else {
                     onBackPressedDispatcher.onBackPressed()
                 }
 
@@ -83,4 +83,25 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>() {
 
     }
 
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
+        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        sessionManager.clearAll()
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
+    }
 }

@@ -136,7 +136,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/margin_8dp"
                         android:fontFamily="@font/open_sans"
                         android:text="@string/str_allowed_file_types"
                         android:textColor="@color/black"
@@ -164,7 +164,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/margin_8dp"
                         android:fontFamily="@font/open_sans"
                         android:text="@string/str_file_size_not_morethan_8mb"
                         android:textColor="@color/black"
@@ -182,7 +182,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/filesize_ll"
-                    tools:visibility="visible">
+                    tools:visibility="gone">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/file_cl"
@@ -219,25 +219,35 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/choose_file_bt"
-                    style="@style/SemiBoldText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_blue_stroke_rect"
-                    android:drawableEnd="@drawable/ic_upload"
-                    android:drawablePadding="@dimen/margin_5dp"
-                    android:drawableTint="@color/dark_blue_color"
-                    android:gravity="center"
-                    android:padding="@dimen/margin_10dp"
-
-                    android:text="@string/str_choose_file"
-                    android:textColor="@color/new_btn_color"
-                    android:textSize="@dimen/font_14sp"
+                    android:layout_marginTop="@dimen/margin_15dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@drawable/ic_blue_stroke_rect"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/file_cv"
-                    app:textAllCaps="true" />
+                    app:layout_constraintTop_toBottomOf="@id/file_cv">
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        style="@style/SemiBoldText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_upload"
+                        android:drawablePadding="@dimen/margin_5dp"
+                        android:drawableTint="@color/dark_blue_color"
+                        android:gravity="center"
+                        android:padding="@dimen/margin_10dp"
+                        android:text="@string/str_choose_file"
+                        android:textColor="@color/new_btn_color"
+                        android:textSize="@dimen/font_14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        app:textAllCaps="true" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
                 <com.conduent.nationalhighways.utils.widgets.NHButton

@@ -1,20 +1,28 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
-import android.util.Log
+import android.content.Context
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityRaiseEnquiryBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.logout.LogoutListener
+import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.Interceptor
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>() {
+class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), LogoutListener {
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     private lateinit var binding: ActivityRaiseEnquiryBinding
     lateinit var navController: NavController
@@ -46,7 +54,6 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>() {
         listener =
             NavController.OnDestinationChangedListener { controller, destination, arguments ->
                 // Handle navigation events here
-                Log.e("TAG", "init: destination displayName "+destination.displayName )
                 when (destination.id) {
                     R.id.guidanceDocumentsFragment -> {
                         binding.toolBarLyt.titleTxt.setText(resources.getString(R.string.str_guidance_and_documents))
@@ -57,7 +64,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>() {
                     }
 
 
-                    R.id.enquiryStatusFragment  or R.id.casesEnquiryDetailsFragment-> {
+                    R.id.enquiryStatusFragment or R.id.casesEnquiryDetailsFragment -> {
                         binding.toolBarLyt.titleTxt.text = getString(R.string.cases_and_enquiry)
                     }
 
@@ -69,9 +76,11 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>() {
                 }
 
                 when (destination.id) {
+
                     R.id.enquirySuccessFragment -> {
                         binding.toolBarLyt.backButton.gone()
                     }
+
                     else -> {
                         binding.toolBarLyt.backButton.visible()
                     }
@@ -90,6 +99,31 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>() {
         if (this::navController.isInitialized) {
             navController.removeOnDestinationChangedListener(listener)
         }
+        LogoutUtil.stopLogoutTimer()
+    }
+
+    fun hideBackIcon() {
+        binding.toolBarLyt.backButton.gone()
+    }
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
+        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onRetryClick(chain: Interceptor.Chain, context: Context) {
+        super.onRetryClick(chain, context)
     }
 
 }

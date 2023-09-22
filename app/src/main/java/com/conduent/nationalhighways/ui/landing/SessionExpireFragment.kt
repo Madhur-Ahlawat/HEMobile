@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.landing
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +60,9 @@ class SessionExpireFragment : BaseFragment<FragmentSessionExpireBinding>(), View
                 requireActivity().finish()
                 when (type) {
                     Constants.LOGIN -> {
-                        requireActivity().startNormalActivity(LoginActivity::class.java)
+                        requireActivity().startNewActivityByClearingStack(LoginActivity::class.java)
+
+//                        requireActivity().startNormalActivity(LoginActivity::class.java)
 
                     }
                     //  "SIGN IN" ->{ requireActivity().startActivity(Intent(requireActivity(),ActivityHome::class.java)) }

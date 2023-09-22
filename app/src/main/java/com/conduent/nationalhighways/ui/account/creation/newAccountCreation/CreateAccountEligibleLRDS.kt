@@ -85,7 +85,8 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
         }
     }
 
-    override fun onRetryClick() {
+
+    override fun onRetryClick(apiUrl: String) {
 
     }
 }

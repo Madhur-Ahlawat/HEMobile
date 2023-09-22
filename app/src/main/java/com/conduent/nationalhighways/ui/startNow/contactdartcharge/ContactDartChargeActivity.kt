@@ -45,10 +45,12 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
             Constants.FROM_LOGIN_TO_CASES_VALUE -> {
                 oldGraph.setStartDestination(R.id.caseHistoryDartChargeFragment)
             }
+
             Constants.FROM_ANSWER_TO_CASE_VALUE -> {
                 oldGraph.setStartDestination(R.id.dartChargeAccountTypeSelectionFragment)
 
             }
+
             else -> {
                 oldGraph.setStartDestination(R.id.contactDartCharge)
             }
@@ -92,12 +94,12 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
             }
         }
         super.onBackPressed()
-/*
-        if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
-            finish()
-            startNormalActivity(HomeActivityMain::class.java)
-        }
-*/
+        /*
+                if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
+                    finish()
+                    startNormalActivity(HomeActivityMain::class.java)
+                }
+        */
     }
 
     override fun observeViewModel() {}
@@ -113,17 +115,19 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
     }
 
     private fun loadSession() {
-        if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
-            LogoutUtil.stopLogoutTimer()
-            LogoutUtil.startLogoutTimer(this)
-        }
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
     }
 
     override fun onLogout() {
-        if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
-            sessionManager.clearAll()
-            Utils.sessionExpired(this)
-        }
+        LogoutUtil.stopLogoutTimer()
+        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
     }
 
 }

@@ -162,8 +162,6 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
     }
 
     private fun checkButtonEnable() {
-        Log.e("TAG", "checkButtonEnable: referenceNumberValidations "+referenceNumberValidations )
-        Log.e("TAG", "checkButtonEnable: lastNameValidations "+lastNameValidations )
         if (referenceNumberValidations && lastNameValidations) {
             binding.btnNext.enable()
         } else {

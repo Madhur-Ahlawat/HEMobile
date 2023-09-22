@@ -125,7 +125,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     }
 
 
-    override fun onRetryClick() {
+    override fun onRetryClick(apiUrl: String){
 
     }
 

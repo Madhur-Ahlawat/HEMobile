@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.startNow
 
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -8,11 +9,17 @@ import com.conduent.nationalhighways.databinding.ActivityStartNowBaseBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.logout.LogoutListener
+import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>() {
-
+class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>(), LogoutListener {
+    @Inject
+    lateinit var sessionManager: SessionManager
     private lateinit var navController: NavController
     private var screenType: String = ""
     private lateinit var binding: ActivityStartNowBaseBinding
@@ -58,9 +65,11 @@ class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>() {
             Constants.ABOUT_SERVICE -> {
                 oldGraph.setStartDestination(R.id.aboutService)
             }
+
             Constants.CROSSING_SERVICE_UPDATE -> {
                 oldGraph.setStartDestination(R.id.crossingUpdate)
             }
+
             Constants.CONTACT_DART_CHARGES -> {
                 oldGraph.setStartDestination(R.id.contactDartCharge)
             }
@@ -69,4 +78,24 @@ class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>() {
         navController.graph = oldGraph
     }
 
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
+        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
+    }
 }

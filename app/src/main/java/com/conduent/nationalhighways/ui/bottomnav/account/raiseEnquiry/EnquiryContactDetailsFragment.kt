@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.databinding.FragmentEnquiryContactDetailsBi
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -42,6 +43,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
 
     private var fullCountryNameWithCode: MutableList<String> = ArrayList()
+    private var fullCountryCode: MutableList<String> = ArrayList()
     private var requiredCountryCode = false
     private var countriesCodeList: MutableList<String> = ArrayList()
     private var loader: LoaderDialog? = null
@@ -73,7 +75,6 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         binding.btnNext.setOnClickListener {
 
             saveData()
-            Log.e("TAG", "init: editRequest " + editRequest)
             if (editRequest == Constants.EDIT_SUMMARY) {
                 findNavController().navigate(
                     R.id.action_contactdetails_enquiryContactDetailsFragment_to_enquirySummaryFragment,
@@ -99,6 +100,15 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         }
         binding.countrycodeEt.dropDownItemSelectListener = this
         listeners()
+
+        if (!backButton) {
+            if (requireActivity() is RaiseEnquiryActivity) {
+                (requireActivity() as RaiseEnquiryActivity).hideBackIcon()
+            } else if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).hideBackIcon()
+            }
+        }
+
     }
 
     private fun saveData() {
@@ -409,7 +419,6 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 binding.countrycodeEt.dataSet.addAll(fullCountryNameWithCode)
 
                 var countryCode = viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
-                Log.e("TAG", "getCountryCodesList: countryCode >> " + countryCode)
                 if (viewModel.edit_enquiryModel.value?.fullcountryCode?.isEmpty() == true) {
                     countryCode = Constants.UNITED_KINGDOM
                     binding.apply {
@@ -421,8 +430,6 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                         viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
                     )
                     requiredCountryCode = binding.countrycodeEt.getText()?.isNotEmpty() == true
-
-
                 }
                 viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(countryCode)
                 viewModel.edit_enquiryModel.value?.fullcountryCode = countryCode
@@ -451,11 +458,22 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
             )
         } else {
-            binding.firstnameEt.setText(sm.fetchFirstName() ?: "")
-            binding.lastnameEt.setText(sm.fetchLastName() ?: "")
-            binding.emailEt.setText(sm.fetchAccountEmailId() ?: "")
-            binding.mobileNumberEt.setText(sm.fetchUserMobileNUmber() ?: "")
+            if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
+                binding.firstnameEt.setText(sm.fetchFirstName() ?: "")
+                binding.lastnameEt.setText(sm.fetchLastName() ?: "")
+                binding.emailEt.setText(sm.fetchAccountEmailId() ?: "")
+                binding.mobileNumberEt.setText(sm.fetchUserMobileNUmber() ?: "")
 
+                val userCountryCode = sm.fetchUserCountryCode()
+
+                fullCountryNameWithCode.forEachIndexed { index, fullCountryName ->
+                    val countrycode = getCountryCode(fullCountryName)
+                    if (countrycode == userCountryCode) {
+                        binding.countrycodeEt.setSelectedValue(fullCountryName)
+                        return@forEachIndexed
+                    }
+                }
+            }
 
         }
     }

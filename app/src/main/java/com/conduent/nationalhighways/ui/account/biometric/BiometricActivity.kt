@@ -37,12 +37,15 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.*
+import com.conduent.nationalhighways.utils.logout.LogoutListener
+import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClickListener {
+class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClickListener,
+    LogoutListener {
 
     lateinit var binding: ActivityBiometricBinding
     private var twoFA: Boolean = false
@@ -413,5 +416,25 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
     }
 
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
+        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
+    }
 
 }

@@ -768,6 +768,12 @@
         android:label="EnquiryContactDetailsFragment"
         tools:layout="@layout/fragment_enquiry_contact_details">
         <action
+            android:id="@+id/action_contactdetails_enquiryContactDetailsFragment_to_enquirySummaryFragment"
+            app:destination="@id/enquirySummaryFragment"
+            app:popUpTo="@id/enquirySummaryFragment"
+            app:popUpToInclusive="true" />
+
+        <action
             android:id="@+id/action_enquiryContactDetailsFragment_to_enquiryCategoryFragment"
             app:destination="@id/enquiryCategoryFragment" />
         <action

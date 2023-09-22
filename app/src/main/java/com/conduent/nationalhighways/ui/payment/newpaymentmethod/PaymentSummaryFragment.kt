@@ -229,7 +229,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     }
 
-    override fun onRetryClick() {
+    override fun onRetryClick(apiUrl: String){
     }
 
 }

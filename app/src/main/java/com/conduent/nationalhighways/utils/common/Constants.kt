@@ -4,6 +4,8 @@ import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TwoS
 
 object Constants {
 
+
+
     const val DIRECT_DEBIT: String="directdebit"
     const val DIRECT_DEBIT_DELETE="direct_debit_delete"
     const val DIRECT_DEBIT_NOT_SET_UP="direct_debit_not_set_up"
@@ -93,6 +95,7 @@ object Constants {
     const val MAIN_ACCOUNT = "main_account"
     const val SUB_ACCOUNT = "sub_account"
     const val VPN_ERROR = "Check your network connection."
+    const val API_TIME_OUT = "Api timeout"
     const val REFRESH_TOKEN = "refresh_token_to_start"
     const val TYPE = "type"
     const val LOGIN = "login"
@@ -101,6 +104,7 @@ object Constants {
     const val START_NOW_SCREEN = "start_now"
     const val LOGOUT_SCREEN = "log_out"
     const val FAILED_RETRY_SCREEN = "failed_retry"
+    const val SERVICE_UNAVAILABLE = "service_unavailable"
     const val LANDING_SCREEN = "landing"
     const val TOLL_TRANSACTION = "Toll_Transaction"
     const val ALL_TRANSACTION = "ALL"
@@ -231,6 +235,10 @@ object Constants {
     const val CROSSING_HISTORY_FILTER_DIALOG = "crossing_history_filter_dialog"
     const val DOWNLOAD_FORMAT_SELECTION_DIALOG = "download_format_selection_dialog"
     const val LIVE = "LIVE"
+    const val MAINTENANCE = "MAINTENANCE"
+    const val UNAVAILABLE = "UNAVAILABLE"
+    const val SERVICE_TYPE = "SERVICE_TYPE"
+    const val END_TIME = "END_TIME"
     const val FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE ="FROM_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE"
     const val VEHICLE_DETAIL="vehicle detail"
     const val DELETE_CARD="delete_card"
@@ -307,6 +315,8 @@ object Constants {
     const val HISTORY_LIST="history_list"
     const val ENQUIRY_STATUS="enquiry_status"
     const val ACCOUNT_CONTACT_US="account_contact_us"
+
+    const val API_TIMEOUT_ERROR=100100
 
 
 

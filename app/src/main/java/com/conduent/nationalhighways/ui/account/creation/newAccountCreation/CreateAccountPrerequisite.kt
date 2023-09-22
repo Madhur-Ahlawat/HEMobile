@@ -51,7 +51,7 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
         }
     }
 
-    override fun onRetryClick() {
+    override fun onRetryClick(apiUrl: String){
 
     }
 }

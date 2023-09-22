@@ -29,6 +29,7 @@ import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -188,8 +189,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
             R.id.contact_us -> {
 
-                raise_viewModel.enquiryModel.value= EnquiryModel()
-                raise_viewModel.edit_enquiryModel.value= EnquiryModel()
+                raise_viewModel.enquiryModel.value = EnquiryModel()
+                raise_viewModel.edit_enquiryModel.value = EnquiryModel()
 
 
                 val bundle: Bundle = Bundle()
@@ -265,12 +266,14 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     private fun logOutOfAccount() {
         sessionManager.clearAll()
-        Intent(requireActivity(), LoginActivity::class.java).apply {
-            putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(this)
-        }
+        Utils.redirectToSignoutPage(requireActivity())
+
+//        Intent(requireActivity(), LoginActivity::class.java).apply {
+//            putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
+//            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            startActivity(this)
+//        }
     }
 
     override fun onLogOutClick() {

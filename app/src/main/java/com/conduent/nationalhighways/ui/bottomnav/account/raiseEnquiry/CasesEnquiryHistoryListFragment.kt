@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryListResponseModel
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.ServiceRequest
 import com.conduent.nationalhighways.databinding.FragmentCasesEnquiryHistoryListBinding
 import com.conduent.nationalhighways.ui.base.BackPressListener
@@ -53,6 +54,8 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
             binding.btnNext.gone()
         }
         binding.btnNext.setOnClickListener {
+            viewModel.enquiryModel.value= EnquiryModel()
+            viewModel.edit_enquiryModel.value= EnquiryModel()
             findNavController().navigate(
                 R.id.action_caseEnquiryHistoryListFragment_to_enquiryCategoryFragment,
                 getBundleData()

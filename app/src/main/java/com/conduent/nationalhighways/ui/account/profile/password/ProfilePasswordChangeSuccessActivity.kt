@@ -8,12 +8,15 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.logout.LogoutListener
+import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePasswordSuccessProfileBinding>() {
+class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePasswordSuccessProfileBinding>(),LogoutListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -54,4 +57,24 @@ class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePassword
     }
 
     override fun observeViewModel() {}
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
+        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
+    }
 }

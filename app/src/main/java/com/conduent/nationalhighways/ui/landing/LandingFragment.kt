@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,6 @@ import com.conduent.nationalhighways.data.model.pushnotification.PushNotificatio
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentNewLandingBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
-import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
@@ -57,8 +57,8 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         if (!isChecked) {
-            // loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            //  webServiceViewModel.checkServiceStatus()
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            webServiceViewModel.checkServiceStatus()
         }
         isChecked = true
         if (isPushNotificationChecked) {
@@ -205,41 +205,38 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         }
         when (resource) {
             is Resource.Success -> {
-                resource.data?.apply {
-/*
-                        if (!state.equals(Constants.LIVE, true) && title != null) {
-                            binding.maintainanceLyt.visible()
-                            binding.maintainanceTitle.text = title
-                            if (message != null)
-                                binding.maintainanceDesc.text = message
-                        } else {
-                            binding.maintainanceLyt.gone()
-                        }
-*/
+                if (resource.data?.state == Constants.LIVE) {
+
+                } else {
+                    findNavController().navigate(
+                        R.id.action_landingFragment_to_serviceUnavailableFragment,
+                        getBundleData(resource.data?.state,resource.data?.endTime)
+                    )
                 }
             }
 
             is Resource.DataError -> {
-                if (resource.errorMsg.contains("Connect your VPN", true)) {
-                    if (count > Constants.RETRY_COUNT) {
-                        requireActivity().startActivity(
-                            Intent(context, LandingActivity::class.java)
-                                .putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
-                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        )
-                    }
-                    ErrorUtil.showRetry(this)
-                } else {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
-                }
+                findNavController().navigate(
+                    R.id.action_landingFragment_to_serviceUnavailableFragment,
+                    getBundleData(Constants.UNAVAILABLE)
+                )
             }
 
             else -> {
-                // do nothing
             }
+
         }
 
 
+    }
+
+    private fun getBundleData(state: String?,endTime:String?=null): Bundle? {
+        val bundle: Bundle = Bundle()
+        bundle.putString(Constants.SERVICE_TYPE, state)
+        if(endTime!=null && endTime.replace("null","").isNotEmpty()){
+            bundle.putString(Constants.END_TIME, endTime)
+        }
+        return bundle
     }
 
     private fun openUrlInWebBrowser() {
@@ -249,7 +246,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         }
     }
 
-    override fun onRetryClick() {
+    override fun onRetryClick(apiUrl: String) {
         count++
         isChecked = true
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)

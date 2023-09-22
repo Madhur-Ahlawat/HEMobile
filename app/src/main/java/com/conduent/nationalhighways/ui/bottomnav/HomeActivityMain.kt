@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment
@@ -36,6 +37,7 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
@@ -123,7 +125,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding?.backButton?.setOnClickListener {
             val currentDestination = navController.currentDestination
             if (currentDestination?.id == R.id.caseEnquiryHistoryListFragment) {
-                Log.e("TAG", "setView: --> ")
                 redirectToAccountFragment()
             } else {
                 onBackPressedDispatcher.onBackPressed()
@@ -140,6 +141,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 getString(R.string.str_raise_new_enquiry)
             val bundle: Bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_FROM, from)
+            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
             navController.navigate(R.id.enquiryCategoryFragment, bundle)
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
             from = ""
@@ -184,7 +186,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     dataBinding?.titleTxt?.text =
                         getString(R.string.str_cases_and_enquiries)
                 }
-                Log.e("TAG", "onDestinationChanged: displayName --> " + destination.displayName)
                 if (destination.id == R.id.enquirySuccessFragment || (destination.id == R.id.enquiryCategoryFragment && from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
                     dataBinding?.backButton?.gone()
                 } else {
@@ -291,13 +292,22 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     sessionManager.saveAccountEmailId(personalInformation?.emailAddress ?: "")
                     sessionManager.saveZipCode(personalInformation?.zipCode ?: "")
                     sessionManager.savePhoneNumber(personalInformation?.phoneNumber ?: "")
-                    sessionManager.saveAccountNumber(accountInformation?.number?:"")
-                    sessionManager.saveUserCountryCode(accountInformation?.phoneDayCountryCode?:"")
-                    sessionManager.saveUserMobileNumber(accountInformation?.phoneCell?:"")
+                    sessionManager.saveAccountNumber(accountInformation?.number ?: "")
+                    sessionManager.saveUserCountryCode(
+                        accountInformation?.phoneCellCountryCode ?: ""
+                    )
+                    sessionManager.saveUserMobileNumber(accountInformation?.phoneCell ?: "")
                     (applicationContext as BaseApplication).setAccountSavedData(
                         this
                     )
                     dashboardViewModel?.setAccountType(this)
+                }
+
+                if (status.data?.accountInformation?.accSubType.equals("LRDS")) {
+                    startNewActivityByClearingStack(LandingActivity::class.java) {
+                        putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
+                    }
+
                 }
             }
 
@@ -332,8 +342,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this)
+        Utils.sessionExpired(this, this, sessionManager)
     }
 
     override fun onDestroy() {
@@ -346,7 +357,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
             navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
-                if (fragment is DeletePaymentMethodSuccessFragment || fragment is AccountSuspendReOpenFragment || fragment is NewCardSuccessScreenFragment) {
+                if (fragment is DeletePaymentMethodSuccessFragment ||
+                    fragment is AccountSuspendReOpenFragment ||
+                    fragment is NewCardSuccessScreenFragment
+                ) {
 
                 } else {
                     onBackPressedDispatcher.onBackPressed()
@@ -358,14 +372,17 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     fun redirectToDashBoardFragment() {
-        Log.e("TAG", "redirectToDashBoardFragment: ")
         dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
         dashboardClick()
     }
 
     fun redirectToAccountFragment() {
-        Log.e("TAG", "redirectToAccountFragment: ")
         dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
         accountFragmentClick()
     }
+
+    fun hideBackIcon() {
+        dataBinding?.backButton?.gone()
+    }
+
 }

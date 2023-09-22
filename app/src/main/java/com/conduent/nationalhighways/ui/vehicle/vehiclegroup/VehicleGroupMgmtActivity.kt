@@ -28,18 +28,6 @@ class VehicleGroupMgmtActivity : BaseActivity<ActivityVehicleGroupMgmtBinding>()
 
     override fun onStart() {
         super.onStart()
-        loadSession()
-
-    }
-
-    override fun onUserInteraction() {
-        super.onUserInteraction()
-        loadSession()
-    }
-
-    private fun loadSession() {
-        LogoutUtil.stopLogoutTimer()
-        LogoutUtil.startLogoutTimer(this)
     }
 
 
@@ -52,9 +40,25 @@ class VehicleGroupMgmtActivity : BaseActivity<ActivityVehicleGroupMgmtBinding>()
         customToolbar(getString(R.string.group_mngmt))
     }
 
-    override fun onLogout() {
-        sessionManager.clearAll()
-        Utils.sessionExpired(this)
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
     }
 
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
+        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
+    }
 }

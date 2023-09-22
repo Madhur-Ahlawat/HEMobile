@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.data.remote
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import okhttp3.Authenticator

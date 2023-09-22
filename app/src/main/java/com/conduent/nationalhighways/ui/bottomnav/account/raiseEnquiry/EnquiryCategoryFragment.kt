@@ -50,7 +50,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         if (arguments?.containsKey(Constants.Edit_REQUEST_KEY) == true) {
             editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         }
-        Log.e("TAG", "init: editRequest "+editRequest )
+
         setBackPressListener(this)
 
         saveEditData()
@@ -70,8 +70,12 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
         }
         binding.cancelMb.setOnClickListener {
-            Log.e("TAG", "init: navFlowFrom " + navFlowFrom)
-            if (navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
+            if (editRequest == Constants.EDIT_SUMMARY) {
+                saveOriginalDataToEditModel()
+                findNavController().navigate(
+                    R.id.action_enquiryCategoryFragment_to_enquirySummaryFragment, getBundleData()
+                )
+            } else if (navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                 if (requireActivity() is HomeActivityMain) {
                     (requireActivity() as HomeActivityMain).redirectToDashBoardFragment()
                 }
@@ -83,6 +87,13 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
                 val intent = Intent(requireActivity(), LandingActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()
+            }
+        }
+        if (!backButton) {
+            if (requireActivity() is RaiseEnquiryActivity) {
+                (requireActivity() as RaiseEnquiryActivity).hideBackIcon()
+            } else if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).hideBackIcon()
             }
         }
 
@@ -243,11 +254,10 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     }
 
     private fun saveOriginalDataToEditModel() {
-        Log.e("TAG", "saveOriginalDataToEditModel: enquiryModel " + viewModel.enquiryModel.value)
-        Log.e("TAG", "saveOriginalDataToEditModel: editRequest " + editRequest)
         if (editRequest == Constants.EDIT_SUMMARY) {
 
-            viewModel.edit_enquiryModel.value?.firstname = viewModel.enquiryModel.value?.firstname ?: ""
+            viewModel.edit_enquiryModel.value?.firstname =
+                viewModel.enquiryModel.value?.firstname ?: ""
             viewModel.edit_enquiryModel.value?.email = viewModel.enquiryModel.value?.email ?: ""
             viewModel.edit_enquiryModel.value?.mobileNumber =
                 viewModel.enquiryModel.value?.mobileNumber ?: ""

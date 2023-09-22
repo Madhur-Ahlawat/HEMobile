@@ -75,7 +75,6 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     private fun backClickListener() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                Log.e("TAG", "onCreateView: handleOnBackPressed: backButton " + backButton)
 
                 backPressListener?.onBackButtonPressed()
 

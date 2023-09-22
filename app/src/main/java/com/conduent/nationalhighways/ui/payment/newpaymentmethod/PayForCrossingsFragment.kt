@@ -155,7 +155,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     }
 
 
-    override fun onRetryClick() {
+    override fun onRetryClick(apiUrl: String){
 
     }
 

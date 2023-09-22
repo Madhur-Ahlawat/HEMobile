@@ -1,11 +1,11 @@
 package com.conduent.nationalhighways.ui.base
 
 import android.app.Dialog
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.Window
@@ -21,16 +21,16 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
-import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
-import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
-import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.logout.LogoutListener
+import com.conduent.nationalhighways.ui.loader.RetryListener
+import com.conduent.nationalhighways.utils.common.Utils
+import okhttp3.Interceptor
 
 
-abstract class BaseActivity<T> : AppCompatActivity(),LogoutListener {
+abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
 
     abstract fun observeViewModel()
     protected abstract fun initViewBinding()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,22 +61,18 @@ abstract class BaseActivity<T> : AppCompatActivity(),LogoutListener {
         val customTitleView = LayoutInflater.from(this).inflate(
             R.layout.alert_dialog_custom_title_layout, LinearLayout(this)
         )
-
         val titleText = customTitleView.findViewById<TextView>(R.id.alert_dialog_title_text)
-
-        titleText.text = fTitle?.let { it }
-
-
+        titleText.text = fTitle
         alertDialog.setCustomTitle(customTitleView)
         alertDialog.setMessage(message)
         alertDialog.setButton(
             AlertDialog.BUTTON_POSITIVE,
             positiveBtnTxt
-        ) { dialog, which -> pListener?.positiveBtnClick(dialog) }
+        ) { dialog, _ -> pListener?.positiveBtnClick(dialog) }
         alertDialog.setButton(
             AlertDialog.BUTTON_NEGATIVE,
             negativeBtnTxt
-        ) { dialog, which -> nListener?.negativeBtnClick(dialog) }
+        ) { dialog, _ -> nListener?.negativeBtnClick(dialog) }
         alertDialog.setOnShowListener {
             val button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
             button.setTextColor(
@@ -110,7 +106,6 @@ abstract class BaseActivity<T> : AppCompatActivity(),LogoutListener {
         dialog.setCancelable(false)
 
 
-
         val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(this))
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -120,7 +115,10 @@ abstract class BaseActivity<T> : AppCompatActivity(),LogoutListener {
 
         dialog.setContentView(binding.root)
 
-        dialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT) //Controlling width and height.
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        ) //Controlling width and height.
 
 
         binding.title.text = fTitle
@@ -143,58 +141,53 @@ abstract class BaseActivity<T> : AppCompatActivity(),LogoutListener {
 
     override fun onResume() {
         super.onResume()
-         // BaseApplication.registerSessionListener(this)
+        // BaseApplication.registerSessionListener(this)
     }
 
-    override fun onLogout() {
-        displayCustomMessage(getString(R.string.str_timeout),
-            getString(R.string.str_for_your_security),
-            getString(R.string.str_sign_out),
-            getString(R.string.str_stay_signed_in),
-            object : DialogPositiveBtnListener {
-                override fun positiveBtnClick(dialog: DialogInterface) {
-
-
-
-                    //dialog.dismiss()
-
-
-                }
-            },
-            object : DialogNegativeBtnListener {
-                override fun negativeBtnClick(dialog: DialogInterface) {
-
-
-                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-                }
-            })
-    }
     override fun onUserInteraction() {
         super.onUserInteraction()
-       // BaseApplication.resetSession()
+        // BaseApplication.resetSession()
+    }
+
+    override fun onRetryClick(chain: Interceptor.Chain, context: Context) {
+        Log.e("TAG", "onRetryClick:--> ")
+        runOnUiThread {
+//            showDialog("csc","sc")
+//            Utils.displayRetryDialog(this, chain)
+//            val fragment = RetryDialog("")
+//            fragment.show(supportFragmentManager, "my_dialog_fragment_tag")
+
+        }
+    }
+
+    protected open fun showDialog(title: String?, message: String?) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(
+                "OK"
+            ) { dialog, which -> dialog.dismiss() }
+            .show()
     }
 
 }
 
-fun AppCompatActivity.onBackPressed(callback: () -> Unit){
+fun AppCompatActivity.onBackPressed(callback: () -> Unit) {
     onBackPressedDispatcher.addCallback(this,
-    object : OnBackPressedCallback(true){
-        override fun handleOnBackPressed() {
-            callback()
-        }
-    })
-}
-
-
-
-
-
-fun FragmentActivity.onBackPressed(callback: () -> Unit){
-    onBackPressedDispatcher.addCallback(this,
-        object : OnBackPressedCallback(true){
+        object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 callback()
             }
         })
 }
+
+
+fun FragmentActivity.onBackPressed(callback: () -> Unit) {
+    onBackPressedDispatcher.addCallback(this,
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                callback()
+            }
+        })
+}
+

@@ -16,6 +16,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
+import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.AccountResponse
@@ -36,6 +37,7 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.*
@@ -47,7 +49,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener {
+class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener,
+    OnRetryClickListener {
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
     private var btnEnabled: Boolean = false
@@ -77,6 +80,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
         }
+
+        viewModel.retryEvent.observe(this, androidx.lifecycle.Observer {
+//            Utils.displayRetryDialog(this, this, BuildConfig.LOGIN)
+        })
 
 
     }
@@ -397,31 +404,37 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                binding.btnLogin.isEnabled = true
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
-                if (status.errorModel?.errorCode == 5260) {
-                    binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
-                } else if (status.errorModel?.error.equals("unauthorized", true)) {
-                    binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
+                if (status.errorModel?.errorCode == Constants.API_TIMEOUT_ERROR) {
 
                 } else {
-                    status.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
+                    binding.btnLogin.isEnabled = true
 
+                    if (status.errorModel?.errorCode == 5260) {
+                        binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
+                    } else if (status.errorModel?.error.equals("unauthorized", true)) {
+                        binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
+
+                    } else {
+                        status.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
+
+                    }
+
+                    AdobeAnalytics.setLoginActionTrackError(
+                        "login",
+                        "login",
+                        "login",
+                        "english",
+                        "login",
+                        "",
+                        "true",
+                        "manual",
+                        sessionManager.getLoggedInUser()
+                    )
                 }
 
-                AdobeAnalytics.setLoginActionTrackError(
-                    "login",
-                    "login",
-                    "login",
-                    "english",
-                    "login",
-                    "",
-                    "true",
-                    "manual",
-                    sessionManager.getLoggedInUser()
-                )
             }
 
             else -> {
@@ -664,6 +677,20 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         startActivity(intent)
 
 
+    }
+
+
+    override fun onRetryClick(apiUrl: String) {
+        Log.e("TAG", "onRetryClick: noOfApiTries --> "+viewModel.noOfApiTries.value )
+        if ((viewModel.noOfApiTries.value?:0) <= 4) {
+/*
+            if (apiUrl.contains(BuildConfig.LOGIN)) {
+                binding.btnLogin.performClick()
+            }
+*/
+        } else {
+
+        }
     }
 
 }

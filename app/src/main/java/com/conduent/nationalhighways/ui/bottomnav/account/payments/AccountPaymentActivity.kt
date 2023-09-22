@@ -16,7 +16,6 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.customToolbar
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
-import com.conduent.nationalhighways.utils.onTextChanged
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,15 +67,20 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
         loadSession()
     }
 
-
     private fun loadSession() {
         LogoutUtil.stopLogoutTimer()
         LogoutUtil.startLogoutTimer(this)
     }
 
     override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this)
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
     }
 
     override fun onClick(v: View?) {

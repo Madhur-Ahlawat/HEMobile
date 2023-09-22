@@ -5,21 +5,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
 import com.conduent.nationalhighways.data.model.contactdartcharge.UploadFileResponseModel
 import com.conduent.nationalhighways.databinding.FragmentEnquiryCommentsBinding
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.FilePath
 import com.conduent.nationalhighways.utils.StorageHelper
 import com.conduent.nationalhighways.utils.common.Constants
@@ -34,7 +36,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
 @AndroidEntryPoint
-class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), BackPressListener {
+class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), BackPressListener,
+    OnRetryClickListener {
 
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     var file: File? = null
@@ -44,6 +47,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
     var isViewCreated: Boolean = false
     private var editRequest: String = ""
     var isApiCalled: Boolean = false
+    var fileInMb: Float = 0f
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -111,6 +115,15 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
             }
         })
+
+        if (!backButton) {
+            if (requireActivity() is RaiseEnquiryActivity) {
+                (requireActivity() as RaiseEnquiryActivity).hideBackIcon()
+            } else if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).hideBackIcon()
+            }
+        }
+
     }
 
     private fun visibleChooseFileBt() {
@@ -140,15 +153,11 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
         previousComments = viewModel.edit_enquiryModel.value?.comments ?: ""
         previousFile = viewModel.edit_enquiryModel.value?.fileName ?: ""
-        Log.e("TAG", "saveEditData: previousFile " + previousFile)
-        Log.e("TAG", "saveEditData: previousFile isNotEmpty " + previousFile.isEmpty())
         if (previousFile.isEmpty()) {
             visibleChooseFileBt()
         } else {
             hideChooseFileBt(2)
         }
-        Log.e("TAG", "saveEditData: comments--> " + viewModel.edit_enquiryModel.value?.comments)
-        Log.e("TAG", "saveEditData: comments-*-> " + viewModel.enquiryModel.value?.comments)
         binding.commentsEt.setText(viewModel.edit_enquiryModel.value?.comments.toString())
         binding.charactersRemTv.setText(
             requireActivity().resources.getString(
@@ -159,16 +168,19 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
     }
 
     override fun observer() {
-        Log.e("TAG", "observer: isViewCreated "+isViewCreated )
         binding.viewModel = viewModel
 //        binding.lifecycleOwner = this
         if (!isViewCreated) {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            if(navFlowFrom==Constants.EDIT_SUMMARY || editRequest.isNotEmpty()) {
-            }else{
+            if (navFlowFrom == Constants.EDIT_SUMMARY || editRequest.isNotEmpty()) {
+            } else {
                 observe(viewModel.uploadFileLiveData, ::uploadFileResponse)
             }
+
+            viewModel.retryEvent.observe(this, androidx.lifecycle.Observer {
+//                Utils.displayRetryDialog(this, this, BuildConfig.UPLOAD_FILE)
+            })
         }
         isViewCreated = true
 
@@ -176,7 +188,6 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
 
     private fun uploadFileResponse(resource: Resource<UploadFileResponseModel?>?) {
-        Log.e("TAG", "uploadFileResponse: isApiCalled "+isApiCalled )
         if (isApiCalled) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
@@ -191,7 +202,9 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                 }
 
                 is Resource.DataError -> {
+                    if (resource.errorModel?.errorCode == Constants.API_TIMEOUT_ERROR) {
 
+                    }
                 }
 
                 else -> {
@@ -204,8 +217,18 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
     }
 
     private fun hideChooseFileBt(type: Int) {
-        Log.e("TAG", "hideChooseFileBt: type " + type)
-        binding.fileNameTv.setText(viewModel.edit_enquiryModel.value?.fileName)
+
+        if (fileInMb >= 1) {
+            binding.fileNameTv.setText(
+                viewModel.edit_enquiryModel.value?.fileName + " (" + String.format(
+                    "%.2f",
+                    fileInMb
+                ) + "MB)"
+            )
+        } else {
+            val kilobytes = (fileInMb * 1000).toInt()
+            binding.fileNameTv.setText(viewModel.edit_enquiryModel.value?.fileName + " (" + kilobytes + "KB)")
+        }
         binding.chooseFileBt.gone()
         binding.fileCv.visible()
     }
@@ -237,20 +260,24 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                     val path: String? = FilePath.getPath(requireContext(), it)
                     path?.let { pat ->
                         val file = File(pat)
-                        if (file.length()
-                                .toFloat() / (1000 * 1000) <= 8.0
-                        ) { //checking file size which should be less than 8mb
+                        fileInMb = file.length().toFloat() / (1000 * 1000)
+                        val kilobytes = fileInMb * 1000
 
+
+                        val fileSizeInMB = file.length().toDouble() / (1024 * 1024)
+                        val kilobytes1 = fileSizeInMB * 1024
+
+
+
+                        if (fileInMb <= 8.0) { //checking file size which should be less than 8mb
                             isApiCalled = true
                             this.file = file
-                            viewModel.uploadFileApi(file)
-                            loader?.show(
-                                requireActivity().supportFragmentManager,
-                                Constants.LOADER_DIALOG
-                            )
-
+                            uploadFileApi()
                         } else {
-                            ErrorUtil.showError(binding.root, "File size must be less than 8MB")
+                            ErrorUtil.showError(
+                                binding.root,
+                                resources.getString(R.string.file_not_more_than_8mb)
+                            )
                         }
                     } ?: run {
                         ErrorUtil.showError(binding.root, "Unable to upload the selected file")
@@ -258,6 +285,17 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                 }
             }
         }
+
+    private fun uploadFileApi() {
+        this.file?.let {
+            viewModel.uploadFileApi(it)
+
+            loader?.show(
+                requireActivity().supportFragmentManager,
+                Constants.LOADER_DIALOG
+            )
+        }
+    }
 
 
     private var onScopeResultLauncher =
@@ -293,7 +331,8 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
     private fun saveOriginalDataToEditModel() {
         if (navFlowFrom == Constants.EDIT_SUMMARY) {
-            viewModel.edit_enquiryModel.value?.firstname = viewModel.enquiryModel.value?.firstname ?: ""
+            viewModel.edit_enquiryModel.value?.firstname =
+                viewModel.enquiryModel.value?.firstname ?: ""
             viewModel.edit_enquiryModel.value?.email = viewModel.enquiryModel.value?.email ?: ""
             viewModel.edit_enquiryModel.value?.mobileNumber =
                 viewModel.enquiryModel.value?.mobileNumber ?: ""
@@ -313,6 +352,14 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                 viewModel.enquiryModel.value?.file ?: File("")
             viewModel.edit_enquiryModel.value?.fileName =
                 viewModel.enquiryModel.value?.fileName ?: ""
+        }
+    }
+
+    override fun onRetryClick(apiUrl: String) {
+        if (apiUrl.contains(BuildConfig.UPLOAD_FILE)) {
+            this.file?.let { viewModel.uploadFileApi(it) }
+        } else {
+
         }
     }
 

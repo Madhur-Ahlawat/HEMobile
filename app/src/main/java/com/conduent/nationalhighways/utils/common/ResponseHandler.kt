@@ -1,10 +1,11 @@
 package com.conduent.nationalhighways.utils.common
 
 import android.text.TextUtils
-import com.google.gson.Gson
+import android.util.Log
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.ErrorResponseModel
 import com.conduent.nationalhighways.data.remote.NoConnectivityException
+import com.google.gson.Gson
 import retrofit2.Response
 import java.io.InterruptedIOException
 import java.net.SocketTimeoutException
@@ -29,9 +30,22 @@ object ResponseHandler {
     }
 
     fun <T> failure(e: Exception?): Resource<T?> {
+        Log.e("TAG", "failure: e " + e)
         if (e is NoConnectivityException) {
             return Resource.DataError(e.message)
-        } else if (e is SocketTimeoutException || e is InterruptedIOException) {
+        } else if (e is SocketTimeoutException) {
+            return Resource.DataError(
+                Constants.VPN_ERROR,
+                ErrorResponseModel(
+                    Constants.API_TIME_OUT,
+                    "",
+                    "",
+                    0,
+                    Constants.API_TIMEOUT_ERROR,
+                    ""
+                )
+            )
+        } else if (e is InterruptedIOException) {
             return Resource.DataError(Constants.VPN_ERROR)
         }
         return Resource.DataError(e?.message)

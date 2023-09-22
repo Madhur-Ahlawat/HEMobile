@@ -4,11 +4,14 @@ import com.conduent.nationalhighways.databinding.ActivityGuidanceAndDocumentsBin
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.logout.LogoutListener
+import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GuidanceAndDocumentsActivity : BaseActivity<Any?>() {
+class GuidanceAndDocumentsActivity : BaseActivity<Any?>(),LogoutListener {
 
     private lateinit var binding: ActivityGuidanceAndDocumentsBinding
 
@@ -50,5 +53,25 @@ class GuidanceAndDocumentsActivity : BaseActivity<Any?>() {
         super.onStart()
     }
 
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
+    }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
+        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
+    }
 
 }

@@ -172,7 +172,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             binding.inputCompanyName.getText().toString()
     }
 
-    override fun onRetryClick() {
+    override fun onRetryClick(apiUrl: String){
 
     }
 
