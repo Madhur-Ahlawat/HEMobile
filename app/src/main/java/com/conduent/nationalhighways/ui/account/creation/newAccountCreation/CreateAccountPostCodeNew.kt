@@ -85,8 +85,41 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             }
 
         }
+        validatePostCode()
         binding.inputPostCode.editText
             .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
+    }
+
+    private fun validatePostCode() {
+        requiredPostCode = if (binding.inputPostCode.getText().toString().trim().isEmpty()) {
+            binding.inputPostCode.removeError()
+            false
+        } else {
+            val string = binding.inputPostCode.getText().toString().trim()
+            val finalString = string.replace(" ", "")
+            if (!(hasLowerCase(
+                    binding.inputPostCode.editText.getText().toString().trim()
+                ) || hasUpperCase(
+                    binding.inputPostCode.editText.getText().toString().trim()
+                )) || !hasDigits(
+                    binding.inputPostCode.editText.getText().toString().trim()
+                ) || hasSpecialCharacters(
+                    binding.inputPostCode.getText().toString().trim(),
+                    ""
+                )
+            ) {
+                binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                false
+            } else if (finalString.length < 4 || finalString.length > 10) {
+                binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
+                false
+            } else {
+                binding.inputPostCode.removeError()
+                true
+            }
+
+        }
+        binding.btnFindAddress.isEnabled = requiredPostCode
     }
 
     private fun setPersonalView() {

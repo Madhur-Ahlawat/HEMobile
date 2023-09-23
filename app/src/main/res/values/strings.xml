@@ -1511,6 +1511,8 @@
     <string name="low_balance_amount_must_be_80_000_or_less">Low Balance amount must be £80,000 or less</string>
     <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
     <string name="str_dummy_text_2fa_options_sms">Mobile <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="phone_number_change_successful">Phone number change successful</string>
 </resources>
 
 
