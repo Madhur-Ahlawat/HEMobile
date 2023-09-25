@@ -296,9 +296,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     sessionManager.saveZipCode(personalInformation?.zipCode ?: "")
                     sessionManager.savePhoneNumber(personalInformation?.phoneNumber ?: "")
                     sessionManager.saveAccountNumber(accountInformation?.number ?: "")
-                    sessionManager.saveUserCountryCode(
-                        accountInformation?.phoneCellCountryCode ?: ""
-                    )
+                    if (accountInformation?.phoneCellCountryCode?.isEmpty() == true) {
+                        sessionManager.saveUserCountryCode(
+                            accountInformation.phoneDayCountryCode ?: ""
+                        )
+                    } else {
+                        sessionManager.saveUserCountryCode(
+                            accountInformation?.phoneCellCountryCode ?: ""
+                        )
+                    }
                     sessionManager.saveUserMobileNumber(accountInformation?.phoneCell ?: "")
                     (applicationContext as BaseApplication).setAccountSavedData(
                         this
