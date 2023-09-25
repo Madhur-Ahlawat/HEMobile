@@ -56,9 +56,9 @@
                 android:layout_marginHorizontal="2dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="5dp"
-                android:id="@+id/layout"
+                android:id="@+id/layout_payment_reference_number"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_account_suspended"
+                app:layout_constraintTop_toBottomOf="@id/tvYouWillNeedToPay"
                 android:background="@drawable/bg_card_type"
                 >
 
@@ -93,7 +93,7 @@
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="@+id/ivWarning"
                 app:layout_constraintStart_toStartOf="@id/ivWarning"
-                app:layout_constraintTop_toBottomOf="@+id/layout" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_account_suspended" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tvYouWillAlsoNeed"
@@ -109,43 +109,43 @@
 
                 app:layout_constraintEnd_toEndOf="@+id/ivWarning"
                 app:layout_constraintStart_toStartOf="@id/ivWarning"
-                app:layout_constraintTop_toBottomOf="@+id/tvYouWillNeedToPay" />
+                app:layout_constraintTop_toBottomOf="@+id/layout_payment_reference_number" />
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="74dp"
-                    android:id="@+id/cardView"
-                    android:visibility="gone"
-                    android:background="@drawable/bg_card_type"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="74dp"
+                android:id="@+id/cardView"
+                android:visibility="gone"
+                android:background="@drawable/bg_card_type"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/_15dp"
+                app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed"
+                >
+
+                <ImageView
+                    android:id="@+id/ivCardType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="@dimen/_15dp"
-                    app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed"
-                    >
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/ivCardType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_18dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_select_payment_method"
+                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_18dp"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/grayColorIcon"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivCardType"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.conduent.nationalhighways.utils.widgets.NHTextView
-                        android:id="@+id/tv_select_payment_method"
-                        style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_18dp"
-                        android:fontFamily="@font/open_sans"
-                        android:textColor="@color/grayColorIcon"
-                        android:textSize="@dimen/font_16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivCardType"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <com.conduent.apollo.ui.CMButton

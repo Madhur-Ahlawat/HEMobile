@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.databinding.FragmentNewLandingBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -53,6 +54,12 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
+        HomeActivityMain.accountDetailsData=null
+        HomeActivityMain.checkedCrossing=null
+        HomeActivityMain.crossing=null
+        HomeActivityMain.dateRangeModel=null
+        HomeActivityMain.paymentHistoryListData=null
+        HomeActivityMain.paymentHistoryListDataCheckedCrossings= arrayListOf()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 

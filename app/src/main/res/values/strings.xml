@@ -1517,7 +1517,9 @@
     <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £80,000 or less</string>
     <string name="low_balance_amount_must_be_80_000_or_less">Low Balance amount must be £80,000 or less</string>
     <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
-    <string name="str_dummy_text_2fa_options_sms">Text <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
+    <string name="str_dummy_text_2fa_options_sms">Mobile <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="phone_number_change_successful">Phone number change successful</string>
     <string name="file_not_more_than_8mb">Selected file type should be no more than 8MB</string>
     <string name="str_contact_dart_charge_contact_centre">Contact the Dart Charge contact centre for help.</string>
     <string name="str_contact_every_day">Every day: 8am to 8pm</string>
@@ -1527,5 +1529,3 @@
     <string name="str_local_resident_discount_scheme">You account contains a Local Resident Discount Scheme</string>
     <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>
 </resources>
-
-

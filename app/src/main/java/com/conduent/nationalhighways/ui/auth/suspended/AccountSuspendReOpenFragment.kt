@@ -136,7 +136,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             )
             binding.tvYouWillAlsoNeed.visibility = View.GONE
             binding.btnTopUpNow.text = getString(R.string.str_continue)
-            binding.layout.visibility=View.GONE
+            binding.layoutPaymentReferenceNumber.visibility=View.GONE
             binding.tvPaymentReference.visibility=View.GONE
 
         } else {
@@ -146,7 +146,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             binding.btnTopUpNow.text = getString(R.string.str_go_to_dashboard)
 
             binding.tvAccountSuspended.text = getString(R.string.str_account_reopened)
-            binding.layout.visibility=View.VISIBLE
+            binding.layoutPaymentReferenceNumber.visibility=View.VISIBLE
             binding.tvPaymentReference.visibility=View.VISIBLE
         }
 

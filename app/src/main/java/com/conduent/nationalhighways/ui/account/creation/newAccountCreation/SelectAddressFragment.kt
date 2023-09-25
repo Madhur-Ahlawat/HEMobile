@@ -33,6 +33,8 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_A
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,22 +55,29 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         FragmentSelectAddressBinding.inflate(inflater, container, false)
 
     override fun init() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         val linearLayoutManager = LinearLayoutManager(requireActivity())
         binding.recylcerview.layoutManager = linearLayoutManager
-
-
         selectAddressAdapter = SelectAddressAdapter(requireContext(), mainList, this)
         binding.recylcerview.adapter = selectAddressAdapter
         binding.txtAddressCount.text = "${mainList.size} Addresses Found"
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        if (navFlowCall.equals(Constants.PROFILE_MANAGEMENT)) {
+            binding.btnEnterAddressManually.gone()
+            binding.btnUpdateAddressManually.visible()
+        }
+        else{
+            binding.btnEnterAddressManually.visible()
+            binding.btnUpdateAddressManually.gone()
+        }
 
     }
 
     override fun initCtrl() {
 
         binding.btnNext.setOnClickListener(this)
-        binding.enterAddressManually.setOnClickListener(this)
+        binding.btnEnterAddressManually.setOnClickListener(this)
+        binding.btnUpdateAddressManually.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -119,10 +128,11 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                 binding.txtAddressCount.text = "${mainList.size} Addresses Found"
 
                 when (navFlowCall) {
-                    EDIT_SUMMARY , EDIT_ACCOUNT_TYPE -> {
+                    EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
                         mainList.forEach { it?.isSelected = false }
-                        if(NewCreateAccountRequestModel.selectedAddressId!=-1){
-                            mainList[NewCreateAccountRequestModel.selectedAddressId]?.isSelected = true
+                        if (NewCreateAccountRequestModel.selectedAddressId != -1) {
+                            mainList[NewCreateAccountRequestModel.selectedAddressId]?.isSelected =
+                                true
                             selectAddressAdapter?.notifyDataSetChanged()
                             binding.btnNext.isEnabled = true
                         }
@@ -163,7 +173,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                 }
             }
 
-            binding.enterAddressManually -> {
+            binding.btnEnterAddressManually,binding.btnUpdateAddressManually -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.NAV_FLOW_FROM, EDIT_FROM_POST_CODE)

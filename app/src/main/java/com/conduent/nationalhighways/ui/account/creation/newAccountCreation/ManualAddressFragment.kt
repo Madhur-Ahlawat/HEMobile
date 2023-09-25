@@ -26,6 +26,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.vi
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
@@ -114,8 +115,20 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             Constants.PROFILE_MANAGEMENT -> {
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
-                val data = navData as ProfileDetailModel?
-                if (data?.accountInformation?.accountType.equals(
+                (navData as ProfileDetailModel).personalInformation?.let {
+                    binding.address.editText.setText(it.addressLine1)
+                    binding.address2.editText.setText(it.addressLine2)
+                    binding.postCode.editText.setText(it.zipcode)
+                    binding.townCity.editText.setText(it.city)
+                    binding.country.setSelectedValue(it.country!!)
+                }
+                requiredAddress=true
+                requiredAddress2=true
+                requiredCountry=true
+                requiredPostcode=true
+                requiredCityTown=true
+                checkButton()
+                if ((navData as ProfileDetailModel)?.accountInformation?.accountType.equals(
                         Constants.PERSONAL_ACCOUNT,
                         true
                     )

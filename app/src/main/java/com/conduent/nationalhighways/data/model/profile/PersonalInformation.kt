@@ -56,7 +56,6 @@ data class PersonalInformation(
     val vrAlexaTc: String?,
     val vrGoogleTc: String?,
     val vrSmsTc: String?,
-    val zipCode: String?,
     val zipCodePlus: String?,
     var zipcode: String?,
     var phoneCellCountryCode: String?,
