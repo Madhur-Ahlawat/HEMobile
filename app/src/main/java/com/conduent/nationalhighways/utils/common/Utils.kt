@@ -12,7 +12,6 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.CountDownTimer
 import android.provider.Settings
-import android.util.Log
 import android.text.Selection
 import android.view.LayoutInflater
 import android.view.Window
@@ -22,7 +21,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogRetryBinding
-import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -31,8 +29,8 @@ import com.conduent.nationalhighways.utils.extn.changeTextColor
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
-import okhttp3.Interceptor
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+import okhttp3.Interceptor
 import java.lang.reflect.Field
 import java.text.DateFormat
 import java.text.DecimalFormat
@@ -420,72 +418,92 @@ object Utils {
         }
     }
 
-    fun sessionExpired(context: AppCompatActivity) {
+    fun redirectToSignoutPage(context: Activity) {
         context.startActivity(
-            Intent(context, LandingActivity::class.java)
-                .putExtra(Constants.SHOW_SCREEN, Constants.SESSION_TIME_OUT)
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            Intent(context, LandingActivity::class.java).putExtra(
+                Constants.SHOW_SCREEN, Constants.SESSION_TIME_OUT
+            ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtra(Constants.TYPE, Constants.LOGIN)
         )
-
-
-       /* displayCustomMessage(context,context.getString(R.string.str_timeout),
-            context.getString(R.string.str_for_your_security,"2"),
-            context.getString(R.string.str_stay_signed_in),
-            context.getString(R.string.str_sign_out),
-
-            object : DialogPositiveBtnListener {
-                override fun positiveBtnClick(dialog: DialogInterface) {
-
-
-
-                    //dialog.dismiss()
-
-
-                }
-            },
-            object : DialogNegativeBtnListener {
-                override fun negativeBtnClick(dialog: DialogInterface) {
-
-
-                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
-
-                }
-            })*/
     }
-/*
-    private fun countDownTimer(context: Context, message: TextView) {
-        object : CountDownTimer(120000, 1000) {
+
+    fun sessionExpired(
+        context: Activity, listener: LogoutListener? = null, sessionManager: SessionManager
+    ) {
+        if (sessionManager.getLoggedInUser()) {
+            displayCustomMessage(
+                context,
+                context,
+                context.resources.getString(R.string.str_timeout),
+                context.getString(R.string.str_for_your_security_account_holder, "2"),
+                context.getString(R.string.str_stay_signed_in),
+                context.getString(R.string.str_sign_out),
+                listener,
+                sessionManager
+            )
+
+        } else {
+            displayCustomMessage(
+                context,
+                context,
+                context.resources.getString(R.string.str_timeout),
+                context.getString(R.string.str_for_your_security_non_account_holder, "2"),
+                context.getString(R.string.str_stay_on_the_app),
+                context.getString(R.string.str_delete_my_answers),
+                listener,
+                sessionManager
+            )
+
+        }
+    }
+
+    private fun countDownTimer(
+        activity: Activity, sessionManager: SessionManager, message: TextView
+    ): CountDownTimer {
+
+        val countDownTimer = object : CountDownTimer(120000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                val f: NumberFormat = DecimalFormat("00")
-                val hour = millisUntilFinished / 3600000 % 24
+                val f = DecimalFormat("00") // Two-digit format
+
                 val min = millisUntilFinished / 60000 % 60
                 val sec = millisUntilFinished / 1000 % 60
 
-                message.text =context.getString(R.string.str_for_your_security, f.format(min) + ":" + f.format(sec))
+                message.text = activity.resources.getString(
+                    R.string.str_for_your_security_account_holder,
+                    f.format(min) + ":" + f.format(sec)
+                )
+
 
             }
 
             // When the task is over it will print 00:00:00 there
             override fun onFinish() {
                 //textView.setText("00:00:00")
+                if (sessionManager.getLoggedInUser()) {
+                    sessionManager.clearAll()
+                    redirectToSignoutPage(activity)
+                } else {
+                    activity.startNewActivityByClearingStack(LandingActivity::class.java)
+                }
             }
-        }.start()
+        }
+        countDownTimer.start()
+        return countDownTimer
     }
-*/
 
-   /* fun displayCustomMessage(context: Context,
+    fun displayCustomMessage(
+        activity: Activity,
+        context: Context,
         fTitle: String?,
         message: String,
         positiveBtnTxt: String,
         negativeBtnTxt: String,
-        pListener: DialogPositiveBtnListener?,
-        nListener: DialogNegativeBtnListener?
+        listener: LogoutListener? = null,
+        sessionManager: SessionManager
     ) {
 
         val dialog = Dialog(context)
         dialog.setCancelable(false)
-
 
 
         val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(context))
@@ -497,27 +515,94 @@ object Utils {
 
         dialog.setContentView(binding.root)
 
-        dialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT) //Controlling width and height.
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT
+        ) //Controlling width and height.
 
-           countDownTimer(context,binding.message)
+        val countDownTimer = countDownTimer(activity, sessionManager, binding.message)
         binding.title.text = fTitle
         binding.message.text = message
         binding.cancelBtn.text = negativeBtnTxt
         binding.okBtn.text = positiveBtnTxt
         binding.cancelBtn.setOnClickListener {
-            nListener?.negativeBtnClick(dialog)
+//            nListener?.negativeBtnClick(dialog)
+            countDownTimer.cancel()
+            if (sessionManager.getLoggedInUser()) {
+                sessionManager.clearAll()
+                redirectToSignoutPage(activity)
+            } else {
+                activity.startNewActivityByClearingStack(LandingActivity::class.java)
+            }
             dialog.dismiss()
         }
 
         binding.okBtn.setOnClickListener {
-            pListener?.positiveBtnClick(dialog)
+//            pListener?.positiveBtnClick(dialog)
+            countDownTimer.cancel()
+            LogoutUtil.stopLogoutTimer()
+            LogoutUtil.startLogoutTimer(listener)
             dialog.dismiss()
         }
         dialog.show()
 
 
     }
-*/
+
+    fun displayRetryDialog(
+        activity: Activity,
+        listener: OnRetryClickListener? = null,
+        api_URL: String
+    ) {
+
+        val dialog = Dialog(activity)
+        dialog.setCancelable(false)
+        val binding: DialogRetryBinding = DialogRetryBinding.inflate(LayoutInflater.from(activity))
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
+        ) //Controlling width and height.
+
+
+        binding.retryBtn.setOnClickListener {
+            listener?.onRetryClick(api_URL)
+            dialog.cancel()
+        }
+        dialog.show()
+
+
+    }
+
+    fun displayRetryDialog(
+        activity: Context,
+        chain: Interceptor.Chain? = null
+    ) {
+
+        val dialog = Dialog(activity)
+        dialog.setCancelable(false)
+        val binding: DialogRetryBinding = DialogRetryBinding.inflate(LayoutInflater.from(activity))
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
+        ) //Controlling width and height.
+
+
+        binding.retryBtn.setOnClickListener {
+//            chain.proceed(chain.request())
+            dialog.cancel()
+        }
+        dialog.show()
+
+
+    }
+
     fun removeGivenStringCharactersFromString(characterString: String, input: String): String {
         var input = input
         characterString.forEach {

@@ -847,9 +847,7 @@
     <string name="str_house_number">House Number</string>
     <string name="str_town_city_state_province">Town/City/State/Province</string>
     <string name="str_street_name">Street Name</string>
-    <string name="str_country">Country</string>
     <string name="failed_problem_with_service">Problem with the service</string>
-    <string name="failed_retry_title">Sorry, there is a problem with the service</string>
     <string name="str_country"><b>Country</b></string>
     <string name="failed_retry_title">Sorry, there is a problem with the service.</string>
     <string name="failed_retry_desc">Your requested action may not have completed successfully.</string>
@@ -859,6 +857,8 @@
     <string name="failed_retry_num2">+44 300 300 0120</string>
     <string name="failed_retry_desc4">Lines are open from Mon to Sun 08:00 to 20:00</string>
     <string name="try_again_later">Try again later.</string>
+    <string name="try_again_later_did_not_save_changes">Try again later. We did not save your changes.</string>
+    <string name="try_again_later_signin_account">Try again later or sign into your account.</string>
 
 
     // account status
@@ -1503,6 +1503,10 @@
     <string name="str_signed_out">Signed out</string>
     <string name="str_you_have_signed_out">You\'ve signed out of your account</string>
     <string name="str_timeout">Timeout</string>
+    <string name="str_for_your_security_account_holder">For your security,you\'ll be signed out in %s minutes</string>
+    <string name="str_for_your_security_non_account_holder">For your security, your session will expire and your answers will be deleted in %s minutes</string>
+    <string name="str_stay_on_the_app">Stay on the app</string>
+    <string name="str_delete_my_answers">Delete my answers</string>
     <string name="str_for_your_security">For your security,you\'ll be signed out in %s minutes</string>
     <string name="str_sign_out">Sign out</string>
     <string name="str_stay_signed_in">Stay signed In</string>
@@ -1522,7 +1526,6 @@
     <string name="str_go_to_website">Go to website</string>
     <string name="str_local_resident_discount_scheme">You account contains a Local Resident Discount Scheme</string>
     <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>
-    <string name="str_dummy_text_2fa_options_sms">Mobile <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
 </resources>
 
 
