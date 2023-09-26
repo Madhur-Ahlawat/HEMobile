@@ -166,7 +166,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             }
 
             is Resource.DataError -> {
-                if (resource.errorModel?.errorCode != Constants.NO_DATA_FOR_GIVEN_INDEX) {
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else if (resource.errorModel?.errorCode != Constants.NO_DATA_FOR_GIVEN_INDEX) {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }

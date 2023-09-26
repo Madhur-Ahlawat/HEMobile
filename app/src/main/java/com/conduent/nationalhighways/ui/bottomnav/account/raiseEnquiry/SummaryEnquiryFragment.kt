@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -20,14 +19,13 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
-    var apiSuccess: Boolean = false
-    var isViewCreated: Boolean = false
+    private var apiSuccess: Boolean = false
+    private var isViewCreated: Boolean = false
     private var editRequest: String = ""
 
     override fun getFragmentBinding(
@@ -42,11 +40,13 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
 
         saveData()
         if (viewModel.enquiryModel.value?.category.toString().contains("enquiry")) {
-            binding.contactDetailsTv.setText(resources.getString(R.string.str_check_your_answer_before_enquiry))
-            binding.detailsEnquiryTv.setText(resources.getString(R.string.details_of_enquiry))
+            binding.contactDetailsTv.text =
+                resources.getString(R.string.str_check_your_answer_before_enquiry)
+            binding.detailsEnquiryTv.text = resources.getString(R.string.details_of_enquiry)
         } else {
-            binding.contactDetailsTv.setText(resources.getString(R.string.str_check_your_answer_before_complaint))
-            binding.detailsEnquiryTv.setText(resources.getString(R.string.details_of_complaint))
+            binding.contactDetailsTv.text =
+                resources.getString(R.string.str_check_your_answer_before_complaint)
+            binding.detailsEnquiryTv.text = resources.getString(R.string.details_of_complaint)
         }
 
 
@@ -56,13 +56,13 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             val subcategorySplit = viewModel.enquiryModel.value?.subCategory?.name?.split("~")
             var selectSubArea = ""
             var seletedArea = ""
-            if (subcategorySplit.orEmpty().size > 0) {
+            if (subcategorySplit.orEmpty().isNotEmpty()) {
                 selectSubArea = subcategorySplit?.get(0).toString()
             }
             if (subcategorySplit.orEmpty().size > 1) {
                 seletedArea = subcategorySplit?.get(1).toString()
             }
-            var arrayList: ArrayList<String> = ArrayList()
+            val arrayList: ArrayList<String> = ArrayList()
             if (viewModel.enquiryModel.value?.fileName != null && viewModel.enquiryModel.value?.fileName?.isNotEmpty() == true) {
                 arrayList.add(viewModel.enquiryModel.value?.fileName ?: "")
             }
@@ -125,7 +125,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
 
 
     private fun getBundleData(): Bundle {
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString(Constants.Edit_REQUEST_KEY, Constants.EDIT_SUMMARY)
         bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
@@ -148,14 +148,14 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         isViewCreated = true
     }
 
-    fun enquiryResponseModel(resource: Resource<EnquiryResponseModel?>?) {
+    private fun enquiryResponseModel(resource: Resource<EnquiryResponseModel?>?) {
         if (!apiSuccess) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
             when (resource) {
                 is Resource.Success -> {
-                    resource.data?.email = binding.emailDataTv.getText().toString()
+                    resource.data?.email = binding.emailDataTv.text.toString()
                     resource.data?.category = viewModel.enquiryModel.value?.category?.value ?: ""
                     val bundle = Bundle()
                     bundle.putParcelable(
@@ -173,7 +173,9 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 }
 
                 is Resource.DataError -> {
-
+                    if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                        displaySessionExpireDialog()
+                    }
                 }
 
                 else -> {

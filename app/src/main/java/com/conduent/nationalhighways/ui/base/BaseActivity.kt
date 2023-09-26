@@ -170,6 +170,9 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
             .show()
     }
 
+    fun displaySessionExpireDialog(){
+        Utils.displaySesionExpiryDialog(this)
+    }
 }
 
 fun AppCompatActivity.onBackPressed(callback: () -> Unit) {

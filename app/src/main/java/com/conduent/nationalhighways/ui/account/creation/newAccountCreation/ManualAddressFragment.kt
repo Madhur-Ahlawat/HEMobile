@@ -26,7 +26,6 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.vi
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
@@ -188,7 +187,11 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
 
             else -> {
@@ -255,7 +258,11 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, response.errorMsg)
+                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, response.errorMsg)
+                }
             }
 
             else -> {
@@ -521,7 +528,11 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, response.errorMsg)
+                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, response.errorMsg)
+                }
             }
 
             else -> {

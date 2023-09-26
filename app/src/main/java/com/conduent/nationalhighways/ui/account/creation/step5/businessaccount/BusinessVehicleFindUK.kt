@@ -100,12 +100,20 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
                 }
 
                 is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                        displaySessionExpireDialog()
+                    }else {
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
 
-                    isObserverBack = false
-                    val bundle = Bundle()
-                    bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
-                    findNavController().navigate(R.id.action_businessUKListFragment_to_businessNonUKMakeFragment, bundle)
+                        isObserverBack = false
+                        val bundle = Bundle()
+                        bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, requestModel)
+                        findNavController().navigate(
+                            R.id.action_businessUKListFragment_to_businessNonUKMakeFragment,
+                            bundle
+                        )
+
+                    }
                 }
                 else -> {}
             }
@@ -153,8 +161,12 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-                findNavController().popBackStack()
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    findNavController().popBackStack()
+                }
             }
             else -> {}
         }

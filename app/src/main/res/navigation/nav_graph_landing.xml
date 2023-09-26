@@ -48,9 +48,6 @@
         android:name="com.conduent.nationalhighways.ui.landing.ServiceUnavailableFragment"
         android:label="ServiceUnavailableFragment"
         tools:layout="@layout/fragment_service_unavailable" >
-        <argument
-            android:name="bundleData"
-            app:argType="android.os.Bundle" />
     </fragment>
 
     <fragment

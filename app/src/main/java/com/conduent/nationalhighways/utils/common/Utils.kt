@@ -13,6 +13,7 @@ import android.os.Build.VERSION_CODES
 import android.os.CountDownTimer
 import android.provider.Settings
 import android.text.Selection
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
@@ -21,6 +22,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogRetryBinding
+import com.conduent.nationalhighways.databinding.DialogSessionexpiryBinding
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -830,15 +833,19 @@ object Utils {
     }
 
     fun maskPhoneNumber(phoneNumber: String): String {
-        val star = phoneNumber.length - 6
-        return if (star == 4) {
-            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length - 3), "*****")
+        Log.e("TAG", "maskPhoneNumber: phoneNumber "+phoneNumber )
+        if (phoneNumber.isNotEmpty()) {
+            val star = phoneNumber.length - 6
+            return if (star == 4) {
+                phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length - 3), "*****")
 
+            } else {
+                phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length - 3), "******")
+
+            }
         } else {
-            phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length - 3), "******")
-
+            return phoneNumber
         }
-
 
     }
 
@@ -902,6 +909,29 @@ object Utils {
             e.printStackTrace()
         }
         return "£$balance"
+    }
+
+    fun displaySesionExpiryDialog(activity: Activity) {
+        val dialog = Dialog(activity)
+        dialog.setCancelable(false)
+        val binding: DialogSessionexpiryBinding =
+            DialogSessionexpiryBinding.inflate(LayoutInflater.from(activity))
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
+        ) //Controlling width and height.
+
+
+        binding.signinTv.setOnClickListener {
+
+            activity.startNewActivityByClearingStack(LoginActivity::class.java)
+            dialog.cancel()
+        }
+        dialog.show()
     }
 
 

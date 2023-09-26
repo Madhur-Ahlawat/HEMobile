@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -202,17 +201,21 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                 }
 
                 is Resource.DataError -> {
-                    binding.edtEmail.setErrorText(status.errorMsg)
+                    if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                        displaySessionExpireDialog()
+                    } else {
+                        binding.edtEmail.setErrorText(status.errorMsg)
 
-                    AdobeAnalytics.setActionTrackError(
-                        "next",
-                        "login:forgot password",
-                        "forgot password",
-                        "english",
-                        "login",
-                        (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
-                        sessionManager.getLoggedInUser()
-                    )
+                        AdobeAnalytics.setActionTrackError(
+                            "next",
+                            "login:forgot password",
+                            "forgot password",
+                            "english",
+                            "login",
+                            (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                            sessionManager.getLoggedInUser()
+                        )
+                    }
 
                 }
 
@@ -416,9 +419,12 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                binding.edtEmail.setErrorText(resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    binding.edtEmail.setErrorText(resource.errorMsg)
 
-
+                }
             }
 
             else -> {

@@ -25,8 +25,13 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
-import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.extn.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -39,7 +44,8 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     private var isChecked = false
     private var isPushNotificationChecked = true
     private var count = 1
-
+    var apiState = Constants.UNAVAILABLE
+    var apiEndTime: String = ""
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -102,77 +108,136 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     override fun initCtrl() {
         binding.payCrossingLayout.setOnClickListener {
+            when (apiState) {
+                Constants.LIVE -> {
+                    AdobeAnalytics.setActionTrack(
+                        "one of payment",
+                        "home",
+                        "home",
+                        "english",
+                        "home",
+                        "splash",
+                        sessionManager.getLoggedInUser()
+                    )
 
-            AdobeAnalytics.setActionTrack(
-                "one of payment",
-                "home",
-                "home",
-                "english",
-                "home",
-                "splash",
-                sessionManager.getLoggedInUser()
-            )
+                    requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
+                }
 
-            requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
+                else -> {
+                    findNavController().navigate(
+                        R.id.action_landingFragment_to_serviceUnavailableFragment,
+                        getBundleData(apiState, apiEndTime)
+                    )
+                }
+            }
 
         }
         binding.pcnLayout.setOnClickListener {
-            AdobeAnalytics.setActionTrack(
-                "create account",
-                "home",
-                "home",
-                "english",
-                "home",
-                "splash",
-                sessionManager.getLoggedInUser()
-            )
-            requireActivity().startNormalActivity(CreateAccountActivity::class.java)
+            when (apiState) {
+                Constants.LIVE -> {
+                    AdobeAnalytics.setActionTrack(
+                        "create account",
+                        "home",
+                        "home",
+                        "english",
+                        "home",
+                        "splash",
+                        sessionManager.getLoggedInUser()
+                    )
+                    requireActivity().startNormalActivity(CreateAccountActivity::class.java)
+                }
+
+                else -> {
+                    findNavController().navigate(
+                        R.id.action_landingFragment_to_serviceUnavailableFragment,
+                        getBundleData(apiState, apiEndTime)
+                    )
+
+                }
+            }
+
 
         }
 
         binding.crossingLayout.setOnClickListener {
-            AdobeAnalytics.setActionTrack(
-                "check crossings",
-                "home",
-                "home",
-                "english",
-                "home",
-                "splash",
-                sessionManager.getLoggedInUser()
-            )
+            when (apiState) {
+                Constants.LIVE -> {
+                    AdobeAnalytics.setActionTrack(
+                        "check crossings",
+                        "home",
+                        "home",
+                        "english",
+                        "home",
+                        "splash",
+                        sessionManager.getLoggedInUser()
+                    )
 
-            requireActivity().startNormalActivity(
-                CheckPaidCrossingActivity::class.java
-            )
+                    requireActivity().startNormalActivity(
+                        CheckPaidCrossingActivity::class.java
+                    )
+                }
+
+                else -> {
+                    findNavController().navigate(
+                        R.id.action_landingFragment_to_serviceUnavailableFragment,
+                        getBundleData(apiState, apiEndTime)
+                    )
+                }
+            }
+
         }
         binding.guidanceLayout.setOnClickListener {
-            AdobeAnalytics.setActionTrack(
-                "dart charge guidance and documents",
-                "home",
-                "home",
-                "english",
-                "home",
-                "splash",
-                sessionManager.getLoggedInUser()
-            )
-            requireActivity().startNormalActivity(
-                RaiseEnquiryActivity::class.java
-            )
+            when (apiState) {
+                Constants.LIVE -> {
+                    AdobeAnalytics.setActionTrack(
+                        "dart charge guidance and documents",
+                        "home",
+                        "home",
+                        "english",
+                        "home",
+                        "splash",
+                        sessionManager.getLoggedInUser()
+                    )
+                    requireActivity().startNormalActivity(
+                        RaiseEnquiryActivity::class.java
+                    )
+                }
+
+                else -> {
+                    findNavController().navigate(
+                        R.id.action_landingFragment_to_serviceUnavailableFragment,
+                        getBundleData(apiState, apiEndTime)
+                    )
+                }
+            }
+
         }
 
         binding.btnSignIn.setOnClickListener {
-            AdobeAnalytics.setActionTrack(
-                "login",
-                "home",
-                "home",
-                "englsh",
-                "home",
-                "splash",
-                sessionManager.getLoggedInUser()
-            )
-            requireActivity().startNormalActivity(
-                LoginActivity::class.java
-            )
+            when (apiState) {
+                Constants.LIVE -> {
+                    AdobeAnalytics.setActionTrack(
+                        "login",
+                        "home",
+                        "home",
+                        "englsh",
+                        "home",
+                        "splash",
+                        sessionManager.getLoggedInUser()
+                    )
+                    requireActivity().startNormalActivity(
+                        LoginActivity::class.java
+                    )
+                }
+
+                else -> {
+                    findNavController().navigate(
+                        R.id.action_landingFragment_to_serviceUnavailableFragment,
+                        getBundleData(apiState, apiEndTime)
+                    )
+                }
+            }
+
         }
     }
 
@@ -194,7 +259,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 }
 
                 is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                        displaySessionExpireDialog()
+                    } else {
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
+                    }
                 }
 
                 else -> {
@@ -212,21 +281,24 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         }
         when (resource) {
             is Resource.Success -> {
-                if (resource.data?.state == Constants.LIVE) {
+                apiState = resource.data?.state ?: Constants.UNAVAILABLE
+                apiEndTime = resource.data?.endTime ?: ""
 
+                if (resource.data?.state == Constants.LIVE) {
                 } else {
-                    findNavController().navigate(
-                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-                        getBundleData(resource.data?.state,resource.data?.endTime)
-                    )
+//                    findNavController().navigate(
+//                        R.id.action_landingFragment_to_serviceUnavailableFragment,
+//                        getBundleData(resource.data?.state,resource.data?.endTime)
+//                    )
                 }
             }
 
             is Resource.DataError -> {
-                findNavController().navigate(
-                    R.id.action_landingFragment_to_serviceUnavailableFragment,
-                    getBundleData(Constants.UNAVAILABLE)
-                )
+                apiState = Constants.UNAVAILABLE
+//                findNavController().navigate(
+//                    R.id.action_landingFragment_to_serviceUnavailableFragment,
+//                    getBundleData(Constants.UNAVAILABLE)
+//                )
             }
 
             else -> {

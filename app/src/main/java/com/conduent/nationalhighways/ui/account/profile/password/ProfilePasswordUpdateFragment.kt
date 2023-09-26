@@ -99,7 +99,11 @@ class ProfilePasswordUpdateFragment : BaseFragment<FragmentProfilePasswordUpdate
                 }
             }
             is Resource.DataError -> {
-                showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    showError(binding.root, status.errorMsg)
+                }
             }
             else -> {
             }

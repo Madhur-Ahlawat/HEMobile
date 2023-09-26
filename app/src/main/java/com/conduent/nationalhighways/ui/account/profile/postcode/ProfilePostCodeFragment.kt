@@ -76,7 +76,11 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(),
 
             }
             is Resource.DataError -> {
-                showError(binding.root, response.errorMsg)
+                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    showError(binding.root, response.errorMsg)
+                }
             }
             else -> {
             }
@@ -92,7 +96,11 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(),
             is Resource.Success -> {
             }
             is Resource.DataError -> {
-                showError(binding.root, response.errorMsg)
+                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    showError(binding.root, response.errorMsg)
+                }
             }
             else -> {
             }
@@ -164,7 +172,11 @@ class ProfilePostCodeFragment : BaseFragment<FragmentProfilePostcodeBinding>(),
                 }
             }
             is Resource.DataError -> {
-                showError(binding.root, response.errorMsg)
+                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    showError(binding.root, response.errorMsg)
+                }
             }
             else -> {
             }

@@ -122,12 +122,16 @@ class BusinessVehicleNonUKClassFragment :
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
 
-                findNavController().navigate(
-                    R.id.action_businessNonUkMakeFragment_to_findYourVehicleFragment,
-                    arguments
-                )
+                    findNavController().navigate(
+                        R.id.action_businessNonUkMakeFragment_to_findYourVehicleFragment,
+                        arguments
+                    )
+                }
 
             }
             else -> {

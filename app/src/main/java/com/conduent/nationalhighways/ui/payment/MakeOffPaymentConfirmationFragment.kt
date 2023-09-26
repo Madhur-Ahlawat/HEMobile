@@ -125,17 +125,21 @@ class MakeOffPaymentConfirmationFragment :
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
 
-                AdobeAnalytics.setActionTrackPaymentMethod( "Confirm ",
-                 " one of payment: payment confirm",
-                "payment ",
-                "english",
-                 " one of payment",
-                "home",
-                resource.errorMsg,"card",sessionManager.getLoggedInUser()
-                )
-
+                    AdobeAnalytics.setActionTrackPaymentMethod(
+                        "Confirm ",
+                        " one of payment: payment confirm",
+                        "payment ",
+                        "english",
+                        " one of payment",
+                        "home",
+                        resource.errorMsg, "card", sessionManager.getLoggedInUser()
+                    )
+                }
             }
             else -> {
             }

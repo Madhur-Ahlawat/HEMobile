@@ -143,7 +143,6 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/margin_15dp">
 
-
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
                                 android:id="@+id/sub_category_tv"
                                 style="@style/SemiBoldTextBlack"
@@ -187,6 +186,7 @@
                     <androidx.cardview.widget.CardView
                         android:id="@+id/contact_message_cv"
                         style="@style/cardView_style"
+                        android:layout_height="@dimen/margin_70dp"
                         android:layout_marginLeft="@dimen/margin_2dp"
                         android:layout_marginTop="@dimen/margin_2dp"
                         android:layout_marginRight="@dimen/margin_2dp"
@@ -197,7 +197,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/contact_message_cl"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:padding="@dimen/margin_15dp">
 
 
@@ -206,6 +206,7 @@
                                 style="@style/SemiBoldTextBlack"
                                 android:layout_width="@dimen/margin_0dp"
                                 android:text="@string/contact_message"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/contact_barrier"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -215,7 +216,7 @@
                                 style="@style/RegularTextBlack"
                                 android:layout_width="0dp"
                                 android:maxLines="2"
-                                android:ellipsize="end"
+                                android:visibility="gone"                                android:ellipsize="end"
                                 android:text="@{viewModel.enquiryModel.comments}"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/contact_barrier"
@@ -328,7 +329,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/margin_15dp">
-
 
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
                                 android:id="@+id/lastname_tv"

@@ -213,7 +213,10 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             }
 
             is Resource.DataError -> {
-                /*AdobeAnalytics.setActionTrack1(
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    /*AdobeAnalytics.setActionTrack1(
                     "submit",
                     "login:forgot password:choose options:otp:new password set",
                     "forgot password",
@@ -224,7 +227,8 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                     sessionManager.getLoggedInUser()
                 )*/
 
-                showError(binding.root, status.errorMsg)
+                    showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {

@@ -27,6 +27,7 @@ import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
+import com.conduent.nationalhighways.utils.common.Utils
 
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
@@ -117,6 +118,12 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         super.onPause()
         AdobeAnalytics.setLifeCycleCallAdobe(false)
     }
+
+
+    fun displaySessionExpireDialog() {
+        Utils.displaySesionExpiryDialog(requireActivity())
+    }
+
 
     fun displayMessage(
         fTitle: String?,

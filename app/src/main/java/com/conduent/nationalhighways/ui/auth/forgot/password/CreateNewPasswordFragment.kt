@@ -230,9 +230,12 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             }
 
             is Resource.DataError -> {
-                Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
-                /* AdobeAnalytics.setActionTrack1(
+                    /* AdobeAnalytics.setActionTrack1(
                      "verify",
                      "login:forgot password:choose options:otp:new password set",
                      "forgot password",
@@ -244,7 +247,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                  )
  */
 
-                showError(binding.root, status.errorMsg)
+                    showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
@@ -289,7 +293,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             }
 
             is Resource.DataError -> {
-                /*AdobeAnalytics.setActionTrack1(
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    /*AdobeAnalytics.setActionTrack1(
                     "submit",
                     "login:forgot password:choose options:otp:new password set",
                     "forgot password",
@@ -300,7 +307,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                     sessionManager.getLoggedInUser()
                 )*/
 
-                showError(binding.root, status.errorMsg)
+                    showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {

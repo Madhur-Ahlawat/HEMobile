@@ -296,16 +296,17 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     sessionManager.saveZipCode(personalInformation?.zipCode ?: "")
                     sessionManager.savePhoneNumber(personalInformation?.phoneNumber ?: "")
                     sessionManager.saveAccountNumber(accountInformation?.number ?: "")
-                    if (accountInformation?.phoneCellCountryCode?.isEmpty() == true) {
+                    if (personalInformation?.phoneCellCountryCode?.isEmpty() == true) {
                         sessionManager.saveUserCountryCode(
-                            accountInformation.phoneDayCountryCode ?: ""
+                            personalInformation.phoneDayCountryCode ?: ""
                         )
                     } else {
                         sessionManager.saveUserCountryCode(
-                            accountInformation?.phoneCellCountryCode ?: ""
+                            personalInformation?.phoneCellCountryCode ?: ""
                         )
                     }
-                    sessionManager.saveUserMobileNumber(accountInformation?.phoneCell ?: "")
+
+                    sessionManager.saveUserMobileNumber(personalInformation?.phoneCell ?: "")
                     (applicationContext as BaseApplication).setAccountSavedData(
                         this
                     )
@@ -321,7 +322,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(dataBinding?.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(dataBinding?.root, status.errorMsg)
+                }
             }
 
             else -> {

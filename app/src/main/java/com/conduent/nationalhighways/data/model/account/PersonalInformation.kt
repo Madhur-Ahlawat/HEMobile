@@ -59,5 +59,7 @@ data class PersonalInformation(
     @SerializedName("tempPwdValid") val tempPwdValid: String?,
     @SerializedName("epseligible") val epseligible: String?,
     @SerializedName("emailTemp") val emailTemp: String?,
-    @SerializedName("phoneCell") val phoneCell: String?
+    @SerializedName("phoneCell") val phoneCell: String?,
+    @SerializedName("phoneDayCountryCode") val phoneDayCountryCode: String?,
+    @SerializedName("phoneCellCountryCode") val phoneCellCountryCode: String?
 ) : Parcelable

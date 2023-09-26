@@ -45,7 +45,8 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
         when (serviceType) {
             Constants.MAINTENANCE -> {
                 binding.decs1Tv.text = resources.getString(R.string.str_able_to_use_service, endTime)
-                binding.btnNext.gone()
+                binding.btnNext.visible()
+                binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
                 binding.decs2Tv.gone()
                 binding.decs3Tv.gone()
                 binding.decs4Tv.gone()
@@ -53,6 +54,7 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
             Constants.UNAVAILABLE -> {
                 binding.decs1Tv.text =
                     resources.getString(R.string.try_again_later_did_not_save_changes)
+                binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
                 binding.btnNext.visible()
                 binding.decs2Tv.visible()
                 binding.decs3Tv.visible()

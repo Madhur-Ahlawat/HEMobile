@@ -114,7 +114,11 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
 
             else -> {

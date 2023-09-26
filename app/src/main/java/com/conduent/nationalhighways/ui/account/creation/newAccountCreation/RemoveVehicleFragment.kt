@@ -105,7 +105,11 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
                 findNavController().navigate(R.id.action_removeVehicleFragment_to_resetForgotPassword,bundle)
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {
 

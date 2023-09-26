@@ -42,12 +42,14 @@
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:text="@string/try_again_later_did_not_save_changes"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_tv" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/decs2_tv"
                 style="@style/SemiBoldTextBlack_14sp"
                 android:layout_marginTop="@dimen/margin_20dp"
+                app:layout_constraintRight_toRightOf="parent"
                 android:text="@string/str_contact_dart_charge_contact_centre"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/decs1_tv" />
@@ -55,6 +57,7 @@
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/decs3_tv"
                 style="@style/SemiBoldTextBlack_14sp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:text="@string/str_contact_telephone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -63,10 +66,18 @@
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/decs4_tv"
                 style="@style/SemiBoldTextBlack_14sp"
-                android:text="@string/str_contact_every_day"
+                android:text="@string/str_contact_textphone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/decs3_tv" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/decs5_tv"
+                style="@style/SemiBoldTextBlack_14sp"
+                android:text="@string/str_contact_every_day"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/decs4_tv" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.conduent.nationalhighways.utils.widgets.NHButton

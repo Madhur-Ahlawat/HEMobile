@@ -9,11 +9,19 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
-import com.conduent.nationalhighways.data.model.communicationspref.*
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModelList
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsResp
+import com.conduent.nationalhighways.data.model.communicationspref.SearchProcessParamsModelReq
+import com.conduent.nationalhighways.data.model.communicationspref.SearchProcessParamsModelResp
 import com.conduent.nationalhighways.databinding.FragmentSelectCommunicationPreferenceBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -192,7 +200,9 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
             }
 
             is Resource.DataError -> {
-
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }
             }
             else -> {
             }
@@ -213,6 +223,9 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
             is Resource.DataError -> {
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
+                }
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
                 }
 
             }
@@ -268,7 +281,11 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {
             }
@@ -288,7 +305,11 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {
             }
