@@ -9,100 +9,91 @@
 
     </data>
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/_20sdp">
 
-        <RelativeLayout
+
+        <TextView
+            android:id="@+id/txtAddressCount"
+            style="@style/MediumTextBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+
+            android:text="@string/str_three_address_found" />
+
+        <TextView
+            android:id="@+id/select_your_address"
+            style="@style/RegularTextBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtAddressCount"
+            android:layout_marginHorizontal="20dp"
+            android:text="@string/str_select_your_address"
+
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recylcerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_20sdp">
+            android:layout_height="wrap_content"
+            android:layout_above="@id/see_text"
+            android:layout_below="@id/select_your_address"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:overScrollMode="never"
+
+            tools:listitem="@layout/adapter_select_address" />
+
+        <TextView
+            android:id="@+id/see_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btn_next"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans"
+
+            android:text="@string/str_if_you_dont_see"
+            android:textColor="@color/grayColorIcon"
+            android:textSize="14sp" />
 
 
-            <TextView
-                android:id="@+id/txtAddressCount"
-                style="@style/MediumTextBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btn_next"
+            style="@style/PrimaryButton"
+            android:layout_above="@id/btnEnterAddressManually"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:text="@string/str_continue"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            app:isEnabled="false" />
 
-                android:text="@string/str_three_address_found" />
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btnEnterAddressManually"
+            style="@style/secondaryButton"
+            android:layout_above="@+id/btnUpdateAddressManually"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="@string/str_enter_address_manually" />
 
-            <TextView
-                android:id="@+id/select_your_address"
-                style="@style/RegularTextBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtAddressCount"
-                android:layout_marginHorizontal="20dp"
-                android:text="@string/str_select_your_address"
-
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recylcerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/see_text"
-                android:layout_below="@id/select_your_address"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:overScrollMode="never"
-
-                tools:listitem="@layout/adapter_select_address" />
-
-            <TextView
-                android:id="@+id/see_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/btn_next"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:fontFamily="@font/open_sans"
-
-                android:text="@string/str_if_you_dont_see"
-                android:textColor="@color/grayColorIcon"
-                android:textSize="14sp" />
-
-
-            <com.conduent.apollo.ui.CMButton
-                android:id="@+id/btn_next"
-                style="@style/PrimaryButton"
-                android:layout_above="@id/btnEnterAddressManually"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:text="@string/str_continue"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
-                app:isEnabled="false"
-                />
-
-            <com.conduent.apollo.ui.CMButton
-                android:id="@+id/btnEnterAddressManually"
-                style="@style/secondaryButton"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_above="@+id/btnUpdateAddressManually"
-                android:gravity="center"
-                android:text="@string/str_enter_address_manually" />
-            <com.conduent.apollo.ui.CMButton
-                android:id="@+id/btnUpdateAddressManually"
-                style="@style/secondaryButton"
-                android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginBottom="@dimen/_30dp"
-                android:textColor="@color/doItLaterColour"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:text="@string/update_address_manually"
-                app:borderColor="@color/doItLaterColour"
-                android:gravity="center"/>
-        </RelativeLayout>
-
-
-    </LinearLayout>
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btnUpdateAddressManually"
+            style="@style/secondaryButton"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_30dp"
+            android:gravity="center"
+            android:text="@string/update_address_manually"
+            android:textColor="@color/doItLaterColour"
+            app:borderColor="@color/doItLaterColour" />
+    </RelativeLayout>
 </layout>
 

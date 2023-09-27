@@ -79,6 +79,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             }
 
             else -> {
+                binding.btnEnterAddressManually.visible()
+                binding.btnUpdateAddressManually.gone()
                 if (NewCreateAccountRequestModel.personalAccount) {
                     setPersonalView()
                 }

@@ -34,6 +34,7 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,7 +69,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         }
         else{
             binding.btnEnterAddressManually.visible()
-            binding.btnUpdateAddressManually.gone()
+            binding.btnUpdateAddressManually.invisible()
         }
 
     }
