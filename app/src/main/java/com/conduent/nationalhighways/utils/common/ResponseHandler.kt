@@ -13,12 +13,25 @@ import java.net.SocketTimeoutException
 object ResponseHandler {
 
     fun <T> success(response: Response<T>?, errorManager: ErrorManager? = null): Resource<T?> {
+
+        Log.e("TAG", "success: response code " + response?.code())
+        Log.e("TAG", "success: response isSuccessful " + response?.isSuccessful)
+
         return if (response?.isSuccessful == true) {
-            Resource.Success(response.body())
+            if (response.code() == Constants.TOKEN_FAIL) {
+                return Resource.DataError(
+                    "Token Expired",
+                    ErrorResponseModel("", "", "", 401, 401, "")
+                )
+            } else {
+                Resource.Success(response.body())
+            }
         } else {
             try {
                 val errorResponse =
                     Gson().fromJson(response?.errorBody()?.string(), ErrorResponseModel::class.java)
+                Log.e("TAG", "success: errorResponse " + errorResponse)
+
                 if (TextUtils.isEmpty(errorResponse.message)) {
                     return Resource.DataError(errorResponse.exception, errorResponse)
                 }

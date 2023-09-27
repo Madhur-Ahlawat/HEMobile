@@ -17,10 +17,16 @@ import com.conduent.nationalhighways.databinding.FragmentAddVehicleDoneBinding
 import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickListener
 import com.conduent.nationalhighways.ui.vehicle.vehiclelist.adapter.VehicleListAdapter
+import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickListener
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Logg
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -160,17 +166,20 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 }
             }
             is Resource.DataError -> {
-                val bundle = Bundle().apply {
-                    putParcelable(Constants.DATA, mVehicleDetails)
-                    putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    val bundle = Bundle().apply {
+                        putParcelable(Constants.DATA, mVehicleDetails)
+                        putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                    }
+
+                    findNavController().navigate(
+                        R.id.action_addVehicleDoneFragment_to_addVehicleDetailsFragment,
+                        bundle
+                    )
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
-
-                findNavController().navigate(
-                    R.id.action_addVehicleDoneFragment_to_addVehicleDetailsFragment,
-                    bundle
-                )
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-
             }
             else -> {
             }

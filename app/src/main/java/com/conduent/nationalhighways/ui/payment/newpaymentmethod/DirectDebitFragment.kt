@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,27 +10,20 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.data.model.payment.SaveNewCardRequest
 import com.conduent.nationalhighways.databinding.FragmentDirectDebitBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 
 @AndroidEntryPoint
@@ -104,17 +96,20 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
             }
 
             is Resource.DataError -> {
-                val bundle = Bundle()
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    val bundle = Bundle()
 
-                bundle.putString(
-                    Constants.CARD_IS_ALREADY_REGISTERED,
-                    Constants.DIRECT_DEBIT_NOT_SET_UP
-                )
-                findNavController().navigate(
-                    R.id.directDebitFragment_to_paymentSuccessFragment2,
-                    bundle
-                )
-
+                    bundle.putString(
+                        Constants.CARD_IS_ALREADY_REGISTERED,
+                        Constants.DIRECT_DEBIT_NOT_SET_UP
+                    )
+                    findNavController().navigate(
+                        R.id.directDebitFragment_to_paymentSuccessFragment2,
+                        bundle
+                    )
+                }
             }
 
             else -> {

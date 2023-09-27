@@ -185,7 +185,9 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
             }
 
             is Resource.DataError -> {
-
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }
             }
 
             else -> {
@@ -214,7 +216,9 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
             }
 
             is Resource.DataError -> {
-
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }
             }
 
             else -> {

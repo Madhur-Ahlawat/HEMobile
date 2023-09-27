@@ -118,18 +118,22 @@ class ForgotEmailFragment : BaseFragment<FragmentForgotEmailBinding>(), View.OnC
 
             }
             is Resource.DataError -> {
-                AdobeAnalytics.setActionTrackError(
-                    "login",
-                    "login:forgot email",
-                    "forgot email",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    AdobeAnalytics.setActionTrackError(
+                        "login",
+                        "login:forgot email",
+                        "forgot email",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        status.errorMsg,
+                        sessionManager.getLoggedInUser()
+                    )
 
-                showError(binding.root, status.errorMsg)
+                    showError(binding.root, status.errorMsg)
+                }
             }
             else -> {
             }

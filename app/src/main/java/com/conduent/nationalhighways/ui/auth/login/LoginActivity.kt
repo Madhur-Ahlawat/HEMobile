@@ -16,7 +16,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
-import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.AccountResponse
@@ -678,13 +677,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     override fun onRetryClick(apiUrl: String) {
-        Log.e("TAG", "onRetryClick: noOfApiTries --> "+viewModel.noOfApiTries.value )
-        if ((viewModel.noOfApiTries.value?:0) <= 4) {
-/*
-            if (apiUrl.contains(BuildConfig.LOGIN)) {
-                binding.btnLogin.performClick()
-            }
-*/
+        Log.e("TAG", "onRetryClick: noOfApiTries --> " + viewModel.noOfApiTries.value)
+        if ((viewModel.noOfApiTries.value ?: 0) <= 4) {
+            /*
+                        if (apiUrl.contains(BuildConfig.LOGIN)) {
+                            binding.btnLogin.performClick()
+                        }
+            */
         } else {
 
         }

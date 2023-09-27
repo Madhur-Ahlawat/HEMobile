@@ -264,44 +264,48 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                var isVehicleExist = false
-                val numberPlate =
-                    binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                        .replace("-", "")
-                for (obj in vehicleList) {
-                    if (obj.plateNumber.equals(numberPlate, true)) {
-                        isVehicleExist = true
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    var isVehicleExist = false
+                    val numberPlate =
+                        binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                            .replace("-", "")
+                    for (obj in vehicleList) {
+                        if (obj.plateNumber.equals(numberPlate, true)) {
+                            isVehicleExist = true
+                        }
                     }
-                }
-                val bundle = Bundle()
-                if (navData == null) {
-                    navData =
-                        CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString())
-                }
-                bundle.putParcelable(
-                    Constants.NAV_DATA_KEY,
-                    navData as CrossingDetailsModelsResponse
-                )
-                if (isVehicleExist) {
-                    accountData.isVehicleAlreadyAddedLocal = true
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putString(Constants.PLATE_NUMBER, plateNumber)
-                    findNavController().navigate(
-                        R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                        bundle
+                    val bundle = Bundle()
+                    if (navData == null) {
+                        navData =
+                            CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString())
+                    }
+                    bundle.putParcelable(
+                        Constants.NAV_DATA_KEY,
+                        navData as CrossingDetailsModelsResponse
                     )
-                } else {
-                    NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
-                    bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    arguments?.getInt(Constants.VEHICLE_INDEX)
-                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    findNavController().navigate(
-                        R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,
-                        bundle
-                    )
+                    if (isVehicleExist) {
+                        accountData.isVehicleAlreadyAddedLocal = true
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                        findNavController().navigate(
+                            R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                            bundle
+                        )
+                    } else {
+                        NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
+                        bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        arguments?.getInt(Constants.VEHICLE_INDEX)
+                            ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                        findNavController().navigate(
+                            R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,
+                            bundle
+                        )
+                    }
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
-                ErrorUtil.showError(binding.root, resource.errorMsg)
             }
 
             else -> {}
@@ -309,7 +313,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
     private fun apiResponsePlateInfo(resource: Resource<GetPlateInfoResponseModel?>?) {
         val bundle = Bundle()
-
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -356,43 +359,47 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                var isVehicleExist = false
-                val numberPlate =
-                    binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                        .replace("-", "")
-                for (obj in vehicleList) {
-                    if (obj.plateNumber.equals(numberPlate, true)) {
-                        isVehicleExist = true
-                    }
-                }
-                bundle.putParcelable(
-                    Constants.NAV_DATA_KEY,
-                    data?.apply {
-                        plateNo=binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                            .replace("-", "")
-                    }
-                )
-                if (isVehicleExist) {
-                    accountData.isVehicleAlreadyAddedLocal = true
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putString(Constants.PLATE_NUMBER, plateNumber)
-                    findNavController().navigate(
-                        R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                        bundle
-                    )
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
                 } else {
-                    NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
-                    bundle.putString(Constants.OLD_PLATE_NUMBER, binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                        .replace("-", ""))
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    arguments?.getInt(Constants.VEHICLE_INDEX)
-                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    findNavController().navigate(
-                        R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,
-                        bundle
+                    var isVehicleExist = false
+                    val numberPlate =
+                        binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                            .replace("-", "")
+                    for (obj in vehicleList) {
+                        if (obj.plateNumber.equals(numberPlate, true)) {
+                            isVehicleExist = true
+                        }
+                    }
+                    bundle.putParcelable(
+                        Constants.NAV_DATA_KEY,
+                        data?.apply {
+                            plateNo=binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                                .replace("-", "")
+                        }
                     )
+                    if (isVehicleExist) {
+                        accountData.isVehicleAlreadyAddedLocal = true
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                        findNavController().navigate(
+                            R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                            bundle
+                        )
+                    } else {
+                        NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
+                        bundle.putString(Constants.OLD_PLATE_NUMBER, binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                            .replace("-", ""))
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        arguments?.getInt(Constants.VEHICLE_INDEX)
+                            ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                        findNavController().navigate(
+                            R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,
+                            bundle
+                        )
+                    }
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
-                ErrorUtil.showError(binding.root, resource.errorMsg)
             }
 
             else -> {}
@@ -487,45 +494,47 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 }
 
                 is Resource.DataError -> {
-
-                    var isVehicleExist = false
-                    val numberPlate =
-                        binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                            .replace("-", "")
-                    for (obj in vehicleList) {
-                        if (obj.plateNumber.equals(numberPlate, true)) {
-                            isVehicleExist = true
+                    if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                        displaySessionExpireDialog()
+                    }else {
+                        var isVehicleExist = false
+                        val numberPlate =
+                            binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                                .replace("-", "")
+                        for (obj in vehicleList) {
+                            if (obj.plateNumber.equals(numberPlate, true)) {
+                                isVehicleExist = true
+                            }
+                        }
+                        val bundle = Bundle()
+                        if (navData == null) {
+                            navData =
+                                CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString())
+                        }
+                        bundle.putParcelable(
+                            Constants.NAV_DATA_KEY,
+                            navData as CrossingDetailsModelsResponse
+                        )
+                        if (isVehicleExist) {
+                            accountData.isVehicleAlreadyAddedLocal = true
+                            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                            bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                            findNavController().navigate(
+                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                bundle
+                            )
+                        } else {
+                            NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
+                            bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                            arguments?.getInt(Constants.VEHICLE_INDEX)
+                                ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                            findNavController().navigate(
+                                R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,
+                                bundle
+                            )
                         }
                     }
-                    val bundle = Bundle()
-                    if (navData == null) {
-                        navData =
-                            CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString())
-                    }
-                    bundle.putParcelable(
-                        Constants.NAV_DATA_KEY,
-                        navData as CrossingDetailsModelsResponse
-                    )
-                    if (isVehicleExist) {
-                        accountData.isVehicleAlreadyAddedLocal = true
-                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        bundle.putString(Constants.PLATE_NUMBER, plateNumber)
-                        findNavController().navigate(
-                            R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                            bundle
-                        )
-                    } else {
-                        NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
-                        bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
-                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        arguments?.getInt(Constants.VEHICLE_INDEX)
-                            ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                        findNavController().navigate(
-                            R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,
-                            bundle
-                        )
-                    }
-
                 }
 
                 else -> {
@@ -566,20 +575,21 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-
-
-                val numberPlate =
-                    binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                        .replace("-", "")
-                NewCreateAccountRequestModel.plateNumber = numberPlate
-                NewCreateAccountRequestModel.isVehicleAlreadyAdded = true
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                findNavController().navigate(
-                    R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                    bundle
-                )
-
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    val numberPlate =
+                        binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                            .replace("-", "")
+                    NewCreateAccountRequestModel.plateNumber = numberPlate
+                    NewCreateAccountRequestModel.isVehicleAlreadyAdded = true
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    findNavController().navigate(
+                        R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                        bundle
+                    )
+                }
             }
 
             else -> {

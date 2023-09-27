@@ -62,35 +62,41 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
         var apiStatus = false
+        var sessionExpiry = false
         when (status) {
             is Resource.Success -> {
                 apiStatus = true
             }
 
             is Resource.DataError -> {
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    sessionExpiry = true
+                    displaySessionExpireDialog()
+                }
                 apiStatus = false
             }
 
             else -> {
             }
         }
+        if (!sessionExpiry) {
+            if (indexExists(vehicleList, apiRequestCount)) {
+                vehicleList[apiRequestCount].status = apiStatus
+                apiRequestCount++
+            }
 
-        if (indexExists(vehicleList, apiRequestCount)) {
-            vehicleList[apiRequestCount].status = apiStatus
-            apiRequestCount++
-        }
-
-        if (apiRequestCount < vehicleList.size) {
-            apiCall(apiRequestCount)
-        } else {
-            loader?.dismiss()
-            val bundle = Bundle()
-            bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_SUMMARY)
-            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-            findNavController().navigate(
-                R.id.action_vehicleListFragment_to_vehicleResultFragment,
-                bundle
-            )
+            if (apiRequestCount < vehicleList.size) {
+                apiCall(apiRequestCount)
+            } else {
+                loader?.dismiss()
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_SUMMARY)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                findNavController().navigate(
+                    R.id.action_vehicleListFragment_to_vehicleResultFragment,
+                    bundle
+                )
+            }
         }
     }
 

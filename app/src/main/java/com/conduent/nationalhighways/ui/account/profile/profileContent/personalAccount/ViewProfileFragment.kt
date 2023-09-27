@@ -71,7 +71,11 @@ class ViewProfileFragment : BaseFragment<FragmentViewProfileBinding>(), View.OnC
 
             }
             is Resource.DataError -> {
-                showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    showError(binding.root, status.errorMsg)
+                }
             }
             else -> {
             }

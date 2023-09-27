@@ -25,8 +25,14 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.StorageHelper
-import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.extn.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.openActivityWithData
+import com.conduent.nationalhighways.utils.extn.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.ResponseBody
 import java.io.File
@@ -119,7 +125,11 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {}
         }

@@ -74,7 +74,11 @@ class ViewBusinessAccountProfileFragment :
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
             else -> {
             }

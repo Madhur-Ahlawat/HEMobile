@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,12 @@ import com.conduent.nationalhighways.databinding.FragmentResendCodeBinding
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -207,7 +211,11 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
@@ -271,6 +279,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 }
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,
                     bundle
@@ -278,9 +287,11 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
 
             else -> {

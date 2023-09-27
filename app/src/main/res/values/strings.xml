@@ -434,6 +434,8 @@
 
     <string name="start_again">Start again</string>
     <string name="your_session_has_expired">Your session has expired</string>
+    <string name="str_session_expired">Session Expired</string>
+    <string name="str_your_security_signed_you_out">For your security, we signed you out.</string>
     <string name="select_the_start_now_button_to_restart_your_session">Select the start now button to restart your session</string>
     <string name="select_the_sign_in_button_to_log_in_to_your_account">Select the sign in button to log in to your account</string>
     <string name="email_recovery">Email Recovery</string>
@@ -1489,7 +1491,7 @@
     <string name="credit_will_expire_on">Credit will expire on</string>
     <string name="vehicle_changed">Vehicle changed</string>
     <string name="our_records_show_the_numberplate_is_a_type_nof_vehicle_on_record_rather_than_a_type_of_nvehicle_entered_this_type_of_vehicle_has_a_ndifferent_charge_of_amount"><![CDATA[Our records show the %s is a %s rather than a {type of\nvehicle entered}. This type of vehicle has a\ndifferent charge of <amount>.]]></string>
-    <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from Dart\nCharge payment</string>
+    <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from\nDart Charge payment</string>
     <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment_and_your_remaining_credit_cannot_be_transferred_contact_the_dart_charge_contact_centre_for_help_telephone_0300_300_0120_every_day_8am_to_8pm">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\nContact the Dart Charge contact centre for help.\nTelephone: 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
     <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
@@ -1524,7 +1526,8 @@
     <string name="str_contact_dart_charge_contact_centre">Contact the Dart Charge contact centre for help.</string>
     <string name="str_contact_every_day">Every day: 8am to 8pm</string>
     <string name="str_contact_telephone">Telephone: 0300 300 0120</string>
-    <string name="str_able_to_use_service">You will be able to use the service from %1$s</string>
+    <string name="str_contact_textphone">Textphone: 18001 0300 300 0120</string>
+    <string name="str_able_to_use_service">You will be able to use the service from\n%1$s</string>
     <string name="str_go_to_website">Go to website</string>
     <string name="str_local_resident_discount_scheme">You account contains a Local Resident Discount Scheme</string>
     <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>

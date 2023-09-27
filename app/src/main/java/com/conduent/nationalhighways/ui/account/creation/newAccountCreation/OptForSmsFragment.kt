@@ -30,7 +30,6 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.makeLinks
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -159,7 +158,11 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
 
             else -> {
@@ -201,7 +204,11 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
 
             else -> {
@@ -229,7 +236,11 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
             }
 
             else -> {

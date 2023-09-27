@@ -13,7 +13,11 @@ import com.conduent.nationalhighways.databinding.FragmentViewPaygAccountUserBind
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -88,7 +92,11 @@ class ViewPayGAccountUserProfileFragment : BaseFragment<FragmentViewPaygAccountU
                 }
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
             else -> {
             }

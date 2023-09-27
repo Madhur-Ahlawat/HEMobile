@@ -14,9 +14,11 @@ import com.conduent.nationalhighways.databinding.FragmentProfileConfirmEmailBind
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.DATA
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,7 +91,11 @@ class ProfileConfirmEmailFragment : BaseFragment<FragmentProfileConfirmEmailBind
                 }
             }
             is Resource.DataError -> {
-                showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {}
         }
@@ -114,7 +120,11 @@ class ProfileConfirmEmailFragment : BaseFragment<FragmentProfileConfirmEmailBind
                 }
             }
             is Resource.DataError -> {
-                showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    showError(binding.root, resource.errorMsg)
+                }
             }
             else -> {
             }

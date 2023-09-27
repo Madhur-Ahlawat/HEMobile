@@ -319,6 +319,7 @@ object Constants {
     const val ACCOUNT_CONTACT_US="account_contact_us"
 
     const val API_TIMEOUT_ERROR=100100
+     const val TOKEN_FAIL = 401
 
 
 

@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -9,8 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -206,7 +203,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    showError(binding.root, resource.errorMsg)
+                }
             }
 
             else -> {
@@ -236,7 +237,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    showError(binding.root, resource.errorMsg)
+                }
             }
 
             else -> {
@@ -492,34 +497,38 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
-                AdobeAnalytics.setActionTrack1(
-                    "verify",
-                    "login:forgot password:choose options:otp:new password set",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )
+                    AdobeAnalytics.setActionTrack1(
+                        "verify",
+                        "login:forgot password:choose options:otp:new password set",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        status.errorMsg,
+                        sessionManager.getLoggedInUser()
+                    )
 
-                when (status.errorModel?.errorCode) {
-                    2051 -> {
-                        binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
-                    }
+                    when (status.errorModel?.errorCode) {
+                        2051 -> {
+                            binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
+                        }
 
-                    2050 -> {
-                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
-                    }
+                        2050 -> {
+                            binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
+                        }
 
-                    5260 -> {
-                        binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
-                    }
+                        5260 -> {
+                            binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
+                        }
 
-                    else -> {
-                        binding.edtOtp.setErrorText(status.errorMsg)
+                        else -> {
+                            binding.edtOtp.setErrorText(status.errorMsg)
+                        }
                     }
                 }
             }
@@ -554,7 +563,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 }
 
                 is Resource.DataError -> {
-                    showError(binding.root, status.errorMsg)
+                    if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                        displaySessionExpireDialog()
+                    } else {
+                        showError(binding.root, status.errorMsg)
+                    }
                 }
 
                 else -> {
@@ -576,7 +589,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-//                otpSuccessRedirection()
+                otpSuccessRedirection()
 
                 when (resource.errorModel?.status) {
                     500 -> {
@@ -587,6 +600,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     900 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
 
+                    }
+
+                    Constants.TOKEN_FAIL -> {
+                        displaySessionExpireDialog()
                     }
 
                     else -> {
@@ -604,6 +621,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun otpSuccessRedirection() {
 
         val bundle = Bundle()
+        Log.e("TAG", "otpSuccessRedirection: navflowcall " + navFlowCall)
+        Log.e("TAG", "otpSuccessRedirection: editRequest " + editRequest)
         when (navFlowCall) {
             ACCOUNT_CREATION_MOBILE_FLOW -> {
                 NewCreateAccountRequestModel.smsSecurityCode =
@@ -626,6 +645,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         )
 
                     }
+                } else if (editRequest.equals(EDIT_ACCOUNT_TYPE, true)) {
+                    findNavController().navigate(
+                        R.id.action_AccountChangeType_forgotPassword_to_vehicleListFragment,
+                        bundle
+                    )
                 } else {
                     findNavController().navigate(
                         R.id.action_otpForgotFragment_to_createVehicleFragment
@@ -825,18 +849,21 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     loader?.dismiss()
                 }
 
-
-                AdobeAnalytics.setLoginActionTrackError(
-                    "login",
-                    "login",
-                    "login",
-                    "english",
-                    "login",
-                    "",
-                    "true",
-                    "manual",
-                    sessionManager.getLoggedInUser()
-                )
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    AdobeAnalytics.setLoginActionTrackError(
+                        "login",
+                        "login",
+                        "login",
+                        "english",
+                        "login",
+                        "",
+                        "true",
+                        "manual",
+                        sessionManager.getLoggedInUser()
+                    )
+                }
             }
 
             else -> {
@@ -879,8 +906,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                    putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                        putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                    }
                 }
             }
 

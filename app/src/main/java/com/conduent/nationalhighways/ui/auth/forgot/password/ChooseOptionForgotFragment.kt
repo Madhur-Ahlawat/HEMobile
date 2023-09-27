@@ -210,7 +210,11 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             }
 
             is Resource.DataError -> {
-                showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
@@ -260,17 +264,19 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             }
 
             is Resource.DataError -> {
-
-                AdobeAnalytics.setActionTrackError(
-                    "next",
-                    "login:forgot password",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )
-
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    AdobeAnalytics.setActionTrackError(
+                        "next",
+                        "login:forgot password",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                        sessionManager.getLoggedInUser()
+                    )
+                }
             }
 
             else -> {

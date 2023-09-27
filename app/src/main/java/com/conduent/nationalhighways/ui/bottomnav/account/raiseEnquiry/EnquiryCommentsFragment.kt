@@ -202,7 +202,9 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                 }
 
                 is Resource.DataError -> {
-                    if (resource.errorModel?.errorCode == Constants.API_TIMEOUT_ERROR) {
+                    if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                        displaySessionExpireDialog()
+                    } else if (resource.errorModel?.errorCode == Constants.API_TIMEOUT_ERROR) {
 
                     }
                 }

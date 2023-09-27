@@ -196,7 +196,11 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
                 navigateToAddVehicleDoneScreen()
             }
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
             else -> {
             }
@@ -250,14 +254,18 @@ class AddVehicleClassesFragment : BaseFragment<FragmentAddVehicleClassesBinding>
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-                val bundle = Bundle().apply {
-                    putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    val bundle = Bundle().apply {
+                        putInt(Constants.VEHICLE_SCREEN_KEY, mScreeType)
+                    }
+                    findNavController().navigate(
+                        R.id.action_addVehicleClassesFragment_to_addVehicleFragment,
+                        bundle
+                    )
                 }
-                findNavController().navigate(
-                    R.id.action_addVehicleClassesFragment_to_addVehicleFragment,
-                    bundle
-                )
             }
             else -> {
             }

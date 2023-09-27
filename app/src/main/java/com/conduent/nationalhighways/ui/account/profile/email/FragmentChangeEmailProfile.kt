@@ -201,7 +201,11 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             }
 
             is Resource.DataError -> {
-                showError(binding.root, resource.errorMsg)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    showError(binding.root, resource.errorMsg)
+                }
             }
 
             else -> {

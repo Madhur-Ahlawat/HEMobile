@@ -147,19 +147,22 @@ class FragmentProfileConfirmEmailSecurityCode : BaseFragment<FragmentProfileConf
             }
 
             is Resource.DataError -> {
-                Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
-                AdobeAnalytics.setActionTrack1(
-                    "verify",
-                    "login:forgot password:choose options:otp:new password set",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )
-
+                    AdobeAnalytics.setActionTrack1(
+                        "verify",
+                        "login:forgot password:choose options:otp:new password set",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        status.errorMsg,
+                        sessionManager.getLoggedInUser()
+                    )
+                }
 
             }
 
@@ -195,7 +198,11 @@ class FragmentProfileConfirmEmailSecurityCode : BaseFragment<FragmentProfileConf
                 }
 
                 is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
+                    if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                        displaySessionExpireDialog()
+                    } else {
+                        ErrorUtil.showError(binding.root, status.errorMsg)
+                    }
                 }
 
                 else -> {

@@ -160,7 +160,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                }
             }
 
             else -> {
@@ -246,20 +250,23 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
 
-                //  ErrorUtil.showError(binding.root, resource.errorMsg)
+                    //  ErrorUtil.showError(binding.root, resource.errorMsg)
 
-                AdobeAnalytics.setActionTrackPaymentMethod(
-                    "Confirm ",
-                    " one of payment: payment confirm",
-                    "payment ",
-                    "english",
-                    " one of payment",
-                    "home",
-                    resource.errorMsg, "card", sessionManager.getLoggedInUser()
-                )
-
+                    AdobeAnalytics.setActionTrackPaymentMethod(
+                        "Confirm ",
+                        " one of payment: payment confirm",
+                        "payment ",
+                        "english",
+                        " one of payment",
+                        "home",
+                        resource.errorMsg, "card", sessionManager.getLoggedInUser()
+                    )
+                }
             }
 
             else -> {
@@ -760,7 +767,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }else {
+                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                }
             }
 
             else -> {
