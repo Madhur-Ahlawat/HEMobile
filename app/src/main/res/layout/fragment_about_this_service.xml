@@ -55,25 +55,14 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:id="@+id/btn_learn_more"
             android:layout_marginTop="@dimen/_47dp"
             android:textSize="@dimen/_14sp"
-            android:fontFamily="@font/open_sans"
-            android:layout_marginStart="@dimen/_31dp"
-            android:layout_marginEnd="@dimen/_63dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:layout_gravity="center"
             android:textColor="@color/blue_color"
             android:text="@string/learn_more_about_dartford_crossing_amp_dart_charge"
-            android:layout_height="wrap_content"/>
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:layout_width="wrap_content"
-            android:textColor="@color/black"
-            android:layout_marginTop="@dimen/_60dp"
-            android:textSize="@dimen/_14sp"
-            android:layout_marginStart="32sp"
-            android:fontFamily="@font/open_sans"
-            android:text="DartCharge v1.0\n\n©2020 Conduent, Inc. All Rights Reserved."
             android:layout_height="wrap_content"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

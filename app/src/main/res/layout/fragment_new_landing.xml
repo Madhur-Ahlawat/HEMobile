@@ -78,50 +78,6 @@
                     android:elevation="6dp"
                     android:paddingHorizontal="@dimen/margin_20dp">
 
-                    <RelativeLayout
-                        android:id="@+id/guidanceLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/crossingLayout"
-                        android:layout_marginVertical="@dimen/margin_34dp">
-
-                        <ImageView
-                            android:id="@+id/img_guidance"
-                            android:layout_width="@dimen/_63dp"
-                            android:layout_height="@dimen/_63dp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_phone_circular_gray" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_marginHorizontal="10dp"
-                            android:layout_toEndOf="@id/img_guidance"
-                            android:orientation="vertical">
-
-                            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                                style="@style/RegularTextBlack"
-                                android:layout_centerInParent="true"
-                                android:layout_toEndOf="@id/img_guidance"
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:text="@string/receive_notifications"
-                                android:textColor="@color/grayColorIcon"
-                                android:textSize="@dimen/_16dp" />
-
-                            <View
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_5dp" />
-
-                            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/click_here_to_receive_notifications_when_you_cross"
-                                android:textSize="@dimen/_12sp" />
-                        </LinearLayout>
-
-
-                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/payCrossingLayout"
@@ -235,6 +191,7 @@
                         android:background="@color/gray_DADDDC" />
 
                     <RelativeLayout
+                        android:layout_marginBottom="@dimen/_34dp"
                         android:id="@+id/crossingLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -280,16 +237,6 @@
 
 
                     </RelativeLayout>
-
-                    <View
-                        android:id="@+id/view_below_check_pid_crossings"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:layout_marginStart="@dimen/_15dp"
-                        android:layout_marginEnd="@dimen/_34dp"
-                        android:layout_below="@+id/crossingLayout"
-                        android:layout_marginVertical="@dimen/_17dp"
-                        android:background="@color/gray_DADDDC" />
 
                 </RelativeLayout>
 

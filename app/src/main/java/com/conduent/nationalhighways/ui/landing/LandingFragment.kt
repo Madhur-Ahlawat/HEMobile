@@ -192,33 +192,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             }
 
         }
-        binding.guidanceLayout.setOnClickListener {
-            when (apiState) {
-                Constants.LIVE -> {
-                    AdobeAnalytics.setActionTrack(
-                        "dart charge guidance and documents",
-                        "home",
-                        "home",
-                        "english",
-                        "home",
-                        "splash",
-                        sessionManager.getLoggedInUser()
-                    )
-                    requireActivity().startNormalActivity(
-                        RaiseEnquiryActivity::class.java
-                    )
-                }
-
-                else -> {
-                    findNavController().navigate(
-                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-                        getBundleData(apiState, apiEndTime)
-                    )
-                }
-            }
-
-        }
-
         binding.btnSignIn.setOnClickListener {
             when (apiState) {
                 Constants.LIVE -> {

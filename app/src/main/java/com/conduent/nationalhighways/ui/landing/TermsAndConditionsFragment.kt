@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentGuidanceAndDocumentsBinding
+import com.conduent.nationalhighways.databinding.FragmentTermsAndConditionsBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -37,7 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBinding>(), OnRetryClickListener {
+class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBinding>(), OnRetryClickListener {
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -53,15 +54,15 @@ class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBi
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentGuidanceAndDocumentsBinding {
-        binding = FragmentGuidanceAndDocumentsBinding.inflate(inflater, container, false)
+    ): FragmentTermsAndConditionsBinding {
+        binding = FragmentTermsAndConditionsBinding.inflate(inflater, container, false)
 
         return binding
     }
 
     override fun init() {
-        LandingActivity.setToolBarTitle("Guidance And Documents")
         LandingActivity.showToolBar(true)
+        LandingActivity.setToolBarTitle("Terms & Conditions")
         HomeActivityMain.accountDetailsData=null
         HomeActivityMain.checkedCrossing=null
         HomeActivityMain.crossing=null
@@ -109,7 +110,7 @@ class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBi
     }
 
     override fun initCtrl() {
-        binding.btnFeedbackToImproveService.setOnClickListener {
+        binding.layoutDartChargeGeneral.setOnClickListener {
             when (apiState) {
                 Constants.LIVE -> {
                     AdobeAnalytics.setActionTrack(
@@ -134,11 +135,10 @@ class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBi
             }
 
         }
-        binding.layoutAboutThisService.setOnClickListener {
+        binding.privacyPolicy.setOnClickListener {
             findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_aboutthisserviceFragment)
         }
-
-        binding.btnContactDartCharge.setOnClickListener {
+        binding.termsandconditions.setOnClickListener {
             when (apiState) {
                 Constants.LIVE -> {
                     AdobeAnalytics.setActionTrack(
@@ -164,36 +164,6 @@ class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBi
                 }
             }
 
-        }
-        binding.btnUnderstandingChargesAndFines.setOnClickListener {
-            when (apiState) {
-                Constants.LIVE -> {
-                    AdobeAnalytics.setActionTrack(
-                        "dart charge guidance and documents",
-                        "home",
-                        "home",
-                        "english",
-                        "home",
-                        "splash",
-                        sessionManager.getLoggedInUser()
-                    )
-                    requireActivity().startNormalActivity(
-                        RaiseEnquiryActivity::class.java
-                    )
-                }
-
-                else -> {
-                    findNavController().navigate(
-                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-                        getBundleData(apiState, apiEndTime)
-                    )
-                }
-            }
-
-        }
-
-        binding.layoutTermsAndConditions.setOnClickListener {
-            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_termsandconditions)
         }
     }
 

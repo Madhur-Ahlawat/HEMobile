@@ -1536,6 +1536,6 @@
     <string name="click_here_to_receive_notifications_when_you_cross"><i>Click here to receive notifications when you\ncross</i></string>
     <string name="receive_notifications">Receive Notifications</string>
     <string name="dart_charge_guidance_and_documents">DART CHARGE GUIDANCE AND\nDOCUMENTS</string>
-    <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which\nmeans that you do not pay charges at a booth\nwhen crossing but you can pay charges for crossing\nin various ways.</string>
+    <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means\nthat you do not pay charges at a booth when crossing\nbut you can pay charges for crossing in various ways.</string>
     <string name="learn_more_about_dartford_crossing_amp_dart_charge"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></string>
 </resources>
