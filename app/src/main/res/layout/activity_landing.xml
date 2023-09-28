@@ -17,6 +17,14 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/btnBack"
+                android:padding="@dimen/_15dp"
+                android:src="@drawable/ic_back_black"
+                android:backgroundTint="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title_txt"

@@ -287,8 +287,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                     else -> {
 
-
-                        confirmEmailCode()
+                        otpSuccessRedirection()
+//                        confirmEmailCode()
                     }
 
                 }
@@ -800,7 +800,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 smsOption = "Y",
                 phoneEvening = "",
                 phoneCellCountryCode = phoneCountryCode,
-                mfaEnabled =  dataModel.accountInformation?.mfaEnabled
+                mfaEnabled = dataModel.accountInformation?.mfaEnabled
             )
 
             viewModelProfile.updateUserDetails(request)

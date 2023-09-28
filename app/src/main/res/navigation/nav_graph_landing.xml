@@ -9,12 +9,30 @@
         android:name="com.conduent.nationalhighways.ui.landing.StartNowFragment"
         android:label="@string/str_start_now"
         tools:layout="@layout/fragment_start_now" />
+    <fragment
+        android:id="@+id/guidanceanddocumentsFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.GuidanceAndDocumentsFragment"
+        android:label="Guidance and Documents"
+        tools:layout="@layout/fragment_guidance_and_documents">
+        <action
+            android:id="@+id/action_guidanceanddocumentsFragment_to_aboutthisserviceFragment"
+            app:destination="@id/aboutthisserviceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutthisserviceFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.AboutThisServiceFragment"
+        android:label="Guidance and Documents"
+        tools:layout="@layout/fragment_about_this_service" />
 
     <fragment
         android:id="@+id/landingFragment"
         android:name="com.conduent.nationalhighways.ui.landing.LandingFragment"
         android:label="@string/str_landing_screen"
         tools:layout="@layout/fragment_landing">
+
+        <action
+            android:id="@+id/action_landingFragment_to_guidanceanddocumentsFragment"
+            app:destination="@id/guidanceanddocumentsFragment" />
 
         <action
             android:id="@+id/action_landingFragment_to_startNow"

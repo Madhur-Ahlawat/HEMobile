@@ -1,10 +1,8 @@
 package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
-import com.conduent.nationalhighways.databinding.FragmentNewLandingBinding
+import com.conduent.nationalhighways.databinding.FragmentGuidanceAndDocumentsBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -39,7 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickListener {
+class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBinding>(), OnRetryClickListener {
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -55,13 +53,15 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentNewLandingBinding {
-        binding = FragmentNewLandingBinding.inflate(inflater, container, false)
+    ): FragmentGuidanceAndDocumentsBinding {
+        binding = FragmentGuidanceAndDocumentsBinding.inflate(inflater, container, false)
 
         return binding
     }
 
     override fun init() {
+        LandingActivity.setToolBarTitle("Guidance And Documents")
+        LandingActivity.showToolBar(true)
         HomeActivityMain.accountDetailsData=null
         HomeActivityMain.checkedCrossing=null
         HomeActivityMain.crossing=null
@@ -109,11 +109,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun initCtrl() {
-        LandingActivity.showToolBar(false)
-        binding.btnGuidanceAndDocuments.setOnClickListener{
-            findNavController().navigate(R.id.action_landingFragment_to_guidanceanddocumentsFragment)
-        }
-        binding.payCrossingLayout.setOnClickListener {
+        binding.btnFeedbackToImproveService.setOnClickListener {
             when (apiState) {
                 Constants.LIVE -> {
                     AdobeAnalytics.setActionTrack(
@@ -138,34 +134,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             }
 
         }
-        binding.pcnLayout.setOnClickListener {
-            when (apiState) {
-                Constants.LIVE -> {
-                    AdobeAnalytics.setActionTrack(
-                        "create account",
-                        "home",
-                        "home",
-                        "english",
-                        "home",
-                        "splash",
-                        sessionManager.getLoggedInUser()
-                    )
-                    requireActivity().startNormalActivity(CreateAccountActivity::class.java)
-                }
-
-                else -> {
-                    findNavController().navigate(
-                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-                        getBundleData(apiState, apiEndTime)
-                    )
-
-                }
-            }
-
-
+        binding.layoutAboutThisService.setOnClickListener {
+            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_aboutthisserviceFragment)
         }
 
-        binding.crossingLayout.setOnClickListener {
+        binding.btnContactDartCharge.setOnClickListener {
             when (apiState) {
                 Constants.LIVE -> {
                     AdobeAnalytics.setActionTrack(
@@ -192,7 +165,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             }
 
         }
-        binding.guidanceLayout.setOnClickListener {
+        binding.btnUnderstandingChargesAndFines.setOnClickListener {
             when (apiState) {
                 Constants.LIVE -> {
                     AdobeAnalytics.setActionTrack(
@@ -219,7 +192,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
         }
 
-        binding.btnSignIn.setOnClickListener {
+        binding.btnTermsAndConditions.setOnClickListener {
             when (apiState) {
                 Constants.LIVE -> {
                     AdobeAnalytics.setActionTrack(

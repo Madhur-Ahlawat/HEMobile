@@ -115,7 +115,7 @@
     <string name="str_what_would_you_like_to_do">What would you like to do?</string>
     <string name="str_create_account">Set up a Dart Charge account</string>
     <string name="str_resolve_penalty_charge">Setup a Dart charge account</string>
-    <string name="str_check_for_paid_crossing">Check which crossing you\'ve paid for</string>
+    <string name="str_check_for_paid_crossing">Check which crossing you\'ve\npaid for</string>
     <string name="str_view_charges">Understanding charges and fines</string>
     <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
     <string name="str_no_vehicles_added_txt">No Vehicles has been added yet</string>
@@ -217,7 +217,7 @@
     <string name="str_crossing_service_update">Crossing service updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
     <string name="str_start_now">Start now</string>
-    <string name="str_use_this_service_to">Use this service to</string>
+    <string name="str_use_this_service_to"><b>Use this service to:</b></string>
 
     <string name="str_learn_about_"><u>Learn more about Dartford Crossings &amp; Dart Charge</u></string>
     <string name="str_timing">Timings : Every day, 8am to 8pm</string>
@@ -947,10 +947,10 @@
 
 
     <string name="str_use_service_guideline">
-        \u2022   Pay for crossings without an account
-        <!--\n\u25CF Pay or challenge a penalty charge notice (PCN)-->
-        \n\u2022 Sign in or set up a Dart Charge account
-        \n\u2022 Check with crossing you\u0027ve paid for
+        \u2022   pay for the crossing
+        \n\u2022 sign in or set up a Dart Charge account
+        \n\u2022 resolve a fine (Penalty Charge Notice)
+        \n\u2022 check with crossing you\u0027ve paid for
     </string>
     <string name="a_valid_debit_or_credit_card">a valid debit or credit card</string>
     <string name="create_account">Create account</string>
@@ -1531,4 +1531,11 @@
     <string name="str_go_to_website">Go to website</string>
     <string name="str_local_resident_discount_scheme">You account contains a Local Resident Discount Scheme</string>
     <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>
+    <string name="click_here_to_search_using_your_number_plate"><i>Click here to search using your number plate</i></string>
+    <string name="click_here_to_register_your_number_plate_and_create_an_automatic_top_up_account"><i>Click here to register your number plate and create an automatic top up account</i></string>
+    <string name="click_here_to_receive_notifications_when_you_cross"><i>Click here to receive notifications when you\ncross</i></string>
+    <string name="receive_notifications">Receive Notifications</string>
+    <string name="dart_charge_guidance_and_documents">DART CHARGE GUIDANCE AND\nDOCUMENTS</string>
+    <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which\nmeans that you do not pay charges at a booth\nwhen crossing but you can pay charges for crossing\nin various ways.</string>
+    <string name="learn_more_about_dartford_crossing_amp_dart_charge"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></string>
 </resources>

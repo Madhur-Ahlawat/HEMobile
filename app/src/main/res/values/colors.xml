@@ -23,6 +23,8 @@
     <color name="txt_disable">#7D7D7D</color>
     <color name="btn_shade">#002D18</color>
     <color name="tool_bar_clr">#0f0f0f</color>
+    <color name="gray_707070">#707070</color>
+    <color name="gray_DADDDC">#DADDDC</color>
     <color name="light_cyan">#e0ffff</color>
     <color name="add_stroke_clr">#731212</color>
     <color name="color_D8000000">#D8000000</color>

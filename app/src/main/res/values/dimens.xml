@@ -168,5 +168,11 @@
     <dimen name="_79dp">79dp</dimen>
     <dimen name="_48dp">48dp</dimen>
     <dimen name="_93dp">93dp</dimen>
+    <dimen name="_63dp">63dp</dimen>
+    <dimen name="_34dp">34dp</dimen>
+    <dimen name="_43dp">43dp</dimen>
+    <dimen name="_54dp">54dp</dimen>
+    <dimen name="_17sp">17sp</dimen>
+    <dimen name="_47dp">47dp</dimen>
     />
 </resources>

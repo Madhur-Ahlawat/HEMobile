@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:backgroundTint="@color/white"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_use_this_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/str_use_this_service_to"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_26dp"
+            android:layout_marginTop="@dimen/_17dp"
+            android:textSize="@dimen/_17sp"
+            android:fontFamily="@font/open_sans_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_guideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14dp"
+            android:text="@string/str_use_service_guideline"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sp"
+            android:layout_marginStart="@dimen/_29dp"
+            android:lineSpacingExtra="@dimen/_8dp"
+            android:fontFamily="@font/open_sans"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_marginTop="@dimen/_22dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginStart="@dimen/_26dp"
+                android:src="@drawable/ic_exclaimation_black"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_vertical"
+                android:layout_width="@dimen/_54dp"
+                android:layout_marginEnd="@dimen/_15dp"
+                android:layout_height="@dimen/_60dp"/>
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/_20sp"
+                android:fontFamily="@font/open_sans_bold"
+                android:textColor="@color/gray_707070"
+                android:text="You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice)."
+                android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:id="@+id/btn_learn_more"
+            android:layout_marginTop="@dimen/_47dp"
+            android:textSize="@dimen/_14sp"
+            android:fontFamily="@font/open_sans"
+            android:layout_marginStart="@dimen/_31dp"
+            android:layout_marginEnd="@dimen/_63dp"
+            android:textColor="@color/blue_color"
+            android:text="@string/learn_more_about_dartford_crossing_amp_dart_charge"
+            android:layout_height="wrap_content"/>
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_60dp"
+            android:textSize="@dimen/_14sp"
+            android:layout_marginStart="32sp"
+            android:fontFamily="@font/open_sans"
+            android:text="DartCharge v1.0\n\n©2020 Conduent, Inc. All Rights Reserved."
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
