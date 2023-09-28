@@ -281,11 +281,33 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 binding.apply {
                     inputCountry.dataSet.clear()
                     inputCountry.dataSet.addAll(fullCountryNameWithCode)
-                    inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
-                    requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
-                    if (!NewCreateAccountRequestModel.prePay) {
-                        checkButton()
+
+                }
+
+
+                if (navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE) {
+                    var userCountryCode = data?.personalInformation?.phoneDayCountryCode
+
+                    if (data?.personalInformation?.phoneCell.isNullOrEmpty().not()) {
+                        userCountryCode = data?.personalInformation?.phoneCellCountryCode
                     }
+
+
+
+                    fullCountryNameWithCode.forEachIndexed { _, fullCountryName ->
+                        val countrycode = getCountryCode(fullCountryName)
+                        if (countrycode == userCountryCode) {
+                            binding.inputCountry.setSelectedValue(fullCountryName)
+                            return@forEachIndexed
+                        }
+                    }
+                } else {
+                    binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                }
+                requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
+
+                if (!NewCreateAccountRequestModel.prePay) {
+                    checkButton()
                 }
 
             }
@@ -303,6 +325,21 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         }
     }
+
+    private fun getCountryCode(selectedItem: String): String {
+        val data = selectedItem
+        val openingParenIndex = selectedItem.indexOf("(")
+        val closingParenIndex = selectedItem.indexOf(")")
+
+        val extractedText =
+            if (openingParenIndex != -1 && closingParenIndex != -1 && closingParenIndex > openingParenIndex) {
+                data.substring(openingParenIndex + 1, closingParenIndex)
+            } else {
+                ""
+            }
+        return extractedText
+    }
+
 
     override fun onClick(v: View?) {
         hideKeyboard()

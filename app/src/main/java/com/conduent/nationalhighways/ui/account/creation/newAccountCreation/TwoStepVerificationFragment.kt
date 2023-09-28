@@ -98,7 +98,9 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
     }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-        loader?.dismiss()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")

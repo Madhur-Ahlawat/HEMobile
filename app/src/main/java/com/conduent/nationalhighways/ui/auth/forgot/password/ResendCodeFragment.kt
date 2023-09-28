@@ -45,6 +45,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     private var replenishmentInformation: ReplenishmentInformation? = null
     private lateinit var editRequest: String
 
+    private var phoneCountryCode: String = ""
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -56,6 +57,9 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
     override fun initCtrl() {
 
+        if(arguments?.containsKey(Constants.PHONE_COUNTRY_CODE) == true){
+            phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
+        }
         if (arguments != null) {
             data = arguments?.getParcelable("data")
         }
@@ -201,6 +205,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
+                bundle.putString(Constants.PHONE_COUNTRY_CODE, phoneCountryCode)
 
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,
@@ -274,12 +279,25 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                         arguments?.getParcelable(Constants.NAV_DATA_KEY)
                     }
 
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                     bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
+                 } else if (navFlowCall == Constants.PROFILE_MANAGEMENT_2FA_CHANGE) {
+                    val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        arguments?.getParcelable(
+                            Constants.NAV_DATA_KEY,
+                            ProfileDetailModel::class.java
+                        )
+                    } else {
+                        arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                    }
+
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                 }
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)
+                bundle.putString(Constants.PHONE_COUNTRY_CODE, phoneCountryCode)
+
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,
                     bundle

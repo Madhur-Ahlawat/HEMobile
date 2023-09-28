@@ -286,10 +286,13 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             findNavController().navigate(R.id.action_accountSummaryFragment_to_removeVehicleFragment)
         } else {
             val bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY, EDIT_SUMMARY)
 
             if (isDblaAvailable == true) {
                 bundle.putString(Constants.PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountFindVehicleFragment,
                     bundle
@@ -297,6 +300,8 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             } else {
                 bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+
                 if (isDblaAvailable != null) {
                     bundle.putBoolean(Constants.IS_DBLA_AVAILABLE, isDblaAvailable)
                 }

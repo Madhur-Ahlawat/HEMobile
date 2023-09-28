@@ -114,7 +114,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
 
-
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
         }
@@ -352,8 +351,21 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
                     }
-                }
 
+                    Constants.PROFILE_MANAGEMENT_2FA_CHANGE->{
+                        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            arguments?.getParcelable(
+                                Constants.NAV_DATA_KEY,
+                                ProfileDetailModel::class.java
+                            )
+                        } else {
+                            arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                        }
+
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    }
+                }
+                bundle.putString(Constants.PHONE_COUNTRY_CODE,this.phoneCountryCode)
                 bundle.putParcelable("data", data)
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -456,6 +468,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 val bundle = Bundle()
 
                 if (navFlowCall == TWOFA) {
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
                     dashboardViewModel.getAccountDetailsData()
 
 
@@ -589,7 +603,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                otpSuccessRedirection()
+//                otpSuccessRedirection()
 
                 when (resource.errorModel?.status) {
                     500 -> {
@@ -599,7 +613,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                     900 -> {
                         binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
-
                     }
 
                     Constants.TOKEN_FAIL -> {
@@ -810,6 +823,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
 
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
 
         when (status) {
             is Resource.Success -> {
@@ -819,18 +835,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                    if (loader?.isVisible == true) {
-                        loader?.dismiss()
-                    }
-
-
                     val intent = Intent(requireActivity(), AuthActivity::class.java)
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
                     intent.putExtra(Constants.CROSSINGCOUNT, "")
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
-
-
                     intent.putExtra(
                         Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                     )
@@ -845,10 +854,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
-
                 if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
                 } else {

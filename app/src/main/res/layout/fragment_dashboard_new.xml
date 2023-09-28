@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="str_maskcardnumber" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,12 +74,12 @@
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textColor="@color/color_00837B"
-                    android:textSize="@dimen/_42sp"
+                    android:textSize="@dimen/font_38sp"
                     app:autoSizePresetSizes="@array/button_text_auto_size"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="£44.50" />
+                    tools:text="£10,00000.00" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/tv_account_number_heading"

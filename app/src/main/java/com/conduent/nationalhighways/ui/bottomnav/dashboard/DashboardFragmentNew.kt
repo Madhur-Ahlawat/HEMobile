@@ -265,7 +265,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         paymentHistoryListData?.clear()
                         paymentHistoryListData?.addAll(it)
                         paymentHistoryListData =
-                            sortTransactionsDateWiseDescending(paymentHistoryListData!!).toMutableList()
+                            sortTransactionsDateWiseDescending(paymentHistoryListData?:ArrayList()).toMutableList()
                         recentTransactionAdapter.submitList(
                             sortTransactionsDateWiseDescending(
                                 paymentHistoryListData!!
@@ -403,7 +403,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        cardNumber.text = data.accountInformation?.paymentTypeInfo
+                        if(data.accountInformation?.paymentTypeInfo?.length!!>=4){
+                            cardNumber.text = resources.getString(R.string.str_maskcardnumber,data.accountInformation.paymentTypeInfo.takeLast(4))
+                        }else{
+                            cardNumber.text = resources.getString(R.string.str_maskcardnumber,data.accountInformation.paymentTypeInfo)
+                        }
                         DashboardUtils.setAccountStatusNew(
                             it,
                             indicatorAccountStatus,
@@ -488,7 +492,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        cardNumber.text = data.accountInformation?.paymentTypeInfo
+                        if(data.accountInformation?.paymentTypeInfo?.length!!>=4){
+                            cardNumber.text = resources.getString(R.string.str_maskcardnumber,data.accountInformation.paymentTypeInfo.takeLast(4))
+                        }else{
+                            cardNumber.text = resources.getString(R.string.str_maskcardnumber,data.accountInformation.paymentTypeInfo)
+                        }
                         DashboardUtils.setAccountStatusNew(
                             it,
                             indicatorAccountStatus,

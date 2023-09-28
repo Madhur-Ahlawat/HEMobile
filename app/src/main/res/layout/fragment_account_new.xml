@@ -17,13 +17,18 @@
             android:layout_height="match_parent"
             android:background="@color/white">
 
-            <ImageView
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/profile_pic"
+                style="@style/SemiBoldText"
                 android:layout_width="@dimen/_90dp"
                 android:layout_height="@dimen/_90dp"
                 android:layout_marginStart="@dimen/_29dp"
                 android:layout_marginTop="@dimen/_25dp"
-                android:src="@drawable/circular_dummy_image"
+                tools:text="12"
+                android:gravity="center"
+                android:textSize="40sp"
+                android:textColor="@color/white"
+                android:background="@drawable/skyblue_circle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -130,7 +135,7 @@
                         android:layout_height="@dimen/_25dp"
                         android:layout_marginStart="@dimen/margin_17dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_car_grey"
+                        android:src="@drawable/ic_profile_management"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -452,7 +457,7 @@
                         android:layout_height="@dimen/_25dp"
                         android:layout_marginStart="@dimen/margin_17dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_car_grey"
+                        android:src="@drawable/ic_logout_black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

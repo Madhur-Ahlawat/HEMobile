@@ -128,7 +128,7 @@ object Utils {
                     }
                     false
 
-                } else if (updatedText.toInt() > 80000) {
+                } else if (updatedText.toInt() > 100000) {
                     if(isTopUp){
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
                     }
@@ -851,8 +851,6 @@ object Utils {
 
     fun maskCardNumber(cardNumber: String): String {
         return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "************")
-
-
     }
 
 

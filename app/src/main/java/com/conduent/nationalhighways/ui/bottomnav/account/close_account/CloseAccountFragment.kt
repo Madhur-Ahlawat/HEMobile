@@ -1,7 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.close_account
 
 import android.content.Context
-import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -46,26 +47,46 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
     }
 
     override fun initCtrl() {
+        Log.e("TAG", "initCtrl:accSubType "+HomeActivityMain.accountDetailsData?.accountInformation?.accSubType )
+        Log.e("TAG", "initCtrl:accountType "+HomeActivityMain.accountDetailsData?.accountInformation?.accountType )
+        Log.e("TAG", "initCtrl:emailAddress "+HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress )
         if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.PAYG)) {
-            binding?.message1?.visible()
+            binding.message1.gone()
         } else {
-            binding?.message1?.gone()
+            binding.message1.visible()
         }
         binding.btnCloseAccount.setOnClickListener {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             val newCaseReq = CreateNewCaseReq(
                 HomeActivityMain.accountDetailsData?.personalInformation?.firstName,
                 HomeActivityMain.accountDetailsData?.personalInformation?.lastName,
-                "",
-                HomeActivityMain.accountDetailsData?.personalInformation?.phoneNumber,
+                HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress,
+                HomeActivityMain.accountDetailsData?.personalInformation?.phoneCell,
                 HomeActivityMain.accountDetailsData?.personalInformation?.accountNumber,
-                "",
+                "account Closure",
                 Constants.ACCOUNT_HOLDER_REQUEST,
                 Constants.ACCOUNT_CLOSURE,
                 null,
                 "ENU",
-            )
-            contactDartChargeViewModel.createNewCase(newCaseReq)
+                HomeActivityMain.accountDetailsData?.personalInformation?.phoneCellCountryCode?:"",
+
+                )
+
+            requireActivity().startNewActivityByClearingStack(CloseAccountSuccessActivity::class.java) {
+                Log.e("TAG", "initCtrl:accSubType "+HomeActivityMain.accountDetailsData?.accountInformation?.accSubType )
+
+                putString(
+                    Constants.EMAIL,
+                    HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
+                )
+                putString(
+                    Constants.ACCOUNT_SUBTYPE,
+                    HomeActivityMain.accountDetailsData?.accountInformation?.accSubType
+                )
+            }
+            requireActivity().finish()
+
+//            contactDartChargeViewModel.createNewCase(newCaseReq)
         }
         binding?.btnContinue?.setOnClickListener {
             findNavController().popBackStack()
@@ -81,11 +102,18 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    val intent = Intent(requireActivity(), CloseAccountSuccessActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
+                    requireActivity().startNewActivityByClearingStack(CloseAccountSuccessActivity::class.java) {
+                        putString(
+                            Constants.EMAIL,
+                            HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
+                        )
+                        putString(
+                            Constants.ACCOUNT_SUBTYPE,
+                            HomeActivityMain.accountDetailsData?.accountInformation?.accSubType
+                        )
+
+                    }
                     requireActivity().finish()
-//                  findNavController().navigate(R.id.action_closeAccountFragment_to_accountClosedFragment)
                 }
             }
 
