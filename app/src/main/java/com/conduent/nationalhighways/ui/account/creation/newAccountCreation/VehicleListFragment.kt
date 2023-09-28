@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -225,10 +226,39 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
 
                 } else {
-                    findNavController().navigate(
-                        R.id.action_vehicleListFragment_to_createAccountSummaryFragment,
-                        bundle
-                    )
+                    Log.e("TAG", "onClick: personalAccount "+NewCreateAccountRequestModel.personalAccount )
+                    Log.e("TAG", "onClick: personalAccount "+vehicleList.size )
+                    if (NewCreateAccountRequestModel.personalAccount) {
+                        if (vehicleList.size > BuildConfig.PERSONAL.toInt()) {
+                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                            findNavController().navigate(
+                                R.id.action_vehicleListFragment_to_maximumVehicleFragment,
+                                bundle
+                            )
+                        } else {
+                            findNavController().navigate(
+                                R.id.action_vehicleListFragment_to_createAccountSummaryFragment,
+                                bundle
+                            )
+
+                        }
+
+                    } else {
+
+                        if (vehicleList.size > BuildConfig.BUSINESS.toInt()) {
+                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                            findNavController().navigate(
+                                R.id.action_vehicleListFragment_to_maximumVehicleFragment,
+                                bundle
+                            )
+                        } else {
+                            findNavController().navigate(
+                                R.id.action_vehicleListFragment_to_createAccountSummaryFragment,
+                                bundle
+                            )
+                        }
+
+                    }
                 }
             }
         }

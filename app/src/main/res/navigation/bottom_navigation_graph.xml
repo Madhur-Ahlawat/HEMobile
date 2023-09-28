@@ -95,7 +95,9 @@
         tools:layout="@layout/vehicle_success_fragment">
         <action
             android:id="@+id/action_vehicleResultFragment_to_vehicleHistoryListFragment"
-            app:destination="@id/vehicleHomeListFragment" />
+            app:destination="@id/vehicleHomeListFragment"
+            app:popUpTo="@id/vehicleHomeListFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

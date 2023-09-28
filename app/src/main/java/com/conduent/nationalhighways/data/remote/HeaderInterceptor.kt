@@ -27,6 +27,29 @@ class HeaderInterceptor @Inject constructor(
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
+        val requestBuilder = chain.request().newBuilder()
+        // requestBuilder.addHeader("ContentType", "application/x-www-form-urlencoded")
+        // If token has been saved, add it to the request
+        //var sessionManager = MyApplication.getContext()?.let { SessionManager(it) }
+        val appVersion = getVersionName()
+        val osVersion: String? = Build.VERSION.RELEASE
+
+        sessionManager.let {
+            it.fetchAuthToken()?.let { accessToken ->
+                if (!chain.request().url.encodedPath.contains("account/vehicle/getPlateInfo")) {
+                    requestBuilder.addHeader("Authorization", "Bearer $accessToken")
+                }
+                requestBuilder.addHeader(
+                    "User-Agent",
+                    "MobileApp-${appVersion}, Android-${osVersion}"
+                )
+            }
+        }
+        return chain.proceed(requestBuilder.build())
+    }
+/*
+
+    override fun intercept(chain: Interceptor.Chain): Response {
 
         val requestBuilder = chain.request().newBuilder()
         // requestBuilder.addHeader("ContentType", "application/x-www-form-urlencoded")
@@ -59,7 +82,8 @@ class HeaderInterceptor @Inject constructor(
         var retryCount = 0
         val maxRetry = 3 // Define your maximum retry count here
 
-        /*
+        */
+/*
                 while (response == null && retryCount < maxRetry) {
                     Log.e("TAG", "checkretryOption: retryCount "+retryCount)
                     try {
@@ -85,7 +109,8 @@ class HeaderInterceptor @Inject constructor(
                         response = null // Reset response to null for retry
                     }
                 }
-        */
+        *//*
+
 //        checkretryOption(response,chain,)
         return response ?: throw IOException("Response is null")
     }
@@ -127,6 +152,7 @@ class HeaderInterceptor @Inject constructor(
             }.show()
         }
     }
+*/
 
 
 }

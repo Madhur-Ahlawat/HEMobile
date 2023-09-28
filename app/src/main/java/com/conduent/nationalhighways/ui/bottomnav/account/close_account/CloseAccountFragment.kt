@@ -68,11 +68,9 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
                 HomeActivityMain.accountDetailsData?.personalInformation?.phoneCellCountryCode?:"",
 
                 )
-
-
             contactDartChargeViewModel.createNewCase(newCaseReq)
         }
-        binding?.btnContinue?.setOnClickListener {
+        binding.btnContinue.setOnClickListener {
             findNavController().popBackStack()
         }
     }

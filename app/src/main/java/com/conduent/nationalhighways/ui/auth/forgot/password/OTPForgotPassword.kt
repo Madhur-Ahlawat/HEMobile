@@ -603,8 +603,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-//                otpSuccessRedirection()
-
                 when (resource.errorModel?.status) {
                     500 -> {
                         binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
@@ -634,29 +632,31 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun otpSuccessRedirection() {
 
         val bundle = Bundle()
-        Log.e("TAG", "otpSuccessRedirection: navflowcall " + navFlowCall)
-        Log.e("TAG", "otpSuccessRedirection: editRequest " + editRequest)
         when (navFlowCall) {
             ACCOUNT_CREATION_MOBILE_FLOW -> {
                 NewCreateAccountRequestModel.smsSecurityCode =
                     binding.edtOtp.getText().toString().trim()
                 if (editRequest.equals(EDIT_SUMMARY, true)) {
-                    if (navFlowFrom == Constants.OPTSMS) {
-                        findNavController().navigate(
-                            R.id.action_optSms_forgotOtpFragment_to_createAccountSummaryFragment,
-                            bundle
-                        )
-                    } else if (navFlowFrom == Constants.TwoStepVerification) {
+                    when (navFlowFrom) {
+                        Constants.OPTSMS -> {
+                            findNavController().navigate(
+                                R.id.action_optSms_forgotOtpFragment_to_createAccountSummaryFragment,
+                                bundle
+                            )
+                        }
+                        Constants.TwoStepVerification -> {
 
-                        findNavController().navigate(
-                            R.id.action_twoStep_forgotOtpFragment_to_createAccountSummaryFragment,
-                            bundle
-                        )
-                    } else {
-                        findNavController().navigate(
-                            R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
-                        )
+                            findNavController().navigate(
+                                R.id.action_twoStep_forgotOtpFragment_to_createAccountSummaryFragment,
+                                bundle
+                            )
+                        }
+                        else -> {
+                            findNavController().navigate(
+                                R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
+                            )
 
+                        }
                     }
                 } else if (editRequest.equals(EDIT_ACCOUNT_TYPE, true)) {
                     findNavController().navigate(
@@ -715,21 +715,25 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 when (navFlowCall) {
                     EDIT_SUMMARY -> {
-                        if (navFlowFrom == Constants.OPTSMS) {
-                            findNavController().navigate(
-                                R.id.action_optSms_forgotOtpFragment_to_createAccountSummaryFragment,
-                                bundle
-                            )
-                        } else if (navFlowFrom == Constants.TwoStepVerification) {
-                            findNavController().navigate(
-                                R.id.action_twoStep_forgotOtpFragment_to_createAccountSummaryFragment,
-                                bundle
-                            )
-                        } else {
-                            findNavController().navigate(
-                                R.id.action_email_forgotOtpFragment_to_createAccountSummaryFragment,
-                                bundle
-                            )
+                        when (navFlowFrom) {
+                            Constants.OPTSMS -> {
+                                findNavController().navigate(
+                                    R.id.action_optSms_forgotOtpFragment_to_createAccountSummaryFragment,
+                                    bundle
+                                )
+                            }
+                            Constants.TwoStepVerification -> {
+                                findNavController().navigate(
+                                    R.id.action_twoStep_forgotOtpFragment_to_createAccountSummaryFragment,
+                                    bundle
+                                )
+                            }
+                            else -> {
+                                findNavController().navigate(
+                                    R.id.action_email_forgotOtpFragment_to_createAccountSummaryFragment,
+                                    bundle
+                                )
+                            }
                         }
                     }
 

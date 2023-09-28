@@ -12,6 +12,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
@@ -154,12 +155,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
-                isClicked=true
+                isClicked = true
 
                 val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
 
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                Log.e("TAG", "onClick: plateNumber " + plateNumber)
+                Log.e("TAG", "onClick: editCall " + editCall)
                 if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.getText()
                         .toString().trim() && isCrossingCall.not()
                 ) {
@@ -196,7 +199,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         isVehicleExist = true
                     }
                 }
-
+                Log.e("TAG", "onClick: isVehicleExist " + isVehicleExist)
                 if (isVehicleExist) {
                     NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = true
                     val bundleData = Bundle()
@@ -209,38 +212,63 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 } else {
                     val vehicleList = NewCreateAccountRequestModel.vehicleList
                     val size = addedVehicleList.size + vehicleList.size
-                    if (size >= 10) {
-                        NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                        findNavController().navigate(
-                            R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                            bundle
-                        )
-                    } else {
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
-                        if (isCrossingCall) {
-                            viewModel.getVehicleData(
-                                binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                                    .replace("-", ""),
-                                Constants.AGENCY_ID.toInt()
+                    Log.e("TAG", "onClick:size " + size)
+                    Log.e("TAG", "onClick:vehicleList " + vehicleList)
+                    Log.e("TAG", "onClick:navFlowCall " + navFlowCall)
+                    if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
+                        if (size >= 10) {
+                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                            findNavController().navigate(
+                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                bundle
                             )
-//                            viewModel.getNewVehicleData(
-//                                binding.editNumberPlate.getText().toString().trim().replace(" ","").replace("-",""),
-//                                Constants.AGENCY_ID.toInt()
-//                            )
                         } else {
-                            if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS, true)) {
-                                viewModel.getVehiclePlateData(numberPlate, Constants.AGENCY_ID.toInt())
-                            } else {
-                                checkForDuplicateVehicle(numberPlate)
-                            }
+                            checkVehicle(numberPlate)
+                        }
+                    } else {
+                        if (NewCreateAccountRequestModel.personalAccount && size >= BuildConfig.PERSONAL.toInt()) {
+                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                            findNavController().navigate(
+                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                bundle
+                            )
+                        } else if (!NewCreateAccountRequestModel.personalAccount && size >= BuildConfig.BUSINESS.toInt()) {
+                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                            findNavController().navigate(
+                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                bundle
+                            )
+                        } else {
+                            checkVehicle(numberPlate)
                         }
                     }
                 }
 
 
+            }
+        }
+    }
+
+    private fun checkVehicle(numberPlate: String) {
+        loader?.show(
+            requireActivity().supportFragmentManager,
+            Constants.LOADER_DIALOG
+        )
+        if (isCrossingCall) {
+            viewModel.getVehicleData(
+                binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                    .replace("-", ""),
+                Constants.AGENCY_ID.toInt()
+            )
+//                            viewModel.getNewVehicleData(
+//                                binding.editNumberPlate.getText().toString().trim().replace(" ","").replace("-",""),
+//                                Constants.AGENCY_ID.toInt()
+//                            )
+        } else {
+            if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS, true)) {
+                viewModel.getVehiclePlateData(numberPlate, Constants.AGENCY_ID.toInt())
+            } else {
+                checkForDuplicateVehicle(numberPlate)
             }
         }
     }
