@@ -850,7 +850,9 @@ object Utils {
     }
 
     fun maskCardNumber(cardNumber: String): String {
-        return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "************")
+        return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "****")
+
+
     }
 
 
