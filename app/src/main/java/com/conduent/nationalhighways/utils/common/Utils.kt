@@ -128,7 +128,7 @@ object Utils {
                     }
                     false
 
-                } else if (updatedText.toInt() > 80000) {
+                } else if (updatedText.toInt() > 100000) {
                     if(isTopUp){
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
                     }

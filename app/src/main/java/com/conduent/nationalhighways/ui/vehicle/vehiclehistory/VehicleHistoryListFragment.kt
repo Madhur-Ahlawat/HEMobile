@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
@@ -216,7 +217,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
             R.id.btnNext -> {
                 if(isBusinessAccount.not()){
-                    if (mList.size >= 10) {
+                    if (mList.size >= BuildConfig.PERSONAL.toInt()) {
                         NewCreateAccountRequestModel.isMaxVehicleAdded = true
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,bundle())
                     } else {
@@ -224,7 +225,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment,bundle())
                     }
                 }else {
-                    if (mList.size >= 50000) {
+                    if (mList.size >= BuildConfig.BUSINESS.toInt()) {
                         NewCreateAccountRequestModel.isMaxVehicleAdded = true
                         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,bundle())
                     } else {

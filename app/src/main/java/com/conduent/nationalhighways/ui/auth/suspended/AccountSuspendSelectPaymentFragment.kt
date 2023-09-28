@@ -164,7 +164,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                         binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                         false
 
-                    } else if (updatedText.toInt() > 80000) {
+                    } else if (updatedText.toInt() > 100000) {
                         binding.lowBalance.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
                         false
                     } else {

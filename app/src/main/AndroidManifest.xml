@@ -30,6 +30,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bottomnav.account.close_account.CloseAccountSuccessActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.account.biometric.BiometricActivity"

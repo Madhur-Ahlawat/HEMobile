@@ -76,6 +76,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
+
         typeOfVehicle.clear()
         typeOfVehicle.add("Motorcycle, moped or quad bike")
         typeOfVehicle.add("Car, van or minibus < 8 seats")
@@ -240,6 +241,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             }
         }
 
+        if(navFlowCall.equals(Constants.EDIT_SUMMARY)){
+            binding.checkBoxTerms.isChecked=true
+        }
     }
 
     private fun setPreSelectedVehicleType() {

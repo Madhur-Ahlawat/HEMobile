@@ -42,12 +42,13 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     lateinit var sessionManager: SessionManager
     override fun init() {
         binding.btnSubmit.setOnClickListener(this)
-        title= requireActivity().findViewById(R.id.title_txt)
-        when(navFlowCall) {
+        title = requireActivity().findViewById(R.id.title_txt)
+        when (navFlowCall) {
 
-            Constants.FORGOT_PASSWORD_FLOW->{
+            Constants.FORGOT_PASSWORD_FLOW -> {
                 binding.subTitle.gone()
             }
+
             REMOVE_VEHICLE -> {
                 binding.subTitle.gone()
                 binding.title.text = getString(R.string.vehicle_deleted)
@@ -63,41 +64,65 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 title?.text = getString(R.string.profile_name)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.name_change_successful)
-                binding.subTitle.text = Html.fromHtml(getString(R.string.you_will_receive_a_confirmation_email,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
+                binding.subTitle.text = Html.fromHtml(
+                    getString(
+                        R.string.you_will_receive_a_confirmation_email,
+                        data?.emailAddress
+                    ), Html.FROM_HTML_MODE_COMPACT
+                )
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
+
             PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
                 title?.text = getString(R.string.profile_address)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.address_change_successful)
-                binding.subTitle.text = Html.fromHtml(getString(R.string.you_will_receive_a_confirmation_email,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
+                binding.subTitle.text = Html.fromHtml(
+                    getString(
+                        R.string.you_will_receive_a_confirmation_email,
+                        data?.emailAddress
+                    ), Html.FROM_HTML_MODE_COMPACT
+                )
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
+
             PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                 title?.text = getString(R.string.communication_preferences)
                 binding.title.text = getString(R.string.communication_change_successful)
                 binding.subTitle.gone()
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
+
             PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                 title?.text = getString(R.string.profile_mobile_number)
                 val data = navData as PersonalInformation?
-                val isMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER,true)
-                if(isMobileNumber == false){
+                val isMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER, true)
+                if (isMobileNumber == false) {
                     binding.title.text = getString(R.string.phone_number_change_successful)
                     HomeActivityMain.setTitle(getString(R.string.profile_phone_number))
-                }else {
+                } else {
                     binding.title.text = getString(R.string.mobile_change_successful)
                     HomeActivityMain.setTitle(getString(R.string.profile_mobile_number))
                 }
-                binding.subTitle.text = Html.fromHtml(getString(R.string.you_will_receive_a_confirmation_email,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
+                binding.subTitle.text = Html.fromHtml(
+                    getString(
+                        R.string.you_will_receive_a_confirmation_email,
+                        data?.emailAddress
+                    ), Html.FROM_HTML_MODE_COMPACT
+                )
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
+
             PROFILE_MANAGEMENT_2FA_CHANGE -> {
                 title?.text = getString(R.string.profile_2fa)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.two_factor_change_successful)
-                binding.subTitle.text = Html.fromHtml(getString(R.string.you_will_receive_a_confirmation_email,data?.emailAddress), Html.FROM_HTML_MODE_COMPACT)
+                binding.subTitle.text = Html.fromHtml(
+                    getString(
+                        R.string.you_will_receive_a_confirmation_email,
+                        data?.emailAddress
+                    ), Html.FROM_HTML_MODE_COMPACT
+                )
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
         }
@@ -115,30 +140,31 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
         when (v?.id) {
             R.id.btn_submit -> {
 
-                when(navFlowCall) {
+                when (navFlowCall) {
 
                     REMOVE_VEHICLE -> {
                         findNavController().popBackStack()
                     }
 
-                    PROFILE_MANAGEMENT_2FA_CHANGE,PROFILE_MANAGEMENT_MOBILE_CHANGE,PROFILE_MANAGEMENT,
-                    PROFILE_MANAGEMENT_ADDRESS_CHANGED,PROFILE_MANAGEMENT -> {
+                    PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT,
+                    PROFILE_MANAGEMENT_ADDRESS_CHANGED, PROFILE_MANAGEMENT -> {
                         findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
                     }
-                    PROFILE_MANAGEMENT_COMMUNICATION_CHANGED->{
+
+                    PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         findNavController().navigate(R.id.action_resetFragment_to_accountManagementFragment)
                     }
 
                     else -> {
-                       /* AdobeAnalytics.setActionTrack(
-                            "submit",
-                            "login:forgot password:choose options:otp:new password set:password reset success",
-                            "forgot password",
-                            "english",
-                            "login",
-                            (requireActivity() as AuthActivity).previousScreen,
-                            sessionManager.getLoggedInUser()
-                        )*/
+                        /* AdobeAnalytics.setActionTrack(
+                             "submit",
+                             "login:forgot password:choose options:otp:new password set:password reset success",
+                             "forgot password",
+                             "english",
+                             "login",
+                             (requireActivity() as AuthActivity).previousScreen,
+                             sessionManager.getLoggedInUser()
+                         )*/
 
                         requireActivity().startNormalActivity(LoginActivity::class.java)
                         requireActivity().finish()

@@ -78,10 +78,14 @@
         tools:layout="@layout/fragment_forgot_reset">
         <action
             android:id="@+id/action_resetFragment_to_profileManagementFragment"
-            app:destination="@id/profileManagementFragment" />
+            app:destination="@id/profileManagementFragment"
+            app:popUpTo="@id/profileManagementFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_resetFragment_to_accountManagementFragment"
-            app:destination="@id/accountFragment" />
+            app:destination="@id/accountFragment"
+            app:popUpTo="@id/profileManagementFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -91,7 +95,9 @@
         tools:layout="@layout/vehicle_success_fragment">
         <action
             android:id="@+id/action_vehicleResultFragment_to_vehicleHistoryListFragment"
-            app:destination="@id/vehicleHomeListFragment" />
+            app:destination="@id/vehicleHomeListFragment"
+            app:popUpTo="@id/vehicleHomeListFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

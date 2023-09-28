@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
-import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -87,13 +85,29 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             ) {
                 paymentManagement.gone()
             }
-            valueName.text = sessionManager.fetchFirstName()
+            valueName.text = sessionManager.fetchFirstName() + " " + sessionManager.fetchLastName()
+
+            var firstNameChar: Char = ' '
+            var secondNameChar: Char = ' '
+            firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
+            secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
+
+            profilePic.text = "" + firstNameChar.toString() + secondNameChar.toString()
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
             DashboardUtils.setAccountStatusNew(
                 sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
                 binding.cardIndicatorAccountStatus
             )
+            if (sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
+                leftIcon6.alpha = 0.5f
+                valueTitle6.alpha = 0.5f
+                iconArrow6.alpha = 0.5f
+            } else {
+                leftIcon6.alpha = 1f
+                valueTitle6.alpha = 1f
+                iconArrow6.alpha = 1f
+            }
         }
     }
 
@@ -183,8 +197,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.close_acount -> {
-                title?.text = getString(R.string.str_close_account)
-                findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
+                if (!sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
+                    title?.text = getString(R.string.str_close_account)
+                    findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
+                }
             }
 
             R.id.contact_us -> {
