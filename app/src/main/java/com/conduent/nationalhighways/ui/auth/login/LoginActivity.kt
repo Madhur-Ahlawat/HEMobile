@@ -452,12 +452,15 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             saveAuthTokenTimeOut(response.data?.expiresIn ?: 0)
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
+//            saveUserName(binding.edtEmail.getText().toString())
             if (response.data?.require2FA == "true") {
                 twoFAEnable = true
             }
             // navigateHomeActivity()
 
         }
+        Log.e("TAG", "launchIntent: twoFAEnable "+twoFAEnable )
+        Log.e("TAG", "launchIntent: fetchUserName "+sessionManager.fetchUserName() )
         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
                 .trim()
         ) {
@@ -524,6 +527,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
+                    Log.e("TAG", "negativeBtnClick: twoFAEnable "+twoFAEnable )
                     if (twoFAEnable) {
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)

@@ -47,9 +47,6 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
     }
 
     override fun initCtrl() {
-        Log.e("TAG", "initCtrl:accSubType "+HomeActivityMain.accountDetailsData?.accountInformation?.accSubType )
-        Log.e("TAG", "initCtrl:accountType "+HomeActivityMain.accountDetailsData?.accountInformation?.accountType )
-        Log.e("TAG", "initCtrl:emailAddress "+HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress )
         if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.PAYG)) {
             binding.message1.gone()
         } else {
@@ -72,21 +69,8 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
 
                 )
 
-            requireActivity().startNewActivityByClearingStack(CloseAccountSuccessActivity::class.java) {
-                Log.e("TAG", "initCtrl:accSubType "+HomeActivityMain.accountDetailsData?.accountInformation?.accSubType )
 
-                putString(
-                    Constants.EMAIL,
-                    HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
-                )
-                putString(
-                    Constants.ACCOUNT_SUBTYPE,
-                    HomeActivityMain.accountDetailsData?.accountInformation?.accSubType
-                )
-            }
-            requireActivity().finish()
-
-//            contactDartChargeViewModel.createNewCase(newCaseReq)
+            contactDartChargeViewModel.createNewCase(newCaseReq)
         }
         binding?.btnContinue?.setOnClickListener {
             findNavController().popBackStack()
@@ -98,7 +82,9 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
     }
 
     private fun createNewCase(resource: Resource<CreateNewCaseResp?>?) {
-        loader?.dismiss()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {

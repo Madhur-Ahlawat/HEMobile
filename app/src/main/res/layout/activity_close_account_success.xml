@@ -1,162 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        layout="@layout/tool_bar_with_title_back"
-        android:layout_width="match_parent"
-        android:id="@+id/id_tool_bar_lyt"
-        android:layout_height="@dimen/_45sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/white"
-        android:elevation="3dp"
-        android:translationZ="2dp"
-        android:theme="@style/Theme.ToolBar">
+    <data>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/btn_backText"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:tint="@color/white"
-                android:text="Back"
-                app:fontFamily="@font/sfbold"
-                android:visibility="gone"
-                android:textSize="17sp"
-                android:fontFamily="@font/sfregular"
-                android:textColor="@color/white"
-                android:drawableLeft="@drawable/ic_back_arrow" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/title_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:text="@string/str_close_account" />
-
-
-        </RelativeLayout>
-
-    </com.google.android.material.appbar.MaterialToolbar>
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/id_tool_bar_lyt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_115dp"
-            android:src="@drawable/checkicon"
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/tool_bar_with_title_back" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/title"
-            style="@style/OpenSansBoldText"
-            android:layout_marginTop="@dimen/_21dp"
-            android:gravity="center"
-            android:text="@string/str_we_are_closing_account"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_check" />
+            <ImageView
+                android:id="@+id/iv_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_115dp"
+                android:src="@drawable/checkicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/message1"
-            style="@style/RegularTextBlack"
-            android:layout_marginTop="@dimen/_18dp"
-            android:textAlignment="center"
-            android:text="@string/str_you_can_no_longer_access_account"
-            android:textSize="@dimen/_14sp"
-            android:layout_marginHorizontal="@dimen/_27dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/message2"
-            style="@style/RegularTextBlack"
-            android:layout_marginTop="@dimen/_18dp"
-            android:textAlignment="center"
-            android:text="@string/we_will_send_an_email_to_when_the_account_has_been_closed"
-            android:textSize="@dimen/_14sp"
-            android:layout_marginHorizontal="@dimen/_27dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/message1" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/title"
+                style="@style/OpenSansBoldText"
+                android:layout_marginTop="@dimen/_21dp"
+                android:gravity="center"
+                android:text="@string/str_we_are_closing_account"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_check" />
 
-        <ImageView
-            android:id="@+id/iv_warning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/warningicon"
-            android:layout_marginTop="@dimen/_18dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/message2" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/message1"
+                style="@style/RegularTextBlack"
+                android:layout_marginHorizontal="@dimen/_27dp"
+                android:layout_marginTop="@dimen/_18dp"
+                android:text="@string/str_you_can_no_longer_access_account"
+                android:textAlignment="center"
+                android:textSize="@dimen/_14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/penalty_message"
-            style="@style/RegularTextBlack"
-            android:layout_marginTop="@dimen/_18dp"
-            android:textAlignment="center"
-            android:text="@string/str_donot_pay_dartcharge"
-            android:textSize="@dimen/_14sp"
-            android:layout_marginHorizontal="@dimen/_27dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_warning" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/message2"
+                style="@style/RegularTextBlack"
+                android:layout_marginTop="@dimen/_18dp"
+                android:paddingLeft="@dimen/margin_15dp"
+                android:paddingRight="@dimen/margin_15dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textSize="@dimen/_14sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/message1"
+                tools:text="We will send an email to\namruthapersonalprepay@gmail.com\nwhen the account has been closed." />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/title_next"
-            style="@style/OpenSansBoldText"
-            android:layout_marginTop="@dimen/_31dp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:text="@string/what_happens_next"
-            android:textSize="@dimen/_15sp"
+            <ImageView
+                android:id="@+id/iv_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18dp"
+                android:src="@drawable/warningicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/message2" />
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/penalty_message" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/penalty_message"
+                style="@style/RegularTextBlack"
+                android:layout_marginHorizontal="@dimen/_27dp"
+                android:layout_marginTop="@dimen/_18dp"
+                android:gravity="center"
+                android:text="@string/str_donot_pay_dartcharge"
+                android:textAlignment="center"
+                android:textSize="@dimen/_14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_warning" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/what_happens_next"
-            style="@style/RegularTextBlack"
-            android:layout_marginTop="@dimen/_18dp"
-            android:textAlignment="center"
-            android:text="@string/any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method"
-            android:textSize="@dimen/_14sp"
-            android:visibility="gone"
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/title_next"
+                style="@style/OpenSansBoldText"
+                android:layout_marginTop="@dimen/_31dp"
+                android:gravity="center"
+                android:text="@string/what_happens_next"
+                android:textSize="@dimen/_15sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/penalty_message"
+                tools:visibility="visible" />
 
-            android:layout_marginHorizontal="@dimen/_27dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_next" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/what_happens_next"
+                style="@style/RegularTextBlack"
+                android:layout_marginHorizontal="@dimen/_27dp"
+                android:layout_marginTop="@dimen/_18dp"
+                android:gravity="center"
+                android:text="@string/any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method"
+                android:textAlignment="center"
+                android:textSize="@dimen/_14sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_next"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

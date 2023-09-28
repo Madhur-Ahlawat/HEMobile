@@ -10,7 +10,6 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
@@ -19,12 +18,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBinding>(),LogoutListener {
-    lateinit var binding: ActivityCloseAccountSuccessBinding
 
     @Inject
     lateinit var sessionManager: SessionManager
     var email = ""
     var accountSubType: String = ""
+    lateinit var binding: ActivityCloseAccountSuccessBinding
+
     override fun observeViewModel() {
     }
 
@@ -35,20 +35,19 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
     }
 
     private fun setView() {
+        binding.toolbar.backButton.gone()
+        binding.toolbar.titleTxt.text = resources.getString(R.string.str_close_account)
         if (intent.hasExtra(Constants.EMAIL)) {
             email = intent.getStringExtra(Constants.EMAIL).toString()
         }
         if (intent.hasExtra(Constants.ACCOUNT_SUBTYPE)) {
             accountSubType = intent.getStringExtra(Constants.ACCOUNT_SUBTYPE).toString()
         }
-        Log.e("TAG", "setView: email "+email )
-        Log.e("TAG", "setView: accountSubType "+accountSubType )
+
         if (accountSubType.equals(Constants.PAYG)) {
-            Log.e("TAG", "setView: 11 " )
-            binding.titleNext.invisible()
-            binding.whatHappensNext.invisible()
+            binding.titleNext.gone()
+            binding.whatHappensNext.gone()
         } else {
-            Log.e("TAG", "setView: 1122 " )
             binding.titleNext.visible()
             binding.whatHappensNext.visible()
         }
@@ -60,11 +59,6 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
             ), Html.FROM_HTML_MODE_LEGACY
         )
         clearSession()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_close_account_success)
     }
 
     private fun clearSession() {
