@@ -195,6 +195,9 @@ class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBi
         binding.layoutTermsAndConditions.setOnClickListener {
             findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_termsandconditions)
         }
+        binding.btnUnderstandingChargesAndFines.setOnClickListener {
+            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_viewChargesFragment)
+        }
     }
 
     override fun observer() {

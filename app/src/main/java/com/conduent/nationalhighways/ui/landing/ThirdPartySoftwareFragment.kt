@@ -14,13 +14,9 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
-import com.conduent.nationalhighways.databinding.FragmentGuidanceAndDocumentsBinding
 import com.conduent.nationalhighways.databinding.FragmentTermsAndConditionsBinding
-import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
-import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -38,7 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class THirdPartySoftwareFragment : BaseFragment<FragmentTermsAndConditionsBinding>(), OnRetryClickListener {
+class ThirdPartySoftwareFragment : BaseFragment<FragmentTermsAndConditionsBinding>(), OnRetryClickListener {
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null

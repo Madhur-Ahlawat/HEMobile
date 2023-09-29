@@ -10,6 +10,11 @@
         android:label="@string/str_start_now"
         tools:layout="@layout/fragment_start_now" />
     <fragment
+        android:id="@+id/viewChargesFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.ViewChargesFragment"
+        android:label="@string/str_view_charges"
+        tools:layout="@layout/fragment_view_charges" />
+    <fragment
         android:id="@+id/fragmentTermsAndConditions"
         android:name="com.conduent.nationalhighways.ui.landing.TermsAndConditionsFragment"
         android:label="Terms &amp; Conditions"
@@ -19,6 +24,9 @@
         android:name="com.conduent.nationalhighways.ui.landing.GuidanceAndDocumentsFragment"
         android:label="Guidance and Documents"
         tools:layout="@layout/fragment_guidance_and_documents">
+        <action
+            android:id="@+id/action_guidanceanddocumentsFragment_to_viewChargesFragment"
+            app:destination="@id/viewChargesFragment" />
         <action
             android:id="@+id/action_guidanceanddocumentsFragment_to_aboutthisserviceFragment"
             app:destination="@id/aboutthisserviceFragment" />
