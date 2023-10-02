@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/contactDartChargeFragment"
-        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.ContactDartChargeFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.ContactDartChargeFragment"
         android:label="ContactDartChargeFragment"
         tools:layout="@layout/fragment_contact_dart_charge2">
         <action

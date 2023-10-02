@@ -38,7 +38,6 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
     var isViewCreated: Boolean = false
     var isApiCalled: Boolean = false
     var referenceNumberValidations: Boolean = false
-    var lastNameValidations: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -47,11 +46,7 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
         FragmentEnquiryStatusBinding.inflate(inflater, container, false)
 
     override fun init() {
-
         binding.enquiryReferenceNumberEt.editText.addTextChangedListener(GenericTextWatcher(1))
-        binding.lastNameEt.editText.addTextChangedListener(GenericTextWatcher(2))
-
-        binding.lastNameEt.editText.setText(viewModel.enquiry_last_name.value?:"")
         binding.enquiryReferenceNumberEt.editText.setText(viewModel.enquiry_status_number.value?:"")
         binding.btnNext.setOnClickListener {
             isApiCalled = false
@@ -65,18 +60,6 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 Constants.LOADER_DIALOG
             )
 
-        }
-
-        if(requireActivity() is RaiseEnquiryActivity){
-            binding.btnGotoStartMenu.visible()
-        }else{
-            binding.btnGotoStartMenu.gone()
-        }
-
-        binding.btnGotoStartMenu.setOnClickListener {
-            requireActivity().startNormalActivityWithFinish(
-                LandingActivity::class.java
-            )
         }
     }
 
@@ -134,25 +117,7 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                         referenceNumberValidations = true
                     }
                 }
-            } else {
-                viewModel.enquiry_last_name.value = charSequence.toString()
-                if(charSequence.toString().trim().isEmpty()){
-                    lastNameValidations = false
-                    binding.lastNameEt.removeError()
-
-                }else  if (Utils.hasDigits(charSequence.toString()) || Utils.hasSpecialCharacters(
-                        charSequence.toString(),
-                        Utils.splCharVehicleMake
-                    )
-                ) {
-                    binding.lastNameEt.setErrorText(resources.getString(R.string.str_last_name_error_message))
-                    lastNameValidations = false
-                } else {
-                    binding.lastNameEt.removeError()
-                    lastNameValidations = true
-                }
             }
-
             checkButtonEnable()
         }
 
@@ -162,7 +127,7 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
     }
 
     private fun checkButtonEnable() {
-        if (referenceNumberValidations && lastNameValidations) {
+        if (referenceNumberValidations) {
             binding.btnNext.enable()
         } else {
             binding.btnNext.disable()

@@ -14,7 +14,9 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
+import com.conduent.nationalhighways.databinding.FragmentDoYouHaveDartChargeAccountBinding
 import com.conduent.nationalhighways.databinding.FragmentGuidanceAndDocumentsBinding
+import com.conduent.nationalhighways.databinding.FragmentTermsAndConditionsBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -37,7 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBinding>(), OnRetryClickListener {
+class DoYouHaveDartChargeFragment : BaseFragment<FragmentDoYouHaveDartChargeAccountBinding>(), OnRetryClickListener {
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -53,23 +55,23 @@ class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBi
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentGuidanceAndDocumentsBinding {
-        binding = FragmentGuidanceAndDocumentsBinding.inflate(inflater, container, false)
+    ): FragmentDoYouHaveDartChargeAccountBinding {
+        binding = FragmentDoYouHaveDartChargeAccountBinding.inflate(inflater, container, false)
 
         return binding
     }
 
     override fun init() {
-        LandingActivity.setToolBarTitle("Guidance And Documents")
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         LandingActivity.showToolBar(true)
+        LandingActivity.setToolBarTitle("Raise a new enquiry")
         HomeActivityMain.accountDetailsData=null
         HomeActivityMain.checkedCrossing=null
         HomeActivityMain.crossing=null
         HomeActivityMain.dateRangeModel=null
         HomeActivityMain.paymentHistoryListData=null
         HomeActivityMain.paymentHistoryListDataCheckedCrossings= arrayListOf()
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         if (!isChecked) {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -79,9 +81,6 @@ class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBi
         if (isPushNotificationChecked) {
             //callPushNotificationApi()
         }
-        val backButton: ImageView? = requireActivity().findViewById(R.id.back_button)
-
-        backButton?.visibility = View.GONE
 
         AdobeAnalytics.setScreenTrack(
             "home",
@@ -92,70 +91,24 @@ class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBi
             "home",
             sessionManager.getLoggedInUser()
         )
+        binding?.btnContinue?.setOnClickListener {
+            if(binding?.radioBtnYes?.isChecked==true){
+                requireActivity().startActivity(Intent(requireActivity(),LoginActivity::class.java))
+            }
+            else if(binding?.radioBtnYes?.isChecked==false && binding?.radioBtnNo?.isChecked==true){
+                requireActivity().startActivity(Intent(requireActivity(),CreateAccountActivity::class.java))
 
-    }
-
-    private fun callPushNotificationApi() {
-        sessionManager.getFirebaseToken()?.let { firebaseToken ->
-            val request = PushNotificationRequest(
-                deviceToken = firebaseToken,
-                osName = PushNotificationUtils.getOSName(),
-                osVersion = PushNotificationUtils.getOSVersion(),
-                appVersion = PushNotificationUtils.getAppVersion(requireContext()),
-                optInStatus = "Y"
-            )
-            webServiceViewModel.allowPushNotification(request)
+            }
         }
     }
 
     override fun initCtrl() {
-        binding.btnFeedbackToImproveService.setOnClickListener {
-            when (apiState) {
-                Constants.LIVE -> {
-                    AdobeAnalytics.setActionTrack(
-                        "one of payment",
-                        "home",
-                        "home",
-                        "english",
-                        "home",
-                        "splash",
-                        sessionManager.getLoggedInUser()
-                    )
 
-                    requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
-                }
-
-                else -> {
-                    findNavController().navigate(
-                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-                        getBundleData(apiState, apiEndTime)
-                    )
-                }
-            }
-
-        }
-        binding.layoutAboutThisService.setOnClickListener {
-            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_aboutthisserviceFragment)
-        }
-
-        binding.layoutContactDartCharge.setOnClickListener {
-            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_contactDartChargeFragment)
-
-        }
-        binding.layoutUnderstandingChargesAndFinesFines.setOnClickListener {
-            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_viewChargesFragment)
-        }
-
-        binding.layoutTermsAndConditions.setOnClickListener {
-            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_termsandconditions)
-        }
     }
 
     override fun observer() {
         observe(webServiceViewModel.webServiceLiveData, ::handleMaintenanceNotification)
         observe(webServiceViewModel.pushNotification, ::handlePushNotification)
-
-
     }
 
     private fun handlePushNotification(resource: Resource<EmptyApiResponse?>) {

@@ -84,13 +84,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="103dp"
                 android:layout_marginStart="33dp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_23dp"
                 android:layout_marginEnd="@dimen/_32dp"
-                android:autoLink="web"
+                android:autoLink="all|web"
+                android:textColorLink="#008BCB"
+                android:textSize="@dimen/_14sp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
                 android:linksClickable="true"
-                android:text="@string/b_more_details_b_nfor_more_details_on_types_of_vehicles_and_charge_amounts_visit_https_www_gov_uk_pay_dartford_crossing_charge_charges_fines"
+                android:text="@string/b_more_details"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/text"
                 app:layout_goneMarginTop="@dimen/_23dp" />
@@ -100,12 +102,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_16dp"
+                android:textSize="@dimen/_14sp"
+                android:textColorLink="#008BCB"
                 android:layout_marginEnd="@dimen/_32dp"
-                android:autoLink="web"
+                android:autoLink="all|web"
                 android:fontFamily="@font/open_sans"
                 android:linksClickable="true"
-                android:text="@string/b_if_you_re_disabled_b_nyou_do_not_need_to_pay_the_charge_if_you_get_free_uk_vehicle_tax_because_of_a_disability_your_vehicle_will_be_checked_automatically_when_you_cross_you_do_not_need_to_do_anything_find_out_how_to_get_free_vehicle_tax_if_you_re_a_driver_with_a_disability"
+                android:text="@string/b_if_you_re_disabled"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/text_more_details" />
 
@@ -114,12 +118,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_23dp"
                 android:layout_marginEnd="@dimen/_32dp"
-                android:autoLink="web"
+                android:autoLink="all|web"
+                android:textSize="@dimen/_14sp"
+                android:textColorLink="#008BCB"
                 android:fontFamily="@font/open_sans"
                 android:linksClickable="true"
-                android:text="@string/b_local_resident_discount_b_nyou_can_apply_for_a_discount_if_you_pay_council_tax_to_dartford_borough_council_or_thurrock_council_you_can_https_www_gov_uk_find_local_council_n_nyou_can_either_n_n_ul_li_pay_20_a_year_to_use_the_dartford_crossing_as_many_times_as_you_want_li_n_li_pay_10_for_50_crossings_plus_20p_for_each_additional_crossing_li_ul_n_napply_for_a_local_resident_discount_online_or_by_post"
+                android:text="@string/b_local_resident_discount"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/text_if_you_have_disabled" />
 
@@ -128,16 +134,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_18dp"
                 android:layout_marginEnd="@dimen/_32dp"
-                android:autoLink="web"
+                android:autoLink="all|web"
+                android:textColorLink="#008BCB"
+                android:textSize="@dimen/_14sp"
                 android:fontFamily="@font/open_sans"
                 android:linksClickable="true"
-                android:text="@string/fines_you_can_get_a_70_fine_if_you_do_not_pay_the_charge_you_must_pay_it_within_28_days_the_fine_will_be_reduced_to_35_if_you_pay_within_14_days_increased_to_105_if_you_do_not_pay_it_you_ll_also_have_to_pay_the_crossing_charge_you_can_pay_or_challenge_the_fine_online_or_call_the_dart_charge_contact_centre"
+                android:text="@string/fines_you_can_get"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/text_local_resident_discount" />
-
-
+            <View
+                app:layout_constraintTop_toBottomOf="@+id/text_fines"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_64dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

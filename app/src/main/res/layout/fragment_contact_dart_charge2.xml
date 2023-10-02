@@ -14,7 +14,7 @@
         android:paddingTop="@dimen/margin_20dp"
         android:paddingRight="@dimen/margin_20dp"
         android:paddingBottom="@dimen/margin_20dp"
-        tools:context=".ui.bottomnav.account.raiseEnquiry.ContactDartChargeFragment">
+        tools:context=".ui.landing.ContactDartChargeFragment">
 
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView

@@ -15,15 +15,52 @@
         android:label="@string/str_view_charges"
         tools:layout="@layout/fragment_view_charges" />
     <fragment
+        android:id="@+id/contactDartChargeFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.ContactDartChargeFragment"
+        android:label="@string/str_view_charges"
+        tools:layout="@layout/fragment_contact_dart_charge2">
+        <action
+            android:id="@+id/action_contactDartChargeFragment_to_doYouHaveDartChargeFragment"
+            app:destination="@id/doYouHaveDartChargeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquiryStatusFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.EnquiryStatusFragment"
+        android:label="EnquiryStatusFragment"
+        tools:layout="@layout/fragment_dart_charge_account_type_enquiry">
+        <action
+            android:id="@+id/action_enquiryStatusFragment_to_casesEnquiryDetailsFragment"
+            app:destination="@id/casesEnquiryDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquiryStatusDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.EnquiryStatusDetailsFragment"
+        android:label="EnquiryStatusDetailsFragment"
+        tools:layout="@layout/fragment_enquiry_status_details">
+        <action
+            android:id="@+id/action_enquiryStatusFragment_to_casesEnquiryDetailsFragment"
+            app:destination="@id/casesEnquiryDetailsFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/fragmentTermsAndConditions"
         android:name="com.conduent.nationalhighways.ui.landing.TermsAndConditionsFragment"
         android:label="Terms &amp; Conditions"
         tools:layout="@layout/fragment_terms_and_conditions" />
     <fragment
+        android:id="@+id/doYouHaveDartChargeFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.DoYouHaveDartChargeFragment"
+        android:label="Terms &amp; Conditions"
+        tools:layout="@layout/fragment_do_you_have_dart_charge_account">
+    </fragment>
+    <fragment
         android:id="@+id/guidanceanddocumentsFragment"
         android:name="com.conduent.nationalhighways.ui.landing.GuidanceAndDocumentsFragment"
         android:label="Guidance and Documents"
         tools:layout="@layout/fragment_guidance_and_documents">
+
+        <action
+            android:id="@+id/action_guidanceanddocumentsFragment_to_contactDartChargeFragment"
+            app:destination="@id/contactDartChargeFragment" />
         <action
             android:id="@+id/action_guidanceanddocumentsFragment_to_viewChargesFragment"
             app:destination="@id/viewChargesFragment" />

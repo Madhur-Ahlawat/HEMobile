@@ -44,6 +44,7 @@
                 android:layout_height="match_parent"/>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/layout_contact_dart_charge"
             android:layout_marginHorizontal="@dimen/_26dp"
             android:background="@drawable/bg_rounded_corner_5dp"
             android:elevation="@dimen/_2dp"
@@ -70,6 +71,7 @@
                 android:layout_height="match_parent"/>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/layout_understanding_charges_and_fines_fines"
             android:layout_marginHorizontal="@dimen/_26dp"
             android:background="@drawable/bg_rounded_corner_5dp"
             android:elevation="@dimen/_2dp"
