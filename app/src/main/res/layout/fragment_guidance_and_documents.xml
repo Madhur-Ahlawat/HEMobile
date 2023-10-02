@@ -148,6 +148,7 @@
                 android:layout_height="match_parent"/>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/layout_third_party_software"
             android:layout_marginHorizontal="@dimen/_26dp"
             android:background="@drawable/bg_rounded_corner_5dp"
             android:elevation="@dimen/_2dp"

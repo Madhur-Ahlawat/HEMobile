@@ -38,15 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBinding>(), OnRetryClickListener {
-
-    private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
-    private var loader: LoaderDialog? = null
-    private var isChecked = false
-    private var isPushNotificationChecked = true
-    private var count = 1
-    var apiState = Constants.UNAVAILABLE
-    var apiEndTime: String = ""
+class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBinding>() {
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -69,20 +61,6 @@ class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBindin
         HomeActivityMain.dateRangeModel=null
         HomeActivityMain.paymentHistoryListData=null
         HomeActivityMain.paymentHistoryListDataCheckedCrossings= arrayListOf()
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-        if (!isChecked) {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            webServiceViewModel.checkServiceStatus()
-        }
-        isChecked = true
-        if (isPushNotificationChecked) {
-            //callPushNotificationApi()
-        }
-        val backButton: ImageView? = requireActivity().findViewById(R.id.back_button)
-
-        backButton?.visibility = View.GONE
 
         AdobeAnalytics.setScreenTrack(
             "home",
@@ -96,143 +74,19 @@ class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBindin
 
     }
 
-    private fun callPushNotificationApi() {
-        sessionManager.getFirebaseToken()?.let { firebaseToken ->
-            val request = PushNotificationRequest(
-                deviceToken = firebaseToken,
-                osName = PushNotificationUtils.getOSName(),
-                osVersion = PushNotificationUtils.getOSVersion(),
-                appVersion = PushNotificationUtils.getAppVersion(requireContext()),
-                optInStatus = "Y"
-            )
-            webServiceViewModel.allowPushNotification(request)
-        }
-    }
-
     override fun initCtrl() {
         binding.layoutDartChargeGeneral.setOnClickListener {
-            when (apiState) {
-                Constants.LIVE -> {
-                    AdobeAnalytics.setActionTrack(
-                        "one of payment",
-                        "home",
-                        "home",
-                        "english",
-                        "home",
-                        "splash",
-                        sessionManager.getLoggedInUser()
-                    )
-
-                    requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
-                }
-
-                else -> {
-                    findNavController().navigate(
-                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-                        getBundleData(apiState, apiEndTime)
-                    )
-                }
-            }
-
+            findNavController().navigate(R.id.action_enquiryStatusFragment_to_generalTermsAndConditions)
         }
         binding.privacyPolicy.setOnClickListener {
             findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_aboutthisserviceFragment)
         }
         binding.termsandconditions.setOnClickListener {
-            when (apiState) {
-                Constants.LIVE -> {
-                    AdobeAnalytics.setActionTrack(
-                        "check crossings",
-                        "home",
-                        "home",
-                        "english",
-                        "home",
-                        "splash",
-                        sessionManager.getLoggedInUser()
-                    )
-
-                    requireActivity().startNormalActivity(
-                        CheckPaidCrossingActivity::class.java
-                    )
-                }
-
-                else -> {
-                    findNavController().navigate(
-                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-                        getBundleData(apiState, apiEndTime)
-                    )
-                }
-            }
 
         }
     }
 
     override fun observer() {
-        observe(webServiceViewModel.webServiceLiveData, ::handleMaintenanceNotification)
-        observe(webServiceViewModel.pushNotification, ::handlePushNotification)
-
-
-    }
-
-    private fun handlePushNotification(resource: Resource<EmptyApiResponse?>) {
-        if (isPushNotificationChecked) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
-            when (resource) {
-                is Resource.Success -> {
-                    ErrorUtil.showError(binding.root, "Push notifications allowed successfully")
-                }
-
-                is Resource.DataError -> {
-                    if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                        displaySessionExpireDialog()
-                    } else {
-                        ErrorUtil.showError(binding.root, resource.errorMsg)
-                    }
-                }
-
-                else -> {
-                    // do nothing
-                }
-            }
-            isPushNotificationChecked = false
-        }
-    }
-
-    private fun handleMaintenanceNotification(resource: Resource<WebSiteStatus?>) {
-
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (resource) {
-            is Resource.Success -> {
-                apiState = resource.data?.state ?: Constants.UNAVAILABLE
-                apiEndTime = resource.data?.endTime ?: ""
-
-                if (resource.data?.state == Constants.LIVE) {
-                } else {
-//                    findNavController().navigate(
-//                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-//                        getBundleData(resource.data?.state,resource.data?.endTime)
-//                    )
-                }
-            }
-
-            is Resource.DataError -> {
-                apiState = Constants.UNAVAILABLE
-//                findNavController().navigate(
-//                    R.id.action_landingFragment_to_serviceUnavailableFragment,
-//                    getBundleData(Constants.UNAVAILABLE)
-//                )
-            }
-
-            else -> {
-            }
-
-        }
-
-
     }
 
     private fun getBundleData(state: String?,endTime:String?=null): Bundle? {
@@ -249,13 +103,6 @@ class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBindin
         Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
             startActivity(Intent.createChooser(this, "Browse with"))
         }
-    }
-
-    override fun onRetryClick(apiUrl: String) {
-        count++
-        isChecked = true
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        webServiceViewModel.checkServiceStatus()
     }
 
 

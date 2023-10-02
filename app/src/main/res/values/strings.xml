@@ -1551,9 +1551,11 @@
     <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a>.</string>
     <string name="contact_dart_charge">Contact Dart Charge</string>
     <string name="do_you_have_dart_charge_account">Do you have Dart Charge Account?</string>
-    <string name="continue">CONTINUE</string>
     <string name="sub_category">Sub-category</string>
     <string name="date_time_submitted"><![CDATA[Date & time submitted]]></string>
     <string name="status_of_enquiry">Status of enquiry</string>
     <string name="date_enquiry_closed">Date enquiry closed</string>
+    <string name="third_party_software_full_message">The following open source software components are used under the MIT License.\nSee <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a> for more details.\n\nSnapKit\nR.swift\nClosures\nMoya/RxSwift\nSwiftLint\nEureka\nSwiftyUserDefaults\nMBProgressHUD\nIQKeyboardManagerSwift\nKeychainSwift\nAlamofire\nMMMaterialDesignSpinner\nUIFloatLabelTextView\nActiveLabel\n\nThe following open source software components are used under the 3 clause BSD License. See <a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>.\n\nCardScan\n\nThe following open source software components are used under a commercial license.\n\nFirebase/Core\nFirebase/Crashlytics\nFabric</string>
+    <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
 </resources>

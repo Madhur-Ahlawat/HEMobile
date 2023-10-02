@@ -20,6 +20,9 @@
         android:label="@string/str_view_charges"
         tools:layout="@layout/fragment_contact_dart_charge2">
         <action
+            android:id="@+id/action_contactDartChargeFragment_to_enquiryStatusFragment"
+            app:destination="@id/enquiryStatusFragment" />
+        <action
             android:id="@+id/action_contactDartChargeFragment_to_doYouHaveDartChargeFragment"
             app:destination="@id/doYouHaveDartChargeFragment" />
     </fragment>
@@ -29,8 +32,17 @@
         android:label="EnquiryStatusFragment"
         tools:layout="@layout/fragment_dart_charge_account_type_enquiry">
         <action
-            android:id="@+id/action_enquiryStatusFragment_to_casesEnquiryDetailsFragment"
-            app:destination="@id/casesEnquiryDetailsFragment" />
+            android:id="@+id/action_enquiryStatusFragment_to_enquiryStatusDetailsFragment"
+            app:destination="@id/enquiryStatusDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/generalTermsAndConditionsFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.GeneralTermsAndConditionsFragment"
+        android:label="EnquiryStatusFragment"
+        tools:layout="@layout/fragment_general_terms_and_conditions">
+        <action
+            android:id="@+id/action_enquiryStatusFragment_to_enquiryStatusDetailsFragment"
+            app:destination="@id/enquiryStatusDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/enquiryStatusDetailsFragment"
@@ -45,12 +57,23 @@
         android:id="@+id/fragmentTermsAndConditions"
         android:name="com.conduent.nationalhighways.ui.landing.TermsAndConditionsFragment"
         android:label="Terms &amp; Conditions"
-        tools:layout="@layout/fragment_terms_and_conditions" />
+        tools:layout="@layout/fragment_terms_and_conditions">
+        <action
+            android:id="@+id/action_enquiryStatusFragment_to_generalTermsAndConditions"
+            app:destination="@id/generalTermsAndConditionsFragment"
+            />
+
+    </fragment>
     <fragment
         android:id="@+id/doYouHaveDartChargeFragment"
         android:name="com.conduent.nationalhighways.ui.landing.DoYouHaveDartChargeFragment"
         android:label="Terms &amp; Conditions"
-        tools:layout="@layout/fragment_do_you_have_dart_charge_account">
+        tools:layout="@layout/fragment_do_you_have_dart_charge_account"></fragment>
+    <fragment
+        android:id="@+id/thirdPartySoftwareFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.ThirdPartySoftwareFragment"
+        android:label="thirdPartySoftwareFragment"
+        tools:layout="@layout/fragment_third_party_software">
     </fragment>
     <fragment
         android:id="@+id/guidanceanddocumentsFragment"
@@ -58,6 +81,9 @@
         android:label="Guidance and Documents"
         tools:layout="@layout/fragment_guidance_and_documents">
 
+        <action
+            android:id="@+id/action_guidanceanddocumentsFragment_to_thirdPartySoftwareFragment"
+            app:destination="@id/thirdPartySoftwareFragment" />
         <action
             android:id="@+id/action_guidanceanddocumentsFragment_to_contactDartChargeFragment"
             app:destination="@id/contactDartChargeFragment" />

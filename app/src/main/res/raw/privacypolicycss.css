@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'opensans_regular';
+    src: url('OpenSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'OpenSans-Semibold';
+    src: url('OpenSans-Semibold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'OpenSans-Bold';
+    src: url('OpenSans-Bold.ttf') format('truetype');
+}
+#label {
+    font-family: 'OpenSans-Bold';
+    font-size: 14px;
+    color: #000000;
+}
+body {
+    font-family: 'opensans_regular';
+    font-size: 14px;
+    color: #000000;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 0px;
+    padding-left: 10px;
+}
+
+.larger-label {
+    font-size: 24px;
+}
+
+b {
+    font-family: 'OpenSans-Bold';
+    font-size: 16px; /* Adjust the font size as needed */
+}

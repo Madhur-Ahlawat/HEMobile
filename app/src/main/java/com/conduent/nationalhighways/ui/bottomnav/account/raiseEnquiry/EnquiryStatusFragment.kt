@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryListResponse
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryStatusRequest
 import com.conduent.nationalhighways.databinding.FragmentEnquiryStatusBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -46,6 +47,8 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
         FragmentEnquiryStatusBinding.inflate(inflater, container, false)
 
     override fun init() {
+        LandingActivity.setToolBarTitle("Enquiry Status")
+        LandingActivity.showToolBar(true)
         binding.enquiryReferenceNumberEt.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.enquiryReferenceNumberEt.editText.setText(viewModel.enquiry_status_number.value?:"")
         binding.btnNext.setOnClickListener {
@@ -64,17 +67,14 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
     }
 
     override fun initCtrl() {
-
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
 
     override fun observer() {
         if (!isViewCreated) {
             binding.viewModel = viewModel
             binding.lifecycleOwner = this
-
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
             observe(viewModel.getAccountSRList, ::getAccountSRListResponse)
         }
         isViewCreated = true

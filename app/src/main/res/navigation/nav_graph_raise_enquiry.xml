@@ -154,8 +154,6 @@
         android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.CasesEnquiryDetailsFragment"
         android:label="CasesEnquiryDetailsFragment"
         tools:layout="@layout/fragment_cases_enquiry_details">
-
-
     </fragment>
 
 </navigation>

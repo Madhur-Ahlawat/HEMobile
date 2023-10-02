@@ -72,7 +72,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         if (!isChecked) {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             webServiceViewModel.checkServiceStatus()
         }
         isChecked = true
@@ -223,8 +222,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     override fun observer() {
         observe(webServiceViewModel.webServiceLiveData, ::handleMaintenanceNotification)
         observe(webServiceViewModel.pushNotification, ::handlePushNotification)
-
-
     }
 
     private fun handlePushNotification(resource: Resource<EmptyApiResponse?>) {
@@ -234,7 +231,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             }
             when (resource) {
                 is Resource.Success -> {
-                    ErrorUtil.showError(binding.root, "Push notifications allowed successfully")
+                    ErrorUtil.showError(binding.root, getString(R.string.push_notifications_allowed_successfully))
                 }
 
                 is Resource.DataError -> {
@@ -307,7 +304,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     override fun onRetryClick(apiUrl: String) {
         count++
         isChecked = true
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         webServiceViewModel.checkServiceStatus()
     }
 

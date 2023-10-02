@@ -6,14 +6,18 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
+import com.conduent.nationalhighways.data.model.raiseEnquiry.ServiceRequest
 import com.conduent.nationalhighways.databinding.FragmentEnquiryStatusBinding
+import com.conduent.nationalhighways.databinding.FragmentEnquiryStatusDetailsBinding
 import com.conduent.nationalhighways.databinding.FragmentPaymentSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
@@ -22,25 +26,48 @@ import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
 
-class EnquiryStatusDetailsFragment : BaseFragment<FragmentEnquiryStatusBinding>(),
+@AndroidEntryPoint
+class EnquiryStatusDetailsFragment : BaseFragment<FragmentEnquiryStatusDetailsBinding>(),
     VehicleListAdapter.VehicleListCallBack,
-    View.OnClickListener, OnRetryClickListener, DropDownItemSelectListener {
-    private var additionalCrossingsCount: Int? = 0
-
-    private var crossingsList: MutableList<String>? = mutableListOf()
+    View.OnClickListener, DropDownItemSelectListener {
+    private var serviceRequest: ServiceRequest?=null
+    val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     private var data: CrossingDetailsModelsResponse? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentEnquiryStatusBinding =
-        FragmentEnquiryStatusBinding.inflate(inflater, container, false)
+    ): FragmentEnquiryStatusDetailsBinding =
+        FragmentEnquiryStatusDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
+        if (arguments?.containsKey(Constants.EnquiryResponseModel) == true) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (arguments?.getParcelable(
+                        Constants.EnquiryResponseModel,
+                        ServiceRequest::class.java
+                    ) != null
+                ) {
+                    serviceRequest = arguments?.getParcelable(
+
+                        Constants.EnquiryResponseModel, ServiceRequest::class.java
+                    )
+                }
+            } else {
+                if (arguments?.getParcelable<ServiceRequest>(Constants.EnquiryResponseModel) != null) {
+                    serviceRequest = arguments?.getParcelable(
+                        Constants.EnquiryResponseModel,
+                    )
+                }
+            }
+
+        }
+        viewModel.enquiryDetailsModel.value = serviceRequest
         setData()
         setClickListeners()
     }
@@ -53,14 +80,12 @@ class EnquiryStatusDetailsFragment : BaseFragment<FragmentEnquiryStatusBinding>(
 
     private fun setClickListeners() {
         binding?.apply {
-            btnNext.setOnClickListener(this@EnquiryStatusDetailsFragment)
         }
     }
 
     fun getRequiredText(text: String) = text.substringAfter(' ')
 
     override fun initCtrl() {
-        binding.btnNext.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -176,9 +201,6 @@ class EnquiryStatusDetailsFragment : BaseFragment<FragmentEnquiryStatusBinding>(
 
     override fun onItemSlected(position: Int, selectedItem: String) {
 
-    }
-
-    override fun onRetryClick(apiUrl: String){
     }
 
 }

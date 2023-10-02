@@ -6,26 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
+import android.webkit.WebViewClient
 import android.widget.ImageView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.webkit.WebViewAssetLoader
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
-import com.conduent.nationalhighways.databinding.FragmentAboutThisServiceBinding
-import com.conduent.nationalhighways.databinding.FragmentGuidanceAndDocumentsBinding
-import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
-import com.conduent.nationalhighways.ui.auth.login.LoginActivity
+import com.conduent.nationalhighways.databinding.FragmentGeneralTermsAndConditionsBinding
+import com.conduent.nationalhighways.databinding.FragmentTermsAndConditionsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
+import com.conduent.nationalhighways.utils.LocalContentWebViewClient
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -37,8 +36,17 @@ import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class AboutThisServiceFragment : BaseFragment<FragmentAboutThisServiceBinding>() {
+class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndConditionsBinding>() {
+
+    private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
+    private var loader: LoaderDialog? = null
+    private var isChecked = false
+    private var isPushNotificationChecked = true
+    private var count = 1
+    var apiState = Constants.UNAVAILABLE
+    var apiEndTime: String = ""
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -46,21 +54,24 @@ class AboutThisServiceFragment : BaseFragment<FragmentAboutThisServiceBinding>()
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentAboutThisServiceBinding {
-        binding = FragmentAboutThisServiceBinding.inflate(inflater, container, false)
+    ): FragmentGeneralTermsAndConditionsBinding {
+        binding = FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
 
         return binding
     }
 
     override fun init() {
-        LandingActivity.setToolBarTitle("About this Service")
         LandingActivity.showToolBar(true)
-        HomeActivityMain.accountDetailsData=null
-        HomeActivityMain.checkedCrossing=null
-        HomeActivityMain.crossing=null
-        HomeActivityMain.dateRangeModel=null
-        HomeActivityMain.paymentHistoryListData=null
-        HomeActivityMain.paymentHistoryListDataCheckedCrossings= arrayListOf()
+        LandingActivity.setToolBarTitle("Terms & Conditions")
+        val webSetting: WebSettings = binding.webView.getSettings()
+        webSetting.builtInZoomControls = false
+        val mAssetLoader = WebViewAssetLoader.Builder()
+            .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireActivity()))
+            .addPathHandler("/res/", WebViewAssetLoader.ResourcesPathHandler(requireActivity()))
+            .build()
+        binding.webView.webViewClient = LocalContentWebViewClient(mAssetLoader)
+//        webView.loadUrl("https://appassets.androidplatform.net/assets/termsandconditions.html")
+        binding.webView.loadUrl("file:///android_res/raw/termsandconditionspage.html")
 
         AdobeAnalytics.setScreenTrack(
             "home",
@@ -73,15 +84,13 @@ class AboutThisServiceFragment : BaseFragment<FragmentAboutThisServiceBinding>()
         )
 
     }
-
     override fun initCtrl() {
-        binding.btnLearnMore.setOnClickListener {
-        }
     }
 
     override fun observer() {
-    }
 
+
+    }
     private fun getBundleData(state: String?,endTime:String?=null): Bundle? {
         val bundle: Bundle = Bundle()
         bundle.putString(Constants.SERVICE_TYPE, state)
