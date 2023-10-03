@@ -1,10 +1,13 @@
 package com.conduent.nationalhighways.ui.base
 
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -81,17 +84,29 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
                 if (backButton) {
                     isEnabled = false
-                    requireActivity().onBackPressed()
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
                     // Implement your custom back navigation logic
                 } else {
+                    val vibrator: Vibrator =
+                        requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        // Create a VibrationEffect object for the default vibration strength
+                        val vibrationEffect =
+                            VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)
+                        // Vibrate the device with the created VibrationEffect
+                        vibrator.vibrate(vibrationEffect)
+                    } else {
+                        // For older versions of Android, vibrate without VibrationEffect
+                        vibrator.vibrate(500)
+                    }
                 }
             }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-        if(navData!=null && navData is CrossingDetailsModelsResponse){
-            Log.e("EXPIRY",(navData as CrossingDetailsModelsResponse).expirationDate)
+        if (navData != null && navData is CrossingDetailsModelsResponse) {
+            Log.e("EXPIRY", (navData as CrossingDetailsModelsResponse).expirationDate)
         }
     }
 

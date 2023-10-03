@@ -47,6 +47,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
         FragmentCasesEnquiryHistoryListBinding.inflate(inflater, container, false)
 
     override fun init() {
+        binding.includeNoData.messageTv.text=resources.getString(R.string.str_no_enquiries_have_been_raised)
         setBackPressListener(this)
         if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
             binding.btnNext.visible()
@@ -110,7 +111,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
                 caseEnquiryList = resource.data?.serviceRequestList?.serviceRequest ?: ArrayList()
                 if (caseEnquiryList.size > 0) {
                     binding.casesEnquiryRv.visible()
-                    binding.noDataCl.gone()
+                    binding.includeNoData.noDataCl.gone()
                     binding.casesEnquiryRv.apply {
                         layoutManager =
                             LinearLayoutManager(this@CasesEnquiryHistoryListFragment.requireActivity())
@@ -122,7 +123,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
 
                 } else {
                     binding.casesEnquiryRv.gone()
-                    binding.noDataCl.visible()
+                    binding.includeNoData.noDataCl.visible()
                 }
             }
 

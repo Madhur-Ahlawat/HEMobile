@@ -1248,7 +1248,7 @@
     <string name="str_dummy_name">Alex Jonson</string>
     <string name="account">Account</string>
     <string name="txt_my_account">My Account</string>
-    <string name="no_vehicle_found">No vehicle found</string>
+    <string name="no_vehicle_found">There are no vehicles on this account</string>
     <string name="success">Success</string>
     <string name="str_you_have_successfully_added_new_card">You have successfully added the new card:</string>
     <string name="txt_dummy_date">28 Jan 2020</string>
@@ -1313,7 +1313,7 @@
     <string name="str_confirm_new_password">Confirm New Password</string>
     <string name="profile_2fa">Profile 2FA</string>
     <string name="password_change_successful">Password change successful</string>
-    <string name="clear_notification">CLEAR NOTIFICATION</string>
+    <string name="clear_notification">CLEAR NOTIFICATIONS</string>
     <string name="what_is_your_email_address">What is your email address?</string>
     <string name="str_email_address">Email address</string>
     <string name="this_will_be_your_username_when_you_log_in_to_your_account">This will be your username when you log in to your account.</string>
@@ -1535,4 +1535,7 @@
     <string name="str_maskcardnumber">\u2022\u2022\u2022\u2022\u2022\u2022%1$s</string>
     <string name="str_local_resident_discount_scheme">You account contains a Local Resident Discount Scheme</string>
     <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>
+    <string name="str_no_priority_notifications">There are no priority notifications to view</string>
+    <string name="str_no_standard_notifications">There are no standard notifications to view</string>
+    <string name="str_number_additional_crossings_btw_1_to_50">Number of additional crossings must be between 1 and 50 inclusive</string>
 </resources>

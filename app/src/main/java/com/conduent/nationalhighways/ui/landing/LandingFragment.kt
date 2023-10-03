@@ -69,11 +69,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        if (!isChecked) {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            webServiceViewModel.checkServiceStatus()
-        }
-        isChecked = true
         if (isPushNotificationChecked) {
             //callPushNotificationApi()
         }
@@ -91,6 +86,16 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             sessionManager.getLoggedInUser()
         )
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+//        if (!isChecked) {
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        webServiceViewModel.checkServiceStatus()
+//        }
+        isChecked = true
     }
 
     private fun callPushNotificationApi() {

@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".ui.base.BaseApplication"
@@ -30,8 +30,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bottomnav.account.close_account.CloseAccountSuccessActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.account.biometric.BiometricActivity"
             android:exported="false" />
@@ -66,6 +66,7 @@
         <activity
             android:name=".ui.auth.login.LoginActivity"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             android:theme="@style/Theme.HEMobileDark" />
         <activity
             android:name=".ui.landing.LandingActivity"
@@ -91,7 +92,7 @@
             android:name=".ui.account.creation.controller.CreateAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.account.profile.ProfileActivity"
             android:screenOrientation="portrait"

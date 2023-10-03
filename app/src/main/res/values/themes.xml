@@ -19,6 +19,8 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue_color</item>
         <item name="android:colorAccent">@color/blue_color</item>
         <item name="backgroundColor">@color/white</item>
+
+
         <!-- Customize your theme here. -->
     </style>
 
@@ -341,6 +343,7 @@
         <item name="backgroundColor">@color/white</item>
         <item name="borderColor">@color/new_btn_color</item>
         <item name="borderWidth_">1dp</item>
+        <item name="radius">2dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/new_btn_color</item>
     </style>

@@ -41,6 +41,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sp"
+                app:textAllCaps="true"
                 app:layout_constraintBottom_toTopOf="@id/tv_account_number_heading"
                 app:layout_constraintStart_toStartOf="@id/tv_account_number_heading"
                 tools:text="@string/str_dummy_name" />
@@ -131,8 +132,8 @@
 
                     <ImageView
                         android:id="@+id/left_icon"
-                        android:layout_width="@dimen/_25dp"
-                        android:layout_height="@dimen/_25dp"
+                        android:layout_width="@dimen/margin_25dp"
+                        android:layout_height="@dimen/margin_25dp"
                         android:layout_marginStart="@dimen/margin_17dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_profile_management"
@@ -144,7 +145,7 @@
                         android:id="@+id/value_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_22_21dp"
+                        android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -186,8 +187,8 @@
 
                     <ImageView
                         android:id="@+id/left_icon2"
-                        android:layout_width="@dimen/_25dp"
-                        android:layout_height="@dimen/_25dp"
+                        android:layout_width="@dimen/margin_25dp"
+                        android:layout_height="@dimen/margin_25dp"
                         android:layout_marginStart="@dimen/margin_17dp"
                         android:src="@drawable/ic_mail"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -198,7 +199,7 @@
                         android:id="@+id/value_title2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_22_21dp"
+                        android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -240,8 +241,8 @@
 
                     <ImageView
                         android:id="@+id/left_icon3"
-                        android:layout_width="@dimen/_25dp"
-                        android:layout_height="@dimen/_25dp"
+                        android:layout_width="@dimen/margin_25dp"
+                        android:layout_height="@dimen/margin_33dp"
                         android:layout_marginStart="@dimen/margin_17dp"
                         android:src="@drawable/ic_payment_management"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -252,7 +253,7 @@
                         android:id="@+id/value_title3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_22_21dp"
+                        android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -294,11 +295,10 @@
 
                     <ImageView
                         android:id="@+id/left_icon4"
-                        android:layout_width="@dimen/_25dp"
-                        android:layout_height="@dimen/_25dp"
+                        android:layout_width="@dimen/margin_25dp"
+                        android:layout_height="@dimen/margin_25dp"
                         android:layout_marginStart="@dimen/margin_17dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_car_grey"
+                        android:src="@drawable/ic_car_blue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -307,7 +307,7 @@
                         android:id="@+id/value_title4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_22_21dp"
+                        android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -348,8 +348,8 @@
 
                     <ImageView
                         android:id="@+id/left_icon5"
-                        android:layout_width="@dimen/_25dp"
-                        android:layout_height="@dimen/_25dp"
+                        android:layout_width="@dimen/margin_25dp"
+                        android:layout_height="@dimen/margin_25dp"
                         android:layout_marginStart="@dimen/margin_17dp"
                         android:src="@drawable/ic_voice_over_record"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -360,7 +360,7 @@
                         android:id="@+id/value_title5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_22_21dp"
+                        android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -400,8 +400,8 @@
 
                     <ImageView
                         android:id="@+id/left_icon6"
-                        android:layout_width="@dimen/_25dp"
-                        android:layout_height="@dimen/_25dp"
+                        android:layout_width="@dimen/margin_25dp"
+                        android:layout_height="@dimen/margin_25dp"
                         android:layout_marginStart="@dimen/margin_17dp"
                         android:src="@drawable/ic_close_account"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -412,7 +412,7 @@
                         android:id="@+id/value_title6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_22_21dp"
+                        android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -453,10 +453,9 @@
 
                     <ImageView
                         android:id="@+id/left_icon7"
-                        android:layout_width="@dimen/_25dp"
-                        android:layout_height="@dimen/_25dp"
-                        android:layout_marginStart="@dimen/margin_17dp"
-                        android:scaleType="centerCrop"
+                        android:layout_width="@dimen/margin_18dp"
+                        android:layout_height="@dimen/margin_18dp"
+                        android:layout_marginStart="@dimen/margin_20dp"
                         android:src="@drawable/ic_logout_black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -466,7 +465,7 @@
                         android:id="@+id/value_title7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_22_21dp"
+                        android:layout_marginStart="@dimen/margin_28dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:textColor="@color/black"

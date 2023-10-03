@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
@@ -28,13 +27,14 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetailsBinding>(),
-    DropDownItemSelectListener, BackPressListener {
+    BackPressListener, NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
 
     @Inject
     lateinit var sm: SessionManager
@@ -104,7 +104,6 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 }
             }
         }
-        binding.countrycodeEt.dropDownItemSelectListener = this
         listeners()
 
         if (!backButton) {
@@ -122,7 +121,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         viewModel.edit_enquiryModel.value?.lastname = binding.lastnameEt.getText().toString()
         viewModel.edit_enquiryModel.value?.email = binding.emailEt.getText().toString()
         viewModel.edit_enquiryModel.value?.mobileNumber =
-            binding.mobileNumberEt.getText().toString()
+            binding.mobileNumberEt.getText().toString().trim()
     }
 
     private fun getBundleData(): Bundle {
@@ -346,7 +345,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     private fun checkButton() {
-        if (requiredEmail && requiredFirstName && requiredMobileNumber && requiredLastName) {
+        if (requiredEmail && requiredFirstName && requiredCountryCode && requiredMobileNumber && requiredLastName) {
             binding.btnNext.enable()
         } else {
             binding.btnNext.disable()
@@ -386,13 +385,10 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 }
                 countriesList.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
 
-
                 if (countriesList.contains(Constants.UK_COUNTRY)) {
                     countriesList.remove(Constants.UK_COUNTRY)
                     countriesList.add(0, Constants.UK_COUNTRY)
                 }
-
-
             }
 
             is Resource.DataError -> {
@@ -446,18 +442,21 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     countryCode = Constants.UNITED_KINGDOM
                     binding.apply {
                         countrycodeEt.setSelectedValue(Constants.UNITED_KINGDOM)
-                        requiredCountryCode = binding.countrycodeEt.getText()?.isNotEmpty() == true
                     }
                 } else {
                     binding.countrycodeEt.setSelectedValue(
                         viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
                     )
-                    requiredCountryCode = binding.countrycodeEt.getText()?.isNotEmpty() == true
                 }
+                checkRequireCountryCode()
+
                 viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(countryCode)
                 viewModel.edit_enquiryModel.value?.fullcountryCode = countryCode
 
                 setSavedData()
+
+                binding.countrycodeEt.clearFocus()
+                binding.countrycodeEt.setDropDownItemSelectListener(this)
 
             }
 
@@ -468,6 +467,15 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             else -> {
             }
 
+        }
+    }
+
+    private fun checkRequireCountryCode() {
+        if (binding.mobileNumberEt.getText().toString().trim().isNotEmpty()) {
+            requiredCountryCode =
+                fullCountryNameWithCode.any { it == binding.countrycodeEt.selectedItemDescription }
+        } else {
+            requiredCountryCode = true
         }
     }
 
@@ -506,18 +514,6 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         }
     }
 
-    override fun onHashMapItemSelected(key: String?, value: Any?) {
-
-    }
-
-    override fun onItemSlected(position: Int, selectedItem: String) {
-
-        viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(selectedItem)
-        viewModel.edit_enquiryModel.value?.fullcountryCode = selectedItem
-
-        binding.mobileNumberEt.setText("")
-        binding.mobileNumberEt.removeError()
-    }
 
     private fun getCountryCode(selectedItem: String): String {
         val data = selectedItem
@@ -563,6 +559,41 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             viewModel.edit_enquiryModel.value?.fileName =
                 viewModel.enquiryModel.value?.fileName ?: ""
         }
+    }
+
+    override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
+        if (selected) {
+            viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(item)
+            viewModel.edit_enquiryModel.value?.fullcountryCode = item
+
+            binding.mobileNumberEt.setText("")
+            binding.mobileNumberEt.removeError()
+        } else {
+            if (binding.mobileNumberEt.getText().toString().trim().isNotEmpty()) {
+                if (fullCountryNameWithCode.size > 0) {
+                    this.requiredCountryCode = fullCountryNameWithCode.any { it == item }
+                } else {
+                    requiredCountryCode = false
+                }
+                if(requiredCountryCode){
+                    saveCountryCodeToViewModel(item)
+                }else{
+                    saveCountryCodeToViewModel("")
+                }
+            } else {
+                saveCountryCodeToViewModel("")
+                requiredCountryCode = true
+            }
+
+        }
+        checkButton()
+
+    }
+
+    fun saveCountryCodeToViewModel(item: String) {
+        viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(item)
+        viewModel.edit_enquiryModel.value?.fullcountryCode = item
+
     }
 
 

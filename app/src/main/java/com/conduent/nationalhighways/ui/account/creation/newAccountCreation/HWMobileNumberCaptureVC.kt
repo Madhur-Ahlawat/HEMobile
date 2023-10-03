@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.CountriesModel
@@ -45,13 +44,15 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBinding>(),
-    View.OnClickListener, OnRetryClickListener, DropDownItemSelectListener {
+    View.OnClickListener, OnRetryClickListener,
+    NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
 
     private var requiredCountryCode = false
     private var requiredMobileNumber = false
@@ -82,7 +83,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         viewModel.getCountries()
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
-        binding.inputCountry.dropDownItemSelectListener = this
         if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
             setTelephoneView()
         } else {
@@ -216,11 +216,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
-
         }
         when (resource) {
             is Resource.Success -> {
-                Log.d("Success", "Updated successfully")
                 data = navData as ProfileDetailModel?
                 val bundle = Bundle()
 
@@ -281,7 +279,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 binding.apply {
                     inputCountry.dataSet.clear()
                     inputCountry.dataSet.addAll(fullCountryNameWithCode)
-
                 }
 
 
@@ -304,11 +301,17 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 } else {
                     binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
                 }
-                requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
+
+                requiredCountryCode =
+                    fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
                 if (!NewCreateAccountRequestModel.prePay) {
                     checkButton()
                 }
+
+                binding.inputCountry.clearFocus()
+                binding.inputCountry.setDropDownItemSelectListener(this)
+
 
             }
 
@@ -415,6 +418,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                                 ) {
                                     findNavController().popBackStack()
                                 } else {
+
+                                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                                     if (data?.accountInformation?.accountType.equals(
                                             Constants.PERSONAL_ACCOUNT,
                                             true
@@ -517,7 +522,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         override fun onTextChanged(
             charSequence: CharSequence?, start: Int, before: Int, count: Int
         ) {
-            requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
 
             if (charSequence.toString().isEmpty()) {
                 requiredMobileNumber = index == 0
@@ -600,7 +604,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     )
                 )
                 bundle.putString(Constants.PHONE_COUNTRY_CODE,
-                    binding.inputCountry.selectedItemDescription?.let { getRequiredText(it) })
+                    binding.inputCountry.selectedItemDescription.let { getRequiredText(it) })
+                bundle.putBoolean(
+                    Constants.IS_MOBILE_NUMBER,
+                    isItMobileNumber
+                )
 
                 bundle.putParcelable(
                     "response", SecurityCodeResponseModel(
@@ -609,8 +617,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 )
 
                 when (navFlowCall) {
-
-
                     PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -659,17 +665,38 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     private fun getRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
-    override fun onHashMapItemSelected(key: String?, value: Any?) {
-    }
 
-    override fun onItemSlected(position: Int, selectedItem: String) {
-        binding.inputMobileNumber.setText("")
-        binding.inputMobileNumber.removeError()
+    override fun onAutoCompleteItemClick(item: String, isSelected: Boolean) {
+        if (isSelected) {
+            binding.inputMobileNumber.setText("")
+            binding.inputMobileNumber.removeError()
+        } else {
+            if (fullCountryNameWithCode.size > 0) {
+                requiredCountryCode = fullCountryNameWithCode.any { it == item }
+            } else {
+                requiredCountryCode = false
+            }
+            checkButton()
+        }
     }
 
     private fun updateBusinessUserProfile(
         dataModel: ProfileDetailModel?
     ) {
+        var phoneCell = dataModel?.personalInformation?.phoneCell
+        var phoneCellCountryCode = dataModel?.personalInformation?.phoneCellCountryCode
+        var phoneDay = dataModel?.personalInformation?.phoneDay
+        var phoneDayCountryCode = dataModel?.personalInformation?.phoneDayCountryCode
+
+        if (!isItMobileNumber) {
+            phoneDay = binding.inputMobileNumber.getText().toString().trim()
+            phoneDayCountryCode =
+                binding.inputCountry.selectedItemDescription.let { getRequiredText(it) }
+        } else {
+            phoneCell = binding.inputMobileNumber.getText().toString().trim()
+            phoneCellCountryCode =
+                binding.inputCountry.selectedItemDescription.let { getRequiredText(it) }
+        }
         dataModel?.run {
             val request = UpdateProfileRequest(
                 firstName = personalInformation?.firstName,
@@ -684,13 +711,15 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 emailAddress = personalInformation?.emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = personalInformation?.phoneCell,
-                phoneDay = binding.inputMobileNumber.getText().toString().trim(),
+                phoneCell = phoneCell,
+                phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
                 fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName
+                businessName = personalInformation?.customerName,
+                phoneCellCountryCode = phoneCellCountryCode,
+                phoneDayCountryCode = phoneDayCountryCode
             )
 
             viewModelProfile.updateUserDetails(request)
@@ -702,6 +731,21 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private fun updateStandardUserProfile(
         dataModel: ProfileDetailModel?
     ) {
+
+        var phoneCell = dataModel?.personalInformation?.phoneCell
+        var phoneCellCountryCode = dataModel?.personalInformation?.phoneCellCountryCode
+        var phoneDay = dataModel?.personalInformation?.phoneDay
+        var phoneDayCountryCode = dataModel?.personalInformation?.phoneDayCountryCode
+
+        if (!isItMobileNumber) {
+            phoneDay = binding.inputMobileNumber.getText().toString().trim()
+            phoneDayCountryCode =
+                binding.inputCountry.selectedItemDescription.let { getRequiredText(it) }
+        } else {
+            phoneCell = binding.inputMobileNumber.getText().toString().trim()
+            phoneCellCountryCode =
+                binding.inputCountry.selectedItemDescription.let { getRequiredText(it) }
+        }
 
         dataModel?.personalInformation?.run {
             val request = UpdateProfileRequest(
@@ -718,10 +762,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
                 phoneCell = phoneCell,
-                phoneDay = binding.inputMobileNumber.getText().toString().trim(),
+                phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = "Y",
-                phoneEvening = ""
+                phoneEvening = "",
+                phoneCellCountryCode = phoneCellCountryCode,
+                phoneDayCountryCode = phoneDayCountryCode
             )
 
             viewModelProfile.updateUserDetails(request)

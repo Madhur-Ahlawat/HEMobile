@@ -36,6 +36,7 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
         super.onCreate(savedInstanceState)
         initViewBinding()
         observeViewModel()
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

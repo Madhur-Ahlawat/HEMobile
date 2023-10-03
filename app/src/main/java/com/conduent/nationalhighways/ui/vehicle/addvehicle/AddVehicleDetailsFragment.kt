@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -367,7 +368,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 binding.makeInputLayout.setErrorText(getString(R.string.enter_the_make_of_your_vehicle))
                 false
             }
-
+            Log.e("TAG", "initCtrl: makeInputCheck "+makeInputCheck )
             checkButton()
         }
         binding.modelInputLayout.editText.onTextChanged {
@@ -530,6 +531,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun setBtnActivated() {
+        Log.e("TAG", "setBtnActivated: makeInputCheck "+makeInputCheck )
         binding.nextBtn.isEnabled = true
     }
 

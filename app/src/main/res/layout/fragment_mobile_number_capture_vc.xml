@@ -22,14 +22,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.apollo.ui.CMDropDownView
+        <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
             android:id="@+id/inputCountry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_24dp"
-            app:labelText="Country code"
-            android:padding="0dp"
+            android:hint="@string/country_code"
             app:inputType="number"
+            android:textSize="@dimen/font_16sp"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_26dp"
             app:labelText="@string/mobile_number"
+            android:textSize="@dimen/font_16sp"
             app:inputType="phone"
             app:maxLength="15"
             android:maxLength="15"

@@ -83,6 +83,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private val viewModelProfile: ProfileViewModel by viewModels()
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var phoneCountryCode: String = ""
+    private var isItMobileNumber: Boolean = false
+    var phoneCell :String=""
+    var phoneCellCountryCode :String=""
+    var phoneDay :String=""
+    var phoneDayCountryCode :String=""
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -113,7 +118,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     override fun initCtrl() {
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
-
+        if (arguments?.containsKey(Constants.IS_MOBILE_NUMBER) == true) {
+            isItMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER) ?: false
+        }
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
         }
@@ -133,6 +140,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
 
 
+        setInputParamsData()
         binding.apply {
             btnVerify.setOnClickListener(this@OTPForgotPassword)
             btnResend.setOnClickListener(this@OTPForgotPassword)
@@ -140,6 +148,26 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 verifyCodeErrorMessage()
             }
         }
+    }
+
+    private fun setInputParamsData() {
+        val profile_navData = navData as ProfileDetailModel?
+
+         phoneCell = profile_navData?.personalInformation?.phoneCell?:""
+         phoneCellCountryCode = profile_navData?.personalInformation?.phoneCellCountryCode?:""
+         phoneDay = profile_navData?.personalInformation?.phoneDay?:""
+         phoneDayCountryCode = profile_navData?.personalInformation?.phoneDayCountryCode?:""
+
+        if (!isItMobileNumber) {
+            phoneDay = data?.optionValue.toString()
+            phoneDayCountryCode =
+                phoneCountryCode
+        } else {
+            phoneCell = data?.optionValue.toString()
+            phoneCellCountryCode =
+                phoneCountryCode
+        }
+
     }
 
     private fun verifyCodeErrorMessage() {
@@ -761,6 +789,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun updateBusinessUserProfile(
         dataModel: ProfileDetailModel?
     ) {
+
         dataModel?.run {
             val request = UpdateProfileRequest(
                 firstName = personalInformation?.firstName,
@@ -775,14 +804,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 emailAddress = personalInformation?.emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = data?.optionValue.toString(),
-                phoneDay = personalInformation?.phoneDay,
+                phoneCell = phoneCell,
+                phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
                 fein = accountInformation?.fein,
                 businessName = personalInformation?.customerName,
-                phoneCellCountryCode = phoneCountryCode,
+                phoneCellCountryCode = phoneCellCountryCode,
+                phoneDayCountryCode = phoneDayCountryCode,
                 mfaEnabled = dataModel.accountInformation?.mfaEnabled
 
             )
@@ -796,6 +826,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun updateStandardUserProfile(
         dataModel: ProfileDetailModel?
     ) {
+
 
         dataModel?.personalInformation?.run {
             val request = UpdateProfileRequest(
@@ -811,13 +842,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = data?.optionValue.toString(),
+                phoneCell = phoneCell,
                 phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
-                phoneCellCountryCode = phoneCountryCode,
-                mfaEnabled =  dataModel.accountInformation?.mfaEnabled
+                phoneCellCountryCode = phoneCellCountryCode,
+                phoneDayCountryCode = phoneDayCountryCode,
+                mfaEnabled = dataModel.accountInformation?.mfaEnabled
             )
 
             viewModelProfile.updateUserDetails(request)
