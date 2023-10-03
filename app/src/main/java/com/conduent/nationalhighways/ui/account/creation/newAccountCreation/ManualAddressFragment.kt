@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -12,7 +14,6 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.CountriesModel
@@ -41,14 +42,15 @@ import com.conduent.nationalhighways.utils.common.Utils.splCharAddress2
 import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
 import com.conduent.nationalhighways.utils.common.Utils.splCharTownCity
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
 @AndroidEntryPoint
-class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
-    View.OnClickListener, DropDownItemSelectListener {
+class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
+    View.OnClickListener, NHAutoCompleteTextview.AutoCompleteSelectedTextListener, Parcelable {
 
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesList: MutableList<String> = ArrayList()
@@ -62,6 +64,16 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
     private var isViewCreated: Boolean = false
     private val viewModelProfile: ProfileViewModel by viewModels()
     private val lrdsViewModel: LrdsEligibilityViewModel by viewModels()
+
+    constructor(parcel: Parcel) : this() {
+        requiredAddress = parcel.readByte() != 0.toByte()
+        requiredAddress2 = parcel.readByte() != 0.toByte()
+        requiredCityTown = parcel.readByte() != 0.toByte()
+        requiredPostcode = parcel.readByte() != 0.toByte()
+        requiredCountry = parcel.readByte() != 0.toByte()
+        country = parcel.readString()?:""
+        isViewCreated = parcel.readByte() != 0.toByte()
+    }
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -82,7 +94,6 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
         binding.townCity.editText.addTextChangedListener(GenericTextWatcher(2))
         binding.postCode.editText.addTextChangedListener(GenericTextWatcher(3))
 
-        binding.country.dropDownItemSelectListener = this
 
         val filter = InputFilter { source, start, end, _, _, _ ->
             for (i in start until end) {
@@ -255,6 +266,9 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
                     country.dataSet.clear()
                     country.dataSet.addAll(countriesList)
                 }
+
+                binding.country.clearFocus()
+                binding.country.setDropDownItemSelectListener(this)
             }
 
             is Resource.DataError -> {
@@ -463,16 +477,6 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
         }
     }
 
-    override fun onHashMapItemSelected(key: String?, value: Any?) {
-
-    }
-
-    override fun onItemSlected(position: Int, selectedItem: String) {
-        requiredCountry = true
-        country = selectedItem
-        checkButton()
-
-    }
 
     private fun handleLrdsApiResponse(response: Resource<LrdsEligibilityResponse?>?) {
         if (loader?.isVisible == true) {
@@ -603,6 +607,47 @@ class ManualAddressFragment : BaseFragment<FragmentManualAddressBinding>(),
             viewModelProfile.updateUserDetails(request)
         }
 
+
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeByte(if (requiredAddress) 1 else 0)
+        parcel.writeByte(if (requiredAddress2) 1 else 0)
+        parcel.writeByte(if (requiredCityTown) 1 else 0)
+        parcel.writeByte(if (requiredPostcode) 1 else 0)
+        parcel.writeByte(if (requiredCountry) 1 else 0)
+        parcel.writeString(country)
+        parcel.writeByte(if (isViewCreated) 1 else 0)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ManualAddressFragment> {
+        override fun createFromParcel(parcel: Parcel): ManualAddressFragment {
+            return ManualAddressFragment(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ManualAddressFragment?> {
+            return arrayOfNulls(size)
+        }
+    }
+
+    override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
+        if (selected) {
+            requiredCountry = true
+            country = item
+        } else {
+            if (countriesList.size > 0) {
+                requiredCountry = countriesList.any { it == item }
+                country = item
+            } else {
+                requiredCountry = false
+                country = ""
+            }
+        }
+        checkButton()
 
     }
 

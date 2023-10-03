@@ -87,13 +87,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/townCity" />
 
-        <com.conduent.apollo.ui.CMDropDownView
+        <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
             android:id="@+id/country"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:labelText="@string/str_country"
+            android:hint="@string/country_code"
             style="@style/input_text"
+            android:textSize="@dimen/font_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postCode" />

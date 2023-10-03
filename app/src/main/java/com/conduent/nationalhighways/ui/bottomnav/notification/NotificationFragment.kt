@@ -6,26 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.databinding.FragmentNotificationBinding
-import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import dagger.hilt.android.AndroidEntryPoint
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.notification.NotificationModel
+import com.conduent.nationalhighways.databinding.FragmentNotificationBinding
 import com.conduent.nationalhighways.listener.FilterDialogListener
 import com.conduent.nationalhighways.listener.NotificationItemClick
+import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationAdapterNew
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationSectionAdapter
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationTypeAdapter
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), FilterDialogListener,
@@ -38,9 +41,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     private val viewModel: NotificationViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var notifications : MutableList<AlertMessage?>?= mutableListOf()
-companion object{
-    var isSelectionMode:Boolean=false
-}
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -117,10 +118,10 @@ companion object{
     }
 
     private fun setClickListeners() {
-        binding?.btnClearNotification?.setOnClickListener {
+        binding.btnClearNotification.setOnClickListener {
             notifications?.forEach {
                 if(it?.isSelectListItem == true){
-                    viewModel.deleteAlertItem(it?.cscLookUpKey!!)
+                    viewModel.deleteAlertItem(it.cscLookUpKey?:"")
                 }
             }
         }
@@ -131,7 +132,7 @@ companion object{
             selectStandard()
 //            setStandardNotifications()
         }
-        binding?.selectAll?.setOnClickListener {
+        binding.selectAll.setOnClickListener {
             if(binding.selectAll.isChecked){
                 selectAllNotification()
             }
@@ -142,7 +143,6 @@ companion object{
     }
 
     fun selectAllNotification() {
-        isSelectionMode=true
         notifications?.forEach { it?.isSelectListItem=true }
         mAdapter?.notifyDataSetChanged()
     }
@@ -174,23 +174,23 @@ companion object{
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
-                if (resource.data?.messageList?.isNullOrEmpty() == false) {
+                if (resource.data?.messageList.isNullOrEmpty() == false) {
                     notifications?.clear()
-                    if(isPrioritySelected!!){
-                        resource.data?.messageList.forEach {
-                            if(it!!.category.equals(Constants.PRIORITY)){
-                                notifications!!.add(it)
+                    if (isPrioritySelected) {
+                        resource.data?.messageList?.forEach {
+                            if (it?.category.equals(Constants.PRIORITY)) {
+                                notifications?.add(it)
+                            }
+                        }
+                    } else if (isStandardSelected) {
+                        resource.data?.messageList?.forEach {
+                            if (it?.category.equals(Constants.STANDARD)) {
+                                notifications?.add(it)
                             }
                         }
                     }
-                    else if(isStandardSelected!!){
-                        resource.data?.messageList.forEach {
-                            if(it!!.category.equals(Constants.STANDARD)){
-                                notifications!!.add(it)
-                            }
-                        }
-                    }
-                    mAdapter!!.notifyDataSetChanged()
+                    mAdapter?.notifyDataSetChanged()
+                    checkData()
 //                    setPriorityNotifications()
 //                    setNotificationAlert(resource.data?.messageList)
 
@@ -199,14 +199,32 @@ companion object{
 
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
-                binding.notificationsRecyclerview.gone()
 //                binding.noNotificationsTxt.visible()
-
+                checkData()
             }
 
             else -> {
                 // do nothing
             }
+        }
+    }
+
+    private fun checkData() {
+        if (isPrioritySelected) {
+            binding.includeNoData.messageTv.text =
+                resources.getString(R.string.str_no_priority_notifications)
+        } else {
+            binding.includeNoData.messageTv.text =
+                resources.getString(R.string.str_no_standard_notifications)
+        }
+        if (notifications.orEmpty().size > 0) {
+            binding.dataRl.visible()
+            binding.noDataRl.gone()
+            binding.includeNoData.noDataCl.gone()
+        } else {
+            binding.dataRl.gone()
+            binding.noDataRl.visible()
+            binding.includeNoData.noDataCl.visible()
         }
     }
 

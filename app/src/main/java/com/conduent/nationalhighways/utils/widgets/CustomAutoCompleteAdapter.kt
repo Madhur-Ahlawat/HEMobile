@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.utils.widgets
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,15 +37,14 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                 if (constraint == null || constraint.isEmpty()) {
                     suggestions.addAll(originalItems)
                 } else {
-                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    val filterPattern = constraint.toString().lowercase().trim()
 
                     for (item in originalItems) {
-                        if (item.toLowerCase().contains(filterPattern)) {
+                        if (item.lowercase().contains(filterPattern)) {
                             suggestions.add(item)
                         }
                     }
                 }
-                Log.e(TAG, "performFiltering: suggestions "+suggestions )
                 results.values = suggestions
                 results.count = suggestions.size
                 return results
@@ -55,12 +53,14 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 clear()
                 if (results != null && results.count > 0) {
-                    @Suppress("UNCHECKED_CAST")
-
                     val filteredList = results.values as List<String>
                     addAll(filteredList)
                 }
-                notifyDataSetChanged()
+                if (results?.count ?: 0 > 0) {
+                    notifyDataSetChanged()
+                } else {
+                    notifyDataSetInvalidated()
+                }
             }
         }
     }

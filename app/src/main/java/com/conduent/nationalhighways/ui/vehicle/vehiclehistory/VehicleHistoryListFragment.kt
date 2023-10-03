@@ -64,15 +64,18 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     }
 
     override fun init() {
+        binding.includeNoData.messageTv.text = resources.getString(R.string.no_vehicle_found)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.btnNext.setOnClickListener(this)
-        binding.btnNext.setText(getString(R.string.add_a_vehicle))
+        binding.btnNextNovehicles.setOnClickListener(this)
+        binding.btnNext.text = getString(R.string.add_a_vehicle)
         binding.btnAddNewVehicle.visibility = View.GONE
+        binding.dataCl.visibility = View.GONE
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.recyclerView.adapter = mAdapter
         sessionManager.fetchAccountType()?.let {
-            if (it == Constants.BUSINESS_ACCOUNT||it==Constants.EXEMPT_ACCOUNT) {
+            if (it == Constants.BUSINESS_ACCOUNT || it == Constants.EXEMPT_ACCOUNT) {
                 isBusinessAccount = true
             }
         }
@@ -121,11 +124,11 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                     }
                 }
                 is Resource.DataError -> {
-                    binding.recyclerView.gone()
+                    binding.dataCl.gone()
                     mList.clear()
                     mAdapter.setList(mList)
                     hideLoader()
-                    binding.notFound.visible()
+                    binding.noDataCl.visible()
 //                    ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
                 else -> {
@@ -137,13 +140,13 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     private fun checkData() {
         if (mList.size == 0) {
-            binding.recyclerView.gone()
-            binding.notFound.visible()
+            binding.dataCl.gone()
+            binding.noDataCl.visible()
             hideLoader()
         } else {
-            binding.recyclerView.visible()
+            binding.dataCl.visible()
             hideLoader()
-            binding.notFound.gone()
+            binding.noDataCl.gone()
         }
     }
 
@@ -207,35 +210,55 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     private fun bundle() : Bundle {
         val bundle = Bundle()
-        bundle.putString(Constants.NAV_FLOW_KEY,VEHICLE_MANAGEMENT)
+        bundle.putString(Constants.NAV_FLOW_KEY, VEHICLE_MANAGEMENT)
         return bundle
     }
 
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
 
             R.id.btnNext -> {
-                if(isBusinessAccount.not()){
-                    if (mList.size >= BuildConfig.PERSONAL.toInt()) {
-                        NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,bundle())
-                    } else {
+                addVehicleRedirection()
+            }
 
-                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment,bundle())
-                    }
-                }else {
-                    if (mList.size >= BuildConfig.BUSINESS.toInt()) {
-                        NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,bundle())
-                    } else {
-
-                        findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment,bundle())
-                    }
-                }
+            R.id.btnNext_novehicles -> {
+                addVehicleRedirection()
             }
         }
 
+    }
+
+    private fun addVehicleRedirection() {
+        if (isBusinessAccount.not()) {
+            if (mList.size >= BuildConfig.PERSONAL.toInt()) {
+                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                findNavController().navigate(
+                    R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,
+                    bundle()
+                )
+            } else {
+
+                findNavController().navigate(
+                    R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment,
+                    bundle()
+                )
+            }
+        } else {
+            if (mList.size >= BuildConfig.BUSINESS.toInt()) {
+                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                findNavController().navigate(
+                    R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,
+                    bundle()
+                )
+            } else {
+
+                findNavController().navigate(
+                    R.id.action_vehicleHistoryListFragment_to_createAccountFindVehicleFragment,
+                    bundle()
+                )
+            }
+        }
     }
 }
 

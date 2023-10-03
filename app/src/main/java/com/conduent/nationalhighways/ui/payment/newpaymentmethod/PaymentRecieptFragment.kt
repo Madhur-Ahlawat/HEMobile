@@ -12,49 +12,36 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
-import com.conduent.nationalhighways.data.model.profile.PersonalInformation
-import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
-import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
 import com.conduent.nationalhighways.databinding.FragmentPaymentRecieptMethodBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
-import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
-import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
-import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED
-import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
-import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
-import com.conduent.nationalhighways.utils.common.Constants.REMOVE_VEHICLE
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>(),
-    View.OnClickListener, DropDownItemSelectListener {
+    View.OnClickListener, NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
     private var commaSeperatedString: String? = null
     private var filterTextForSpecialChars: String? = null
     private var requiredCountryCode = false
@@ -94,7 +81,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         }
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
-        binding.inputCountry.dropDownItemSelectListener = this
         binding.edtEmail.editText.addTextChangedListener {
             isEnable()
         }
@@ -279,6 +265,10 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     inputCountry.dataSet.addAll(countriesCodeList)
                     inputCountry.setSelectedValue(Constants.UK_CODE)
                 }
+
+                binding.inputCountry.clearFocus()
+                binding.inputCountry.setDropDownItemSelectListener(this)
+
             }
 
             is Resource.DataError -> {
@@ -341,13 +331,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         return Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
     }
 
-    override fun onHashMapItemSelected(key: String?, value: Any?) {
-        (navData as CrossingDetailsModelsResponse).countryCode = key
-    }
-
-    override fun onItemSlected(position: Int, selectedItem: String) {
-        (navData as CrossingDetailsModelsResponse).countryCode = selectedItem
-    }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
         override fun beforeTextChanged(
@@ -359,7 +342,8 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             charSequence: CharSequence?, start: Int, before: Int, count: Int
         ) {
 
-            requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
+            requiredCountryCode =
+                countriesCodeList.any { it == binding.inputCountry.selectedItemDescription }
 
             if (index == 0) {
                 requiredMobileNumber = true
@@ -417,5 +401,26 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         } else {
             binding.btnContinue.disable()
         }
+    }
+
+    override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
+        if (selected) {
+            (navData as CrossingDetailsModelsResponse).countryCode = item
+            requiredCountryCode = true
+        } else {
+            if (countriesCodeList.size > 0) {
+                requiredCountryCode = countriesCodeList.any { it == item }
+            } else {
+                requiredCountryCode = false
+            }
+
+            if (requiredCountryCode) {
+                (navData as CrossingDetailsModelsResponse).countryCode =
+                    binding.inputCountry.selectedItemDescription
+            } else {
+                (navData as CrossingDetailsModelsResponse).countryCode = ""
+            }
+        }
+        checkButton()
     }
 }

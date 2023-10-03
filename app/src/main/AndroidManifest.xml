@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".ui.base.BaseApplication"
@@ -30,8 +30,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bottomnav.account.close_account.CloseAccountSuccessActivity"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.account.biometric.BiometricActivity"
             android:exported="false" />

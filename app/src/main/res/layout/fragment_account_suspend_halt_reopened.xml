@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:overScrollMode="never"
-        >
+        android:overScrollMode="never">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,9 +28,9 @@
                 android:id="@+id/ivWarning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="115dp"
                 android:src="@drawable/ic_check_blue"
                 android:textSize="@dimen/font_14sp"
-                android:layout_marginTop="115dp"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,18 +48,18 @@
                 app:layout_constraintEnd_toEndOf="@+id/ivWarning"
                 app:layout_constraintStart_toStartOf="@id/ivWarning"
                 app:layout_constraintTop_toBottomOf="@+id/ivWarning" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_payment_reference_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/margin_60dp"
                 android:layout_marginHorizontal="2dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="5dp"
-                android:id="@+id/layout_payment_reference_number"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvYouWillNeedToPay"
                 android:background="@drawable/bg_card_type"
-                >
+                android:minHeight="@dimen/margin_60dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvYouWillNeedToPay">
 
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -68,9 +67,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_12dp"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/str_payment_reference"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,8 +88,8 @@
                 android:gravity="center_horizontal"
                 android:text="@string/str_we_have_sent_confirmation"
                 android:textAlignment="center"
-                android:textSize="15sp"
                 android:textColor="@color/black"
+                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="@+id/ivWarning"
                 app:layout_constraintStart_toStartOf="@id/ivWarning"
                 app:layout_constraintTop_toBottomOf="@+id/tv_account_suspended" />
@@ -113,15 +112,14 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="74dp"
-                android:id="@+id/cardView"
-                android:visibility="gone"
-                android:background="@drawable/bg_card_type"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_15dp"
-                app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed"
-                >
+                android:background="@drawable/bg_card_type"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed">
 
                 <ImageView
                     android:id="@+id/ivCardType"
@@ -153,27 +151,24 @@
                 style="@style/PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
                 android:layout_marginTop="@dimen/_30dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
                 android:text="@string/str_go_to_dashboard"
                 app:isEnabled="true"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/feedback_bt"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <com.conduent.apollo.ui.CMButton
-                android:id="@+id/btnNoIwillDoItLater"
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/feedback_bt"
                 style="@style/secondaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_30dp"
-                android:text="@string/str_feedback_to_improve_the_service"
-                android:textSize="@dimen/font_14sp"
-                android:visibility="invisible"
-                app:isEnabled="true"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:text="@string/feed_back_to_improve_service"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnTopUpNow" />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

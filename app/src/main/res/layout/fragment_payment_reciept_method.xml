@@ -108,16 +108,15 @@
             app:layout_constraintTop_toTopOf="@id/selectTextMessage" />
 
 
-        <com.conduent.apollo.ui.CMDropDownView
+        <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
             android:id="@+id/inputCountry"
             android:layout_width="0dp"
             android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_11dp"
-            android:padding="0dp"
             android:textColor="@color/black"
-            app:inputType="number"
-            app:labelText="Country code"
+            android:hint="@string/country_code"
+            android:textSize="@dimen/font_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/label_text_message"
             app:layout_constraintTop_toBottomOf="@id/label_text_message" />
