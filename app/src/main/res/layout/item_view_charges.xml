@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.conduent.nationalhighways.data.model.tollrates.TollRatesRespNew" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_3dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <!--
+                                <androidx.constraintlayout.widget.Guideline
+                                    android:id="@+id/guide_line_vertical2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    app:layout_constraintGuide_percent="0.50" />
+                -->
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_type_of_vehicle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_21dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center|left"
+                    android:text="@string/str_type_of_vehicle"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/label_vehicle_class"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/label_vehicle_class" />
+
+                <!--
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/title2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="@dimen/_2sdp"
+                                    android:text="@string/str_one_of_payment"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp"
+                                    android:visibility="gone"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical2"
+                                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                -->
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_vehicle_class"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_21dp"
+                    android:text="@string/vehicle__class"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical_new"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_one_off_payment"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_21dp"
+                    android:text="@string/one_off__payment"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical_new"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/label_if_you_have_accoun"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+
+                    android:padding="@dimen/_2sdp"
+                    android:text="If you have\nan account"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/label_vehicle_class"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical3"
+                    app:layout_constraintTop_toTopOf="@id/label_vehicle_class" />
+
+                <View
+                    android:id="@+id/view_footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="@dimen/_17dp"
+                    android:background="@color/blue_vehicle_charge_heading"
+                    app:layout_constraintTop_toBottomOf="@id/label_vehicle_class" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_line_vertical1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.25"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_line_vertical_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.47"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <!--
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guide_line_vertical2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.50" />
+                -->
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guide_line_vertical3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.71"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_type_of_vehicle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_12dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center|left"
+                    android:src="@drawable/ic_truck_black"
+                    android:padding="@dimen/_2sdp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_footer"
+                    tools:text="Cars,\nMotorhomes,\nMinibuses" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/value_vehicle_class"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:text="@{data.vehicleClass}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical_new"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
+                    app:layout_constraintTop_toTopOf="@+id/iv_type_of_vehicle"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle"
+                    />
+
+                <!--
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/title2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/open_sans"
+                            android:textSize="14sp"
+                            android:padding="@dimen/_2sdp"
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
+                            app:layout_constraintEnd_toStartOf="@id/guide_line_vertical2"
+                            app:layout_constraintTop_toTopOf="parent" />
+                -->
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/value_one_off_payment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="@{data.oneOffPaymentRate}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical_new"
+                    app:layout_constraintTop_toTopOf="@+id/iv_type_of_vehicle"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/value_if_you_have_an_account"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="@{data.ifYouHaveAccountRate}"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_type_of_vehicle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical3"
+                    app:layout_constraintTop_toTopOf="@id/iv_type_of_vehicle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/grayColorIcon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

@@ -10,12 +10,12 @@
         android:label="@string/str_start_now"
         tools:layout="@layout/fragment_start_now" />
 
+
     <fragment
         android:id="@+id/landingFragment"
         android:name="com.conduent.nationalhighways.ui.landing.LandingFragment"
         android:label="@string/str_landing_screen"
         tools:layout="@layout/fragment_landing">
-
         <action
             android:id="@+id/action_landingFragment_to_startNow"
             app:destination="@id/startNow" />
@@ -23,7 +23,7 @@
             android:id="@+id/action_landingFragment_to_serviceUnavailableFragment"
             app:destination="@id/serviceUnavailableFragment"
             app:popUpTo="@id/serviceUnavailableFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -47,8 +47,7 @@
         android:id="@+id/serviceUnavailableFragment"
         android:name="com.conduent.nationalhighways.ui.landing.ServiceUnavailableFragment"
         android:label="ServiceUnavailableFragment"
-        tools:layout="@layout/fragment_service_unavailable" >
-    </fragment>
+        tools:layout="@layout/fragment_service_unavailable"></fragment>
 
     <fragment
         android:id="@+id/failedRetryFragment"

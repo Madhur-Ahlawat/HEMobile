@@ -1,5 +1,4 @@
-package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
-
+package com.conduent.nationalhighways.ui.landing
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -29,7 +28,6 @@ class ContactDartChargeFragment : BaseFragment<FragmentContactDartCharge2Binding
         binding.getInTouchMb.setOnClickListener {
             raise_viewModel.enquiryModel.value = EnquiryModel()
             raise_viewModel.edit_enquiryModel.value = EnquiryModel()
-
             findNavController().navigate(R.id.action_contactDartChargeFragment_to_dartChargeAccountTypeEnquiryFragment)
         }
         binding.checkEnquiryStatusMb.setOnClickListener {

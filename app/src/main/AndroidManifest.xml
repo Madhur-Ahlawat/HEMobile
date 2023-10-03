@@ -66,11 +66,12 @@
         <activity
             android:name=".ui.auth.login.LoginActivity"
             android:screenOrientation="portrait"
-            android:noHistory="true"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.HEMobileDark" />
         <activity
             android:name=".ui.landing.LandingActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.HEMobileDark" />
         <activity
             android:name=".ui.vehicle.VehicleMgmtActivity"
@@ -91,8 +92,9 @@
         <activity
             android:name=".ui.account.creation.controller.CreateAccountActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.CreateAccount"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.account.profile.ProfileActivity"
             android:screenOrientation="portrait"
@@ -109,6 +111,7 @@
         <activity
             android:name=".ui.payment.MakeOffPaymentActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.HEMobileWhite" />
         <activity
             android:name=".ui.bottomnav.account.payments.AccountPaymentActivity"
@@ -125,6 +128,7 @@
         <activity
             android:name=".ui.checkpaidcrossings.CheckPaidCrossingActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.HEMobileWhite" />
 
         <provider

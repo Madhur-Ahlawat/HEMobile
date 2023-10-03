@@ -36,9 +36,22 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
 
     private lateinit var navController: NavController
     private var screenType: String = ""
-    private lateinit var binding: ActivityLandingBinding
     val viewModel: WebSiteServiceViewModel by viewModels()
+    companion object{
+        private lateinit var binding: ActivityLandingBinding
 
+        fun showToolBar(isShown:Boolean){
+            if(isShown){
+             binding.toolbar.visible()
+            }
+            else{
+                binding.toolbar.gone()
+            }
+        }
+        fun setToolBarTitle(title:String){
+                binding.titleTxt.text=title
+        }
+    }
     override fun initViewBinding() {
         binding = ActivityLandingBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -54,6 +67,9 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
             binding.titleTxt.text = resources.getString(R.string.txt_my_account)
         } else {
             binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
+        }
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
         }
 
     }
@@ -130,7 +146,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 }
             }
         }
-
         navController.setGraph(oldGraph, bundle)
 
     }

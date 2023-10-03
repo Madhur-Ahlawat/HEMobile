@@ -789,7 +789,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun updateBusinessUserProfile(
         dataModel: ProfileDetailModel?
     ) {
-
         dataModel?.run {
             val request = UpdateProfileRequest(
                 firstName = personalInformation?.firstName,

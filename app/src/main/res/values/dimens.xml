@@ -171,5 +171,17 @@
     <dimen name="_79dp">79dp</dimen>
     <dimen name="_48dp">48dp</dimen>
     <dimen name="_93dp">93dp</dimen>
+    <dimen name="_63dp">63dp</dimen>
+    <dimen name="_34dp">34dp</dimen>
+    <dimen name="_43dp">43dp</dimen>
+    <dimen name="_54dp">54dp</dimen>
+    <dimen name="_17sp">17sp</dimen>
+    <dimen name="_47dp">47dp</dimen>
+    <dimen name="_64dp">64dp</dimen>
+    <dimen name="_26_43dp">26.43dp</dimen>
+    <dimen name="_69dp">69dp</dimen>
+    <dimen name="_91dp">91dp</dimen>
+    <dimen name="_76dp">76dp</dimen>
+    <dimen name="margin_76dp">76dp</dimen>
     />
 </resources>

@@ -29,14 +29,15 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
     lateinit var sessionManager: SessionManager
 
     override fun initViewBinding() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
         binding = ActivityViewChargesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolBarLyt.titleTxt.text = getString(R.string.str_create_an_account)
         binding.toolBarLyt.backButton.setOnClickListener {
             finish()
         }
-
-
 
         AdobeAnalytics.setScreenTrack(
             "view charges",
@@ -47,20 +48,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
             "view charges",
             sessionManager.getLoggedInUser()
         )
-
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.tollRates()
-
-        /*
-                binding.text.makeLinksWhite(Pair("click here", View.OnClickListener {
-                    val url = "https://www.gov.uk/pay-dartford"
-                    val i = Intent(Intent.ACTION_VIEW)
-                    i.data = Uri.parse(url)
-                    startActivity(i)
-                }))
-        */
     }
 
 
