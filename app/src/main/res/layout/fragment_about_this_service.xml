@@ -61,6 +61,7 @@
             android:textSize="@dimen/_14sp"
             android:fontFamily="@font/open_sans_semibold"
             android:layout_gravity="center"
+            android:textColorLink="@color/btn_color"
             android:textColor="@color/blue_color"
             android:text="@string/learn_more_about_dartford_crossing_amp_dart_charge"
             android:layout_height="wrap_content"/>

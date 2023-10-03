@@ -10,6 +10,7 @@
         android:orientation="vertical">
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/text_terms_and_conditions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_24dp"

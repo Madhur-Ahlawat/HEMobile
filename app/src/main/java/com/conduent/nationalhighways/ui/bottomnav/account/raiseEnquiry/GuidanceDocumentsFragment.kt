@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,8 @@ class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>
         FragmentGuidanceDocumentsBinding.inflate(inflater, container, false)
 
     override fun init() {
+        binding?.feedbackToImproveMb?.setMovementMethod(LinkMovementMethod.getInstance())
+
         binding.contactDartChargeCv.setOnClickListener {
             findNavController().navigate(R.id.action_guidanceDocumentsFragment_to_contactDartChargeFragment)
         }

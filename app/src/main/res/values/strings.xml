@@ -1189,7 +1189,7 @@
     <string name="str_upload_more_vehicles">upload more vehicles </string>
     <string name="change_how_pay_for_crossing">change how you pay for crossings </string>
     <string name="change_how_to_receive_communication">change how you receive communications</string>
-    <string name="feed_back_to_improve_service"><u>FEEDBACK TO IMPROVE THE SERVICE</u></string>
+    <string name="feed_back_to_improve_service"><a href="https://websurveys2.servmetric.com/theme/gm/2712?GUID=c1694af9-bd75-49a9-90b2-8af9ca81d41e"><u>FEEDBACK TO IMPROVE THE SERVICE</u></a></string>
     <string name="the_name_on_card_must_only_include_letters_a_to_z_and_special_characters_such_as_hyphens">The name on card must only include letters a to z, and special characters such as hyphens</string>
     <string name="card_security_code_must_be_3_digits_or_more">Card security code must be 3 digits or more</string>
     <string name="invalid_date_format">Invalid date format</string>
@@ -1471,7 +1471,7 @@
     <string name="str_third_party_software">Third party software</string>
     <string name="str_dart_charge_contact_centre">Dart charge contact centre</string>
     <string name="str_contact_dart_charge_team">Contact the Dart Charge team</string>
-    <string name="str_find_out_about_call_charges"><u>Find out about call charges</u></string>
+    <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
     <string name="str_get_in_touch_about">Get in touch about:</string>
     <string name="str_charges">charges</string>
     <string name="str_fines">fines(Penalty Charge Notice)</string>
@@ -1541,14 +1541,14 @@
     <string name="receive_notifications">Receive Notifications</string>
     <string name="dart_charge_guidance_and_documents">DART CHARGE GUIDANCE AND\nDOCUMENTS</string>
     <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means\nthat you do not pay charges at a booth when crossing\nbut you can pay charges for crossing in various ways.</string>
-    <string name="learn_more_about_dartford_crossing_amp_dart_charge"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></string>
+    <string name="learn_more_about_dartford_crossing_amp_dart_charge"><a href="https://www.gov.uk/call-charges"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></a></string>
     <string name="vehicle__class">Vehicle\nClass</string>
     <string name="one_off__payment">One off\npayment</string>
     <string name="b_more_details"><b>More details</b>\nFor more details on Types of Vehicles and charge amounts visit <a href="https://www.gov.uk/pay-dartford-crossing-charge/charges-fines">understanding charges , discounts and penalties</a></string>
     <string name="b_if_you_re_disabled"><b>If you’re disabled</b>\nYou do not need to pay the charge if you get free UK vehicle tax because of a disability.\n\nYour vehicle will be checked automatically when you cross - you do not need to do anything.\n\nFind out how to <a href="https://www.gov.uk/get-vehicle-tax-exemption-disability">get free vehicle tax if you’re a driver with a disability.</a>.</string>
     <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council.</a>.\n\nYou can either\n\n<ul><li>pay £20 a year to use the Dartford Crossing as many times as you want</li>\n<li>pay £10 for 50 crossings, plus 20p for each additional crossing</li></ul>\n\nApply for a local resident discount online or by post.</string>
 
-    <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a>.</string>
+    <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a> or call the Dart Charge contact centre..</string>
     <string name="contact_dart_charge">Contact Dart Charge</string>
     <string name="do_you_have_dart_charge_account">Do you have Dart Charge Account?</string>
     <string name="sub_category">Sub-category</string>

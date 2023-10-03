@@ -14,7 +14,7 @@
             android:background="@color/white">
 
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/top_title"
                 style="@style/MediumTextBlack"
                 android:layout_marginStart="@dimen/_23dp"
@@ -68,7 +68,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <TextView
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,75 +79,68 @@
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/title_card" />
 
-            <TextView
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/text_more_details"
                 android:layout_width="match_parent"
                 android:layout_height="103dp"
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="@dimen/_23dp"
                 android:layout_marginEnd="@dimen/_32dp"
-                android:autoLink="all|web"
-                android:textColorLink="@color/btn_color"
-                android:textSize="@dimen/_14sp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:linksClickable="true"
                 android:text="@string/b_more_details"
                 android:textColor="@color/black"
+                android:textColorLink="@color/btn_color"
+                android:textSize="@dimen/_14sp"
                 app:layout_constraintTop_toBottomOf="@id/text"
                 app:layout_goneMarginTop="@dimen/_23dp" />
 
-            <TextView
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/text_if_you_have_disabled"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="@dimen/_16dp"
-                android:textSize="@dimen/_14sp"
-                android:textColorLink="@color/btn_color"
                 android:layout_marginEnd="@dimen/_32dp"
-                android:autoLink="all|web"
                 android:fontFamily="@font/open_sans"
-                android:linksClickable="true"
                 android:text="@string/b_if_you_re_disabled"
                 android:textColor="@color/black"
+                android:textColorLink="@color/btn_color"
+                android:textSize="@dimen/_14sp"
                 app:layout_constraintTop_toBottomOf="@id/text_more_details" />
 
-            <TextView
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/text_local_resident_discount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="@dimen/_23dp"
                 android:layout_marginEnd="@dimen/_32dp"
-                android:autoLink="all|web"
-                android:textSize="@dimen/_14sp"
-                android:textColorLink="@color/btn_color"
                 android:fontFamily="@font/open_sans"
-                android:linksClickable="true"
                 android:text="@string/b_local_resident_discount"
                 android:textColor="@color/black"
+                android:textColorLink="@color/btn_color"
+                android:textSize="@dimen/_14sp"
                 app:layout_constraintTop_toBottomOf="@id/text_if_you_have_disabled" />
 
-            <TextView
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/text_fines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="@dimen/_18dp"
                 android:layout_marginEnd="@dimen/_32dp"
-                android:autoLink="all|web"
-                android:textColorLink="@color/btn_color"
-                android:textSize="@dimen/_14sp"
                 android:fontFamily="@font/open_sans"
-                android:linksClickable="true"
                 android:text="@string/fines_you_can_get"
                 android:textColor="@color/black"
+                android:textColorLink="@color/btn_color"
+                android:textSize="@dimen/_14sp"
                 app:layout_constraintTop_toBottomOf="@id/text_local_resident_discount" />
+
             <View
-                app:layout_constraintTop_toBottomOf="@+id/text_fines"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_64dp"/>
+                android:layout_height="@dimen/_64dp"
+                app:layout_constraintTop_toBottomOf="@+id/text_fines" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
