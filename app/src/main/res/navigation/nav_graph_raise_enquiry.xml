@@ -13,7 +13,11 @@
         android:id="@+id/aboutthisserviceFragment"
         android:name="com.conduent.nationalhighways.ui.landing.AboutThisServiceFragment"
         android:label="Guidance and Documents"
-        tools:layout="@layout/fragment_about_this_service" />
+        tools:layout="@layout/fragment_about_this_service">
+        <action
+            android:id="@+id/action_aboutthisserviceFragment_to_viewChargesFragment"
+            app:destination="@id/viewChargesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/viewChargesFragment"
         android:name="com.conduent.nationalhighways.ui.landing.ViewChargesFragment"

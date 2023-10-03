@@ -67,7 +67,8 @@ class AboutThisServiceFragment : BaseFragment<FragmentAboutThisServiceBinding>()
     }
 
     override fun initCtrl() {
-        binding?.btnLearnMore?.setMovementMethod(LinkMovementMethod.getInstance())
+//        binding?.btnLearnMore?.setMovementMethod(LinkMovementMethod.getInstance())
+        binding?.btnLearnMore?.setOnClickListener { findNavController().navigate(R.id.action_aboutthisserviceFragment_to_viewChargesFragment) }
     }
 
     override fun observer() {

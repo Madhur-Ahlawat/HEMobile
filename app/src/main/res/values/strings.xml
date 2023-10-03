@@ -1541,7 +1541,7 @@
     <string name="receive_notifications">Receive Notifications</string>
     <string name="dart_charge_guidance_and_documents">DART CHARGE GUIDANCE AND\nDOCUMENTS</string>
     <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means\nthat you do not pay charges at a booth when crossing\nbut you can pay charges for crossing in various ways.</string>
-    <string name="learn_more_about_dartford_crossing_amp_dart_charge"><a href="https://www.gov.uk/call-charges"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></a></string>
+    <string name="learn_more_about_dartford_crossing_amp_dart_charge"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></string>
     <string name="vehicle__class">Vehicle\nClass</string>
     <string name="one_off__payment">One off\npayment</string>
     <string name="b_more_details"><b>More details</b>\nFor more details on Types of Vehicles and charge amounts visit <a href="https://www.gov.uk/pay-dartford-crossing-charge/charges-fines">understanding charges , discounts and penalties</a></string>

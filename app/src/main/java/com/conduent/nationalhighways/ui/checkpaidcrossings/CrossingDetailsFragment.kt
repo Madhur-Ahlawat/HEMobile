@@ -71,13 +71,13 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         data.let {
             val crossings = it?.unusedTrip?.toInt()
             binding.fullName.text = it?.referenceNumber
-            binding.companyName.text = it?.plateNo
             binding.address.text = crossings.toString()+ " crossings"
             binding.emailAddress.text = it?.expirationDate?.let { it1 ->
                 DateUtils.convertDateFormatToDateFormat(
                     it1
                 )
             }
+            binding?.valueVehicleRegistrationNumber?.text=it?.plateNo
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH)
             val date = LocalDateTime.parse(it?.expirationDate, formatter)

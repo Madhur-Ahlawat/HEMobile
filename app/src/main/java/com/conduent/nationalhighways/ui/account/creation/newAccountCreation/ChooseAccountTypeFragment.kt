@@ -15,7 +15,7 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 
 class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>(),
     View.OnClickListener {
-
+    val bundle = Bundle()
     private var oldPersonalAccountValue = false
     private var isViewCreated: Boolean = false
 
@@ -65,33 +65,24 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
 
                 if (id == R.id.radio_personal_account) {
                     NewCreateAccountRequestModel.personalAccount = true
-                    NewCreateAccountRequestModel.companyName=""
+                    NewCreateAccountRequestModel.companyName = ""
                 } else {
                     NewCreateAccountRequestModel.prePay = true
                     NewCreateAccountRequestModel.personalAccount = false
                 }
 
                 val editCall = navFlowCall.equals(EDIT_SUMMARY, true)
-                if (editCall && oldPersonalAccountValue == NewCreateAccountRequestModel.personalAccount) {
-                    findNavController().popBackStack()
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                if (editCall) {
+                    findNavController().popBackStack(R.id.createAccountSummaryFragment, false)
                 } else {
-                    val bundle = Bundle()
-                    if (editCall) {
-                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_ACCOUNT_TYPE)
-                    } else {
-                        bundle.putString(
-                            Constants.NAV_FLOW_KEY,
-                            Constants.ACCOUNT_CREATION_EMAIL_FLOW
-                        )
-                    }
-
                     findNavController().navigate(
                         R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo,
                         bundle
                     )
                 }
+
             }
         }
     }
-
 }
