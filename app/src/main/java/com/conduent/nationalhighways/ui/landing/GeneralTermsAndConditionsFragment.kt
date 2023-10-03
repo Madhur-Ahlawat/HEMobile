@@ -40,14 +40,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndConditionsBinding>() {
 
-    private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
-    private var loader: LoaderDialog? = null
-    private var isChecked = false
-    private var isPushNotificationChecked = true
-    private var count = 1
-    var apiState = Constants.UNAVAILABLE
-    var apiEndTime: String = ""
-
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -61,10 +53,6 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
     }
 
     override fun init() {
-        LandingActivity.showToolBar(true)
-        LandingActivity.setToolBarTitle("Terms & Conditions")
-        val webSetting: WebSettings = binding.webView.getSettings()
-        webSetting.builtInZoomControls = false
         val mAssetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(requireActivity()))
             .addPathHandler("/res/", WebViewAssetLoader.ResourcesPathHandler(requireActivity()))
@@ -88,24 +76,5 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
     }
 
     override fun observer() {
-
-
     }
-    private fun getBundleData(state: String?,endTime:String?=null): Bundle? {
-        val bundle: Bundle = Bundle()
-        bundle.putString(Constants.SERVICE_TYPE, state)
-        if(endTime!=null && endTime.replace("null","").isNotEmpty()){
-            bundle.putString(Constants.END_TIME, endTime)
-        }
-        return bundle
-    }
-
-    private fun openUrlInWebBrowser() {
-        val url = Constants.PCN_RESOLVE_URL
-        Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
-            startActivity(Intent.createChooser(this, "Browse with"))
-        }
-    }
-
-
 }

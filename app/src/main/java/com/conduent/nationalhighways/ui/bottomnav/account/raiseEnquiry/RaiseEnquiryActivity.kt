@@ -55,16 +55,46 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
             NavController.OnDestinationChangedListener { controller, destination, arguments ->
                 // Handle navigation events here
                 when (destination.id) {
+
                     R.id.guidanceDocumentsFragment -> {
                         binding.toolBarLyt.titleTxt.setText(resources.getString(R.string.str_guidance_and_documents))
                     }
-
+                    R.id.aboutthisserviceFragment -> {
+                        binding.toolBarLyt.titleTxt.setText(getString(R.string.about_this_service))
+                    }
                     R.id.contactDartChargeFragment -> {
                         binding.toolBarLyt.titleTxt.setText(resources.getString(R.string.str_contact_dart_charge))
                     }
+                    R.id.dartChargeAccountTypeEnquiryFragment -> {
+                        binding.toolBarLyt.titleTxt.text = getString(R.string.str_raise_new_enquiry)
+                    }
+                    R.id.viewChargesFragment -> {
+                        binding.toolBarLyt.titleTxt.setText(getString(R.string.charges_and_fines))
+                    }
+                    R.id.fragmentTermsAndConditions -> {
+                        binding.toolBarLyt.titleTxt.setText("Dart Charge terms and conditions")
+                    }
+                    R.id.generalTermsAndConditionsFragment -> {
+                        binding.toolBarLyt.titleTxt.setText("Terms & Conditions")
+                    }
+                    R.id.paygtermsandconditions -> {
+                        binding.toolBarLyt.titleTxt.setText("PAYG Terms & Conditions")
+                    }
+                    R.id.privacyPolicyFragment -> {
+                        binding.toolBarLyt.titleTxt.setText("Privacy Policy")
+                    }
+                    R.id.btnOtherWaysToPayCharge -> {
+                        binding.toolBarLyt.titleTxt.setText("Other ways to pay")
+                    }
+                    R.id.thirdPartySoftwareFragment -> {
+                        binding.toolBarLyt.titleTxt.setText("Third party software")
+                    }
 
+                    R.id.enquiryStatusFragment -> {
+                        binding.toolBarLyt.titleTxt.text = getString(R.string.enquiry_status)
+                    }
 
-                    R.id.enquiryStatusFragment or R.id.casesEnquiryDetailsFragment -> {
+                    R.id.casesEnquiryDetailsFragment -> {
                         binding.toolBarLyt.titleTxt.text = getString(R.string.cases_and_enquiry)
                     }
 
@@ -72,7 +102,6 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                         binding.toolBarLyt.titleTxt.text = getString(R.string.str_raise_new_enquiry)
                     }
 
-                    // Add more destination cases as needed
                 }
 
                 when (destination.id) {

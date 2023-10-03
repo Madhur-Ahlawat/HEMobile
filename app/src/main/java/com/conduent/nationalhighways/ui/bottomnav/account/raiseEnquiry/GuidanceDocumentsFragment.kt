@@ -24,6 +24,28 @@ class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>
         binding.contactDartChargeCv.setOnClickListener {
             findNavController().navigate(R.id.action_guidanceDocumentsFragment_to_contactDartChargeFragment)
         }
+        binding.feedbackToImproveMb.setOnClickListener {
+        }
+
+        binding.aboutServiceCv.setOnClickListener {
+            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_aboutthisserviceFragment)
+        }
+
+        binding.understandingDartchargesCv.setOnClickListener {
+            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_viewChargesFragment)
+        }
+
+        binding.otherwaysTopayCv.setOnClickListener {
+            findNavController().navigate(R.id.action_guidanceDocumentsFragment_to_otherwaystopayFragment)
+        }
+
+        binding.termsConditionsCv.setOnClickListener {
+            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_termsandconditions)
+        }
+
+        binding.thirdPartySoftwareCv.setOnClickListener {
+            findNavController().navigate(R.id.action_guidanceanddocumentsFragment_to_thirdPartySoftwareFragment)
+        }
     }
 
     override fun initCtrl() {

@@ -15,34 +15,56 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:paddingStart="@dimen/_28dp"
-        android:paddingEnd="@dimen/_26dp"
+        android:padding="@dimen/margin_20dp"
         tools:context=".ui.bottomnav.account.raiseEnquiry.EnquirySuccessFragment">
 
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:id="@+id/enquiry_reference_number_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5dp"
             android:textColor="@color/black"
-            android:layout_marginTop="@dimen/_91dp"
-
             app:imeOptions="actionNext"
             app:labelText="@string/str_enquiry_reference_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+            android:id="@+id/last_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:textColor="@color/black"
+            app:imeOptions="actionNext"
+            app:labelText="@string/last_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enquiry_reference_number_et" />
+
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnNext"
             style="@style/PrimaryButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_76dp"
+            android:layout_marginTop="@dimen/margin_20dp"
             android:enabled="false"
             android:text="@string/str_continue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enquiry_reference_number_et"
+            app:layout_constraintTop_toBottomOf="@+id/last_name_et"
+            app:radius="@dimen/margin_5dp" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnGotoStartMenu"
+            style="@style/secondaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:text="@string/str_go_to_start_menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNext"
             app:radius="@dimen/margin_5dp" />
 
 

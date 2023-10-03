@@ -180,5 +180,6 @@
     <dimen name="_69dp">69dp</dimen>
     <dimen name="_91dp">91dp</dimen>
     <dimen name="_76dp">76dp</dimen>
+    <dimen name="margin_76dp">76dp</dimen>
     />
 </resources>

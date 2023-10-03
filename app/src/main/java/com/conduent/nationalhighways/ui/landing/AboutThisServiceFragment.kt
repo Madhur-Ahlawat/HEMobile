@@ -53,15 +53,6 @@ class AboutThisServiceFragment : BaseFragment<FragmentAboutThisServiceBinding>()
     }
 
     override fun init() {
-        LandingActivity.setToolBarTitle("About this Service")
-        LandingActivity.showToolBar(true)
-        HomeActivityMain.accountDetailsData=null
-        HomeActivityMain.checkedCrossing=null
-        HomeActivityMain.crossing=null
-        HomeActivityMain.dateRangeModel=null
-        HomeActivityMain.paymentHistoryListData=null
-        HomeActivityMain.paymentHistoryListDataCheckedCrossings= arrayListOf()
-
         AdobeAnalytics.setScreenTrack(
             "home",
             "home",
@@ -81,22 +72,4 @@ class AboutThisServiceFragment : BaseFragment<FragmentAboutThisServiceBinding>()
 
     override fun observer() {
     }
-
-    private fun getBundleData(state: String?,endTime:String?=null): Bundle? {
-        val bundle: Bundle = Bundle()
-        bundle.putString(Constants.SERVICE_TYPE, state)
-        if(endTime!=null && endTime.replace("null","").isNotEmpty()){
-            bundle.putString(Constants.END_TIME, endTime)
-        }
-        return bundle
-    }
-
-    private fun openUrlInWebBrowser() {
-        val url = Constants.PCN_RESOLVE_URL
-        Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
-            startActivity(Intent.createChooser(this, "Browse with"))
-        }
-    }
-
-
 }

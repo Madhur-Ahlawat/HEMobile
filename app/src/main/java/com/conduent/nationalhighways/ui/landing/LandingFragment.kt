@@ -109,8 +109,31 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     override fun initCtrl() {
         LandingActivity.showToolBar(false)
-        binding.btnGuidanceAndDocuments.setOnClickListener{
-            findNavController().navigate(R.id.action_landingFragment_to_guidanceanddocumentsFragment)
+        binding.btnGuidanceAndDocuments.setOnClickListener {
+            when (apiState) {
+                Constants.LIVE -> {
+                    AdobeAnalytics.setActionTrack(
+                        "dart charge guidance and documents",
+                        "home",
+                        "home",
+                        "english",
+                        "home",
+                        "splash",
+                        sessionManager.getLoggedInUser()
+                    )
+                    requireActivity().startNormalActivity(
+                        RaiseEnquiryActivity::class.java
+                    )
+                }
+
+                else -> {
+                    findNavController().navigate(
+                        R.id.action_landingFragment_to_serviceUnavailableFragment,
+                        getBundleData(apiState, apiEndTime)
+                    )
+                }
+            }
+
         }
         binding.payCrossingLayout.setOnClickListener {
             when (apiState) {
