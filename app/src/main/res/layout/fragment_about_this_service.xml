@@ -28,7 +28,7 @@
             android:layout_marginTop="@dimen/_14dp"
             android:text="@string/str_use_service_guideline"
             android:textColor="@color/black"
-            android:textSize="@dimen/_15sp"
+            android:textSize="@dimen/_16sp"
             android:layout_marginStart="@dimen/_29dp"
             android:lineSpacingExtra="@dimen/_8dp"
             android:fontFamily="@font/open_sans"/>

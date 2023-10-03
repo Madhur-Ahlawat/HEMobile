@@ -27,7 +27,7 @@
             android:id="@+id/tv_guideline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_29dp"
+            android:layout_marginStart="@dimen/_26dp"
             android:layout_marginTop="@dimen/_14dp"
             android:fontFamily="@font/open_sans"
             android:lineSpacingExtra="@dimen/_8dp"

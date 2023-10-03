@@ -77,7 +77,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                     it1
                 )
             }
-            binding?.valueVehicleRegistrationNumber?.text=it?.plateNo
+            binding?.valueVehicleRegistrationNumber?.text=it?.plateNumberToTransfer
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH)
             val date = LocalDateTime.parse(it?.expirationDate, formatter)

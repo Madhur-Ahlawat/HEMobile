@@ -1474,7 +1474,7 @@
     <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
     <string name="str_get_in_touch_about">Get in touch about:</string>
     <string name="str_charges">charges</string>
-    <string name="str_fines">fines(Penalty Charge Notice)</string>
+    <string name="str_fines">fines (Penalty Charge Notice)</string>
     <string name="str_refunds">refunds</string>
     <string name="str_dart_charge_accounts">dart Charge accounts</string>
     <string name="str_complaints">complaints</string>
@@ -1558,7 +1558,7 @@
     <string name="third_party_software_full_message">The following open source software components are used under the MIT License.\nSee <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a> for more details.\n\nSnapKit\nR.swift\nClosures\nMoya/RxSwift\nSwiftLint\nEureka\nSwiftyUserDefaults\nMBProgressHUD\nIQKeyboardManagerSwift\nKeychainSwift\nAlamofire\nMMMaterialDesignSpinner\nUIFloatLabelTextView\nActiveLabel\n\nThe following open source software components are used under the 3 clause BSD License. See <a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>.\n\nCardScan\n\nThe following open source software components are used under a commercial license.\n\nFirebase/Core\nFirebase/Crashlytics\nFabric</string>
     <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
-    <string name="str_using_this_mobile_app">Using this mobile app is the quickest way to pay your charge\nOr you can:\n\n<ul><li>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></li>\n<li>pay or setup an account <a href="https://pay-dartford-crossing-charge.service.gov.uk/forms-and-guidance">by post</a></li>\n<li>pay or setup an account by phoning the Dart Charge Contact centre</li></ul></string>
+    <string name="str_using_this_mobile_app">Using the mobile app is the quickest way to pay your charge. Or you can:\n\n<ul><li>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></li>\n<li>pay or setup an account <a href="https://pay-dartford-crossing-charge.service.gov.uk/forms-and-guidance">by post</a></li>\n<li>pay or setup an account by phoning the Dart Charge Contact centre</li></ul></string>
     <string name="about_this_service">About this Service</string>
     <string name="charges_and_fines">Charges and Fines</string>
     <string name="enquiry_status">Enquiry Status</string>
