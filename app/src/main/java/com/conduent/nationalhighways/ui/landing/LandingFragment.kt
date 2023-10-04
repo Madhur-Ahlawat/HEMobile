@@ -1,10 +1,8 @@
 package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +60,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
+        binding.scrollViewLanding.post(Runnable { binding.scrollViewLanding.smoothScrollTo(0,binding.scrollViewLanding.bottom)})
         HomeActivityMain.accountDetailsData=null
         HomeActivityMain.checkedCrossing=null
         HomeActivityMain.crossing=null

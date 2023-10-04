@@ -15,22 +15,33 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_26dp"
             android:layout_marginTop="@dimen/_17dp"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/open_sans_semibold"
             android:gravity="center_vertical"
             android:text="@string/str_otherways_to_pay_your_charge"
-            android:textColor="@color/gray_707070"
+            android:textColor="@color/black"
             android:textSize="@dimen/_17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/tv_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_26dp"
+            android:layout_marginTop="@dimen/_14dp"
+            android:lineSpacingExtra="@dimen/_5dp"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/str_heading_other_ways_to_pay"
+            android:textColor="@color/black"
+            android:textColorLink="@color/btn_color"
+            android:textSize="@dimen/_16sp" />
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/tv_guideline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_26dp"
             android:layout_marginTop="@dimen/_14dp"
+            android:lineSpacingExtra="@dimen/_5dp"
             android:fontFamily="@font/open_sans"
-            android:lineSpacingExtra="@dimen/_8dp"
             android:text="@string/str_using_this_mobile_app"
             android:textColor="@color/black"
             android:textColorLink="@color/btn_color"
@@ -54,8 +65,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
+                android:layout_marginEnd="@dimen/_18dp"
                 android:text="You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice)."
-                android:textColor="@color/gray_707070"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_20sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

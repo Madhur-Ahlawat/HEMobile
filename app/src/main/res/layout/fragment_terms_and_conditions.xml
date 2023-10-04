@@ -35,7 +35,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_21dp"
                 android:fontFamily="@font/open_sans"
-                android:text="Dart Charge general terms and conditions"
+                android:text="Dart Charge general Terms and Conditions"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp" />
 

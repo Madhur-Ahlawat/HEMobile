@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_bg_new"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
+        android:src="@drawable/ic_logo_dart_charge_new" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:text="powered by"
+        android:layout_marginTop="@dimen/_30dp"
+        android:layout_marginBottom="@dimen/_30dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="71dp"
+        android:src="@drawable/ic_logo_conduent" />
+</LinearLayout>
