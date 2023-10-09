@@ -37,21 +37,23 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     private lateinit var navController: NavController
     private var screenType: String = ""
     val viewModel: WebSiteServiceViewModel by viewModels()
-    companion object{
+
+    companion object {
         private lateinit var binding: ActivityLandingBinding
 
-        fun showToolBar(isShown:Boolean){
-            if(isShown){
-             binding.toolbar.visible()
-            }
-            else{
+        fun showToolBar(isShown: Boolean) {
+            if (isShown) {
+                binding.toolbar.visible()
+            } else {
                 binding.toolbar.gone()
             }
         }
-        fun setToolBarTitle(title:String){
-                binding.titleTxt.text=title
+
+        fun setToolBarTitle(title: String) {
+            binding.titleTxt.text = title
         }
     }
+
     override fun initViewBinding() {
         binding = ActivityLandingBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -62,11 +64,15 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         loadFragment(screenType)
 
         navControllerListener()
-
-        if (screenType == Constants.LRDS_SCREEN) {
+        if (screenType == LRDS_SCREEN) {
             binding.titleTxt.text = resources.getString(R.string.txt_my_account)
+            binding.btnBack.visible()
+        }else if(screenType== LOGOUT_SCREEN||screenType== SESSION_TIME_OUT){
+            binding.titleTxt.text = resources.getString(R.string.str_signed_out)
+            binding.btnBack.gone()
         } else {
             binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
+            binding.btnBack.visible()
         }
         binding.btnBack.setOnClickListener {
             onBackPressed()
@@ -82,15 +88,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 destination: NavDestination,
                 arguments: Bundle?
             ) {
-                when (destination.id) {
-                    R.id.failedRetryFragment, R.id.serviceUnavailableFragment -> {
-                        binding.toolbar.visible()
-                    }
-
-                    else -> {
-                        binding.toolbar.gone()
-                    }
-                }
 
             }
         })
@@ -129,8 +126,8 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 NavArgument.Builder().setDefaultValue(intent.extras).build()
             )
 
-        if (this.screenType == Constants.LRDS_SCREEN) {
-            bundle.putString(Constants.SERVICE_TYPE, Constants.LRDS_SCREEN)
+        if (this.screenType == LRDS_SCREEN) {
+            bundle.putString(Constants.SERVICE_TYPE, LRDS_SCREEN)
             bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
         }
 

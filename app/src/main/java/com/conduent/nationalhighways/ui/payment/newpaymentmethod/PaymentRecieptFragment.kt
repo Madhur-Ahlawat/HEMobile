@@ -8,6 +8,7 @@ import android.text.Html
 import android.text.InputType
 import android.text.Spanned
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -17,13 +18,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentPaymentRecieptMethodBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
-import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -31,6 +31,7 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.getCountryCodeRequiredText
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -44,16 +45,19 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     View.OnClickListener, NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
     private var commaSeperatedString: String? = null
     private var filterTextForSpecialChars: String? = null
-    private var requiredCountryCode = false
+    private var requiredCountryCode = true
     private var requiredMobileNumber = false
     private var loader: LoaderDialog? = null
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesCodeList: MutableList<String> = ArrayList()
     private var isViewCreated: Boolean = false
-    private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var isItMobileNumber = true
     private var btnEnabled: Boolean = false
-    private val viewModelProfile: ProfileViewModel by viewModels()
+
+    private var countriesList: MutableList<String> = ArrayList()
+    private var countriesModel: List<CountriesModel?>? = ArrayList()
+    private var fullCountryNameWithCode: MutableList<String> = ArrayList()
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -63,22 +67,30 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     @Inject
     lateinit var sessionManager: SessionManager
     override fun init() {
+        viewModel.getCountries()
         binding.btnContinue.setOnClickListener(this)
         loader = LoaderDialog()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+            if (arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                    CrossingDetailsModelsResponse::class.java
+                ) != null
+            ) {
                 navData = arguments?.getParcelable(
 
-                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                    Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse::class.java
                 )
             }
         } else {
-            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+            if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
                 navData = arguments?.getParcelable(
                     Constants.NAV_DATA_KEY,
                 )
             }
         }
+
+
+
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
         binding.edtEmail.editText.addTextChangedListener {
@@ -86,20 +98,20 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         }
         navData?.let {
             if ((navData as CrossingDetailsModelsResponse).recieptMode.equals("")) {
-            } else if ((navData as CrossingDetailsModelsResponse).recieptMode!!.contains("@") && (navData as CrossingDetailsModelsResponse).recieptMode!!.contains(
-                    "."
+            } else if (!Utils.isStringOnlyInt(
+                    ((navData as CrossingDetailsModelsResponse).recieptMode ?: "")
                 )
             ) {
-                binding?.apply {
+                binding.apply {
                     selectEmail.isChecked = true
                     edtEmail.visible()
                     edtEmail.editText.setText((navData as CrossingDetailsModelsResponse).recieptMode)
                 }
+                checkButton()
             } else {
-                binding?.apply {
+                binding.apply {
                     selectTextMessage.isChecked = true
                     edtEmail.visible()
-                    inputCountry.setSelectedValue((navData as CrossingDetailsModelsResponse).countryCode!!)
                     inputMobileNumber.editText.setText((navData as CrossingDetailsModelsResponse).recieptMode)
                 }
             }
@@ -107,37 +119,37 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     }
 
     private fun isEnable() {
-        btnEnabled = if (binding.edtEmail.editText.getText().toString().trim().length > 0) {
-            if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
+        btnEnabled = if (binding.edtEmail.editText.text.toString().trim().length > 0) {
+            if (binding.edtEmail.editText.text.toString().trim().length < 8) {
                 false
             } else {
-                if (binding.edtEmail.editText.getText().toString().length > 100) {
+                if (binding.edtEmail.editText.text.toString().length > 100) {
                     binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                     false
                 } else {
                     if (!Utils.isLastCharOfStringACharacter(
-                            binding.edtEmail.editText.getText().toString().trim()
+                            binding.edtEmail.editText.text.toString().trim()
                         ) || Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '@'
-                        ) > 1 || binding.edtEmail.editText.getText().toString().trim().contains(
+                            binding.edtEmail.editText.text.toString().trim(), '@'
+                        ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
                             Utils.TWO_OR_MORE_DOTS
-                        ) || (binding.edtEmail.editText.getText().toString().trim().last()
-                            .toString().equals(".") || binding.edtEmail.editText.getText()
+                        ) || (binding.edtEmail.editText.text.toString().trim().last()
+                            .toString().equals(".") || binding.edtEmail.editText.text
                             .toString().first().toString().equals("."))
-                        || (binding.edtEmail.editText.getText().toString().trim().last().toString()
-                            .equals("-") || binding.edtEmail.editText.getText().toString().first()
+                        || (binding.edtEmail.editText.text.toString().trim().last().toString()
+                            .equals("-") || binding.edtEmail.editText.text.toString().first()
                             .toString().equals("-"))
                         || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '.'
+                            binding.edtEmail.editText.text.toString().trim(), '.'
                         ) < 1) || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '@'
+                            binding.edtEmail.editText.text.toString().trim(), '@'
                         ) < 1)
                     ) {
                         binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                         false
                     } else {
                         if (Utils.hasSpecialCharacters(
-                                binding.edtEmail.editText.getText().toString().trim(),
+                                binding.edtEmail.editText.text.toString().trim(),
                                 Utils.splCharEmailCode
                             )
                         ) {
@@ -177,9 +189,9 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                                 true
                             }
                         } else if (!(Utils.countOccurenceOfChar(
-                                binding.edtEmail.editText.getText().toString().trim(), '@'
+                                binding.edtEmail.editText.text.toString().trim(), '@'
                             ) > 0 && Utils.countOccurenceOfChar(
-                                binding.edtEmail.editText.getText().toString().trim(), '@'
+                                binding.edtEmail.editText.text.toString().trim(), '@'
                             ) < 2)
                         ) {
                             binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
@@ -195,38 +207,43 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             binding.edtEmail.removeError()
             false
         }
-        checkButtonEmail()
+        checkButton()
     }
 
     override fun initCtrl() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+            if (arguments?.getParcelable(
+                    Constants.NAV_DATA_KEY,
+                    CrossingDetailsModelsResponse::class.java
+                ) != null
+            ) {
                 navData = arguments?.getParcelable(
 
-                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                    Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse::class.java
                 )
             }
         } else {
-            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+            if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
                 navData = arguments?.getParcelable(
                     Constants.NAV_DATA_KEY,
                 )
             }
         }
-        binding?.apply {
+        binding.apply {
             selectEmail.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    selectTextMessage.isChecked = !isChecked
+                    selectTextMessage.isChecked = false
                     edtEmail.visible()
                     isEnable()
                 } else {
                     edtEmail.gone()
                 }
+                checkButton()
             }
             selectTextMessage.setOnCheckedChangeListener { buttonView, isChecked ->
 
                 if (isChecked) {
-                    selectEmail.isChecked = !isChecked
+                    selectEmail.isChecked = false
                     inputCountry.visible()
                     inputMobileNumber.visible()
                     checkButton()
@@ -234,15 +251,53 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     inputCountry.gone()
                     inputMobileNumber.gone()
                 }
-
+                checkButton()
             }
             setMobileView()
         }
     }
 
     override fun observer() {
-        viewModel.getCountryCodesList()
+        observe(viewModel.countriesList, ::getCountriesList)
         observe(viewModel.countriesCodeList, ::getCountryCodesList)
+
+    }
+
+    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
+        when (response) {
+            is Resource.Success -> {
+                countriesList.clear()
+                countriesModel = response.data
+                viewModel.getCountryCodesList()
+
+                response.data?.forEach {
+                    it?.countryName?.let { it1 -> countriesList.add(it1) }
+                }
+                countriesList.sortWith(
+                    compareBy(String.CASE_INSENSITIVE_ORDER) { it }
+                )
+
+
+                if (countriesList.contains(Constants.UK_COUNTRY)) {
+                    countriesList.remove(Constants.UK_COUNTRY)
+                    countriesList.add(0, Constants.UK_COUNTRY)
+                }
+
+
+            }
+
+            is Resource.DataError -> {
+                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, response.errorMsg)
+                }
+            }
+
+            else -> {
+            }
+
+        }
     }
 
     private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
@@ -252,27 +307,69 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         when (response) {
             is Resource.Success -> {
                 countriesCodeList.clear()
+                for (i in 0..(countriesModel?.size?.minus(1) ?: 0)) {
+                    for (j in 0..(response.data?.size?.minus(1) ?: 0)) {
+                        if (countriesModel?.get(i)?.id == response.data?.get(j)?.id) {
+                            fullCountryNameWithCode.add(
+                                countriesModel?.get(i)?.countryName + " " + "(" + response.data?.get(
+                                    j
+                                )?.key + ")"
+                            )
+                        }
+                    }
+
+                }
                 response.data?.forEach {
                     it?.value?.let { it1 -> countriesCodeList.add(it1) }
                 }
-                countriesCodeList.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
-                if (countriesCodeList.contains(Constants.UK_CODE)) {
-                    countriesCodeList.remove(Constants.UK_CODE)
-                    countriesCodeList.add(0, Constants.UK_CODE)
+                fullCountryNameWithCode.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
+
+
+                if (fullCountryNameWithCode.contains(Constants.UNITED_KINGDOM)) {
+                    fullCountryNameWithCode.remove(Constants.UNITED_KINGDOM)
+                    fullCountryNameWithCode.add(0, Constants.UNITED_KINGDOM)
+                }
+
+                if (fullCountryNameWithCode.contains(Constants.UNITED_KINGDOM)) {
+                    fullCountryNameWithCode.remove(Constants.UNITED_KINGDOM)
+                    fullCountryNameWithCode.add(0, Constants.UNITED_KINGDOM)
                 }
                 binding.apply {
                     inputCountry.dataSet.clear()
-                    inputCountry.dataSet.addAll(countriesCodeList)
-                    inputCountry.setSelectedValue(Constants.UK_CODE)
+                    inputCountry.dataSet.addAll(fullCountryNameWithCode)
+                    if (navData != null && navData is CrossingDetailsModelsResponse) {
+                        if (Utils.isStringOnlyInt(
+                                (navData as CrossingDetailsModelsResponse).recieptMode ?: ""
+                            )
+                        ) {
+                            inputCountry.setSelectedValue(
+                                (navData as CrossingDetailsModelsResponse).fullCountryCode ?: ""
+                            )
+                        } else {
+                            inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+
+                        }
+                    }else{
+                        inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                    }
                 }
+
+                requiredCountryCode =
+                    fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
                 binding.inputCountry.clearFocus()
                 binding.inputCountry.setDropDownItemSelectListener(this)
+                checkButton()
+
 
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, response.errorMsg)
+                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, response.errorMsg)
+                }
             }
 
             else -> {
@@ -280,6 +377,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
         }
     }
+
 
     private fun setMobileView() {
         isItMobileNumber = true
@@ -303,25 +401,35 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                if (binding?.selectEmail?.isChecked == true) {
+                if (binding.selectEmail.isChecked == true) {
                     (navData as CrossingDetailsModelsResponse).recieptMode =
                         binding.edtEmail.getText().toString().trim()
-                    NewCreateAccountRequestModel.emailAddress=binding.edtEmail.editText.getText().toString().trim()
+                    NewCreateAccountRequestModel.emailAddress =
+                        binding.edtEmail.editText.text.toString().trim()
                 } else {
                     (navData as CrossingDetailsModelsResponse).recieptMode =
-                        binding.inputMobileNumber.editText.getText().toString().trim()
-                    NewCreateAccountRequestModel.mobileNumber=binding.inputMobileNumber.editText.getText().toString().trim()
+                        binding.inputMobileNumber.editText.text.toString().trim()
+                    NewCreateAccountRequestModel.mobileNumber =
+                        binding.inputMobileNumber.editText.text.toString().trim()
                 }
                 bundle.putParcelable(
                     Constants.NAV_DATA_KEY,
                     (navData as CrossingDetailsModelsResponse) as Parcelable?
                 )
 
-                findNavController().navigate(
-                    R.id.action_crossingRecieptFragment_to_crossingCheckAnswersFragment,
-                    bundle
-                )
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
+                if (edit_summary) {
+                    findNavController().navigate(
+                        R.id.action_crossingRecieptFragment_editsummary_to_crossingCheckAnswersFragment,
+                        bundle
+                    )
+                } else {
+                    findNavController().navigate(
+                        R.id.action_crossingRecieptFragment_to_crossingCheckAnswersFragment,
+                        bundle
+                    )
+                }
             }
 
         }
@@ -343,7 +451,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         ) {
 
             requiredCountryCode =
-                countriesCodeList.any { it == binding.inputCountry.selectedItemDescription }
+                fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
             if (index == 0) {
                 requiredMobileNumber = true
@@ -387,16 +495,19 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         }
     }
 
-    private fun checkButton() {
-        if (requiredCountryCode && requiredMobileNumber) {
-            binding.btnContinue.enable()
-        } else {
-            binding.btnContinue.disable()
-        }
-    }
 
-    private fun checkButtonEmail() {
+    private fun checkButton() {
         if (btnEnabled && binding.selectEmail.isChecked) {
+            binding.btnContinue.enable()
+        } else if (binding.selectTextMessage.isChecked && requiredCountryCode && requiredMobileNumber) {
+            binding.btnContinue.enable()
+            (navData as CrossingDetailsModelsResponse).countryCode =
+                getCountryCodeRequiredText(
+                    binding.inputCountry.selectedItemDescription
+                )
+            (navData as CrossingDetailsModelsResponse).fullCountryCode =
+                binding.inputCountry.selectedItemDescription
+        } else if (!binding.selectEmail.isChecked && !binding.selectTextMessage.isChecked) {
             binding.btnContinue.enable()
         } else {
             binding.btnContinue.disable()
@@ -404,21 +515,34 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     }
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
+        Log.e("TAG", "onAutoCompleteItemClick() called with: item = $item, selected = $selected")
         if (selected) {
-            (navData as CrossingDetailsModelsResponse).countryCode = item
+            (navData as CrossingDetailsModelsResponse).countryCode =
+                getCountryCodeRequiredText(item)
+            (navData as CrossingDetailsModelsResponse).fullCountryCode =
+                item
+
             requiredCountryCode = true
         } else {
-            if (countriesCodeList.size > 0) {
-                requiredCountryCode = countriesCodeList.any { it == item }
+            if (fullCountryNameWithCode.size > 0) {
+                requiredCountryCode = fullCountryNameWithCode.any { it == item }
             } else {
                 requiredCountryCode = false
             }
 
+            Log.e("TAG", "onAutoCompleteItemClick: requiredCountryCode " + requiredCountryCode)
+
             if (requiredCountryCode) {
                 (navData as CrossingDetailsModelsResponse).countryCode =
+                    getCountryCodeRequiredText(
+                        binding.inputCountry.selectedItemDescription
+                    )
+                (navData as CrossingDetailsModelsResponse).fullCountryCode =
                     binding.inputCountry.selectedItemDescription
+
             } else {
                 (navData as CrossingDetailsModelsResponse).countryCode = ""
+                (navData as CrossingDetailsModelsResponse).fullCountryCode = ""
             }
         }
         checkButton()

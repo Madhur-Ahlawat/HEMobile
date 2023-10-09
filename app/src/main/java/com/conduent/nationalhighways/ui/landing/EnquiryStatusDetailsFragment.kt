@@ -131,6 +131,7 @@ class EnquiryStatusDetailsFragment : BaseFragment<FragmentEnquiryStatusDetailsBi
                 )
             }
 
+/*
             R.id.editPaymentAmount -> {
                 if (data?.unSettledTrips!! > 0) {
                     findNavController().navigate(
@@ -145,6 +146,7 @@ class EnquiryStatusDetailsFragment : BaseFragment<FragmentEnquiryStatusDetailsBi
                 }
 
             }
+*/
         }
     }
 

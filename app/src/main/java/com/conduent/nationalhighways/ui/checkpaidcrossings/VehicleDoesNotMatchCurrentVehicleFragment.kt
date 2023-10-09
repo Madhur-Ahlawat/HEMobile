@@ -6,13 +6,9 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
-import com.conduent.nationalhighways.databinding.FragmentChangeVehicleSuccessConfirmCheckPaidCrossingsFragmentBinding
-import com.conduent.nationalhighways.databinding.FragmentConfirmNewVehicleDetailsCheckPaidCrossingsFragmentBinding
-import com.conduent.nationalhighways.databinding.FragmentPaymentSummaryBinding
 import com.conduent.nationalhighways.databinding.FragmentVehicleDoesNotMatchBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -21,17 +17,17 @@ import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.common.Utils
 
-class VehicleDoesNotMatchCurrentVehicleFragment : BaseFragment<FragmentVehicleDoesNotMatchBinding>(),
+class VehicleDoesNotMatchCurrentVehicleFragment :
+    BaseFragment<FragmentVehicleDoesNotMatchBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener {
     private var additionalCrossings: Int? = 0
     private var additionalCrossingsCharge: Double? = 0.0
-    private var totalAmountOfUnsettledTrips: Double?=0.0
+    private var totalAmountOfUnsettledTrips: Double? = 0.0
     private var crossingsList: MutableList<String>? = mutableListOf()
-
+    var crossingDetailModel: CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -40,23 +36,47 @@ class VehicleDoesNotMatchCurrentVehicleFragment : BaseFragment<FragmentVehicleDo
 
     override fun init() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(arguments?.getParcelable(Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java)!=null){
+            if (arguments?.getParcelable(
+                    NAV_DATA_KEY,
+                    CrossingDetailsModelsResponse::class.java
+                ) != null
+            ) {
                 navData = arguments?.getParcelable(
-
-                    Constants.NAV_DATA_KEY,CrossingDetailsModelsResponse::class.java
+                    NAV_DATA_KEY, CrossingDetailsModelsResponse::class.java
                 )
             }
         } else {
-            if(arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY)!=null){
+            if (arguments?.getParcelable<CrossingDetailsModelsResponse>(NAV_DATA_KEY) != null) {
                 navData = arguments?.getParcelable(
-                    Constants.NAV_DATA_KEY,
+                    NAV_DATA_KEY,
                 )
             }
         }
-        additionalCrossings = (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
-        additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
+        crossingDetailModel = (navData as CrossingDetailsModelsResponse)
+        additionalCrossings = crossingDetailModel?.additionalCrossingCount
+        additionalCrossingsCharge = crossingDetailModel?.additionalCharge
+
+        val correctVehicleType = Utils.getVehicleType(
+            requireActivity(),
+            crossingDetailModel?.customerClass ?: ""
+        )
+        val selectedVehicleType = Utils.getVehicleType(
+            requireActivity(),
+            crossingDetailModel?.dvlaclass ?: ""
+        )
+        val chargingRate = "£" + crossingDetailModel?.chargingRate
+
+        binding.descTv.text = resources.getString(
+            R.string.vehcile_type_mismatch,
+            selectedVehicleType, correctVehicleType,
+                    chargingRate
+        )
         setData()
         setClickListeners()
+
+        if (navFlowCall == PAY_FOR_CROSSINGS) {
+            binding.btnOk.text = resources.getString(R.string.pay_new_amount)
+        }
         /*  val i = Intent(Intent.ACTION_VIEW)
           i.data = Uri.parse(url)
           startActivity(i)*/
@@ -65,13 +85,12 @@ class VehicleDoesNotMatchCurrentVehicleFragment : BaseFragment<FragmentVehicleDo
     }
 
     private fun setData() {
-        binding?.apply {
-
-            val charge = (navData as CrossingDetailsModelsResponse).chargingRate?.toDouble()
-            val unSettledTrips = (navData as CrossingDetailsModelsResponse).unSettledTrips
+        binding.apply {
+            val charge = crossingDetailModel?.chargingRate?.toDouble()
+            val unSettledTrips = crossingDetailModel?.unSettledTrips
             crossingsList = emptyList<String>().toMutableList()
-            if(unSettledTrips != null && charge != null){
-                totalAmountOfUnsettledTrips = charge*unSettledTrips
+            if (unSettledTrips != null && charge != null) {
+                totalAmountOfUnsettledTrips = charge * unSettledTrips
             }
 
 //            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
@@ -82,7 +101,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment : BaseFragment<FragmentVehicleDo
     }
 
     private fun setClickListeners() {
-        binding?.apply {
+        binding.apply {
             btnOk.setOnClickListener(this@VehicleDoesNotMatchCurrentVehicleFragment)
             btnFeedback.setOnClickListener(this@VehicleDoesNotMatchCurrentVehicleFragment)
         }
@@ -97,36 +116,98 @@ class VehicleDoesNotMatchCurrentVehicleFragment : BaseFragment<FragmentVehicleDo
     }
 
     override fun onClick(v: View?) {
-
+        val bundle = Bundle()
+        bundle.putString(NAV_FLOW_KEY, navFlowCall)
         when (v?.id) {
 
             R.id.btnOk -> {
-                    val bundle = Bundle()
-                    bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount?:0.0)
+                if (navFlowCall == PAY_FOR_CROSSINGS) {
+                    bundle.putParcelable(NAV_DATA_KEY, returnModel(true))
+
+                    if (crossingDetailModel?.unSettledTrips!! > 0) {
+                        findNavController().navigate(
+                            R.id.action_vehicleDoesNotMatchCurrentVehicleFragment_to_payCrossingsFragment,
+                            bundle
+                        )
+                    } else {
+                        findNavController().navigate(
+                            R.id.action_vehicleDoesNotMatchCurrentVehicleFragment_to_additionalCrossingsFragment,
+                            bundle
+                        )
+                    }
+                } else {
+                    bundle.putDouble(
+                        Constants.DATA,
+                        (navData as CrossingDetailsModelsResponse).totalAmount
+                    )
                     bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
                     bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
                     findNavController().navigate(
                         R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
                         bundle
                     )
+                }
             }
-            R.id.btnCancel -> {
-                val bundle = Bundle()
-                bundle.putDouble(Constants.DATA, (navData as CrossingDetailsModelsResponse).totalAmount?:0.0)
-                bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-                bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
-                findNavController().navigate(
-                    R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
-                    bundle
-                )
+
+            R.id.btnFeedback -> {
+
+                if (navFlowCall == PAY_FOR_CROSSINGS) {
+
+                    bundle.putParcelable(NAV_DATA_KEY, returnModel(false))
+
+                    if (crossingDetailModel?.unSettledTrips!! > 0) {
+                        findNavController().navigate(
+                            R.id.action_vehicleDoesNotMatchCurrentVehicleFragment_to_payCrossingsFragment,
+                            bundle
+                        )
+                    } else {
+                        findNavController().navigate(
+                            R.id.action_vehicleDoesNotMatchCurrentVehicleFragment_to_additionalCrossingsFragment,
+                            bundle
+                        )
+                    }
+                } else {
+                    bundle.putDouble(
+                        Constants.DATA,
+                        (navData as CrossingDetailsModelsResponse).totalAmount
+                    )
+                    bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
+                    bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
+                    findNavController().navigate(
+                        R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
+                        bundle
+                    )
+                }
             }
         }
+    }
+
+    private fun returnModel(status: Boolean): CrossingDetailsModelsResponse {
+        var chargingRate = crossingDetailModel?.chargingRate
+        if (!status) {
+            chargingRate = crossingDetailModel?.customerClassRate
+        }
+        return CrossingDetailsModelsResponse(
+            accountNo = crossingDetailModel?.accountNo ?: "",
+            chargingRate = chargingRate,
+            customerClass = crossingDetailModel?.customerClass,
+            customerClassRate = crossingDetailModel?.customerClassRate,
+            dvlaclass = crossingDetailModel?.dvlaclass,
+            plateCountry = crossingDetailModel?.plateCountry,
+            plateNo = crossingDetailModel?.plateNo ?: "",
+            unPaidAmt = crossingDetailModel?.unPaidAmt,
+            unSettledTrips = crossingDetailModel?.unSettledTrips ?: 0,
+            vehicleMake = crossingDetailModel?.vehicleMake,
+            vehicleModel = crossingDetailModel?.vehicleModel,
+        )
+
+
     }
 
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-        bundle.putString(PLATE_NUMBER, (navData as CrossingDetailsModelsResponse).plateNo?.trim())
+        bundle.putString(PLATE_NUMBER, (navData as CrossingDetailsModelsResponse).plateNo.trim())
         bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
         return bundle
     }
@@ -147,7 +228,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment : BaseFragment<FragmentVehicleDo
             val bundle = Bundle()
 
             if (isDblaAvailable == true) {
-                bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                bundle.putString(PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountFindVehicleFragment,

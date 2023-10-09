@@ -75,8 +75,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:text="@string/add_new_payment_method"
-                android:textColor="@color/doItLaterColour"
-                app:borderColor="@color/doItLaterColour"
+
+
                 android:id="@+id/cancel_btn"
                 android:layout_marginBottom="@dimen/_30dp"
                 />

@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
@@ -36,6 +37,7 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>() {
     ) = FragmentFailedRetryBinding.inflate(inflater, container, false)
 
     override fun init() {
+        showToolBar(true)
 //        binding.desc3.movementMethod = LinkMovementMethod.getInstance()
 //        makeLinksInLicenseAgreementDescription()
 

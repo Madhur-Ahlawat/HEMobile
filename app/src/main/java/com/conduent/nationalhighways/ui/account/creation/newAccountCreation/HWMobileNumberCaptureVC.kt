@@ -42,6 +42,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_M
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.getCountryCodeRequiredText
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
@@ -473,9 +474,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
-        /* if (loader?.isVisible == true) {
-             loader?.dismiss()
-         }*/
         when (response) {
             is Resource.Success -> {
                 countriesList.clear()
@@ -604,7 +602,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     )
                 )
                 bundle.putString(Constants.PHONE_COUNTRY_CODE,
-                    binding.inputCountry.selectedItemDescription.let { getRequiredText(it) })
+                    binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) })
                 bundle.putBoolean(
                     Constants.IS_MOBILE_NUMBER,
                     isItMobileNumber
@@ -663,7 +661,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
     }
 
-    private fun getRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
 
     override fun onAutoCompleteItemClick(item: String, isSelected: Boolean) {
@@ -691,11 +688,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (!isItMobileNumber) {
             phoneDay = binding.inputMobileNumber.getText().toString().trim()
             phoneDayCountryCode =
-                binding.inputCountry.selectedItemDescription.let { getRequiredText(it) }
+                binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         } else {
             phoneCell = binding.inputMobileNumber.getText().toString().trim()
             phoneCellCountryCode =
-                binding.inputCountry.selectedItemDescription.let { getRequiredText(it) }
+                binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         }
         dataModel?.run {
             val request = UpdateProfileRequest(
@@ -740,11 +737,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (!isItMobileNumber) {
             phoneDay = binding.inputMobileNumber.getText().toString().trim()
             phoneDayCountryCode =
-                binding.inputCountry.selectedItemDescription.let { getRequiredText(it) }
+                binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         } else {
             phoneCell = binding.inputMobileNumber.getText().toString().trim()
             phoneCellCountryCode =
-                binding.inputCountry.selectedItemDescription.let { getRequiredText(it) }
+                binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         }
 
         dataModel?.personalInformation?.run {

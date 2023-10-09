@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
+        Log.e("TAG", "init: data "+data )
         if (data == null) {
             data = CrossingDetailsModelsResponse()
         }
@@ -63,6 +65,7 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 if(navFlowCall.equals(Constants.TRANSFER_CROSSINGS)){
                     findNavController().navigate(
                         R.id.action_findYourVehicleFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment, bundle

@@ -101,8 +101,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:gravity="center"
                     android:text="@string/update_address_manually"
-                    android:textColor="@color/doItLaterColour"
-                    app:borderColor="@color/doItLaterColour" />
+                     />
             </LinearLayout>
 
         </RelativeLayout>

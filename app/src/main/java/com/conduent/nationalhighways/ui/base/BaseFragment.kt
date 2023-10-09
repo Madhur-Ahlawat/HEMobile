@@ -26,6 +26,7 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
@@ -40,6 +41,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     var navFlowFrom: String = ""
     var navData: Any? = null
     var backButton: Boolean = true
+    var edit_summary: Boolean = false
     private var backPressListener: BackPressListener? = null
 
     override fun onCreateView(
@@ -53,6 +55,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         if (arguments?.containsKey(NAV_FLOW_FROM) == true) {
             navFlowFrom = arguments?.getString(NAV_FLOW_FROM, "").toString()
         }
+        if (arguments?.containsKey(EDIT_SUMMARY) == true) {
+            edit_summary = arguments?.getBoolean(EDIT_SUMMARY, false) ?: false
+        }
         navData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(NAV_DATA_KEY, Any::class.java)
         } else {
@@ -61,6 +66,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         if (arguments?.containsKey(SHOW_BACK_BUTTON) == true) {
             backButton = arguments?.getBoolean(SHOW_BACK_BUTTON, true) ?: true
         }
+        Log.e("TAG", "onCreateView: navFlowCall " + navFlowCall)
+        Log.e("TAG", "onCreateView: navFlowFrom " + navFlowFrom)
+        Log.e("TAG", "onCreateView: navData " + navData.toString())
         return binding.root
     }
 

@@ -2,9 +2,6 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
-import android.text.Selection
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

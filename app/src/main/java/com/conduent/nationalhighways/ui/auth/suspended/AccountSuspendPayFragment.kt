@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.auth.suspended
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Html
-import android.text.Selection
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View

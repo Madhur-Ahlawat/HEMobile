@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.close_account
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment

@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_2dp"
+            android:layout_alignParentTop="true"
             android:layout_above="@id/btnOk"
             android:layout_marginStart="@dimen/_24dp"
             android:layout_marginEnd="@dimen/_24dp"
@@ -24,7 +25,6 @@
                 android:layout_width="73.33dp"
                 android:layout_height="73.33dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="127dp"
                 android:src="@drawable/ic_tick_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -39,12 +39,13 @@
                 android:textSize="@dimen/font_16sp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
+              android:id="@+id/desc_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_13dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="@string/our_records_show_the_numberplate_is_a_type_nof_vehicle_on_record_rather_than_a_type_of_nvehicle_entered_this_type_of_vehicle_has_a_ndifferent_charge_of_amount"
+                android:text="@string/vehcile_type_mismatch"
                 android:textColor="@color/new_btn_color"
                 android:textSize="@dimen/_15sp" />
 
@@ -77,8 +78,6 @@
             android:layout_marginTop="@dimen/_30dp"
             android:layout_marginBottom="@dimen/_23dp"
             android:text="@string/cancel"
-            android:textColor="@color/doItLaterColour"
-            app:borderColor="@color/doItLaterColour"
             app:radius="5dp" />
     </RelativeLayout>
 
