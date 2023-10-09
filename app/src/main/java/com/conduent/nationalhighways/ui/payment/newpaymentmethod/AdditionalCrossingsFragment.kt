@@ -7,6 +7,7 @@ import android.os.Parcelable
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +17,16 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentAdditionalCrossingsBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.ErrorDialog
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -32,7 +36,8 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
 
     private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
-    var requiredNoAdditionalCrossings:Boolean=false
+    var requiredNoAdditionalCrossings: Boolean = false
+
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAdditionalCrossingsBinding.inflate(inflater, container, false)
@@ -58,19 +63,30 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                 )
             }
         }
+        
         navData = data
+
+        if (data?.unsettledTripChange == 0) {
+            binding.recentCrossingHelper.gone()
+            binding.recentCrossing.gone()
+        } else {
+            binding.recentCrossing.visible()
+            binding.recentCrossing.visible()
+        }
         binding.apply {
-            if (data?.additionalCrossingCount!! > 0) {
-                numberAdditionalCrossings.text = "" + data?.additionalCrossingCount.toString()
-                requiredNoAdditionalCrossings=true
+            if ((data?.additionalCrossingCount ?: 0) > 0) {
+                numberAdditionalCrossings.setText("" + data?.additionalCrossingCount.toString())
+                requiredNoAdditionalCrossings = true
             } else {
-                numberAdditionalCrossings.text = "0"
-                data?.additionalCrossingCount = 0
-                requiredNoAdditionalCrossings=false
+                numberAdditionalCrossings.setText("1")
+                data?.additionalCrossingCount = 1
+                requiredNoAdditionalCrossings = true
             }
             val charge = data?.chargingRate?.replace("£", "")?.replace("$", "")?.toDouble()
+            Log.e("TAG", "init: charge " + charge)
+            Log.e("TAG", "init: unsettledTripChange " + data?.unsettledTripChange)
             if (charge != null) {
-                val mUnSettledTrips = data?.unSettledTrips
+                val mUnSettledTrips = data?.unsettledTripChange
                 val additionalCrossingsCount = data?.additionalCrossingCount
                 var recentCrossingsAmount = 0.0
                 var additionalCrossingsAmount = 0.0
@@ -81,36 +97,21 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                     additionalCrossingsAmount = charge * additionalCrossingsCount
                 }
                 val total = recentCrossingsAmount + additionalCrossingsAmount
-                recentCrossing.setText(
-                    getString(R.string.currency_symbol) + String.format(
-                        "%.2f",
-                        recentCrossingsAmount
-                    )
+                recentCrossing.text = getString(R.string.currency_symbol) + String.format(
+                    "%.2f",
+                    recentCrossingsAmount
                 )
-                paymentCrossing.setText(
-                    getString(R.string.currency_symbol) + String.format(
-                        "%.2f",
-                        additionalCrossingsAmount
-                    )
+                paymentCrossing.text = getString(R.string.currency_symbol) + String.format(
+                    "%.2f",
+                    additionalCrossingsAmount
                 )
-                totalAmount.setText(
-                    getString(R.string.currency_symbol) + String.format(
-                        "%.2f",
-                        total
-                    )
+                totalAmount.text = getString(R.string.currency_symbol) + String.format(
+                    "%.2f",
+                    total
                 )
                 data?.totalAmount = total
             }
-            recentCrossing.isEnabled = false
-            paymentCrossing.isEnabled = false
-            totalAmount.isEnabled = false
-            titleText2.text = Html.fromHtml(
-                getString(
-                    R.string.recent_crossings_txt,
-                    String.format("%.2f", charge),
-                    data?.vehicleType
-                ), Html.FROM_HTML_MODE_COMPACT
-            )
+
 
         }
         displayCustomMessage(
@@ -139,49 +140,70 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             before: Int,
             count: Int
         ) {
-            requiredNoAdditionalCrossings=  if(charSequence.toString().isNotEmpty() && charSequence.toString().toInt()>0 && charSequence.toString().toInt()<=50){
-                val charge = data?.chargingRate?.toDouble()
-                if (charge != null) {
-                    data?.additionalCrossingCount = binding.numberAdditionalCrossings.text.toString().toInt()
-//            val total = charge*selectedItem.toInt()
-//            binding.paymentCrossing.setText(getString(R.string.currency_symbol)+total)
-                    val mUnSettledTrips = data?.unSettledTrips
-                    val additionalCrossingsCount = data?.additionalCrossingCount
-                    var recentCrossingsAmount = 0.0
-                    var additionalCrossingsAmount = 0.0
-                    if (mUnSettledTrips != null && mUnSettledTrips > 0) {
-                        recentCrossingsAmount = charge * mUnSettledTrips
-                    }
-                    if (additionalCrossingsCount != null && additionalCrossingsCount > 0) {
-                        additionalCrossingsAmount = charge * additionalCrossingsCount
-                    }
-                    val total = recentCrossingsAmount + additionalCrossingsAmount
-                    binding.recentCrossing?.setText(
-                        getString(R.string.currency_symbol) + String.format(
+            Log.e("TAG", "onTextChanged: 11122 ")
+            requiredNoAdditionalCrossings =
+                if (charSequence.toString().isNotEmpty() && charSequence.toString()
+                        .toInt() > 0 && charSequence.toString().toInt() <= 50
+                ) {
+                    val charge = data?.chargingRate?.toDouble()
+                    if (charge != null) {
+                        Log.e("TAG", "onTextChanged: --> " + charge)
+                        data?.additionalCrossingCount =
+                            binding.numberAdditionalCrossings.editText.text.toString().toInt()
+
+                        val mUnSettledTrips = data?.unsettledTripChange
+                        val additionalCrossingsCount = data?.additionalCrossingCount
+                        var recentCrossingsAmount = 0.0
+                        var additionalCrossingsAmount = 0.0
+                        if (mUnSettledTrips != null && mUnSettledTrips > 0) {
+                            recentCrossingsAmount = charge * mUnSettledTrips
+                        }
+                        if (additionalCrossingsCount != null && additionalCrossingsCount > 0) {
+                            additionalCrossingsAmount = charge * additionalCrossingsCount
+                        }
+                        Log.e(
+                            "TAG",
+                            "onTextChanged: --> recentCrossingsAmount -> " + recentCrossingsAmount
+                        )
+                        Log.e(
+                            "TAG",
+                            "onTextChanged: --> additionalCrossingsAmount -> " + additionalCrossingsAmount
+                        )
+
+                        val total = recentCrossingsAmount + additionalCrossingsAmount
+                        Log.e("TAG", "onTextChanged: --> total -> " + total)
+
+                        binding.recentCrossing.text = getString(R.string.currency_symbol) + String.format(
                             "%.2f",
                             recentCrossingsAmount
                         )
-                    )
-                    binding.paymentCrossing?.setText(additionalCrossingsCount.toString())
-                    data?.totalAmount = total
-                    data?.additionalCharge = additionalCrossingsAmount
-                    binding.totalAmount.setText(
-                        getString(R.string.currency_symbol) + String.format(
+                        data?.totalAmount = total
+                        data?.additionalCharge = additionalCrossingsAmount
+
+                        binding.paymentCrossing.text = getString(R.string.currency_symbol) + String.format(
+                            "%.2f",
+                            data?.additionalCharge
+                        )
+
+                        binding.totalAmount.text = getString(R.string.currency_symbol) + String.format(
                             "%.2f",
                             data?.totalAmount
                         )
-                    )
-                }
-                binding.numberAdditionalCrossings.removeError()
-                true
-            }else{
-                if(charSequence.toString().trim().isEmpty()){
+                        Log.e("TAG", "onTextChanged: --> totalAmount -> " + data?.totalAmount)
+
+                    }
                     binding.numberAdditionalCrossings.removeError()
-                }else if(charSequence.toString().toInt()==0 || charSequence.toString().toInt()>50){
-                    binding.numberAdditionalCrossings.setErrorText(resources.getString(R.string.str_number_additional_crossings_btw_1_to_50))
+                    true
+                } else {
+                    if (charSequence.toString().trim().isEmpty()) {
+                        binding.numberAdditionalCrossings.removeError()
+                    } else if (charSequence.toString().toInt() == 0 || charSequence.toString()
+                            .toInt() > 50
+                    ) {
+                        binding.numberAdditionalCrossings.setErrorText(resources.getString(R.string.str_number_additional_crossings_btw_1_to_50))
+                    }
+                    false
                 }
-                false
-            }
             checkButton()
 
 
@@ -191,14 +213,16 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
 
         }
     }
+
     private fun checkButton() {
         binding.btnNext.isEnabled =
-           ( binding.totalAmount.editText.text.toString().trim().replace("£", "")
+            (binding.totalAmount.text.toString().trim().replace("£", "")
                 .replace("$", "").replace(" ", "").toDouble() > 0 && requiredNoAdditionalCrossings)
     }
 
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
+        binding.backToMainMenu.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -209,20 +233,31 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         when (v?.id) {
 
             R.id.btnNext -> {
+                Log.e("TAG", "init: navFlowFrom "+navFlowFrom )
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putDouble(
                     Constants.DATA,
-                    binding.totalAmount.getText().toString().trim()
+                    binding.totalAmount.text.toString().trim()
                         .replace(getString(R.string.currency_symbol), "").replace("$", "")
                         .replace(getString(R.string.currency_symbol), "").replace(" ", "")
                         .replace(".", "").toDouble()
                 )
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data as Parcelable?)
-                findNavController().navigate(
-                    R.id.action_additionalCrossingsFragment_to_crossingRecieptFragment,
-                    bundle
-                )
+                if(edit_summary){
+                    findNavController().navigate(R.id.action_additionalCrossingsFragment_to_crossingCheckAnswersFragment,bundle)
+                }else {
+
+                    findNavController().navigate(
+                        R.id.action_additionalCrossingsFragment_to_crossingRecieptFragment,
+                        bundle
+                    )
+                }
+            }
+
+            R.id.backToMainMenu -> {
+                requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
+                requireActivity().finish()
             }
         }
     }
@@ -233,12 +268,12 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     }
 
 
-
     fun showError(view: View?, message: String?) {
         try {
             val dialog = ErrorDialog()
             val bundle = Bundle()
             bundle.putString(Constants.DATA, message)
+            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
             dialog.arguments = bundle
             dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 

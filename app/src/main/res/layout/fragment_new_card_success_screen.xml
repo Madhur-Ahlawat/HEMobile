@@ -147,8 +147,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/cancel"
-                android:textColor="@color/doItLaterColour"
-                app:borderColor="@color/doItLaterColour"
+
+
                 android:id="@+id/cancel_btn"
                 android:layout_marginTop="@dimen/_30dp"
                 android:layout_marginBottom="@dimen/_30dp"

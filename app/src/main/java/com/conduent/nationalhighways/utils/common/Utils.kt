@@ -19,6 +19,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.FragmentActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogRetryBinding
@@ -101,52 +102,54 @@ object Utils {
         ALLOWED_CHARS_POSTCODE
 //        getSplCharString(ALLOWED_CHARS_POSTCODE)
     }
-    fun validateAmount(nhTextInputCell: NHTextInputCell,minimumAmount:Int,isTopUp:Boolean):Boolean{
-        var isValid:Boolean=false
+
+    fun validateAmount(
+        nhTextInputCell: NHTextInputCell,
+        minimumAmount: Int,
+        isTopUp: Boolean
+    ): Boolean {
+        var isValid: Boolean = false
         val mText = nhTextInputCell.editText.text.toString().trim()
         var updatedText: String =
-            mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
-                .replace("0.","0")
-                .replace("1.","1")
-                .replace("2.","2")
-                .replace("3.","3")
-                .replace("4.","4")
-                .replace("5.","5")
-                .replace("6.","6")
-                .replace("7.","7")
-                .replace("8.","8")
-                .replace("9.","9")
+            mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+                .replace(".0", "")
+                .replace("0.", "0")
+                .replace("1.", "1")
+                .replace("2.", "2")
+                .replace("3.", "3")
+                .replace("4.", "4")
+                .replace("5.", "5")
+                .replace("6.", "6")
+                .replace("7.", "7")
+                .replace("8.", "8")
+                .replace("9.", "9")
                 .replace(" ", "")
         if (updatedText.isNotEmpty()) {
             isValid = if (updatedText.length < 6) {
                 if (updatedText.toDouble() < minimumAmount) {
-                    if(isTopUp){
+                    if (isTopUp) {
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_more))
-                    }
-                    else{
+                    } else {
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_more))
                     }
                     false
 
                 } else if (updatedText.toInt() > 100000) {
-                    if(isTopUp){
+                    if (isTopUp) {
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
-                    }
-                    else{
+                    } else {
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.low_balance_amount_must_be_80_000_or_less))
                     }
                     false
-                }
-                else {
+                } else {
                     nhTextInputCell.removeError()
                     nhTextInputCell.setText("£" + amountFormatter.format(updatedText.toInt()))
                     true
                 }
             } else {
-                if(isTopUp){
+                if (isTopUp) {
                     nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_8_characters))
-                }
-                else{
+                } else {
                     nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_8_characters))
                 }
                 false
@@ -236,9 +239,9 @@ object Utils {
 
     fun convertDateForTransferCrossingsScreen(inputDate: String?): String {
         val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a")
-        val date: Date = inputFormat.parse(inputDate);
+        val date: Date = inputFormat.parse(inputDate)
         val outputFormat = SimpleDateFormat("dd-MM-yyyy")
-        return outputFormat.format(date);
+        return outputFormat.format(date)
     }
 
     fun removeAllCharacters(charsToBeRemoved: String, input: String): String {
@@ -686,21 +689,22 @@ object Utils {
         return matcher.matches()
     }
 
-    fun getManuallyAddedVehicleClass(vehicleClass: String): String {
+    fun getManuallyAddedVehicleClass(activity: Activity, vehicleClass: String): String {
+        Log.e("TAG", "getManuallyAddedVehicleClass: vehicleClass "+vehicleClass )
         return when (vehicleClass) {
-            "Motorcycle, moped or quad bike" -> {
+            activity.resources.getString(R.string.vehicle_type_A) -> {
                 "A"
             }
 
-            "Car, van or minibus < 8 seats" -> {
+            activity.resources.getString(R.string.vehicle_type_B)  -> {
                 "B"
             }
 
-            "Bus, coach or other goods vehicle with 2 axles" -> {
+            activity.resources.getString(R.string.vehicle_type_C)  -> {
                 "C"
             }
 
-            "Vehicle with more than 2 axles" -> {
+            activity.resources.getString(R.string.vehicle_type_D)  -> {
                 "D"
             }
 
@@ -710,22 +714,23 @@ object Utils {
         }
     }
 
-    fun getVehicleType(vehicleClass: String): String {
+    fun getVehicleType(activity: Activity, vehicleClass: String): String {
+        Log.e("TAG", "getVehicleType: vehicleClass -> "+vehicleClass )
         return when (vehicleClass) {
             "A" -> {
-                "Motorcycle, moped or quad bike"
+                activity.resources.getString(R.string.vehicle_type_A)
             }
 
             "B" -> {
-                "Car, van or minibus < 8 seats"
+                activity.resources.getString(R.string.vehicle_type_B)
             }
 
             "C" -> {
-                "Bus, coach or other goods vehicle with 2 axles"
+                activity.resources.getString(R.string.vehicle_type_C)
             }
 
             "D" -> {
-                "Vehicle with more than 2 axles"
+                activity.resources.getString(R.string.vehicle_type_D)
             }
 
             else -> {
@@ -833,7 +838,7 @@ object Utils {
     }
 
     fun maskPhoneNumber(phoneNumber: String): String {
-        Log.e("TAG", "maskPhoneNumber: phoneNumber "+phoneNumber )
+        Log.e("TAG", "maskPhoneNumber: phoneNumber " + phoneNumber)
         if (phoneNumber.isNotEmpty()) {
             val star = phoneNumber.length - 6
             return if (star == 4) {
@@ -898,7 +903,7 @@ object Utils {
             val number = NumberFormat.getCurrencyInstance(Locale.UK)
 
             return if (balance?.contains("(") == true && balance.contains(")")) {
-                val doublePayment = balance?.replace("(", "")?.replace(")", "")?.toDouble()
+                val doublePayment = balance.replace("(", "")?.replace(")", "")?.toDouble()
                 number.format(doublePayment)
             } else {
                 val doublePayment = balance?.toDouble()
@@ -933,6 +938,11 @@ object Utils {
         }
         dialog.show()
     }
+    fun isStringOnlyInt(input: String): Boolean {
+        return input.toIntOrNull() != null
+    }
+
+    fun getCountryCodeRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
 
 }

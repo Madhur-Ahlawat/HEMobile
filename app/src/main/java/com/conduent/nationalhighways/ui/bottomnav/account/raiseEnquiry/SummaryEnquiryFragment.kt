@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
@@ -175,6 +176,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 is Resource.DataError -> {
                     if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                         displaySessionExpireDialog()
+                    }else{
+                        ErrorUtil.showError(binding.root, resource.errorMsg)
                     }
                 }
 

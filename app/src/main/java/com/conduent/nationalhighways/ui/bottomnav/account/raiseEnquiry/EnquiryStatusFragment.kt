@@ -3,19 +3,16 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryListResponseModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryStatusRequest
 import com.conduent.nationalhighways.databinding.FragmentEnquiryStatusBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -23,12 +20,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
-import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
-import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONObject
 
 
 @AndroidEntryPoint

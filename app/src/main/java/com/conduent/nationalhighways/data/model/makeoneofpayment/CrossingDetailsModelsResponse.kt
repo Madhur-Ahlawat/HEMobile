@@ -40,6 +40,9 @@ data class CrossingDetailsModelsResponse(
     var isExempted: String?="",
     var isRUCEligible: String?="",
     var vehicleClass: String?="",
-    var vehicleClassBalanceTransfer: String?=""
-) : Parcelable
+    var vehicleClassBalanceTransfer: String?="",
+    var unsettledTripChange:Int=0,
+    var fullCountryCode:String?="",
+
+    ) : Parcelable
 

@@ -1,8 +1,8 @@
 package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
-import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +15,14 @@ import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdap
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
+import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
+
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 
@@ -26,11 +30,9 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener, OnRetryClickListener, DropDownItemSelectListener {
     private var additionalCrossingsCount: Int? = 0
-    private var totalAmountOfAdditionalCrossings: Double? = 0.00
-
     private var crossingsList: MutableList<String>? = mutableListOf()
-    private var totalAmount: Double? = 0.00
-    private lateinit var vehicleAdapter: VehicleListAdapter
+
+    
     private var data: CrossingDetailsModelsResponse? = null
 
     override fun getFragmentBinding(
@@ -43,6 +45,9 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
+
+        Log.e("TAG", "init: navFlowFrom " + navFlowFrom)
+
         setData()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)
@@ -53,16 +58,44 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     }
 
     private fun setData() {
-        binding?.apply {
+        binding.apply {
             additionalCrossingsCount = data?.additionalCrossingCount
             val charge = data?.chargingRate?.toDouble()
-            val unSettledTrips = data?.unSettledTrips
+            val unSettledTrips = data?.unsettledTripChange
+            Log.e("TAG", "setData: unSettledTrips--> "+unSettledTrips )
             vehicleRegisration.text = data?.plateNo
             recentCrossings.text =
                 unSettledTrips.toString()
             creditAdditionalCrossings.text =
                 additionalCrossingsCount.toString()
+            if (additionalCrossingsCount == 0) {
+                creditForAdditionalCrossings.gone()
+            } else {
+                creditForAdditionalCrossings.visible()
+            }
+            if (data?.recieptMode?.isEmpty() == true) {
+                labelEmail.gone()
+                labelMobileNumber.gone()
+            } else if (Utils.isStringOnlyInt(data?.recieptMode ?: "")) {
+                labelEmail.gone()
+                labelMobileNumber.visible()
+                mobileNumber.text = "" + data?.countryCode + " " + data?.recieptMode
+            } else {
+                labelEmail.visible()
+                labelMobileNumber.gone()
+                email.text = "" + data?.recieptMode
+            }
 
+
+            if (navFlowFrom != PAY_FOR_CROSSINGS) {
+                if (unSettledTrips == 0) {
+                    recentCrossingsCv.gone()
+                } else {
+                    recentCrossingsCv.visible()
+                }
+            } else {
+                recentCrossingsCv.visible()
+            }
             var recentCrossingsAmount = 0.0
             var additionalCrossingsAmount = 0.0
             if (unSettledTrips != null && unSettledTrips > 0) {
@@ -72,7 +105,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                 additionalCrossingsAmount = charge!! * additionalCrossingsCount!!
             }
             val total = recentCrossingsAmount + additionalCrossingsAmount
-            data?.totalAmount=total
+            data?.totalAmount = total
             crossingsList = emptyList<String>().toMutableList()
 
 //            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
@@ -80,31 +113,28 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 //
 //            }
             crossingsList!!.clear()
-            for (i in 0..additionalCrossingsCount!!.plus(unSettledTrips!!)) {
+            val totalAdditional =
+                (additionalCrossingsCount?.plus(unSettledTrips ?: 0)) ?: additionalCrossingsCount
+            for (i in 0..(totalAdditional ?: 0)) {
                 crossingsList!!.add(i.toString())
             }
-            paymentAmount.setText(
-                getString(R.string.currency_symbol) + String.format(
-                    "%.2f",
-                    total
-                )
+            paymentAmount.text = getString(R.string.currency_symbol) + String.format(
+                "%.2f",
+                total
             )
 
-            if (unSettledTrips > 0) {
-                binding.cardRecentCrossings.visible()
-            } else {
-                binding.cardRecentCrossings.gone()
-            }
+
         }
     }
 
     private fun setClickListeners() {
-        binding?.apply {
+        binding.apply {
             btnNext.setOnClickListener(this@PaymentSummaryFragment)
             editRegistrationNumber.setOnClickListener(this@PaymentSummaryFragment)
             editRecentCrossings.setOnClickListener(this@PaymentSummaryFragment)
             editCreditForAdditionalCrossings.setOnClickListener(this@PaymentSummaryFragment)
-            editPaymentAmount.setOnClickListener(this@PaymentSummaryFragment)
+            editEmail.setOnClickListener(this@PaymentSummaryFragment)
+            editMobileNumber.setOnClickListener(this@PaymentSummaryFragment)
         }
     }
 
@@ -156,27 +186,41 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                     enableEditMode()
                 )
             }
-
-            R.id.editPaymentAmount -> {
-                if (data?.unSettledTrips!! > 0) {
-                    findNavController().navigate(
-                        R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
-                        enableEditMode()
-                    )
-                } else {
-                    findNavController().navigate(
-                        R.id.action_crossingCheckAnswersFragment_to_additionalCrossingsFragment,
-                        enableEditMode()
-                    )
-                }
-
+            R.id.editEmail -> {
+                findNavController().navigate(
+                    R.id.action_crossingCheckAnswersFragment_to_crossingRecieptFragment,
+                    enableEditMode()
+                )
             }
+            R.id.editMobileNumber -> {
+                findNavController().navigate(
+                    R.id.action_crossingCheckAnswersFragment_to_crossingRecieptFragment,
+                    enableEditMode()
+                )
+            }
+
+//            R.id.editPaymentAmount -> {
+//                if (data?.unSettledTrips!! > 0) {
+//                    findNavController().navigate(
+//                        R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
+//                        enableEditMode()
+//                    )
+//                } else {
+//                    findNavController().navigate(
+//                        R.id.action_crossingCheckAnswersFragment_to_additionalCrossingsFragment,
+//                        enableEditMode()
+//                    )
+//                }
+//
+//            }
         }
     }
 
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
+        bundle.putString(NAV_FLOW_FROM,navFlowFrom)
+        bundle.putBoolean(EDIT_SUMMARY, true)
         bundle.putString(
             PLATE_NUMBER,
             data?.plateNo?.trim()
@@ -201,7 +245,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             val bundle = Bundle()
 
             if (isDblaAvailable == true) {
-                bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                bundle.putString(PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountFindVehicleFragment,
@@ -229,7 +273,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     }
 
-    override fun onRetryClick(apiUrl: String){
+    override fun onRetryClick(apiUrl: String) {
     }
 
 }

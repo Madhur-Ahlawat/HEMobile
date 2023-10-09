@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.step5.businessaccount
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,6 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,11 +46,13 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         }
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
-        Log.d("vehicleData", Gson().toJson(nonUKVehicleModel))
-        if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
+        if (navFlowCall == Constants.TRANSFER_CROSSINGS || navFlowCall == Constants.PAY_FOR_CROSSINGS) {
             binding.apply {
                 regNum.text = data?.plateNo
-                typeOfVehicle.text = Utils.getVehicleType(data?.vehicleClass.toString())
+                typeOfVehicle.text = Utils.getVehicleType(
+                    requireActivity(),
+                    data?.vehicleClass.toString()
+                )
                 vehicleModel.text = data?.vehicleModel
                 vehicleMake.text = data?.vehicleMake
                 vehicleColor.text = data?.vehicleColor
@@ -61,7 +61,10 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             binding.apply {
                 regNum.text = nonUKVehicleModel?.plateNumber
                 typeOfVehicle.text =
-                    Utils.getVehicleType(nonUKVehicleModel?.vehicleClass.toString())
+                    Utils.getVehicleType(
+                        requireActivity(),
+                        nonUKVehicleModel?.vehicleClass.toString()
+                    )
                 vehicleModel.text = nonUKVehicleModel?.vehicleModel
                 vehicleMake.text = nonUKVehicleModel?.vehicleMake
                 vehicleColor.text = nonUKVehicleModel?.vehicleColor
@@ -93,14 +96,24 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             is Resource.Success -> {
                 resource.data?.let {
                     it.let {
-                        it.vehicleModel = nonUKVehicleModel?.vehicleModel
-                        it.vehicleMake = nonUKVehicleModel?.vehicleMake
-                        it.vehicleColor = nonUKVehicleModel?.vehicleColor
+                        if (data != null) {
+                            it.vehicleModel = data?.vehicleModel
+                            it.vehicleMake = data?.vehicleMake
+                            it.vehicleColor = data?.vehicleColor
+                        } else {
+                            it.vehicleModel = nonUKVehicleModel?.vehicleModel
+                            it.vehicleMake = nonUKVehicleModel?.vehicleMake
+                            it.vehicleColor = nonUKVehicleModel?.vehicleColor
+                        }
+
+                        resource.data.plateNo = data?.plateNo ?: ""
+
                         val unSettledTrips = it.unSettledTrips.toDouble()
                         val chargingRate = it.chargingRate?.toDouble()
                         val customerClassRate = it.customerClassRate?.toDouble()
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         bundle.putParcelable(Constants.NAV_DATA_KEY, resource.data)
                         if (chargingRate != customerClassRate) {
                             findNavController().navigate(
@@ -140,6 +153,8 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     override fun onClick(view: View?) {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+
         when (view?.id) {
             R.id.confirmBtn -> {
                 val accountData = NewCreateAccountRequestModel
@@ -152,12 +167,13 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                             requireActivity().supportFragmentManager,
                             Constants.LOADER_DIALOG
                         )
+
                         val model = CrossingDetailsModelsRequest(
-                            nonUKVehicleModel?.plateNumber,
-                            nonUKVehicleModel?.vehicleClass,
+                            data?.plateNo,
+                            data?.vehicleClass,
                             "UK",
-                            nonUKVehicleModel?.vehicleMake,
-                            nonUKVehicleModel?.vehicleModel
+                            data?.vehicleMake,
+                            data?.vehicleModel
                         )
 
                         viewModel.getCrossingDetails(model)
@@ -168,13 +184,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                         arguments?.getInt(Constants.VEHICLE_INDEX)
                             ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                        if(data?.isExempted?.lowercase().equals("y")){
+                        if (data?.isExempted?.lowercase().equals("y")) {
                             findNavController().navigate(
                                 R.id.action_businessVehicleDetailFragment_to_vehicleIsExemptFromDartChargesFragment,
                                 bundle
                             )
-                        }
-                        else{
+                        } else {
                             findNavController().navigate(
                                 R.id.action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,
                                 bundle
@@ -220,11 +235,13 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             R.id.notVehicle -> {
                 if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, CrossingDetailsModelsResponse()?.apply {
-                        plateNo=data?.plateNo!!
-                        expirationDate= data?.expirationDate!!
-                        unusedTrip=data?.unusedTrip!!
-                    })
+                    bundle.putParcelable(
+                        Constants.NAV_DATA_KEY,
+                        CrossingDetailsModelsResponse().apply {
+                            plateNo = data?.plateNo ?: ""
+                            expirationDate = data?.expirationDate ?: ""
+                            unusedTrip = data?.unusedTrip ?: ""
+                        })
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                     findNavController().navigate(
@@ -232,6 +249,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         bundle
                     )
 
+                } else if (navFlowCall == Constants.PAY_FOR_CROSSINGS) {
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    findNavController().navigate(
+                        R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
+                        bundle
+                    )
                 } else {
                     bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
                     findNavController().navigate(

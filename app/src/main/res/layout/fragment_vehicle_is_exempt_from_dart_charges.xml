@@ -67,8 +67,8 @@
             android:layout_marginTop="@dimen/_30dp"
             android:layout_marginBottom="@dimen/_23dp"
             android:text="@string/cancel"
-            android:textColor="@color/doItLaterColour"
-            app:borderColor="@color/doItLaterColour"
+
+
             app:radius="5dp" />
     </RelativeLayout>
 

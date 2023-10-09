@@ -22,8 +22,12 @@ class CreateAccountRespository @Inject constructor(private val apiService: ApiSe
     suspend fun confirmEmailApiCall(requestParam: ConfirmEmailRequest?) =
         apiService.confirmEmailVerification(request = requestParam)
 
+    suspend fun getOneOffVehicleDetail(vehicleNumber: String?, agencyId: Int?) =
+        apiService.getOneOffAccountFindVehicle(vehicleNumber, agencyId)
+
     suspend fun getVehicleDetail(vehicleNumber: String?, agencyId: Int?) =
         apiService.getAccountFindVehicle(vehicleNumber, agencyId)
+
     suspend fun getVehiclePlateInfo(vehicleNumber: String?, agencyId: Int?) =
         apiService.getVehiclePlateInfo(vehicleNumber, agencyId)
 

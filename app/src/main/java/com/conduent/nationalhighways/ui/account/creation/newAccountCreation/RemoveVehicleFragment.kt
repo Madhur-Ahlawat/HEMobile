@@ -66,7 +66,7 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
                 numberPlate = nonUKVehicleModel?.plateNumber ?: ""
                 binding.regNum.text = numberPlate
                 binding.typeOfVehicle.text =
-                    Utils.getVehicleType(nonUKVehicleModel?.vehicleClass ?: "")
+                    Utils.getVehicleType(requireActivity(),nonUKVehicleModel?.vehicleClass ?: "")
                 binding.vehicleMake.text = nonUKVehicleModel?.vehicleMake ?: ""
                 binding.vehicleModel.text = nonUKVehicleModel?.vehicleModel ?: ""
                 binding.vehicleColor.text = nonUKVehicleModel?.vehicleColor ?: ""
@@ -84,7 +84,10 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
     private fun setData() {
         vehicleDetails = arguments?.getParcelable(Constants.DATA)
         binding.typeOfVehicle.text =
-            Utils.getVehicleType(vehicleDetails?.vehicleInfo?.vehicleClassDesc ?: "")
+            Utils.getVehicleType(
+                requireActivity(),
+                vehicleDetails?.vehicleInfo?.vehicleClassDesc ?: ""
+            )
         binding.vehicleMake.text = vehicleDetails?.vehicleInfo?.make ?: ""
         binding.vehicleModel.text = vehicleDetails?.vehicleInfo?.model ?: ""
         binding.vehicleColor.text = vehicleDetails?.vehicleInfo?.color ?: ""

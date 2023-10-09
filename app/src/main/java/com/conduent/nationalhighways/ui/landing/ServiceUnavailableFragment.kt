@@ -8,6 +8,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentServiceUnavailableBinding
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
@@ -36,6 +37,8 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
         if (arguments?.containsKey(Constants.END_TIME) == true) {
             endTime = arguments?.getString(Constants.END_TIME, "").toString()
         }
+        showToolBar(true)
+
         setBackPressListener(this)
     }
 

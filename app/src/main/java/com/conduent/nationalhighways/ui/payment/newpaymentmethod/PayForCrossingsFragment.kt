@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,11 +28,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     View.OnClickListener, OnRetryClickListener, DropDownItemSelectListener {
-    private var totalAmountOfUnsettledTrips: Double?=0.0
+    private var totalAmountOfUnsettledTrips: Double? = 0.0
     private var crossingsList: MutableList<String> = mutableListOf()
-    private var totalAmountOfAdditionalCrossings: Double?=0.00
+    private var totalAmountOfAdditionalCrossings: Double? = 0.00
     private var loader: LoaderDialog? = null
-    private var data : CrossingDetailsModelsResponse? = null
+    private var unsettled_trip_api = 0
+    private var data: CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentPayForCrossingsBinding.inflate(inflater, container, false)
 
@@ -57,13 +59,19 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             }
         }
         data = navData as CrossingDetailsModelsResponse?
+        unsettled_trip_api = data?.unSettledTrips ?: 0
+        if (!edit_summary) {
+            data?.unsettledTripChange = data?.unSettledTrips ?: 0
+        }
+        Log.e("TAG", "init: unsettled_trip_api-- " + unsettled_trip_api)
+        Log.e("TAG", "init: navFlowFrom-- " + navFlowFrom)
         val additionalCrossings =
-            (navData as CrossingDetailsModelsResponse)?.additionalCrossingCount
-        val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse)?.additionalCharge
+            (navData as CrossingDetailsModelsResponse).additionalCrossingCount
+        val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse).additionalCharge
         binding.apply {
             inputTotalAmount.isEnabled = false
             val charge = data?.chargingRate?.toDouble()
-            val unSettledTrips = data?.unSettledTrips
+            val unSettledTrips = data?.unsettledTripChange
             crossingsList = emptyList<String>().toMutableList()
             if (unSettledTrips != null && charge != null) {
                 totalAmountOfUnsettledTrips = charge * unSettledTrips
@@ -74,26 +82,28 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
 
             }
             crossingsList.clear()
-            for (i in 0..additionalCrossings!!.plus(unSettledTrips!!)) {
+            for (i in 0..additionalCrossings.plus(unSettledTrips!!)) {
                 crossingsList.add(i.toString())
             }
             inputCountry.dataSet.clear()
             inputCountry.dataSet.addAll(crossingsList)
             inputCountry.setSelectedValue(unSettledTrips.toString())
-            inputTotalAmount.setText(
-                getString(R.string.currency_symbol) + String.format(
-                    "%.2f",
-                    totalAmountOfUnsettledTrips!!
-                )
+            inputTotalAmount.text = getString(R.string.currency_symbol) + String.format(
+                "%.2f",
+                totalAmountOfUnsettledTrips ?: 0
             )
-            binding.titleText2.text = Html.fromHtml(getString(R.string.recent_crossings_txt,
-                String.format("%.2f", data?.chargingRate?.toDouble()),
-                data?.dvlaclass?.let { Utils.getVehicleType(it) }), Html.FROM_HTML_MODE_COMPACT
+
+
+            binding.titleText2.text = Html.fromHtml(
+                getString(R.string.str_pay_for_crossing_point2,
+                    String.format("%.2f", data?.chargingRate?.toDouble()),
+                    data?.dvlaclass?.let { Utils.getVehicleType(requireActivity(), it) }),
+                Html.FROM_HTML_MODE_COMPACT
             )
         }
 
-        data?.unSettledTrips =
-            binding.inputCountry.getSelectedValue()!!.toInt()
+        data?.unsettledTripChange =
+            binding.inputCountry.getSelectedValue()?.toInt() ?: 0
     }
 
     override fun initCtrl() {
@@ -109,53 +119,76 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.btnAdditionalCrossing -> {
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                bundle.putParcelable(Constants.NAV_DATA_KEY, data)
-                findNavController().navigate(
-                    R.id.action_payCrossingsFragment_to_additionalCrossingsFragment,
-                    bundle
-                )
+                additionalCrossingClick()
             }
 
             R.id.btnNext -> {
-                val crossings = binding.inputCountry.selectedItemDescription?.toInt()
-                if (crossings == 0) {
-                    displayCustomMessage(getString(R.string.purchase_no_crossings),
-                        getString(R.string.to_continue_you_must_pay_for_at_least_one_recent_additional_crossing),
-                        getString(R.string.str_continue),
-                        getString(R.string.str_cancel),
-                        object : DialogPositiveBtnListener {
-                            override fun positiveBtnClick(dialog: DialogInterface) {
-                                findNavController().navigate(R.id.action_payCrossingsFragment_to_landingFragment)
 
-                            }
-                        },
-                        object : DialogNegativeBtnListener {
-                            override fun negativeBtnClick(dialog: DialogInterface) {
-                            }
-                        })
-                } else {
-                    val bundle = Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putDouble(
-                        Constants.DATA,
-                        binding.inputTotalAmount.getText().toString()
-                            .replace(getString(R.string.currency_symbol), "").toDouble()
-                    )
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putDouble(
+                    Constants.DATA,
+                    binding.inputTotalAmount.text.toString()
+                        .replace(getString(R.string.currency_symbol), "").toDouble()
+                )
+                if (!edit_summary) {
+                    data?.additionalCrossingCount = 0
+                }
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+
+                if (edit_summary) {
+
                     findNavController().navigate(
-                        R.id.action_payCrossingsFragment_to_crossingRecieptFragment,
+                        R.id.action_payCrossingsFragment_to_crossingCheckAnswersFragment,
                         bundle
                     )
+                } else {
+                    val crossings = binding.inputCountry.selectedItemDescription?.toInt()
+                    if (crossings == 0) {
+                        displayCustomMessage(getString(R.string.purchase_no_crossings),
+                            getString(R.string.to_continue_you_must_pay_for_at_least_one_recent_additional_crossing),
+                            getString(R.string.str_continue),
+                            getString(R.string.str_cancel),
+                            object : DialogPositiveBtnListener {
+                                override fun positiveBtnClick(dialog: DialogInterface) {
+                                    additionalCrossingClick()
+                                }
+                            },
+                            object : DialogNegativeBtnListener {
+                                override fun negativeBtnClick(dialog: DialogInterface) {
+                                }
+                            })
+                    } else {
+                        findNavController().navigate(
+                            R.id.action_payCrossingsFragment_to_crossingRecieptFragment,
+                            bundle
+                        )
+                    }
                 }
-
             }
         }
     }
 
+    private fun additionalCrossingClick() {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
 
-    override fun onRetryClick(apiUrl: String){
+
+        Log.e("TAG", "onClick:plateNo11 plateNo --> " + data?.plateNo)
+        Log.e("TAG", "onClick:plateNo11 unsettled_trip_api --> " + unsettled_trip_api)
+        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+
+        bundle.putString(Constants.NAV_FLOW_FROM, Constants.PAY_FOR_CROSSINGS)
+        bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
+        findNavController().navigate(
+            R.id.action_payCrossingsFragment_to_additionalCrossingsFragment,
+            bundle
+        )
+    }
+
+
+    override fun onRetryClick(apiUrl: String) {
 
     }
 
@@ -163,15 +196,13 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     }
 
     override fun onItemSlected(position: Int, selectedItem: String) {
-        data?.unSettledTrips = selectedItem.toInt()
-        val charge = data?.chargingRate?.toInt()
+        data?.unsettledTripChange = selectedItem.toInt()
+        val charge = data?.chargingRate?.toDouble()
         if (charge != null) {
-            val total = data?.unSettledTrips!! * charge
-            binding.inputTotalAmount.setText(
-                getString(R.string.currency_symbol) + String.format(
-                    "%.2f",
-                    total.toDouble()
-                )
+            val total = (data?.unsettledTripChange ?: 0) * charge
+            binding.inputTotalAmount.text = getString(R.string.currency_symbol) + String.format(
+                "%.2f",
+                total.toDouble()
             )
         }
     }

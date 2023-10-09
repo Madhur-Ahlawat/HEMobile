@@ -11,7 +11,6 @@ import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
 import com.conduent.nationalhighways.databinding.FragmentTopupDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.checkedCrossing
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel

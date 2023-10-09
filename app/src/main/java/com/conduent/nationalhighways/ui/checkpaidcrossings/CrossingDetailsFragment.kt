@@ -11,8 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
-import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModel
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingTransactionsRequestModel
@@ -20,7 +18,6 @@ import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.FragmentCrossingDetailsBinding
-import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
 import com.conduent.nationalhighways.databinding.ItemRecentTansactionsCheckedCrossingsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -28,7 +25,6 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone

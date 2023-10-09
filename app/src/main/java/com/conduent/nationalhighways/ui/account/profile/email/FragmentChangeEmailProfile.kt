@@ -20,9 +20,7 @@ import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.Constants.DATA
 import com.conduent.nationalhighways.utils.common.Constants.EMAIL_SELECTION_TYPE
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.common.Utils.isEmailValid
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
-import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

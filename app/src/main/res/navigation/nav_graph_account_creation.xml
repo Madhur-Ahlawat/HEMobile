@@ -46,6 +46,11 @@
         <action
             android:id="@+id/action_findVehicleFragment_to_maximumVehicleFragment"
             app:destination="@+id/maximumVehicleFragment" />
+        <action
+            android:id="@+id/action_findVehicleFragment_to_crossingCheckAnswersFragment"
+            app:destination="@+id/crossingCheckAnswersFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/crossingCheckAnswersFragment"/>
 
     </fragment>
 
@@ -255,6 +260,13 @@
         <action
             android:id="@+id/action_additionalCrossingsFragment_to_crossingRecieptFragment"
             app:destination="@id/crossingRecieptFragment" />
+
+        <action
+            android:id="@+id/action_additionalCrossingsFragment_to_crossingCheckAnswersFragment"
+            app:destination="@+id/crossingCheckAnswersFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/crossingCheckAnswersFragment"/>
+
     </fragment>
 
     <fragment
@@ -272,6 +284,12 @@
         <action
             android:id="@+id/action_payCrossingsFragment_to_landingFragment"
             app:destination="@+id/landingFragment" />
+
+        <action
+            android:id="@+id/action_payCrossingsFragment_to_crossingCheckAnswersFragment"
+            app:destination="@+id/crossingCheckAnswersFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/crossingCheckAnswersFragment"/>
 
     </fragment>
 
@@ -309,6 +327,11 @@
             android:id="@+id/action_crossingRecieptFragment_to_crossingCheckAnswersFragment"
             app:destination="@id/crossingCheckAnswersFragment" />
         <action
+            android:id="@+id/action_crossingRecieptFragment_editsummary_to_crossingCheckAnswersFragment"
+            app:destination="@id/crossingCheckAnswersFragment"
+            app:popUpTo="@id/crossingCheckAnswersFragment"
+            app:popUpToInclusive="true"/>
+        <action
             android:id="@+id/action_crossingRecieptFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
     </fragment>
@@ -332,6 +355,9 @@
         <action
             android:id="@+id/action_crossingCheckAnswersFragment_to_additionalCrossingsFragment"
             app:destination="@id/additionalCrossingsFragment" />
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_crossingRecieptFragment"
+            app:destination="@id/crossingRecieptFragment" />
     </fragment>
     <fragment
         android:id="@+id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment"
@@ -372,6 +398,12 @@
         <action
             android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_addNewVehicleDetailsFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
+        <action
+            android:id="@+id/action_vehicleDoesNotMatchCurrentVehicleFragment_to_payCrossingsFragment"
+            app:destination="@id/payCrossingsFragment" />
+        <action
+            android:id="@+id/action_vehicleDoesNotMatchCurrentVehicleFragment_to_additionalCrossingsFragment"
+            app:destination="@id/additionalCrossingsFragment" />
 
     </fragment>
     <fragment
@@ -382,6 +414,9 @@
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_addVehicleDetailsFragment_to_vehicleDoesNotMatchCurrentVehicleFragment"
+            app:destination="@id/vehicleDoesNotMatchCurrentVehicleFragment" />
         <action
             android:id="@+id/action_addNewVehicleDetailsFragment_to_vehicleIsExemptFromDartChargesFragment"
             app:destination="@id/vehicleIsExemptFromDartChargesFragment" />

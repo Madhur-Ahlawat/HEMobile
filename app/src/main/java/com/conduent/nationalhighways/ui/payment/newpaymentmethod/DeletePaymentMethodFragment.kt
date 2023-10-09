@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
-import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.FragmentDeletePaymentMethodBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -68,8 +66,11 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
                 val data = navData as CrossingDetailsModelsResponse?
                 binding.maximumVehicleAdded.text = getString(R.string.your_type_of_vehicle_does_not_match_what_we_have_on_record)
                 binding.textMaximumVehicle.text = getString(R.string.our_records_show_the_numberplate,
-                    data?.plateNo, data?.dvlaclass?.let { Utils.getVehicleType(it) },
-                    data?.customerClass?.let { Utils.getVehicleType(it) },
+                    data?.plateNo, data?.dvlaclass?.let { Utils.getVehicleType(
+                        requireActivity(),
+                        it
+                    ) },
+                    data?.customerClass?.let { Utils.getVehicleType(requireActivity(), it) },
                     data?.customerClassRate)
                 binding.btnContinue.text = getString(R.string.pay_new_amount)
             }

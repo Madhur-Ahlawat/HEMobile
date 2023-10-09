@@ -8,6 +8,8 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentLogoutBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.setToolBarTitle
+import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,6 +27,8 @@ class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListen
             btnSignin.setOnClickListener(this@LogoutFragment)
             btnStart.setOnClickListener(this@LogoutFragment)
         }
+        showToolBar(true)
+        setToolBarTitle(resources.getString(R.string.str_signed_out))
     }
 
     override fun observer() {

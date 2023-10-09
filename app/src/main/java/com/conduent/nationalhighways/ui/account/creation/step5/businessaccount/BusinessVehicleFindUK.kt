@@ -78,7 +78,7 @@ class BusinessVehicleFindUK : BaseFragment<FragmentBusinessVehicleFindUkBinding>
     }
 
     private fun getVehicleDataFromDVRM() {
-        viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID.toInt())
+//        viewModel.getVehicleData(requestModel?.vehicleNo, Constants.AGENCY_ID.toInt())
     }
 
     private fun apiResponseDVRM(resource: Resource<VehicleInfoDetails?>?) {
