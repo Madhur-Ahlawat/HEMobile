@@ -1,6 +1,10 @@
 package com.conduent.nationalhighways.ui.base
 
+import android.app.Activity
 import android.app.Application
+import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import com.adobe.marketing.mobile.*
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
 import com.conduent.nationalhighways.data.model.account.AccountResponse
@@ -101,6 +105,7 @@ class BaseApplication : Application() {
         super.onCreate()
         getFireBaseToken()
         setAdobeAnalytics()
+        setupActivityListener()
     }
 
     private fun setAdobeAnalytics() {
@@ -149,6 +154,34 @@ class BaseApplication : Application() {
             // Get new FCM registration token
             sessionManager.setFirebasePushToken(task.result)
         })
+    }
+
+    private fun setupActivityListener() { registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        } override fun onActivityStarted(activity: Activity) {
+
+        } override fun onActivityResumed(activity: Activity) {
+            activity.window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        } override fun onActivityPaused(activity: Activity) {
+            val window: Window = activity.window
+            val wm: WindowManager = activity.windowManager
+            wm.removeViewImmediate(window.decorView)
+            activity.window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
+            wm.addView(window.decorView, window.attributes)
+
+        } override fun onActivityStopped(activity: Activity) {
+            val window: Window = activity.window
+            val wm: WindowManager = activity.windowManager
+            wm.removeViewImmediate(window.decorView)
+            activity.window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
+            wm.addView(window.decorView, window.attributes)
+        } override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+
+        } override fun onActivityDestroyed(activity: Activity) {
+
+        } }
+    )
     }
 
 }

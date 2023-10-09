@@ -37,6 +37,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
     var requiredNoAdditionalCrossings: Boolean = false
+    var viewCreated:Boolean=false
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -114,11 +115,6 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
 
 
         }
-        displayCustomMessage(
-            getString(R.string.additional_crossings_txt),
-            getString(R.string.only_use_this_option_for_crossings_planned),
-            getString(R.string.str_continue), "", null, null, View.GONE
-        )
 
         checkButton()
 
@@ -226,6 +222,18 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     }
 
     override fun observer() {
+        Log.e("TAG", "observer: viewCreated --> "+viewCreated )
+        if(!viewCreated){
+            displayCustomMessage(
+                getString(R.string.additional_crossings_txt),
+                getString(R.string.only_use_this_option_for_crossings_planned),
+                getString(R.string.str_continue), "", null, null, View.GONE
+            )
+        }
+        viewCreated=true
+
+
+
     }
 
     override fun onClick(v: View?) {

@@ -101,12 +101,12 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         // Create a VibrationEffect object for the default vibration strength
                         val vibrationEffect =
-                            VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)
+                            VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
                         // Vibrate the device with the created VibrationEffect
                         vibrator.vibrate(vibrationEffect)
                     } else {
                         // For older versions of Android, vibrate without VibrationEffect
-                        vibrator.vibrate(500)
+                        vibrator.vibrate(200)
                     }
                 }
             }

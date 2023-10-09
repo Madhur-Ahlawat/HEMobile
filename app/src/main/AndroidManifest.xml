@@ -22,9 +22,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
         <activity
-            android:name=".ui.bottomnav.account.raiseEnquiry.EnquiryStatusActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

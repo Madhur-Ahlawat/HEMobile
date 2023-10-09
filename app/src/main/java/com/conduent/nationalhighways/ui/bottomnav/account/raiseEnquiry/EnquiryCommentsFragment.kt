@@ -178,9 +178,6 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                 observe(viewModel.uploadFileLiveData, ::uploadFileResponse)
             }
 
-            viewModel.retryEvent.observe(this, androidx.lifecycle.Observer {
-//                Utils.displayRetryDialog(this, this, BuildConfig.UPLOAD_FILE)
-            })
         }
         isViewCreated = true
 

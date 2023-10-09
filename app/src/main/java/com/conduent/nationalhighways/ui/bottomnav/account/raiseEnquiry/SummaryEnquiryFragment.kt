@@ -128,7 +128,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     private fun getBundleData(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.Edit_REQUEST_KEY, Constants.EDIT_SUMMARY)
-        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, true)
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         return bundle
     }

@@ -4,6 +4,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         >
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -17,14 +18,14 @@
             android:layout_marginTop="200dp"/>
 
 
-        <TextView
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:lineSpacingExtra="2dp"
             android:text="@string/str_you_have_signed_out"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_blue_color"
             android:textSize="15sp"
             android:gravity="center"
             android:fontFamily="@font/open_sans_bold"
