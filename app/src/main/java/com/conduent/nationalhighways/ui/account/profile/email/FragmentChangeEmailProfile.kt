@@ -9,9 +9,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentChangeEmailProfileBinding
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -31,6 +34,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
     private var btnEnabled: Boolean = false
     private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
+    private var data: ProfileDetailModel? = null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentChangeEmailProfileBinding.inflate(inflater, container, false)
@@ -38,6 +42,9 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        navData?.let {
+            data = it as ProfileDetailModel
+        }
     }
 
     override fun initCtrl() {
@@ -49,12 +56,14 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             btnNext.setOnClickListener {
                 hideKeyboard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                viewModel.emailVerificationApi(
-                    EmailVerificationRequest(
-                        selectionType = EMAIL_SELECTION_TYPE,
-                        selectionValues = binding.edtEmail.getText().toString().trim().replace(" ","") ?: ""
-                    )
-                )
+                val request = UserNameCheckReq(binding.edtEmail.getText().toString().trim())
+                viewModel.userNameAvailabilityCheck(request)
+//                viewModel.emailVerificationApi(
+//                    EmailVerificationRequest(
+//                        selectionType = EMAIL_SELECTION_TYPE,
+//                        selectionValues = binding.edtEmail.getText().toString().trim().replace(" ","") ?: ""
+//                    )
+//                )
             }
             isEnable()
             checkButton()
@@ -167,6 +176,8 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
 
     override fun observer() {
         observe(viewModel.emailVerificationApiVal, ::handleEmailVerification)
+        observe(viewModel.userNameAvailabilityCheck, ::handleEmailCheck)
+
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
@@ -184,6 +195,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                     val bundle = Bundle()
                     binding.data?.referenceId = resource.data?.referenceId
                     bundle.putParcelable(DATA, binding.data)
+                    bundle.putBoolean(Constants.IS_EDIT_EMAIL,arguments?.getBoolean(Constants.IS_EDIT_EMAIL) as Boolean)
                     bundle.putParcelable(
                         "response",
                         SecurityCodeResponseModel(
@@ -211,5 +223,25 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             else -> {
             }
         }
+    }
+
+    private fun handleEmailCheck(response: Resource<Boolean?>?) {
+
+        if (response?.data == true) {
+            val request = EmailVerificationRequest(
+                Constants.EMAIL,
+                binding.edtEmail.getText().toString().trim()
+            )
+            viewModel.emailVerificationApi(request)
+        } else {
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
+                binding.edtEmail.setError(getString(R.string.an_account_with_this_email_address_already_exists))
+            }
+
+        }
+
     }
 }

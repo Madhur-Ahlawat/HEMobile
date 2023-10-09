@@ -346,6 +346,9 @@
         <action
             android:id="@+id/action_otpForgotFragment_to_resetForgotPassword"
             app:destination="@id/resetFragment" />
+        <action
+            android:id="@+id/action_forgotOtpFragment_to_createAccountSummaryFragment"
+            app:destination="@id/createAccountSummaryFragment" />
     </fragment>
 
     <fragment
@@ -460,17 +463,6 @@
         tools:layout="@layout/fragment_profile_email_change_success">
 
     </fragment>
-
-    <fragment
-        android:id="@+id/fragmentProfileConfirmEmailSecurityCode"
-        android:name="com.conduent.nationalhighways.ui.account.profile.email.FragmentProfileConfirmEmailSecurityCode"
-        android:label="Confirm code"
-        tools:layout="@layout/fragment_profile_confirm_email_security_code">
-        <action
-            android:id="@+id/action_createAccountPersonalInfo_to_email_change_success"
-            app:destination="@id/fragmentProfileEmailChangeSuccess" />
-    </fragment>
-
     <fragment
         android:id="@+id/fragmentChangeEmailProfile"
         android:name="com.conduent.nationalhighways.ui.account.profile.email.FragmentChangeEmailProfile"
@@ -478,7 +470,7 @@
         tools:layout="@layout/fragment_change_email_profile">
         <action
             android:id="@+id/action_change_email_profile_to_confirm_security_code"
-            app:destination="@id/fragmentProfileConfirmEmailSecurityCode" />
+            app:destination="@id/forgotOtpFragment" />
     </fragment>
 
     <fragment

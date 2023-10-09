@@ -22,6 +22,7 @@ import com.conduent.nationalhighways.utils.common.ResponseHandler
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
 import com.conduent.nationalhighways.utils.common.Utils
 import androidx.databinding.Observable
+import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,6 +34,9 @@ class ProfileViewModel @Inject constructor(
     private val repository: ProfileRepository,
     val errorManager: ErrorManager
 ) : ViewModel(),Observable {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _userNameAvailabilityCheck = MutableLiveData<Resource<Boolean?>?>()
+    val userNameAvailabilityCheck: LiveData<Resource<Boolean?>?> get() = _userNameAvailabilityCheck
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _verifyRequestCode = MutableLiveData<Resource<VerifyRequestOtpResp?>?>()
     val verifyRequestCode: LiveData<Resource<VerifyRequestOtpResp?>?> get() = _verifyRequestCode
@@ -209,5 +213,19 @@ class ProfileViewModel @Inject constructor(
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
         TODO("Not yet implemented")
+    }
+    fun userNameAvailabilityCheck(request: UserNameCheckReq) {
+        viewModelScope.launch {
+            try {
+                _userNameAvailabilityCheck.postValue(
+                    success(
+                        repository.userNameAvailabilityCheck(request),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _userNameAvailabilityCheck.postValue(ResponseHandler.failure(e))
+            }
+        }
     }
 }

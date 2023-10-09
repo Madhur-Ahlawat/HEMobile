@@ -213,6 +213,8 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
 
             R.id.editEmailAddress -> {
+                var bundle = Bundle()
+                bundle.putBoolean(Constants.IS_EDIT_EMAIL,true)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_emailAddressFragment,
                     enableEditMode()
