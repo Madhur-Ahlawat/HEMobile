@@ -78,7 +78,7 @@
     <string name="str_letter_posted_txt">"A letter will be posted to your registered address with a temporary password. The password will be active for seven days. Please use the password to login to your account "</string>
     <string name="str_letter_not_received">If you do not receive the letter within 5 days, please contact :</string>
     <string name="str_dart_change_contact">Dart Change contact centre</string>
-    <string name="str_contact_address">Telephone: 03003000120\nTextPhone: 1800 1 0300 300 0120\nEveryday, 8am to 8pm</string>
+    <string name="str_contact_address">Telephone: 0300 300 0120\nTextPhone: 18001 0300 300 0120\nEveryday, 8am to 8pm</string>
     <string name="str_accept">Accept</string>
     <string name="txt_email_address">Email address</string>
     <string name="txt_enter_security_code">Enter security code</string>
@@ -1190,7 +1190,7 @@
     <string name="str_upload_more_vehicles">upload more vehicles </string>
     <string name="change_how_pay_for_crossing">change how you pay for crossings </string>
     <string name="change_how_to_receive_communication">change how you receive communications</string>
-    <string name="feed_back_to_improve_service"><u>FEEDBACK TO IMPROVE THE SERVICE</u></string>
+    <string name="feed_back_to_improve_service"><a href="https://websurveys2.servmetric.com/theme/gm/2712?GUID=c1694af9-bd75-49a9-90b2-8af9ca81d41e"><u>FEEDBACK TO IMPROVE THE SERVICE</u></a></string>
     <string name="the_name_on_card_must_only_include_letters_a_to_z_and_special_characters_such_as_hyphens">The name on card must only include letters a to z, and special characters such as hyphens</string>
     <string name="card_security_code_must_be_3_digits_or_more">Card security code must be 3 digits or more</string>
     <string name="invalid_date_format">Invalid date format</string>
@@ -1471,14 +1471,14 @@
     <string name="str_terms_conditions">Terms &amp; Conditions</string>
     <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
     <string name="str_third_party_software">Third party software</string>
-    <string name="str_dart_charge_contact_centre">Dart charge contact centre</string>
+    <string name="str_dart_charge_contact_centre">Dart Charge contact centre</string>
     <string name="str_contact_dart_charge_team">Contact the Dart Charge team</string>
-    <string name="str_find_out_about_call_charges"><u>Find out about call charges</u></string>
+    <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
     <string name="str_get_in_touch_about">Get in touch about:</string>
     <string name="str_charges">charges</string>
-    <string name="str_fines">fines(Penalty Charge Notice)</string>
+    <string name="str_fines">fines (Penalty Charge Notice)</string>
     <string name="str_refunds">refunds</string>
-    <string name="str_dart_charge_accounts">dart Charge accounts</string>
+    <string name="str_dart_charge_accounts">Dart Charge accounts</string>
     <string name="str_complaints">complaints</string>
     <string name="str_general_enquiries">general enquiries</string>
     <string name="str_get_in_touch">Get in touch</string>
@@ -1542,25 +1542,26 @@
     <string name="click_here_to_receive_notifications_when_you_cross"><i>Click here to receive notifications when you\ncross</i></string>
     <string name="receive_notifications">Receive Notifications</string>
     <string name="dart_charge_guidance_and_documents">DART CHARGE GUIDANCE AND\nDOCUMENTS</string>
-    <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means\nthat you do not pay charges at a booth when crossing\nbut you can pay charges for crossing in various ways.</string>
+    <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossing in various ways.</string>
     <string name="learn_more_about_dartford_crossing_amp_dart_charge"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></string>
     <string name="vehicle__class">Vehicle\nClass</string>
     <string name="one_off__payment">One off\npayment</string>
-    <string name="b_more_details"><b>More details</b>\nFor more details on Types of Vehicles and charge amounts visit <a href="https://www.gov.uk/pay-dartford-crossing-charge/charges-fines">understanding charges , discounts and penalties</a></string>
-    <string name="b_if_you_re_disabled"><b>If you’re disabled</b>\nYou do not need to pay the charge if you get free UK vehicle tax because of a disability.\n\nYour vehicle will be checked automatically when you cross - you do not need to do anything.\n\nFind out how to <a href="https://www.gov.uk/get-vehicle-tax-exemption-disability">get free vehicle tax if you’re a driver with a disability.</a>.</string>
-    <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council.</a>.\n\nYou can either\n\n<ul><li>pay £20 a year to use the Dartford Crossing as many times as you want</li>\n<li>pay £10 for 50 crossings, plus 20p for each additional crossing</li></ul>\n\nApply for a local resident discount online or by post.</string>
+    <string name="b_more_details"><b>More details</b>\nFor more details on Types of Vehicles and charge amounts visit <a href="https://www.gov.uk/pay-dartford-crossing-charge/charges-fines">understanding charges, discounts and penalties</a>.</string>
+    <string name="b_if_you_re_disabled"><b>If you’re disabled</b>\nYou do not need to pay the charge if you get free UK vehicle tax because of a disability.\n\nYour vehicle will be checked automatically when you cross - you do not need to do anything.\n\nFind out how to <a href="https://www.gov.uk/get-vehicle-tax-exemption-disability">get free vehicle tax if you’re a driver with a disability</a>.</string>
+    <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council</a>.\n\nYou can either\n\n<ul><li>pay £20 a year to use the Dartford Crossing as many times as you want</li>\n<li>pay £10 for 50 crossings, plus 20p for each additional crossing</li></ul>\n\nApply for a local resident discount online or by post.</string>
 
-    <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a>.</string>
+    <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a> or call the Dart Charge contact centre.</string>
     <string name="contact_dart_charge">Contact Dart Charge</string>
     <string name="do_you_have_dart_charge_account">Do you have Dart Charge Account?</string>
     <string name="sub_category">Sub-category</string>
     <string name="date_time_submitted"><![CDATA[Date & time submitted]]></string>
     <string name="status_of_enquiry">Status of enquiry</string>
     <string name="date_enquiry_closed">Date enquiry closed</string>
-    <string name="third_party_software_full_message">The following open source software components are used under the MIT License.\nSee <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a> for more details.\n\nSnapKit\nR.swift\nClosures\nMoya/RxSwift\nSwiftLint\nEureka\nSwiftyUserDefaults\nMBProgressHUD\nIQKeyboardManagerSwift\nKeychainSwift\nAlamofire\nMMMaterialDesignSpinner\nUIFloatLabelTextView\nActiveLabel\n\nThe following open source software components are used under the 3 clause BSD License. See <a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>.\n\nCardScan\n\nThe following open source software components are used under a commercial license.\n\nFirebase/Core\nFirebase/Crashlytics\nFabric</string>
+    <string name="third_party_software_full_message">The following open source software components are used under the MIT License.\nSee <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a> for more details.\n\nSnapKit\nClosures\nMoya/RxJava\nEureka\nMBProgressHUD\nAlamofire\nUIFloatLabelTextView\nActiveLabel\n\nThe following open source software components are used under the 3 clause BSD License. See <a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>.\n\nCardScan\n\nThe following open source software components are used under a commercial license.\n\nFirebase/Core\nFirebase/Crashlytics\nFabric</string>
     <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
-    <string name="str_using_this_mobile_app">Using this mobile app is the quickest way to pay your charge\nOr you can:\n\n<ul><li>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></li>\n<li>pay or setup an account <a href="https://pay-dartford-crossing-charge.service.gov.uk/forms-and-guidance">by post</a></li>\n<li>pay or setup an account by phoning the Dart Charge Contact centre</li></ul></string>
+    <string name="str_using_this_mobile_app"><ul><li>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></li>\n<li>pay or setup an account <a href="https://pay-dartford-crossing-charge.service.gov.uk/forms-and-guidance">by post</a></li>\n<li>pay or setup an account by phoning the Dart Charge Contact centre</li></ul></string>
+    <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge. Or you can:</string>
     <string name="about_this_service">About this Service</string>
     <string name="charges_and_fines">Charges and Fines</string>
     <string name="enquiry_status">Enquiry Status</string>

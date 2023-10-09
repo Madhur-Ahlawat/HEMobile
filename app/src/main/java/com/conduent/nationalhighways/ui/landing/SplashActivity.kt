@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import com.conduent.nationalhighways.databinding.ActivityLandingBinding
+import com.conduent.nationalhighways.databinding.ActivitySplashNewBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.BiometricUtils
@@ -22,11 +24,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
+    private var binding: ActivitySplashNewBinding?=null
+
     @Inject
     lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySplashNewBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
         Handler(Looper.getMainLooper()).postDelayed({
             navigateNextScreen()
         }, Constants.SPLASH_TIME_OUT)

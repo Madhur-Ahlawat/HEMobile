@@ -16,7 +16,7 @@
             android:paddingHorizontal="@dimen/_23dp">
 
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtReferenceNumber"
                         style="@style/MediumTextBlack"
                         android:text="@string/reference_number"
@@ -51,7 +51,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/referenceNumber"
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtCategory"
                         style="@style/MediumTextBlack"
                         android:text="@string/str_category"
@@ -89,7 +89,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/category"
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtSubcategory"
                         style="@style/MediumTextBlack"
                         android:text="@string/sub_category"
@@ -127,7 +127,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/creditAdditionalCrossings"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
@@ -159,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtDateAndTimeSubmitted"
                         style="@style/MediumTextBlack"
                         android:text="@string/date_time_submitted"
@@ -167,7 +167,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/dateAndTimeSubmitted"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
@@ -199,7 +199,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtStatusOfEnquiry"
                         style="@style/MediumTextBlack"
                         android:text="@string/status_of_enquiry"
@@ -207,7 +207,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/statusOfEnquiry"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtdateEnquiryClose"
                         style="@style/MediumTextBlack"
                         android:text="@string/date_enquiry_closed"
@@ -248,7 +248,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/dateAndEnquiry"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
@@ -278,7 +278,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtLabelPaymentAmount"
                         style="@style/MediumTextBlack"
                         android:text="@string/date_time_submitted"
@@ -286,7 +286,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/paymentAmount"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"

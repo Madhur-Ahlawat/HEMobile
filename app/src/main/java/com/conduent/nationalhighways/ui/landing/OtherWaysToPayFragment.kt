@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.landing
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,7 @@ class OtherWaysToPayFragment : BaseFragment<FragmentOtherWaysToPayBinding>() {
 
     }
     override fun initCtrl() {
+        binding?.tvGuideline?.setMovementMethod(LinkMovementMethod.getInstance())
     }
     override fun observer() {
     }

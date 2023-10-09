@@ -1,21 +1,16 @@
 @font-face {
     font-family: 'file:///android_assets/OpenSans-Regular';
 }
-@font-face {
-    font-family: 'file:///android_assets/OpenSans-Semibold';
-}
-@font-face {
-    font-family: 'file:///android_assets/OpenSans-Bold';
-}
+
 #label {
     font-family: 'file:///android_assets/OpenSans-Bold';
-    font-size: 16px;
-    color: #707070;
+    font-size: 14px;
+    color: #000000;
 }
 body {
     font-family: 'file:///android_assets/OpenSans-Regular';
     font-size: 14px;
-    color: #707070;
+    color: #000000;
 }
 
 .larger-label {
@@ -23,7 +18,7 @@ body {
 }
 
 b {
-    font-family: 'file:///android_assets/OpenSans-Regular';
+    font-family: 'file:///android_assets/OpenSans-Bold';
     font-size: 16px; /* Adjust the font size as needed */
 }
 

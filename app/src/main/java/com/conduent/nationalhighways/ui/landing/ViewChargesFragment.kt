@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.landing
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,10 +48,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ViewChargesFragment : BaseFragment<FragmentViewChargesNewBinding>() {
 
-    private val viewModel: ViewChargeViewModel by viewModels()
-
-    private var loader: LoaderDialog? = null
-
     @Inject
     lateinit var sessionManager: SessionManager
     override fun getFragmentBinding(
@@ -63,21 +60,6 @@ class ViewChargesFragment : BaseFragment<FragmentViewChargesNewBinding>() {
     }
 
     override fun init() {
-        LandingActivity.setToolBarTitle("Charges and Fines")
-        LandingActivity.showToolBar(true)
-        HomeActivityMain.accountDetailsData = null
-        HomeActivityMain.checkedCrossing = null
-        HomeActivityMain.crossing = null
-        HomeActivityMain.dateRangeModel = null
-        HomeActivityMain.paymentHistoryListData = null
-        HomeActivityMain.paymentHistoryListDataCheckedCrossings = arrayListOf()
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-        val backButton: ImageView? = requireActivity().findViewById(R.id.back_button)
-
-        backButton?.visibility = View.GONE
-
         AdobeAnalytics.setScreenTrack(
             "home",
             "home",
@@ -110,6 +92,12 @@ class ViewChargesFragment : BaseFragment<FragmentViewChargesNewBinding>() {
     }
 
     override fun initCtrl() {
+        binding?.apply {
+            textFines?.setMovementMethod(LinkMovementMethod.getInstance())
+            textMoreDetails?.setMovementMethod(LinkMovementMethod.getInstance())
+            textIfYouHaveDisabled?.setMovementMethod(LinkMovementMethod.getInstance())
+            textLocalResidentDiscount?.setMovementMethod(LinkMovementMethod.getInstance())
+        }
     }
 
     override fun observer() {

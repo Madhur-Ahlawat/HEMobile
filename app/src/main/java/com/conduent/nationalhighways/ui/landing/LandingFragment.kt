@@ -60,6 +60,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
+        binding.scrollViewLanding.post(Runnable { binding.scrollViewLanding.smoothScrollTo(0,binding.scrollViewLanding.bottom)})
         HomeActivityMain.accountDetailsData=null
         HomeActivityMain.checkedCrossing=null
         HomeActivityMain.crossing=null
@@ -114,29 +115,30 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     override fun initCtrl() {
         LandingActivity.showToolBar(false)
         binding.btnGuidanceAndDocuments.setOnClickListener {
-            when (apiState) {
-                Constants.LIVE -> {
-                    AdobeAnalytics.setActionTrack(
-                        "dart charge guidance and documents",
-                        "home",
-                        "home",
-                        "english",
-                        "home",
-                        "splash",
-                        sessionManager.getLoggedInUser()
-                    )
-                    requireActivity().startNormalActivity(
-                        RaiseEnquiryActivity::class.java
-                    )
-                }
-
-                else -> {
-                    findNavController().navigate(
-                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-                        getBundleData(apiState, apiEndTime)
-                    )
-                }
-            }
+            requireActivity().startNormalActivity(
+                RaiseEnquiryActivity::class.java)
+//            when (apiState) {
+//
+//                Constants.LIVE -> {
+//                    AdobeAnalytics.setActionTrack(
+//                        "dart charge guidance and documents",
+//                        "home",
+//                        "home",
+//                        "english",
+//                        "home",
+//                        "splash",
+//                        sessionManager.getLoggedInUser()
+//                    )
+//
+//                }
+//
+//                else -> {
+//                    findNavController().navigate(
+//                        R.id.action_landingFragment_to_serviceUnavailableFragment,
+//                        getBundleData(apiState, apiEndTime)
+//                    )
+//                }
+//            }
 
         }
         binding.payCrossingLayout.setOnClickListener {

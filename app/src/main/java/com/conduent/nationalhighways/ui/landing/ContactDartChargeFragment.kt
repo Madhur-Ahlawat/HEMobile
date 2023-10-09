@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.landing
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,9 @@ class ContactDartChargeFragment : BaseFragment<FragmentContactDartCharge2Binding
     }
 
     override fun initCtrl() {
+        binding.findOutTv?.setMovementMethod(LinkMovementMethod.getInstance())
+        binding?.feedbackToImproveMb?.setMovementMethod(LinkMovementMethod.getInstance())
+
 
     }
 
