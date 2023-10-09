@@ -72,7 +72,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                         binding.toolBarLyt.titleTxt.setText(getString(R.string.charges_and_fines))
                     }
                     R.id.fragmentTermsAndConditions -> {
-                        binding.toolBarLyt.titleTxt.setText("Dart Charge terms and conditions")
+                        binding.toolBarLyt.titleTxt.setText("Dart Charge Terms and Conditions")
                     }
                     R.id.generalTermsAndConditionsFragment -> {
                         binding.toolBarLyt.titleTxt.setText("Terms & Conditions")
@@ -83,7 +83,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                     R.id.privacyPolicyFragment -> {
                         binding.toolBarLyt.titleTxt.setText("Privacy Policy")
                     }
-                    R.id.btnOtherWaysToPayCharge -> {
+                    R.id.otherwaystopayFragment -> {
                         binding.toolBarLyt.titleTxt.setText("Other ways to pay")
                     }
                     R.id.thirdPartySoftwareFragment -> {
