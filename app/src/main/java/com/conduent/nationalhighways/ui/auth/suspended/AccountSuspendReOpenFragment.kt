@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
 
     override fun initCtrl() {
-
+        binding?.feedbackBt?.setMovementMethod(LinkMovementMethod.getInstance())
         transactionId = arguments?.getString(Constants.TRANSACTIONID).toString()
         topUpAmount = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
 

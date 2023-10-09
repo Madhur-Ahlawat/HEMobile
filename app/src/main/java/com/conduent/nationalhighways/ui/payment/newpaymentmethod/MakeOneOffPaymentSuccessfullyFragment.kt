@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
     override fun init() {
         binding.createAccount.setOnClickListener(this)
         binding.backToMainMenu.setOnClickListener(this)
+        binding?.feedbackBt?.setMovementMethod(LinkMovementMethod.getInstance())
 
     }
 

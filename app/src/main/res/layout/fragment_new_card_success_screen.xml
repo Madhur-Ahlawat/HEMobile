@@ -145,7 +145,7 @@
             <com.conduent.apollo.ui.CMButton
                 style="@style/secondaryButton"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/feedback_bt"
                 android:text="@string/cancel"
 
 
@@ -153,6 +153,19 @@
                 android:layout_marginTop="@dimen/_30dp"
                 android:layout_marginBottom="@dimen/_30dp"
                 />
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/feedback_bt"
+                style="@style/secondaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_30dp"
+                android:textColor="@color/new_btn_color"
+                app:borderColor="@color/new_btn_color"
+                android:textColorLink="@color/new_btn_color"
+                android:text="@string/feed_back_to_improve_service"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

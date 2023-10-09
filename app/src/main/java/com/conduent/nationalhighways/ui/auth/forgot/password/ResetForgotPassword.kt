@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.text.Html
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,8 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     @Inject
     lateinit var sessionManager: SessionManager
     override fun init() {
+        binding?.feedbackBt?.setMovementMethod(LinkMovementMethod.getInstance())
+
         binding.btnSubmit.setOnClickListener(this)
         title = requireActivity().findViewById(R.id.title_txt)
         when (navFlowCall) {
