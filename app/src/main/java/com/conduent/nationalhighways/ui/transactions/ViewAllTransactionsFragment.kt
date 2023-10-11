@@ -97,7 +97,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                         paymentHistoryListData.clear()
                         paymentHistoryListData.addAll(it)
                         paymentHistoryListData =
-                            sortTransactionsDateWiseDescending(HomeActivityMain.paymentHistoryListData).toMutableList()
+                            sortTransactionsDateWiseDescending(HomeActivityMain.paymentHistoryListData!!).toMutableList()
                         recentTransactionAdapter.submitList(
                             paymentHistoryListData
                         )

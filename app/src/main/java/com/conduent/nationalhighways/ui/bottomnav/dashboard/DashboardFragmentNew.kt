@@ -262,13 +262,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         binding.tvNoHistory.gone()
                         binding.boxViewAll.visible()
                         binding.rvRecenrTransactions.visible()
-                        paymentHistoryListData.clear()
-                        paymentHistoryListData.addAll(it)
+                        paymentHistoryListData?.clear()
+                        paymentHistoryListData?.addAll(it)
                         paymentHistoryListData =
-                            sortTransactionsDateWiseDescending(paymentHistoryListData).toMutableList()
+                            sortTransactionsDateWiseDescending(paymentHistoryListData!!).toMutableList()
                         recentTransactionAdapter.submitList(
                             sortTransactionsDateWiseDescending(
-                                paymentHistoryListData
+                                paymentHistoryListData!!
                             )
                         )
                     } else {

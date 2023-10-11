@@ -10,10 +10,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPostCodeNewBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
@@ -28,7 +30,9 @@ import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import org.bouncycastle.jce.provider.BrokenPBE.Util
 
@@ -36,21 +40,20 @@ import org.bouncycastle.jce.provider.BrokenPBE.Util
 class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBinding>(),
     View.OnClickListener, OnRetryClickListener {
     private var requiredPostCode = false
+    private var data: CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.inputPostCode.editText
-            .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
-
-
-
+        binding.btnUpdateAddressManually.setOnClickListener(this)
         binding.inputPostCode.setMaxLength(10)
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
+                binding.btnEnterAddressManually.visible()
+                binding.btnUpdateAddressManually.gone()
                 binding.inputPostCode.setText(NewCreateAccountRequestModel.zipCode)
                 if(NewCreateAccountRequestModel.personalAccount){
                     setPersonalView()
@@ -58,6 +61,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             }
 
             PROFILE_MANAGEMENT -> {
+                binding.btnEnterAddressManually.gone()
+                binding.btnUpdateAddressManually.visible()
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
                 val data = navData as ProfileDetailModel?
@@ -80,6 +85,41 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             }
 
         }
+        validatePostCode()
+        binding.inputPostCode.editText
+            .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
+    }
+
+    private fun validatePostCode() {
+        requiredPostCode = if (binding.inputPostCode.getText().toString().trim().isEmpty()) {
+            binding.inputPostCode.removeError()
+            false
+        } else {
+            val string = binding.inputPostCode.getText().toString().trim()
+            val finalString = string.replace(" ", "")
+            if (!(hasLowerCase(
+                    binding.inputPostCode.editText.getText().toString().trim()
+                ) || hasUpperCase(
+                    binding.inputPostCode.editText.getText().toString().trim()
+                )) || !hasDigits(
+                    binding.inputPostCode.editText.getText().toString().trim()
+                ) || hasSpecialCharacters(
+                    binding.inputPostCode.getText().toString().trim(),
+                    ""
+                )
+            ) {
+                binding.inputPostCode.setErrorText(getString(R.string.postcode_must_not_contain_special_characters))
+                false
+            } else if (finalString.length < 4 || finalString.length > 10) {
+                binding.inputPostCode.setErrorText(getString(R.string.postcode_must_be_between_4_and_10_characters))
+                false
+            } else {
+                binding.inputPostCode.removeError()
+                true
+            }
+
+        }
+        binding.btnFindAddress.isEnabled = requiredPostCode
     }
 
     private fun setPersonalView() {
@@ -106,7 +146,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 //                }
             }
 
-            R.id.btnEnterAddressManually -> {
+            R.id.btnEnterAddressManually,R.id.btnUpdateAddressManually -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 if (navFlowCall.equals(PROFILE_MANAGEMENT, true) && navData != null) {
