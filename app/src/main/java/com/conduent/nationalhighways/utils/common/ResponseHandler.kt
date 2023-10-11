@@ -29,13 +29,23 @@ object ResponseHandler {
         } else {
             try {
                 val errorResponse =
-                    Gson().fromJson(response?.errorBody()?.string(), ErrorResponseModel::class.java)
-                Log.e("TAG", "success: errorResponse " + errorResponse)
+                    Gson().fromJson(
+                        response?.errorBody()?.string(),
+                        ErrorResponseModel::class.java
+                    )
 
-                if (TextUtils.isEmpty(errorResponse.message)) {
-                    return Resource.DataError(errorResponse.exception, errorResponse)
+                if (response?.code() == Constants.TOKEN_FAIL && errorResponse.error.equals("invalid_token")) {
+                    return Resource.DataError(
+                        "Token Expired",
+                        ErrorResponseModel("", "", "", 401, 401, "")
+                    )
+                } else {
+
+                    if (TextUtils.isEmpty(errorResponse.message)) {
+                        return Resource.DataError(errorResponse.exception, errorResponse)
+                    }
+                    return Resource.DataError(errorResponse.message, errorResponse)
                 }
-                return Resource.DataError(errorResponse.message, errorResponse)
             } catch (e: Exception) {
                 return Resource.DataError(e.message)
             }

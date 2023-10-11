@@ -681,7 +681,7 @@
         <action
             android:id="@+id/deletePaymentMethodSuccessFragment_to_paymentMethodFragment"
             app:destination="@id/paymentMethodFragment"
-            app:popUpTo="@id/accountFragment"
+            app:popUpTo="@id/paymentMethodFragment"
             app:popUpToInclusive="true" />
     </fragment>
 

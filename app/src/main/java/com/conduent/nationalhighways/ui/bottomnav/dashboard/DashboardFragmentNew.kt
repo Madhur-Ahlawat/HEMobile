@@ -42,12 +42,14 @@ import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -79,11 +81,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 viewDataBinding.apply {
                     valueCurrentBalance.text = recentTransactionItem.balance
                     tvTransactionType.text =
-                        recentTransactionItem.activity?.substring(0, 1)!!.toUpperCase().plus(
-                            recentTransactionItem.activity?.substring(
+                        recentTransactionItem.activity?.substring(0, 1)!!
+                            .uppercase(Locale.getDefault())
+                            .plus(
+                            recentTransactionItem.activity.substring(
                                 1,
                                 recentTransactionItem.activity.length
-                            )!!.toLowerCase()
+                            )!!.lowercase(Locale.getDefault())
                         )
                     if (recentTransactionItem.amount?.contains("-") == false) {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
@@ -132,10 +136,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentDashboardNewBinding.inflate(inflater, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     override fun init() {
         initTransactionsRecyclerView()
@@ -218,7 +218,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleAccountType(accountResponse: AccountResponse) {
-        accountResponse?.apply {
+        accountResponse.apply {
             if (accountInformation?.accountType.equals("BUSINESS", true)
                 || ((accountInformation?.accSubType.equals(
                     "STANDARD",
@@ -256,7 +256,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         paymentHistoryListData?.clear()
                         paymentHistoryListData?.addAll(it)
                         paymentHistoryListData =
-                            sortTransactionsDateWiseDescending(paymentHistoryListData?:ArrayList()).toMutableList()
+                            sortTransactionsDateWiseDescending(
+                                paymentHistoryListData ?: ArrayList()
+                            ).toMutableList()
                         recentTransactionAdapter.submitList(
                             sortTransactionsDateWiseDescending(
                                 paymentHistoryListData!!
@@ -293,7 +295,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData?>): MutableList<TransactionData> {
         var transactionListSorted: MutableList<TransactionData> = mutableListOf()
         for (transaction in transactions) {
-            if (transactionListSorted?.isEmpty() == true) {
+            if (transactionListSorted.isEmpty() == true) {
                 transactionListSorted.add(transaction!!)
             } else {
                 if (compareDates(
@@ -394,11 +396,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        if(data.accountInformation?.paymentTypeInfo?.length!!>=4){
-                            cardNumber.text = resources.getString(R.string.str_maskcardnumber,data.accountInformation.paymentTypeInfo.takeLast(4))
-                        }else{
-                            cardNumber.text = resources.getString(R.string.str_maskcardnumber,data.accountInformation.paymentTypeInfo)
-                        }
+                        cardNumber.text = Utils.setMaskWithDots(
+                            requireActivity(),
+                            data.accountInformation?.paymentTypeInfo
+                        )
                         DashboardUtils.setAccountStatusNew(
                             it,
                             indicatorAccountStatus,
@@ -483,10 +484,16 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        if(data.accountInformation?.paymentTypeInfo?.length!!>=4){
-                            cardNumber.text = resources.getString(R.string.str_maskcardnumber,data.accountInformation.paymentTypeInfo.takeLast(4))
-                        }else{
-                            cardNumber.text = resources.getString(R.string.str_maskcardnumber,data.accountInformation.paymentTypeInfo)
+                        if (data.accountInformation?.paymentTypeInfo?.length!! >= 4) {
+                            cardNumber.text = resources.getString(
+                                R.string.str_maskcardnumber,
+                                data.accountInformation.paymentTypeInfo.takeLast(4)
+                            )
+                        } else {
+                            cardNumber.text = resources.getString(
+                                R.string.str_maskcardnumber,
+                                data.accountInformation.paymentTypeInfo
+                            )
                         }
                         DashboardUtils.setAccountStatusNew(
                             it,

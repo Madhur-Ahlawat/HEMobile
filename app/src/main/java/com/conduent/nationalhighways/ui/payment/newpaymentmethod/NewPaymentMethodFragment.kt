@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +58,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     private var accountInformation: AccountInformation? = null
     private lateinit var title: AppCompatTextView
     private var position: Int = 0
-    private var accountNumber:String=""
+    private var accountNumber: String = ""
 
 
     override fun getFragmentBinding(
@@ -76,7 +77,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
 
         if (!isViewCreated) {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            showLoader()
             viewModel.saveCardList()
             dashboardViewModel.getAccountDetailsData()
 
@@ -111,9 +112,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
 
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        hideLoader()
         when (status) {
             is Resource.Success -> {
                 personalInformation = status.data?.personalInformation
@@ -132,6 +131,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             is Resource.DataError -> {
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                }
             }
 
             else -> {
@@ -141,12 +143,17 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        hideLoader()
         when (status) {
             is Resource.Success -> {
+
+
                 paymentList = status.data?.creditCardListType?.cardsList
+
+                for(i in 0 until paymentList.orEmpty().size){
+                    checkNullValuesOfModel(paymentList?.get(i))
+                }
+
                 if (paymentList?.isNotEmpty() == true) {
                     binding.paymentMethodInformation.visible()
                     binding.paymentRecycleView.visible()
@@ -157,7 +164,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                     paymentMethodAdapter.updateList(paymentList)
 
-                    if ((paymentList?.size ?: 0) < 2) {
+                    if (paymentList.orEmpty().size < 2) {
                         binding.addNewPaymentMethod.visibility = View.VISIBLE
 
                     } else {
@@ -179,7 +186,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
@@ -196,7 +207,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
                     bundle.putDouble(Constants.DATA, 0.0)
-                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
 
 
                     findNavController().navigate(
@@ -206,7 +217,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                 } else {
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
 
 
                     findNavController().navigate(
@@ -238,7 +249,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 title.text = getString(R.string.set_threshold_limit)
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.THRESHOLD)
-                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
 
                 findNavController().navigate(
                     R.id.action_paymentMethodFragment_to_topUpFragment,
@@ -250,19 +261,25 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     override fun paymentMethodCallback(position: Int, value: String) {
-
         if (value == Constants.DELETE_CARD) {
-            accountNumber= paymentList?.get(position)?.cardNumber.toString()
+            accountNumber = paymentList?.get(position)?.cardNumber.toString()
+            Log.e("TAG", "paymentMethodCallback: accountNumber " + accountNumber)
+            Log.e(
+                "TAG",
+                "paymentMethodCallback: primaryCard " + paymentList?.get(position)?.primaryCard
+            )
+            Log.e("TAG", "paymentMethodCallback: accSubType " + accountInformation?.accSubType)
+            Log.e("TAG", "paymentMethodCallback: paymentList " + paymentList?.get(position))
 
             if (paymentList?.get(position)?.primaryCard == true) {
                 val bundle = Bundle()
 
-                if (paymentList?.size == 1) {
+                if (paymentList.orEmpty().size == 1) {
                     if (accountInformation?.accSubType.equals(Constants.PAYG)) {
 
                         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYG)
                         bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
-                        bundle.putString(Constants.ACCOUNT_NUMBER,accountNumber)
+                        bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
                         findNavController().navigate(
                             R.id.action_paymentMethodFragment_to_deletePaymentMethodFragment,
@@ -272,19 +289,16 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PRE_PAY_ACCOUNT)
                         bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
-                        bundle.putString(Constants.ACCOUNT_NUMBER,accountNumber)
+                        bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
                         findNavController().navigate(
                             R.id.action_paymentMethodFragment_to_deletePaymentMethodFragment,
                             bundle
                         )
                     }
                 } else {
-                    if ((paymentList?.size ?: 0) > 1) {
+                    if (paymentList.orEmpty().size > 1) {
                         rowId = paymentList?.get(position)?.rowId ?: ""
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
+                       showLoader()
 
                         makeSecondaryCardAsPrimary(
                             paymentList?.get(position + 1)?.cardType,
@@ -299,25 +313,32 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 isDirectDebitDelete = false
 
                 this.position = position
-                deletePaymentDialog(getString(R.string.str_payment_method_deleted),paymentList?.get(position)?.rowId,getString(R.string.str_are_you_sure_you_want_to_remove_payment_method,paymentList?.get(position)?.cardNumber,
-                    paymentList?.get(position)?.expMonth+"/"+paymentList?.get(position)?.expMonth))
+                deletePaymentDialog(
+                    getString(R.string.str_payment_method_deleted),
+                    paymentList?.get(position)?.rowId,
+                    getString(
+                        R.string.str_are_you_sure_you_want_to_remove_payment_method,
+                        paymentList?.get(position)?.cardNumber,
+                        paymentList?.get(position)?.expMonth + "/" + paymentList?.get(position)?.expMonth
+                    )
+                )
 
 
             }
 
 
         } else if (value == Constants.DIRECT_DEBIT) {
-            accountNumber= paymentList?.get(position)?.bankAccountNumber.toString()
-
+            accountNumber = paymentList?.get(position)?.bankAccountNumber.toString()
+            Log.e("TAG", "paymentMethodCallback: accountNumber " + accountNumber)
             if (paymentList?.get(position)?.primaryCard == true) {
                 val bundle = Bundle()
 
-                if (paymentList?.size == 1) {
+                if (paymentList.orEmpty().size == 1) {
                     if (accountInformation?.accSubType.equals(Constants.PAYG)) {
 
                         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYG)
                         bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
-                        bundle.putString(Constants.ACCOUNT_NUMBER,accountNumber)
+                        bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
                         findNavController().navigate(
                             R.id.action_paymentMethodFragment_to_deletePaymentMethodFragment,
@@ -327,7 +348,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PRE_PAY_ACCOUNT)
                         bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
-                        bundle.putString(Constants.ACCOUNT_NUMBER,accountNumber)
+                        bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
                         findNavController().navigate(
                             R.id.action_paymentMethodFragment_to_deletePaymentMethodFragment,
@@ -335,14 +356,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                         )
                     }
                 } else {
-                    if ((paymentList?.size ?: 0) > 1) {
+                    if (paymentList.orEmpty().size > 1) {
                         rowId = paymentList?.get(position)?.rowId ?: ""
 
 
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
+                       showLoader()
 
                         makeSecondaryCardAsPrimary(
                             paymentList?.get(position + 1)?.cardType,
@@ -356,26 +374,108 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             } else {
                 this.position = position
                 isDirectDebitDelete = true
-                deletePaymentDialog(getString(R.string.str_payment_method_deleted),paymentList?.get(position)?.rowId,getString(R.string.str_are_you_sure_you_want_to_remove_direct_payment_method,paymentList?.get(position)?.cardNumber))
-
-
+                deletePaymentDialog(
+                    getString(R.string.str_payment_method_deleted),
+                    paymentList?.get(position)?.rowId,
+                    getString(
+                        R.string.str_are_you_sure_you_want_to_remove_direct_payment_method,
+                        paymentList?.get(position)?.cardNumber
+                    )
+                )
 
 
             }
 
         } else if (value == Constants.MAKE_DEFAULT) {
             makeDefault = true
-            loader?.show(
-                requireActivity().supportFragmentManager,
-                Constants.LOADER_DIALOG
-            )
-
+            hideLoader()
+            Log.e("TAG", "paymentMethodCallback: isVisible "+loader?.isVisible )
+            showLoader()
             makeSecondaryCardAsPrimary(
                 paymentList?.get(position)?.cardType,
                 paymentList?.get(position)?.rowId
             )
         }
 
+    }
+
+    private fun checkNullValuesOfModel(model: CardListResponseModel?) {
+        if (model?.check == null) {
+            model?.check = false
+        }
+        if (model?.isSelected == null) {
+            model?.isSelected = false
+        }
+        if (model?.bankRoutingNumber == null) {
+            model?.bankRoutingNumber = ""
+        }
+        if (model?.cardType == null) {
+            model?.cardType = ""
+        }
+        if (model?.cardNumber == null) {
+            model?.cardNumber = ""
+        }
+        if (model?.middleName == null) {
+            model?.middleName = ""
+        }
+        if (model?.expMonth == null) {
+            model?.expMonth = ""
+        }
+        if (model?.expYear == null) {
+            model?.expYear = ""
+        }
+        if (model?.bankAccountNumber == null) {
+            model?.bankAccountNumber = ""
+        }
+        if (model?.bankAccountType == null) {
+            model?.bankAccountType = ""
+        }
+
+        if (model?.bankAccountType == null) {
+            model?.bankAccountType = ""
+        }
+        if (model?.rowId == null) {
+            model?.rowId = ""
+        }
+        if (model?.bankAccountType == null) {
+            model?.bankAccountType = ""
+        }
+        if (model?.bankAccountNumber == null) {
+            model?.bankAccountNumber = ""
+        }
+        if (model?.firstName == null) {
+            model?.firstName = ""
+        }
+        if (model?.lastName == null) {
+            model?.lastName = ""
+        }
+        if (model?.customerVaultId == null) {
+            model?.customerVaultId = ""
+        }
+        if (model?.addressLine1 == null) {
+            model?.addressLine1 = ""
+        }
+        if (model?.city == null) {
+            model?.city = ""
+        }
+        if (model?.state == null) {
+            model?.state = ""
+        }
+        if (model?.zipCode == null) {
+            model?.zipCode = ""
+        }
+        if (model?.country == null) {
+            model?.country = ""
+        }
+        if (model?.emandateStatus == null) {
+            model?.emandateStatus = ""
+        }
+        if (model?.paymentSeqNumber == null) {
+            model?.paymentSeqNumber = 0
+        }
+        if (model?.bankAccount == null) {
+            model?.bankAccount = false
+        }
     }
 
     private fun makeSecondaryCardAsPrimary(cardType: String?, rowId: String?) {
@@ -399,9 +499,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        hideLoader()
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("500") == true || status.data?.statusCode?.equals(
@@ -419,7 +517,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                         Constants.DIRECT_DEBIT_DELETE
                     )
                     bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
-                    bundle.putString(Constants.ACCOUNT_NUMBER,accountNumber)
+                    bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
                     findNavController().navigate(
                         R.id.paymentMethodFragment_to_action_paymentSuccessFragment,
@@ -428,7 +526,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 } else {
                     bundle.putString(Constants.CARD_IS_ALREADY_REGISTERED, Constants.DELETE_CARD)
                     bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
-                    bundle.putString(Constants.ACCOUNT_NUMBER,accountNumber)
+                    bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
 
                     findNavController().navigate(
@@ -441,7 +539,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
@@ -450,12 +552,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     private fun handleDefaultCardResponse(status: Resource<PaymentMethodEditResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        hideLoader()
         when (status) {
             is Resource.Success -> {
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                showLoader()
 
                 if (makeDefault) {
                     viewModel.saveCardList()
@@ -468,7 +568,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog()
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
@@ -480,9 +584,13 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     private fun deletePaymentDialog(
         title: String,
         rowId: String?,
-        message:String,
+        message: String,
 
-    ) {
+        ) {
+        Log.e(
+            "TAG",
+            "deletePaymentDialog() called with: title = $title, rowId = $rowId, message = $message"
+        )
 
         displayCustomMessage(title,
             message,
@@ -490,22 +598,38 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             getString(R.string.delete),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
-                    viewModel.deleteCard(PaymentMethodDeleteModel(rowId))
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
-
+                    dialog.dismiss()
 
                 }
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    dialog.dismiss()
+                    Log.e("TAG", "positiveBtnClick: deletecard api ")
+                    showLoader()
+                    viewModel.deleteCard(PaymentMethodDeleteModel(rowId))
+
 
                 }
             })
     }
 
+    fun showLoader() {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
 
+        if (existingFragment == null) {
+            // Fragment is not added, add it now
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+            loader?.show(fragmentManager, Constants.LOADER_DIALOG)
+        }
+    }
+    fun hideLoader() {
+        if(loader?.isVisible == true) {
+            loader?.dismiss()
+            loader = null
+        }
+    }
 
 }
 

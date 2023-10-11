@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Parcelable
 import android.text.InputFilter
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -60,9 +61,12 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             data = CrossingDetailsModelsResponse()
         }
 
+// Set maximum length
+        val maxLength = 10 // Change this to your desired maximum length
+        binding.editNumberPlate.editText.filters = arrayOf(InputFilter.LengthFilter(maxLength))
+// Set all caps
+        binding.editNumberPlate.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
         binding.editNumberPlate.setText(plateNumber.trim().replace(" ", "").replace("-", ""))
-        val filter = InputFilter.AllCaps()
-        binding.editNumberPlate.editText.filters = arrayOf(filter)
 
         if (plateNumber.isNotEmpty()) {
             binding.findVehicle.isEnabled = true
@@ -85,6 +89,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 NewCreateAccountRequestModel.vehicleList.clear()
                 binding.titleText1.visible()
                 binding.titleText2.visible()
+                binding.titleText3.visible()
             }
 
             Constants.TRANSFER_CROSSINGS -> {
@@ -97,39 +102,36 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     override fun initCtrl() {
-        binding.editNumberPlate.setMaxLength(10)
+//        binding.editNumberPlate.setMaxLength(10)
         binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
         binding.findVehicle.setOnClickListener(this)
     }
 
     private fun isEnable() {
-        if (binding.editNumberPlate.getText().toString().trim().isEmpty()) {
+        val entered_numberplate=binding.editNumberPlate.editText.text.toString().trim().replace("-","")
+        if (entered_numberplate.isEmpty()) {
             binding.findVehicle.isEnabled = false
             binding.editNumberPlate.removeError()
         } else {
-            if (Utils.countOccurenceOfChar(
-                    binding.editNumberPlate.editText.text.toString().trim(), '-'
-                ) > 1 || binding.editNumberPlate.editText.text.toString().trim().contains(
+            if (entered_numberplate.toString().replace("-","").trim().contains(
                     Utils.TWO_OR_MORE_HYPEN
-                ) || (binding.editNumberPlate.editText.text.toString().trim().last()
-                    .toString() == "." || binding.editNumberPlate.editText.text
+                ) || (entered_numberplate.toString().trim().last()
+                    .toString() == "." || entered_numberplate
                     .toString().first().toString() == ".")
-                || (binding.editNumberPlate.editText.text.toString().trim().last()
-                    .toString() == "-" || binding.editNumberPlate.editText.text.toString()
-                    .first()
-                    .toString() == "-")
             ) {
-                binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
+                Log.e("TAG", "isEnable: 11 " )
+                binding.editNumberPlate.setErrorText(resources.getString(R.string.str_vehicle_registration))
                 binding.findVehicle.isEnabled = false
             } else if (Utils.hasSpecialCharacters(
-                    binding.editNumberPlate.getText().toString().trim().replace(" ", ""),
+                    entered_numberplate.replace(" ", ""),
                     splCharsVehicleRegistration
                 )
             ) {
-                binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
+                Log.e("TAG", "isEnable: 22 " )
+                binding.editNumberPlate.setErrorText(resources.getString(R.string.str_vehicle_registration))
                 binding.findVehicle.isEnabled = false
             } else if (binding.editNumberPlate.getText().toString().trim().length > 10) {
-                binding.editNumberPlate.setErrorText("Vehicle Registration $plateNumber must be 10 characters or fewer")
+                binding.editNumberPlate.setErrorText("Vehicle Registration (number plate) must be 10 characters or fewer")
                 binding.findVehicle.isEnabled = false
             } else {
                 binding.editNumberPlate.removeError()
@@ -160,7 +162,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.getText()
+                if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.editText.text
                         .toString().trim() && isCrossingCall.not()
                 ) {
                     if (editCall) {
@@ -179,7 +181,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                 binding.findVehicle.isEnabled = false
                 val numberPlate =
-                    binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                    binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                         .replace("-", "")
                 NewCreateAccountRequestModel.plateNumber = numberPlate
 
@@ -250,7 +252,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if (isCrossingCall) {
             if (edit_summary) {
                 if (data?.plateNo.equals(
-                        binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                        binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                             .replace("-", "")
                     )
                 ) {
@@ -288,7 +290,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 Constants.LOADER_DIALOG
             )
             if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS, true)) {
-                viewModel.getVehiclePlateData(numberPlate, Constants.AGENCY_ID.toInt())
+                viewModel.getVehiclePlateData(numberPlate.uppercase(), Constants.AGENCY_ID.toInt())
             } else {
                 checkForDuplicateVehicle(numberPlate)
             }
@@ -297,8 +299,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     private fun getOneoffApi() {
         viewModel.getOneOffVehicleData(
-            binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                .replace("-", ""),
+            binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
+                .replace("-", "").uppercase(),
             Constants.AGENCY_ID.toInt()
         )
     }
@@ -374,7 +376,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 } else {
                     var isVehicleExist = false
                     val numberPlate =
-                        binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                        binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                             .replace("-", "")
                     for (obj in vehicleList) {
                         if (obj.plateNumber.equals(numberPlate, true)) {
@@ -473,7 +475,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 } else {
                     var isVehicleExist = false
                     val numberPlate =
-                        binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                        binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                             .replace("-", "")
                     for (obj in vehicleList) {
                         if (obj.plateNumber.equals(numberPlate, true)) {
@@ -484,7 +486,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         Constants.NAV_DATA_KEY,
                         data?.apply {
                             plateNo =
-                                binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                                binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                                     .replace("-", "")
                         }
                     )
@@ -500,7 +502,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
                         bundle.putString(
                             Constants.OLD_PLATE_NUMBER,
-                            binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                            binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                                 .replace("-", "")
                         )
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -616,7 +618,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     } else {
                         var isVehicleExist = false
                         val numberPlate =
-                            binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                            binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                                 .replace("-", "")
                         for (obj in vehicleList) {
                             if (obj.plateNumber.equals(numberPlate, true)) {
@@ -667,7 +669,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private fun checkForDuplicateVehicle(plateNumber: String) {
 
         val vehicleValidReqModel = ValidVehicleCheckRequest(
-            plateNumber, "UK", "STANDARD",
+            plateNumber.uppercase(), "UK", "STANDARD",
             "2022", "model", "make", "colour", "2", "HE"
         )
         viewModel.validVehicleCheck(vehicleValidReqModel, Constants.AGENCY_ID.toInt())
@@ -682,8 +684,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             is Resource.Success -> {
 
                 viewModel.getNewVehicleData(
-                    binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                        .replace("-", ""),
+                    binding.editNumberPlate.editText.text.toString().trim().replace(" ", "").replace("-", "").uppercase(),
                     Constants.AGENCY_ID.toInt()
                 )
 
@@ -696,7 +697,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     displaySessionExpireDialog()
                 } else {
                     val numberPlate =
-                        binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                        binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                             .replace("-", "")
                     NewCreateAccountRequestModel.plateNumber = numberPlate
                     NewCreateAccountRequestModel.isVehicleAlreadyAdded = true

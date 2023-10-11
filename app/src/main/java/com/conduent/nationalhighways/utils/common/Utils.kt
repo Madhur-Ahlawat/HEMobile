@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -945,4 +946,30 @@ object Utils {
     fun getCountryCodeRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
 
+    fun setMaskWithDots(activity: Activity,info:String?):String{
+       return if((info?.length?:0)>=4){
+            activity.resources.getString(R.string.str_maskcardnumber,info?.takeLast(4))
+        }else{
+            activity.resources.getString(R.string.str_maskcardnumber,info)
+        }
+
+    }
+    fun setStarmaskcardnumber(activity: Activity,info:String?):String{
+       return if((info?.length?:0)>=4){
+            activity.resources.getString(R.string.str_starmaskcardnumber,info?.takeLast(4))
+        }else{
+            activity.resources.getString(R.string.str_starmaskcardnumber,info)
+        }
+
+    }
+
+    fun setCardImage(cardType:String):Int{
+        if (cardType.equals("visa", true)) {
+            return R.drawable.visablue
+        } else if (cardType.equals("maestro", true)) {
+            return R.drawable.maestro
+        } else {
+            return R.drawable.mastercard
+        }
+    }
 }

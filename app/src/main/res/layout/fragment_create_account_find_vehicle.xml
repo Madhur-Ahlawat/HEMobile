@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -57,21 +58,64 @@
             android:text="@string/for_example_hd542321725_or_1_898008009"
             android:textColor="@color/black"
             android:visibility="gone"
+            tools:visibility="visible"
             android:textSize="14sp"
             android:gravity="start"
             android:fontFamily="@font/open_sans" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
             android:id="@+id/titleText2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:text="@string/pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:textColor="@color/grayColorIcon"
-            android:textSize="14sp"
-            android:fontFamily="@font/open_sans" />
+            tools:visibility="visible"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:layout_marginTop="@dimen/margin_7dp"
+                android:src="@drawable/circle_5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_7dp"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/str_pay_for_crossing_numberplate_point1"
+                android:textColor="@color/grayColorIcon"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/titleText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginBottom="@dimen/margin_20dp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:layout_marginTop="@dimen/margin_7dp"
+                android:src="@drawable/circle_5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_7dp"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/str_pay_for_crossing_numberplate_point2"
+                android:textColor="@color/grayColorIcon"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
 
 
         <androidx.appcompat.widget.AppCompatTextView

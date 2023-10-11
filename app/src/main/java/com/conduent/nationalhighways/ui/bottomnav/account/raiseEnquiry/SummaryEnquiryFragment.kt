@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -18,6 +19,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.common.removeObserve
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
@@ -138,7 +140,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
     override fun observer() {
-
+        Log.e("TAG", "observer: isViewCreated "+isViewCreated )
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         if (!isViewCreated) {
@@ -150,6 +152,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
     private fun enquiryResponseModel(resource: Resource<EnquiryResponseModel?>?) {
+        Log.e("TAG", "enquiryResponseModel: apiSuccess "+apiSuccess )
         if (!apiSuccess) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
@@ -168,6 +171,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                     bundle.putString(
                         Constants.NAV_FLOW_FROM, navFlowFrom
                     )
+
                     findNavController().navigate(
                         R.id.action_enquirySummaryFragment_to_enquirySuccessFragment, bundle
                     )

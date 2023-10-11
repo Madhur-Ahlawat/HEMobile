@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.base
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import com.adobe.marketing.mobile.*
@@ -14,6 +15,7 @@ import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.HiltAndroidApp
@@ -105,7 +107,6 @@ class BaseApplication : Application() {
         super.onCreate()
         getFireBaseToken()
         setAdobeAnalytics()
-        setupActivityListener()
     }
 
     private fun setAdobeAnalytics() {
@@ -148,40 +149,18 @@ class BaseApplication : Application() {
     private fun getFireBaseToken() {
         FirebaseApp.initializeApp(this)
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            Log.e("PUSHTOKENTAG", "Receiver firebase token is ->: ${task.isSuccessful}")
             if (!task.isSuccessful) {
                 return@OnCompleteListener
             }
             // Get new FCM registration token
             sessionManager.setFirebasePushToken(task.result)
+            Log.e("PUSHTOKENTAG", "Receiver firebase token is ->: ${task.result}")
+
+        }).addOnFailureListener(OnFailureListener {
+            Log.e("PUSHTOKENTAG", "Receiver firebase exception is ->: ${it.localizedMessage}")
+
         })
-    }
-
-    private fun setupActivityListener() { registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
-
-        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        } override fun onActivityStarted(activity: Activity) {
-
-        } override fun onActivityResumed(activity: Activity) {
-            activity.window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        } override fun onActivityPaused(activity: Activity) {
-            val window: Window = activity.window
-            val wm: WindowManager = activity.windowManager
-            wm.removeViewImmediate(window.decorView)
-            activity.window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
-            wm.addView(window.decorView, window.attributes)
-
-        } override fun onActivityStopped(activity: Activity) {
-            val window: Window = activity.window
-            val wm: WindowManager = activity.windowManager
-            wm.removeViewImmediate(window.decorView)
-            activity.window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
-            wm.addView(window.decorView, window.attributes)
-        } override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-
-        } override fun onActivityDestroyed(activity: Activity) {
-
-        } }
-    )
     }
 
 }

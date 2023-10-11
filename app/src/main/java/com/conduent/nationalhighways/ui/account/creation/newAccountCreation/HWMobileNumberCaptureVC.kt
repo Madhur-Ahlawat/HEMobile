@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationR
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentMobileNumberCaptureVcBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
@@ -129,12 +130,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                title?.text = getString(R.string.communication_preferences)
+                if(requireActivity() is CreateAccountActivity) {
+                }else{
+                    title?.text = getString(R.string.communication_preferences)
+                }
                 setMobileView()
             }
 
             Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
-                title?.text = getString(R.string.str_profile_two_factor_verification)
+                if(requireActivity() is CreateAccountActivity) {
+                }else {
+                    title?.text = getString(R.string.str_profile_two_factor_verification)
+                }
             }
 
             PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
@@ -181,7 +188,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         isItMobileNumber = false
         requiredMobileNumber = true
         data = navData as ProfileDetailModel?
-        title?.text = getString(R.string.profile_phone_number)
+        if(requireActivity() is CreateAccountActivity) {
+        }else {
+            title?.text = getString(R.string.profile_phone_number)
+        }
         binding.inputMobileNumber.setLabel(getString(R.string.phone_number))
         binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
         binding.txtBottom.visibility = View.GONE
@@ -197,7 +207,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     private fun setMobileView() {
         isItMobileNumber = true
-        title?.text = getString(R.string.profile_mobile_number)
+        if(requireActivity() is CreateAccountActivity) {
+        }else {
+            title?.text = getString(R.string.profile_mobile_number)
+        }
         binding.inputMobileNumber.setLabel(getString(R.string.mobile_number))
         binding.txtTitleTop.text = getString(R.string.str_what_mobile_number)
         binding.txtBottom.visibility = View.VISIBLE

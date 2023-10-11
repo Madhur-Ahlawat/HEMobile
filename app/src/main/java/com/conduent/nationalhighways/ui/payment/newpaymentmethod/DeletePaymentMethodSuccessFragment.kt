@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,6 +85,7 @@ class DeletePaymentMethodSuccessFragment :
         when (v?.id) {
 
             R.id.btnContinue -> {
+                Log.e("TAG", "onClick: ---->" )
                 findNavController().navigate(R.id.deletePaymentMethodSuccessFragment_to_paymentMethodFragment)
             }
 

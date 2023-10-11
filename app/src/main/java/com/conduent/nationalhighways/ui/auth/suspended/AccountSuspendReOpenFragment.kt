@@ -1,38 +1,34 @@
 package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
-import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
-import com.conduent.nationalhighways.data.model.payment.Card
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltReopenedBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
-import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
-import org.bouncycastle.jce.provider.BrokenPBE.Util
 
 @AndroidEntryPoint
 class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReopenedBinding>(),
     View.OnClickListener {
     private var responseModel: CardResponseModel? = null
-    private var paymentSuccessResponse: PaymentSuccessResponse? = null
     private var personalInformation: PersonalInformation? = null
     private var currentBalance: String = ""
     private var transactionId: String = ""
     private var navFlow: String = ""
     private var topUpAmount: String = ""
+    private var newCard: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -46,10 +42,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
         transactionId = arguments?.getString(Constants.TRANSACTIONID).toString()
         topUpAmount = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
 
-        if (arguments?.getParcelable<PaymentSuccessResponse>(Constants.NEW_CARD) != null) {
-            paymentSuccessResponse = arguments?.getParcelable(Constants.NEW_CARD)
+        if (arguments?.containsKey(Constants.NEW_CARD) == true) {
+            newCard = arguments?.getBoolean(Constants.NEW_CARD, false) ?: false
         }
-
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -63,10 +58,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             responseModel = arguments?.getParcelable<CardResponseModel>(Constants.DATA)
 
             if (responseModel?.checkCheckBox == true) {
-                binding.cardView.visibility = View.VISIBLE
-
+                binding.cardView.visible()
             } else {
-                binding.cardView.visibility = View.GONE
+                binding.cardView.gone()
 
             }
 
@@ -84,13 +78,13 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                     Utils.maskCardNumber(
                         it
                     )
-                },Html.FROM_HTML_MODE_COMPACT)
+                }, Html.FROM_HTML_MODE_COMPACT)
 
             binding.tvSelectPaymentMethod.text = htmlText
 
 
         } else {
-            binding.cardView.visibility = View.GONE
+            binding.cardView.gone()
 
         }
         if (currentBalance.isNotEmpty()) {
@@ -99,9 +93,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             val intBalance = doubleBalance.toInt()
             val finalCurrentBalance = 5.00 - doubleBalance
             if (finalCurrentBalance < 5.00) {
-                binding.tvYouWillAlsoNeed.visibility = View.VISIBLE
+                binding.tvYouWillAlsoNeed.visible()
             } else {
-                binding.tvYouWillAlsoNeed.visibility = View.GONE
+                binding.tvYouWillAlsoNeed.gone()
 
             }
         }
@@ -116,12 +110,8 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
         )
 
 
-        val htmlText = Html.fromHtml(
-            "<b>" + getString(R.string.str_payment_reference) + "</b>" + "<br>" + transactionId,
-            Html.FROM_HTML_MODE_COMPACT
-        )
 
-        binding.tvPaymentReference.text = htmlText
+        binding.referenceNumberTv.text = transactionId
 
 
         if (arguments?.getString(Constants.NAV_FLOW_KEY) != null) {
@@ -134,20 +124,45 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                 R.string.str_balance_topped_up_with,
                 getString(R.string.pound_symbol) + topUpAmount
             )
-            binding.tvYouWillAlsoNeed.visibility = View.GONE
+            binding.tvYouWillNeedToPay.gone()
+            binding.tvYouWillAlsoNeed.gone()
             binding.btnTopUpNow.text = getString(R.string.str_continue)
-            binding.layoutPaymentReferenceNumber.visibility=View.GONE
-            binding.tvPaymentReference.visibility=View.GONE
+            binding.layoutPaymentReferenceNumber.visible()
+            binding.layoutPaymentReferenceNumber.visible()
+            binding.succesfulCardAdded.visible()
+            Log.e("TAG", "initCtrl: newCard "+newCard )
+            Log.e("TAG", "initCtrl: type "+responseModel?.card?.type )
+            if (newCard) {
+                binding.cardDetailsCv.visible()
+                binding.addCardTypeIv.setImageResource(
+                    Utils.setCardImage(
+                        responseModel?.card?.type?:""
+                    )
+                )
+
+                val htmlText =
+                    Html.fromHtml(responseModel?.card?.type?.uppercase() + "<br>" + responseModel?.card?.number?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    }, Html.FROM_HTML_MODE_COMPACT)
+
+                binding.addCardNameTv.text = htmlText
+
+            } else {
+                binding.cardDetailsCv.gone()
+            }
 
         } else {
             binding.tvYouWillAlsoNeed.text = getString(R.string.str_you_have_less_than, "£5.00")
-            binding.tvYouWillAlsoNeed.visibility = View.VISIBLE
+            binding.tvYouWillAlsoNeed.visible()
 
             binding.btnTopUpNow.text = getString(R.string.str_go_to_dashboard)
 
             binding.tvAccountSuspended.text = getString(R.string.str_account_reopened)
-            binding.layoutPaymentReferenceNumber.visibility=View.VISIBLE
-            binding.tvPaymentReference.visibility=View.VISIBLE
+            binding.layoutPaymentReferenceNumber.visible()
+            binding.layoutPaymentReferenceNumber.visible()
+            binding.succesfulCardAdded.gone()
         }
 
     }
@@ -167,11 +182,11 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                 when (binding.btnTopUpNow.text) {
                     getString(R.string.str_go_to_dashboard) ->
 
-                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java){
-                            putString(Constants.NAV_FLOW_FROM,navFlowFrom)
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         }
 
-                    getString(R.string.str_continue) ->{
+                    getString(R.string.str_continue) -> {
                         findNavController().navigate(R.id.accountSuspendReOpenFragment_to_paymentMethodFragment)
 
                     }
