@@ -629,7 +629,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                otpSuccessRedirection()
+
                 when (resource.errorModel?.status) {
+
                     500 -> {
                         binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
 

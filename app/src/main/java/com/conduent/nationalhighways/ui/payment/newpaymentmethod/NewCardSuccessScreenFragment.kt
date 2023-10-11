@@ -106,7 +106,10 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
         } else if (flow == Constants.DELETE_CARD) {
             binding.maximumVehicleAdded.text =
-                getString(R.string.str_payment_method_deleted, accountNumber)
+                getString(
+                    R.string.str_payment_method_deleted,
+                    Utils.setStarmaskcardnumber(requireActivity(), accountNumber)
+                )
             binding.textDefault.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.GONE
             binding.feedbackBt.visible()

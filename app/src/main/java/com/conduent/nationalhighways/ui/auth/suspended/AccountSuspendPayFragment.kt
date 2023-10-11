@@ -72,6 +72,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         if (arguments?.getParcelable<PaymentSuccessResponse>(Constants.NEW_CARD) != null) {
             paymentSuccessResponse = arguments?.getParcelable(Constants.NEW_CARD)
         }
+        Log.e("TAG", "initCtrl: paymentSuccessResponse "+paymentSuccessResponse )
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
@@ -121,15 +122,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         binding.btnCancel.setOnClickListener(this)
         binding.lowBalance.setText("£" + String.format("%.2f", topUpAmount))
         if (paymentList?.isNotEmpty() == true) {
-            if (paymentList?.get(position)?.cardType.equals("visa", true)) {
-                binding.ivCardType.setImageResource(R.drawable.visablue)
-            } else if (paymentList?.get(position)?.cardType.equals("maestro", true)) {
-                binding.ivCardType.setImageResource(R.drawable.maestro)
+            binding.ivCardType.setImageResource(Utils.setCardImage(paymentList?.get(position)?.cardType?:""))
 
-            } else {
-                binding.ivCardType.setImageResource(R.drawable.mastercard)
-
-            }
             val htmlText = Html.fromHtml(
                 paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber,
                 Html.FROM_HTML_MODE_COMPACT
@@ -303,6 +297,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putString(Constants.TRANSACTIONID, status.data.transactionId)
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                     bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                    bundle.putBoolean(Constants.NEW_CARD, true)
 
 
                     findNavController().navigate(

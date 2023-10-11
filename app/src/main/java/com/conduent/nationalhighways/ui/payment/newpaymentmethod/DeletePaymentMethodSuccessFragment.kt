@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,7 @@ class DeletePaymentMethodSuccessFragment :
         FragmentDeletePaymentMethodSuccessBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding?.feedbackBt?.setMovementMethod(LinkMovementMethod.getInstance())
+        binding.feedbackBt.setMovementMethod(LinkMovementMethod.getInstance())
     }
 
     @SuppressLint("SetTextI18n")
@@ -46,7 +47,7 @@ class DeletePaymentMethodSuccessFragment :
         }
 
         if (navFlow == Constants.THRESHOLD) {
-            binding.btnContinue.text="OK"
+            binding.btnContinue.text=requireActivity().resources.getString(R.string.str_ok)
             binding.maximumVehicleAdded.text = getString(R.string.str_threshold_limit)
             if (lowBalance.isEmpty()){
                 binding.textMaximumVehicle.text = getString(
@@ -72,8 +73,9 @@ class DeletePaymentMethodSuccessFragment :
 
             binding.cancelBtn.visibility = View.GONE
         }else if (navFlow==Constants.DELETE_CARD){
-            binding.btnContinue.text="CONTINUE"
+            binding.btnContinue.text=resources.getString(R.string.str_continue)
             binding.maximumVehicleAdded.text=getString(R.string.payment_method_deleted)
+
         }
 
         binding.btnContinue.setOnClickListener(this)

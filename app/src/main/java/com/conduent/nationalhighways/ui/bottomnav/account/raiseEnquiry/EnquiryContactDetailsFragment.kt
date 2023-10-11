@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -72,6 +73,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         createaccountViewmodel.getCountries()
         binding.btnNext.setOnClickListener {
 
+            Log.e("TAG", "init: editRequest "+editRequest )
             saveData()
             when (editRequest) {
                 Constants.EDIT_SUMMARY -> {
@@ -357,6 +359,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     override fun observer() {
+        Log.e("TAG", "observer: isViewCreated "+isViewCreated )
         if (!isViewCreated) {
             binding.viewModel = viewModel
             binding.lifecycleOwner = this

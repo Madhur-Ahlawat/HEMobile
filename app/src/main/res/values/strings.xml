@@ -102,7 +102,7 @@
     <string name="str_not_received_resend">If you have not received the email please click resend</string>
     <string name="str_resend_message">Please check your text message, if you have not received the text message, please click resend</string>
     <string name="str_make_one_of_payment">Pay for crossings without an account</string>
-    <string name="one_of_payment">Pay for crossings</string>
+    <string name="one_of_payment">Pay for Crossings</string>
     <string name="str_make_one_of_payment_continue">Make a one off payment \nMake a payment for crossings without creating an account</string>
     <string name="str_charges_for_crossing">The charges for crossings</string>
     <string name="str_six_am_morning_txt">\u2022  You have made since 6 am yesterday morning</string>
@@ -565,7 +565,7 @@
     <string name="vehicle_reg_number">Vehicle Registration (number plate)</string>
     <string name="make">Make</string>
     <string name="colour">Colour</string>
-    <string name="country_registration">Country of registration</string>
+    <string name="country_registration">Country of Registration</string>
     <string name="not_vehicle">This is not your vehicle</string>
     <string name="personal_account_setup">Personal account setup</string>
     <string name="personal_pre_pay_account">Personal Pre-pay account</string>
@@ -1251,7 +1251,7 @@
     <string name="txt_my_account">My Account</string>
     <string name="no_vehicle_found">There are no vehicles on this account</string>
     <string name="success">Success</string>
-    <string name="str_you_have_successfully_added_new_card">You have successfully added the new card:</string>
+    <string name="str_you_have_successfully_added_new_card">You have successfully added\nthe new card:</string>
     <string name="txt_dummy_date">28 Jan 2020</string>
     <string name="str_payment_reference">Payment reference</string>
     <string name="vehicle_added">Vehicle added</string>
@@ -1378,8 +1378,10 @@
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
     <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an \naccount to:</string>
-    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for crossings you’ve made since yesterday
-        \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for future crossings</string>
+    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;
+        \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;</string>
+    <string name="str_pay_for_crossing_numberplate_point1">Pay for crossings you’ve made since yesterday</string>
+    <string name="str_pay_for_crossing_numberplate_point2">Pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment gets calculated</string>
     <string name="str_pay_for_crossing_point1">Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
@@ -1535,6 +1537,7 @@
     <string name="str_able_to_use_service">You will be able to use the service from\n%1$s</string>
     <string name="str_go_to_website">Go to website</string>
     <string name="str_maskcardnumber">\u2022\u2022\u2022\u2022\u2022\u2022%1$s</string>
+    <string name="str_starmaskcardnumber">****%1$s</string>
     <string name="str_local_resident_discount_scheme">You account contains a Local Resident Discount Scheme</string>
     <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>
     <string name="click_here_to_search_using_your_number_plate"><i>Click here to search using your number plate</i></string>
@@ -1569,11 +1572,16 @@
     <string name="str_no_standard_notifications">There are no standard notifications to view</string>
     <string name="str_number_additional_crossings_btw_1_to_50">Number of additional crossings must be between 1 and 50 inclusive</string>
     <string name="vehicle_type_A">Motorcycle, moped or quad bike</string>
-    <string name="vehicle_type_C">Bus, coach or other goods vehicle with 2 axles</string>
     <string name="vehicle_type_B">Car, van or minibus less than 8 seats</string>
+    <string name="vehicle_type_C">Bus, coach or other goods vehicle with 2 axles</string>
     <string name="vehicle_type_D">Vehicle with more than 2 axles</string>
     <string name="str_payment_amount_for_recent_crossings">Payment Amount for recent crossings</string>
     <string name="str_payment_amount_for_additional_crossings">Payment Amount for additional crossings</string>
     <string name="str_total_amount">Total amount</string>
     <string name="str_total_payment_amount">Total payment amount</string>
+
+    <string name="default_notification_channel_id" translatable="false">dartcharge_default_channel</string>
+    <string name="fcm_message">DartCharge Message</string>
+    <string name="str_vehicle_registration">Vehicle Registration (number plate) must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces</string>
+
 </resources>
