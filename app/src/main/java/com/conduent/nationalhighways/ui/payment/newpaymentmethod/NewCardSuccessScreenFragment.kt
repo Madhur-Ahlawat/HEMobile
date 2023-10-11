@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.os.Bundle
 import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,8 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -89,6 +92,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.textMaximumVehicle.text =
                 getString(R.string.str_you_have_successfully_added_card)
             binding.cancelBtn.visibility = View.GONE
+            binding.feedbackBt.visible()
 
         }
 
@@ -108,7 +112,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
                 )
             binding.textDefault.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.GONE
-
+            binding.feedbackBt.visible()
             if (paymentList?.primaryCard == true) {
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 viewModel.saveCardList()
@@ -127,6 +131,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.textMaximumVehicle.text = getString(R.string.str_your_default_payment_method)
             binding.textDefault.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.GONE
+            binding.feedbackBt.visible()
 
 
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -151,12 +156,14 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
 
             binding.cancelBtn.visibility = View.VISIBLE
+            binding.feedbackBt.gone()
         }
     }
 
     override fun init() {
         binding.btnContinue.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
+        binding?.feedbackBt?.setMovementMethod(LinkMovementMethod.getInstance())
     }
 
     override fun observer() {

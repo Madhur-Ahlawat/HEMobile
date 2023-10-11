@@ -63,7 +63,6 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-
                 app:layout_constraintEnd_toEndOf="@+id/ivWarning"
                 app:layout_constraintStart_toStartOf="@id/ivWarning"
                 app:layout_constraintTop_toBottomOf="@+id/tv_account_suspended" />
@@ -242,6 +241,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_10dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:textColor="@color/new_btn_color"
+                app:borderColor="@color/new_btn_color"
+                android:textColorLink="@color/new_btn_color"
                 android:text="@string/feed_back_to_improve_service"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

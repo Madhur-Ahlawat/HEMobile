@@ -105,13 +105,16 @@
             android:gravity="center"
             android:text="@string/str_continue_login" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHButton
+        <com.conduent.apollo.ui.CMButton
             android:id="@+id/feedback_bt"
             style="@style/secondaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_15sdp"
+            android:textColor="@color/new_btn_color"
+            app:borderColor="@color/new_btn_color"
+            android:textColorLink="@color/new_btn_color"
             android:layout_marginBottom="@dimen/margin_50dp"
             android:text="@string/feed_back_to_improve_service"
             app:radius="@dimen/margin_5dp" />
