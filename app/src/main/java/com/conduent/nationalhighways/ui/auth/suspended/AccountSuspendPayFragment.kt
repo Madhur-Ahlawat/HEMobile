@@ -310,7 +310,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         bundle
                     )
                 } else {
-                    ErrorUtil.showError(binding.root, status.data?.message)
+                    findNavController().navigate(
+                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment)
                 }
             }
 
@@ -318,8 +319,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
                 }else {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
-                }
+                    findNavController().navigate(
+                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment)                }
             }
 
             else -> {

@@ -218,6 +218,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleAccountType(accountResponse: AccountResponse) {
+        personalInformation = accountResponse.personalInformation
+
         accountResponse?.apply {
             if (accountInformation?.accountType.equals("BUSINESS", true)
                 || ((accountInformation?.accSubType.equals(
@@ -363,6 +365,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun showPayGUI(data: AccountResponse) {
+        personalInformation = data.personalInformation
+
         binding.apply {
             tvAvailableBalanceHeading.gone()
             tvAvailableBalance.gone()
@@ -387,6 +391,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+
 //            tvAccountStatus.text = data.accountInformation?.accountStatus
 //            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
 //            tvAccountType.text = data.accountInformation?.type

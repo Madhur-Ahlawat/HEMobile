@@ -655,7 +655,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
 
-                        if (paymentListSize == 0 || paymentListSize == 1) {
+                        if (paymentListSize != 0 && paymentListSize != 1) {
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
                         }
