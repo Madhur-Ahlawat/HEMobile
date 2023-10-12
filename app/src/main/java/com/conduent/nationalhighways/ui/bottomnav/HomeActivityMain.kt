@@ -162,48 +162,40 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
 
 
-        navController.addOnDestinationChangedListener(object :
-            NavController.OnDestinationChangedListener {
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-
-                if (destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment) {
-                    dataBinding?.idToolBarLyt?.visible()
-                    dataBinding?.titleTxt?.text =
-                        getString(R.string.str_close_account)
-                }
-                if (destination.id == R.id.changePasswordProfile || destination.id == R.id.changePasswordSuccessProfile) {
-                    dataBinding?.idToolBarLyt?.visible()
-                    dataBinding?.titleTxt?.text =
-                        getString(R.string.str_close_account)
-                }
-                if (destination.id == R.id.enquiryCategoryFragment
-                    || destination.id == R.id.enquiryCommentsFragment
-                    || destination.id == R.id.enquiryContactDetailsFragment
-                    || destination.id == R.id.enquirySummaryFragment
-                    || destination.id == R.id.enquirySuccessFragment
-                ) {
-                    dataBinding?.idToolBarLyt?.visible()
-                    dataBinding?.titleTxt?.text =
-                        getString(R.string.str_raise_new_enquiry)
-                }
-                if (destination.id == R.id.caseEnquiryHistoryListFragment
-                    || destination.id == R.id.casesEnquiryDetailsFragment
-                ) {
-                    dataBinding?.idToolBarLyt?.visible()
-                    dataBinding?.titleTxt?.text =
-                        getString(R.string.str_cases_and_enquiries)
-                }
-                if (destination.id == R.id.enquirySuccessFragment || (destination.id == R.id.enquiryCategoryFragment && from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
-                    dataBinding?.backButton?.gone()
-                } else {
-                    dataBinding?.backButton?.visible()
-                }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment) {
+                dataBinding?.idToolBarLyt?.visible()
+                dataBinding?.titleTxt?.text =
+                    getString(R.string.str_close_account)
             }
-        })
+            if (destination.id == R.id.changePasswordProfile || destination.id == R.id.changePasswordSuccessProfile) {
+                dataBinding?.idToolBarLyt?.visible()
+                dataBinding?.titleTxt?.text =
+                    getString(R.string.str_close_account)
+            }
+            if (destination.id == R.id.enquiryCategoryFragment
+                || destination.id == R.id.enquiryCommentsFragment
+                || destination.id == R.id.enquiryContactDetailsFragment
+                || destination.id == R.id.enquirySummaryFragment
+                || destination.id == R.id.enquirySuccessFragment
+            ) {
+                dataBinding?.idToolBarLyt?.visible()
+                dataBinding?.titleTxt?.text =
+                    getString(R.string.str_raise_new_enquiry)
+            }
+            if (destination.id == R.id.caseEnquiryHistoryListFragment
+                || destination.id == R.id.casesEnquiryDetailsFragment
+            ) {
+                dataBinding?.idToolBarLyt?.visible()
+                dataBinding?.titleTxt?.text =
+                    getString(R.string.str_cases_and_enquiries)
+            }
+            if (destination.id == R.id.enquirySuccessFragment || (destination.id == R.id.enquiryCategoryFragment && from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+                dataBinding?.backButton?.gone()
+            } else {
+                dataBinding?.backButton?.visible()
+            }
+        }
 
         dataBinding?.bottomNavigationView?.setOnNavigationItemChangedListener(
             object : OnNavigationItemChangeListener {

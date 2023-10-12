@@ -1347,7 +1347,7 @@
     <string name="str_payment_method_deleted">Your Credit Card for %s\n has been removed</string>
     <string name="str_your_default_payment_method">Your default payment method is now:</string>
     <string name="str_you_are_removing_all_the_registered_payment_now">You are removing all the payment methods registered on the account</string>
-    <string name="str_your_balance_will_no_longer_available">Your balance will no longer be topped up automatically. If you do not have enough credit to pay for crossings, your account will be suspended and you will have to pay standard Dart Charge rates for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_your_balance_will_no_longer_available">Your balance will no longer be topped up automatically.\nIf you do not have enough credit to pay for crossings, your account will be suspended and you will have to pay standard Dart Charge rates for crossings separately.\n\nIf you do not pay the Road User Charge on time, you may get a fine (Penalty Charge Notice).</string>
     <string name="str_you_must_pay">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
     <string name="str_you_have_no_payment_methods_on_file">You have no payment methods on file</string>
     <string name="str_you_must_pay_crossing">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
@@ -1423,6 +1423,7 @@
     <string name="we_can_send_you_a_receipt_by_email_and_text_message">We can send you a receipt by email and text\nmessage.</string>
     <string name="email_optional">Email (optional)</string>
     <string name="text_message_optional">Text message (optional)</string>
+    <string name="text_we_have_sent_a_reciept_email_to">We\'ve sent a receipt email to\n<b>%s</b></string>
     <string name="credit_for_additional_crossings">Credit for Additional Crossings</string>
     <string name="your_type_of_vehicle_does_not_match_what_we_have_on_record">Your type of vehicle does not match what we have on record.</string>
     <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
@@ -1444,8 +1445,8 @@
     <string name="str_dont_include_personal_text">Do not include personal or financial information, like your credit card details.</string>
     <string name="str_500_characters_remaining">You have 500 characters remaining.</string>
     <string name="str_upload_file_">Upload file</string>
-    <string name="str_allowed_file_types">Allowed file types are JPG, PDF, BMP or TIF.</string>
-    <string name="str_file_size_not_morethan_8mb">File size should be no more than 8MB.</string>
+    <string name="str_allowed_file_types">The selected file type must be a JPG, PDF, BMP or TIF.</string>
+    <string name="str_file_size_not_morethan_8mb">Also, the selected file type should be no more than 8MB.</string>
 
     <string name="what_contact_details">What are your contact details?</string>
     <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
@@ -1583,5 +1584,8 @@
     <string name="default_notification_channel_id" translatable="false">dartcharge_default_channel</string>
     <string name="fcm_message">DartCharge Message</string>
     <string name="str_vehicle_registration">Vehicle Registration (number plate) must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces</string>
+    <string name="balance">Balance</string>
+    <string name="northbound">Northbound</string>
+    <string name="payment_details">Payment Details</string>
 
 </resources>

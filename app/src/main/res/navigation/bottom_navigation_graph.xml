@@ -648,6 +648,9 @@
         <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_amountKeyPadFragment"
             app:destination="@id/amountKeyPadFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment"
+            app:destination="@id/tryPaymentAgainFragment" />
     </fragment>
 
     <fragment

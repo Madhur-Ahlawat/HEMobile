@@ -65,7 +65,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
                 tvPaymentDateValue.text = checkedCrossing?.entryDate
                 tvPaymentTimeValue.text = checkedCrossing?.exitTime
                 tvTypeOfPaymentValue.text = checkedCrossing?.activity
-                tvChannelValue.text = Constants.CHANNEL_WEB
+                tvChannelValue.text = Constants.Mobile_App
 
             }
 
@@ -86,7 +86,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
                     0,
                     crossing?.rebillPaymentType?.indexOf("-")!!
                 )
-                tvChannelValue.text = Constants.CHANNEL_WEB
+                tvChannelValue.text = Constants.Mobile_App
                 tvFourDigitsOfTheCardValue.text = crossing?.rebillPaymentType?.substring(
                     crossing?.rebillPaymentType?.indexOf("-")!! + 1,
                     crossing?.rebillPaymentType?.length!!

@@ -52,7 +52,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     OnRetryClickListener {
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
-    private var btnEnabled: Boolean = false
     private val viewModel: LoginViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private lateinit var biometricPrompt: BiometricPrompt
@@ -68,6 +67,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var accountInformation: AccountInformation? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var from: String = ""
+    private var crossingCount: Int = 0
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -114,8 +114,26 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     startActivity(intent)
 
 
+                    if (crossingCount > 0) {
+
+
+                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                        intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+                        intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
+
+
+                        intent.putExtra(
+                            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                        )
+                        startActivity(intent)
+
+                    }
                 } else {
-                    crossingHistoryApi()
+                    startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                        putString(Constants.NAV_FLOW_FROM, from)
+                    }
 
                 }
 
@@ -157,12 +175,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             is Resource.Success -> {
                 resource.data?.let {
                     if (it.transactionList != null) {
-                        navigateWithCrossing(it.transactionList.count ?: 0)
-
-                    } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                            putString(Constants.NAV_FLOW_FROM, from)
-                        }
+                        crossingCount = it.transactionList.count ?: 0
 
                     }
 
@@ -173,9 +186,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
-                startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                    putString(Constants.NAV_FLOW_FROM, from)
-                }
             }
 
             else -> {
@@ -183,32 +193,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
     }
 
-    private fun navigateWithCrossing(count: Int) {
-
-
-        if (count > 0) {
-
-
-            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-            intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
-            intent.putExtra(Constants.PERSONALDATA, personalInformation)
-            intent.putExtra(Constants.NAV_FLOW_FROM, from)
-
-
-            intent.putExtra(
-                Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-            )
-            startActivity(intent)
-
-        } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                putString(Constants.NAV_FLOW_FROM, from)
-            }
-        }
-
-
-    }
 
     private fun crossingHistoryApi() {
         val request = CrossingHistoryRequest(
@@ -229,6 +213,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
         init()
         initCtrl()
+
     }
 
 
@@ -456,11 +441,11 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             if (response.data?.require2FA == "true") {
                 twoFAEnable = true
             }
-            // navigateHomeActivity()
 
         }
-        Log.e("TAG", "launchIntent: twoFAEnable "+twoFAEnable )
-        Log.e("TAG", "launchIntent: fetchUserName "+sessionManager.fetchUserName() )
+        crossingHistoryApi()
+
+
         if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
                 .trim()
         ) {
@@ -527,7 +512,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    Log.e("TAG", "negativeBtnClick: twoFAEnable "+twoFAEnable )
+                    Log.e("TAG", "negativeBtnClick: twoFAEnable " + twoFAEnable)
                     if (twoFAEnable) {
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
