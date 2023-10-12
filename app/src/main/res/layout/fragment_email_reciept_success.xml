@@ -30,6 +30,7 @@
             android:text="@string/email_receipt_send_successful"
             android:textSize="@dimen/_20sp"
             android:textStyle="bold"
+            android:textColor="@color/new_btn_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_check" />
@@ -40,7 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_21dp"
             android:textAlignment="center"
-            android:fontFamily="@font/open_sans_bold"
+            android:textColor="@color/new_btn_color"
+            android:fontFamily="@font/open_sans"
             android:text="We’ve sent a receipt email to\njohndoe@email.com"
             android:textSize="@dimen/_14sp"
             android:textStyle="bold"
@@ -54,7 +56,8 @@
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_34_5dp"
+            android:layout_marginStart="@dimen/_34_5dp"
+            android:layout_marginEnd="@dimen/_18_5dp"
             android:layout_marginBottom="@dimen/_70dp"
             android:text="@string/str_continue"
             app:layout_constraintBottom_toBottomOf="parent" />

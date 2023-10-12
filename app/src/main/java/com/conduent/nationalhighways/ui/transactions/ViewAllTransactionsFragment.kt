@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.transactions
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
@@ -10,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
@@ -32,17 +34,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
 
-    private var transactionItem: TransactionData?=null
+    private var loading: Boolean=false
+    private var pastVisibleItems: Int=0
+    private var totalItemCount: Int = 0
+    private var visibleItemCount: Int = 0;
+    private var currentPage: Int = 1
+    private var transactionItem: TransactionData? = null
     private var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
-    private var noOfPages: Int?=0
-    private var mLayoutManager: LinearLayoutManager?=null
-    private var dateRangeModel: PaymentDateRangeModel?=null
-    private var topup: String?=null
+    private var noOfPages: Int? = 0
+    private var mLayoutManager: LinearLayoutManager? = null
+    private var dateRangeModel: PaymentDateRangeModel? = null
+    private var topup: String? = null
     private val countPerPage = 10
-    private var startIndex = 1
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
 
@@ -60,12 +67,13 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        transactionItem=null
     }
 
     override fun onResume() {
         super.onResume()
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        getPaymentHistoryList(startIndex)
+        getPaymentHistoryList(currentPage)
     }
 
     override fun initCtrl() {
@@ -93,16 +101,20 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                 }
                 resource.data?.transactionList?.transaction?.let {
                     if (it.isNotEmpty()) {
+                        binding.ivNoTransactions.gone()
+                        binding.tvNoTransactions.gone()
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData.clear()
                         paymentHistoryListData.addAll(it)
                         paymentHistoryListData =
-                            sortTransactionsDateWiseDescending(HomeActivityMain.paymentHistoryListData!!).toMutableList()
+                            sortTransactionsDateWiseDescending(it).toMutableList()
                         recentTransactionAdapter.submitList(
                             paymentHistoryListData
                         )
                     } else {
                         binding.rvRecenrTransactions.gone()
+                        binding.ivNoTransactions.visible()
+                        binding.tvNoTransactions.visible()
 //                        binding.paginationLayout.gone()
                     }
                 } ?: run {
@@ -125,6 +137,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
         return ((item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber))
     }
+
     private fun getPaymentHistoryList(
         index: Int
     ) {
@@ -143,6 +156,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }
+
     private fun initTransactionsRecyclerView() {
         mLayoutManager = LinearLayoutManager(requireContext())
         binding.rvRecenrTransactions.run {
@@ -153,6 +167,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
             adapter = recentTransactionAdapter
         }
     }
+
     val dfDate = SimpleDateFormat("dd MMM yyyy")
 
     fun createPaymentsHistoryListAdapter() = GenericRecyclerViewAdapter(
@@ -162,65 +177,81 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
         onBind = { recentTransactionItem, viewDataBinding, _ ->
             with(viewDataBinding as ItemAllTansactionsBinding) {
                 viewDataBinding.apply {
-                    if(transactionItem!=null && (dfDate.parse(transactionItem!!.transactionDate)!=dfDate.parse(recentTransactionItem.transactionDate))){
-                        headerDate.text=recentTransactionItem.transactionDate
+                    if (transactionItem == null) {
+                        transactionItem = recentTransactionItem
+                        headerDate.text = recentTransactionItem.transactionDate
                         headerDate.visible()
+                    } else {
+                        if (dfDate.parse(transactionItem!!.transactionDate) != dfDate.parse(
+                                recentTransactionItem.transactionDate
+                            )
+                        ) {
+                            headerDate.text = recentTransactionItem.transactionDate
+                            headerDate.visible()
+                        } else {
+                            headerDate.gone()
+                        }
+                        transactionItem = recentTransactionItem
                     }
-                    else if(transactionItem==null){
-                        transactionItem=recentTransactionItem
-                        headerDate.text=recentTransactionItem.transactionDate
-                        headerDate.visible()
-                    }
-                    else{
-                        headerDate.gone()
-                    }
+
                     valueCurrentBalance.text = recentTransactionItem.balance
-                    tvTransactionType.text =
-                        recentTransactionItem.activity?.substring(0, 1)!!.toUpperCase().plus(
-                            recentTransactionItem.activity?.substring(
-                                1,
-                                recentTransactionItem.activity.length
-                            )!!.toLowerCase()
-                        )
+//                    tvTransactionType.text =
+//                        recentTransactionItem.activity?.substring(0, 1)!!.toUpperCase().plus(
+//                            recentTransactionItem.activity?.substring(
+//                                1,
+//                                recentTransactionItem.activity.length
+//                            )!!.toLowerCase()
+//                        )
                     if (recentTransactionItem.amount?.contains("-") == false) {
+                        tvTransactionType.text = resources.getString(R.string.top_up)
                         verticalStripTransactionType.background.setTint(resources.getColor(R.color.green_status))
                         topup = "+" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
                         valueTopUpAmount.setTextColor(resources.getColor(R.color.green_status))
                     } else {
+                        tvTransactionType.text = recentTransactionItem.exitDirection
                         verticalStripTransactionType.background.setTint(resources.getColor(R.color.red_status))
                         topup = "-" + recentTransactionItem.amount
                         valueTopUpAmount.text = topup
                         valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
                     }
+
                     root.setOnClickListener {
+                        HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
                         val bundle = Bundle()
-                        crossing =recentTransactionItem
+                        crossing = recentTransactionItem
 //                        bundle.putInt(Constants.FROM, Constants.FROM_ALL_TRANSACTIONS_TO_DETAILS)
-                        if(crossing!!.activity.equals("Toll")){
+                        if (crossing!!.activity.equals("Toll")) {
                             findNavController().navigate(
                                 R.id.action_crossingHistoryFragment_to_tollDetails,
                                 bundle
                             )
-                        }
-                        else{
+                        } else {
                             findNavController().navigate(
                                 R.id.action_crossingHistoryFragment_to_topUpDetails,
                                 bundle
                             )
                         }
                     }
+                    if (recentTransactionItem.activity.equals("Toll")) {
+                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_car_grey))
+                        indicatorIconEuro.gone()
+                    } else {
+                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
+                        indicatorIconEuro.visible()
+                    }
                 }
             }
         }
     )
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData?>): MutableList<TransactionData> {
         var transactionListSorted: MutableList<TransactionData> = mutableListOf()
         val dfDate = SimpleDateFormat("dd MMM yyyy")
         for (transaction in transactions) {
             if (transactionListSorted?.isEmpty() == true) {
-                transaction!!.showDateHeader=true
+                transaction!!.showDateHeader = true
                 transactionListSorted.add(transaction!!)
             } else {
                 if (DateUtils.compareDates(

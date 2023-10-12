@@ -11,7 +11,7 @@ object Constants {
     const val DIRECT_DEBIT_NOT_SET_UP="direct_debit_not_set_up"
     const val ACCOUNT_CLOSURE = "ACCOUNT CLOSURE"
     const val ACCOUNT_HOLDER_REQUEST = "ACCOUNT HOLDER REQUEST"
-    const val CHANNEL_WEB="Web"
+    const val Mobile_App="Mobile App"
     const val NEW_CARD="newcard"
     const val IS_EDIT_EMAIL="isEditEmail"
     const val MAKE_DEFAULT="make_default"

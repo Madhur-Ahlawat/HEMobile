@@ -9,35 +9,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginBottom="@dimen/_30dp"
             android:id="@+id/rv_recenrTransactions"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/_22dp"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
+            android:layout_marginHorizontal="@dimen/_22dp"
             android:layout_marginTop="@dimen/_65dp"
+            android:layout_marginBottom="@dimen/_30dp"
+            android:elevation="@dimen/_1dp"
+            android:nestedScrollingEnabled="false"
             android:orientation="vertical"
-            tools:itemCount="8"
-            tools:listitem="@layout/item_all_tansactions"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/box_viewAll"
             app:layout_constraintStart_toStartOf="@id/box_viewAll"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/box_viewAll"
-            android:elevation="@dimen/_1dp"
-            />
+            tools:itemCount="8"
+            tools:listitem="@layout/item_all_tansactions" />
 
     </androidx.core.widget.NestedScrollView>
+
     <ImageView
-        android:id="@+id/loader_placeholder"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="fitXY"
+        android:id="@+id/ivNoTransactions"
+        android:layout_width="@dimen/_73dp"
+        android:layout_height="@dimen/_73dp"
+        android:layout_marginTop="@dimen/_115dp"
+        android:src="@drawable/error"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/he_bg"
-        android:elevation="1dp"
-        android:layout_width="0dp"
-        android:layout_height="0dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/new_btn_color" />
+
+    <com.conduent.nationalhighways.utils.widgets.NHTextView
+        android:id="@+id/tvNoTransactions"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_32dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:text="No recent crossings\nor Payments."
+        android:textColor="@color/new_btn_color"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintEnd_toEndOf="@+id/ivNoTransactions"
+        app:layout_constraintStart_toStartOf="@+id/ivNoTransactions"
+        app:layout_constraintTop_toBottomOf="@id/ivNoTransactions" />
 </androidx.constraintlayout.widget.ConstraintLayout>
