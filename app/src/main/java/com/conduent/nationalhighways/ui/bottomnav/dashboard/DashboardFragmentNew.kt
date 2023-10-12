@@ -218,7 +218,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleAccountType(accountResponse: AccountResponse) {
-        accountResponse.apply {
+        personalInformation = accountResponse.personalInformation
+
+        accountResponse?.apply {
             if (accountInformation?.accountType.equals("BUSINESS", true)
                 || ((accountInformation?.accSubType.equals(
                     "STANDARD",
@@ -256,9 +258,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         paymentHistoryListData?.clear()
                         paymentHistoryListData?.addAll(it)
                         paymentHistoryListData =
-                            sortTransactionsDateWiseDescending(
-                                paymentHistoryListData ?: ArrayList()
-                            ).toMutableList()
+                            sortTransactionsDateWiseDescending(paymentHistoryListData?:ArrayList()).toMutableList()
                         recentTransactionAdapter.submitList(
                             sortTransactionsDateWiseDescending(
                                 paymentHistoryListData!!
@@ -295,7 +295,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData?>): MutableList<TransactionData> {
         var transactionListSorted: MutableList<TransactionData> = mutableListOf()
         for (transaction in transactions) {
-            if (transactionListSorted.isEmpty() == true) {
+            if (transactionListSorted?.isEmpty() == true) {
                 transactionListSorted.add(transaction!!)
             } else {
                 if (compareDates(
@@ -365,6 +365,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun showPayGUI(data: AccountResponse) {
+        personalInformation = data.personalInformation
+
         binding.apply {
             tvAvailableBalanceHeading.gone()
             tvAvailableBalance.gone()
@@ -389,6 +391,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+
 //            tvAccountStatus.text = data.accountInformation?.accountStatus
 //            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
 //            tvAccountType.text = data.accountInformation?.type
