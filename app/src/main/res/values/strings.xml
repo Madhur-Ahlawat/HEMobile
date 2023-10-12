@@ -1383,7 +1383,7 @@
     <string name="str_pay_for_crossing_numberplate_point1">Pay for crossings you’ve made since yesterday</string>
     <string name="str_pay_for_crossing_numberplate_point2">Pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
-    <string name="how_your_payment_gets_calculated">How your payment gets calculated</string>
+    <string name="how_your_payment_gets_calculated">How your payment amount gets calculated</string>
     <string name="str_pay_for_crossing_point1">Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
     <string name="str_pay_for_crossing_point2">It costs £%s per crossing for a %s.</string>
     <string name="str_pay_for_crossing_point3">A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>

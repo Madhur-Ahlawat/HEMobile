@@ -100,7 +100,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.rvPaymentMethods.layoutManager = linearLayoutManager
 
         suspendPaymentMethodAdapter =
-            SuspendPaymentMethodAdapter(requireContext(), paymentList, this, navFlow)
+            SuspendPaymentMethodAdapter(requireActivity(), paymentList, this, navFlow)
         binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
 
         binding.lowBalance.setText("£10.00")
@@ -114,7 +114,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         if (b.not()) {
             val mText = binding.lowBalance.getText().toString().trim()
             var updatedText: String =
-                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
+                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+                    .replace(".0", "")
                     .replace(" ", "")
             if (updatedText.isNotEmpty().not()) {
                 binding.lowBalance.setText(formatter.format(updatedText))
@@ -149,7 +150,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             var mText = binding.lowBalance.getText().toString()
             var updatedText: String =
-                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "").replace(".0", "")
+                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+                    .replace(".0", "")
                     .replace(" ", "")
             if (updatedText.isNotEmpty()) {
                 lowBalance = if (updatedText.length < 6) {
@@ -202,7 +204,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     override fun onClick(v: View?) {
-        Log.e("TAG", "onClick:paymentList "+paymentList.toString() )
+        Log.e("TAG", "onClick:paymentList " + paymentList.toString())
         when (v?.id) {
 
             R.id.btnContinue -> {
@@ -268,9 +270,18 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
         when (status) {
             is Resource.Success -> {
-                paymentList = status.data?.creditCardListType?.cardsList
-                for(i in 0 until paymentList.orEmpty().size){
+                paymentList?.clear()
+                for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
+                    if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
+                        paymentList?.add(status.data.creditCardListType.cardsList.get(i))
+                    }
+                }
+                for (i in 0 until paymentList.orEmpty().size) {
                     checkNullValuesOfModel(paymentList?.get(i))
+                }
+
+                if(paymentList.orEmpty().size==1){
+                    paymentList?.get(0)?.primaryCard=true
                 }
                 if (paymentList?.isNotEmpty() == true) {
 
@@ -279,7 +290,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                             position = i
                             cardSelection = true
                             checkButton()
-
+                            break
                         }
 
                     }
@@ -309,7 +320,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             is Resource.DataError -> {
                 if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
-                }else {
+                } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }
             }
@@ -318,6 +329,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
         }
     }
+
     private fun checkNullValuesOfModel(model: CardListResponseModel?) {
         if (model?.check == null) {
             model?.check = false

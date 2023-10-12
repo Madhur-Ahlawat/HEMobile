@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.onTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -105,9 +107,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         if (data == null) {
             data = CrossingDetailsModelsResponse()
         }
-        val filter = InputFilter.AllCaps()
-        binding.vehicleRegTv.editText.filters = arrayOf(filter)
-        binding.vehicleRegTv.setMaxLength(10)
+        Log.e("TAG", "setBtnActivated: plateCountry--?  " + data?.plateCountry)
+        binding.vehicleRegTv.editText.filters = arrayOf(LengthFilter(10))
+        binding.vehicleRegTv.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
 
         binding.vehicleRegTv.setText(data?.plateNo.toString())
 
@@ -168,9 +170,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
             binding.vehiclePlateNumber.text = NewCreateAccountRequestModel.plateNumber
-            binding.vehicleRegisteredLayout.visibility = View.VISIBLE
+            binding.vehicleRegisteredLayout.visible()
         } else {
-            binding.vehicleRegisteredLayout.visibility = View.GONE
+            binding.vehicleRegisteredLayout.gone()
             radioButtonChecked = true
 
             when (navFlowCall) {
@@ -204,16 +206,19 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
             if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
                 if (data?.vehicleClass == "D") {
-                    binding.typeVehicle.visibility = View.VISIBLE
+                    binding.typeVehicle.visible()
                 } else {
-                    binding.typeVehicle.visibility = View.GONE
+                    binding.typeVehicle.gone()
                 }
-                binding.vehicleRegTv.visibility = View.GONE
-                binding.cardLayout.visibility = View.VISIBLE
+                binding.vehicleRegTv.gone()
+                binding.cardLayout.visible()
             } else {
-                binding.typeVehicle.visibility = View.VISIBLE
-                binding.vehicleRegTv.visibility = View.VISIBLE
-                binding.cardLayout.visibility = View.GONE
+                binding.typeVehicle.visible()
+                binding.vehicleRegTv.visible()
+                binding.cardLayout.gone()
+            }
+            if (NewCreateAccountRequestModel.isExempted) {
+                binding.typeVehicle.visible()
             }
 
         }
@@ -234,7 +239,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     binding.colorInputLayout.gone()
                     binding.vehicleRegTv.gone()
 
-                    binding.vehicleRegisteredLayout.visibility = View.GONE
+                    binding.vehicleRegisteredLayout.gone()
 
                     radioButtonChecked = true
                     makeInputCheck = true
@@ -359,7 +364,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         if (vehicleClass.equals("D", true) && NewCreateAccountRequestModel.plateCountry.equals(
                 Constants.COUNTRY_TYPE_UK
-            )) {
+            )
+        ) {
             typeOfVehicle.clear()
             typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_C))
             typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_D))
@@ -477,34 +483,26 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun GenericWatcher() {
-        val plateNumber = binding.vehicleRegTv.editText.text.toString()
-        if (binding.vehicleRegTv.getText().toString().trim().isEmpty()) {
+        val entered_numberplate =
+            binding.vehicleRegTv.editText.text.toString().trim().replace("-", "")
+        if (entered_numberplate.isEmpty()) {
             vehcileRegRequired = false
             binding.vehicleRegTv.removeError()
         } else {
-            if (Utils.countOccurenceOfChar(
-                    binding.vehicleRegTv.editText.text.toString().trim(), '-'
-                ) > 1 || binding.vehicleRegTv.editText.text.toString().trim().contains(
-                    Utils.TWO_OR_MORE_HYPEN
-                ) || (binding.vehicleRegTv.editText.text.toString().trim().last()
-                    .toString() == "." || binding.vehicleRegTv.editText.text
-                    .toString().first().toString() == ".")
-                || (binding.vehicleRegTv.editText.text.toString().trim().last()
-                    .toString() == "-" || binding.vehicleRegTv.editText.text.toString()
-                    .first()
-                    .toString() == "-")
+            if (entered_numberplate.last().toString() == "." || entered_numberplate.first()
+                    .toString() == "."
             ) {
-                binding.vehicleRegTv.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
+                binding.vehicleRegTv.setErrorText(requireActivity().resources.getString(R.string.str_vehicle_registration))
                 vehcileRegRequired = false
             } else if (hasSpecialCharacters(
-                    binding.vehicleRegTv.getText().toString().trim().replace(" ", ""),
+                    entered_numberplate.replace(" ", ""),
                     Utils.splCharsVehicleRegistration
                 )
             ) {
-                binding.vehicleRegTv.setErrorText("Vehicle Registration $plateNumber must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces")
+                binding.vehicleRegTv.setErrorText(requireActivity().resources.getString(R.string.str_vehicle_registration))
                 vehcileRegRequired = false
-            } else if (binding.vehicleRegTv.getText().toString().trim().length > 10) {
-                binding.vehicleRegTv.setErrorText("Vehicle Registration $plateNumber must be 10 characters or fewer")
+            } else if (entered_numberplate.trim().length > 10) {
+                binding.vehicleRegTv.setErrorText(requireActivity().resources.getString(R.string.vehicle_registration_number_plate_error))
                 vehcileRegRequired = false
             } else {
                 binding.vehicleRegTv.removeError()
@@ -583,7 +581,16 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun checkButton() {
-        if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
+        Log.e("TAG", "checkButton:vehicleClassSelected "+vehicleClassSelected )
+        if (NewCreateAccountRequestModel.isExempted) {
+            binding.typeVehicle.setSelectedValue(vehicleClassSelected)
+            if (typeOfVehicleChecked && binding.checkBoxTerms.isChecked
+            ) {
+                setBtnActivated()
+            } else {
+                setBtnDisabled()
+            }
+        } else if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
             checkValidation()
         } else {
             if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
@@ -630,6 +637,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         } else {
             data?.plateCountry = "NON-UK"
         }
+        Log.e("TAG", "setBtnActivated: plateCountry " + data?.plateCountry)
         binding.nextBtn.isEnabled = true
     }
 
@@ -855,6 +863,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             when (navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
+                    Log.e("TAG", "checkRUC: plateCountry --> " + data?.plateCountry)
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     val model = CrossingDetailsModelsRequest(
                         newVehicleInfoDetails.plateNumber,

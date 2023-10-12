@@ -115,6 +115,21 @@
             android:id="@+id/action_maximumFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment" />
         <action
+            android:id="@+id/action_maximumFragment_clear_to_vehicleListFragment"
+            app:destination="@+id/vehicleListFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/vehicleListFragment"/>
+        <action
+            android:id="@+id/action_maximumFragment_addNewVehicleDetailsFragment"
+            app:destination="@+id/addNewVehicleDetailsFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/addNewVehicleDetailsFragment"/>
+        <action
+            android:id="@+id/action_maximumFragment_to_vehicleResultFragment"
+            app:destination="@+id/vehicleResultFragment"
+            app:popUpTo="@id/vehicleResultFragment"
+            app:popUpToInclusive="true" />
+        <action
             android:id="@+id/action_maximumFragment_to_vehicleHomeListFragment"
             app:destination="@+id/vehicleHomeListFragment"
             app:popUpTo="@id/vehicleHomeListFragment"

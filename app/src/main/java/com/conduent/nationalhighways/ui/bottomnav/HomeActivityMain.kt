@@ -69,8 +69,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         var paymentHistoryListData: MutableList<TransactionData?>? = ArrayList()
         var paymentHistoryListDataCheckedCrossings: MutableList<CheckedCrossingRecentTransactionsResponseModelItem?> =
             ArrayList()
-        fun setTitle(title:String){
-            dataBinding?.titleTxt?.text=title
+
+        fun setTitle(title: String) {
+            dataBinding?.titleTxt?.text = title
         }
     }
 
@@ -84,9 +85,16 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         setView()
     }
 
-    private fun initLoaderDialog() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+    fun showLoader() {
+        val fragmentManager = supportFragmentManager
+        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
+
+        if (existingFragment == null) {
+            // Fragment is not added, add it now
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+            loader?.show(fragmentManager, Constants.LOADER_DIALOG)
+        }
     }
 
     fun viewAllTransactions() {
@@ -96,7 +104,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun getDashBoardAllData() {
-        loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoader()
         val request = CrossingHistoryRequest(
             startIndex = 1,
             count = 5,
@@ -310,7 +318,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     (applicationContext as BaseApplication).setAccountSavedData(
                         this
                     )
-                    dashboardViewModel?.setAccountType(this)
+                    dashboardViewModel.setAccountType(this)
                 }
 
                 if (status.data?.accountInformation?.accSubType.equals("LRDS")) {

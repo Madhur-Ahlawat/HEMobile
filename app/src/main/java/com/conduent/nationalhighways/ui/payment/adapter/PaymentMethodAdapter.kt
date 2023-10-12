@@ -37,15 +37,8 @@ class PaymentMethodAdapter(
         holder: PaymentMethodViewHolder,
         position: Int
     ) {
-        if (paymentList?.get(position)?.cardType.equals("visa", true)) {
-            holder.binding.ivCardType.setImageResource(R.drawable.visablue)
-        } else if (paymentList?.get(position)?.cardType.equals("maestro", true)) {
-            holder.binding.ivCardType.setImageResource(R.drawable.maestro)
 
-        } else {
-            holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
-
-        }
+        holder.binding.ivCardType.setImageResource(Utils.setCardImage(paymentList?.get(position)?.cardType?:""))
 
         if (paymentList?.get(position)?.emandateStatus == "PENDING" && paymentList?.get(position)?.bankAccount == true) {
             holder.binding.tvSelectPaymentMethod.text = context.getString(

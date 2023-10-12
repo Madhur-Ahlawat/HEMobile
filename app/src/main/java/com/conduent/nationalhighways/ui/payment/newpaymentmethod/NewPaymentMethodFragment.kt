@@ -150,7 +150,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                 paymentList = status.data?.creditCardListType?.cardsList
 
-                for(i in 0 until paymentList.orEmpty().size){
+                for (i in 0 until paymentList.orEmpty().size) {
                     checkNullValuesOfModel(paymentList?.get(i))
                 }
 
@@ -298,7 +298,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 } else {
                     if (paymentList.orEmpty().size > 1) {
                         rowId = paymentList?.get(position)?.rowId ?: ""
-                       showLoader()
+                        showLoader()
 
                         makeSecondaryCardAsPrimary(
                             paymentList?.get(position + 1)?.cardType,
@@ -360,7 +360,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                         rowId = paymentList?.get(position)?.rowId ?: ""
 
 
-                       showLoader()
+                        showLoader()
 
                         makeSecondaryCardAsPrimary(
                             paymentList?.get(position + 1)?.cardType,
@@ -389,7 +389,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         } else if (value == Constants.MAKE_DEFAULT) {
             makeDefault = true
             hideLoader()
-            Log.e("TAG", "paymentMethodCallback: isVisible "+loader?.isVisible )
+            Log.e("TAG", "paymentMethodCallback: isVisible " + loader?.isVisible)
             showLoader()
             makeSecondaryCardAsPrimary(
                 paymentList?.get(position)?.cardType,
@@ -624,8 +624,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             loader?.show(fragmentManager, Constants.LOADER_DIALOG)
         }
     }
+
     fun hideLoader() {
-        if(loader?.isVisible == true) {
+        if (loader?.isVisible == true) {
             loader?.dismiss()
             loader = null
         }

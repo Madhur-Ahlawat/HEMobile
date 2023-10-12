@@ -162,7 +162,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
         onBind = { recentTransactionItem, viewDataBinding, _ ->
             with(viewDataBinding as ItemAllTansactionsBinding) {
                 viewDataBinding.apply {
-                    if(transactionItem!=null && (dfDate.parse(transactionItem!!.transactionDate)!=dfDate.parse(recentTransactionItem.transactionDate))){
+                    if(transactionItem!=null && (dfDate.parse(transactionItem?.transactionDate?:"")!=dfDate.parse(recentTransactionItem.transactionDate?:""))){
                         headerDate.text=recentTransactionItem.transactionDate
                         headerDate.visible()
                     }

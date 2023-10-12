@@ -452,10 +452,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             cardIndicatorAccountStatus.visible()
 
             boxTopupAmount.visible()
-            valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
+            valueTopupAmount.text = data.replenishmentInformation?.replenishThreshold
 
             boxLowBalanceThreshold.visible()
-            valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
+            valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishAmount
 
             boxTopupMethod.visible()
 

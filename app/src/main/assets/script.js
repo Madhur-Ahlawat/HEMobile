@@ -140,21 +140,31 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         "timeoutDuration" : 10000,
         "timeoutCallback" : function () {
-            window.appInterface.postMessage("timedOUt");
+            window.webkit.messageHandlers.observer.postMessage("timedOUt");
             document.getElementById("errorPayment").style.display="none";
         },
         "fieldsAvailableCallback" : function () {
-            window.appInterface.postMessage("NMILoaded");
+            window.webkit.messageHandlers.observer.postMessage("NMILoaded");
         },
         'callback': function(e) {
-            window.appInterface.postMessage("3DSLoaded");
+            window.webkit.messageHandlers.observer.postMessage("3DSLoaded");
             var apiResponse = JSON.stringify(e, null, "");
-           // invokeCommand("NMi Callback","{\"nmiModel\":"+apiResponse+"}")
-           window.appInterface.postMessage(apiResponse);
+            invokeCommand("NMi Callback","{\"nmiModel\":"+apiResponse+"}")
+//            window.webkit.messageHandlers.observer.postMessage("NMi Callback"+ apiResponse);
             var card = e.card;
             var amt =  document.getElementById("amount").value;
             const pattern = /^(\w)[A-Za-z-\s\.']{2,50}$/i;
-            if ((pattern.test(e.check.name) == false) ||  ((amt < 10) && (amt > 10000)) || (card.type == null) || (e.check.name == null || ((card.type.localeCompare('visa') != "0") && (card.type.localeCompare('maestro') != "0") && (card.type.localeCompare('mastercard') != "0"))) || (amt == "")) {
+            var cardType = e.card.type
+
+
+
+            if ((pattern.test(e.check.name) == false) ||  ((amt < 10) && (amt > 10000)) || (card.type == null) || (((card.type.localeCompare('visa') != "0") && (card.type.localeCompare('maestro') != "0") && (card.type.localeCompare('mastercard') != "0"))) || (amt == "") || (cardType == null)) {
+
+                if (cardType == null) {
+                    document.getElementById("ccerrormesages").style.display="";
+                    document.getElementById("ccerrormesages").innerText="Payment method is incorrect";
+                }
+
                 if (pattern.test(e.check.name) == false) {
                     document.getElementById("nameerrormesages").style.display="";
                     document.getElementById("nameerrormesages").innerText = "The name on card must only include letters a to z, and special characters such as hyphens";
@@ -178,17 +188,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.getElementById("errorMessageForAmount").style.display="none";
                     }
                 }
-                if (e.check.name == null || ((card.type.localeCompare('visa') != "0") && (card.type.localeCompare('maestro') != "0") && (card.type.localeCompare('mastercard') != "0"))) {
-                    document.getElementById("ccerrormesages").style.display="";
-                    document.getElementById("ccerrormesages").innerText="Payment method is incorrect";
-                }
             } else if (((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0")) && (pattern.test(e.check.name)))
             {
                 var amt =  document.getElementById("amount").value;
-               // invokeCommand("amounttoIncrease","{\"amount\":"+amt+"}")
-                window.appInterface.postMessage("amounttoIncrease"+ amt);
-                window.appInterface.postMessage("3DStarted");
-                window.appInterface.postMessage("3DStarted1");
+                invokeCommand("amounttoIncrease","{\"amount\":"+amt+"}")
+//                window.webkit.messageHandlers.observer.postMessage("amounttoIncrease"+ amt);
+                window.webkit.messageHandlers.observer.postMessage("3DStarted");
                 document.getElementById("form1").style.display="none";
                 const options = {
                 paymentToken: e.token,
@@ -198,31 +203,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 phone:  document.getElementById("phone").innerText,
                 city: document.getElementById("city").innerText,
                 address1:  document.getElementById("address1").innerText,
-                country: "GB" /*document.getElementById("country").innerText*/,
+                country:  document.getElementById("country").innerText,
                 firstName: e.check.name,
                 lastName:  e.check.name,
                 postalCode:  document.getElementById("postalCode").innerText
                 };
-                window.appInterface.postMessage(options);
+                window.webkit.messageHandlers.observer.postMessage(options);
                 const threeDSecureInterface = threeDS.createUI(options);
                 threeDSecureInterface.start('#threeDSMountPoint');
-                
+
                 threeDSecureInterface.on('challenge', function(e) {
-                    window.appInterface.postMessage("3DSLoaded");
+                    window.webkit.messageHandlers.observer.postMessage("3DSLoaded");
+                    window.webkit.messageHandlers.observer.postMessage("3DStarted1");
                 });
-                
+
                 threeDSecureInterface.on('complete', function(e) {
                     var apiResponse = JSON.stringify(e, null, "");
-                    //invokeCommand("threeDSecure","{\"threeDSecure\":"+apiResponse+"}")
-                    window.appInterface.postMessage(apiResponse);
+                    invokeCommand("threeDSecure","{\"threeDSecure\":"+apiResponse+"}")
+                   // window.webkit.messageHandlers.observer.postMessage(apiResponse);
                 });
-                
+
                 threeDSecureInterface.on('failure', function(e) {
-                    window.appInterface.postMessage("cancelClicked");
+                    window.webkit.messageHandlers.observer.postMessage("cancelClicked");
                 });
-                
+
                 threeDSecureInterface.on('error', function(e) {
-                    window.appInterface.postMessage("paymentFailed");
+                    window.webkit.messageHandlers.observer.postMessage("paymentFailed");
                 });
             } else {
                 //errorPayment
@@ -232,12 +238,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     gateway.on('error', function (e) {
-        window.appInterface.postMessage('3DSNotIntiated');
+        window.webkit.messageHandlers.observer.postMessage('3DSNotIntiated');
     })
 });
 
 function buttonClicked() {
-    window.appInterface.postMessage("3DStarted");
+    window.webkit.messageHandlers.observer.postMessage("3DStarted");
 }
 
 function checkNumber() {
@@ -261,9 +267,9 @@ function checkNumber() {
 
 function saveCardClick() {
     var checkBox = document.getElementById("cardChecked");
-    invokeCommand(checkBox.checked)
+    invokeCommand("saveCardChecked","{\"saveCard\":"+checkBox.checked+"}")
 }
 
-function invokeCommand(params) {
-   window.appInterface.postMessage(params);
+function invokeCommand(action, params) {
+   window.webkit.messageHandlers.observer.postMessage("{\"action\":\""+action+"\", \"parameter\":"+params+"}");
 }

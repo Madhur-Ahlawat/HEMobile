@@ -7,106 +7,105 @@
     <data>
 
     </data>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:overScrollMode="never">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingTop="18dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="18dp"
-        tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
-        <ImageView
-            android:id="@+id/warningIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/checkicon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/maximumVehicleAdded"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:fontFamily="@font/open_sans_bold"
-            android:gravity="center"
-            android:text="@string/vehicle_added_to_your_account"
-            android:textColor="@color/new_btn_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+            android:paddingStart="20dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="18dp"
+            tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/vehicles_added"
-            app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
-            android:textColor="@color/black"
-            android:gravity="center|left"
-            android:fontFamily="@font/open_sans_bold"
-            android:textSize="@dimen/font_14sp"
-            android:layout_marginTop="@dimen/margin_15dp"
-            android:id="@+id/vehicleAddedNote" />
+            <ImageView
+                android:id="@+id/warningIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/checkicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSuccess"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:nestedScrollingEnabled="false"
-            app:layout_constraintTop_toBottomOf="@id/vehicleAddedNote" />
+            <TextView
+                android:id="@+id/maximumVehicleAdded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:fontFamily="@font/open_sans_bold"
+                android:gravity="center"
+                android:text="@string/vehicle_added_to_your_account"
+                android:textColor="@color/new_btn_color"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/warningIcon" />
 
+            <TextView
+                android:id="@+id/vehicleAddedNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_15dp"
+                android:fontFamily="@font/open_sans_bold"
+                android:gravity="center|left"
+                android:text="@string/vehicles_added"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded" />
 
-        <ImageView
-            android:id="@+id/warningIcon2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/warningicon"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewSuccess"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/vehicles_not_added"
-            app:layout_constraintTop_toBottomOf="@id/warningIcon2"
-            android:textColor="@color/black"
-            android:gravity="center|left"
-            android:fontFamily="@font/open_sans_bold"
-            android:textSize="@dimen/font_14sp"
-            android:layout_marginTop="@dimen/margin_15dp"
-            android:id="@+id/vehicleNotAdded" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewFaied"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:nestedScrollingEnabled="false"
-            app:layout_constraintTop_toBottomOf="@id/vehicleNotAdded" />
-
-        <com.conduent.apollo.ui.CMButton
-            style="@style/PrimaryButton"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewFaied"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/str_continue"
-            android:layout_marginTop="@dimen/margin_50dp"
-            android:id="@+id/btnContinue"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSuccess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@id/vehicleAddedNote" />
 
 
+            <ImageView
+                android:id="@+id/warningIcon2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/warningicon"
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewSuccess" />
+
+            <TextView
+                android:id="@+id/vehicleNotAdded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_15dp"
+                android:fontFamily="@font/open_sans_bold"
+                android:gravity="center|left"
+                android:text="@string/vehicles_not_added"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintTop_toBottomOf="@id/warningIcon2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewFaied"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@id/vehicleNotAdded" />
+
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnContinue"
+                style="@style/PrimaryButton"
+                android:layout_marginTop="@dimen/margin_50dp"
+                android:text="@string/str_continue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewFaied" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </layout>

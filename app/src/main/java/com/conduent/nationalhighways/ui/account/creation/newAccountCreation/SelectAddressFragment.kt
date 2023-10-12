@@ -69,7 +69,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         }
         else{
             binding.btnEnterAddressManually.visible()
-            binding.btnUpdateAddressManually.invisible()
+            binding.btnUpdateAddressManually.gone()
         }
 
     }

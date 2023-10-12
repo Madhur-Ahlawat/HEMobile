@@ -855,11 +855,6 @@ object Utils {
 
     }
 
-    fun maskCardNumber(cardNumber: String): String {
-        return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "****")
-
-
-    }
 
 
     fun getYesterdayDate(): String {
@@ -962,6 +957,17 @@ object Utils {
         }
 
     }
+
+    fun maskCardNumber(cardNumber: String): String {
+        return if((cardNumber.length)>=4){
+            "****"+cardNumber.takeLast(4)
+        }else{
+            "****"+cardNumber
+        }
+
+//        return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "****")
+    }
+
 
     fun setCardImage(cardType:String):Int{
         if (cardType.equals("visa", true)) {

@@ -72,10 +72,19 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
                 }
 
                 val editCall = navFlowCall.equals(EDIT_SUMMARY, true)
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                if (editCall) {
-                    findNavController().popBackStack(R.id.createAccountSummaryFragment, false)
+                if (editCall && oldPersonalAccountValue == NewCreateAccountRequestModel.personalAccount) {
+                    findNavController().popBackStack()
                 } else {
+                    val bundle = Bundle()
+                    if (editCall) {
+                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_ACCOUNT_TYPE)
+                    } else {
+                        bundle.putString(
+                            Constants.NAV_FLOW_KEY,
+                            Constants.ACCOUNT_CREATION_EMAIL_FLOW
+                        )
+                    }
+
                     findNavController().navigate(
                         R.id.action_fragment_choose_account_type_to_createAccountPersonalInfo,
                         bundle

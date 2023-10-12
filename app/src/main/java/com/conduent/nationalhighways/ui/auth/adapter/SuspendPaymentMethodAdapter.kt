@@ -1,7 +1,8 @@
 package com.conduent.nationalhighways.ui.auth.adapter
 
-import android.content.Context
+import android.app.Activity
 import android.text.Html
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 
 
 class SuspendPaymentMethodAdapter(
-    private var context: Context,
+    private var context: Activity,
     var list: MutableList<CardListResponseModel?>?,
     private val paymentMethod: PaymentMethodSelectCallBack,
     var navFlow: String
@@ -36,41 +37,56 @@ class SuspendPaymentMethodAdapter(
         position: Int
     ) {
         var pos: Int
-        if (list?.get(position)?.cardType.equals("visa", true)) {
-            holder.binding.ivCardType.setImageResource(R.drawable.visablue)
-        } else if (list?.get(position)?.cardType.equals("maestro", true)) {
-            holder.binding.ivCardType.setImageResource(R.drawable.maestro)
+        val model = list?.get(position)
+        var htmlText: Spanned? = null
 
+        if (model?.bankAccount == false) {
+            holder.binding.ivCardType.setImageResource(
+                Utils.setCardImage(
+                    model.cardType
+                )
+            )
+            htmlText =
+                Html.fromHtml(model.cardType + "<br>" + model.cardNumber.let {
+                    Utils.setStarmaskcardnumber(
+                        context,
+                        it
+                    )
+                }, Html.FROM_HTML_MODE_COMPACT)
         } else {
-            holder.binding.ivCardType.setImageResource(R.drawable.mastercard)
+            holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
+            htmlText =
+                Html.fromHtml(
+                    "Direct Debit" + "<br>" + model?.bankAccountNumber?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    })
 
         }
-        val htmlText = Html.fromHtml(list?.get(position)?.cardType+"<br>"+ list?.get(position)?.cardNumber?.let {
-            Utils.maskCardNumber(
-                it
-            )
-        },Html.FROM_HTML_MODE_COMPACT)
-
-
-            if (list?.get(position)?.bankAccount==false){
-                holder.binding.radioButtonPaymentMethod.isChecked = list?.get(position)?.primaryCard==true
-                list?.get(position)?.isSelected=true
-            }
-
 
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
 
+        if (model?.bankAccount == false) {
+            holder.binding.radioButtonPaymentMethod.isChecked =
+                model.primaryCard == true
+            model.isSelected = true
+        }
+
+
+
+
 
         holder.binding.layout.setOnClickListener {
-            pos=position
-            if (list?.get(pos)?.isSelected == true){
-                list?.get(pos)?.isSelected=false
-                holder.binding.radioButtonPaymentMethod.isChecked=false
+            pos = position
+            if (list?.get(pos)?.isSelected == true) {
+                list?.get(pos)?.isSelected = false
+                holder.binding.radioButtonPaymentMethod.isChecked = false
 
-            }else{
-                list?.get(pos)?.isSelected=true
-                holder.binding.radioButtonPaymentMethod.isChecked=true
+            } else {
+                list?.get(pos)?.isSelected = true
+                holder.binding.radioButtonPaymentMethod.isChecked = true
 
 
             }
@@ -78,14 +94,14 @@ class SuspendPaymentMethodAdapter(
             paymentMethod.paymentMethodCallback(pos)
         }
         holder.binding.radioButtonPaymentMethod.setOnClickListener {
-            pos=position
-            if (list?.get(pos)?.isSelected == true){
-                list?.get(pos)?.isSelected=false
-                holder.binding.radioButtonPaymentMethod.isChecked=false
+            pos = position
+            if (list?.get(pos)?.isSelected == true) {
+                list?.get(pos)?.isSelected = false
+                holder.binding.radioButtonPaymentMethod.isChecked = false
 
-            }else{
-                list?.get(pos)?.isSelected=true
-                holder.binding.radioButtonPaymentMethod.isChecked=true
+            } else {
+                list?.get(pos)?.isSelected = true
+                holder.binding.radioButtonPaymentMethod.isChecked = true
 
 
             }
@@ -100,7 +116,7 @@ class SuspendPaymentMethodAdapter(
 
     fun updateList(paymentList: MutableList<CardListResponseModel?>?, navFlow: String) {
         this.list = paymentList
-        this.navFlow=navFlow
+        this.navFlow = navFlow
         notifyDataSetChanged()
 
     }

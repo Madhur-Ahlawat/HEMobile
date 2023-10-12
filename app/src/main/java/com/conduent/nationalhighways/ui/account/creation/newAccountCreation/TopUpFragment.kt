@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -99,6 +100,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     val thresholdAmount =
                         binding.lowBalance.editText.text.toString().trim().replace("$", "£")
                             .replace("£", "").replace(",","").replace(" ","")
+
+                    Log.e("TAG", "onClick: amount "+amount )
+                    Log.e("TAG", "onClick: thresholdAmount "+thresholdAmount )
                     val request = AccountTopUpUpdateThresholdRequest(
                         amount,
                         thresholdAmount
@@ -234,7 +238,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     val amount = binding.top.editText.text.toString().trim().replace("£", "")
                     val thresholdAmount =
                         binding.lowBalance.editText.text.toString().trim().replace("£", "")
-                    if (apiLowBalanceAmount == thresholdAmount
+
+
+                    if (navFlow != Constants.THRESHOLD && apiLowBalanceAmount == thresholdAmount
                             .trim()
                     ) {
                         bundle.putString(Constants.THRESHOLD_AMOUNT, "")
@@ -248,7 +254,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     }
 
 
-                    if (apiTopUpAmountBalance == amount) {
+                    if (navFlow != Constants.THRESHOLD && apiTopUpAmountBalance == amount) {
                         bundle.putString(Constants.TOP_UP_AMOUNT, "")
 
                     } else {

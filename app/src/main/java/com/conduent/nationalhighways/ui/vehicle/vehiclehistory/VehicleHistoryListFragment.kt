@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.vehicle.vehiclehistory
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +72,6 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         binding.btnNextNovehicles.setOnClickListener(this)
         binding.btnNext.text = getString(R.string.add_a_vehicle)
         binding.btnAddNewVehicle.visibility = View.GONE
-        binding.dataCl.visibility = View.GONE
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.recyclerView.adapter = mAdapter
         sessionManager.fetchAccountType()?.let {
@@ -80,9 +80,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             }
         }
         binding.youHaveAddedVehicle.text = getString(R.string.vehicle_list)
-        Handler().postDelayed({
-            checkData()
-        }, 1000)
+
         NewCreateAccountRequestModel.vehicleList.clear()
     }
 
@@ -117,19 +115,14 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                         mList.addAll(response)
                         isLoading = false
                         mAdapter.setList(mList)
-
-
                         checkData()
-//                        endlessScroll()
                     }
                 }
                 is Resource.DataError -> {
-                    binding.dataCl.gone()
                     mList.clear()
                     mAdapter.setList(mList)
                     hideLoader()
-                    binding.noDataCl.visible()
-//                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    checkData()
                 }
                 else -> {
                 }
@@ -139,14 +132,17 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     }
 
     private fun checkData() {
+        Log.e("TAG", "checkData: mList "+mList.size )
         if (mList.size == 0) {
             binding.dataCl.gone()
             binding.noDataCl.visible()
+            binding.includeNoData.noDataCl.visible()
             hideLoader()
         } else {
             binding.dataCl.visible()
             hideLoader()
             binding.noDataCl.gone()
+            binding.includeNoData.noDataCl.gone()
         }
     }
 
@@ -198,8 +194,16 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         findNavController().navigate(R.id.action_vehicleHistoryListFragment_to_removeVehicleFragment,bundle)
     }
 
-    private fun showLoader() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+    fun showLoader() {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
+
+        if (existingFragment == null) {
+            // Fragment is not added, add it now
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+            loader?.show(fragmentManager, Constants.LOADER_DIALOG)
+        }
     }
 
     private fun hideLoader() {

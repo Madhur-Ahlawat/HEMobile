@@ -23,6 +23,7 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicleBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -108,18 +109,15 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun isEnable() {
-        val entered_numberplate=binding.editNumberPlate.editText.text.toString().trim().replace("-","")
+        val entered_numberplate =
+            binding.editNumberPlate.editText.text.toString().trim().replace("-", "")
         if (entered_numberplate.isEmpty()) {
             binding.findVehicle.isEnabled = false
             binding.editNumberPlate.removeError()
         } else {
-            if (entered_numberplate.toString().replace("-","").trim().contains(
-                    Utils.TWO_OR_MORE_HYPEN
-                ) || (entered_numberplate.toString().trim().last()
-                    .toString() == "." || entered_numberplate
-                    .toString().first().toString() == ".")
+            if (entered_numberplate.trim().last().toString() == "." || entered_numberplate.first()
+                    .toString() == "."
             ) {
-                Log.e("TAG", "isEnable: 11 " )
                 binding.editNumberPlate.setErrorText(resources.getString(R.string.str_vehicle_registration))
                 binding.findVehicle.isEnabled = false
             } else if (Utils.hasSpecialCharacters(
@@ -127,11 +125,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     splCharsVehicleRegistration
                 )
             ) {
-                Log.e("TAG", "isEnable: 22 " )
                 binding.editNumberPlate.setErrorText(resources.getString(R.string.str_vehicle_registration))
                 binding.findVehicle.isEnabled = false
             } else if (binding.editNumberPlate.getText().toString().trim().length > 10) {
-                binding.editNumberPlate.setErrorText("Vehicle Registration (number plate) must be 10 characters or fewer")
+                binding.editNumberPlate.setErrorText(requireActivity().resources.getString(R.string.vehicle_registration_number_plate_error))
                 binding.findVehicle.isEnabled = false
             } else {
                 binding.editNumberPlate.removeError()
@@ -213,8 +210,26 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     Log.e("TAG", "onClick:size " + size)
                     Log.e("TAG", "onClick:vehicleList " + vehicleList)
                     Log.e("TAG", "onClick:navFlowCall " + navFlowCall)
+                    Log.e(
+                        "TAG",
+                        "onClick:personalAccount " + NewCreateAccountRequestModel.personalAccount
+                    )
                     if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
-                        if (size >= 10) {
+                        val accountType =
+                            HomeActivityMain.accountDetailsData?.accountInformation?.accountType
+                        Log.e("TAG", "onClick:accountType " + accountType)
+
+                        if (accountType == Constants.BUSINESS_ACCOUNT &&
+                           ( (size >= BuildConfig.BUSINESS.toInt()) || vehicleList.size >= 10)) {
+                            Log.e("TAG", "onClick: 1123233 ")
+                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                            findNavController().navigate(
+                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                bundle
+                            )
+                        }else if (accountType != Constants.BUSINESS_ACCOUNT &&
+                           ( (size >= BuildConfig.PERSONAL.toInt()) || vehicleList.size >= 10)) {
+                            Log.e("TAG", "onClick: 1123235673 ")
                             NewCreateAccountRequestModel.isMaxVehicleAdded = true
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
@@ -486,7 +501,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         Constants.NAV_DATA_KEY,
                         data?.apply {
                             plateNo =
-                                binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
+                                binding.editNumberPlate.editText.text.toString().trim()
+                                    .replace(" ", "")
                                     .replace("-", "")
                         }
                     )
@@ -538,7 +554,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         Log.d("responseData", Gson().toJson(apiData))
 
                         if (vehicleList.contains(apiData[0]) && isCrossingCall.not()) {
-                            Log.e("TAG", "apiResponseDVRM: 11 " )
+                            Log.e("TAG", "apiResponseDVRM: 11 ")
                             accountData.isVehicleAlreadyAddedLocal = true
                             val bundleData = Bundle()
                             bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -556,7 +572,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         }
 
                         if (apiData[0]?.isExempted?.equals("Y", true) == true) {
-                            Log.e("TAG", "apiResponseDVRM: 22 " )
+                            Log.e("TAG", "apiResponseDVRM: 22 ")
                             NewCreateAccountRequestModel.isExempted = true
                             bundle.putParcelable(Constants.VEHICLE_DETAIL, apiData[0])
                             findNavController().navigate(
@@ -567,7 +583,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         }
 
                         if (apiData[0]?.isRUCEligible?.equals("Y", true) == true) {
-                            Log.e("TAG", "apiResponseDVRM: 33 " )
+                            Log.e("TAG", "apiResponseDVRM: 33 ")
                             if (apiData.isNotEmpty()) {
                                 bundle.putParcelable(
                                     Constants.VEHICLE_DETAIL,
@@ -590,7 +606,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 bundle
                             )
                         } else if (apiData[0]?.isRUCEligible?.equals("N", true) == true) {
-                            Log.e("TAG", "apiResponseDVRM: 44 " )
+                            Log.e("TAG", "apiResponseDVRM: 44 ")
                             NewCreateAccountRequestModel.isRucEligible = true
                             if (apiData.isNotEmpty()) {
                                 bundle.putParcelable(
@@ -684,7 +700,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             is Resource.Success -> {
 
                 viewModel.getNewVehicleData(
-                    binding.editNumberPlate.editText.text.toString().trim().replace(" ", "").replace("-", "").uppercase(),
+                    binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
+                        .replace("-", "").uppercase(),
                     Constants.AGENCY_ID.toInt()
                 )
 

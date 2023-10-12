@@ -62,7 +62,9 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
             else -> {
                 val accountData = NewCreateAccountRequestModel
                 vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
-                nonUKVehicleModel = index?.let { vehicleList[it] }
+                if(vehicleList.size>(index?:0)){
+                    nonUKVehicleModel = index?.let { vehicleList[it] }
+                }
                 numberPlate = nonUKVehicleModel?.plateNumber ?: ""
                 binding.regNum.text = numberPlate
                 binding.typeOfVehicle.text =
