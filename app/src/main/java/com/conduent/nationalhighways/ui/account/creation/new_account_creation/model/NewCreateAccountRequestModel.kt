@@ -42,6 +42,7 @@ object NewCreateAccountRequestModel{
     var smsSecurityCode:String=""
     var password:String=""
 
+    var sms_referenceId: String? = ""
 
 
 

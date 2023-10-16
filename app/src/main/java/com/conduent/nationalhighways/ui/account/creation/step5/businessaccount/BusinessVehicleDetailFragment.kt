@@ -173,7 +173,11 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                             data?.vehicleClass,
                             "UK",
                             data?.vehicleMake,
-                            data?.vehicleModel
+                            data?.vehicleModel,
+                            data?.vehicleColor?:"",
+                            data?.vehicleClass?:"",
+                            "yesDVLA"
+
                         )
 
                         viewModel.getCrossingDetails(model)

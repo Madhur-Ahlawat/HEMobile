@@ -37,7 +37,7 @@ data class PersonalInformation(
     var password: String?,
     var confirmPassword: String?,
     val pemailUniqueCode: String?,
-    val phoneDay: String?,
+    var phoneDay: String?,
     val phoneLandLine: String?,
     val phoneNumber: String?,
     val postLoginChallengeQuestionChange: String?,

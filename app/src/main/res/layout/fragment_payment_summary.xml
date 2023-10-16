@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="@string/check_your_answers_before_making_a_payment"
+                android:text="@string/str_check_your_answer_paying"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp" />
 
@@ -59,6 +59,7 @@
                         tools:text="AJ66 MHA"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
+
 
                     <ImageView
                         android:id="@+id/editRegistrationNumber"

@@ -67,7 +67,9 @@ class SessionExpireFragment : BaseFragment<FragmentSessionExpireBinding>(), View
                     }
                     //  "SIGN IN" ->{ requireActivity().startActivity(Intent(requireActivity(),ActivityHome::class.java)) }
                     Constants.REFRESH_TOKEN -> {// refresh token api call
-                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java){
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS,true)
+                        }
                     }
                 }
             }

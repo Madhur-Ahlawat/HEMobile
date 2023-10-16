@@ -94,12 +94,7 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
             }
         }
         super.onBackPressed()
-        /*
-                if (mValue == Constants.FROM_LOGIN_TO_CASES_VALUE) {
-                    finish()
-                    startNormalActivity(HomeActivityMain::class.java)
-                }
-        */
+
     }
 
     override fun observeViewModel() {}

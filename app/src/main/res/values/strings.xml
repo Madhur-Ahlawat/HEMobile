@@ -1042,7 +1042,7 @@
     <string name="str_maximum_vehicle_registered">Maximum number of vehicles have been registered against the account</string>
     <string name="str_you_have_reached_the_maximum_vehicle">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
     <string name="where_is_your_vehicle_registered">Where is your vehicle registered?</string>
-    <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle.</string>
+    <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle</string>
     <string name="i_confirm_that_the_vehicle_information_provided_is_correct">I confirm that the vehicle information provided is correct.</string>
     <string name="str_vehicle_registration_number_plate">Vehicle Registration (number plate)</string>
     <string name="str_are_you_sure_you_want_to_remove">Are you sure you want to remove vehicle %s ?</string>
@@ -1070,7 +1070,7 @@
     <string name="str_colour_error_message">Vehicle colour must only include letters a to z, and the special character forward slash</string>
     <string name="str_vehicle_exempt_message">Vehicle %s is not charged\nNo Dart Charge payment is due</string>
     <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
-    <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from\nDart Charge payment</string>
+    <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from\nDart Charge payment.</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
     <string name="str_no_ruc_desc_pay_for_crossing">Motorcycles, mopeds and quad bikes do not need to pay for a crossing.</string>
     <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\n Telephone: 0300 300 0120 \n Every day: 8am to 8pm</string>
@@ -1383,7 +1383,7 @@
     <string name="str_pay_for_crossing_numberplate_point1">Pay for crossings you’ve made since yesterday</string>
     <string name="str_pay_for_crossing_numberplate_point2">Pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
-    <string name="how_your_payment_gets_calculated">How your payment amount gets calculated</string>
+    <string name="how_your_payment_gets_calculated">How your payment amount gets calculated?</string>
     <string name="str_pay_for_crossing_point1">Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
     <string name="str_pay_for_crossing_point2">It costs £%s per crossing for a %s.</string>
     <string name="str_pay_for_crossing_point3">A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>
@@ -1396,7 +1396,7 @@
     <string name="additional_crossings">+ ADDITIONAL CROSSINGS</string>
     <string name="additional_crossings_txt">Additional Crossings</string>
     <string name="number_of_additional_crossings">Number of additional crossings</string>
-    <string name="how_many_payments_do_you_need_to_pay_for">How many payments do you need to pay for ?</string>
+    <string name="how_many_payments_do_you_need_to_pay_for">How many payments do you need to pay for?</string>
     <string name="confirm_your_password">Confirm your password</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="transactions">Transactions</string>
@@ -1579,7 +1579,7 @@
     <string name="str_payment_amount_for_recent_crossings">Payment Amount for recent crossings</string>
     <string name="str_payment_amount_for_additional_crossings">Payment Amount for additional crossings</string>
     <string name="str_total_amount">Total amount</string>
-    <string name="str_total_payment_amount">Total payment amount</string>
+    <string name="str_total_payment_amount">Total Payment Amount</string>
 
     <string name="default_notification_channel_id" translatable="false">dartcharge_default_channel</string>
     <string name="fcm_message">DartCharge Message</string>
@@ -1587,5 +1587,6 @@
     <string name="balance">Balance</string>
     <string name="northbound">Northbound</string>
     <string name="payment_details">Payment Details</string>
+    <string name="str_check_your_answer_paying">Check your answers before paying</string>
 
 </resources>

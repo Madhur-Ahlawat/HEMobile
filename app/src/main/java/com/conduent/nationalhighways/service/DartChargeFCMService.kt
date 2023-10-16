@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -43,6 +44,7 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
     }
 
     override fun onNewToken(token: String) {
+        Log.e("TAG", "onNewToken() called with: token = $token")
         super.onNewToken(token)
     }
 

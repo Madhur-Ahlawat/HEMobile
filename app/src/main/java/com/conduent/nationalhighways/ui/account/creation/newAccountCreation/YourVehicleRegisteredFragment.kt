@@ -65,6 +65,7 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                 Log.e("TAG", "onClick:plateCountry " + data?.plateCountry)
                 Log.e("TAG", "onClick:veicleUKnonUK " + data?.veicleUKnonUK)
                 val bundle = Bundle()
+                bundle.putString(Constants.data_type, "dvla")
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data)

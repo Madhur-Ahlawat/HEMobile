@@ -99,18 +99,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         isChecked = true
     }
 
-    private fun callPushNotificationApi() {
-        sessionManager.getFirebaseToken()?.let { firebaseToken ->
-            val request = PushNotificationRequest(
-                deviceToken = firebaseToken,
-                osName = PushNotificationUtils.getOSName(),
-                osVersion = PushNotificationUtils.getOSVersion(),
-                appVersion = PushNotificationUtils.getAppVersion(requireContext()),
-                optInStatus = "Y"
-            )
-            webServiceViewModel.allowPushNotification(request)
-        }
-    }
 
     override fun initCtrl() {
         LandingActivity.showToolBar(false)

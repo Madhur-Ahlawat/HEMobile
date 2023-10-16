@@ -117,9 +117,9 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateHomeActivity() {
-        startActivity(
-            Intent(this, HomeActivityMain::class.java)
-        )
+        val intent= Intent(this, HomeActivityMain::class.java)
+        intent.putExtra(Constants.FIRST_TYM_REDIRECTS,true)
+        startActivity(intent)
         finish()
     }
     private fun navigateAuthActivity() {

@@ -105,7 +105,7 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical"
             android:paddingTop="@dimen/margin_5dp"
-            android:paddingBottom="@dimen/margin_25dp"
+            android:paddingBottom="@dimen/margin_35dp"
             >
 
             <com.conduent.apollo.ui.CMButton

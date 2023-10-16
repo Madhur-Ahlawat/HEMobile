@@ -44,17 +44,36 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 //        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
+
+        binding.btnNext.setOnClickListener(this)
+
         when (navFlowCall) {
-            EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
+
+            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
                 if(!isViewCreated){
                     oldtwoStepVerification = NewCreateAccountRequestModel.twoStepVerification
                 }
+
                 binding.twoFactor.isChecked = NewCreateAccountRequestModel.twoStepVerification
             }
 
-            else -> {
-                NewCreateAccountRequestModel.twoStepVerification = false
+            PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                val data = navData as ProfileDetailModel?
+                if (data != null) {
+                    binding.twoFactor.isChecked =
+                        data.accountInformation?.mfaEnabled.equals("true", true)
+                }
+
+
+                if(!isViewCreated){
+                    oldtwoStepVerification =  binding.twoFactor.isChecked
+                }
+
+
+                binding.btnNext.enable()
             }
+
         }
 
         binding.twoFactor.setOnCheckedChangeListener { _, isChecked ->
@@ -68,24 +87,6 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 
         }
 
-        binding.btnNext.setOnClickListener(this)
-
-        when (navFlowCall) {
-
-            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
-                binding.twoFactor.isChecked = NewCreateAccountRequestModel.twoStepVerification
-            }
-
-            PROFILE_MANAGEMENT_2FA_CHANGE -> {
-                val data = navData as ProfileDetailModel?
-                if (data != null) {
-                    binding.twoFactor.isChecked =
-                        data.accountInformation?.mfaEnabled.equals("true", true)
-                }
-                binding.btnNext.enable()
-            }
-
-        }
         isViewCreated=true
     }
 
@@ -164,29 +165,34 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                     }
 
                     PROFILE_MANAGEMENT_2FA_CHANGE -> {
-                        NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
-                        val data = navData as ProfileDetailModel?
-                        if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
-                            if (binding.twoFactor.isChecked){
-                                verifyMobileNumber(data)
+                        if(oldtwoStepVerification==binding.twoFactor.isChecked){
+                            findNavController().popBackStack()
+                        }else {
+                            NewCreateAccountRequestModel.twoStepVerification =
+                                binding.twoFactor.isChecked
+                            val data = navData as ProfileDetailModel?
+                            if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
+                                if (binding.twoFactor.isChecked) {
+                                    verifyMobileNumber(data)
 
-                            }else{
-                                updateStandardUserProfile(data)
+                                } else {
+                                    updateStandardUserProfile(data)
 
-                            }
-                        } else {
-                            loader?.show(
-                                requireActivity().supportFragmentManager,
-                                Constants.LOADER_DIALOG
-                            )
-                            if (data?.accountInformation?.accountType.equals(
-                                    Constants.PERSONAL_ACCOUNT,
-                                    true
-                                )
-                            ) {
-                                updateStandardUserProfile(data)
+                                }
                             } else {
-                                updateBusinessUserProfile(data)
+                                loader?.show(
+                                    requireActivity().supportFragmentManager,
+                                    Constants.LOADER_DIALOG
+                                )
+                                if (data?.accountInformation?.accountType.equals(
+                                        Constants.PERSONAL_ACCOUNT,
+                                        true
+                                    )
+                                ) {
+                                    updateStandardUserProfile(data)
+                                } else {
+                                    updateBusinessUserProfile(data)
+                                }
                             }
                         }
                     }
@@ -255,6 +261,8 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
                 phoneCell = personalInformation?.phoneNumber ?: "",
                 phoneDay = personalInformation?.phoneDay,
+                phoneDayCountryCode = personalInformation?.phoneDayCountryCode,
+                phoneCellCountryCode = personalInformation?.phoneCellCountryCode,
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
@@ -262,6 +270,8 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 businessName = personalInformation?.customerName,
                 mfaEnabled = if (binding.twoFactor.isChecked) "Y" else "N"
             )
+            Log.e("TAG", "updateStandardUserProfile: request -@-> "+request.toString() )
+
 
             viewModel.updateUserDetails(request)
         }
@@ -287,13 +297,16 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneNumber ?: "",
+                phoneCell = phoneCell ?: "",
                 phoneDay = phoneDay,
+                phoneDayCountryCode = phoneDayCountryCode,
+                phoneCellCountryCode = phoneCellCountryCode,
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
                 mfaEnabled = if (binding.twoFactor.isChecked) "Y" else "N"
             )
+            Log.e("TAG", "updateStandardUserProfile: request --> "+request.toString() )
 
             viewModel.updateUserDetails(request)
         }

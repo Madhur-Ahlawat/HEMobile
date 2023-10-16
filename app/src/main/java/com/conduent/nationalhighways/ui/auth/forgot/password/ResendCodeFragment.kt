@@ -49,6 +49,8 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
     @Inject
     lateinit var sessionManager: SessionManager
+    private var isItMobileNumber: Boolean = false
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -60,6 +62,10 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
         if(arguments?.containsKey(Constants.PHONE_COUNTRY_CODE) == true){
             phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
         }
+        if (arguments?.containsKey(Constants.IS_MOBILE_NUMBER) == true) {
+            isItMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER) ?: false
+        }
+
         if (arguments != null) {
             data = arguments?.getParcelable("data")
         }
@@ -206,6 +212,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
                 bundle.putString(Constants.PHONE_COUNTRY_CODE, phoneCountryCode)
+                bundle.putBoolean(Constants.IS_MOBILE_NUMBER,isItMobileNumber)
 
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,
@@ -297,6 +304,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)
                 bundle.putString(Constants.PHONE_COUNTRY_CODE, phoneCountryCode)
+                bundle.putBoolean(Constants.IS_MOBILE_NUMBER,isItMobileNumber)
 
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,

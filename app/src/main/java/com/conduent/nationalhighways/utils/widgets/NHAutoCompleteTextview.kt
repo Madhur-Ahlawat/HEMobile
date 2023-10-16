@@ -42,7 +42,6 @@ class NHAutoCompleteTextview @JvmOverloads constructor(
                 count: Int
             ) {
                 charSequence?.let {
-                    Log.e(TAG, "onTextChanged: ** " + charSequence.toString())
                     dropDownItemSelectListener?.onAutoCompleteItemClick(
                         charSequence.toString(),
                         false
@@ -56,28 +55,24 @@ class NHAutoCompleteTextview @JvmOverloads constructor(
         })
 
         this.setOnClickListener {
-            Log.e(TAG, "onclick: " )
-            if (dataSet.size > 0) {
+          if (dataSet.size > 0) {
                 showDropDown()
             }
         }
         this.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
-            if (hasFocus == false && dataSet.size > 0) {
-                if (dataSet.any { it == text.toString() }) {
-                } else {
+            if (hasFocus == false) {
+                if(dataSet.size>0){
+                    if (dataSet.any { it == text.toString() }) {
+                    } else {
+                        setText("")
+                        selectedItemDescription = ""
+                    }
+                }else{
                     setText("")
                     selectedItemDescription = ""
                 }
-            } else {
-//                if (!isPopupShowing && firstTym == false) {
-//                    if (dataSet.size > 0) {
-//                        showDropDown()
-//                    }
-//                }
-//                if(dataSet.size>0){
-//                    firstTym = false
-//                }
 
+            } else {
             }
         }
     }

@@ -177,6 +177,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun updateUserDetails(request: UpdateProfileRequest) {
+
         viewModelScope.launch {
             try {
                 _updateProfileApiVal.postValue(

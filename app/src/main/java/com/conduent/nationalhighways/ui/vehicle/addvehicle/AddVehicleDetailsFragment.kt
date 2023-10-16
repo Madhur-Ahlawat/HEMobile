@@ -62,6 +62,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private var vehcileRegRequired: Boolean = true
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private var data_type: String = ""
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -82,6 +83,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
 
+        if (arguments?.containsKey(Constants.data_type) == true) {
+            data_type = arguments?.getString(Constants.data_type).toString()
+        }
         typeOfVehicle.clear()
         typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_A))
         typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_B))
@@ -122,7 +126,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 if (isDblaAvailable.not()) {
                     nonUKVehicleModel = index?.let { vehicleList?.get(it) }
                     updateView(
-                        nonUKVehicleModel?.plateNumber ?: "",
+                        (nonUKVehicleModel?.plateNumber ?: "").uppercase(),
                         nonUKVehicleModel?.vehicleMake ?: "",
                         nonUKVehicleModel?.vehicleColor ?: "",
                         nonUKVehicleModel?.vehicleClass ?: "",
@@ -169,7 +173,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
 
         if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
-            binding.vehiclePlateNumber.text = NewCreateAccountRequestModel.plateNumber
+            binding.vehiclePlateNumber.text = NewCreateAccountRequestModel.plateNumber.uppercase()
             binding.vehicleRegisteredLayout.visible()
         } else {
             binding.vehicleRegisteredLayout.gone()
@@ -177,7 +181,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
             when (navFlowCall) {
                 Constants.TRANSFER_CROSSINGS -> {
-                    binding.vehiclePlateNumber.text = data?.plateNo.toString()
+                    binding.vehiclePlateNumber.text = data?.plateNo.toString().uppercase()
                 }
 
                 Constants.PAY_FOR_CROSSINGS -> {
@@ -186,7 +190,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         data?.vehicleColor ?: "", data?.vehicleClass ?: "",
                         data?.vehicleModel ?: "", data?.veicleUKnonUK ?: false
                     )
-                    binding.vehiclePlateNumber.text = data?.plateNo.toString()
+                    binding.vehiclePlateNumber.text = data?.plateNo.toString().uppercase()
 
                 }
 
@@ -219,6 +223,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             }
             if (NewCreateAccountRequestModel.isExempted) {
                 binding.typeVehicle.visible()
+                binding.cardLayout.visible()
             }
 
         }
@@ -383,6 +388,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 typeVehicle.dataSet.clear()
                 typeVehicle.dataSet.addAll(typeOfVehicle)
             }
+
         }
         if (isUK) {
             binding.radioButtonYes.isChecked = true
@@ -411,7 +417,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         }
         binding.makeInputLayout.editText.onTextChanged {
-            makeInputCheck = if (it.isNotEmpty()) {
+            makeInputCheck = if (it.trim().isNotEmpty()) {
                 if (it.trim().length > 50) {
                     binding.makeInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
@@ -426,13 +432,13 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
-                binding.makeInputLayout.setErrorText(getString(R.string.enter_the_make_of_your_vehicle))
+                binding.makeInputLayout.removeError()
                 false
             }
             checkButton()
         }
         binding.modelInputLayout.editText.onTextChanged {
-            modelInputCheck = if (it.isNotEmpty()) {
+            modelInputCheck = if (it.trim().isNotEmpty()) {
                 if (it.trim().length > 50) {
                     binding.modelInputLayout.setErrorText(getString(R.string.vehicle_make_must_be_less_than_fifty))
                     false
@@ -451,7 +457,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
-                binding.modelInputLayout.setErrorText(getString(R.string.enter_your_vehicle_model))
+                binding.modelInputLayout.removeError()
                 false
             }
 
@@ -471,7 +477,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     true
                 }
             } else {
-                binding.colorInputLayout.setErrorText(getString(R.string.enter_your_vihicle_color))
+                binding.colorInputLayout.removeError()
                 false
             }
 
@@ -581,7 +587,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun checkButton() {
-        Log.e("TAG", "checkButton:vehicleClassSelected "+vehicleClassSelected )
+        Log.e("TAG", "checkButton:vehicleClassSelected " + vehicleClassSelected)
         if (NewCreateAccountRequestModel.isExempted) {
             binding.typeVehicle.setSelectedValue(vehicleClassSelected)
             if (typeOfVehicleChecked && binding.checkBoxTerms.isChecked
@@ -788,7 +794,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             binding.typeVehicle.getSelectedDescription().toString()
                         )
                         newVehicleInfoDetails.plateNumber =
-                            binding.vehiclePlateNumber.text.toString()
+                            binding.vehiclePlateNumber.text.toString().uppercase()
                         newVehicleInfoDetails.isDblaAvailable = false
                         newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
                         checkRUC(newVehicleInfoDetails)
@@ -807,7 +813,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                                 vehicleClassSelected
                             )
                         newVehicleInfoDetails.plateNumber =
-                            binding.vehiclePlateNumber.text.toString()
+                            binding.vehiclePlateNumber.text.toString().uppercase()
                         newVehicleInfoDetails.isDblaAvailable = false
                         newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
                         checkRUC(newVehicleInfoDetails)
@@ -866,11 +872,14 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     Log.e("TAG", "checkRUC: plateCountry --> " + data?.plateCountry)
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     val model = CrossingDetailsModelsRequest(
-                        newVehicleInfoDetails.plateNumber,
+                        newVehicleInfoDetails.plateNumber.toString().uppercase(),
                         newVehicleInfoDetails.vehicleClass,
                         data?.plateCountry,
                         newVehicleInfoDetails.vehicleMake,
-                        newVehicleInfoDetails.vehicleModel
+                        newVehicleInfoDetails.vehicleModel,
+                        newVehicleInfoDetails.vehicleColor ?: "",
+                        newVehicleInfoDetails.vehicleClass ?: "",
+                        data_type
                     )
 
                     viewModel.getCrossingDetails(model)
@@ -878,7 +887,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
                 Constants.TRANSFER_CROSSINGS -> {
                     data?.apply {
-                        plateNo = newVehicleInfoDetails.plateNumber.toString()
+                        plateNo = newVehicleInfoDetails.plateNumber.toString().uppercase()
                         vehicleClass = newVehicleInfoDetails.vehicleClass
                         plateCountry = "UK"
                         vehicleMake = newVehicleInfoDetails.vehicleMake

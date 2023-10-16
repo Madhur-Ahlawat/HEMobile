@@ -73,7 +73,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private var oldTelephoneNumber = ""
     private var oldTelephoneCountryCode = ""
     private var title: TextView? = null
-    private var data:ProfileDetailModel?=null
+    private var data: ProfileDetailModel? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
@@ -125,21 +125,21 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
                 }
 
-                requiredCountryCode = binding.inputCountry.getText()?.isNotEmpty() == true
+                requiredCountryCode = binding.inputCountry.text?.isNotEmpty() == true
                 checkButton()
             }
 
             PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                if(requireActivity() is CreateAccountActivity) {
-                }else{
+                if (requireActivity() is CreateAccountActivity) {
+                } else {
                     title?.text = getString(R.string.communication_preferences)
                 }
                 setMobileView()
             }
 
             Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
-                if(requireActivity() is CreateAccountActivity) {
-                }else {
+                if (requireActivity() is CreateAccountActivity) {
+                } else {
                     title?.text = getString(R.string.str_profile_two_factor_verification)
                 }
             }
@@ -188,8 +188,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         isItMobileNumber = false
         requiredMobileNumber = true
         data = navData as ProfileDetailModel?
-        if(requireActivity() is CreateAccountActivity) {
-        }else {
+        if (requireActivity() is CreateAccountActivity) {
+        } else {
             title?.text = getString(R.string.profile_phone_number)
         }
         binding.inputMobileNumber.setLabel(getString(R.string.phone_number))
@@ -197,7 +197,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.txtBottom.visibility = View.GONE
         if (NewCreateAccountRequestModel.prePay) {
             binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
-        } else if (data!=null&&data?.accountInformation?.accSubType.equals(Constants.PAYG).not()) {
+        } else if (data != null && data?.accountInformation?.accSubType.equals(Constants.PAYG)
+                .not()
+        ) {
             binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
 
         } else {
@@ -207,8 +209,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     private fun setMobileView() {
         isItMobileNumber = true
-        if(requireActivity() is CreateAccountActivity) {
-        }else {
+        if (requireActivity() is CreateAccountActivity) {
+        } else {
             title?.text = getString(R.string.profile_mobile_number)
         }
         binding.inputMobileNumber.setLabel(getString(R.string.mobile_number))
@@ -221,11 +223,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     override fun observer() {
-            observe(viewModel.countriesList, ::getCountriesList)
-            observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
-            observe(viewModel.countriesCodeList, ::getCountryCodesList)
-            observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
-        }
+        observe(viewModel.countriesList, ::getCountriesList)
+        observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
+        observe(viewModel.countriesCodeList, ::getCountryCodesList)
+        observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
+    }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
         if (loader?.isVisible == true) {
@@ -414,6 +416,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         data = navData as ProfileDetailModel?
                         if (data != null) {
+                            Log.e("TAG", "isitmobilenumber --> " + isItMobileNumber)
                             if (isItMobileNumber) {
                                 val phone = data?.personalInformation?.phoneCell
                                 if (phone.isNullOrEmpty().not() && phone.equals(
@@ -433,7 +436,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                                     findNavController().popBackStack()
                                 } else {
 
-                                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                                    loader?.show(
+                                        requireActivity().supportFragmentManager,
+                                        Constants.LOADER_DIALOG
+                                    )
                                     if (data?.accountInformation?.accountType.equals(
                                             Constants.PERSONAL_ACCOUNT,
                                             true
@@ -482,7 +488,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
 
-    override fun onRetryClick(apiUrl: String){
+    override fun onRetryClick(apiUrl: String) {
 
     }
 
@@ -643,6 +649,21 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                     PROFILE_MANAGEMENT_MOBILE_CHANGE, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         data = navData as ProfileDetailModel?
+                        if (isItMobileNumber) {
+                            data?.personalInformation?.phoneCell =
+                                binding.inputMobileNumber.getText().toString()
+                            data?.personalInformation?.phoneCellCountryCode =
+                                binding.inputCountry.selectedItemDescription.let {
+                                    getCountryCodeRequiredText(it)
+                                }
+                        }else{
+                            data?.personalInformation?.phoneDay =
+                                binding.inputMobileNumber.getText().toString()
+                            data?.personalInformation?.phoneDayCountryCode =
+                                binding.inputCountry.selectedItemDescription.let {
+                                    getCountryCodeRequiredText(it)
+                                }
+                        }
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
@@ -654,6 +675,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
 
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                NewCreateAccountRequestModel.sms_referenceId = resource.data?.referenceId
 
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
@@ -673,7 +695,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
         }
     }
-
 
 
     override fun onAutoCompleteItemClick(item: String, isSelected: Boolean) {

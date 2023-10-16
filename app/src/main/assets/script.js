@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 "placeholder": "00 / 00"
             },
             "cvv": {
-                "display": "required",
+                "display": "show",
                 "selector": "#cvv",
                 "title": "CVV Code",
                 "placeholder": "***"
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if(message.localeCompare('Field is empty') == "0" ){
                         errorMessage = "Enter a card number";
                     } else if(message.localeCompare('Card number must be 13-19 digits and a recognizable card format') == "0") {
-                        errorMessage = "Check the payment method and card number";
+                        errorMessage = "Card number must be 16 digits or more";
                     } else {
                         errorMessage = message;
                     }
@@ -117,8 +117,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     if(message.localeCompare('Field is empty') == "0") {
                         errorMessage = "Enter an expiry date";
                     } else if(message.localeCompare('Expiration date must be a present or future month and year') == "0") {
-                        errorMessage = "Invalid date format";
-                        
+                        errorMessage = "Expiry date cannot be in the past";
+//                        errorMessage = "Invalid date format";
+
                     } else {
                         errorMessage = message;
                     }
@@ -131,40 +132,50 @@ document.addEventListener('DOMContentLoaded', function () {
                         errorMessage = "Name on card should be at least 3 characters";
                     } else {
                         errorMessage = message;
-                    }
+                    }0
                     document.getElementById("nameerrormesages").style.display = "";
                     document.getElementById("nameerrormesages").innerText = errorMessage;
                 }
             }
-            
+
         },
         "timeoutDuration" : 10000,
         "timeoutCallback" : function () {
-            window.webkit.messageHandlers.observer.postMessage("timedOUt");
+            window.appInterface.postMessage("timedOUt");
             document.getElementById("errorPayment").style.display="none";
         },
         "fieldsAvailableCallback" : function () {
-            window.webkit.messageHandlers.observer.postMessage("NMILoaded");
+            window.appInterface.postMessage("NMILoaded");
         },
         'callback': function(e) {
-            window.webkit.messageHandlers.observer.postMessage("3DSLoaded");
             var apiResponse = JSON.stringify(e, null, "");
-            invokeCommand("NMi Callback","{\"nmiModel\":"+apiResponse+"}")
-//            window.webkit.messageHandlers.observer.postMessage("NMi Callback"+ apiResponse);
+            //invokeCommand(apiResponse)
+            window.appInterface.postMessage(apiResponse);
             var card = e.card;
             var amt =  document.getElementById("amount").value;
             const pattern = /^(\w)[A-Za-z-\s\.']{2,50}$/i;
-            var cardType = e.card.type
 
-
-
-            if ((pattern.test(e.check.name) == false) ||  ((amt < 10) && (amt > 10000)) || (card.type == null) || (((card.type.localeCompare('visa') != "0") && (card.type.localeCompare('maestro') != "0") && (card.type.localeCompare('mastercard') != "0"))) || (amt == "") || (cardType == null)) {
-
+           /* if (pattern.test(e.check.name) == false) {
+                document.getElementById("nameerrormesages").style.display="";
+                document.getElementById("nameerrormesages").innerText = "The name on card must only include letters a to z, and special characters such as hyphens";
+                window.appInterface.postMessage("ValidationFailed");
+            } else if ((amt < 10) && (amt > 10000)) {
+                if (amt < 10) {
+                    document.getElementById("errorMessageForAmount").style.display="";
+                    document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be 00A310 or more";
+                } else  if (amt > 10000) {
+                    document.getElementById("errorMessageForAmount").style.display="";
+                    document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be 00A310,000 or less";
+                } else {
+                    document.getElementById("errorMessageForAmount").style.display="none";
+                }
+            } */
+             var cardType = e.card.type
+             if ((pattern.test(e.check.name) == false) ||  ((amt < 10) && (amt > 10000)) || (card.type == null) || (((card.type.localeCompare('visa') != "0") && (card.type.localeCompare('maestro') != "0") && (card.type.localeCompare('mastercard') != "0"))) || (amt == "") || (cardType == null)) {
                 if (cardType == null) {
                     document.getElementById("ccerrormesages").style.display="";
                     document.getElementById("ccerrormesages").innerText="Payment method is incorrect";
                 }
-
                 if (pattern.test(e.check.name) == false) {
                     document.getElementById("nameerrormesages").style.display="";
                     document.getElementById("nameerrormesages").innerText = "The name on card must only include letters a to z, and special characters such as hyphens";
@@ -188,12 +199,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.getElementById("errorMessageForAmount").style.display="none";
                     }
                 }
-            } else if (((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0")) && (pattern.test(e.check.name)))
-            {
+             } else if (((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0")) && (pattern.test(e.check.name))){
+                window.appInterface.postMessage("3DSLoaded");
                 var amt =  document.getElementById("amount").value;
-                invokeCommand("amounttoIncrease","{\"amount\":"+amt+"}")
-//                window.webkit.messageHandlers.observer.postMessage("amounttoIncrease"+ amt);
-                window.webkit.messageHandlers.observer.postMessage("3DStarted");
+                window.appInterface.postMessage("amounttoIncrease"+amt);
+                window.appInterface.postMessage("3DStarted");
                 document.getElementById("form1").style.display="none";
                 const options = {
                 paymentToken: e.token,
@@ -203,55 +213,47 @@ document.addEventListener('DOMContentLoaded', function () {
                 phone:  document.getElementById("phone").innerText,
                 city: document.getElementById("city").innerText,
                 address1:  document.getElementById("address1").innerText,
-                country:  document.getElementById("country").innerText,
+                country: "GB" /*document.getElementById("country").innerText*/,
                 firstName: e.check.name,
                 lastName:  e.check.name,
                 postalCode:  document.getElementById("postalCode").innerText
                 };
-                window.webkit.messageHandlers.observer.postMessage(options);
+                window.appInterface.postMessage(options);
                 const threeDSecureInterface = threeDS.createUI(options);
                 threeDSecureInterface.start('#threeDSMountPoint');
 
                 threeDSecureInterface.on('challenge', function(e) {
-                    window.webkit.messageHandlers.observer.postMessage("3DSLoaded");
-                    window.webkit.messageHandlers.observer.postMessage("3DStarted1");
+                    window.appInterface.postMessage("3DSLoaded");
                 });
 
                 threeDSecureInterface.on('complete', function(e) {
                     var apiResponse = JSON.stringify(e, null, "");
-                    invokeCommand("threeDSecure","{\"threeDSecure\":"+apiResponse+"}")
-                   // window.webkit.messageHandlers.observer.postMessage(apiResponse);
+                    window.appInterface.postMessage(apiResponse);
                 });
 
                 threeDSecureInterface.on('failure', function(e) {
-                    window.webkit.messageHandlers.observer.postMessage("cancelClicked");
-                });
-
-                threeDSecureInterface.on('error', function(e) {
-                    window.webkit.messageHandlers.observer.postMessage("paymentFailed");
+                    window.appInterface.postMessage("cancelClicked");
                 });
             } else {
                 //errorPayment
-                document.getElementById("ccerrormesages").style.display="";
-                document.getElementById("ccerrormesages").innerText="Payment method is incorrect";
+                document.getElementById("errorPayment").style.display="";
+                document.getElementById("errorPayment").innerText="Payment method is incorrect";
+                window.appInterface.postMessage('cardtypeerror');
             }
         }
     });
     gateway.on('error', function (e) {
-        window.webkit.messageHandlers.observer.postMessage('3DSNotIntiated');
+        window.appInterface.postMessage('3DSNotIntiated');
     })
 });
 
 function buttonClicked() {
-    window.webkit.messageHandlers.observer.postMessage("3DStarted");
+    window.appInterface.postMessage("3DStarted");
 }
 
 function checkNumber() {
     var amt =  document.getElementById("amount").value;
-    if (amt == "") {
-        document.getElementById("errorMessageForAmount").style.display="";
-        document.getElementById("errorMessageForAmount").innerText = "Enter the amount";
-    } else if (amt < 10) {
+    if (amt < 10) {
         //errorMessageForAmount
         //Top-up amount must be £10,000 or less
         //Top-up amount must be £@ or more
@@ -267,9 +269,9 @@ function checkNumber() {
 
 function saveCardClick() {
     var checkBox = document.getElementById("cardChecked");
-    invokeCommand("saveCardChecked","{\"saveCard\":"+checkBox.checked+"}")
+    invokeCommand(checkBox.checked)
 }
 
-function invokeCommand(action, params) {
-   window.webkit.messageHandlers.observer.postMessage("{\"action\":\""+action+"\", \"parameter\":"+params+"}");
+function invokeCommand(params) {
+   window.appInterface.postMessage(params);
 }

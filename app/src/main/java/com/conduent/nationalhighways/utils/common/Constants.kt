@@ -7,6 +7,7 @@ object Constants {
 
 
     const val DIRECT_DEBIT: String="directdebit"
+    const val FIND_VEHICLE="FIND_VEHICLE"
     const val DIRECT_DEBIT_DELETE="direct_debit_delete"
     const val DIRECT_DEBIT_NOT_SET_UP="direct_debit_not_set_up"
     const val ACCOUNT_CLOSURE = "ACCOUNT CLOSURE"
@@ -261,8 +262,10 @@ object Constants {
     const val CASES_GIVEN_DATE_WRONG = 1042
 
 
+    const val data_type = "data_type"
     const val NAV_FLOW_KEY = "navFlowKey"
     const val NAV_FLOW_FROM = "navFlowFrom"
+    const val FIRST_TYM_REDIRECTS = "FIRST_TYM_REDIRECTS"
     const val NAV_DATA_KEY = "navDataKey"
     const val FROM_SUMMARY_PAGE = "fromSummaryPage"
     const val Edit_REQUEST_KEY = "editRequestKey"

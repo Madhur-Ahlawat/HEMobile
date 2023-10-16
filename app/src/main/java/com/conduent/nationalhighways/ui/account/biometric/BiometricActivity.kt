@@ -370,6 +370,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
                     } else {
                         startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                             putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         }
 
@@ -380,6 +381,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
             is Resource.DataError -> {
                 startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                     putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 }
             }
@@ -409,6 +411,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
         } else {
             startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                 putString(Constants.NAV_FLOW_FROM, navFlowFrom)
             }
         }

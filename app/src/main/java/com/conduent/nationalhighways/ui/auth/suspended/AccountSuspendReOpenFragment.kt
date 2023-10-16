@@ -60,9 +60,10 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
             if (responseModel?.checkCheckBox == true) {
                 binding.cardView.visible()
+                binding.succesfulCardAdded.visible()
             } else {
                 binding.cardView.gone()
-
+                binding.succesfulCardAdded.gone()
             }
 
             if (responseModel?.card?.type.equals("visa", true)) {
@@ -130,29 +131,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             binding.btnTopUpNow.text = getString(R.string.str_continue)
             binding.layoutPaymentReferenceNumber.visible()
             binding.layoutPaymentReferenceNumber.visible()
-            binding.succesfulCardAdded.visible()
             Log.e("TAG", "initCtrl: newCard "+newCard )
             Log.e("TAG", "initCtrl: type "+responseModel?.card?.type )
-            if (newCard) {
-                binding.cardDetailsCv.visible()
-                binding.addCardTypeIv.setImageResource(
-                    Utils.setCardImage(
-                        responseModel?.card?.type?:""
-                    )
-                )
 
-                val htmlText =
-                    Html.fromHtml(responseModel?.card?.type?.uppercase() + "<br>" + responseModel?.card?.number?.let {
-                        Utils.maskCardNumber(
-                            it
-                        )
-                    }, Html.FROM_HTML_MODE_COMPACT)
-
-                binding.addCardNameTv.text = htmlText
-
-            } else {
-                binding.cardDetailsCv.gone()
-            }
 
         } else {
             binding.tvYouWillAlsoNeed.text = getString(R.string.str_you_have_less_than, "£5.00")
@@ -185,6 +166,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                             putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS,true)
                         }
 
                     getString(R.string.str_continue) -> {

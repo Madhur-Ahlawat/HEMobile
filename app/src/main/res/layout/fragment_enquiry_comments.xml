@@ -106,18 +106,6 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/characters_rem_tv" />
 
-                    <com.conduent.nationalhighways.utils.widgets.NHTextView
-                        android:id="@+id/dont_include_personal1_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:fontFamily="@font/open_sans"
-                        android:text="@string/str_dont_include_personal_text"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_16sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/upload_file_tv" />
 
                     <LinearLayout
                         android:id="@+id/allowed_file_types_ll"
@@ -127,7 +115,7 @@
                         android:orientation="horizontal"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/dont_include_personal1_tv">
+                        app:layout_constraintTop_toBottomOf="@+id/upload_file_tv">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/img_dot1"

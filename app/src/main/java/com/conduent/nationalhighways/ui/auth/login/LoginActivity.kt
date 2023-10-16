@@ -133,6 +133,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 } else {
                     startNewActivityByClearingStack(HomeActivityMain::class.java) {
                         putString(Constants.NAV_FLOW_FROM, from)
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS,true)
                     }
 
                 }
@@ -522,9 +523,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         dashboardViewModel.getAccountDetailsData()
 
                     }
-
-                    // startNewActivityByClearingStack(HomeActivityMain::class.java)
-
                 }
             })
     }
@@ -657,11 +655,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun onBiometricSuccessful() {
-
         val intent = Intent(this, HomeActivityMain::class.java)
+        intent.putExtra(Constants.FIRST_TYM_REDIRECTS,true)
         startActivity(intent)
-
-
     }
 
 

@@ -137,10 +137,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     override fun observer() {
 
         lifecycleScope.launch {
-            observe(
-                manualTopUpViewModel.paymentWithExistingCard,
-                ::handlePaymentWithExistingCardResponse
-            )
+            observe(manualTopUpViewModel.paymentWithExistingCard, ::handlePaymentWithExistingCardResponse)
             observe(manualTopUpViewModel.paymentWithNewCard, ::handlePaymentWithNewCardResponse)
 
         }
@@ -170,7 +167,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 if (navFlow == Constants.PAYMENT_TOP_UP) {
                     findNavController().navigate(R.id.action_accountSuspendedFinalPayFragment_to_newPaymentMethodFragment)
                 } else {
-                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java)
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java){
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS,true)
+                    }
 
                 }
 

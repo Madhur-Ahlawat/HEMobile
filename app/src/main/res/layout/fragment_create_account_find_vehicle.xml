@@ -133,10 +133,11 @@
             android:layout_height="wrap_content"
             android:padding="0dp"
             style="@style/input_text"
-            app:maxLength="10"
+            app:counterMaxLength="10"
             android:maxLength="10"
-            app:inputType="text"
-            app:imeOptions="actionDone" />
+            android:inputType="textCapCharacters"
+            app:imeOptions="actionDone"
+            android:textAllCaps="true"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/belowHint"

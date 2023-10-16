@@ -30,11 +30,6 @@ button[type=button] {
     color: white;
     background-color: #002E5F;
 }
-input:disabled {
-    color:solid black;
-    opacity:1.0;
-    border-bottom: 0px;
-}
 @font-face {
     font-family: 'opensans_regular';
     src: url('OpenSans-Regular.ttf') format('truetype');

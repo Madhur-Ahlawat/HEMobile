@@ -159,8 +159,8 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             binding.textMaximumVehicle.gravity = Gravity.CENTER
         }
         if (sessionManager.getLoggedInUser()) {
-            if(requireActivity() is MakeOffPaymentActivity||requireActivity() is CreateAccountActivity){
-            }else{
+            if (requireActivity() is MakeOffPaymentActivity || requireActivity() is CreateAccountActivity) {
+            } else {
                 vehicleMgmtViewModel.getVehicleInformationApi("0", "20")
             }
         }
@@ -267,7 +267,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
                     getString(R.string.vehicle_no_longer_exempt) -> findNavController().navigate(
                         R.id.action_maximumFragment_to_addVehicleFragment,
-                        bundle()
+                        bundle(true)
                     )
 
                     else -> {
@@ -278,23 +278,41 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                             }
 
                             else -> {
-                                Log.e("TAG", "onClick: navCall "+navCall )
-                                Log.e("TAG", "onClick: addedVehicleList2 "+NewCreateAccountRequestModel.addedVehicleList2.isEmpty() )
-                                Log.e("TAG", "onClick: vehicleList "+NewCreateAccountRequestModel.vehicleList.size )
-                                Log.e("TAG", "onClick: isVehicleAlreadyAdded "+NewCreateAccountRequestModel.isVehicleAlreadyAdded )
+                                Log.e("TAG", "onClick: navCall " + navCall)
+                                Log.e(
+                                    "TAG",
+                                    "onClick: addedVehicleList2 " + NewCreateAccountRequestModel.addedVehicleList2.isEmpty()
+                                )
+                                Log.e(
+                                    "TAG",
+                                    "onClick: vehicleList " + NewCreateAccountRequestModel.vehicleList.size
+                                )
+                                Log.e(
+                                    "TAG",
+                                    "onClick: isVehicleAlreadyAdded " + NewCreateAccountRequestModel.isVehicleAlreadyAdded
+                                )
                                 if (NewCreateAccountRequestModel.addedVehicleList2.isEmpty()) {
                                     if (navCall) {
                                         if (NewCreateAccountRequestModel.vehicleList.size > 0) {
-                                            findNavController().navigate(R.id.action_maximumFragment_clear_to_vehicleListFragment,bundle())
+                                            findNavController().navigate(
+                                                R.id.action_maximumFragment_clear_to_vehicleListFragment,
+                                                bundle()
+                                            )
                                         } else {
-                                            findNavController().navigate(R.id.action_maximumFragment_to_vehicleHomeListFragment,bundle())
+                                            findNavController().navigate(
+                                                R.id.action_maximumFragment_to_vehicleHomeListFragment,
+                                                bundle()
+                                            )
                                         }
 
                                     } else {
                                         if (NewCreateAccountRequestModel.isVehicleAlreadyAdded) {
 
                                             if (NewCreateAccountRequestModel.vehicleList.size > 0) {
-                                                findNavController().navigate(R.id.action_maximumFragment_vehicleListFragment,bundle())
+                                                findNavController().navigate(
+                                                    R.id.action_maximumFragment_vehicleListFragment,
+                                                    bundle()
+                                                )
                                             } else {
                                                 noVehicleAddedDialog()
                                             }
@@ -316,9 +334,15 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                                     if (sessionManager.getLoggedInUser()) {
 
                                         if (NewCreateAccountRequestModel.vehicleList.size > 0) {
-                                            findNavController().navigate(R.id.action_maximumFragment_clear_to_vehicleListFragment,bundle())
+                                            findNavController().navigate(
+                                                R.id.action_maximumFragment_clear_to_vehicleListFragment,
+                                                bundle()
+                                            )
                                         } else {
-                                            findNavController().navigate(R.id.action_maximumFragment_to_vehicleHomeListFragment,bundle())
+                                            findNavController().navigate(
+                                                R.id.action_maximumFragment_to_vehicleHomeListFragment,
+                                                bundle()
+                                            )
                                         }
 
 //                                        findNavController().navigate(
@@ -344,12 +368,20 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             }
 
             R.id.inCorrectVehicleNumber -> {
-                findNavController().popBackStack()
+                if (NewCreateAccountRequestModel.isRucEligible && navFlowFrom == Constants.FIND_VEHICLE) {
+                    findNavController().navigate(
+                        R.id.action_maximumFragment_to_findYourVehicleFragment,
+                        getBundle()
+                    )
+                } else {
+                    findNavController().popBackStack()
+                }
+
             }
         }
     }
 
-    private fun bundle(): Bundle {
+    private fun bundle(sendPlateNumber: Boolean = false): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
@@ -366,6 +398,17 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 isRUCEligible = nonUKVehicleModel?.isRUCEligible,
             )
         )
+        if (sendPlateNumber) {
+            bundle.putString(Constants.PLATE_NUMBER, NewCreateAccountRequestModel.plateNumber)
+        }
+        return bundle
+    }
+
+    private fun getBundle(): Bundle {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+        bundle.putString(Constants.PLATE_NUMBER, NewCreateAccountRequestModel.plateNumber)
+
         return bundle
     }
 

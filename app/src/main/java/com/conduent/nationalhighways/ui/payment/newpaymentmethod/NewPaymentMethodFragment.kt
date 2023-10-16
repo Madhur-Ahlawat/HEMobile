@@ -35,6 +35,7 @@ import com.conduent.nationalhighways.ui.payment.adapter.PaymentMethodAdapter
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -263,17 +264,35 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     override fun paymentMethodCallback(position: Int, value: String) {
         if (value == Constants.DELETE_CARD) {
             accountNumber = paymentList?.get(position)?.cardNumber.toString()
-            Log.e("TAG", "paymentMethodCallback: accountNumber " + accountNumber)
-            Log.e(
-                "TAG",
-                "paymentMethodCallback: primaryCard " + paymentList?.get(position)?.primaryCard
-            )
-            Log.e("TAG", "paymentMethodCallback: accSubType " + accountInformation?.accSubType)
-            Log.e("TAG", "paymentMethodCallback: paymentList " + paymentList?.get(position))
+
+
+
+
+            0
+            this.position = position
+            val bundle = Bundle()
 
             if (paymentList?.get(position)?.primaryCard == true) {
-                val bundle = Bundle()
 
+            } else {
+                isDirectDebitDelete = false
+            }
+            if (paymentList.orEmpty().size >= 2) {
+                deletePaymentDialog(
+                    getString(R.string.str_remove_payment_method),
+                    paymentList?.get(position)?.rowId,
+                    getString(
+                        R.string.str_are_you_sure_you_want_to_remove_payment_method,
+                        Utils.setStarmaskcardnumber(
+                            requireActivity(),
+                            paymentList?.get(position)?.cardNumber
+                        ),
+                        paymentList?.get(position)?.expMonth + "/" + paymentList?.get(position)?.expMonth
+                    )
+                )
+
+
+            } else {
                 if (paymentList.orEmpty().size == 1) {
                     if (accountInformation?.accSubType.equals(Constants.PAYG)) {
 
@@ -308,24 +327,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                 }
 
-
-            } else {
-                isDirectDebitDelete = false
-
-                this.position = position
-                deletePaymentDialog(
-                    getString(R.string.str_payment_method_deleted),
-                    paymentList?.get(position)?.rowId,
-                    getString(
-                        R.string.str_are_you_sure_you_want_to_remove_payment_method,
-                        paymentList?.get(position)?.cardNumber,
-                        paymentList?.get(position)?.expMonth + "/" + paymentList?.get(position)?.expMonth
-                    )
-                )
-
-
             }
-
 
         } else if (value == Constants.DIRECT_DEBIT) {
             accountNumber = paymentList?.get(position)?.bankAccountNumber.toString()
@@ -399,6 +401,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        hideLoader()
+    }
     private fun checkNullValuesOfModel(model: CardListResponseModel?) {
         if (model?.check == null) {
             model?.check = false
@@ -583,13 +589,13 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     private fun deletePaymentDialog(
         title: String,
-        rowId: String?,
+        rowId_: String?,
         message: String,
 
         ) {
         Log.e(
             "TAG",
-            "deletePaymentDialog() called with: title = $title, rowId = $rowId, message = $message"
+            "deletePaymentDialog() called with: title = $title, rowId = $rowId_, message = $message"
         )
 
         displayCustomMessage(title,
@@ -606,7 +612,17 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 override fun negativeBtnClick(dialog: DialogInterface) {
                     Log.e("TAG", "positiveBtnClick: deletecard api ")
                     showLoader()
-                    viewModel.deleteCard(PaymentMethodDeleteModel(rowId))
+                    if (paymentList?.get(position)?.primaryCard == true && paymentList.orEmpty().size > 1) {
+                        rowId = paymentList?.get(position)?.rowId ?: ""
+                        showLoader()
+
+                        makeSecondaryCardAsPrimary(
+                            paymentList?.get(position + 1)?.cardType,
+                            paymentList?.get(position + 1)?.rowId
+                        )
+                    } else {
+                        viewModel.deleteCard(PaymentMethodDeleteModel(rowId_))
+                    }
 
 
                 }

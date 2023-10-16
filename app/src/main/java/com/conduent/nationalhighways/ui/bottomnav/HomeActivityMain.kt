@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
+import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
@@ -29,6 +32,7 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment
+import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -41,6 +45,7 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
+import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -52,6 +57,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     lateinit var sessionManager: SessionManager
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
+    private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
 
     @Inject
     lateinit var api: ApiService
@@ -59,6 +65,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private var loader: LoaderDialog? = null
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     var from: String = ""
+    var firstTymRedirects:Boolean=false
 
     companion object {
         var dataBinding: ActivityHomeMainBinding? = null
@@ -276,6 +283,30 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun observeViewModel() {
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
+
+        if(intent.hasExtra(Constants.FIRST_TYM_REDIRECTS) && intent.getBooleanExtra(Constants.FIRST_TYM_REDIRECTS,false)==true){
+            callPushNotificationApi()
+            observe(webServiceViewModel.pushNotification, ::handlePushNotificationResponse)
+        }
+
+    }
+
+    private fun handlePushNotificationResponse(resource: Resource<EmptyApiResponse?>) {
+
+    }
+
+    private fun callPushNotificationApi() {
+
+        sessionManager.getFirebaseToken()?.let { firebaseToken ->
+            val request = PushNotificationRequest(
+                deviceToken = firebaseToken,
+                osName = PushNotificationUtils.getOSName(),
+                osVersion = PushNotificationUtils.getOSVersion(),
+                appVersion = PushNotificationUtils.getAppVersion(this),
+                optInStatus = "Y"
+            )
+            webServiceViewModel.allowPushNotification(request)
+        }
     }
 
     private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {

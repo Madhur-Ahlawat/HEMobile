@@ -43,6 +43,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var cursorPosition: Int? = 0
     private lateinit var suspendPaymentMethodAdapter: SuspendPaymentMethodAdapter
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
+    private var real_paymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var lowBalance: Boolean = true
     private var cardSelection: Boolean = false
     private val viewModel: PaymentMethodViewModel by viewModels()
@@ -238,7 +239,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, real_paymentList?.size ?: 0)
 
                 findNavController().navigate(
                     R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment,
@@ -265,12 +266,16 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
+        Log.e("TAG", "handleSaveCardResponse() called with ")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
         when (status) {
             is Resource.Success -> {
                 paymentList?.clear()
+                real_paymentList?.clear()
+                real_paymentList=status.data?.creditCardListType?.cardsList
+                Log.e("TAG", "handleSaveCardResponse: cardsList "+status.data?.creditCardListType?.cardsList.orEmpty().size )
                 for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
                     if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
                         paymentList?.add(status.data.creditCardListType.cardsList.get(i))
@@ -283,6 +288,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 if(paymentList.orEmpty().size==1){
                     paymentList?.get(0)?.primaryCard=true
                 }
+                Log.e("TAG", "handleSaveCardResponse: paymentList "+paymentList.orEmpty().size )
                 if (paymentList?.isNotEmpty() == true) {
 
                     for (i in 0 until (paymentList?.size ?: 0)) {

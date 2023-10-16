@@ -34,6 +34,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.getCountryCodeRequiredText
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import dagger.hilt.android.AndroidEntryPoint
@@ -232,7 +233,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         binding.apply {
             selectEmail.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
-                    selectTextMessage.isChecked = false
+//                    selectTextMessage.isChecked = false
                     edtEmail.visible()
                     isEnable()
                 } else {
@@ -243,12 +244,14 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             selectTextMessage.setOnCheckedChangeListener { buttonView, isChecked ->
 
                 if (isChecked) {
-                    selectEmail.isChecked = false
+//                    selectEmail.isChecked = false
+                    inputCountryHelper.visible()
                     inputCountry.visible()
                     inputMobileNumber.visible()
                     checkButton()
                 } else {
                     inputCountry.gone()
+                    inputCountryHelper.gone()
                     inputMobileNumber.gone()
                 }
                 checkButton()
@@ -307,6 +310,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         when (response) {
             is Resource.Success -> {
                 countriesCodeList.clear()
+                fullCountryNameWithCode.clear()
                 for (i in 0..(countriesModel?.size?.minus(1) ?: 0)) {
                     for (j in 0..(response.data?.size?.minus(1) ?: 0)) {
                         if (countriesModel?.get(i)?.id == response.data?.get(j)?.id) {
@@ -349,7 +353,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                             inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
 
                         }
-                    }else{
+                    } else {
                         inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
                     }
                 }
@@ -497,7 +501,20 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
 
     private fun checkButton() {
-        if (btnEnabled && binding.selectEmail.isChecked) {
+        if (binding.selectEmail.isChecked && binding.selectTextMessage.isChecked) {
+            if (btnEnabled && requiredCountryCode && requiredMobileNumber) {
+                binding.btnContinue.enable()
+                (navData as CrossingDetailsModelsResponse).countryCode =
+                    getCountryCodeRequiredText(
+                        binding.inputCountry.selectedItemDescription
+                    )
+                (navData as CrossingDetailsModelsResponse).fullCountryCode =
+                    binding.inputCountry.selectedItemDescription
+            } else {
+                binding.btnContinue.disable()
+            }
+        }
+      else  if (btnEnabled && binding.selectEmail.isChecked) {
             binding.btnContinue.enable()
         } else if (binding.selectTextMessage.isChecked && requiredCountryCode && requiredMobileNumber) {
             binding.btnContinue.enable()
@@ -524,13 +541,20 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
             requiredCountryCode = true
         } else {
-            if (fullCountryNameWithCode.size > 0) {
-                requiredCountryCode = fullCountryNameWithCode.any { it == item }
-            } else {
+
+            if (item.isEmpty() == true) {
                 requiredCountryCode = false
+                binding.inputCountryHelper.invisible()
+            } else {
+                binding.inputCountryHelper.visible()
+                if (fullCountryNameWithCode.size > 0) {
+                    requiredCountryCode = fullCountryNameWithCode.any { it == item }
+                } else {
+                    requiredCountryCode = false
+                }
+
             }
 
-            Log.e("TAG", "onAutoCompleteItemClick: requiredCountryCode " + requiredCountryCode)
 
             if (requiredCountryCode) {
                 (navData as CrossingDetailsModelsResponse).countryCode =

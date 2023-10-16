@@ -84,10 +84,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var phoneCountryCode: String = ""
     private var isItMobileNumber: Boolean = false
-    var phoneCell :String=""
-    var phoneCellCountryCode :String=""
-    var phoneDay :String=""
-    var phoneDayCountryCode :String=""
+    var phoneCell: String = ""
+    var phoneCellCountryCode: String = ""
+    var phoneDay: String = ""
+    var phoneDayCountryCode: String = ""
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -137,6 +137,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         if (arguments != null) {
             data = arguments?.getParcelable("data")
             response = arguments?.getParcelable("response")
+            Log.e("TAG", "initCtrl: isItMobileNumber " + isItMobileNumber)
+            if (isItMobileNumber) {
+                NewCreateAccountRequestModel.sms_referenceId = response?.referenceId
+            } else {
+                NewCreateAccountRequestModel.referenceId = response?.referenceId
+            }
         }
 
 
@@ -153,10 +159,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun setInputParamsData() {
         val profile_navData = navData as ProfileDetailModel?
 
-         phoneCell = profile_navData?.personalInformation?.phoneCell?:""
-         phoneCellCountryCode = profile_navData?.personalInformation?.phoneCellCountryCode?:""
-         phoneDay = profile_navData?.personalInformation?.phoneDay?:""
-         phoneDayCountryCode = profile_navData?.personalInformation?.phoneDayCountryCode?:""
+        phoneCell = profile_navData?.personalInformation?.phoneCell ?: ""
+        phoneCellCountryCode = profile_navData?.personalInformation?.phoneCellCountryCode ?: ""
+        phoneDay = profile_navData?.personalInformation?.phoneDay ?: ""
+        phoneDayCountryCode = profile_navData?.personalInformation?.phoneDayCountryCode ?: ""
 
         if (!isItMobileNumber) {
             phoneDay = data?.optionValue.toString()
@@ -334,7 +340,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         )
                     }
 
-                    Constants.ACCOUNT_CREATION_MOBILE_FLOW -> {
+                    ACCOUNT_CREATION_MOBILE_FLOW -> {
                         AdobeAnalytics.setActionTrack(
                             "resend",
                             "login:forgot password:choose options:otp",
@@ -378,7 +384,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                     }
 
-                    Constants.PROFILE_MANAGEMENT_2FA_CHANGE->{
+                    PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             arguments?.getParcelable(
                                 Constants.NAV_DATA_KEY,
@@ -391,7 +397,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
                 }
-                bundle.putString(Constants.PHONE_COUNTRY_CODE,this.phoneCountryCode)
+                bundle.putString(Constants.PHONE_COUNTRY_CODE, this.phoneCountryCode)
                 bundle.putParcelable("data", data)
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -400,6 +406,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
+                bundle.putBoolean(Constants.IS_MOBILE_NUMBER, isItMobileNumber)
 
                 findNavController().navigate(R.id.action_otpFragment_to_resenedCodeFragment, bundle)
 
@@ -629,12 +636,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-
+//                otpSuccessRedirection()
                 when (resource.errorModel?.status) {
 
                     500 -> {
                         binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
-
                     }
 
                     900 -> {
@@ -658,7 +664,18 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun otpSuccessRedirection() {
-
+        Log.e(
+            "TAG",
+            "otpSuccessRedirection: referenceId " + NewCreateAccountRequestModel.referenceId
+        )
+        Log.e(
+            "TAG",
+            "otpSuccessRedirection: sms_referenceId " + NewCreateAccountRequestModel.sms_referenceId
+        )
+        Log.e(
+            "TAG",
+            "otpSuccessRedirection: emailSecurityCode " + NewCreateAccountRequestModel.emailSecurityCode
+        )
         val bundle = Bundle()
         when (navFlowCall) {
             ACCOUNT_CREATION_MOBILE_FLOW -> {
@@ -672,6 +689,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                 bundle
                             )
                         }
+
                         Constants.TwoStepVerification -> {
 
                             findNavController().navigate(
@@ -679,6 +697,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                 bundle
                             )
                         }
+
                         else -> {
                             findNavController().navigate(
                                 R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
@@ -750,12 +769,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                     bundle
                                 )
                             }
+
                             Constants.TwoStepVerification -> {
                                 findNavController().navigate(
                                     R.id.action_twoStep_forgotOtpFragment_to_createAccountSummaryFragment,
                                     bundle
                                 )
                             }
+
                             else -> {
                                 findNavController().navigate(
                                     R.id.action_email_forgotOtpFragment_to_createAccountSummaryFragment,
@@ -825,7 +846,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun updateStandardUserProfile(
         dataModel: ProfileDetailModel?
     ) {
-
+        Log.e("TAG", "updateStandardUserProfile: phoneCell " + phoneCell)
+        Log.e("TAG", "updateStandardUserProfile: phoneCellCountryCode " + phoneCellCountryCode)
+        Log.e("TAG", "updateStandardUserProfile: phoneDay " + phoneDay)
+        Log.e("TAG", "updateStandardUserProfile: phoneDayCountryCode " + phoneDayCountryCode)
 
         dataModel?.personalInformation?.run {
             val request = UpdateProfileRequest(
@@ -937,6 +961,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                     } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                             putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         }
 
@@ -950,6 +975,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     displaySessionExpireDialog()
                 } else {
                     requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                         putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                     }
                 }
@@ -980,6 +1006,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
         } else {
             requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                 putString(Constants.NAV_FLOW_FROM, navFlowFrom)
             }
         }

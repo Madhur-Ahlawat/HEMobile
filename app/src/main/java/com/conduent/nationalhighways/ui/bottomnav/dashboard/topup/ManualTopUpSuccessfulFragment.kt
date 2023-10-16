@@ -66,7 +66,6 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
         when (v?.id) {
             R.id.btnContinue -> {
                 requireActivity().finish()
-                //requireActivity().startNormalActivity(HomeActivityMain::class.java)
             }
 
             R.id.downloadReceipt -> {

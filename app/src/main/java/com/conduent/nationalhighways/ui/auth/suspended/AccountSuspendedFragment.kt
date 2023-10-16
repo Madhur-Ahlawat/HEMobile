@@ -105,6 +105,7 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
             R.id.cancel_btn -> {
                 requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java){
                     putString(Constants.NAV_FLOW_FROM,navFlowFrom)
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS,true)
                 }
 
             }

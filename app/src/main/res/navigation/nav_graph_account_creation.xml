@@ -413,7 +413,10 @@
 
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
-            app:destination="@id/findYourVehicleFragment" />
+            app:destination="@id/findYourVehicleFragment"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"
+            />
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_vehicleDoesNotMatchCurrentVehicleFragment"
             app:destination="@id/vehicleDoesNotMatchCurrentVehicleFragment" />

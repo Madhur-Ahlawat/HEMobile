@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Parcelable
+import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -62,11 +64,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             data = CrossingDetailsModelsResponse()
         }
 
-// Set maximum length
-        val maxLength = 10 // Change this to your desired maximum length
-        binding.editNumberPlate.editText.filters = arrayOf(InputFilter.LengthFilter(maxLength))
-// Set all caps
-        binding.editNumberPlate.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+        binding.editNumberPlate.editText.filters = arrayOf(InputFilter.LengthFilter(10))
+        binding.editNumberPlate.editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+
         binding.editNumberPlate.setText(plateNumber.trim().replace(" ", "").replace("-", ""))
 
         if (plateNumber.isNotEmpty()) {
@@ -104,9 +104,46 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     override fun initCtrl() {
 //        binding.editNumberPlate.setMaxLength(10)
-        binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
+        binding.editNumberPlate.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.findVehicle.setOnClickListener(this)
     }
+
+    inner class GenericTextWatcher(private val index: Int) : TextWatcher {
+        override fun beforeTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            before: Int,
+            count: Int
+        ) {
+            isEnable()
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+//            val inputText = s.toString()
+//            val capitalizedText = inputText.capitalize() // Capitalize the text
+//
+//            // Remove the TextWatcher to prevent infinite loop
+//            binding.editNumberPlate.editText.removeTextChangedListener(this)
+//
+//            // Set the capitalized text back to the EditText
+//            binding.editNumberPlate.editText.setText(capitalizedText)
+//
+//            // Move the cursor to the end of the text
+//            binding.editNumberPlate.editText.setSelection(capitalizedText.length)
+//
+//            // Add the TextWatcher back
+//            binding.editNumberPlate.editText.addTextChangedListener(this)
+        }
+    }
+
 
     private fun isEnable() {
         val entered_numberplate =
@@ -159,6 +196,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+                bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
+
                 if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.editText.text
                         .toString().trim() && isCrossingCall.not()
                 ) {
@@ -199,6 +239,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = true
                     val bundleData = Bundle()
                     bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundleData.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
                     bundleData.putString(Constants.PLATE_NUMBER, plateNumber)
                     findNavController().navigate(
                         R.id.action_findVehicleFragment_to_maximumVehicleFragment,
@@ -207,21 +248,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 } else {
                     val vehicleList = NewCreateAccountRequestModel.vehicleList
                     val size = addedVehicleList.size + vehicleList.size
-                    Log.e("TAG", "onClick:size " + size)
-                    Log.e("TAG", "onClick:vehicleList " + vehicleList)
-                    Log.e("TAG", "onClick:navFlowCall " + navFlowCall)
-                    Log.e(
-                        "TAG",
-                        "onClick:personalAccount " + NewCreateAccountRequestModel.personalAccount
-                    )
+
                     if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
                         val accountType =
                             HomeActivityMain.accountDetailsData?.accountInformation?.accountType
-                        Log.e("TAG", "onClick:accountType " + accountType)
 
                         if (accountType == Constants.BUSINESS_ACCOUNT &&
                            ( (size >= BuildConfig.BUSINESS.toInt()) || vehicleList.size >= 10)) {
-                            Log.e("TAG", "onClick: 1123233 ")
                             NewCreateAccountRequestModel.isMaxVehicleAdded = true
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
@@ -229,7 +262,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             )
                         }else if (accountType != Constants.BUSINESS_ACCOUNT &&
                            ( (size >= BuildConfig.PERSONAL.toInt()) || vehicleList.size >= 10)) {
-                            Log.e("TAG", "onClick: 1123235673 ")
                             NewCreateAccountRequestModel.isMaxVehicleAdded = true
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
@@ -332,6 +364,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     val bundle = Bundle()
 
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
 
                     if (it.size > 0) {
 
@@ -339,6 +372,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             Log.e("TAG", "apiResponseDVRM1: E " + navFlowCall)
                             NewCreateAccountRequestModel.isExempted = true
                             bundle.putParcelable(Constants.VEHICLE_DETAIL, it[0])
+                            bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
@@ -353,6 +387,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                     it[0]
                                 )
                             }
+                            bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
@@ -399,6 +435,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         }
                     }
                     val bundle = Bundle()
+                    bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
+
                     if (navData == null) {
                         navData =
                             CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString())
@@ -411,6 +449,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         accountData.isVehicleAlreadyAddedLocal = true
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                        bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+
                         findNavController().navigate(
                             R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                             bundle
@@ -438,6 +478,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     private fun apiResponsePlateInfo(resource: Resource<GetPlateInfoResponseModel?>?) {
         val bundle = Bundle()
+        bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -510,6 +551,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         accountData.isVehicleAlreadyAddedLocal = true
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                        bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+
                         findNavController().navigate(
                             R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                             bundle
@@ -551,6 +594,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     resource.data?.let { apiData ->
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
+
                         Log.d("responseData", Gson().toJson(apiData))
 
                         if (vehicleList.contains(apiData[0]) && isCrossingCall.not()) {
@@ -564,6 +609,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                     it?.plateNumber
                                 )
                             }
+                            bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundleData
@@ -575,6 +622,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             Log.e("TAG", "apiResponseDVRM: 22 ")
                             NewCreateAccountRequestModel.isExempted = true
                             bundle.putParcelable(Constants.VEHICLE_DETAIL, apiData[0])
+                            bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
@@ -614,6 +663,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                     apiData[0]
                                 )
                             }
+                            bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
@@ -654,6 +704,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             accountData.isVehicleAlreadyAddedLocal = true
                             bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                             bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                            bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
@@ -720,6 +772,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     NewCreateAccountRequestModel.isVehicleAlreadyAdded = true
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+
                     findNavController().navigate(
                         R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                         bundle
