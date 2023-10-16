@@ -551,10 +551,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         val request = AccountPaymentHistoryRequest(
             index,
             Constants.PAYMENT,
-            countPerPage,
-            dateRangeModel?.startDate,
-            dateRangeModel?.endDate,
-            dateRangeModel?.vehicleNumber
+            countPerPage
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }

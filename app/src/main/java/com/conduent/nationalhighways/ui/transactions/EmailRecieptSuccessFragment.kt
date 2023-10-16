@@ -19,11 +19,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EmailRecieptSuccessFragment : BaseFragment<FragmentEmailRecieptSuccessBinding>() {
 
-    private var dateRangeModel: PaymentDateRangeModel? = null
-    private var topup: String? = null
-    private val dashboardViewModel: DashboardViewModel by viewModels()
-    private var loader: LoaderDialog? = null
-
     @Inject
     lateinit var sessionManager: SessionManager
 

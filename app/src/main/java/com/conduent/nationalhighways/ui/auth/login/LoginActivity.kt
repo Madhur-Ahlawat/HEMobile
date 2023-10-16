@@ -245,8 +245,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             sessionManager.getLoggedInUser()
         )
 
-        binding.btnLogin.performClick()
-        binding.btnLogin.performClick()
+        binding.edtEmail.editText.setText("anilkumar.thallapelli@conduent.com")
+        binding.edtPwd.editText.setText("Welcome1")
+        binding.btnLogin.enable()
     }
 
 

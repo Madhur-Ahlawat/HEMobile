@@ -10,8 +10,8 @@ data class AccountPaymentHistoryResponse(
     )
 
 class TransactionList (
-val transaction: MutableList<TransactionData?>?,
-val count: String?
+ var transaction: MutableList<TransactionData> = mutableListOf(),
+ val count: String?
 )
 
 @Parcelize
