@@ -116,8 +116,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_8dp"
+                            android:text="@string/str_file_size_not_morethan_8mb"
                             android:fontFamily="@font/open_sans"
-                            android:text="@string/str_allowed_file_types"
                             android:textColor="@color/black"
                             android:textSize="@dimen/font_16sp" />
 
@@ -145,7 +145,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_8dp"
                             android:fontFamily="@font/open_sans"
-                            android:text="@string/str_file_size_not_morethan_8mb"
+                            android:text="@string/str_allowed_file_types"
+
                             android:textColor="@color/black"
                             android:textSize="@dimen/font_16sp" />
 
