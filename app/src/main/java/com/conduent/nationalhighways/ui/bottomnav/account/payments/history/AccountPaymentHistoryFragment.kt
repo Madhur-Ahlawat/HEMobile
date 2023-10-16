@@ -269,10 +269,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
         val request = AccountPaymentHistoryRequest(
             index,
             Constants.PAYMENT,
-            countPerPage,
-            dateRangeModel.startDate,
-            dateRangeModel.endDate,
-            dateRangeModel.vehicleNumber
+            countPerPage
         )
         viewModel.paymentHistoryDetails(request)
     }

@@ -3,10 +3,10 @@ package com.conduent.nationalhighways.ui.bottomnav
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
@@ -162,10 +162,26 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
             navController.navigate(R.id.enquiryCategoryFragment, bundle)
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
+            dataBinding!!.bottomNavigationView.get(3)
+                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+            dataBinding!!.bottomNavigationView.get(1)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+            dataBinding!!.bottomNavigationView.get(2)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+            dataBinding!!.bottomNavigationView.get(0)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
             from = ""
 
         } else {
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
+            dataBinding!!.bottomNavigationView.get(0)
+                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+            dataBinding!!.bottomNavigationView.get(1)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+            dataBinding!!.bottomNavigationView.get(2)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+            dataBinding!!.bottomNavigationView.get(3)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
         }
 
 
@@ -212,12 +228,28 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
                     when (navigationItem.position) {
                         0 -> {
+                            dataBinding!!.bottomNavigationView.get(0)
+                                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+                            dataBinding!!.bottomNavigationView.get(1)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(2)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(3)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
                                 dashboardClick()
                             }
                         }
 
                         1 -> {
+                            dataBinding!!.bottomNavigationView.get(1)
+                                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+                            dataBinding!!.bottomNavigationView.get(0)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(2)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(3)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
                             if (navController.currentDestination?.id != R.id.crossingHistoryFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
@@ -229,6 +261,14 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         2 -> {
+                            dataBinding!!.bottomNavigationView.get(2)
+                                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+                            dataBinding!!.bottomNavigationView.get(1)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(0)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(3)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
                             if (navController.currentDestination?.id != R.id.notificationFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
@@ -240,6 +280,14 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         3 -> {
+                            dataBinding!!.bottomNavigationView.get(3)
+                                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+                            dataBinding!!.bottomNavigationView.get(2)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(1)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(0)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
                             if (navController.currentDestination?.id != R.id.accountFragment) {
                                 accountFragmentClick()
                             }

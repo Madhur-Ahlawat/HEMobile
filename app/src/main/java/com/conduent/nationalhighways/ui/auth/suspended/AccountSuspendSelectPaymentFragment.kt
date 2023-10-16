@@ -77,7 +77,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.btnContinue.setOnClickListener(this)
         binding.btnAddNewPaymentMethod.setOnClickListener(this)
         binding.btnAddNewPayment.setOnClickListener(this)
-        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
+        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal() }
 
 
 
@@ -111,16 +111,14 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         Selection.setSelection(binding.lowBalance.editText.text, edtLength!! - 1)
     }
 
-    private fun topBalanceDecimal(b: Boolean) {
-        if (b.not()) {
-            val mText = binding.lowBalance.getText().toString().trim()
-            var updatedText: String =
-                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
-                    .replace(".0", "")
-                    .replace(" ", "")
-            if (updatedText.isNotEmpty().not()) {
-                binding.lowBalance.setText(formatter.format(updatedText))
-            }
+    private fun topBalanceDecimal() {
+        val mText = binding.lowBalance.getText().toString().trim()
+        var updatedText: String =
+            mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
+                .replace(".0", "")
+                .replace(" ", "")
+        if (updatedText.isNotEmpty().not()) {
+            binding.lowBalance.setText(formatter.format(updatedText))
         }
     }
 
@@ -155,7 +153,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     .replace(".0", "")
                     .replace(" ", "")
             if (updatedText.isNotEmpty()) {
-                lowBalance = if (updatedText.length < 6) {
+                lowBalance = if (updatedText.length <= 6) {
                     if (updatedText.toInt() < 10) {
                         binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
                         false
@@ -166,16 +164,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     } else {
                         lowBalance = true
                         binding.lowBalance.removeError()
-                        binding.lowBalance.editText.removeTextChangedListener(this)
-                        binding.lowBalance.setText("£" + formatter.format(updatedText.toInt()))
-                        binding.lowBalance.editText.addTextChangedListener(this)
                         true
                     }
                 } else {
                     binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_8_characters))
                     false
                 }
-
             } else {
                 binding.lowBalance.removeError()
             }
@@ -209,7 +203,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         when (v?.id) {
 
             R.id.btnContinue -> {
-
+                topBalanceDecimal()
                 val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
                     .replace(".00", "")
                     .replace("$", "").replace(",", "")
@@ -285,8 +279,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     checkNullValuesOfModel(paymentList?.get(i))
                 }
 
-                if(paymentList.orEmpty().size==1){
-                    paymentList?.get(0)?.primaryCard=true
+                if (paymentList.orEmpty().size == 1) {
+                    paymentList?.get(0)?.primaryCard = true
                 }
                 Log.e("TAG", "handleSaveCardResponse: paymentList "+paymentList.orEmpty().size )
                 if (paymentList?.isNotEmpty() == true) {

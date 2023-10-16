@@ -165,7 +165,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
             R.id.btnCancel -> {
                 if (navFlow == Constants.PAYMENT_TOP_UP) {
-                    findNavController().navigate(R.id.action_accountSuspendedFinalPayFragment_to_newPaymentMethodFragment)
+                    findNavController().popBackStack(R.id.accountSuspendedPaymentFragment,false)
                 } else {
                     requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java){
                         putBoolean(Constants.FIRST_TYM_REDIRECTS,true)

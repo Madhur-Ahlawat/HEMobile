@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.ThresholdAmountApiResponse
@@ -20,6 +23,7 @@ import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTy
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.remote.NoConnectivityException
 import com.conduent.nationalhighways.data.repository.dashboard.DashBoardRepo
+import com.conduent.nationalhighways.ui.transactions.paging.TransactionsPagingSource
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
@@ -39,6 +43,11 @@ class DashboardViewModel @Inject constructor(
     private val repository: DashBoardRepo,
     val errorManager: ErrorManager
 ) : ViewModel() {
+    val loading = MutableLiveData<Boolean>()
+
+    val transactionsList = Pager(PagingConfig(10)) {
+        TransactionsPagingSource(repository)
+    }.flow.cachedIn(viewModelScope)
     private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
     val accountType: LiveData<AccountResponse> get() = _accountType
     private val _accountType = MutableLiveData<AccountResponse>()
