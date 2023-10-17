@@ -58,7 +58,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     @Inject
     lateinit var sessionManager: SessionManager
     private val dashboardViewModel: DashboardViewModel by viewModels()
-    private var personalInformation: PersonalInformation? = null
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     var iconColorStates = ColorStateList(
         arrayOf(
