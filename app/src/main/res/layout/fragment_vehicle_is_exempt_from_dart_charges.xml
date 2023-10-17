@@ -44,7 +44,7 @@
                 android:layout_marginTop="@dimen/_13dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="@string/our_records_show_that_number_plate_is_exempt_from_dart_charge_payment_and_your_remaining_credit_cannot_be_transferred_contact_the_dart_charge_contact_centre_for_help_telephone_0300_300_0120_every_day_8am_to_8pm"
+                android:text="@string/our_records_show_that_number_plate_is_exempt_from_dart_charge_payment"
                 android:textColor="@color/new_btn_color"
                 android:textSize="@dimen/_15sp" />
         </LinearLayout>

@@ -48,16 +48,6 @@
                 android:text="@string/vehcile_type_mismatch"
                 android:textColor="@color/new_btn_color"
                 android:textSize="@dimen/_15sp" />
-
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_80dp"
-                android:layout_marginTop="@dimen/_32dp"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="If you pay the wrong Dart Charge for your type\nof vehicle, you could receive a Penalty Charge\nNotice."
-                android:textColor="@color/new_btn_color"
-                android:textSize="@dimen/_15sp" />
         </LinearLayout>
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
@@ -66,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/btnFeedback"
-            android:text="@string/str_ok"
+            android:text="BUY CROSSINGS FOR THIS VEHICLE"
             app:radius="5dp" />
 
         <com.conduent.nationalhighways.utils.widgets.NHButton

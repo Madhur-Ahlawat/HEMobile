@@ -68,6 +68,12 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     private fun initUI() {
         title = requireActivity().findViewById(R.id.title_txt)
         binding.run {
+            if(HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.EXEMPT_ACCOUNT)){
+                paymentManagement.gone()
+            }
+            else{
+                paymentManagement.visible()
+            }
             if (isSecondaryUser)
                 contactUs.gone()
 

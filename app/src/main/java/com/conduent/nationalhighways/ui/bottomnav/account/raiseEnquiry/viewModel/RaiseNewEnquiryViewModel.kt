@@ -19,6 +19,8 @@ import com.conduent.nationalhighways.utils.MimeType
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -42,8 +44,8 @@ class RaiseNewEnquiryViewModel @Inject constructor(
     val subcategoriesLiveData: LiveData<Resource<List<CaseCategoriesModel?>?>?> get() = _subcategoriesData
 
 
-    private val _enquiryResponseModel = MutableLiveData<Resource<EnquiryResponseModel?>?>()
-    val enquiryResponseLiveData: LiveData<Resource<EnquiryResponseModel?>?> get() = _enquiryResponseModel
+    val _enquiryResponseModel = MutableStateFlow<Resource<EnquiryResponseModel?>?>(null)
+    val enquiryResponseLiveData: StateFlow<Resource<EnquiryResponseModel?>?> get() = _enquiryResponseModel
 
     private val _uploadFileModel = MutableLiveData<Resource<UploadFileResponseModel?>?>()
     val uploadFileLiveData: LiveData<Resource<UploadFileResponseModel?>?> get() = _uploadFileModel
@@ -134,7 +136,7 @@ class RaiseNewEnquiryViewModel @Inject constructor(
         viewModelScope.launch {
             try {
 
-                _enquiryResponseModel.postValue(
+                _enquiryResponseModel.emit(
                     ResponseHandler.success(
                         repository.raiseEnquiryApi(
                             enquiryRequest
@@ -142,7 +144,7 @@ class RaiseNewEnquiryViewModel @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
-                _enquiryResponseModel.postValue(ResponseHandler.failure(e))
+                _enquiryResponseModel.emit(ResponseHandler.failure(e))
             }
         }
     }

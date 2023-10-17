@@ -59,6 +59,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dont_include_personal_tv"
             app:maxLength="50" />
+
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:id="@+id/lastname_et"
             android:layout_width="match_parent"
@@ -85,21 +86,31 @@
             app:labelText="@string/email_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lastname_et"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/lastname_et" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/label_country_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_3dp"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:text="@string/country_code"
+            android:textColor="@color/label_color"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_et" />
 
         <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
             android:id="@+id/countrycode_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_20dp"
-            android:textColor="@color/black"
-            android:singleLine="true"
-            android:textSize="17sp"
             android:hint="Country code"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_et" />
+            app:layout_constraintTop_toBottomOf="@+id/label_country_code" />
 
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:id="@+id/mobileNumber_et"
@@ -115,7 +126,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/countrycode_et"
             app:maxLength="15" />
-
 
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
