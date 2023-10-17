@@ -120,7 +120,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         binding.btnPay.setOnClickListener(this)
         binding.btnCancel.setOnClickListener(this)
-        binding.lowBalance.setText("£" + String.format("%.2f", topUpAmount))
+        binding.lowBalance.setText("£" + formatter.format(topUpAmount)
+        )
         if (paymentList?.isNotEmpty() == true) {
             binding.ivCardType.setImageResource(Utils.setCardImage(paymentList?.get(position)?.cardType?:""))
 

@@ -68,19 +68,10 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
 
         binding.descTv.text = resources.getString(
             R.string.vehcile_type_mismatch,
-            selectedVehicleType, correctVehicleType,
-                    chargingRate
+            selectedVehicleType, correctVehicleType
         )
         setData()
         setClickListeners()
-
-        if (navFlowCall == PAY_FOR_CROSSINGS) {
-            binding.btnOk.text = resources.getString(R.string.pay_new_amount)
-        }
-        /*  val i = Intent(Intent.ACTION_VIEW)
-          i.data = Uri.parse(url)
-          startActivity(i)*/
-
 
     }
 

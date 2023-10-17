@@ -84,11 +84,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         recentTransactionItem.activity?.substring(0, 1)!!
                             .uppercase(Locale.getDefault())
                             .plus(
-                            recentTransactionItem.activity.substring(
-                                1,
-                                recentTransactionItem.activity.length
-                            )!!.lowercase(Locale.getDefault())
-                        )
+                                recentTransactionItem.activity.substring(
+                                    1,
+                                    recentTransactionItem.activity.length
+                                )!!.lowercase(Locale.getDefault())
+                            )
                     if (recentTransactionItem.amount?.contains("-") == false) {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
                         indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
@@ -232,6 +232,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showNonPayGUI(this)
             } else if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                 showPayGUI(this)
+            } else if (accountInformation?.accSubType.equals(Constants.EXEMPT_PARTNER)) {
+                showExemptPartnerUI(this)
             }
         }
     }
@@ -258,7 +260,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         paymentHistoryListData?.clear()
                         paymentHistoryListData?.addAll(it)
                         paymentHistoryListData =
-                            sortTransactionsDateWiseDescending(paymentHistoryListData?:ArrayList()).toMutableList()
+                            sortTransactionsDateWiseDescending(
+                                paymentHistoryListData ?: ArrayList()
+                            ).toMutableList()
                         recentTransactionAdapter.submitList(
                             sortTransactionsDateWiseDescending(
                                 paymentHistoryListData!!
@@ -311,47 +315,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
         }
         return transactionListSorted
-    }
-
-    private fun handleAlertsData(status: Resource<AlertMessageApiResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (status) {
-            is Resource.Success -> {
-                status.data?.messageList?.let { alerts ->
-                    if (alerts.isNotEmpty()) {
-//                        binding.notificationView.visible()
-//                        binding.viewAllNotifi.text =
-//                            getString(R.string.str_view_all, alerts.size.toString())
-//                        binding.viewAllNotifi.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-                        if (requireActivity() is HomeActivityMain) {
-                            HomeActivityMain.dataBinding!!.bottomNavigationView.navigationItems.let { list ->
-                                val badgeCountBtn =
-                                    list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
-                                badgeCountBtn.visible()
-                                badgeCountBtn.text = alerts.size.toString()
-                            }
-                        }
-                    } else {
-                        hideNotification()
-                    }
-                }
-            }
-
-            is Resource.DataError -> {
-                if (status.errorModel?.errorCode == Constants.NO_DATA_FOR_NOTIFICATIONS) {
-                    hideNotification()
-                } else {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
-                }
-            }
-
-            else -> {
-
-            }
-        }
-
     }
 
     private fun hideNotification() {
@@ -438,6 +401,87 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
         }
         getPaymentHistoryList(startIndex)
+    }
+
+    private fun showExemptPartnerUI(data: AccountResponse) {
+        personalInformation = data.personalInformation
+
+        binding.apply {
+            tvAvailableBalanceHeading.visible()
+            tvAvailableBalance.visible()
+            tvAvailableBalance.text=getString(R.string.str_zero_euro)
+//            tvAvailableBalance.apply {
+//                visible()
+//                text = data.replenishmentInformation?.currentBalance?.run {
+//                    get(0) + " " + drop(1)
+//                }
+//            }
+
+            tvAccountStatusHeading.visible()
+            cardIndicatorAccountStatus.visible()
+
+//            valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
+
+            boxLowBalanceThreshold.visible()
+            valueLowBalanceThreshold.text = getString(R.string.str_zero_euro)
+
+            boxTopupAmount.visible()
+            valueTopupAmount.text = getString(R.string.str_zero_euro)
+
+            boxTopupMethod.visible()
+            valueAutopay.text = getString(R.string.exempt)
+
+            buttonTopup.gone()
+
+            tvAccountNumberHeading.visible()
+            tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            boxCardType.visible()
+            cardLogo.gone()
+            cardNumber.text = getString(R.string.no_payment_method_required)
+//            tvAccountStatus.text = data.accountInformation?.accountStatus
+//            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
+//            tvAccountType.text = data.accountInformation?.type
+            data.let {
+                it.accountInformation?.let {
+                    it.accountStatus?.let {
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatus,
+                            binding.cardIndicatorAccountStatus
+                        )
+                    }
+//                    it.accountFinancialstatus?.let {
+//                        DashboardUtils.setAccountFinancialStatus(it, valueAutopay)
+//                    }
+
+                    it.type?.let {
+                        //                DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
+                        sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
+                        sessionManager.saveAccountType(data.accountInformation?.accountType)
+                    }
+                }
+                it.personalInformation?.emailAddress?.let { email ->
+                    sessionManager.saveAccountEmailId(email)
+                }
+            }
+            when (data.replenishmentInformation?.reBillPayType) {
+                Constants.MASTERCARD -> {
+                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.mastercard))
+                }
+
+                Constants.VISA -> {
+                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
+
+                }
+
+                Constants.MAESTRO -> {
+                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
+                }
+            }
+            boxViewAll.visible()
+            getPaymentHistoryList(startIndex)
+            rvRecenrTransactions.visible()
+        }
     }
 
     private fun showNonPayGUI(data: AccountResponse) {

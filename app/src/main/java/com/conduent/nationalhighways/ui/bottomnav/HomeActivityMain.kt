@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -12,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.AccountResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
@@ -50,6 +51,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener {
 
@@ -58,7 +60,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
-
+    var iconColorStates = ColorStateList(
+        arrayOf(
+            intArrayOf(-android.R.attr.state_checked),
+            intArrayOf(android.R.attr.state_checked)
+        ), intArrayOf(
+            Color.parseColor("#002E5F"),
+            Color.parseColor("#007AFF")
+        )
+    )
     @Inject
     lateinit var api: ApiService
     private lateinit var navController: NavController
@@ -120,7 +130,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
             endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
         )
-        Log.e("XJ220", Gson().toJson(request))
         dashboardViewModel.getDashboardAllData(request)
     }
 
@@ -363,8 +372,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
         when (status) {
             is Resource.Success -> {
-                personalInformation = status.data?.personalInformation
-
                 status.data?.apply {
 
                     accountDetailsData = this
