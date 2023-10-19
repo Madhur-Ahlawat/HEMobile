@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
@@ -19,6 +20,7 @@ import com.conduent.nationalhighways.databinding.FragmentEnquiryCommentsBinding
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -40,6 +42,8 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
     OnRetryClickListener {
 
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
+    val apiViewModel: RaiseAPIViewModel by viewModels()
+
     var file: File? = null
     private var loader: LoaderDialog? = null
     var previousComments: String = ""
@@ -175,7 +179,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
             if (navFlowFrom == Constants.EDIT_SUMMARY || editRequest.isNotEmpty()) {
             } else {
-                observe(viewModel.uploadFileLiveData, ::uploadFileResponse)
+                observe(apiViewModel.uploadFileLiveData, ::uploadFileResponse)
             }
 
         }
@@ -287,7 +291,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
     private fun uploadFileApi() {
         this.file?.let {
-            viewModel.uploadFileApi(it)
+            apiViewModel.uploadFileApi(it)
 
             loader?.show(
                 requireActivity().supportFragmentManager,
@@ -356,7 +360,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
     override fun onRetryClick(apiUrl: String) {
         if (apiUrl.contains(BuildConfig.UPLOAD_FILE)) {
-            this.file?.let { viewModel.uploadFileApi(it) }
+            this.file?.let { apiViewModel.uploadFileApi(it) }
         } else {
 
         }

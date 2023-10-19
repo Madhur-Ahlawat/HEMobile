@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,11 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentTryPaymentAgainBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import javax.annotation.meta.When
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
     View.OnClickListener {
-
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -37,6 +35,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
         when (v?.id) {
 
             R.id.tryPaymentAgain -> {
+                Log.e("TAG", "onClick: -> ")
                 findNavController().popBackStack()
             }
         }

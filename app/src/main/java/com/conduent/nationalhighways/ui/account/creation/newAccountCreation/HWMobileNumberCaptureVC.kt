@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -20,7 +19,6 @@ import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
-import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -636,15 +634,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 when (navFlowCall) {
                     PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            arguments?.getParcelable(
-                                Constants.NAV_DATA_KEY,
-                                CommunicationPrefsRequestModel::class.java
-                            )
-                        } else {
-                            arguments?.getParcelable(Constants.NAV_DATA_KEY)
-                        }
-                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
 
                     PROFILE_MANAGEMENT_MOBILE_CHANGE, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
@@ -656,7 +645,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                                 binding.inputCountry.selectedItemDescription.let {
                                     getCountryCodeRequiredText(it)
                                 }
-                        }else{
+                        } else {
                             data?.personalInformation?.phoneDay =
                                 binding.inputMobileNumber.getText().toString()
                             data?.personalInformation?.phoneDayCountryCode =
@@ -697,8 +686,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
 
-    override fun onAutoCompleteItemClick(item: String, isSelected: Boolean) {
-        if (isSelected) {
+    override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
+        if (selected) {
             binding.inputMobileNumber.setText("")
             binding.inputMobileNumber.removeError()
         } else {

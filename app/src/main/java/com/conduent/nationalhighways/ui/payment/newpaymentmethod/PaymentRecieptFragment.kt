@@ -375,37 +375,40 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             requiredCountryCode =
                 fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
-            if (index == 0) {
-                requiredMobileNumber = true
-            }
-
 
             if (index == 1) {
-                val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
-                if (binding.inputCountry.getSelectedDescription().equals("UK +44", true)) {
-                    requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
-                        if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
-                            binding.inputMobileNumber.removeError()
-                            true
+                if(charSequence.toString().isEmpty()){
+                    requiredMobileNumber=false
+                    binding.inputMobileNumber.removeError()
+                }else {
+                    val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
+                    if (binding.inputCountry.getSelectedDescription()
+                            .equals(Constants.UNITED_KINGDOM, true)
+                    ) {
+                        requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
+                            if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
+                                binding.inputMobileNumber.removeError()
+                                true
+                            } else {
+                                binding.inputMobileNumber.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
+                                false
+                            }
                         } else {
-                            binding.inputMobileNumber.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
                             false
                         }
                     } else {
-                        false
-                    }
-                } else {
 
-                    requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
-                        if (phoneNumber.matches(Utils.PHONENUMBER)) {
-                            binding.inputMobileNumber.removeError()
-                            true
+                        requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
+                            if (phoneNumber.matches(Utils.PHONENUMBER)) {
+                                binding.inputMobileNumber.removeError()
+                                true
+                            } else {
+                                binding.inputMobileNumber.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                                false
+                            }
                         } else {
-                            binding.inputMobileNumber.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
                             false
                         }
-                    } else {
-                        false
                     }
                 }
             }

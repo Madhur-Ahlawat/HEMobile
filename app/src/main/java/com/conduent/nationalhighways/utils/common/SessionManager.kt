@@ -22,6 +22,8 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val USER_TOKEN_TIME_OUT = "user_token_time_out"
         const val Refresh_TOKEN = "refresh_token"
         const val ACCOUNT_NUMBER = "account_number"
+        const val SMS_OPTION = "sms_option"
+        const val NOTIFICATION_OPTION = "notification_option"
         const val ACCOUNT_STATUS = "account_status"
         const val ACCOUNT_TYPE = "account_type"
         const val SUB_ACCOUNT_TYPE = "sub_account_type"
@@ -97,16 +99,29 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     fun fetchRefreshToken(): String? {
         return prefs.getString(Refresh_TOKEN, null)
     }
+    fun fetchSmsOption(): String? {
+        return prefs.getString(SMS_OPTION, null)
+    }
 
     fun saveAccountNumber(accountNumber: String) {
         prefs.edit().apply {
             putString(ACCOUNT_NUMBER, accountNumber)
         }.apply()
     }
+    fun saveSmsOption(sms_option: String) {
+        prefs.edit().apply {
+            putString(SMS_OPTION, sms_option)
+        }.apply()
+    }
 
     fun saveAccountStatus(accountStatus: String) {
         prefs.edit().apply {
             putString(ACCOUNT_STATUS, accountStatus)
+        }.apply()
+    }
+    fun saveNotificationOption(notificationOption: Boolean) {
+        prefs.edit().apply {
+            putBoolean(NOTIFICATION_OPTION, notificationOption)
         }.apply()
     }
 
@@ -118,6 +133,9 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
     fun fetchFirstName(): String? {
         return prefs.getString(FIRST_NAME, null)
+    }
+    fun fetchNotificationOption(): Boolean? {
+        return prefs.getBoolean(NOTIFICATION_OPTION, false)
     }
   fun saveLastName(name: String) {
         prefs.edit().apply {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
@@ -14,6 +15,7 @@ import com.conduent.nationalhighways.databinding.FragmentEnquiryCategoryBinding
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -29,6 +31,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     DropDownItemSelectListener, BackPressListener {
 
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
+    val apiViewModel: RaiseAPIViewModel by viewModels()
 
     private var categoryList: ArrayList<CaseCategoriesModel> = ArrayList()
     private var subcategoryList: ArrayList<CaseCategoriesModel> = ArrayList()
@@ -141,7 +144,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
     private fun getCategoriesApiCall() {
 //        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        viewModel.getCategories()
+        apiViewModel.getCategories()
     }
 
     override fun observer() {
@@ -149,8 +152,8 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
             getCategoriesApiCall()
-            observe(viewModel.categoriesLiveData, ::categoriesData)
-            observe(viewModel.subcategoriesLiveData, ::subCategoriesData)
+            observe(apiViewModel.categoriesLiveData, ::categoriesData)
+            observe(apiViewModel.subcategoriesLiveData, ::subCategoriesData)
         }
         isViewCreated = true
     }
@@ -234,7 +237,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         if (selectedItem.equals("A general enquiry") || selectedItem.equals("A complaint")) {
 //            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
-            viewModel.getSubCategories(categoryList[position].name.toString())
+            apiViewModel.getSubCategories(categoryList[position].name.toString())
             viewModel.edit_enquiryModel.value?.category = categoryList.get(position)
             binding.apply {
                 subcategoryDropdown.dataSet.clear()

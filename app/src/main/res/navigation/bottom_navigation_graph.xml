@@ -389,7 +389,9 @@
         tools:layout="@layout/fragment_resend_code">
         <action
             android:id="@+id/action_resenedCodeFragment_to_otpFragment"
-            app:destination="@id/forgotOtpFragment" />
+            app:destination="@id/forgotOtpFragment"
+            app:popUpTo="@id/forgotOtpFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -667,6 +669,13 @@
         <action
             android:id="@+id/action_nmiPaymentFragment_to_tryPaymentAgainFragment"
             app:destination="@id/tryPaymentAgainFragment" />
+
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment"
+            app:popUpTo="@id/paymentMethodFragment"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
@@ -721,6 +730,13 @@
         <action
             android:id="@+id/directDebitFragment_to_paymentSuccessFragment2"
             app:destination="@id/paymentSuccessFragment" />
+
+        <action
+            android:id="@+id/action_directDebitFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment"
+            app:popUpTo="@id/paymentMethodFragment"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment

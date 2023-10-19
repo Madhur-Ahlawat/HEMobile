@@ -506,6 +506,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
         hideLoader()
+
+        Log.e("TAG", "handleDeleteCardResponse: " )
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("500") == true || status.data?.statusCode?.equals(
@@ -534,7 +536,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
                     bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
-
+                    Log.e("TAG", "handleDeleteCardResponse: 11 > " )
                     findNavController().navigate(
                         R.id.paymentMethodFragment_to_action_paymentSuccessFragment,
                         bundle

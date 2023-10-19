@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRe
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -58,6 +59,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     @Inject
     lateinit var sessionManager: SessionManager
     private val dashboardViewModel: DashboardViewModel by viewModels()
+    private var personalInformation: PersonalInformation? = null
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     var iconColorStates = ColorStateList(
         arrayOf(
@@ -74,7 +76,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private var loader: LoaderDialog? = null
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     var from: String = ""
-    var firstTymRedirects:Boolean=false
+    var firstTymRedirects: Boolean = false
 
     companion object {
         var dataBinding: ActivityHomeMainBinding? = null
@@ -340,7 +342,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     override fun observeViewModel() {
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
 
-        if(intent.hasExtra(Constants.FIRST_TYM_REDIRECTS) && intent.getBooleanExtra(Constants.FIRST_TYM_REDIRECTS,false)==true){
+        if (intent.hasExtra(Constants.FIRST_TYM_REDIRECTS) && intent.getBooleanExtra(
+                Constants.FIRST_TYM_REDIRECTS,
+                false
+            ) == true
+        ) {
             callPushNotificationApi()
             observe(webServiceViewModel.pushNotification, ::handlePushNotificationResponse)
         }
@@ -348,7 +354,19 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handlePushNotificationResponse(resource: Resource<EmptyApiResponse?>) {
+        when (resource) {
+            is Resource.Success -> {
+                sessionManager.saveNotificationOption(Utils.areNotificationsEnabled(this))
+            }
 
+            is Resource.DataError -> {
+
+            }
+
+            else -> {
+
+            }
+        }
     }
 
     private fun callPushNotificationApi() {
@@ -359,7 +377,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 osName = PushNotificationUtils.getOSName(),
                 osVersion = PushNotificationUtils.getOSVersion(),
                 appVersion = PushNotificationUtils.getAppVersion(this),
-                optInStatus = "Y"
+                optInStatus = Utils.getNotificationStatus(this)
             )
             webServiceViewModel.allowPushNotification(request)
         }
@@ -371,6 +389,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
         when (status) {
             is Resource.Success -> {
+                dashboardViewModel.personalInformationData.value = status.data?.personalInformation
+                dashboardViewModel.accountInformationData.value = status.data?.accountInformation
+                personalInformation = status.data?.personalInformation
+
                 status.data?.apply {
 
                     accountDetailsData = this
@@ -381,6 +403,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     sessionManager.saveZipCode(personalInformation?.zipCode ?: "")
                     sessionManager.savePhoneNumber(personalInformation?.phoneNumber ?: "")
                     sessionManager.saveAccountNumber(accountInformation?.number ?: "")
+                    sessionManager.saveSmsOption(accountInformation?.smsOption ?: "")
                     if (personalInformation?.phoneCellCountryCode?.isEmpty() == true) {
                         sessionManager.saveUserCountryCode(
                             personalInformation.phoneDayCountryCode ?: ""

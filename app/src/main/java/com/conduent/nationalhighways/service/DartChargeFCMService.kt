@@ -29,6 +29,7 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Log.e("TAG", "onMessageReceived() called with: remoteMessage = $remoteMessage")
         try {
             remoteMessage.notification?.let {
                 it.body?.let { body -> sendNotification(body) }
