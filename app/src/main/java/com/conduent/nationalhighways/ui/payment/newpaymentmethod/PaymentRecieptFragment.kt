@@ -44,17 +44,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>(),
     View.OnClickListener, NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
-    private var commaSeperatedString: String? = null
+    private var isButtonEnabled: Boolean = false
     private var filterTextForSpecialChars: String? = null
     private var requiredCountryCode = true
     private var requiredMobileNumber = false
     private var loader: LoaderDialog? = null
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesCodeList: MutableList<String> = ArrayList()
-    private var isViewCreated: Boolean = false
     private var isItMobileNumber = true
-    private var btnEnabled: Boolean = false
-
+    private var isEmailValid: Boolean = false
+    private var commaSeparatedString: String? = null
     private var countriesList: MutableList<String> = ArrayList()
     private var countriesModel: List<CountriesModel?>? = ArrayList()
     private var fullCountryNameWithCode: MutableList<String> = ArrayList()
@@ -68,7 +67,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     @Inject
     lateinit var sessionManager: SessionManager
     override fun init() {
-        viewModel.getCountries()
         binding.btnContinue.setOnClickListener(this)
         loader = LoaderDialog()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -90,20 +88,15 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             }
         }
 
-
-
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
-        binding.edtEmail.editText.addTextChangedListener {
-            isEnable()
-        }
+
         if (!NewCreateAccountRequestModel.emailAddress.isNullOrEmpty()) {
             binding.apply {
                 selectEmail.isChecked = true
                 edtEmail.visible()
                 edtEmail.editText.setText(NewCreateAccountRequestModel.emailAddress)
             }
-            checkButton()
         } else {
             binding.apply {
                 selectEmail.isChecked = false
@@ -122,102 +115,17 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 edtEmail.gone()
             }
         }
-        checkButton()
-
-    }
-
-    private fun isEnable() {
-        btnEnabled = if (binding.edtEmail.editText.text.toString().trim().length > 0) {
-            if (binding.edtEmail.editText.text.toString().trim().length < 8) {
-                false
-            } else {
-                if (binding.edtEmail.editText.text.toString().length > 100) {
-                    binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
-                    false
-                } else {
-                    if (!Utils.isLastCharOfStringACharacter(
-                            binding.edtEmail.editText.text.toString().trim()
-                        ) || Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.text.toString().trim(), '@'
-                        ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
-                            Utils.TWO_OR_MORE_DOTS
-                        ) || (binding.edtEmail.editText.text.toString().trim().last()
-                            .toString().equals(".") || binding.edtEmail.editText.text
-                            .toString().first().toString().equals("."))
-                        || (binding.edtEmail.editText.text.toString().trim().last().toString()
-                            .equals("-") || binding.edtEmail.editText.text.toString().first()
-                            .toString().equals("-"))
-                        || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.text.toString().trim(), '.'
-                        ) < 1) || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.text.toString().trim(), '@'
-                        ) < 1)
-                    ) {
-                        binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
-                        false
-                    } else {
-                        if (Utils.hasSpecialCharacters(
-                                binding.edtEmail.editText.text.toString().trim(),
-                                Utils.splCharEmailCode
-                            )
-                        ) {
-                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                                Utils.LOWER_CASE,
-                                binding.edtEmail.getText().toString().trim()
-                            )
-                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                                Utils.UPPER_CASE,
-                                binding.edtEmail.getText().toString().trim()
-                            )
-                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                                Utils.DIGITS,
-                                binding.edtEmail.getText().toString().trim()
-                            )
-                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                                Utils.ALLOWED_CHARS_EMAIL,
-                                binding.edtEmail.getText().toString().trim()
-                            )
-                            commaSeperatedString =
-                                Utils.makeCommaSeperatedStringForPassword(
-                                    Utils.removeAllCharacters(
-                                        Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
-                                    )
-                                )
-                            if (filterTextForSpecialChars!!.length > 0) {
-                                binding.edtEmail.setErrorText("Email address must not include $commaSeperatedString")
-                                false
-                            } else if (!Patterns.EMAIL_ADDRESS.matcher(
-                                    binding.edtEmail.getText().toString()
-                                ).matches()
-                            ) {
-                                binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
-                                false
-                            } else {
-                                binding.edtEmail.removeError()
-                                true
-                            }
-                        } else if (!(Utils.countOccurenceOfChar(
-                                binding.edtEmail.editText.text.toString().trim(), '@'
-                            ) > 0 && Utils.countOccurenceOfChar(
-                                binding.edtEmail.editText.text.toString().trim(), '@'
-                            ) < 2)
-                        ) {
-                            binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
-                            false
-                        } else {
-                            binding.edtEmail.removeError()
-                            true
-                        }
-                    }
-                }
-            }
-        } else {
-            binding.edtEmail.removeError()
-            false
+        binding.edtEmail.editText.addTextChangedListener {
+            isEnable()
+            checkButton()
         }
-        checkButton()
+        setMobileView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCountries()
+    }
     override fun initCtrl() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (arguments?.getParcelable(
@@ -255,7 +163,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     inputCountryHelper.visible()
                     inputCountry.visible()
                     inputMobileNumber.visible()
-                    checkButton()
                 } else {
                     inputCountry.gone()
                     inputCountryHelper.gone()
@@ -263,17 +170,16 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 }
                 checkButton()
             }
-            setMobileView()
         }
     }
 
     override fun observer() {
-        observe(viewModel.countriesList, ::getCountriesList)
-        observe(viewModel.countriesCodeList, ::getCountryCodesList)
+        observe(viewModel.countriesList, ::handleCountriesListResponse)
+        observe(viewModel.countriesCodeList, ::handleCountryCodesListResponse)
 
     }
 
-    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
+    private fun handleCountriesListResponse(response: Resource<List<CountriesModel?>?>?) {
         when (response) {
             is Resource.Success -> {
                 countriesList.clear()
@@ -292,8 +198,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     countriesList.remove(Constants.UK_COUNTRY)
                     countriesList.add(0, Constants.UK_COUNTRY)
                 }
-
-
             }
 
             is Resource.DataError -> {
@@ -310,7 +214,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         }
     }
 
-    private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
+    private fun handleCountryCodesListResponse(response: Resource<List<CountryCodes?>?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -348,7 +252,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 binding.apply {
                     inputCountry.dataSet.clear()
                     inputCountry.dataSet.addAll(fullCountryNameWithCode)
-                    if (navData != null && navData is CrossingDetailsModelsResponse) {
+                    if (navData != null && navData is CrossingDetailsModelsResponse && !(navData as CrossingDetailsModelsResponse).fullCountryCode.isNullOrEmpty()) {
                         if (Utils.isStringOnlyInt(
                                 NewCreateAccountRequestModel.mobileNumber ?: ""
                             )
@@ -358,10 +262,12 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                             )
                         } else {
                             inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                            (navData as CrossingDetailsModelsResponse).fullCountryCode=Constants.UNITED_KINGDOM
 
                         }
                     } else {
                         inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                        (navData as CrossingDetailsModelsResponse).fullCountryCode=Constants.UNITED_KINGDOM
                     }
                 }
 
@@ -371,8 +277,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 binding.inputCountry.clearFocus()
                 binding.inputCountry.setDropDownItemSelectListener(this)
                 checkButton()
-
-
             }
 
             is Resource.DataError -> {
@@ -417,8 +321,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                         binding.edtEmail.getText().toString().trim()
                     NewCreateAccountRequestModel.emailAddress =
                         binding.edtEmail.editText.text.toString().trim()
-                }
-                else{
+                } else {
                     (navData as CrossingDetailsModelsResponse).recieptMode = ""
                     NewCreateAccountRequestModel.emailAddress = ""
                 }
@@ -427,8 +330,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                         binding.inputMobileNumber.getText().toString().trim()
                     NewCreateAccountRequestModel.mobileNumber =
                         binding.inputMobileNumber.editText.text.toString().trim()
-                }
-                else{
+                } else {
                     NewCreateAccountRequestModel.mobileNumber =
                         ""
                 }
@@ -515,10 +417,100 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         }
     }
 
+    private fun isEnable(): Boolean {
+        isEmailValid = if (binding.edtEmail.editText.getText().toString().trim().isNotEmpty()) {
+            if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
+                false
+            } else {
+                if (binding.edtEmail.editText.getText().toString().length > 100) {
+                    binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
+                    false
+                } else {
+                    if (!Utils.isLastCharOfStringACharacter(
+                            binding.edtEmail.editText.getText().toString().trim()
+                        ) || Utils.countOccurenceOfChar(
+                            binding.edtEmail.editText.getText().toString().trim(), '@'
+                        ) > 1 || binding.edtEmail.editText.getText().toString().trim().contains(
+                            Utils.TWO_OR_MORE_DOTS
+                        ) || (binding.edtEmail.editText.getText().toString().trim().last()
+                            .toString() == "." || binding.edtEmail.editText.text
+                            .toString().first().toString() == ".")
+                        || (binding.edtEmail.editText.getText().toString().trim().last()
+                            .toString() == "-" || binding.edtEmail.editText.getText().toString()
+                            .first()
+                            .toString() == "-")
+                        || (Utils.countOccurenceOfChar(
+                            binding.edtEmail.editText.getText().toString().trim(), '.'
+                        ) < 1) || (Utils.countOccurenceOfChar(
+                            binding.edtEmail.editText.getText().toString().trim(), '@'
+                        ) < 1)
+                    ) {
+                        binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                        false
+                    } else {
+                        if (Utils.hasSpecialCharacters(
+                                binding.edtEmail.editText.getText().toString().trim(),
+                                Utils.splCharEmailCode
+                            )
+                        ) {
+                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                Utils.LOWER_CASE,
+                                binding.edtEmail.getText().toString().trim()
+                            )
+                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                Utils.UPPER_CASE,
+                                binding.edtEmail.getText().toString().trim()
+                            )
+                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                Utils.DIGITS,
+                                binding.edtEmail.getText().toString().trim()
+                            )
+                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                Utils.ALLOWED_CHARS_EMAIL,
+                                binding.edtEmail.getText().toString().trim()
+                            )
+                            commaSeparatedString =
+                                Utils.makeCommaSeperatedStringForPassword(
+                                    Utils.removeAllCharacters(
+                                        Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
+                                    )
+                                )
+                            if (filterTextForSpecialChars!!.isNotEmpty()) {
+                                binding.edtEmail.setErrorText("Email address must not include $commaSeparatedString")
+                                false
+                            } else if (!Patterns.EMAIL_ADDRESS.matcher(
+                                    binding.edtEmail.getText().toString()
+                                ).matches()
+                            ) {
+                                binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                                false
+                            } else {
+                                binding.edtEmail.removeError()
+                                true
+                            }
+                        } else if (Utils.countOccurenceOfChar(
+                                binding.edtEmail.editText.getText().toString().trim(), '@'
+                            ) !in (1..1)
+                        ) {
+                            binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                            false
+                        } else {
+                            binding.edtEmail.removeError()
+                            true
+                        }
+                    }
+                }
+            }
+        } else {
+            binding.edtEmail.removeError()
+            false
+        }
+        return isEmailValid
+    }
 
     private fun checkButton() {
         if (binding.selectEmail.isChecked && binding.selectTextMessage.isChecked) {
-            if (btnEnabled && requiredCountryCode && requiredMobileNumber) {
+            if (isEnable() && requiredCountryCode && requiredMobileNumber) {
                 binding.btnContinue.enable()
                 (navData as CrossingDetailsModelsResponse).countryCode =
                     getCountryCodeRequiredText(
@@ -529,7 +521,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             } else {
                 binding.btnContinue.disable()
             }
-        } else if (btnEnabled && binding.selectEmail.isChecked) {
+        } else if (binding.selectEmail.isChecked && isEnable()) {
             binding.btnContinue.enable()
         } else if (binding.selectTextMessage.isChecked && requiredCountryCode && requiredMobileNumber) {
             binding.btnContinue.enable()
@@ -539,8 +531,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 )
             (navData as CrossingDetailsModelsResponse).fullCountryCode =
                 binding.inputCountry.selectedItemDescription
-        } else if (!binding.selectEmail.isChecked && !binding.selectTextMessage.isChecked) {
-            binding.btnContinue.enable()
         } else {
             binding.btnContinue.disable()
         }
@@ -561,7 +551,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 requiredCountryCode = false
                 binding.inputCountryHelper.invisible()
             } else {
-                binding.inputCountryHelper.visible()
                 if (fullCountryNameWithCode.size > 0) {
                     requiredCountryCode = fullCountryNameWithCode.any { it == item }
                 } else {
@@ -574,10 +563,10 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             if (requiredCountryCode) {
                 (navData as CrossingDetailsModelsResponse).countryCode =
                     getCountryCodeRequiredText(
-                        binding.inputCountry.selectedItemDescription
+                        binding.inputCountry.getSelectedDescription()
                     )
                 (navData as CrossingDetailsModelsResponse).fullCountryCode =
-                    binding.inputCountry.selectedItemDescription
+                    binding.inputCountry.getSelectedDescription()
 
             } else {
                 (navData as CrossingDetailsModelsResponse).countryCode = ""
