@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryListResponseModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryStatusRequest
 import com.conduent.nationalhighways.databinding.FragmentEnquiryStatusBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -35,6 +37,7 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
     var isApiCalled: Boolean = false
     var referenceNumberValidations: Boolean = false
     var lastNameValidations: Boolean = false
+    val apiViewModel: RaiseAPIViewModel by viewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -55,7 +58,7 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 viewModel.enquiry_status_number.value?.trim().toString(),
                 viewModel.enquiry_last_name.value?.trim().toString()
             )
-            viewModel.getAccountSRDetails(jsonObject)
+            apiViewModel.getAccountSRDetails(jsonObject)
             loader?.show(
                 requireActivity().supportFragmentManager,
                 Constants.LOADER_DIALOG
@@ -88,7 +91,7 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-            observe(viewModel.getAccountSRList, ::getAccountSRListResponse)
+            observe(apiViewModel.getAccountSRList, ::getAccountSRListResponse)
         }
         isViewCreated = true
 

@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -17,6 +18,8 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.data.model.payment.SaveNewCardRequest
 import com.conduent.nationalhighways.databinding.FragmentDirectDebitBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.utils.common.Constants
@@ -70,16 +73,33 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
                         bundle
                     )
                 } else if (status.data?.statusCode?.equals("1337") == true) {
-                    val bundle = Bundle()
+                    displayCustomMessage(
+                        getString(R.string.str_warning),
+                        getString(R.string.the_card_you_are_trying_to_add_is_already),
+                        getString(R.string.str_add_another_card_small),  getString(R.string.cancel),
+                        object : DialogPositiveBtnListener {
+                            override fun positiveBtnClick(dialog: DialogInterface) {
+                                val fragmentId = findNavController().currentDestination?.id
+                                findNavController().popBackStack(fragmentId!!,true)
+                                findNavController().navigate(fragmentId,arguments)
+                            }
+                        },
+                        object : DialogNegativeBtnListener {
+                            override fun negativeBtnClick(dialog: DialogInterface) {
+                                findNavController().navigate(R.id.action_directDebitFragment_to_paymentMethodFragment)
+                            }
+                        })
 
-                    bundle.putString(
-                        Constants.CARD_IS_ALREADY_REGISTERED,
-                        Constants.CARD_IS_ALREADY_REGISTERED
-                    )
-                    findNavController().navigate(
-                        R.id.directDebitFragment_to_paymentSuccessFragment2,
-                        bundle
-                    )
+                    /* val bundle = Bundle()
+
+                     bundle.putString(
+                         Constants.CARD_IS_ALREADY_REGISTERED,
+                         Constants.CARD_IS_ALREADY_REGISTERED
+                     )
+                     findNavController().navigate(
+                         R.id.directDebitFragment_to_paymentSuccessFragment2,
+                         bundle
+                     )*/
                 } else {
                     val bundle = Bundle()
 

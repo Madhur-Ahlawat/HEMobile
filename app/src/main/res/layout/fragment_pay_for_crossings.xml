@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_3dp"
                 android:layout_marginTop="@dimen/margin_20dp"
-                android:text="@string/str_payment_amount"
+                android:text="@string/payment_Amount"
                 android:textColor="@color/label_color"
                 android:textSize="12sp" />
 

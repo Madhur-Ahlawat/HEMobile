@@ -210,11 +210,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     override fun initViewBinding() {
         binding = FragmentLoginChangesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         init()
         initCtrl()
-
     }
 
 
@@ -230,13 +227,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         materialToolbar?.visibility = View.GONE
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-
-
         initBiometric()
-
-
-
         AdobeAnalytics.setScreenTrack(
             "login",
             "login",
@@ -246,8 +237,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             sessionManager.getLoggedInUser()
         )
 
-        binding.edtEmail.editText.setText("anilkumar.thallapelli@conduent.com")
-        binding.edtPwd.editText.setText("Welcome1")
+
         binding.btnLogin.enable()
     }
 

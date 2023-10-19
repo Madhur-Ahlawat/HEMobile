@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -30,7 +31,6 @@ import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryA
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
-import com.conduent.nationalhighways.ui.account.communication.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
@@ -79,7 +79,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var personalInformation: PersonalInformation? = null
     private var accountInformation: AccountInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
-    private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
     private val viewModelProfile: ProfileViewModel by viewModels()
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var phoneCountryCode: String = ""
@@ -88,6 +87,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     var phoneCellCountryCode: String = ""
     var phoneDay: String = ""
     var phoneDayCountryCode: String = ""
+    val dashboardViewmodel: DashboardViewModel by activityViewModels()
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -200,10 +201,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             observe(viewModel.otp, ::handleOTPResponse)
             observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
             observe(createAccountViewModel.confirmEmailApiVal, ::handleConfirmEmailResponse)
-            observe(
-                communicationPrefsViewModel.updateCommunicationPrefs,
-                ::updateCommunicationSettingsPrefs
-            )
             observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
 
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
@@ -225,7 +222,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 Log.d("Success", "Updated successfully")
                 val data = navData as ProfileDetailModel?
                 val bundle = Bundle()
-
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
@@ -718,21 +714,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    arguments?.getParcelable(
-                        Constants.NAV_DATA_KEY,
-                        CommunicationPrefsRequestModel::class.java
-                    )
-                } else {
-                    arguments?.getParcelable(Constants.NAV_DATA_KEY)
-                }
                 loader?.show(
                     requireActivity().supportFragmentManager,
                     Constants.LOADER_DIALOG
                 )
-                if (data != null) {
-                    communicationPrefsViewModel.updateCommunicationPrefs(data)
-                }
+                dashboardViewmodel.personalInformationData.value?.let { updateSmsOption(it) }
+
             }
 
             PROFILE_MANAGEMENT_2FA_CHANGE, Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
@@ -746,9 +733,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         true
                     )
                 ) {
-                    updateStandardUserProfile(data)
+                    updateStandardUserProfile(data?.personalInformation, data?.accountInformation)
                 } else {
-                    updateBusinessUserProfile(data)
+                    updateBusinessUserProfile(data?.personalInformation, data?.accountInformation)
                 }
             }
 
@@ -808,32 +795,33 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun updateBusinessUserProfile(
-        dataModel: ProfileDetailModel?
+        dataModel: com.conduent.nationalhighways.data.model.profile.PersonalInformation?,
+        accountInformation: com.conduent.nationalhighways.data.model.profile.AccountInformation?
     ) {
         dataModel?.run {
             val request = UpdateProfileRequest(
-                firstName = personalInformation?.firstName,
-                lastName = personalInformation?.lastName,
-                addressLine1 = personalInformation?.addressLine1,
-                addressLine2 = personalInformation?.addressLine2,
-                city = personalInformation?.city,
-                state = personalInformation?.state,
-                zipCode = personalInformation?.zipcode,
-                zipCodePlus = personalInformation?.zipCodePlus,
-                country = personalInformation?.country,
-                emailAddress = personalInformation?.emailAddress,
+                firstName = firstName,
+                lastName = lastName,
+                addressLine1 = addressLine1,
+                addressLine2 = addressLine2,
+                city = city,
+                state = state,
+                zipCode = zipcode,
+                zipCodePlus = zipCodePlus,
+                country = country,
+                emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
+                primaryEmailUniqueID = pemailUniqueCode,
                 phoneCell = phoneCell,
                 phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
                 fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName,
+                businessName = customerName,
                 phoneCellCountryCode = phoneCellCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode,
-                mfaEnabled = dataModel.accountInformation?.mfaEnabled
+                mfaEnabled = accountInformation?.mfaEnabled
 
             )
 
@@ -844,14 +832,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun updateStandardUserProfile(
-        dataModel: ProfileDetailModel?
+        dataModel: com.conduent.nationalhighways.data.model.profile.PersonalInformation?,
+        accountInformation: com.conduent.nationalhighways.data.model.profile.AccountInformation?
     ) {
-        Log.e("TAG", "updateStandardUserProfile: phoneCell " + phoneCell)
-        Log.e("TAG", "updateStandardUserProfile: phoneCellCountryCode " + phoneCellCountryCode)
-        Log.e("TAG", "updateStandardUserProfile: phoneDay " + phoneDay)
-        Log.e("TAG", "updateStandardUserProfile: phoneDayCountryCode " + phoneDayCountryCode)
 
-        dataModel?.personalInformation?.run {
+        dataModel?.run {
             val request = UpdateProfileRequest(
                 firstName = firstName,
                 lastName = lastName,
@@ -872,13 +857,47 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 phoneEvening = "",
                 phoneCellCountryCode = phoneCellCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode,
-                mfaEnabled = dataModel.accountInformation?.mfaEnabled
+                mfaEnabled = accountInformation?.mfaEnabled
             )
 
             viewModelProfile.updateUserDetails(request)
         }
 
     }
+
+    private fun updateSmsOption(personalInformationModel: PersonalInformation) {
+//        loader?.show(
+//            requireActivity().supportFragmentManager,
+//            Constants.LOADER_DIALOG
+//        )
+
+        personalInformationModel.run {
+            val request = UpdateProfileRequest(
+                firstName = firstName,
+                lastName = lastName,
+                addressLine1 = addressLine1,
+                addressLine2 = addressLine2,
+                city = city,
+                state = state,
+                zipCode = zipcode,
+                zipCodePlus = zipCodePlus,
+                country = country,
+                emailAddress = emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = pemailUniqueCode,
+                phoneCell = data?.optionValue,
+                phoneDay = phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = "",
+                phoneCellCountryCode = phoneCountryCode,
+                phoneDayCountryCode = phoneDayCountryCode
+            )
+
+            viewModelProfile.updateUserDetails(request)
+        }
+    }
+
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
 

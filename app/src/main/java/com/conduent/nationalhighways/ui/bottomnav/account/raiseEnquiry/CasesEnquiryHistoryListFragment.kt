@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
@@ -17,6 +18,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.adapter.CasesEnquiryListAdapter
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.listener.ItemClickListener
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -35,6 +37,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
     private var loader: LoaderDialog? = null
     var caseEnquiryList: ArrayList<ServiceRequest> = ArrayList()
     var isViewCreated: Boolean = false
+    val apiViewModel: RaiseAPIViewModel by viewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -58,7 +61,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
                 getBundleData()
             )
         }
-        viewModel.getAccountSRList()
+        apiViewModel.getAccountSRList()
     }
 
     private fun getBundleData(): Bundle {
@@ -91,7 +94,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
                 Constants.LOADER_DIALOG
             )
 
-            observe(viewModel.getAccountSRList, ::getAccountSRListResponse)
+            observe(apiViewModel.getAccountSRList, ::getAccountSRListResponse)
         }
         isViewCreated = true
 
@@ -108,6 +111,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
                 if (caseEnquiryList.size > 0) {
                     binding.casesEnquiryRv.visible()
                     binding.includeNoData.noDataCl.gone()
+                    binding.noDataCl.gone()
                     binding.casesEnquiryRv.apply {
                         layoutManager =
                             LinearLayoutManager(this@CasesEnquiryHistoryListFragment.requireActivity())
@@ -120,6 +124,8 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
                 } else {
                     binding.casesEnquiryRv.gone()
                     binding.includeNoData.noDataCl.visible()
+                    binding.noDataCl.visible()
+
                 }
             }
 

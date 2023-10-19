@@ -10,10 +10,10 @@
             type="com.conduent.nationalhighways.data.model.raiseEnquiry.ServiceRequest" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/margin_2dp">
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/category_cv"
@@ -21,6 +21,7 @@
             android:layout_marginLeft="@dimen/margin_2dp"
             android:layout_marginTop="@dimen/margin_2dp"
             android:layout_marginRight="@dimen/margin_2dp"
+            android:layout_marginBottom="2dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -102,5 +103,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </layout>

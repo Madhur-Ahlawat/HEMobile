@@ -9,8 +9,11 @@ import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.address.DataAddress
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
 import com.conduent.nationalhighways.data.repository.account.AccountCreationRepository
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.ResponseHandler
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,6 +37,7 @@ class CreateAccountPostCodeViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _countriesCodesList = MutableLiveData<Resource<List<CountryCodes?>?>?>()
     val countriesCodeList: LiveData<Resource<List<CountryCodes?>?>?> get() = _countriesCodesList
+
 
     fun fetchAddress(search: String) {
         viewModelScope.launch {
@@ -79,6 +83,7 @@ class CreateAccountPostCodeViewModel @Inject constructor(
             }
         }
     }
+
 
 
 }

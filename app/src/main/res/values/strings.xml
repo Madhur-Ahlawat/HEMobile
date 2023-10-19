@@ -235,7 +235,7 @@
     <string name="str_charge_and_fines">6am to 10pm, charges apply everyday.</string>
     <string name="str_charges_6am_10pm">Charges  and fines</string>
     <string name="str_type_of_vehicle">Type of\nvehicle</string>
-    <string name="type_of_vehicle">Type of vehicle</string>
+    <string name="type_of_vehicle">Type of Vehicle</string>
     <string name="str_one_of_payment">One of \npayment</string>
     <string name="str_pay_g_service">Pay as \nyou go</string>
     <string name="str_pre_pay_service">Pre-Pay</string>
@@ -1163,8 +1163,8 @@
     <string name="proceed_with_payment">PROCEED WITH PAYMENT</string>
     <string name="pay_sample">PAYG SAMPLE PAGE</string>
     <string name="str_you_choose_to_pay">You chose to pay as you go. We’ll collect payment from your card each time you cross.</string>
-    <string name="str_your_payment_has_been_declined">Your payment has been declined</string>
-    <string name="str_contact_your_bank_for_more_details">Contact your bank for more details. No money has been taken from your account. Go back to try the payment again</string>
+    <string name="str_your_payment_has_been_declined">Your payment has been declined.</string>
+    <string name="str_contact_your_bank_for_more_details">Contact your bank for more details. No money has been taken from your account.</string>
     <string name="str_try_payment_again">Try payment again</string>
 
     <!--TOP UP Error Message-->
@@ -1366,6 +1366,7 @@
     <string name="the_card_you_are_trying">The card you are trying to add is already registered to your account.</string>
     <string name="str_do_you_want_to_another_card">Do you want to add another card?</string>
     <string name="str_add_another_card">ADD ANOTHER CARD</string>
+    <string name="str_add_another_card_small">Add Another Card</string>
     <string name="payg_delete_description">No payments will be made from your account for any crossings that you make and you will have to pay for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
     <string name="minimum_amount_five_pound">Minimum amount £5.00</string>
     <string name="minimum_amount_ten_pound">Minimum amount £10.00</string>
@@ -1411,7 +1412,7 @@
     <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We’ve sent a confirmation email to %s and a confirmation text message to %s.</string>
     <string name="str_we_have_sent_confirmation_email">We’ve sent a confirmation email to %s.</string>
     <string name="str_we_have_sent_confirmation_text_message">We’ve sent a confirmation text message to %s.</string>
-    <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
+    <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\n\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
     <string name="str_payment_successfully">Payment Successful</string>
     <string name="str_amount_paid">Amount Paid</string>
     <string name="str_time_date">Time and  Date</string>
@@ -1588,5 +1589,12 @@
     <string name="northbound">Northbound</string>
     <string name="payment_details">Payment Details</string>
     <string name="str_check_your_answer_paying">Check your answers before paying</string>
+    <string name="str_warning">Warning</string>
+    <string name="str_notification_title">"National Highways" Would Like to Send You Notifications</string>
+    <string name="str_notification_desc">Notifications may include alerts, sounds, and icon badges. These can be configured in Settings.</string>
+    <string name="str_allow">Allow</string>
+    <string name="str_dont_allow">Don\'t Allow</string>
+    <string name="payment_Amount">Payment Amount</string>
+
 
 </resources>

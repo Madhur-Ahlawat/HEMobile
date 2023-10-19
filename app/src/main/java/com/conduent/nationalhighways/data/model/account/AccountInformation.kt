@@ -51,5 +51,6 @@ data class AccountInformation(
     @SerializedName("accSubType") val accSubType:String?,
     @SerializedName("paymentTypeInfo") val paymentTypeInfo: String?,
     @SerializedName("stmtDelivaryType") val stmtDelivaryType: String?,
+    @SerializedName("mfaEnabled") val mfaEnabled: String?,
 
 ) : Parcelable

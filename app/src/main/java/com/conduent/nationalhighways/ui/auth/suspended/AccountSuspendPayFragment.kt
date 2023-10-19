@@ -54,6 +54,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private var cardModel: PaymentWithNewCardModel? = null
 
     private var topUpAmount = 0.0
+    private var paymentListSize: Int = 0
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -66,13 +67,15 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
             paymentList = arguments?.getParcelableArrayList(Constants.DATA)
         }
+        if(arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE)==true){
+            paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
+        }
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
         topUpAmount = arguments?.getDouble(Constants.PAYMENT_TOP_UP) ?: 0.0
 
         if (arguments?.getParcelable<PaymentSuccessResponse>(Constants.NEW_CARD) != null) {
             paymentSuccessResponse = arguments?.getParcelable(Constants.NEW_CARD)
         }
-        Log.e("TAG", "initCtrl: paymentSuccessResponse "+paymentSuccessResponse )
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
@@ -122,7 +125,11 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         binding.btnCancel.setOnClickListener(this)
         binding.lowBalance.setText("£" + String.format("%.2f", topUpAmount))
         if (paymentList?.isNotEmpty() == true) {
-            binding.ivCardType.setImageResource(Utils.setCardImage(paymentList?.get(position)?.cardType?:""))
+            binding.ivCardType.setImageResource(
+                Utils.setCardImage(
+                    paymentList?.get(position)?.cardType ?: ""
+                )
+            )
 
             val htmlText = Html.fromHtml(
                 paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber,
@@ -137,7 +144,10 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     override fun observer() {
 
         lifecycleScope.launch {
-            observe(manualTopUpViewModel.paymentWithExistingCard, ::handlePaymentWithExistingCardResponse)
+            observe(
+                manualTopUpViewModel.paymentWithExistingCard,
+                ::handlePaymentWithExistingCardResponse
+            )
             observe(manualTopUpViewModel.paymentWithNewCard, ::handlePaymentWithNewCardResponse)
 
         }
@@ -149,6 +159,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             R.id.btnPay -> {
                 if (Utils.validateAmount(binding.lowBalance, 10, true)) {
                     if (responseModel != null) {
+                        Log.e("TAG", "onClick: checkCheckBox " + responseModel?.checkCheckBox)
                         if (responseModel?.checkCheckBox == true) {
                             newPaymentMethod("Y")
                         } else {
@@ -165,10 +176,10 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
             R.id.btnCancel -> {
                 if (navFlow == Constants.PAYMENT_TOP_UP) {
-                    findNavController().popBackStack(R.id.accountSuspendedPaymentFragment,false)
+                    findNavController().popBackStack(R.id.accountSuspendedPaymentFragment, false)
                 } else {
-                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java){
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS,true)
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                     }
 
                 }
@@ -179,6 +190,19 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     @SuppressLint("SuspiciousIndentation")
     private fun newPaymentMethod(s: String) {
+        var primaryCard = "N"
+        var easyPay = "N"
+
+        if(paymentListSize==0){
+             primaryCard = "Y"
+
+        }
+            if(responseModel?.checkCheckBox==true){
+                easyPay="Y"
+            }else{
+                easyPay="N"
+            }
+
         cardModel = PaymentWithNewCardModel(
             addressLine1 = personalInformation?.addressLine1.toString(),
             addressLine2 = personalInformation?.addressLine1.toString(),
@@ -188,7 +212,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             city = personalInformation?.city,
             country = "UK",
             cvv = "",
-            easyPay = "Y",
+            easyPay = easyPay,
             expMonth = responseModel?.card?.exp?.substring(0, 2),
             expYear = "20${responseModel?.card?.exp?.substring(2, 4)}",
             firstName = responseModel?.check?.name ?: "",
@@ -196,7 +220,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             lastName = "",
             maskedNumber = Utils.maskCardNumber(responseModel?.card?.number.toString()),
             paymentType = "card",
-            primaryCard = "Y",
+            primaryCard = primaryCard,
             saveCard = s,
             state = "HE",
             transactionAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
@@ -270,7 +294,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             is Resource.DataError -> {
                 if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
-                }else {
+                } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }
             }
@@ -305,16 +329,19 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     )
                 } else {
                     findNavController().navigate(
-                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment)
+                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
+                    )
                 }
             }
 
             is Resource.DataError -> {
                 if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
-                }else {
+                } else {
                     findNavController().navigate(
-                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment)                }
+                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
+                    )
+                }
             }
 
             else -> {

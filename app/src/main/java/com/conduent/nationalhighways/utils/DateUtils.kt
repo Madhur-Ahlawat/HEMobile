@@ -195,7 +195,7 @@ object DateUtils {
         val dateFormatter: DateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a")
         return try {
             val dateObj = dateFormatter.parse(date)
-            val postFormatter = SimpleDateFormat("dd MMM yyyy 'at' hh:mm a")
+            val postFormatter = SimpleDateFormat("dd MMM yyyy hh:mm a")
             postFormatter.format(dateObj)
         } catch (e: Exception) {
             date

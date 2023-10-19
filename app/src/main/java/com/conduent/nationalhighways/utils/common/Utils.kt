@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -20,7 +19,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.fragment.app.FragmentActivity
+import androidx.core.app.NotificationManagerCompat
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogRetryBinding
@@ -691,7 +690,6 @@ object Utils {
     }
 
     fun getManuallyAddedVehicleClass(activity: Activity, vehicleClass: String): String {
-        Log.e("TAG", "getManuallyAddedVehicleClass: vehicleClass "+vehicleClass )
         return when (vehicleClass) {
             activity.resources.getString(R.string.vehicle_type_A) -> {
                 "A"
@@ -874,6 +872,22 @@ object Utils {
 
     }
 
+    fun areNotificationsEnabled(context: Context): Boolean {
+        val notificationManagerCompat = NotificationManagerCompat.from(context)
+        val status = notificationManagerCompat.areNotificationsEnabled()
+        Log.e("TAG", "areNotificationsEnabled: status --> "+status )
+        return status
+    }
+
+    fun getNotificationStatus(context: Context): String {
+        val notificationManagerCompat = NotificationManagerCompat.from(context)
+        val status = notificationManagerCompat.areNotificationsEnabled()
+        if (status) {
+            return "Y"
+        } else {
+            return "N"
+        }
+    }
 
     private const val DOC = "application/msword"
     private const val DOCX =
@@ -969,7 +983,7 @@ object Utils {
     }
 
 
-    fun setCardImage(cardType:String):Int{
+    fun setCardImage(cardType: String): Int {
         if (cardType.equals("visa", true)) {
             return R.drawable.visablue
         } else if (cardType.equals("maestro", true)) {
@@ -977,5 +991,26 @@ object Utils {
         } else {
             return R.drawable.mastercard
         }
+    }
+
+    fun redirectToNotificationPermissionSettings(context: Context) {
+        val intent = Intent().apply {
+            when {
+                Build.VERSION.SDK_INT >= VERSION_CODES.O -> {
+                    // For Android 8.0 (API level 26) and above
+                    action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                    putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                }
+
+                else -> {
+                    // For Android 4.4 and below
+                    action = "android.settings.APP_NOTIFICATION_SETTINGS"
+                    putExtra("app_package", context.packageName)
+                    putExtra("app_uid", context.applicationInfo.uid)
+                }
+            }
+        }
+        context.startActivity(intent)
+
     }
 }

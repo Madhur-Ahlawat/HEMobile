@@ -58,12 +58,6 @@
                     app:layout_constraintTop_toBottomOf="@id/vehicleRegNum"
                     tools:text="ASXCD" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:background="@color/color_E0E0E0"
-                    app:layout_constraintTop_toBottomOf="@+id/reg_num" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/typeOfVeh"
@@ -81,12 +75,6 @@
                     app:layout_constraintTop_toBottomOf="@id/typeOfVeh"
                     tools:text="ABCABC" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:background="@color/color_E0E0E0"
-                    app:layout_constraintTop_toBottomOf="@+id/typeOfVehicle" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/str_make"
@@ -104,12 +92,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/str_make" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:background="@color/color_E0E0E0"
-                    app:layout_constraintTop_toBottomOf="@+id/vehicleMake" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/str_model"
@@ -126,12 +108,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/str_model" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:background="@color/color_E0E0E0"
-                    app:layout_constraintTop_toBottomOf="@+id/vehicleModel" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/str_color"
@@ -148,12 +124,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/str_color" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:background="@color/color_E0E0E0"
-                    app:layout_constraintTop_toBottomOf="@+id/vehicleColor" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/str_effective_date"
@@ -167,15 +137,10 @@
                     android:id="@+id/str_effective_date_text"
                     style="@style/RegularTextBlack"
                     android:layout_marginTop="@dimen/margin_4dp"
+                    tools:text="vv mm"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/str_effective_date" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1dp"
-                    android:layout_marginTop="@dimen/_3dp"
-                    android:background="@color/color_E0E0E0"
-                    app:layout_constraintTop_toBottomOf="@+id/str_effective_date_text" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

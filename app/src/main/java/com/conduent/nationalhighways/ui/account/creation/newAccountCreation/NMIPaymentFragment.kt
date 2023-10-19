@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +29,8 @@ import com.conduent.nationalhighways.data.model.payment.AddCardModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.NmiPaymentFragmentBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CreateAccountViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -286,7 +289,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 MainScope().launch {
                     when (data) {
                         "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt", "cancelClicked" -> hideLoader()
-
                         "3DStarted" -> showLoader()
                         "3DSNotIntiated" -> showErrorPopup(resources.getString(R.string.payment_failed))
                         "cardtypeerror" -> showErrorPopup(resources.getString(R.string.payment_incorrect))
@@ -308,7 +310,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     }
 
                     val check: Boolean = "tokenType" in data
+                    Log.e("TAG", "postMessage:check--> "+check )
+
                     if (check) {
+                        Log.e("TAG", "postMessage:checkBox--> "+checkBox )
+
                         responseModel =
                             Gson().fromJson(data, CardResponseModel::class.java)
                         responseModel?.checkCheckBox = checkBox
@@ -340,10 +346,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             } else if (flow == Constants.ADD_PAYMENT_METHOD) {
                                 if (responseModel?.checkCheckBox == true) {
                                     saveNewCard(responseModel, paymentSuccessResponse, "Y")
-
                                 } else {
                                     saveNewCard(responseModel, paymentSuccessResponse, "N")
-
                                 }
 
                             } else if (flow == Constants.PAY_FOR_CROSSINGS) {
@@ -358,12 +362,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                                 bundle.putString(Constants.NAV_FLOW_KEY, flow)
                                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
                                 findNavController().navigate(
                                     R.id.action_nmiPaymentFragment_to_accountSuspendedFinalPayFragment,
                                     bundle
                                 )
-
-
                             }
 
                         }
@@ -753,7 +756,24 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
-                    val bundle = Bundle()
+                    displayCustomMessage(
+                        getString(R.string.str_warning),
+                        getString(R.string.the_card_you_are_trying_to_add_is_already),
+                        getString(R.string.str_add_another_card_small),  getString(R.string.cancel),
+                        object : DialogPositiveBtnListener {
+                            override fun positiveBtnClick(dialog: DialogInterface) {
+                                val fragmentId = findNavController().currentDestination?.id
+                                findNavController().popBackStack(fragmentId!!,true)
+                                findNavController().navigate(fragmentId,arguments)
+                            }
+                        },
+                        object : DialogNegativeBtnListener {
+                            override fun negativeBtnClick(dialog: DialogInterface) {
+                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentMethodFragment)
+                            }
+                        })
+
+                 /* val bundle = Bundle()
 
                     bundle.putString(
                         Constants.CARD_IS_ALREADY_REGISTERED,
@@ -764,7 +784,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     findNavController().navigate(
                         R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
                         bundle
-                    )
+                    )*/
                 } else if (status.data?.statusCode?.equals("1333") == true) {
                     val bundle = Bundle()
 

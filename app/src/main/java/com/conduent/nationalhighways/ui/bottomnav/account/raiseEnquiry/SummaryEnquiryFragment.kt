@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
 import com.conduent.nationalhighways.databinding.FragmentSummaryEnquiryBinding
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -19,7 +21,6 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.common.removeObserve
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
@@ -30,6 +31,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     private var apiSuccess: Boolean = false
     private var isViewCreated: Boolean = false
     private var editRequest: String = ""
+    private val apiViewModel: RaiseAPIViewModel by viewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater, container: ViewGroup?
@@ -82,7 +84,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 arrayList
             )
             apiSuccess = false
-            viewModel.raiseEnquiryApi(
+            apiViewModel.raiseEnquiryApi(
                 enquiryRequestModel
             )
         }
@@ -146,7 +148,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         if (!isViewCreated) {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            observe(viewModel.enquiryResponseLiveData, ::enquiryResponseModel)
+            observe(apiViewModel.enquiryResponseLiveData, ::enquiryResponseModel)
         }
         isViewCreated = true
     }

@@ -155,6 +155,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 getString(R.string.you_ve_reached_the_maximum_amount_of_vehicles_that_you_can_add_to_your_account_you_ll_need_to_remove_a_vehicle_before_adding_another)
             binding.maximumVehicleAddedNote.visibility = View.GONE
             binding.cancelBtn.visibility = View.GONE
+            binding.inCorrectVehicleNumber.visibility = View.GONE
             binding.btnContinue.text = getString(R.string.str_continue)
             binding.textMaximumVehicle.gravity = Gravity.CENTER
         }
@@ -368,7 +369,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             }
 
             R.id.inCorrectVehicleNumber -> {
-                if (NewCreateAccountRequestModel.isRucEligible && navFlowFrom == Constants.FIND_VEHICLE) {
+                if (NewCreateAccountRequestModel.isRucEligible) {
                     findNavController().navigate(
                         R.id.action_maximumFragment_to_findYourVehicleFragment,
                         getBundle()
