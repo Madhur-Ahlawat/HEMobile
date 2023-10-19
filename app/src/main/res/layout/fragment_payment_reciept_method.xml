@@ -145,7 +145,7 @@
             android:textColor="@color/black"
             app:imeOptions="actionNext"
             app:inputType="phone"
-            app:labelText="Mobile number"
+            app:labelText="@string/mobile_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/inputCountry"
             app:layout_constraintTop_toBottomOf="@+id/inputCountry"

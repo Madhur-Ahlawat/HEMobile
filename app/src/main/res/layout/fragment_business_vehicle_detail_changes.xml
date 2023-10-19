@@ -37,7 +37,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:elevation="5dp"
                 app:cardCornerRadius="5dp"
                 app:layout_constraintTop_toBottomOf="@id/isYourVehicle">
 
@@ -60,13 +60,21 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/vehicleRegNum" />
 
+                    <View
+                        android:id="@+id/seperator1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:background="@color/color_E0E0E0"
+                        app:layout_constraintTop_toBottomOf="@+id/reg_num" />
+
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/typeOfVeh"
                         style="@style/MediumTextBlack"
                         android:layout_marginTop="@dimen/margin_16dp"
                         android:text="@string/type_of_vehicle"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/reg_num" />
+                        app:layout_constraintTop_toBottomOf="@id/seperator1" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/typeOfVehicle"
@@ -75,13 +83,21 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/typeOfVeh" />
 
+                    <View
+                        android:id="@+id/seperator2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:background="@color/color_E0E0E0"
+                        app:layout_constraintTop_toBottomOf="@+id/typeOfVehicle" />
+
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/str_make"
                         style="@style/MediumTextBlack"
                         android:layout_marginTop="@dimen/margin_22dp"
                         android:text="@string/str_make"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/typeOfVehicle" />
+                        app:layout_constraintTop_toBottomOf="@id/seperator2" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/vehicleMake"
@@ -89,14 +105,20 @@
                         android:layout_marginTop="@dimen/margin_4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/str_make" />
-
+                    <View
+                        android:id="@+id/seperator3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:background="@color/color_E0E0E0"
+                        app:layout_constraintTop_toBottomOf="@+id/vehicleMake" />
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/str_model"
                         style="@style/MediumTextBlack"
                         android:layout_marginTop="@dimen/margin_22dp"
                         android:text="@string/str_model"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/vehicleMake" />
+                        app:layout_constraintTop_toBottomOf="@id/seperator3" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/vehicleModel"
@@ -104,14 +126,20 @@
                         android:layout_marginTop="@dimen/margin_4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/str_model" />
-
+                    <View
+                        android:id="@+id/seperator4"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:background="@color/color_E0E0E0"
+                        app:layout_constraintTop_toBottomOf="@+id/vehicleModel" />
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/str_color"
                         style="@style/MediumTextBlack"
                         android:layout_marginTop="@dimen/margin_22dp"
                         android:text="@string/str_color"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/vehicleModel" />
+                        app:layout_constraintTop_toBottomOf="@id/seperator4" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/vehicleColor"
@@ -119,7 +147,13 @@
                         android:layout_marginTop="@dimen/margin_4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/str_color" />
-
+                    <View
+                        android:id="@+id/seperator5"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:background="@color/color_E0E0E0"
+                        app:layout_constraintTop_toBottomOf="@+id/vehicleColor" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -129,6 +163,7 @@
                 android:id="@+id/confirmBtn"
                 style="@style/PrimaryButton"
                 android:text="@string/str_yes"
+                android:layout_marginTop="@dimen/_40dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardView" />
 

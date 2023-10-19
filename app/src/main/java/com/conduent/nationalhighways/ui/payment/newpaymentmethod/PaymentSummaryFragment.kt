@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentPaymentSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
@@ -32,7 +33,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     private var additionalCrossingsCount: Int? = 0
     private var crossingsList: MutableList<String>? = mutableListOf()
 
-    
+
     private var data: CrossingDetailsModelsResponse? = null
 
     override fun getFragmentBinding(
@@ -62,7 +63,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             additionalCrossingsCount = data?.additionalCrossingCount
             val charge = data?.chargingRate?.toDouble()
             val unSettledTrips = data?.unsettledTripChange
-            Log.e("TAG", "setData: unSettledTrips--> "+unSettledTrips )
+            Log.e("TAG", "setData: unSettledTrips--> " + unSettledTrips)
             vehicleRegisration.text = data?.plateNo
             recentCrossings.text =
                 unSettledTrips.toString()
@@ -73,19 +74,19 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             } else {
                 creditForAdditionalCrossings.visible()
             }
-            if (data?.recieptMode?.isEmpty() == true) {
-                labelEmail.gone()
-                labelMobileNumber.gone()
-            } else if (Utils.isStringOnlyInt(data?.recieptMode ?: "")) {
-                labelEmail.gone()
+            if (Utils.isStringOnlyInt(NewCreateAccountRequestModel.mobileNumber ?: "")) {
                 labelMobileNumber.visible()
-                mobileNumber.text = "" + data?.countryCode + " " + data?.recieptMode
+                mobileNumber.text = "" + data?.countryCode + " " + NewCreateAccountRequestModel.mobileNumber
             } else {
-                labelEmail.visible()
                 labelMobileNumber.gone()
-                email.text = "" + data?.recieptMode
             }
 
+            if (!NewCreateAccountRequestModel.emailAddress.isNullOrEmpty()) {
+                labelEmail.visible()
+                email.text = "" + NewCreateAccountRequestModel.emailAddress
+            } else {
+                labelEmail.gone()
+            }
 
             if (navFlowFrom != PAY_FOR_CROSSINGS) {
                 if (unSettledTrips == 0) {
@@ -186,12 +187,14 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                     enableEditMode()
                 )
             }
+
             R.id.editEmail -> {
                 findNavController().navigate(
                     R.id.action_crossingCheckAnswersFragment_to_crossingRecieptFragment,
                     enableEditMode()
                 )
             }
+
             R.id.editMobileNumber -> {
                 findNavController().navigate(
                     R.id.action_crossingCheckAnswersFragment_to_crossingRecieptFragment,
@@ -219,7 +222,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-        bundle.putString(NAV_FLOW_FROM,navFlowFrom)
+        bundle.putString(NAV_FLOW_FROM, navFlowFrom)
         bundle.putBoolean(EDIT_SUMMARY, true)
         bundle.putString(
             PLATE_NUMBER,

@@ -23,9 +23,13 @@ import com.conduent.nationalhighways.ui.transactions.adapter.LoadMoreAdapter
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapter
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.isVisible
+import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
@@ -42,8 +46,9 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     private var topup: String? = null
     private val countPerPage = 10
     private val dashboardViewModel: DashboardViewModel by viewModels()
-//    private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
-    private var transactionsAdapter: TransactionsAdapter?=null
+
+    //    private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
+    private var transactionsAdapter: TransactionsAdapter? = null
 
     private var loader: LoaderDialog? = null
 
@@ -59,7 +64,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        transactionsAdapter= TransactionsAdapter()
+        transactionsAdapter = TransactionsAdapter()
         mLayoutManager = LinearLayoutManager(requireContext())
         binding.rvRecenrTransactions.run {
             if (itemDecorationCount == 0) {
@@ -73,9 +78,22 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
             }
         }
         lifecycleScope.launchWhenCreated {
-            transactionsAdapter!!.loadStateFlow.collect{
+            transactionsAdapter!!.loadStateFlow.map {
                 val state = it.refresh
                 binding.prgBarMovies.isVisible(state is LoadState.Loading)
+                state
+            }.distinctUntilChanged().collect {
+                if (it is LoadState.NotLoading) {
+                    if(transactionsAdapter!!.itemCount==0){
+                        binding.ivNoTransactions.visible()
+                        binding.tvNoTransactions.visible()
+                    }
+                    else{
+                        binding.ivNoTransactions.gone()
+                        binding.tvNoTransactions.gone()
+                    }
+                }
+
             }
         }
 
@@ -85,13 +103,13 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
             adapter = transactionsAdapter
         }
 
-        binding.rvRecenrTransactions.adapter=transactionsAdapter!!.withLoadStateFooter(
-            LoadMoreAdapter{
+        binding.rvRecenrTransactions.adapter = transactionsAdapter!!.withLoadStateFooter(
+            LoadMoreAdapter {
                 transactionsAdapter!!.retry()
             }
         )
 
-        transactionItem=null
+        transactionItem = null
     }
 
     override fun onResume() {

@@ -1454,7 +1454,7 @@
     <string name="what_contact_details">What are your contact details?</string>
     <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
     <string name="vehicle_registration_number_plate_optional">Vehicle Registration (number plate) Optional</string>
-    <string name="country_code">Country code</string>
+    <string name="country_code">Country Code</string>
     <string name="details_of_enquiry">Details of enquiry</string>
     <string name="details_of_complaint">Details of complaint</string>
     <string name="str_check_your_answer_before_enquiry">Check your answers before sending your enquiry.</string>
@@ -1531,7 +1531,7 @@
     <string name="low_balance_amount_must_be_80_000_or_less">Low Balance amount must be £100,000 or less</string>
     <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
     <string name="str_dummy_text_2fa_options_sms">Mobile <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
-    <string name="mobile_number">Mobile number</string>
+    <string name="mobile_number">Mobile Number</string>
     <string name="phone_number_change_successful">Phone number change successful</string>
     <string name="file_not_more_than_8mb">Selected file type should be no more than 8MB</string>
     <string name="str_contact_dart_charge_contact_centre">Contact the Dart Charge contact centre for help.</string>

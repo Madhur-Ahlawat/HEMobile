@@ -45,7 +45,7 @@ class DashboardViewModel @Inject constructor(
 ) : ViewModel() {
     val loading = MutableLiveData<Boolean>()
 
-    val transactionsList = Pager(PagingConfig(10)) {
+    val transactionsList = Pager(PagingConfig(20)) {
         TransactionsPagingSource(repository)
     }.flow.cachedIn(viewModelScope)
     private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()

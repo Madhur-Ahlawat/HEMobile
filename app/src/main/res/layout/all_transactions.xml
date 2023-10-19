@@ -5,29 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recenrTransactions"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/_22dp"
-            android:layout_marginTop="@dimen/_65dp"
-            android:layout_marginBottom="@dimen/_30dp"
             android:elevation="@dimen/_1dp"
             android:nestedScrollingEnabled="false"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/box_viewAll"
-            app:layout_constraintStart_toStartOf="@id/box_viewAll"
-            app:layout_constraintTop_toBottomOf="@+id/box_viewAll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="8"
             tools:listitem="@layout/item_all_tansactions" />
-
-    </androidx.core.widget.NestedScrollView>
 
     <ImageView
         android:id="@+id/ivNoTransactions"

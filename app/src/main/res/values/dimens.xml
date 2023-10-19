@@ -185,5 +185,6 @@
     <dimen name="margin_76dp">76dp</dimen>
     <dimen name="margin_27dp">27dp</dimen>
     <dimen name="_18_5dp">18.5dp</dimen>
+    <dimen name="_3_5dp">3.5dp</dimen>
     />
 </resources>

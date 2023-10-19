@@ -97,26 +97,33 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         binding.edtEmail.editText.addTextChangedListener {
             isEnable()
         }
-        navData?.let {
-            if ((navData as CrossingDetailsModelsResponse).recieptMode.equals("")) {
-            } else if (!Utils.isStringOnlyInt(
-                    ((navData as CrossingDetailsModelsResponse).recieptMode ?: "")
-                )
-            ) {
-                binding.apply {
-                    selectEmail.isChecked = true
-                    edtEmail.visible()
-                    edtEmail.editText.setText((navData as CrossingDetailsModelsResponse).recieptMode)
-                }
-                checkButton()
-            } else {
-                binding.apply {
-                    selectTextMessage.isChecked = true
-                    edtEmail.visible()
-                    inputMobileNumber.editText.setText((navData as CrossingDetailsModelsResponse).recieptMode)
-                }
+        if (!NewCreateAccountRequestModel.emailAddress.isNullOrEmpty()) {
+            binding.apply {
+                selectEmail.isChecked = true
+                edtEmail.visible()
+                edtEmail.editText.setText(NewCreateAccountRequestModel.emailAddress)
+            }
+            checkButton()
+        } else {
+            binding.apply {
+                selectEmail.isChecked = false
+                edtEmail.gone()
             }
         }
+        if (!NewCreateAccountRequestModel.mobileNumber.isNullOrEmpty()) {
+            binding.apply {
+                selectTextMessage.isChecked = true
+                edtEmail.visible()
+                inputMobileNumber.editText.setText(NewCreateAccountRequestModel.mobileNumber)
+            }
+        } else {
+            binding.apply {
+                selectTextMessage.isChecked = false
+                edtEmail.gone()
+            }
+        }
+        checkButton()
+
     }
 
     private fun isEnable() {
@@ -343,7 +350,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     inputCountry.dataSet.addAll(fullCountryNameWithCode)
                     if (navData != null && navData is CrossingDetailsModelsResponse) {
                         if (Utils.isStringOnlyInt(
-                                (navData as CrossingDetailsModelsResponse).recieptMode ?: ""
+                                NewCreateAccountRequestModel.mobileNumber ?: ""
                             )
                         ) {
                             inputCountry.setSelectedValue(
@@ -385,7 +392,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
     private fun setMobileView() {
         isItMobileNumber = true
-        binding.inputMobileNumber.setLabel(getString(R.string.str_mobile_number))
+        binding.inputMobileNumber.setLabel(getString(R.string.mobile_number))
         binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
     }
 
@@ -410,11 +417,20 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                         binding.edtEmail.getText().toString().trim()
                     NewCreateAccountRequestModel.emailAddress =
                         binding.edtEmail.editText.text.toString().trim()
-                } else {
+                }
+                else{
+                    (navData as CrossingDetailsModelsResponse).recieptMode = ""
+                    NewCreateAccountRequestModel.emailAddress = ""
+                }
+                if (binding.selectTextMessage.isChecked == true) {
                     (navData as CrossingDetailsModelsResponse).recieptMode =
-                        binding.inputMobileNumber.editText.text.toString().trim()
+                        binding.inputMobileNumber.getText().toString().trim()
                     NewCreateAccountRequestModel.mobileNumber =
                         binding.inputMobileNumber.editText.text.toString().trim()
+                }
+                else{
+                    NewCreateAccountRequestModel.mobileNumber =
+                        ""
                 }
                 bundle.putParcelable(
                     Constants.NAV_DATA_KEY,
@@ -513,8 +529,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             } else {
                 binding.btnContinue.disable()
             }
-        }
-      else  if (btnEnabled && binding.selectEmail.isChecked) {
+        } else if (btnEnabled && binding.selectEmail.isChecked) {
             binding.btnContinue.enable()
         } else if (binding.selectTextMessage.isChecked && requiredCountryCode && requiredMobileNumber) {
             binding.btnContinue.enable()
