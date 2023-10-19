@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -12,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.AccountResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
@@ -51,6 +52,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener {
 
@@ -59,7 +61,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
-
+    var iconColorStates = ColorStateList(
+        arrayOf(
+            intArrayOf(-android.R.attr.state_checked),
+            intArrayOf(android.R.attr.state_checked)
+        ), intArrayOf(
+            Color.parseColor("#002E5F"),
+            Color.parseColor("#007AFF")
+        )
+    )
     @Inject
     lateinit var api: ApiService
     private lateinit var navController: NavController
@@ -121,7 +131,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
             endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
         )
-        Log.e("XJ220", Gson().toJson(request))
         dashboardViewModel.getDashboardAllData(request)
     }
 
@@ -163,21 +172,26 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
             navController.navigate(R.id.enquiryCategoryFragment, bundle)
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
-            dataBinding!!.bottomNavigationView.get(3).backgroundTintList = getColorStateList(R.color.hyperlink_blue2)
-            dataBinding!!.bottomNavigationView.get(1).backgroundTintList = getColorStateList(R.color.new_btn_color)
-            dataBinding!!.bottomNavigationView.get(2).backgroundTintList = getColorStateList(R.color.new_btn_color)
-            dataBinding!!.bottomNavigationView.get(0).backgroundTintList = getColorStateList(R.color.new_btn_color)
+            dataBinding!!.bottomNavigationView.get(3)
+                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+            dataBinding!!.bottomNavigationView.get(1)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+            dataBinding!!.bottomNavigationView.get(2)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+            dataBinding!!.bottomNavigationView.get(0)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
             from = ""
 
         } else {
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
-            dataBinding!!.bottomNavigationView.get(0).backgroundTintList = getColorStateList(R.color.hyperlink_blue2)
-            dataBinding!!.bottomNavigationView.get(1).backgroundTintList =
-                getColorStateList(R.color.new_btn_color)
-            dataBinding!!.bottomNavigationView.get(2).backgroundTintList =
-                getColorStateList(R.color.new_btn_color)
-            dataBinding!!.bottomNavigationView.get(3).backgroundTintList =
-                getColorStateList(R.color.new_btn_color)
+            dataBinding!!.bottomNavigationView.get(0)
+                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+            dataBinding!!.bottomNavigationView.get(1)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+            dataBinding!!.bottomNavigationView.get(2)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+            dataBinding!!.bottomNavigationView.get(3)
+                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
         }
 
 
@@ -224,28 +238,28 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
                     when (navigationItem.position) {
                         0 -> {
-                            dataBinding!!.bottomNavigationView.get(0).backgroundTintList =
-                                getColorStateList(R.color.hyperlink_blue2)
-                            dataBinding!!.bottomNavigationView.get(1).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
-                            dataBinding!!.bottomNavigationView.get(2).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
-                            dataBinding!!.bottomNavigationView.get(3).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
+                            dataBinding!!.bottomNavigationView.get(0)
+                                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+                            dataBinding!!.bottomNavigationView.get(1)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(2)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(3)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
                                 dashboardClick()
                             }
                         }
 
                         1 -> {
-                            dataBinding!!.bottomNavigationView.get(1).backgroundTintList =
-                                getColorStateList(R.color.hyperlink_blue2)
-                            dataBinding!!.bottomNavigationView.get(0).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
-                            dataBinding!!.bottomNavigationView.get(2).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
-                            dataBinding!!.bottomNavigationView.get(3).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
+                            dataBinding!!.bottomNavigationView.get(1)
+                                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+                            dataBinding!!.bottomNavigationView.get(0)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(2)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(3)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
                             if (navController.currentDestination?.id != R.id.crossingHistoryFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
@@ -257,14 +271,14 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         2 -> {
-                            dataBinding!!.bottomNavigationView.get(2).backgroundTintList =
-                                getColorStateList(R.color.hyperlink_blue2)
-                            dataBinding!!.bottomNavigationView.get(1).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
-                            dataBinding!!.bottomNavigationView.get(0).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
-                            dataBinding!!.bottomNavigationView.get(3).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
+                            dataBinding!!.bottomNavigationView.get(2)
+                                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+                            dataBinding!!.bottomNavigationView.get(1)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(0)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(3)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
                             if (navController.currentDestination?.id != R.id.notificationFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
@@ -276,14 +290,14 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         3 -> {
-                            dataBinding!!.bottomNavigationView.get(3).backgroundTintList =
-                                getColorStateList(R.color.hyperlink_blue2)
-                            dataBinding!!.bottomNavigationView.get(2).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
-                            dataBinding!!.bottomNavigationView.get(1).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
-                            dataBinding!!.bottomNavigationView.get(0).backgroundTintList =
-                                getColorStateList(R.color.new_btn_color)
+                            dataBinding!!.bottomNavigationView.get(3)
+                                .setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+                            dataBinding!!.bottomNavigationView.get(2)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(1)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
+                            dataBinding!!.bottomNavigationView.get(0)
+                                .setBackgroundTintList(getColorStateList(R.color.new_btn_color))
                             if (navController.currentDestination?.id != R.id.accountFragment) {
                                 accountFragmentClick()
                             }

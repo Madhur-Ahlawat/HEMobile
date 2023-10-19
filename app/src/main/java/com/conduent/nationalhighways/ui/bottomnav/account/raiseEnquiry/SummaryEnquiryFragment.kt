@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
@@ -22,6 +23,7 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.io.File
 
 @AndroidEntryPoint
@@ -91,17 +93,18 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
 
         binding.setCategoryClickListener {
             findNavController().navigate(
-                R.id.action_enquirySummaryFragment_to_enquiryCategoryFragment, getBundleData()
+                R.id.action_enquirySummaryFragment_to_enquiryCategoryFragment, getBundleData(false)
             )
         }
         binding.setCommentsClickListener {
             findNavController().navigate(
-                R.id.action_enquirySummaryFragment_to_enquiryCommentsFragment, getBundleData()
+                R.id.action_enquirySummaryFragment_to_enquiryCommentsFragment, getBundleData(false)
             )
         }
         binding.setContactDetailsClickListener {
             findNavController().navigate(
-                R.id.action_enquirySummaryFragment_to_enquiryContactDetailsFragment, getBundleData()
+                R.id.action_enquirySummaryFragment_to_enquiryContactDetailsFragment,
+                getBundleData(false)
             )
         }
     }
@@ -129,10 +132,10 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
 
-    private fun getBundleData(): Bundle {
+    private fun getBundleData(showBackButton: Boolean): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.Edit_REQUEST_KEY, Constants.EDIT_SUMMARY)
-        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, true)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, showBackButton)
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         return bundle
     }
@@ -142,19 +145,24 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
     override fun observer() {
-        Log.e("TAG", "observer: isViewCreated "+isViewCreated )
+        Log.e("TAG", "observer: isViewCreated " + isViewCreated)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         if (!isViewCreated) {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            observe(apiViewModel.enquiryResponseLiveData, ::enquiryResponseModel)
+            lifecycleScope.launch {
+                apiViewModel.enquiryResponseLiveData.collect {
+                    enquiryResponseModel(it)
+                }
+            }
+
         }
         isViewCreated = true
     }
 
     private fun enquiryResponseModel(resource: Resource<EnquiryResponseModel?>?) {
-        Log.e("TAG", "enquiryResponseModel: apiSuccess "+apiSuccess )
+        Log.e("TAG", "enquiryResponseModel: apiSuccess " + apiSuccess)
         if (!apiSuccess) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
@@ -177,12 +185,15 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                     findNavController().navigate(
                         R.id.action_enquirySummaryFragment_to_enquirySuccessFragment, bundle
                     )
+                    lifecycleScope.launch {
+                        apiViewModel._enquiryResponseModel.emit(null)
+                    }
                 }
 
                 is Resource.DataError -> {
                     if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                         displaySessionExpireDialog()
-                    }else{
+                    } else {
                         ErrorUtil.showError(binding.root, resource.errorMsg)
                     }
                 }

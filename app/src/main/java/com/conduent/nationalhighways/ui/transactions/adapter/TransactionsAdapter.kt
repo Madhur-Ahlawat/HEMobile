@@ -66,17 +66,30 @@ class TransactionsAdapter constructor() :
 //                                recentTransactionItem.activity.length
 //                            )!!.toLowerCase()
 //                        )
-                if (recentTransactionItem.amount?.contains("-") == false) {
+                if (recentTransactionItem.activity?.contains("TOLL") == false) {
+                    indicatorIconEuro.visible()
+                    indicatorIconTransactionType.post {
+                        Runnable {
+                            indicatorIconTransactionType.setImageDrawable(context.getDrawable(R.drawable.ic_euro_circular_green))
+                        }
+                    }
                     tvTransactionType.text = context.resources.getString(R.string.top_up)
                     verticalStripTransactionType.background.setTint(context.resources.getColor(R.color.green_status))
                     topup = "+" + recentTransactionItem.amount
                     valueTopUpAmount.text = topup
                     valueTopUpAmount.setTextColor(context.resources.getColor(R.color.green_status))
                 } else {
-                    tvTransactionType.text = recentTransactionItem.exitDirection
+                    tvTransactionType.text = recentTransactionItem.exitPlazaName
                     verticalStripTransactionType.background.setTint(context.resources.getColor(R.color.red_status))
                     topup = "-" + recentTransactionItem.amount
                     valueTopUpAmount.text = topup
+                    indicatorIconEuro.gone()
+
+                    indicatorIconTransactionType.post {
+                        Runnable {
+                            indicatorIconTransactionType.setImageDrawable(context.getDrawable(R.drawable.ic_car_grey))
+                        }
+                    }
                     valueTopUpAmount.setTextColor(context.resources.getColor(R.color.red_status))
                 }
 
@@ -116,12 +129,18 @@ class TransactionsAdapter constructor() :
 
     companion object {
         val differCallback = object : DiffUtil.ItemCallback<TransactionData>() {
-            override fun areItemsTheSame(oldItem: TransactionData, newItem: TransactionData): Boolean {
-                return oldItem.entryTime == oldItem.entryTime
+            override fun areItemsTheSame(
+                oldItem: TransactionData,
+                newItem: TransactionData
+            ): Boolean {
+                return oldItem.entryTime == newItem.entryTime
             }
 
-            override fun areContentsTheSame(oldItem: TransactionData, newItem: TransactionData): Boolean {
-                return oldItem.entryTime==newItem.entryTime
+            override fun areContentsTheSame(
+                oldItem: TransactionData,
+                newItem: TransactionData
+            ): Boolean {
+                return oldItem.entryTime == newItem.entryTime
             }
         }
     }

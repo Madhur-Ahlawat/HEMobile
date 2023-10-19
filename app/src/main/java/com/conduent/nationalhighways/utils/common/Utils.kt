@@ -48,7 +48,7 @@ import java.util.regex.Pattern
 
 
 object Utils {
-    private val amountFormatter = DecimalFormat("#,###.00")
+    public val amountFormatter = DecimalFormat("#,###.00")
     private var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-"
     private var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-"
     private var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
@@ -108,25 +108,13 @@ object Utils {
         minimumAmount: Int,
         isTopUp: Boolean
     ): Boolean {
-        var isValid: Boolean = false
-        val mText = nhTextInputCell.editText.text.toString().trim()
-        var updatedText: String =
-            mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
-                .replace(".0", "")
-                .replace("0.", "0")
-                .replace("1.", "1")
-                .replace("2.", "2")
-                .replace("3.", "3")
-                .replace("4.", "4")
-                .replace("5.", "5")
-                .replace("6.", "6")
-                .replace("7.", "7")
-                .replace("8.", "8")
-                .replace("9.", "9")
-                .replace(" ", "")
-        if (updatedText.isNotEmpty()) {
-            isValid = if (updatedText.length < 6) {
-                if (updatedText.toDouble() < minimumAmount) {
+        var isValid = false
+        var mText = nhTextInputCell.editText.getText().toString().trim()
+        mText =
+            mText.replace("$", "").replace("£", "").replace(",", "").replace(" ", "")
+        if (mText.isNotEmpty()) {
+            isValid = if (mText.toDouble().toInt() <= 999999) {
+                if (mText.toDouble().toInt() < minimumAmount) {
                     if (isTopUp) {
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_more))
                     } else {
@@ -134,7 +122,7 @@ object Utils {
                     }
                     false
 
-                } else if (updatedText.toInt() > 100000) {
+                } else if (mText.toDouble().toInt() > 100000) {
                     if (isTopUp) {
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
                     } else {
@@ -143,7 +131,6 @@ object Utils {
                     false
                 } else {
                     nhTextInputCell.removeError()
-                    nhTextInputCell.setText("£" + amountFormatter.format(updatedText.toInt()))
                     true
                 }
             } else {
@@ -157,10 +144,6 @@ object Utils {
         } else {
             nhTextInputCell.removeError()
         }
-        Selection.setSelection(
-            nhTextInputCell.editText.text,
-            nhTextInputCell.editText.text.toString().length
-        )
         return isValid
     }
 

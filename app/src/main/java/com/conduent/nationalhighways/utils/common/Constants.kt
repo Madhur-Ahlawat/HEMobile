@@ -59,6 +59,7 @@ object Constants {
     const val CASES_CATEGORY = "cases_category"
     const val CASES_SUB_CATEGORY = "cases_sub_category"
     const val PAYG = "PAYG"
+    const val EXEMPT_PARTNER = "EXEMPT PARTNER"
     const val PAYMENT_HISTORY = "payment_history"
     const val PAYMENT_METHOD = "payment_method"
     const val ADD_PAYMENT_METHOD="add_payment_method"

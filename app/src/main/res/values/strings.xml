@@ -874,6 +874,7 @@
     <string name="personal">Personal</string>
     <string name="business">Business</string>
     <string name="exempt_partner">Exempt Partner</string>
+    <string name="exempt">Exempt</string>
 
     // account sub type
     <string name="pay_as_you_go_acc">Pay as you go account</string>
@@ -1151,6 +1152,8 @@
     <string name="str_you_will_automatically_top_up">We\'ll automatically top-up your account with this amount</string>
     <string name="top_up_amount">Top-up amount</string>
     <string name="top_up_minimum_amount">Minimum amount £10</string>
+    <string name="no_payment_method_required">No Payment method required</string>
+    <string name="str_zero_euro">£0.00</string>
 
     <string name="str_how_do_you_want_to_pay">How do you want to pay?</string>
     <string name="str_payment_amount">Payment amount</string>
@@ -1452,7 +1455,7 @@
     <string name="what_contact_details">What are your contact details?</string>
     <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
     <string name="vehicle_registration_number_plate_optional">Vehicle Registration (number plate) Optional</string>
-    <string name="country_code">Country code</string>
+    <string name="country_code">Country Code</string>
     <string name="details_of_enquiry">Details of enquiry</string>
     <string name="details_of_complaint">Details of complaint</string>
     <string name="str_check_your_answer_before_enquiry">Check your answers before sending your enquiry.</string>
@@ -1499,9 +1502,9 @@
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
     <string name="vehicle_changed">Vehicle changed</string>
-    <string name="vehcile_type_mismatch"><![CDATA[Our records show the %s is a %s rather than a {type of\nvehicle entered}. This type of vehicle has a\ndifferent charge of %s.]]></string>
+    <string name="vehcile_type_mismatch"><![CDATA[Our records show the %s is a %s rather than a {type of\nvehicle entered}. This type of vehicle has a\ndifferent charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm]]></string>
     <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from\nDart Charge payment</string>
-    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment_and_your_remaining_credit_cannot_be_transferred_contact_the_dart_charge_contact_centre_for_help_telephone_0300_300_0120_every_day_8am_to_8pm">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\nContact the Dart Charge contact centre for help.\nTelephone: 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm</string>
     <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
     <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
     <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
@@ -1529,7 +1532,7 @@
     <string name="low_balance_amount_must_be_80_000_or_less">Low Balance amount must be £100,000 or less</string>
     <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
     <string name="str_dummy_text_2fa_options_sms">Mobile <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
-    <string name="mobile_number">Mobile number</string>
+    <string name="mobile_number">Mobile Number</string>
     <string name="phone_number_change_successful">Phone number change successful</string>
     <string name="file_not_more_than_8mb">Selected file type should be no more than 8MB</string>
     <string name="str_contact_dart_charge_contact_centre">Contact the Dart Charge contact centre for help.</string>

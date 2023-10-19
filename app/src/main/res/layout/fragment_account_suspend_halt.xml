@@ -36,7 +36,7 @@
 
 
             <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-                android:id="@+id/lowBalance"
+                android:id="@+id/topBalance"
                 style="@style/input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lowBalance" />
+                app:layout_constraintTop_toBottomOf="@+id/topBalance" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/recyclerViewLayout"

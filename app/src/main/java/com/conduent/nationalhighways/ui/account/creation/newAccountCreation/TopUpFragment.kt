@@ -2,6 +2,9 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.Selection
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -66,9 +69,40 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         binding.topUpBtn.setOnClickListener(this)
         binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
         binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
+        binding.top.editText.addTextChangedListener(GenericTextWatcher(true))
+        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(false))
         lowBalance=true
         topUpBalance=true
         checkButton()
+    }
+    inner class GenericTextWatcher(var isTopUp:Boolean) : TextWatcher {
+
+        override fun beforeTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            before: Int,
+            count: Int
+        ) {
+            if(isTopUp){
+                topUpBalance=Utils.validateAmount(binding.top,10,true)
+            }
+            else{
+                lowBalance=Utils.validateAmount(binding.lowBalance,5,false)
+            }
+            checkButton()
+        }
+
+        override fun afterTextChanged(editable: Editable?) {
+
+        }
     }
 
     private fun getThresholdAmount() {
@@ -168,15 +202,19 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     }
 
     private fun topBalanceDecimal(b: Boolean) {
-        if (b.not()) {
-            topUpBalance= Utils.validateAmount(binding.top,10,true)
-        }
+        val mText = binding.top.getText().toString().trim()
+        var updatedText: Int =
+            mText.replace("$", "").replace("£", "").replace(",", "").replace(" ", "")
+                .replace(" ", "").toDouble().toInt()
+        binding.top.setText("£"+formatter.format(updatedText))
     }
 
     private fun lowBalanceDecimal(b: Boolean) {
-        if (b.not()) {
-            lowBalance= Utils.validateAmount(binding.lowBalance,5,false)
-        }
+        val mText = binding.lowBalance.getText().toString().trim()
+        var updatedText: Int =
+            mText.replace("$", "").replace("£", "").replace(",", "").replace(" ", "")
+                .replace(" ", "").toDouble().toInt()
+        binding.lowBalance.setText("£"+formatter.format(updatedText))
     }
 
     private fun checkButton() {

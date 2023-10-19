@@ -28,6 +28,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -77,9 +78,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.btnContinue.setOnClickListener(this)
         binding.btnAddNewPaymentMethod.setOnClickListener(this)
         binding.btnAddNewPayment.setOnClickListener(this)
-        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal() }
-
-
+        binding.topBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal() }
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -95,31 +94,24 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     override fun init() {
-
-
         val linearLayoutManager = LinearLayoutManager(requireContext())
         binding.rvPaymentMethods.layoutManager = linearLayoutManager
-
         suspendPaymentMethodAdapter =
             SuspendPaymentMethodAdapter(requireActivity(), paymentList, this, navFlow)
         binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
-
-        binding.lowBalance.setText("£10.00")
-        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
-        cursorPosition = binding.lowBalance.editText.selectionStart
-        edtLength = binding.lowBalance.editText.text?.length
-        Selection.setSelection(binding.lowBalance.editText.text, edtLength!! - 1)
+        binding.topBalance.setText("£10.00")
+        binding.topBalance.editText.addTextChangedListener(GenericTextWatcher())
+        cursorPosition = binding.topBalance.editText.selectionStart
+        edtLength = binding.topBalance.editText.text?.length
+        Selection.setSelection(binding.topBalance.editText.text, edtLength!! - 1)
     }
 
     private fun topBalanceDecimal() {
-        val mText = binding.lowBalance.getText().toString().trim()
-        var updatedText: String =
-            mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
-                .replace(".0", "")
-                .replace(" ", "")
-        if (updatedText.isNotEmpty().not()) {
-            binding.lowBalance.setText(formatter.format(updatedText))
-        }
+        val mText = binding.topBalance.getText().toString().trim()
+        var updatedText: Int =
+            mText.replace("$", "").replace("£", "").replace(",", "").replace(" ", "")
+                .replace(" ", "").toDouble().toInt()
+        binding.topBalance.setText("£"+formatter.format(updatedText))
     }
 
 
@@ -146,39 +138,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             before: Int,
             count: Int
         ) {
-
-            var mText = binding.lowBalance.getText().toString()
-            var updatedText: String =
-                mText.replace("$", "").replace("£", "").replace(",", "").replace(".00", "")
-                    .replace(".0", "")
-                    .replace(" ", "")
-            if (updatedText.isNotEmpty()) {
-                lowBalance = if (updatedText.length <= 6) {
-                    if (updatedText.toInt() < 10) {
-                        binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_more))
-                        false
-
-                    } else if (updatedText.toInt() > 100000) {
-                        binding.lowBalance.setErrorText(getString(R.string.top_up_amount_must_be_80_000_or_less))
-                        false
-                    } else {
-                        lowBalance = true
-                        binding.lowBalance.removeError()
-                        true
-                    }
-                } else {
-                    binding.lowBalance.setErrorText(getString(R.string.str_top_up_amount_must_be_8_characters))
-                    false
-                }
-            } else {
-                binding.lowBalance.removeError()
-            }
+            lowBalance = Utils.validateAmount(binding.topBalance, 10, true)
             checkButton()
             checkNewPaymentMethodButton()
-            Selection.setSelection(
-                binding.lowBalance.getText(),
-                binding.lowBalance.getText().toString().length
-            )
         }
 
         override fun afterTextChanged(editable: Editable?) {
@@ -204,10 +166,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             R.id.btnContinue -> {
                 topBalanceDecimal()
-                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
-                    .replace(".00", "")
-                    .replace("$", "").replace(",", "")
-
+                val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "")
+                    .replace("$", "").replace(",", "").replace(" ", "").toDouble().toInt()
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
                 bundle.putInt(Constants.POSITION, position)
@@ -224,7 +184,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             R.id.btnAddNewPaymentMethod -> {
                 val topUpAmount =
-                    binding.lowBalance.getText().toString().trim().replace("£", "")
+                    binding.topBalance.getText().toString().trim().replace("£", "")
                         .replace(".00", "")
                         .replace("$", "").replace(",", "")
                 val bundle = Bundle()
@@ -242,7 +202,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
 
             R.id.btnAddNewPayment -> {
-                val topUpAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
+                val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "")
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
