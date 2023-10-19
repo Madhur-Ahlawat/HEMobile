@@ -93,18 +93,18 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
 
         binding.setCategoryClickListener {
             findNavController().navigate(
-                R.id.action_enquirySummaryFragment_to_enquiryCategoryFragment, getBundleData(false)
+                R.id.action_enquirySummaryFragment_to_enquiryCategoryFragment, getBundleData()
             )
         }
         binding.setCommentsClickListener {
             findNavController().navigate(
-                R.id.action_enquirySummaryFragment_to_enquiryCommentsFragment, getBundleData(false)
+                R.id.action_enquirySummaryFragment_to_enquiryCommentsFragment, getBundleData()
             )
         }
         binding.setContactDetailsClickListener {
             findNavController().navigate(
                 R.id.action_enquirySummaryFragment_to_enquiryContactDetailsFragment,
-                getBundleData(false)
+                getBundleData()
             )
         }
     }
@@ -132,10 +132,10 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
 
-    private fun getBundleData(showBackButton: Boolean): Bundle {
+    private fun getBundleData(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.Edit_REQUEST_KEY, Constants.EDIT_SUMMARY)
-        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, showBackButton)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, true)
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         return bundle
     }
@@ -151,11 +151,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         if (!isViewCreated) {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            lifecycleScope.launch {
-                apiViewModel.enquiryResponseLiveData.collect {
-                    enquiryResponseModel(it)
-                }
-            }
+
+            observe(apiViewModel.enquiryResponseLiveData,::enquiryResponseModel)
 
         }
         isViewCreated = true
@@ -185,9 +182,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                     findNavController().navigate(
                         R.id.action_enquirySummaryFragment_to_enquirySuccessFragment, bundle
                     )
-                    lifecycleScope.launch {
-                        apiViewModel._enquiryResponseModel.emit(null)
-                    }
                 }
 
                 is Resource.DataError -> {
