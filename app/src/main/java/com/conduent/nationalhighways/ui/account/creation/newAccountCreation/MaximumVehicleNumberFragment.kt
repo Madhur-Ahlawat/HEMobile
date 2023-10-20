@@ -89,6 +89,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     )
                     binding.cancelBtn.visibility = View.GONE
                     binding.btnContinue.text = getString(R.string.str_continue)
+                    binding.inCorrectVehicleNumber.gone()
                 }
             }
         }
@@ -133,6 +134,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             binding.maximumVehicleAddedNote.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.VISIBLE
             binding.btnContinue.text = getString(R.string.str_add_another)
+            binding.inCorrectVehicleNumber.gone()
         }
 
 
@@ -145,6 +147,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 getString(R.string.you_have_already_added_this_vehicle_to_this_account)
             binding.maximumVehicleAddedNote.visibility = View.INVISIBLE
             binding.btnContinue.text = getString(R.string.str_add_another)
+            binding.inCorrectVehicleNumber.gone()
             binding.textMaximumVehicle.gravity = Gravity.CENTER
         }
 

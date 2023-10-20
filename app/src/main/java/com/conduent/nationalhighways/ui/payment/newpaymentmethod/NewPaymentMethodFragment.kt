@@ -41,6 +41,7 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 @AndroidEntryPoint
 class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
@@ -287,7 +288,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             requireActivity(),
                             paymentList?.get(position)?.cardNumber
                         ),
-                        paymentList?.get(position)?.expMonth + "/" + paymentList?.get(position)?.expMonth
+                        paymentList?.get(position)?.expMonth + "/" + paymentList?.get(position)?.expYear
                     )
                 )
 

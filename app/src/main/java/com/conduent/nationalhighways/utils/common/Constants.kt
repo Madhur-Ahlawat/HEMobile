@@ -265,6 +265,7 @@ object Constants {
 
     const val data_type = "data_type"
     const val NAV_FLOW_KEY = "navFlowKey"
+    const val SAVED_CARDS = "SAVED_CARDS"
     const val NAV_FLOW_FROM = "navFlowFrom"
     const val FIRST_TYM_REDIRECTS = "FIRST_TYM_REDIRECTS"
     const val NAV_DATA_KEY = "navDataKey"

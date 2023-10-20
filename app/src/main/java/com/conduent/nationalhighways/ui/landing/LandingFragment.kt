@@ -12,10 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
+import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentNewLandingBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -97,6 +100,46 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         webServiceViewModel.checkServiceStatus()
 //        }
         isChecked = true
+        resetOneOffData()
+    }
+
+    private fun resetOneOffData() {
+        NewCreateAccountRequestModel.referenceId= ""
+        NewCreateAccountRequestModel.emailAddress= ""
+        NewCreateAccountRequestModel.mobileNumber= ""
+        NewCreateAccountRequestModel.countryCode= ""
+        NewCreateAccountRequestModel.telephoneNumber= ""
+        NewCreateAccountRequestModel.telephone_countryCode=""
+        NewCreateAccountRequestModel.communicationTextMessage=false
+        NewCreateAccountRequestModel.termsCondition=false
+        NewCreateAccountRequestModel.twoStepVerification=false
+        NewCreateAccountRequestModel.personalAccount=false
+        NewCreateAccountRequestModel.firstName=""
+        NewCreateAccountRequestModel.lastName=""
+        NewCreateAccountRequestModel.companyName=""
+        NewCreateAccountRequestModel.addressline1=""
+        NewCreateAccountRequestModel.addressline2=""
+        NewCreateAccountRequestModel.townCity=""
+        NewCreateAccountRequestModel.state=""
+        NewCreateAccountRequestModel.country=""
+        NewCreateAccountRequestModel.zipCode=""
+        NewCreateAccountRequestModel.selectedAddressId=-1
+        NewCreateAccountRequestModel.prePay=false
+        NewCreateAccountRequestModel.plateCountry=""
+        NewCreateAccountRequestModel.plateNumber=""
+        NewCreateAccountRequestModel.plateNumberIsNotInDVLA=false
+        NewCreateAccountRequestModel.vehicleList = mutableListOf<NewVehicleInfoDetails>()
+        NewCreateAccountRequestModel.addedVehicleList = ArrayList<VehicleResponse?>()
+        NewCreateAccountRequestModel.addedVehicleList2 = ArrayList<VehicleResponse?>()
+        NewCreateAccountRequestModel.isRucEligible=false
+        NewCreateAccountRequestModel.isExempted=false
+        NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
+        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
+        NewCreateAccountRequestModel.isMaxVehicleAdded=false
+        NewCreateAccountRequestModel.isManualAddress = false
+        NewCreateAccountRequestModel.emailSecurityCode=""
+        NewCreateAccountRequestModel.smsSecurityCode=""
+        NewCreateAccountRequestModel.password=""
     }
 
 
