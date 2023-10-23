@@ -64,12 +64,23 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             requireActivity(),
             crossingDetailModel?.dvlaclass ?: ""
         )
-        val chargingRate = "£" + crossingDetailModel?.chargingRate
+        val chargingRate = crossingDetailModel?.chargingRate
 
-        binding.descTv.text = resources.getString(
-            R.string.vehcile_type_mismatch,
-            selectedVehicleType, correctVehicleType
-        )
+        if (navFlowCall == PAY_FOR_CROSSINGS) {
+            binding.descTv.text = resources.getString(
+                R.string.our_records_show_the_numberplate, crossingDetailModel?.plateNo,
+                selectedVehicleType, correctVehicleType,
+               (String.format("%.2f", chargingRate?.toDouble()))
+            )
+            binding.btnOk.text = resources.getString(R.string.pay_new_amount)
+        } else {
+            binding.descTv.text = resources.getString(
+                R.string.vehcile_type_mismatch, crossingDetailModel?.plateNo,
+                selectedVehicleType, correctVehicleType
+            )
+            binding.btnOk.text = resources.getString(R.string.str_buy_crossings_for_vehicle)
+
+        }
         setData()
         setClickListeners()
 
@@ -83,11 +94,6 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             if (unSettledTrips != null && charge != null) {
                 totalAmountOfUnsettledTrips = charge * unSettledTrips
             }
-
-//            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
-//                totalAmountOfAdditionalCrossings = totalAmountOfAdditionalCrossings?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
-//
-//            }
         }
     }
 
