@@ -64,14 +64,28 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             requireActivity(),
             crossingDetailModel?.dvlaclass ?: ""
         )
-        val chargingRate = "£" + crossingDetailModel?.chargingRate
-        binding.descTv.text = resources.getString(R.string.our_records_show_the_numberplate,
-            crossingDetailModel?.plateNo, crossingDetailModel?.dvlaclass?.let { Utils.getVehicleType(
-                requireActivity(),
-                it
-            ) },
-            crossingDetailModel?.customerClass?.let { Utils.getVehicleType(requireActivity(), it) },
-            crossingDetailModel?.customerClassRate)
+        val chargingRate = crossingDetailModel?.chargingRate
+
+        if (navFlowCall == PAY_FOR_CROSSINGS) {
+            binding.descTv.text = resources.getString(
+                R.string.our_records_show_the_numberplate, crossingDetailModel?.plateNo,
+                selectedVehicleType, correctVehicleType,
+               (String.format("%.2f", chargingRate?.toDouble()))
+            )
+            binding.btnOk.text = resources.getString(R.string.pay_new_amount)
+        } else {
+            val chargingRate = "£" + crossingDetailModel?.chargingRate
+            binding.descTv.text = resources.getString(R.string.our_records_show_the_numberplate,
+                crossingDetailModel?.plateNo, crossingDetailModel?.dvlaclass?.let { Utils.getVehicleType(
+                    requireActivity(),
+                    it
+                ) },
+                crossingDetailModel?.customerClass?.let { Utils.getVehicleType(requireActivity(), it) },
+                crossingDetailModel?.customerClassRate)
+
+            binding.btnOk.text = resources.getString(R.string.str_buy_crossings_for_vehicle)
+
+        }
         setData()
         setClickListeners()
 
@@ -85,11 +99,6 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             if (unSettledTrips != null && charge != null) {
                 totalAmountOfUnsettledTrips = charge * unSettledTrips
             }
-
-//            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
-//                totalAmountOfAdditionalCrossings = totalAmountOfAdditionalCrossings?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
-//
-//            }
         }
     }
 

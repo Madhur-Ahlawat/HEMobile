@@ -263,13 +263,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     override fun paymentMethodCallback(position: Int, value: String) {
+        Log.e("TAG", "paymentMethodCallback: paymentList > "+paymentList?.get(position) )
         if (value == Constants.DELETE_CARD) {
             accountNumber = paymentList?.get(position)?.cardNumber.toString()
-
-
-
-
-            0
             this.position = position
             val bundle = Bundle()
 
@@ -331,8 +327,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
         } else if (value == Constants.DIRECT_DEBIT) {
+            isDirectDebitDelete = true
+            this.position = position
+
             accountNumber = paymentList?.get(position)?.bankAccountNumber.toString()
-            Log.e("TAG", "paymentMethodCallback: accountNumber " + accountNumber)
             if (paymentList?.get(position)?.primaryCard == true) {
                 val bundle = Bundle()
 
@@ -361,14 +359,17 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 } else {
                     if (paymentList.orEmpty().size > 1) {
                         rowId = paymentList?.get(position)?.rowId ?: ""
-
-
-                        showLoader()
-
-                        makeSecondaryCardAsPrimary(
-                            paymentList?.get(position + 1)?.cardType,
-                            paymentList?.get(position + 1)?.rowId
+                        deletePaymentDialog(
+                            getString(R.string.str_remove_payment_method),
+                            paymentList?.get(position)?.rowId,
+                            getString(
+                                R.string.str_are_you_sure_you_want_to_remove_direct_payment_method,
+                                paymentList?.get(position)?.bankAccountNumber
+                            )
                         )
+
+
+
                     }
 
                 }
@@ -378,7 +379,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 this.position = position
                 isDirectDebitDelete = true
                 deletePaymentDialog(
-                    getString(R.string.str_payment_method_deleted),
+                    getString(R.string.str_remove_payment_method),
                     paymentList?.get(position)?.rowId,
                     getString(
                         R.string.str_are_you_sure_you_want_to_remove_direct_payment_method,
@@ -618,7 +619,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     if (paymentList?.get(position)?.primaryCard == true && paymentList.orEmpty().size > 1) {
                         rowId = paymentList?.get(position)?.rowId ?: ""
                         showLoader()
-
                         makeSecondaryCardAsPrimary(
                             paymentList?.get(position + 1)?.cardType,
                             paymentList?.get(position + 1)?.rowId

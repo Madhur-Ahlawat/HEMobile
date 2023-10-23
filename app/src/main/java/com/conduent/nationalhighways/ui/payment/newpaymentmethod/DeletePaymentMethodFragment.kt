@@ -71,7 +71,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
                         it
                     ) },
                     data?.customerClass?.let { Utils.getVehicleType(requireActivity(), it) },
-                    data?.customerClassRate)
+                    String.format("%.2f", data?.customerClassRate?.toDouble()))
                 binding.btnContinue.text = getString(R.string.pay_new_amount)
             }
             Constants.PAYG -> {
