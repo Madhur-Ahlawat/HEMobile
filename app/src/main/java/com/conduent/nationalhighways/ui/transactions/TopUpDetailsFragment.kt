@@ -54,46 +54,27 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        if (crossing == null) {
-            binding?.apply {
-                tvPaymentReference.gone()
-                tvPaymentReferenceValue.gone()
-                tvPaymentMethod.gone()
-                tvPaymentMethodValue.gone()
-                tvLastFourDigitsOfTheCard.gone()
-                tvFourDigitsOfTheCardValue.gone()
-                crossingAmount.text = checkedCrossing?.amount
-                tvPaymentDateValue.text = checkedCrossing?.entryDate
-                tvPaymentTimeValue.text = checkedCrossing?.exitTime
-                tvTypeOfPaymentValue.text = checkedCrossing?.activity
-                tvChannelValue.text = Constants.Mobile_App
-
-            }
-
-        } else {
-            binding.apply {
-                tvPaymentReference.visible()
-                tvPaymentReferenceValue.visible()
-                tvPaymentMethod.visible()
-                tvPaymentMethodValue.visible()
-                tvLastFourDigitsOfTheCard.visible()
-                tvFourDigitsOfTheCardValue.visible()
-                crossingAmount.text = crossing?.balance
-                tvPaymentDateValue.text = crossing?.transactionDate
-                tvPaymentTimeValue.text = crossing?.exitTime
-                tvPaymentReferenceValue.text = crossing?.transactionNumber
-                tvTypeOfPaymentValue.text = crossing?.activity
-                tvPaymentMethodValue.text = crossing?.rebillPaymentType?.substring(
-                    0,
-                    crossing?.rebillPaymentType?.indexOf("-")!!
-                )
-                tvChannelValue.text = Constants.Mobile_App
-                tvFourDigitsOfTheCardValue.text = crossing?.rebillPaymentType?.substring(
-                    crossing?.rebillPaymentType?.indexOf("-")!! + 1,
-                    crossing?.rebillPaymentType?.length!!
-                )
-            }
-
+        binding?.apply {
+            tvPaymentReference.visible()
+            tvPaymentReferenceValue.visible()
+            tvPaymentMethod.visible()
+            tvPaymentMethodValue.visible()
+            tvLastFourDigitsOfTheCard.visible()
+            tvFourDigitsOfTheCardValue.visible()
+            crossingAmount.text = crossing?.balance
+            tvPaymentDateValue.text = crossing?.transactionDate
+            tvPaymentTimeValue.text = crossing?.exitTime
+            tvPaymentReferenceValue.text = crossing?.transactionNumber
+            tvTypeOfPaymentValue.text = crossing?.activity
+            tvPaymentMethodValue.text = crossing?.rebillPaymentType?.substring(
+                0,
+                crossing?.rebillPaymentType?.indexOf("-")!!
+            )
+            tvChannelValue.text = Constants.Mobile_App
+            tvFourDigitsOfTheCardValue.text = crossing?.rebillPaymentType?.substring(
+                crossing?.rebillPaymentType?.indexOf("-")!! + 1,
+                crossing?.rebillPaymentType?.length!!
+            )
         }
         HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
     }

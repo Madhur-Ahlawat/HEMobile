@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.che
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -49,34 +50,21 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        if(crossing==null){
-            binding?.apply {
-                tvStatus.gone()
-                tvStatusValue.gone()
-                tvAccountNumberHeading.gone()
-                tvAccountNumberValue.gone()
-                crossingAmount.text = checkedCrossing?.amount
-                tvAccountNumberValue.text = accountDetailsData?.accountInformation?.number
-                tvVehicleRegistrationValue.text = checkedCrossing?.plateNumber
-                tvTimeValue.text = checkedCrossing?.exitTime
-                tvLocationValue.text = checkedCrossing?.exitPlazaName
-            }
+        binding?.apply {
+            tvPaymentReference.gone()
+            tvPaymentReferenceValue.gone()
+            tvPaymentMethod.gone()
+            tvPaymentMethodValue.gone()
+            tvLastFourDigitsOfTheCard.gone()
+            tvFourDigitsOfTheCardValue.gone()
+            crossingAmount.text = crossing?.amount
+            tvPaymentDateValue.text = crossing?.transactionDate
+            tvPaymentTimeValue.text = crossing?.exitTime
+            tvTypeOfPaymentValue.text = crossing?.activity
+            tvChannelValue.text = Constants.Mobile_App
 
         }
-        else{
-            binding?.apply {
-                tvStatus.visible()
-                tvStatusValue.visible()
-                tvAccountNumberHeading.visible()
-                tvAccountNumberValue.visible()
-                crossingAmount.text = crossing?.amount
-                tvAccountNumberValue.text = accountDetailsData?.accountInformation?.number
-                tvVehicleRegistrationValue.text = dateRangeModel?.vehicleNumber
-                tvTimeValue.text = crossing?.exitTime
-                tvLocationValue.text = crossing?.entryPlaza
-                tvStatusValue.text= crossing?.tranSettleStatus
-            }
-        }
+
         HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
     }
 

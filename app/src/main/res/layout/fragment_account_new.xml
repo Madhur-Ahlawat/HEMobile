@@ -41,7 +41,6 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sp"
-                app:textAllCaps="true"
                 app:layout_constraintBottom_toTopOf="@id/tv_account_number_heading"
                 app:layout_constraintStart_toStartOf="@id/tv_account_number_heading"
                 tools:text="@string/str_dummy_name" />

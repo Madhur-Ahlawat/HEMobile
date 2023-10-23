@@ -23,7 +23,7 @@ class TransactionsPagingSource(
             val request = AccountPaymentHistoryRequest(
                 currentPage,
                 Constants.ALL_TRANSACTION,
-                5
+                100
             )
             val response = repository.getAccountPayment(
                 request
@@ -38,7 +38,7 @@ class TransactionsPagingSource(
             LoadResult.Page(
                 data = responseData,
                 prevKey = null,
-                nextKey = currentPage.plus(5)
+                nextKey = currentPage.plus(100)
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
@@ -50,10 +50,11 @@ class TransactionsPagingSource(
 
 
     override fun getRefreshKey(state: PagingState<Int, TransactionData>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
-        }
+//        return state.anchorPosition?.let { anchorPosition ->
+//            val anchorPage = state.closestPageToPosition(anchorPosition)
+//            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+//        }
+        return null
     }
 
 

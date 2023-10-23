@@ -12,11 +12,13 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
+import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.AllTransactionsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.transactions.adapter.LoadMoreAdapter
@@ -37,16 +39,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
 
-    private var currentPage: Int = 1
-    private var transactionItem: TransactionData? = null
-    private var paymentHistoryListData: MutableList<TransactionData?> = ArrayList()
-    private var noOfPages: Int? = 0
+    private val countPerPage = 20
+    private var noOfPages=0
+    private var paymentHistoryHashMap: MutableMap<String,MutableList<TransactionData>> = hashMapOf()
+    private var paymentHistoryDatesList: MutableList<String> = ArrayList()
     private var mLayoutManager: LinearLayoutManager? = null
-    private var dateRangeModel: PaymentDateRangeModel? = null
-    private var topup: String? = null
-    private val countPerPage = 10
     private val dashboardViewModel: DashboardViewModel by viewModels()
-
+    val dfDate = SimpleDateFormat("dd MMM yyyy")
     //    private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
     private var transactionsAdapter: TransactionsAdapter? = null
 
@@ -64,37 +63,14 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        transactionsAdapter = TransactionsAdapter()
+        transactionsAdapter = TransactionsAdapter(this@ViewAllTransactionsFragment,paymentHistoryDatesList,paymentHistoryHashMap)
         mLayoutManager = LinearLayoutManager(requireContext())
+        mLayoutManager?.orientation=LinearLayoutManager.VERTICAL
         binding.rvRecenrTransactions.run {
             if (itemDecorationCount == 0) {
                 addItemDecoration(RecyclerViewItemDecorator(0, 1))
             }
             binding.rvRecenrTransactions.layoutManager = mLayoutManager
-        }
-        lifecycleScope.launchWhenCreated {
-            dashboardViewModel.transactionsList.collect {
-                transactionsAdapter!!.submitData(it)
-            }
-        }
-        lifecycleScope.launchWhenCreated {
-            transactionsAdapter!!.loadStateFlow.map {
-                val state = it.refresh
-                binding.prgBarMovies.isVisible(state is LoadState.Loading)
-                state
-            }.distinctUntilChanged().collect {
-                if (it is LoadState.NotLoading) {
-                    if(transactionsAdapter!!.itemCount==0){
-                        binding.ivNoTransactions.visible()
-                        binding.tvNoTransactions.visible()
-                    }
-                    else{
-                        binding.ivNoTransactions.gone()
-                        binding.tvNoTransactions.gone()
-                    }
-                }
-
-            }
         }
 
 
@@ -102,14 +78,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
             layoutManager = mLayoutManager
             adapter = transactionsAdapter
         }
-
-        binding.rvRecenrTransactions.adapter = transactionsAdapter!!.withLoadStateFooter(
-            LoadMoreAdapter {
-                transactionsAdapter!!.retry()
-            }
-        )
-
-        transactionItem = null
+        getPaymentHistoryList(1)
     }
 
     override fun onResume() {
@@ -122,156 +91,65 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun observer() {
-//        observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
+        observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
     }
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
-//        if (loader?.isVisible == true) {
-//            loader?.dismiss()
-//        }
-//        when (resource) {
-//            is Resource.Success -> {
-//                resource.data?.transactionList?.count?.let {
-//                    noOfPages = if (it.toInt() % countPerPage == 0) {
-//                        it.toInt() / countPerPage
-//                    } else {
-//                        (it.toInt() / countPerPage) + 1
-//                    }
-//                }
-//                resource.data?.transactionList?.transaction?.let {
-//                    if (it.isNotEmpty()) {
-//                        binding.ivNoTransactions.gone()
-//                        binding.tvNoTransactions.gone()
-//                        binding.rvRecenrTransactions.visible()
-//                        paymentHistoryListData.clear()
-//                        paymentHistoryListData.addAll(it)
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                resource.data?.transactionList?.count?.let {
+                    noOfPages = if (it.toInt() % countPerPage == 0) {
+                        it.toInt() / countPerPage
+                    } else {
+                        (it.toInt() / countPerPage) + 1
+                    }
+                }
+                resource.data?.transactionList?.transaction?.let {
+                    if (it.isNotEmpty()) {
+                        binding.rvRecenrTransactions.visible()
+                        paymentHistoryListData?.clear()
+                        paymentHistoryListData?.addAll(it)
 //                        paymentHistoryListData =
-//                            sortTransactionsDateWiseDescending(it).toMutableList()
-//                        recentTransactionAdapter.submitList(
-//                            paymentHistoryListData
-//                        )
-//                        currentPage++
-//                    } else {
-//                        binding.rvRecenrTransactions.gone()
-//                        binding.ivNoTransactions.visible()
-//                        binding.tvNoTransactions.visible()
-////                        binding.paginationLayout.gone()
-//                    }
-//                } ?: run {
-//                    binding.rvRecenrTransactions.gone()
-////                    binding.paginationLayout.gone()
-//                }
-//            }
-//
-//            is Resource.DataError -> {
-//                binding.rvRecenrTransactions.gone()
-////                binding.paginationLayout.gone()
-//                ErrorUtil.showError(binding.root, resource.errorMsg)
-//            }
-//
-//            else -> {
-//            }
-//        }
-//    }
+//                            sortTransactionsDateWiseDescending(HomeActivityMain.paymentHistoryListData).toMutableList()
+                        paymentHistoryDatesList.clear()
+                        getDatesList(paymentHistoryListData)
+                        transactionsAdapter?.notifyDataSetChanged()
+                    } else {
+                        binding.rvRecenrTransactions.gone()
+//                        binding.paginationLayout.gone()
+                    }
+                } ?: run {
+                    binding.rvRecenrTransactions.gone()
+//                    binding.paginationLayout.gone()
+                }
+            }
 
-    fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
-        return ((item1.transactionNumber == item2.transactionNumber))
+            is Resource.DataError -> {
+                binding.rvRecenrTransactions.gone()
+//                binding.paginationLayout.gone()
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+
+            else -> {
+            }
+        }
     }
-
     private fun getPaymentHistoryList(
         index: Int
     ) {
-        dateRangeModel =
-            PaymentDateRangeModel(
-                filterType = Constants.PAYMENT_FILTER_SPECIFIC,
-                DateUtils.lastPriorDate(-30), DateUtils.currentDate(), ""
-            )
         val request = AccountPaymentHistoryRequest(
             index,
-            Constants.PAYMENT,
-            countPerPage
+            Constants.ALL_TRANSACTION,
+            20
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }
 
-//    fun createPaymentsHistoryListAdapter() = GenericRecyclerViewAdapter(
-//        getViewLayout = { R.layout.item_all_tansactions },
-//        areItemsSame = ::areRecentTransactionsSame,
-//        areItemContentsEqual = ::areRecentTransactionsSame,
-//        onBind = { recentTransactionItem, viewDataBinding, _ ->
-//            with(viewDataBinding as ItemAllTansactionsBinding) {
-//                viewDataBinding.apply {
-//                    if (transactionItem == null) {
-//                        transactionItem = recentTransactionItem
-//                        headerDate.text = recentTransactionItem.transactionDate
-//                        headerDate.visible()
-//                    } else {
-//                        if (dfDate.parse(transactionItem!!.transactionDate) != dfDate.parse(
-//                                recentTransactionItem.transactionDate
-//                            )
-//                        ) {
-//                            headerDate.text = recentTransactionItem.transactionDate
-//                            headerDate.visible()
-//                        } else {
-//                            headerDate.gone()
-//                        }
-//                        transactionItem = recentTransactionItem
-//                    }
-//
-//                    valueCurrentBalance.text = recentTransactionItem.balance
-////                    tvTransactionType.text =
-////                        recentTransactionItem.activity?.substring(0, 1)!!.toUpperCase().plus(
-////                            recentTransactionItem.activity?.substring(
-////                                1,
-////                                recentTransactionItem.activity.length
-////                            )!!.toLowerCase()
-////                        )
-//                    if (recentTransactionItem.amount?.contains("-") == false) {
-//                        tvTransactionType.text = resources.getString(R.string.top_up)
-//                        verticalStripTransactionType.background.setTint(resources.getColor(R.color.green_status))
-//                        topup = "+" + recentTransactionItem.amount
-//                        valueTopUpAmount.text = topup
-//                        valueTopUpAmount.setTextColor(resources.getColor(R.color.green_status))
-//                    } else {
-//                        tvTransactionType.text = recentTransactionItem.exitDirection
-//                        verticalStripTransactionType.background.setTint(resources.getColor(R.color.red_status))
-//                        topup = "-" + recentTransactionItem.amount
-//                        valueTopUpAmount.text = topup
-//                        valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
-//                    }
-//
-//                    root.setOnClickListener {
-//                        HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
-//                        val bundle = Bundle()
-//                        crossing = recentTransactionItem
-////                        bundle.putInt(Constants.FROM, Constants.FROM_ALL_TRANSACTIONS_TO_DETAILS)
-//                        if (crossing!!.activity.equals("Toll")) {
-//                            findNavController().navigate(
-//                                R.id.action_crossingHistoryFragment_to_tollDetails,
-//                                bundle
-//                            )
-//                        } else {
-//                            findNavController().navigate(
-//                                R.id.action_crossingHistoryFragment_to_topUpDetails,
-//                                bundle
-//                            )
-//                        }
-//                    }
-//                    if (recentTransactionItem.activity.equals("Toll")) {
-//                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_car_grey))
-//                        indicatorIconEuro.gone()
-//                    } else {
-//                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
-//                        indicatorIconEuro.visible()
-//                    }
-//                }
-//            }
-//        }
-//    )
-
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData?>): MutableList<TransactionData> {
+    private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
         var transactionListSorted: MutableList<TransactionData> = mutableListOf()
         val dfDate = SimpleDateFormat("dd MMM yyyy")
         for (transaction in transactions) {
@@ -298,5 +176,30 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
+    }
+    fun getDatesList(transactionsList:MutableList<TransactionData>) {
+        var temTransactionDate:String?=null
+        var listOfTransactionsOnSameDate:MutableList<TransactionData> = mutableListOf()
+        transactionsList.forEach {
+        if(temTransactionDate==null){
+            temTransactionDate=it.transactionDate
+            listOfTransactionsOnSameDate.add(it)
+        }
+            else{
+                if(dfDate.parse(temTransactionDate)==dfDate.parse(it.transactionDate)){
+                    listOfTransactionsOnSameDate.add(it)
+                    paymentHistoryHashMap.put(it.transactionDate!!,listOfTransactionsOnSameDate)
+                }
+            else{
+                    listOfTransactionsOnSameDate.clear()
+                    listOfTransactionsOnSameDate.add(it)
+                    paymentHistoryHashMap.put(it.transactionDate!!,listOfTransactionsOnSameDate)
+
+                }
+            }
+
+            paymentHistoryDatesList.add(it.transactionDate!!)
+
+        }
     }
 }

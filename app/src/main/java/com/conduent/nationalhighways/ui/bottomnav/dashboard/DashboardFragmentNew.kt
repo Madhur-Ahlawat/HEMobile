@@ -35,6 +35,7 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dat
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapter
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.DateUtils.compareDates
 import com.conduent.nationalhighways.utils.common.Constants
@@ -49,13 +50,17 @@ import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener,
     View.OnClickListener {
-
+    private var paymentHistoryDatesList: MutableList<String> = ArrayList()
+    private var paymentHistoryHashMap: MutableMap<String,MutableList<TransactionData>> = hashMapOf()
+    private var transactionsAdapter: TransactionsAdapter? = null
+    val dfDate = SimpleDateFormat("dd MMM yyyy")
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
     private var personalInformation: PersonalInformation? = null
@@ -106,7 +111,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         crossing = recentTransactionItem
                         val bundle = Bundle()
 //                        bundle.putInt(Constants.FROM, Constants.FROM_ALL_TRANSACTIONS_TO_DETAILS)
-                        if (crossing?.activity.equals("Toll")) {
+                        if(crossing!!.activity?.toLowerCase().equals("toll")){
                             findNavController().navigate(
                                 R.id.action_dashBoardFragment_to_tollDetails,
                                 bundle
@@ -259,15 +264,16 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData?.clear()
                         paymentHistoryListData?.addAll(it)
-                        paymentHistoryListData =
-                            sortTransactionsDateWiseDescending(
-                                paymentHistoryListData ?: ArrayList()
-                            ).toMutableList()
-                        recentTransactionAdapter.submitList(
-                            sortTransactionsDateWiseDescending(
-                                paymentHistoryListData!!
-                            )
-                        )
+//                        paymentHistoryListData =
+//                            sortTransactionsDateWiseDescending(HomeActivityMain.paymentHistoryListData).toMutableList()
+                        paymentHistoryDatesList.clear()
+                        getDatesList(paymentHistoryListData)
+                        transactionsAdapter?.notifyDataSetChanged()
+//                        paymentHistoryListData =
+//                            sortTransactionsDateWiseDescending(
+//                                paymentHistoryListData ?: ArrayList()
+//                            ).toMutableList()
+
                     } else {
                         binding.boxViewAll.gone()
                         binding.rvRecenrTransactions.gone()
@@ -292,6 +298,31 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             else -> {
             }
+        }
+    }
+    fun getDatesList(transactionsList:MutableList<TransactionData>) {
+        var temTransactionDate:String?=null
+        var listOfTransactionsOnSameDate:MutableList<TransactionData> = mutableListOf()
+        transactionsList.forEach {
+            if(temTransactionDate==null){
+                temTransactionDate=it.transactionDate
+                listOfTransactionsOnSameDate.add(it)
+            }
+            else{
+                if(dfDate.parse(temTransactionDate)==dfDate.parse(it.transactionDate)){
+                    listOfTransactionsOnSameDate.add(it)
+                    paymentHistoryHashMap.put(it.transactionDate!!,listOfTransactionsOnSameDate)
+                }
+                else{
+                    listOfTransactionsOnSameDate.clear()
+                    listOfTransactionsOnSameDate.add(it)
+                    paymentHistoryHashMap.put(it.transactionDate!!,listOfTransactionsOnSameDate)
+
+                }
+            }
+
+            paymentHistoryDatesList.add(it.transactionDate!!)
+
         }
     }
 
