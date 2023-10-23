@@ -34,6 +34,7 @@ import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CreateAccountViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -113,6 +114,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
         setupWebView()
+        if(navFlowCall.equals(Constants.PAYMENT_TOP_UP) && paymentListSize==0){
+            HomeActivityMain.setTitle("Top Up New Payment Method")
+        }
     }
 
     override fun init() {
@@ -699,9 +703,17 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         if (paymentListSize >= 2) {
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
-                        }else{
+                        }
+                        else if(paymentListSize==0){
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('hint1').innerHTML = 'Save the payment method against the account';})()")
+                        }
+                        else{
+                            view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('hint').value = 'Make default payment method';})()")
+
                         }
                         view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")

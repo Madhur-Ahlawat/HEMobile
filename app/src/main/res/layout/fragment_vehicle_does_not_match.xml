@@ -25,14 +25,14 @@
                 android:layout_width="73.33dp"
                 android:layout_height="73.33dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_tick_blue" />
+                android:src="@drawable/warningicon" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_36dp"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
                 android:text="@string/your_type_of_vehicle_does_not_match_what_we_have_on_record"
                 android:textColor="@color/new_btn_color"
@@ -45,7 +45,7 @@
                 android:layout_marginTop="@dimen/_13dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="@string/vehcile_type_mismatch"
+                android:text="@string/our_records_show_the_numberplate"
                 android:textColor="@color/new_btn_color"
                 android:textSize="@dimen/_15sp" />
         </LinearLayout>

@@ -116,6 +116,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
 
         }
+        if(navFlowCall.equals(Constants.PAYMENT_TOP_UP)){
+            HomeActivityMain.setTitle("Top Up New Payment Method")
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")

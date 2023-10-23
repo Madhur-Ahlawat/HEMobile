@@ -9,6 +9,7 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.FragmentTollDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.accountDetailsData
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.checkedCrossing
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
@@ -76,7 +77,7 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
                 tvStatusValue.text= crossing?.tranSettleStatus
             }
         }
-
+        HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
     }
 
     override fun initCtrl() {

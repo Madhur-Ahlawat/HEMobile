@@ -12,7 +12,6 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.CountDownTimer
 import android.provider.Settings
-import android.text.Selection
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
@@ -101,6 +100,10 @@ object Utils {
     val splCharPostCode: String by lazy {
         ALLOWED_CHARS_POSTCODE
 //        getSplCharString(ALLOWED_CHARS_POSTCODE)
+    }
+    fun capitalizeString(str: String?): String? {
+        return if (str == null || str.length == 0) str else str.substring(0, 1)
+            .uppercase(Locale.getDefault()) + str.substring(1).toLowerCase()
     }
 
     fun validateAmount(

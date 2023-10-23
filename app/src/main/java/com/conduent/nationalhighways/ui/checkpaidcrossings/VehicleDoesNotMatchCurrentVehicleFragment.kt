@@ -65,11 +65,13 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             crossingDetailModel?.dvlaclass ?: ""
         )
         val chargingRate = "£" + crossingDetailModel?.chargingRate
-
-        binding.descTv.text = resources.getString(
-            R.string.vehcile_type_mismatch,
-            selectedVehicleType, correctVehicleType
-        )
+        binding.descTv.text = resources.getString(R.string.our_records_show_the_numberplate,
+            crossingDetailModel?.plateNo, crossingDetailModel?.dvlaclass?.let { Utils.getVehicleType(
+                requireActivity(),
+                it
+            ) },
+            crossingDetailModel?.customerClass?.let { Utils.getVehicleType(requireActivity(), it) },
+            crossingDetailModel?.customerClassRate)
         setData()
         setClickListeners()
 
