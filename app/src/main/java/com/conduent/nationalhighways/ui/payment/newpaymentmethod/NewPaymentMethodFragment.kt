@@ -331,7 +331,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             this.position = position
 
             accountNumber = paymentList?.get(position)?.bankAccountNumber.toString()
-            Log.e("TAG", "paymentMethodCallback: accountNumber " + accountNumber)
             if (paymentList?.get(position)?.primaryCard == true) {
                 val bundle = Bundle()
 

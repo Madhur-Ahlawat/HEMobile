@@ -163,7 +163,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     override fun init() {
         binding.btnContinue.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
-        binding?.feedbackBt?.setMovementMethod(LinkMovementMethod.getInstance())
+        binding.feedbackBt?.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun observer() {
@@ -236,7 +236,11 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
                     }
                     val htmlText =
                         Html.fromHtml(
-                            status.data.creditCardListType.cardsList[0]?.cardType?.uppercase() + "<br>" + status.data.creditCardListType.cardsList[0]?.cardNumber
+                            status.data.creditCardListType.cardsList[0]?.cardType?.uppercase() + "<br>" +
+                                    Utils.maskCardNumber(
+                                        status.data.creditCardListType.cardsList[0]?.cardNumber
+                                            ?: ""
+                                    )
                         )
 
                     binding.tvSelectPaymentMethod.text = htmlText
