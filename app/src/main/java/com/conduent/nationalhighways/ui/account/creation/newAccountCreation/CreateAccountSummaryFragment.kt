@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.extn.gone
@@ -28,6 +30,7 @@ import com.conduent.nationalhighways.utils.extn.visible
 class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener {
+    private var dataModel: NewCreateAccountRequestModel?=null
     private lateinit var title: TextView
 
     private lateinit var vehicleAdapter: VehicleListAdapter
@@ -50,52 +53,52 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.editAccountSubType.setOnClickListener(this)
         title = requireActivity().findViewById(R.id.title_txt)
 
-        val dataModel = NewCreateAccountRequestModel
-        (dataModel.firstName + " " + dataModel.lastName).also { binding.fullName.text = it }
-        if (!dataModel.personalAccount) {
+        dataModel = NewCreateAccountRequestModel
+        (dataModel!!.firstName + " " + dataModel!!.lastName).also { binding.fullName.text = it }
+        if (!dataModel!!.personalAccount) {
             binding.companyNameCard.visible()
-            binding.companyName.text = dataModel.companyName
+            binding.companyName.text = dataModel!!.companyName
             binding.editCompanyName.setOnClickListener(this)
         } else {
             binding.companyNameCard.gone()
 
         }
         binding.passwordCard.gone()
-        if (dataModel.communicationTextMessage) {
+        if (dataModel!!.communicationTextMessage) {
             binding.communications.text = getString(R.string.yes)
         } else {
             binding.communications.text = getString(R.string.no)
         }
 
-        if (dataModel.twoStepVerification) {
+        if (dataModel!!.twoStepVerification) {
             binding.twoStepVerification.text = getString(R.string.yes)
         } else {
             binding.twoStepVerification.text = getString(R.string.no)
         }
 
         binding.address.text =
-            dataModel.addressline1 + "\n" + dataModel.townCity + "\n" + dataModel.zipCode
-        binding.emailAddress.text = dataModel.emailAddress
+            dataModel!!.addressline1 + "\n" + dataModel!!.townCity + "\n" + dataModel!!.zipCode
+        binding.emailAddress.text = dataModel!!.emailAddress
         if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
-            if (dataModel.mobileNumber?.isEmpty() != false) {
+            if (dataModel!!.mobileNumber?.isEmpty() != false) {
                 binding.phoneCard.gone()
             } else {
                 binding.phoneCard.visible()
                 binding.mobileNumber.text =
-                    dataModel.countryCode?.let { getRequiredText(it) } + " " + dataModel.mobileNumber
+                    dataModel!!.countryCode?.let { getRequiredText(it) } + " " + dataModel!!.mobileNumber
             }
         } else {
-            if (dataModel.telephoneNumber?.isEmpty() != false) {
+            if (dataModel!!.telephoneNumber?.isEmpty() != false) {
                 binding.phoneCard.gone()
             } else {
                 binding.phoneCard.visible()
                 binding.mobileNumber.text =
-                    dataModel.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel.telephoneNumber
+                    dataModel!!.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel!!.telephoneNumber
             }
         }
 
 
-        if (dataModel.personalAccount) {
+        if (dataModel!!.personalAccount) {
             binding.accountSubType.visible()
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
@@ -110,7 +113,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val vehicleList = dataModel.vehicleList as ArrayList<NewVehicleInfoDetails>
+        val vehicleList = dataModel!!.vehicleList as ArrayList<NewVehicleInfoDetails>
         vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this, false)
         binding.recyclerView.adapter = vehicleAdapter
 
@@ -255,6 +258,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             R.id.editAccountSubType -> {
                 val bundle = Bundle()
                 bundle.putString(NAV_FLOW_KEY, EDIT_ACCOUNT_TYPE)
+                bundle.putParcelable(NAV_DATA_KEY, dataModel!! as Parcelable)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountTypesFragment,bundle

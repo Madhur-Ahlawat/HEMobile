@@ -91,7 +91,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             ) {
                 paymentManagement.gone()
             }
-            valueName.text = sessionManager.fetchFirstName() + " " + sessionManager.fetchLastName()
+            valueName.text = Utils.capitalizeString(sessionManager.fetchFirstName()) + " " + Utils.capitalizeString(sessionManager.fetchLastName())
 
             var firstNameChar: Char = ' '
             var secondNameChar: Char = ' '

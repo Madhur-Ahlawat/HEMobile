@@ -22,6 +22,7 @@ import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseMode
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
+import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicleBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -66,10 +67,12 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
         }
 
         binding.editNumberPlate.editText.filters = arrayOf(InputFilter.LengthFilter(10))
-        binding.editNumberPlate.editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        binding.editNumberPlate.editText.inputType =
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        if (!plateNumber.isNullOrEmpty()) {
+            binding.editNumberPlate.setText(plateNumber.trim().replace(" ", "").replace("-", ""))
 
-        binding.editNumberPlate.setText(plateNumber.trim().replace(" ", "").replace("-", ""))
-
+        }
         if (plateNumber.isNotEmpty()) {
             binding.findVehicle.isEnabled = true
         }
@@ -92,6 +95,7 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                 binding.titleText1.visible()
                 binding.titleText2.visible()
                 binding.titleText3.visible()
+                binding.editNumberPlate.setText(NewCreateAccountRequestModel.plateNumber)
             }
 
             Constants.TRANSFER_CROSSINGS -> {
@@ -198,7 +202,10 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
-                bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
+                bundle.putString(
+                    Constants.PLATE_NUMBER,
+                    binding.editNumberPlate.editText.text.toString()
+                )
 
                 if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.editText.text
                         .toString().trim() && isCrossingCall.not()
@@ -255,14 +262,16 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                             HomeActivityMain.accountDetailsData?.accountInformation?.accountType
 
                         if (accountType == Constants.BUSINESS_ACCOUNT &&
-                           ( (size >= BuildConfig.BUSINESS.toInt()) || vehicleList.size >= 10)) {
+                            ((size >= BuildConfig.BUSINESS.toInt()) || vehicleList.size >= 10)
+                        ) {
                             NewCreateAccountRequestModel.isMaxVehicleAdded = true
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
                             )
-                        }else if (accountType != Constants.BUSINESS_ACCOUNT &&
-                           ( (size >= BuildConfig.PERSONAL.toInt()) || vehicleList.size >= 10)) {
+                        } else if (accountType != Constants.BUSINESS_ACCOUNT &&
+                            ((size >= BuildConfig.PERSONAL.toInt()) || vehicleList.size >= 10)
+                        ) {
                             NewCreateAccountRequestModel.isMaxVehicleAdded = true
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
@@ -365,7 +374,10 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                     val bundle = Bundle()
 
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
+                    bundle.putString(
+                        Constants.PLATE_NUMBER,
+                        binding.editNumberPlate.editText.text.toString()
+                    )
 
                     if (it.size > 0) {
 
@@ -411,6 +423,48 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                             bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                             arguments?.getInt(Constants.VEHICLE_INDEX)
                                 ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                            if(!binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                                    .replace("-", "").equals(NewCreateAccountRequestModel.plateNumber)){
+                                NewCreateAccountRequestModel.referenceId= ""
+                                NewCreateAccountRequestModel.emailAddress= ""
+                                NewCreateAccountRequestModel.mobileNumber= ""
+                                NewCreateAccountRequestModel.countryCode= ""
+                                NewCreateAccountRequestModel.telephoneNumber= ""
+                                NewCreateAccountRequestModel.telephone_countryCode=""
+                                NewCreateAccountRequestModel.communicationTextMessage=false
+                                NewCreateAccountRequestModel.termsCondition=false
+                                NewCreateAccountRequestModel.twoStepVerification=false
+                                NewCreateAccountRequestModel.personalAccount=false
+                                NewCreateAccountRequestModel.firstName=""
+                                NewCreateAccountRequestModel.lastName=""
+                                NewCreateAccountRequestModel.companyName=""
+                                NewCreateAccountRequestModel.addressline1=""
+                                NewCreateAccountRequestModel.addressline2=""
+                                NewCreateAccountRequestModel.townCity=""
+                                NewCreateAccountRequestModel.state=""
+                                NewCreateAccountRequestModel.country=""
+                                NewCreateAccountRequestModel.zipCode=""
+                                NewCreateAccountRequestModel.selectedAddressId=-1
+                                NewCreateAccountRequestModel.prePay=false
+                                NewCreateAccountRequestModel.plateCountry=""
+                                NewCreateAccountRequestModel.plateNumber=""
+                                NewCreateAccountRequestModel.plateNumberIsNotInDVLA=false
+                                NewCreateAccountRequestModel.vehicleList = mutableListOf<NewVehicleInfoDetails>()
+                                NewCreateAccountRequestModel.addedVehicleList = ArrayList<VehicleResponse?>()
+                                NewCreateAccountRequestModel.addedVehicleList2 = ArrayList<VehicleResponse?>()
+                                NewCreateAccountRequestModel.isRucEligible=false
+                                NewCreateAccountRequestModel.isExempted=false
+                                NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
+                                NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
+                                NewCreateAccountRequestModel.isMaxVehicleAdded=false
+                                NewCreateAccountRequestModel.isManualAddress = false
+                                NewCreateAccountRequestModel.emailSecurityCode=""
+                                NewCreateAccountRequestModel.smsSecurityCode=""
+                                NewCreateAccountRequestModel.password=""
+                            }
+                            NewCreateAccountRequestModel.plateNumber =
+                                binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                                    .replace("-", "")
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_businessVehicleDetailFragment,
                                 bundle
@@ -436,7 +490,10 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                         }
                     }
                     val bundle = Bundle()
-                    bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
+                    bundle.putString(
+                        Constants.PLATE_NUMBER,
+                        binding.editNumberPlate.editText.text.toString()
+                    )
 
                     if (navData == null) {
                         navData =
@@ -462,6 +519,48 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         arguments?.getInt(Constants.VEHICLE_INDEX)
                             ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                        if(!binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                                .replace("-", "").equals(NewCreateAccountRequestModel.plateNumber)){
+                            NewCreateAccountRequestModel.referenceId= ""
+                            NewCreateAccountRequestModel.emailAddress= ""
+                            NewCreateAccountRequestModel.mobileNumber= ""
+                            NewCreateAccountRequestModel.countryCode= ""
+                            NewCreateAccountRequestModel.telephoneNumber= ""
+                            NewCreateAccountRequestModel.telephone_countryCode=""
+                            NewCreateAccountRequestModel.communicationTextMessage=false
+                            NewCreateAccountRequestModel.termsCondition=false
+                            NewCreateAccountRequestModel.twoStepVerification=false
+                            NewCreateAccountRequestModel.personalAccount=false
+                            NewCreateAccountRequestModel.firstName=""
+                            NewCreateAccountRequestModel.lastName=""
+                            NewCreateAccountRequestModel.companyName=""
+                            NewCreateAccountRequestModel.addressline1=""
+                            NewCreateAccountRequestModel.addressline2=""
+                            NewCreateAccountRequestModel.townCity=""
+                            NewCreateAccountRequestModel.state=""
+                            NewCreateAccountRequestModel.country=""
+                            NewCreateAccountRequestModel.zipCode=""
+                            NewCreateAccountRequestModel.selectedAddressId=-1
+                            NewCreateAccountRequestModel.prePay=false
+                            NewCreateAccountRequestModel.plateCountry=""
+                            NewCreateAccountRequestModel.plateNumber=""
+                            NewCreateAccountRequestModel.plateNumberIsNotInDVLA=false
+                            NewCreateAccountRequestModel.vehicleList = mutableListOf<NewVehicleInfoDetails>()
+                            NewCreateAccountRequestModel.addedVehicleList = ArrayList<VehicleResponse?>()
+                            NewCreateAccountRequestModel.addedVehicleList2 = ArrayList<VehicleResponse?>()
+                            NewCreateAccountRequestModel.isRucEligible=false
+                            NewCreateAccountRequestModel.isExempted=false
+                            NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
+                            NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
+                            NewCreateAccountRequestModel.isMaxVehicleAdded=false
+                            NewCreateAccountRequestModel.isManualAddress = false
+                            NewCreateAccountRequestModel.emailSecurityCode=""
+                            NewCreateAccountRequestModel.smsSecurityCode=""
+                            NewCreateAccountRequestModel.password=""
+                        }
+                        NewCreateAccountRequestModel.plateNumber =
+                            binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                                .replace("-", "")
                         findNavController().navigate(
                             R.id.action_findVehicleFragment_to_addNewVehicleDetailsFragment,
                             bundle
@@ -595,7 +694,10 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                     resource.data?.let { apiData ->
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
+                        bundle.putString(
+                            Constants.PLATE_NUMBER,
+                            binding.editNumberPlate.editText.text.toString()
+                        )
 
                         Log.d("responseData", Gson().toJson(apiData))
 

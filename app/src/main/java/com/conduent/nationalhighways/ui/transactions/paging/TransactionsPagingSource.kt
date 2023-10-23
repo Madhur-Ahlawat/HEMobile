@@ -23,7 +23,7 @@ class TransactionsPagingSource(
             val request = AccountPaymentHistoryRequest(
                 currentPage,
                 Constants.ALL_TRANSACTION,
-                20
+                5
             )
             val response = repository.getAccountPayment(
                 request
@@ -38,7 +38,7 @@ class TransactionsPagingSource(
             LoadResult.Page(
                 data = responseData,
                 prevKey = null,
-                nextKey = currentPage.plus(20)
+                nextKey = currentPage.plus(5)
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

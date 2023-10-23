@@ -74,10 +74,15 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             )
             binding.btnOk.text = resources.getString(R.string.pay_new_amount)
         } else {
-            binding.descTv.text = resources.getString(
-                R.string.vehcile_type_mismatch, crossingDetailModel?.plateNo,
-                selectedVehicleType, correctVehicleType
-            )
+            val chargingRate = "£" + crossingDetailModel?.chargingRate
+            binding.descTv.text = resources.getString(R.string.our_records_show_the_numberplate,
+                crossingDetailModel?.plateNo, crossingDetailModel?.dvlaclass?.let { Utils.getVehicleType(
+                    requireActivity(),
+                    it
+                ) },
+                crossingDetailModel?.customerClass?.let { Utils.getVehicleType(requireActivity(), it) },
+                crossingDetailModel?.customerClassRate)
+
             binding.btnOk.text = resources.getString(R.string.str_buy_crossings_for_vehicle)
 
         }

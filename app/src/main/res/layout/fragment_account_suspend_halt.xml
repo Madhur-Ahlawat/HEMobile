@@ -162,20 +162,9 @@
                 app:isEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/btnAddNewPaymentMethod" />
+                app:layout_constraintBottom_toTopOf="@id/btnAddNewPayment" />
 
-            <com.conduent.apollo.ui.CMButton
-                android:id="@+id/btnAddNewPaymentMethod"
-                style="@style/secondaryButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/str_new_payment_method"
-                android:textSize="@dimen/font_14sp"
-                app:isEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btnAddNewPayment"
                 style="@style/PrimaryButton"
@@ -184,7 +173,6 @@
                 android:layout_marginTop="52dp"
                 android:text="@string/str_new_payment_method"
                 android:textSize="@dimen/font_14sp"
-                android:visibility="gone"
 
                 app:isEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"

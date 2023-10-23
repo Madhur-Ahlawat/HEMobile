@@ -55,6 +55,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var currentBalance: String = ""
     private var navFlow: String = ""
     private val formatter = DecimalFormat("#,###.00")
+    private var paymentListSize: Int = 0
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -65,6 +66,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initCtrl() {
+        paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         if (!isViewCreated) {
@@ -76,7 +79,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
 
         binding.btnContinue.setOnClickListener(this)
-        binding.btnAddNewPaymentMethod.setOnClickListener(this)
         binding.btnAddNewPayment.setOnClickListener(this)
         binding.topBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal() }
 
@@ -104,6 +106,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         cursorPosition = binding.topBalance.editText.selectionStart
         edtLength = binding.topBalance.editText.text?.length
         Selection.setSelection(binding.topBalance.editText.text, edtLength!! - 1)
+        if(navFlowCall.equals(Constants.PAYMENT_TOP_UP)){
+            HomeActivityMain.setTitle("Top Up New Payment Method")
+        }
     }
 
     private fun topBalanceDecimal() {
@@ -155,9 +160,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     private fun checkNewPaymentMethodButton() {
         binding.btnAddNewPayment.isEnabled = lowBalance
-        binding.btnAddNewPaymentMethod.isEnabled = lowBalance
-
-
     }
 
     override fun onClick(v: View?) {
@@ -182,27 +184,11 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 )
             }
 
-            R.id.btnAddNewPaymentMethod -> {
+            R.id.btnAddNewPayment -> {
                 val topUpAmount =
                     binding.topBalance.getText().toString().trim().replace("£", "")
                         .replace(".00", "")
                         .replace("$", "").replace(",", "")
-                val bundle = Bundle()
-                bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, real_paymentList?.size ?: 0)
-
-                findNavController().navigate(
-                    R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment,
-                    bundle
-                )
-            }
-
-            R.id.btnAddNewPayment -> {
-                val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "")
                 val bundle = Bundle()
                 bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
@@ -264,11 +250,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     binding.noCardFoundLayout.gone()
 
                     binding.btnAddNewPayment.gone()
-                    binding.btnAddNewPaymentMethod.visible()
 
                 } else {
                     binding.btnAddNewPayment.visible()
-                    binding.btnAddNewPaymentMethod.gone()
                     binding.noCardFoundLayout.visible()
                     binding.rvPaymentMethods.gone()
                     binding.btnContinue.gone()

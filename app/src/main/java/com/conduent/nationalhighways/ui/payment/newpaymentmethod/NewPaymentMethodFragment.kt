@@ -41,6 +41,7 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 @AndroidEntryPoint
 class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
@@ -237,7 +238,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-
+                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
                 findNavController().navigate(
                     R.id.action_paymentMethodFragment_to_accountSuspendedPaymentFragment,
                     bundle
@@ -283,7 +284,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             requireActivity(),
                             paymentList?.get(position)?.cardNumber
                         ),
-                        paymentList?.get(position)?.expMonth + "/" + paymentList?.get(position)?.expMonth
+                        paymentList?.get(position)?.expMonth + "/" + paymentList?.get(position)?.expYear
                     )
                 )
 

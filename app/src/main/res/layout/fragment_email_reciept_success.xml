@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_21dp"
             android:textAlignment="center"
-            android:textColor="@color/new_btn_color"
+            android:textColor="@color/black"
             android:fontFamily="@font/open_sans"
             android:text="We’ve sent a receipt email to\njohndoe@email.com"
             android:textSize="@dimen/_14sp"

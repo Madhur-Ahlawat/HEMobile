@@ -65,7 +65,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
             Constants.PAY_FOR_CROSSINGS -> {
                 val data = navData as CrossingDetailsModelsResponse?
                 binding.maximumVehicleAdded.text = getString(R.string.your_type_of_vehicle_does_not_match_what_we_have_on_record)
-                binding.textMaximumVehicle.text = getString(R.string.our_records_show_the_numberplate,
+                binding.textMaximumVehicle.text = getString(R.string.str_your_balance_will_no_longer_available,
                     data?.plateNo, data?.dvlaclass?.let { Utils.getVehicleType(
                         requireActivity(),
                         it

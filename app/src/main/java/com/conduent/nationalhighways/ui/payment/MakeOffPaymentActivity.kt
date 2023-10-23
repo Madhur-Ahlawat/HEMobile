@@ -25,6 +25,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
+    private var navHostFragment: NavHostFragment?=null
     lateinit var binding: ActivityCreateAccountBinding
 
     @Inject
@@ -55,33 +56,32 @@ class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
             onBackPressedDispatcher.onBackPressed()
 
         }
-        val navHostFragment =
+        navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val graphInflater = navHostFragment.navController.navInflater
-        val navGraph = graphInflater.inflate(R.navigation.nav_graph_account_creation)
-        val navController = navHostFragment.navController
+        val graphInflater = navHostFragment?.navController?.navInflater
+        val navGraph = graphInflater?.inflate(R.navigation.nav_graph_account_creation)
+        val navController = navHostFragment?.navController
         val destination = R.id.findYourVehicleFragment
-        navGraph.setStartDestination(destination)
+        navGraph?.setStartDestination(destination)
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAY_FOR_CROSSINGS)
         if(data!=null && data is CrossingDetailsModelsResponse){
             bundle.putString(Constants.PLATE_NUMBER, (data as CrossingDetailsModelsResponse).plateNo)
             bundle.putParcelable(Constants.NAV_DATA_KEY, data as CrossingDetailsModelsResponse)
         }
-        navController.setGraph(navGraph, bundle)
+        navController?.setGraph(navGraph!!, bundle)
     }
 
     override fun observeViewModel() {}
 
 
     override fun onBackPressed() {
-        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
-        navHost?.let { navFragment ->
+        navHostFragment?.let { navFragment ->
             navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
                 if (fragment is MakeOneOffPaymentSuccessfullyFragment) {
 
                 } else {
-                    onBackPressedDispatcher.onBackPressed()
+                    navHostFragment?.findNavController()?.popBackStack()
                 }
 
             }
