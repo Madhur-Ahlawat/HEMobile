@@ -91,7 +91,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             ) {
                 paymentManagement.gone()
             }
-            valueName.text = Utils.capitalizeString(sessionManager.fetchFirstName()) + " " + Utils.capitalizeString(sessionManager.fetchLastName())
 
             var firstNameChar: Char = ' '
             var secondNameChar: Char = ' '
@@ -114,7 +113,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 valueTitle6.alpha = 1f
                 iconArrow6.alpha = 1f
             }
+            valueName.setText(Utils.capitalizeString(sessionManager.fetchFirstName()) + " " + Utils.capitalizeString(sessionManager.fetchLastName()))
+
         }
+
     }
 
     private fun setPaymentsVisibility() {

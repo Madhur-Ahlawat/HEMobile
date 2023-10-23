@@ -46,7 +46,7 @@ class DeletePaymentMethodSuccessFragment :
         }
 
         if (navFlow == Constants.THRESHOLD) {
-            binding.btnContinue.text = requireActivity().resources.getString(R.string.str_ok)
+            binding.btnContinue.text = requireActivity().resources.getString(R.string.str_continue)
             binding.maximumVehicleAdded.text = getString(R.string.str_threshold_limit)
             if (lowBalance.isEmpty()) {
                 binding.textMaximumVehicle.text = getString(

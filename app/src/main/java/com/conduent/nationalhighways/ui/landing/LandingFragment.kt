@@ -68,8 +68,8 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         HomeActivityMain.checkedCrossing=null
         HomeActivityMain.crossing=null
         HomeActivityMain.dateRangeModel=null
-        HomeActivityMain.paymentHistoryListData=null
-        HomeActivityMain.paymentHistoryListDataCheckedCrossings= arrayListOf()
+        HomeActivityMain.paymentHistoryListData= mutableListOf()
+        HomeActivityMain.paymentHistoryListDataCheckedCrossings= mutableListOf()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 

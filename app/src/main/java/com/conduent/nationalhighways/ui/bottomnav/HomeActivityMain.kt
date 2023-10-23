@@ -85,9 +85,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         var accountDetailsData: AccountResponse? = null
         var crossing: TransactionData? = null
         var checkedCrossing: CheckedCrossingRecentTransactionsResponseModelItem? = null
-        var paymentHistoryListData: MutableList<TransactionData?>? = ArrayList()
+        var paymentHistoryListData: MutableList<TransactionData> = mutableListOf()
         var paymentHistoryListDataCheckedCrossings: MutableList<CheckedCrossingRecentTransactionsResponseModelItem?> =
-            ArrayList()
+            mutableListOf()
 
         fun setTitle(title: String) {
             dataBinding?.titleTxt?.text = title
