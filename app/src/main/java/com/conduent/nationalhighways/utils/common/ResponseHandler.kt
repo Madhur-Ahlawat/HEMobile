@@ -18,6 +18,7 @@ object ResponseHandler {
         Log.e("TAG", "success: response isSuccessful " + response?.isSuccessful)
 
         return if (response?.isSuccessful == true) {
+            Log.e("TAG", "success: success " )
             if (response.code() == Constants.TOKEN_FAIL) {
                 return Resource.DataError(
                     "Token Expired",
@@ -33,6 +34,8 @@ object ResponseHandler {
                         response?.errorBody()?.string(),
                         ErrorResponseModel::class.java
                     )
+                Log.e("TAG", "success: response error " + errorResponse.error.equals("invalid_token"))
+                Log.e("TAG", "success: response error--> " + errorResponse.error)
 
                 if (response?.code() == Constants.TOKEN_FAIL && errorResponse.error.equals("invalid_token")) {
                     return Resource.DataError(
