@@ -22,6 +22,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.NotificationManagerCompat
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
+import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogRetryBinding
 import com.conduent.nationalhighways.databinding.DialogSessionexpiryBinding
@@ -132,6 +133,28 @@ object Utils {
         return transactionListSorted
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sortAlertsDateWiseDescending(transactions: MutableList<AlertMessage>): MutableList<AlertMessage> {
+        var transactionListSorted: MutableList<AlertMessage> = mutableListOf()
+        for (transaction in transactions) {
+            if (transactionListSorted?.isEmpty() == true) {
+                transactionListSorted.add(transaction!!)
+            } else {
+                if (DateUtils.compareDates(
+                        transactionListSorted.last().createTs,
+                        transaction?.createTs
+                    )
+                ) {
+                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
+
+                } else {
+                    transactionListSorted.add(transaction!!)
+                }
+            }
+
+        }
+        return transactionListSorted
+    }
     fun validateAmount(
         nhTextInputCell: NHTextInputCell,
         minimumAmount: Int,

@@ -218,7 +218,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 Log.e("TAG", "handleSaveCardResponse: cardsList "+status.data?.creditCardListType?.cardsList.orEmpty().size )
                 for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
                     if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
-                        paymentList?.add(status.data.creditCardListType.cardsList.get(i))
+                        paymentList?.add(status.data.creditCardListType.cardsList?.get(i))
                     }
                 }
                 for (i in 0 until paymentList.orEmpty().size) {

@@ -33,7 +33,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         binding.crossingCharges.setOnClickListener(this)
-        dataModel=arguments?.getParcelable(Constants.NAV_DATA_KEY,NewCreateAccountRequestModel::class.java)
+//        dataModel=arguments?.getParcelable(Constants.NAV_DATA_KEY,NewCreateAccountRequestModel::class.java)
     }
 
     override fun initCtrl() {

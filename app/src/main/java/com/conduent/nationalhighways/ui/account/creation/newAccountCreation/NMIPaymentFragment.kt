@@ -56,6 +56,7 @@ import javax.inject.Inject
 class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnClickListener {
 
 
+    private var isDrectDebit: Boolean?=false
     private val viewModel: CreateAccountViewModel by viewModels()
     private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
     private val oneOfPaymentViewModel: MakeOneOfPaymentViewModel by viewModels()
@@ -94,6 +95,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     override fun initCtrl() {
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
+        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT,false)
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -692,7 +694,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
-
+                        if(isDrectDebit!! && paymentListSize==1){
+                            view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('hint1').innerHTML = 'Save the payment method against the account';})()")
+                        }
                     }
                     Constants.PAYMENT_TOP_UP -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")

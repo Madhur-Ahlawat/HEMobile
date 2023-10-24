@@ -3,15 +3,25 @@ package com.conduent.nationalhighways.ui.bottomnav.notification.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.databinding.ItemNotificationsBinding
+import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment
+import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewModel
+import kotlinx.coroutines.launch
 
-class NotificationAdapterNew(private val context: Context, private val list: List<AlertMessage?>?) :
+class NotificationAdapterNew(
+    private val context: NotificationFragment,
+    private val list: List<AlertMessage?>?,
+    private var viewModel: NotificationViewModel
+) :
     RecyclerView.Adapter<NotificationAdapterNew.NotificationViewHolderNew>() {
 
     class NotificationViewHolderNew(var binding: ItemNotificationsBinding) :
@@ -21,7 +31,7 @@ class NotificationAdapterNew(private val context: Context, private val list: Lis
         parent: ViewGroup,
         viewType: Int
     ): NotificationViewHolderNew {
-        var binding = ItemNotificationsBinding.inflate(LayoutInflater.from(context), parent, false)
+        var binding = ItemNotificationsBinding.inflate(LayoutInflater.from(context.requireContext()), parent, false)
         return NotificationViewHolderNew(binding)
     }
 
@@ -43,7 +53,20 @@ class NotificationAdapterNew(private val context: Context, private val list: Lis
             binding.seeMore.text = "See more"
         }
         binding.selectNotification.isChecked = item.isSelectListItem
-
+        binding.selectNotification.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+                clickedItem = position
+                var item = list[clickedItem]
+                if (p1) {
+                    item?.isSelectListItem = true
+                } else {
+                    item?.isSelectListItem = false
+                }
+                context.lifecycleScope.launch{
+                    viewModel.notificationCheckUncheck.emit(item!!)
+                }
+            }
+        })
         binding.seeMore.setOnClickListener {
             clickedItem = position
             item.isSeeMore = !item.isSeeMore
@@ -102,6 +125,7 @@ class NotificationAdapterNew(private val context: Context, private val list: Lis
             }
             this@NotificationAdapterNew.notifyItemChanged(clickedItem)
         }
+        binding?.message?.setMovementMethod(LinkMovementMethod.getInstance())
     }
 
     override fun getItemCount(): Int {

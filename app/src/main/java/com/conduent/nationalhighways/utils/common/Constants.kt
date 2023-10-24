@@ -7,6 +7,7 @@ object Constants {
 
 
     const val DIRECT_DEBIT: String="directdebit"
+    const val IS_DIRECT_DEBIT: String="IS_DIRECT_DEBIT"
     const val FIND_VEHICLE="FIND_VEHICLE"
     const val DIRECT_DEBIT_DELETE="direct_debit_delete"
     const val DIRECT_DEBIT_NOT_SET_UP="direct_debit_not_set_up"
