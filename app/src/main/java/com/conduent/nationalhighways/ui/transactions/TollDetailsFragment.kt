@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,20 +52,18 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
     override fun onResume() {
         super.onResume()
         binding?.apply {
-            tvPaymentReference.gone()
-            tvPaymentReferenceValue.gone()
-            tvPaymentMethod.gone()
-            tvPaymentMethodValue.gone()
-            tvLastFourDigitsOfTheCard.gone()
-            tvFourDigitsOfTheCardValue.gone()
             crossingAmount.text = crossing?.amount
-            tvPaymentDateValue.text = crossing?.transactionDate
-            tvPaymentTimeValue.text = crossing?.exitTime
-            tvTypeOfPaymentValue.text = crossing?.activity
-            tvChannelValue.text = Constants.Mobile_App
-
+            tvCrossingDateValue.text = crossing?.transactionDate
+            tvTimeValue.text = crossing?.exitTime
+            tvVrnValue.text= crossing?.plateNumber
+            if(crossing?.exitDirection.equals("N")){
+                tvLocationValue.text = "Northbound"
+            }
+            else{
+                tvLocationValue.text = "Southbound"
+            }
+            tvPaymentStatusValue.text = Utils.capitalizeString(crossing?.tranSettleStatus)
         }
-
         HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
     }
 

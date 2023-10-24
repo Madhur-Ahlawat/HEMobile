@@ -32,16 +32,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_62dp"
-            android:layout_marginTop="@dimen/_3dp"
-            android:elevation="@dimen/margin_1dp"
-            app:cardCornerRadius="@dimen/margin_5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header_date">
             <androidx.recyclerview.widget.RecyclerView
+                app:layout_constraintTop_toBottomOf="@+id/header_date"
                 android:id="@+id/rvCrossings"
                 tools:itemCount="4"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -49,7 +41,7 @@
                 android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/item_crossings"
                 android:layout_width="match_parent"
+                android:minHeight="@dimen/_65dp"
                 android:layout_height="wrap_content"/>
-        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

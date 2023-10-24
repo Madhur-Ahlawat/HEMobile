@@ -11,6 +11,7 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/_22dp"
             android:elevation="@dimen/_1dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:nestedScrollingEnabled="false"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,13 +47,4 @@
         app:layout_constraintEnd_toEndOf="@+id/ivNoTransactions"
         app:layout_constraintStart_toStartOf="@+id/ivNoTransactions"
         app:layout_constraintTop_toBottomOf="@id/ivNoTransactions" />
-    <ProgressBar
-        android:id="@+id/prgBarMovies"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

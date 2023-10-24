@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.ui.transactions.adapter.LoadMoreAdapter
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapter
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Utils.sortTransactionsDateWiseDescending
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.isVisible
 import com.conduent.nationalhighways.utils.extn.visible
@@ -40,12 +41,14 @@ import javax.inject.Inject
 class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
 
     private val countPerPage = 20
-    private var noOfPages=0
-    private var paymentHistoryHashMap: MutableMap<String,MutableList<TransactionData>> = hashMapOf()
+    private var noOfPages = 0
+    private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
+        hashMapOf()
     private var paymentHistoryDatesList: MutableList<String> = ArrayList()
     private var mLayoutManager: LinearLayoutManager? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
     val dfDate = SimpleDateFormat("dd MMM yyyy")
+
     //    private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
     private var transactionsAdapter: TransactionsAdapter? = null
 
@@ -63,14 +66,17 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        transactionsAdapter = TransactionsAdapter(this@ViewAllTransactionsFragment,paymentHistoryDatesList,paymentHistoryHashMap)
+        transactionsAdapter = TransactionsAdapter(
+            this@ViewAllTransactionsFragment,
+            paymentHistoryDatesList,
+            paymentHistoryHashMap
+        )
         mLayoutManager = LinearLayoutManager(requireContext())
-        mLayoutManager?.orientation=LinearLayoutManager.VERTICAL
+        mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
         binding.rvRecenrTransactions.run {
             if (itemDecorationCount == 0) {
                 addItemDecoration(RecyclerViewItemDecorator(0, 1))
             }
-            binding.rvRecenrTransactions.layoutManager = mLayoutManager
         }
 
 
@@ -93,6 +99,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     override fun observer() {
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
         if (loader?.isVisible == true) {
@@ -112,8 +119,8 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData?.clear()
                         paymentHistoryListData?.addAll(it)
-//                        paymentHistoryListData =
-//                            sortTransactionsDateWiseDescending(HomeActivityMain.paymentHistoryListData).toMutableList()
+                        paymentHistoryListData =
+                            sortTransactionsDateWiseDescending(paymentHistoryListData).toMutableList()
                         paymentHistoryDatesList.clear()
                         getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
@@ -137,69 +144,42 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
             }
         }
     }
+
     private fun getPaymentHistoryList(
         index: Int
     ) {
         val request = AccountPaymentHistoryRequest(
             index,
             Constants.ALL_TRANSACTION,
-            20
+            100
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
-        var transactionListSorted: MutableList<TransactionData> = mutableListOf()
-        val dfDate = SimpleDateFormat("dd MMM yyyy")
-        for (transaction in transactions) {
-            if (transactionListSorted?.isEmpty() == true) {
-                transaction!!.showDateHeader = true
-                transactionListSorted.add(transaction!!)
-            } else {
-                if (DateUtils.compareDates(
-                        transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
-                        transaction?.transactionDate + " " + transaction?.exitTime
-                    )
-                ) {
-                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
-
-                } else {
-                    transactionListSorted.add(transaction!!)
-                }
-            }
-
-        }
-        return transactionListSorted
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
-    fun getDatesList(transactionsList:MutableList<TransactionData>) {
-        var temTransactionDate:String?=null
-        var listOfTransactionsOnSameDate:MutableList<TransactionData> = mutableListOf()
-        transactionsList.forEach {
-        if(temTransactionDate==null){
-            temTransactionDate=it.transactionDate
-            listOfTransactionsOnSameDate.add(it)
-        }
-            else{
-                if(dfDate.parse(temTransactionDate)==dfDate.parse(it.transactionDate)){
-                    listOfTransactionsOnSameDate.add(it)
-                    paymentHistoryHashMap.put(it.transactionDate!!,listOfTransactionsOnSameDate)
-                }
-            else{
-                    listOfTransactionsOnSameDate.clear()
-                    listOfTransactionsOnSameDate.add(it)
-                    paymentHistoryHashMap.put(it.transactionDate!!,listOfTransactionsOnSameDate)
 
+    fun getDatesList(transactionsList: MutableList<TransactionData>) {
+        var tempDate: String? = null
+        transactionsList.forEach {
+            if (tempDate == null) {
+                tempDate = it.transactionDate
+                paymentHistoryDatesList.add(it.transactionDate!!)
+
+            } else {
+                if (!dfDate.parse(tempDate).equals(dfDate.parse(it.transactionDate))) {
+                    paymentHistoryDatesList.add(it.transactionDate!!)
+                    tempDate = it.transactionDate
                 }
             }
-
-            paymentHistoryDatesList.add(it.transactionDate!!)
-
+            var transactionsListTemp =
+                paymentHistoryHashMap.get(it.transactionDate) ?: mutableListOf()
+            transactionsListTemp?.add(it)
+            paymentHistoryHashMap.remove(it.transactionDate!!)
+            paymentHistoryHashMap.put(it.transactionDate!!, transactionsListTemp!!)
         }
     }
 }

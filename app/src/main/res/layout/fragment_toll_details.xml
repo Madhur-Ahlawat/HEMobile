@@ -45,202 +45,135 @@
                 app:layout_constraintTop_toBottomOf="@+id/label_crossing_amount" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_payment_date_heading"
+                android:id="@+id/tv_crossing_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:text="@string/txt_payment_date"
+                android:text="@string/str_crossing_date"
                 android:textColor="@color/label_color"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/vw" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_payment_date_value"
+                android:id="@+id/tv_crossing_date_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_payment_date_heading"
+                app:layout_constraintBottom_toBottomOf="@id/tv_crossing_date"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_payment_date_heading"
+                app:layout_constraintTop_toTopOf="@id/tv_crossing_date"
                 tools:text="28 Jan 2020" />
 
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_payment_time_heading"
+                android:id="@+id/tv_vrn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_22dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:text="@string/txt_payment_time"
+                android:text="Vehicle Registration (number plate)"
                 android:textColor="@color/label_color"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_payment_date_heading" />
+                app:layout_constraintTop_toBottomOf="@id/tv_crossing_date_value" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_payment_time_value"
+                android:id="@+id/tv_vrn_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_payment_time_heading"
+                app:layout_constraintBottom_toBottomOf="@id/tv_vrn"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_payment_time_heading"
-                tools:text="2:45 PM" />
-
-
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_payment_reference"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_22dp"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center_vertical"
-                android:text="@string/txt_payment_reference"
-                android:textColor="@color/label_color"
-                android:textSize="@dimen/_14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_payment_time_heading" />
-
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_payment_reference_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center_vertical"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_payment_reference"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_payment_reference"
+                app:layout_constraintTop_toTopOf="@id/tv_vrn"
                 tools:text="2165322131" />
 
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_type_of_payment"
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_22dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:text="@string/txt_type_of_payment"
+                android:text="Time"
                 android:textColor="@color/label_color"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_payment_reference" />
+                app:layout_constraintTop_toBottomOf="@id/tv_vrn" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_type_of_payment_value"
+                android:id="@+id/tv_time_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_type_of_payment"
+                app:layout_constraintBottom_toBottomOf="@id/tv_time"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_type_of_payment"
+                app:layout_constraintTop_toTopOf="@id/tv_time"
                 tools:text="Initial payment" />
 
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_payment_method"
+                android:id="@+id/tv_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_22dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:text="@string/payment_method"
+                android:text="Location"
                 android:textColor="@color/label_color"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_type_of_payment_value" />
+                app:layout_constraintTop_toBottomOf="@id/tv_time_value" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_payment_method_value"
+                android:id="@+id/tv_location_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_payment_method"
+                app:layout_constraintBottom_toBottomOf="@id/tv_location"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_payment_method"
-                tools:text="Visa" />
-
-
+                app:layout_constraintTop_toTopOf="@id/tv_location"
+                tools:text="Northbound" />
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_channel"
+                android:id="@+id/tv_payment_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_22dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:text="@string/txt_channel"
+                android:text="Payment Status"
                 android:textColor="@color/label_color"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_payment_method" />
+                app:layout_constraintTop_toBottomOf="@id/tv_location_value" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_channel_value"
+                android:id="@+id/tv_payment_status_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_channel"
+                app:layout_constraintBottom_toBottomOf="@id/tv_payment_status"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_channel"
-                tools:text="Web" />
-
-
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_last_four_digits_of_the_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_22dp"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center_vertical"
-                android:text="@string/txt_last_digits_of_card"
-                android:textColor="@color/label_color"
-                android:textSize="@dimen/_14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_channel" />
-
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_four_digits_of_the_card_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center_vertical"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_last_four_digits_of_the_card"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_last_four_digits_of_the_card"
-                tools:text="5175" />
-            <com.conduent.nationalhighways.utils.widgets.NHButton
-                android:id="@+id/button_email_reciept"
-                style="@style/secondaryButton"
-                app:layout_constraintTop_toBottomOf="@id/tv_last_four_digits_of_the_card"
-                android:layout_marginTop="@dimen/_75sp"
-                android:text="@string/email_reciept"
-                android:layout_width="match_parent"
-                android:textSize="@dimen/_14sp"
-                android:fontFamily="@font/open_sans_semibold"
-
-                android:layout_height="wrap_content"/>
+                app:layout_constraintTop_toTopOf="@id/tv_payment_status"
+                tools:text="Paid" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
