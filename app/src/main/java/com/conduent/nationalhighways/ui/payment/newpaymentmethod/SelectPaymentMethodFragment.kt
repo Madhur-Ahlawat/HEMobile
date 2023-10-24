@@ -19,6 +19,7 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
 
     private var personalInformation: PersonalInformation? = null
     private var paymentListSize: Int = 0
+    private var isDrectDebit: Boolean?=false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -29,6 +30,7 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
 
     override fun initCtrl() {
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
+        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT,false)
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -57,7 +59,9 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
 
                 bundle.putDouble(Constants.DATA, 0.0)
-
+                isDrectDebit?.let {
+                    bundle.putBoolean(Constants.IS_DIRECT_DEBIT, it)
+                }
                 findNavController().navigate(
                     R.id.action_selectPaymentMethodFragment_to_nmiPaymentFragment,
                     bundle

@@ -152,8 +152,14 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         when (status) {
             is Resource.Success -> {
 
-
-                paymentList = status.data?.creditCardListType?.cardsList
+                paymentList?.clear()
+                status?.data?.let {
+                    it?.creditCardListType?.let {
+                        it.cardsList?.let {
+                            paymentList?.addAll(it)
+                        }
+                    }
+                }
 
                 directDebitPaymentList = (paymentList?.filter { it?.bankAccount == true }
                     ?: ArrayList()) as ArrayList<CardListResponseModel?>?
@@ -217,11 +223,17 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
             R.id.addNewPaymentMethod -> {
                 val bundle = Bundle()
-
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
+                bundle.putDouble(Constants.DATA, 0.0)
+                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
                 if (accountInformation?.accSubType.equals(Constants.PAYG) || directDebitPaymentList.orEmpty().size==1) {
-                    bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
-                    bundle.putDouble(Constants.DATA, 0.0)
-                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
+
+                    if (paymentList?.get(0)?.emandateStatus == "ACTIVE" && paymentList?.get(0)?.bankAccount == true) {
+                        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, true)
+                    } else {
+                        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
+                    }
+
                     findNavController().navigate(
                         R.id.action_paymentMethodFragment_to_nmiPaymentFragment,
                         bundle
@@ -229,11 +241,22 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                 } else {
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
-                    findNavController().navigate(
-                        R.id.action_paymentMethodFragment_to_selectPaymentMethodFragment,
-                        bundle
-                    )
+
+                    if (paymentList?.get(0)?.emandateStatus == "ACTIVE" && paymentList?.get(0)?.bankAccount == true) {
+                        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, true)
+                        findNavController().navigate(
+                            R.id.action_paymentMethodFragment_to_nmiPaymentFragment,
+                            bundle
+                        )
+                    } else {
+                        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
+                        findNavController().navigate(
+                            R.id.action_paymentMethodFragment_to_selectPaymentMethodFragment,
+                            bundle
+                        )
+                    }
+
+
 
                 }
 

@@ -37,7 +37,6 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
     }
 
     override fun initCtrl() {
-      
         binding.prePayCard.setOnClickListener(this)
         binding.payCard.setOnClickListener(this)
     }

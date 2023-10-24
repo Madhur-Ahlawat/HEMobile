@@ -25,7 +25,6 @@ class TransactionsInnerAdapter(
         RecyclerView.ViewHolder(binding.root) {
     }
     private var binding: ItemCrossingsBinding? = null
-    private var transactionItem: TransactionData? = null
     private var pos: Int = -1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -65,7 +64,12 @@ class TransactionsInnerAdapter(
                 valueTopUpAmount.text = topup
                 valueTopUpAmount.setTextColor(viewAllTransactionsFragment.resources.getColor(R.color.green_status))
             } else {
-                tvTransactionType.text = recentTransactionItem.exitPlazaName
+                if(HomeActivityMain.crossing?.exitDirection.equals("N")){
+                    tvTransactionType.text = "Northbound"
+                }
+                else{
+                    tvTransactionType.text = "Southbound"
+                }
                 verticalStripTransactionType.background.setTint(
                     viewAllTransactionsFragment.resources.getColor(
                         R.color.red_status

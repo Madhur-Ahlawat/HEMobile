@@ -215,7 +215,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 real_paymentList=status.data?.creditCardListType?.cardsList
                 for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
                     if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
-                        paymentList?.add(status.data.creditCardListType.cardsList.get(i))
+                        paymentList?.add(status.data.creditCardListType.cardsList?.get(i))
                     }
                 }
                 for (i in 0 until paymentList.orEmpty().size) {

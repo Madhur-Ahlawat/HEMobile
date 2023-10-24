@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
+import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.repository.notification.NotificationRepo
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +21,10 @@ class NotificationViewModel @Inject constructor(
     private val repo: NotificationRepo,
     val errorManager: ErrorManager
 ) : ViewModel() {
-    private val dismissAlertMutData = MutableLiveData<Resource<String?>?>()
+    val notificationCheckUncheck = MutableStateFlow<AlertMessage?>(null)
+    val notificationCheckUncheckStateFlow: StateFlow<AlertMessage?> = notificationCheckUncheck
+
+    val dismissAlertMutData = MutableLiveData<Resource<String?>?>()
     val dismissAlertLiveData: LiveData<Resource<String?>?> get() = dismissAlertMutData
     private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
     val alertLivData: LiveData<Resource<AlertMessageApiResponse?>?> get() = alertMutData

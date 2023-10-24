@@ -1,13 +1,16 @@
 package com.conduent.nationalhighways.ui.bottomnav.notification
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
@@ -24,10 +27,12 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), FilterDialogListener,
@@ -39,9 +44,9 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     private var mLayoutManager: LinearLayoutManager? = null
     private val viewModel: NotificationViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var priority_notifications: MutableList<AlertMessage?>? = mutableListOf()
-    private var standard_notifications: MutableList<AlertMessage?>? = mutableListOf()
-
+    private var priority_notifications: MutableList<AlertMessage> = mutableListOf()
+    private var standard_notifications: MutableList<AlertMessage> = mutableListOf()
+    private var numberOfAlertsTOBeCleared = 0
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -112,15 +117,15 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     }
 
-    private fun initAdapter(notifications: MutableList<AlertMessage?>?) {
+    private fun initAdapter(notifications: MutableList<AlertMessage>) {
         Log.e("TAG", "initAdapter: notifications " + notifications)
         mLayoutManager = LinearLayoutManager(context)
         mLayoutManager!!.orientation = RecyclerView.VERTICAL
         binding.notificationsRecyclerview.layoutManager = mLayoutManager
         mAdapter =
             NotificationAdapterNew(
-                requireActivity() as HomeActivityMain,
-                notifications
+                this@NotificationFragment,
+                notifications, viewModel
             )
         binding.notificationsRecyclerview.adapter = mAdapter
         checkData()
@@ -129,19 +134,41 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     private fun setClickListeners() {
         binding.btnClearNotification.setOnClickListener {
+            numberOfAlertsTOBeCleared = 0
             if (isPrioritySelected) {
                 priority_notifications?.forEach {
                     if (it?.isSelectListItem == true) {
+                        binding.btnClearNotification.isEnabled = false
+                        binding.btnClearNotification.isFocusable = false
+                        numberOfAlertsTOBeCleared++
                         viewModel.deleteAlertItem(it.cscLookUpKey ?: "")
+                    }
+                }
+                if (numberOfAlertsTOBeCleared > 0) {
+                    if (!loader!!.isVisible) {
+                        loader?.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.LOADER_DIALOG
+                        )
                     }
                 }
             } else {
                 standard_notifications?.forEach {
                     if (it?.isSelectListItem == true) {
+                        numberOfAlertsTOBeCleared++
+                        binding.btnClearNotification.isEnabled = false
+                        binding.btnClearNotification.isFocusable = false
                         viewModel.deleteAlertItem(it.cscLookUpKey ?: "")
                     }
                 }
-
+                if (numberOfAlertsTOBeCleared > 0) {
+                    if (!loader!!.isVisible) {
+                        loader?.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.LOADER_DIALOG
+                        )
+                    }
+                }
             }
         }
         binding.priority.setOnClickListener {
@@ -192,11 +219,52 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     override fun initCtrl() {
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun observer() {
         observe(viewModel.alertLivData, ::handleAlertResponse)
         observe(viewModel.dismissAlertLiveData, ::handleDismissAlertResponse)
+        lifecycleScope.launch {
+            viewModel.notificationCheckUncheckStateFlow.collect {
+                it?.let {
+                    handleNotificationChecked(it)
+                    viewModel.notificationCheckUncheck.emit(null)
+                }
+            }
+        }
     }
 
+    private fun handleNotificationChecked(alertMessage: AlertMessage) {
+        if (!alertMessage.isSelectListItem) {
+            binding.selectAll.isChecked = false
+        } else {
+            var areAllItemsSelected = true
+            if (isPrioritySelected) {
+                for (i in 0..(priority_notifications!!.size - 1)) {
+                    if (!priority_notifications!!.get(i)!!.isSelectListItem) {
+                        areAllItemsSelected = false
+                        break
+                    }
+                }
+            } else {
+                for (i in 0..(standard_notifications!!.size - 1)) {
+                    if (!standard_notifications!!.get(i)!!.isSelectListItem) {
+                        areAllItemsSelected = false
+                        break
+                    }
+                }
+            }
+
+
+            if (!areAllItemsSelected) {
+                binding.selectAll.isChecked = areAllItemsSelected
+            } else {
+                binding.selectAll.isChecked = areAllItemsSelected
+            }
+        }
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
         loader?.dismiss()
         when (resource) {
@@ -209,13 +277,18 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
                         } else {
                             if (it?.category.equals(Constants.PRIORITY)) {
-                                priority_notifications?.add(it)
+                                priority_notifications?.add(it!!)
                             }
                             if (it?.category.equals(Constants.STANDARD)) {
-                                standard_notifications?.add(it)
+                                standard_notifications?.add(it!!)
                             }
                         }
                     }
+
+                    priority_notifications =
+                        Utils.sortAlertsDateWiseDescending(priority_notifications)
+                    standard_notifications =
+                        Utils.sortAlertsDateWiseDescending(standard_notifications)
 
                     if (isPrioritySelected) {
                         initAdapter(priority_notifications)
@@ -266,10 +339,20 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     }
 
     private fun handleDismissAlertResponse(resource: Resource<String?>?) {
-        loader?.dismiss()
+        if(numberOfAlertsTOBeCleared>0){
+            numberOfAlertsTOBeCleared--
+        }
+        if(numberOfAlertsTOBeCleared==0){
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            binding.btnClearNotification.isEnabled=true
+            binding.btnClearNotification.isFocusable=true
+        }
         when (resource) {
             is Resource.Success -> {
-
+                unSelectAllNotifications()
+                viewModel.getAlertsApi(Constants.LANGUAGE)
 
             }
 

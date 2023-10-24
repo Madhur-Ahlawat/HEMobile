@@ -17,9 +17,12 @@ import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.NotificationManagerCompat
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
+import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogRetryBinding
 import com.conduent.nationalhighways.databinding.DialogSessionexpiryBinding
@@ -27,6 +30,7 @@ import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.extn.changeBackgroundColor
 import com.conduent.nationalhighways.utils.extn.changeTextColor
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
@@ -105,7 +109,52 @@ object Utils {
         return if (str == null || str.length == 0) str else str.substring(0, 1)
             .uppercase(Locale.getDefault()) + str.substring(1).toLowerCase()
     }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
+        var transactionListSorted: MutableList<TransactionData> = mutableListOf()
+        for (transaction in transactions) {
+            if (transactionListSorted?.isEmpty() == true) {
+                transaction!!.showDateHeader = true
+                transactionListSorted.add(transaction!!)
+            } else {
+                if (DateUtils.compareDates(
+                        transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
+                        transaction?.transactionDate + " " + transaction?.exitTime
+                    )
+                ) {
+                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
 
+                } else {
+                    transactionListSorted.add(transaction!!)
+                }
+            }
+
+        }
+        return transactionListSorted
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sortAlertsDateWiseDescending(transactions: MutableList<AlertMessage>): MutableList<AlertMessage> {
+        var transactionListSorted: MutableList<AlertMessage> = mutableListOf()
+        for (transaction in transactions) {
+            if (transactionListSorted?.isEmpty() == true) {
+                transactionListSorted.add(transaction!!)
+            } else {
+                if (DateUtils.compareDates(
+                        transactionListSorted.last().createTs,
+                        transaction?.createTs
+                    )
+                ) {
+                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
+
+                } else {
+                    transactionListSorted.add(transaction!!)
+                }
+            }
+
+        }
+        return transactionListSorted
+    }
     fun validateAmount(
         nhTextInputCell: NHTextInputCell,
         minimumAmount: Int,

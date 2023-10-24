@@ -55,12 +55,6 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
     override fun onResume() {
         super.onResume()
         binding?.apply {
-            tvPaymentReference.visible()
-            tvPaymentReferenceValue.visible()
-            tvPaymentMethod.visible()
-            tvPaymentMethodValue.visible()
-            tvLastFourDigitsOfTheCard.visible()
-            tvFourDigitsOfTheCardValue.visible()
             crossingAmount.text = crossing?.balance
             tvPaymentDateValue.text = crossing?.transactionDate
             tvPaymentTimeValue.text = crossing?.exitTime

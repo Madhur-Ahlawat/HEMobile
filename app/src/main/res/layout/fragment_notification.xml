@@ -13,10 +13,10 @@
         android:background="@color/white">
 
         <LinearLayout
-            android:layout_alignParentTop="true"
             android:id="@+id/llyt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_marginHorizontal="@dimen/_11dp"
             android:layout_marginTop="@dimen/_11dp"
             android:background="@drawable/bg_rounded_corner_5dp"
@@ -67,20 +67,20 @@
 
         <RelativeLayout
             android:id="@+id/data_rl"
-            android:layout_below="@+id/llyt"
-            android:layout_marginTop="@dimen/_1dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/llyt"
             android:layout_marginHorizontal="@dimen/_8dp"
+            android:layout_marginTop="@dimen/_1dp"
             android:background="@drawable/bg_rounded_corner_5dp"
             android:elevation="@dimen/_5dp"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl_checkbox"
-                android:layout_alignParentTop="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:elevation="@dimen/_5dp">
 
                 <CheckBox
@@ -107,10 +107,10 @@
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_below="@+id/rl_checkbox"
                 android:id="@+id/notifications_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@+id/rl_checkbox"
                 android:layout_marginHorizontal="@dimen/_8dp"
                 android:clickable="true"
                 android:clipToPadding="false"
@@ -120,16 +120,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_notifications" />
+
             <com.conduent.nationalhighways.utils.widgets.NHButton
-                android:layout_width="match_parent"
-                style="@style/PrimaryButton"
-                android:layout_marginBottom="@dimen/_19dp"
-                android:layout_alignParentBottom="true"
                 android:id="@+id/btn_clear_notification"
-                android:textColor="@color/white"
+                style="@style/PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_marginHorizontal="@dimen/_26_7dp"
+                android:layout_marginBottom="@dimen/_19dp"
                 android:text="@string/clear_notification"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/white" />
         </RelativeLayout>
     </RelativeLayout>
 </layout>

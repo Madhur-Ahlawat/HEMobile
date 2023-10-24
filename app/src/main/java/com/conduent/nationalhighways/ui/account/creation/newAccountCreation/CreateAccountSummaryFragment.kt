@@ -258,7 +258,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             R.id.editAccountSubType -> {
                 val bundle = Bundle()
                 bundle.putString(NAV_FLOW_KEY, EDIT_ACCOUNT_TYPE)
-                bundle.putParcelable(NAV_DATA_KEY, dataModel!! as Parcelable)
+//                bundle.putParcelable(NAV_DATA_KEY, dataModel!!. as Parcelable)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountTypesFragment,bundle
