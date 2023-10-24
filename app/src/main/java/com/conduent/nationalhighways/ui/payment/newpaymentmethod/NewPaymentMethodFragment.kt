@@ -200,6 +200,12 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("TAG", "onDestroy: " )
+//        hideLoader()
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
 
@@ -618,7 +624,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     showLoader()
                     if (paymentList?.get(position)?.primaryCard == true && paymentList.orEmpty().size > 1) {
                         rowId = paymentList?.get(position)?.rowId ?: ""
-                        showLoader()
                         makeSecondaryCardAsPrimary(
                             paymentList?.get(position + 1)?.cardType,
                             paymentList?.get(position + 1)?.rowId
