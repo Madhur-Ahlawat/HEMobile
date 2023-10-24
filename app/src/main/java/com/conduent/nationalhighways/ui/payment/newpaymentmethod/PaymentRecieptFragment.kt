@@ -341,6 +341,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
+                NewCreateAccountRequestModel.countryCode=binding.inputCountry.getSelectedDescription()
                 if (edit_summary) {
                     findNavController().navigate(
                         R.id.action_crossingRecieptFragment_editsummary_to_crossingCheckAnswersFragment,
@@ -382,7 +383,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
             if (index == 1) {
                 val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
-                if (binding.inputCountry.getSelectedDescription().equals("UK +44", true)) {
+                if (binding.inputCountry.getSelectedDescription().equals(Constants.UNITED_KINGDOM, true)) {
                     requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
                         if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
                             binding.inputMobileNumber.removeError()
@@ -532,12 +533,11 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             (navData as CrossingDetailsModelsResponse).fullCountryCode =
                 binding.inputCountry.selectedItemDescription
         } else {
-            binding.btnContinue.disable()
+            binding.btnContinue.enable()
         }
     }
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
-        Log.e("TAG", "onAutoCompleteItemClick() called with: item = $item, selected = $selected")
         if (selected) {
             (navData as CrossingDetailsModelsResponse).countryCode =
                 getCountryCodeRequiredText(item)

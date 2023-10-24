@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.landing
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
-import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentNewLandingBinding
@@ -35,7 +35,6 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
-import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -49,6 +48,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     private var count = 1
     var apiState = Constants.UNAVAILABLE
     var apiEndTime: String = ""
+    private var plateNumber: String = ""
+    private var email: String = ""
+    private var mobileNumber: String = ""
+    private var countryCode: String = ""
+
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -63,13 +67,30 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
-        binding.scrollViewLanding.post(Runnable { binding.scrollViewLanding.smoothScrollTo(0,binding.scrollViewLanding.bottom)})
-        HomeActivityMain.accountDetailsData=null
-        HomeActivityMain.checkedCrossing=null
-        HomeActivityMain.crossing=null
-        HomeActivityMain.dateRangeModel=null
-        HomeActivityMain.paymentHistoryListData= mutableListOf()
-        HomeActivityMain.paymentHistoryListDataCheckedCrossings= mutableListOf()
+        if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
+            plateNumber = arguments?.getString(Constants.PLATE_NUMBER) ?: ""
+        }
+        if (arguments?.containsKey(Constants.EMAIL) == true) {
+            email = arguments?.getString(Constants.EMAIL) ?: ""
+        }
+        if (arguments?.containsKey(Constants.MOBILE_NUMBER) == true) {
+            mobileNumber = arguments?.getString(Constants.MOBILE_NUMBER) ?: ""
+        }
+        if (arguments?.containsKey(Constants.COUNTRY_TYPE) == true) {
+            countryCode = arguments?.getString(Constants.COUNTRY_TYPE) ?: ""
+        }
+        binding.scrollViewLanding.post(Runnable {
+            binding.scrollViewLanding.smoothScrollTo(
+                0,
+                binding.scrollViewLanding.bottom
+            )
+        })
+        HomeActivityMain.accountDetailsData = null
+        HomeActivityMain.checkedCrossing = null
+        HomeActivityMain.crossing = null
+        HomeActivityMain.dateRangeModel = null
+        HomeActivityMain.paymentHistoryListData = mutableListOf()
+        HomeActivityMain.paymentHistoryListDataCheckedCrossings = mutableListOf()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -90,6 +111,13 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             sessionManager.getLoggedInUser()
         )
 
+        if (navFlowFrom == Constants.ONE_OFF_PAYMENT_SUCCESS) {
+            NewCreateAccountRequestModel.plateNumber = plateNumber
+            NewCreateAccountRequestModel.emailAddress = email
+            NewCreateAccountRequestModel.mobileNumber = mobileNumber
+            NewCreateAccountRequestModel.countryCode = countryCode
+            requireActivity().startNormalActivity(CreateAccountActivity::class.java)
+        }
     }
 
     override fun onResume() {
@@ -100,46 +128,48 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         webServiceViewModel.checkServiceStatus()
 //        }
         isChecked = true
-        resetOneOffData()
+        if (navFlowFrom != Constants.ONE_OFF_PAYMENT_SUCCESS) {
+            resetOneOffData()
+        }
     }
 
     private fun resetOneOffData() {
-        NewCreateAccountRequestModel.referenceId= ""
-        NewCreateAccountRequestModel.emailAddress= ""
-        NewCreateAccountRequestModel.mobileNumber= ""
-        NewCreateAccountRequestModel.countryCode= ""
-        NewCreateAccountRequestModel.telephoneNumber= ""
-        NewCreateAccountRequestModel.telephone_countryCode=""
-        NewCreateAccountRequestModel.communicationTextMessage=false
-        NewCreateAccountRequestModel.termsCondition=false
-        NewCreateAccountRequestModel.twoStepVerification=false
-        NewCreateAccountRequestModel.personalAccount=false
-        NewCreateAccountRequestModel.firstName=""
-        NewCreateAccountRequestModel.lastName=""
-        NewCreateAccountRequestModel.companyName=""
-        NewCreateAccountRequestModel.addressline1=""
-        NewCreateAccountRequestModel.addressline2=""
-        NewCreateAccountRequestModel.townCity=""
-        NewCreateAccountRequestModel.state=""
-        NewCreateAccountRequestModel.country=""
-        NewCreateAccountRequestModel.zipCode=""
-        NewCreateAccountRequestModel.selectedAddressId=-1
-        NewCreateAccountRequestModel.prePay=false
-        NewCreateAccountRequestModel.plateCountry=""
-        NewCreateAccountRequestModel.plateNumber=""
-        NewCreateAccountRequestModel.plateNumberIsNotInDVLA=false
+        NewCreateAccountRequestModel.referenceId = ""
+        NewCreateAccountRequestModel.emailAddress = ""
+        NewCreateAccountRequestModel.mobileNumber = ""
+        NewCreateAccountRequestModel.countryCode = ""
+        NewCreateAccountRequestModel.telephoneNumber = ""
+        NewCreateAccountRequestModel.telephone_countryCode = ""
+        NewCreateAccountRequestModel.communicationTextMessage = false
+        NewCreateAccountRequestModel.termsCondition = false
+        NewCreateAccountRequestModel.twoStepVerification = false
+        NewCreateAccountRequestModel.personalAccount = false
+        NewCreateAccountRequestModel.firstName = ""
+        NewCreateAccountRequestModel.lastName = ""
+        NewCreateAccountRequestModel.companyName = ""
+        NewCreateAccountRequestModel.addressline1 = ""
+        NewCreateAccountRequestModel.addressline2 = ""
+        NewCreateAccountRequestModel.townCity = ""
+        NewCreateAccountRequestModel.state = ""
+        NewCreateAccountRequestModel.country = ""
+        NewCreateAccountRequestModel.zipCode = ""
+        NewCreateAccountRequestModel.selectedAddressId = -1
+        NewCreateAccountRequestModel.prePay = false
+        NewCreateAccountRequestModel.plateCountry = ""
+        NewCreateAccountRequestModel.plateNumber = ""
+        NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
         NewCreateAccountRequestModel.vehicleList = mutableListOf<NewVehicleInfoDetails>()
         NewCreateAccountRequestModel.addedVehicleList = ArrayList<VehicleResponse?>()
         NewCreateAccountRequestModel.addedVehicleList2 = ArrayList<VehicleResponse?>()
-        NewCreateAccountRequestModel.isRucEligible=false
-        NewCreateAccountRequestModel.isExempted=false
-        NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
-        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
-        NewCreateAccountRequestModel.isMaxVehicleAdded=false
+        NewCreateAccountRequestModel.isRucEligible = false
+        NewCreateAccountRequestModel.isExempted = false
+        NewCreateAccountRequestModel.isVehicleAlreadyAdded = false
+        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = false
+        NewCreateAccountRequestModel.isMaxVehicleAdded = false
         NewCreateAccountRequestModel.isManualAddress = false
-        NewCreateAccountRequestModel.emailSecurityCode=""
-        NewCreateAccountRequestModel.smsSecurityCode=""
-        NewCreateAccountRequestModel.password=""
+        NewCreateAccountRequestModel.emailSecurityCode = ""
+        NewCreateAccountRequestModel.smsSecurityCode = ""
+        NewCreateAccountRequestModel.password = ""
     }
 
 
@@ -147,7 +177,8 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         LandingActivity.showToolBar(false)
         binding.btnGuidanceAndDocuments.setOnClickListener {
             requireActivity().startNormalActivity(
-                RaiseEnquiryActivity::class.java)
+                RaiseEnquiryActivity::class.java
+            )
 //            when (apiState) {
 //
 //                Constants.LIVE -> {
@@ -291,7 +322,10 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             }
             when (resource) {
                 is Resource.Success -> {
-                    ErrorUtil.showError(binding.root, getString(R.string.push_notifications_allowed_successfully))
+                    ErrorUtil.showError(
+                        binding.root,
+                        getString(R.string.push_notifications_allowed_successfully)
+                    )
                 }
 
                 is Resource.DataError -> {
@@ -345,10 +379,10 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     }
 
-    private fun getBundleData(state: String?,endTime:String?=null): Bundle? {
+    private fun getBundleData(state: String?, endTime: String? = null): Bundle {
         val bundle: Bundle = Bundle()
         bundle.putString(Constants.SERVICE_TYPE, state)
-        if(endTime!=null && endTime.replace("null","").isNotEmpty()){
+        if (endTime != null && endTime.replace("null", "").isNotEmpty()) {
             bundle.putString(Constants.END_TIME, endTime)
         }
         return bundle

@@ -10,9 +10,12 @@ import com.conduent.nationalhighways.data.model.payment.*
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.repository.payment.PaymentMethodRepository
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.ResponseHandler
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +26,15 @@ class PaymentMethodViewModel @Inject constructor(
 ) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+
+    val _savedCardListState = MutableStateFlow<Resource<PaymentMethodResponseModel?>?>(null)
+    val savedCardState: StateFlow<Resource<PaymentMethodResponseModel?>?> get() = _savedCardListState
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+     val _saveDirectDebitNewCardState = MutableStateFlow<Resource<PaymentMethodDeleteResponseModel?>?>(null)
+    val saveDirectDebitNewCardState: StateFlow<Resource<PaymentMethodDeleteResponseModel?>?> get() = _saveDirectDebitNewCardState
+
+
     private val _savedCardList = MutableLiveData<Resource<PaymentMethodResponseModel?>?>()
     val savedCardList: LiveData<Resource<PaymentMethodResponseModel?>?> get() = _savedCardList
 
@@ -45,6 +57,8 @@ class PaymentMethodViewModel @Inject constructor(
         MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
     val saveDirectDebitNewCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _saveDirectDebitNewCard
 
+
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _deletePrimaryCard = MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
     val deletePrimaryCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _deletePrimaryCard
@@ -55,10 +69,46 @@ class PaymentMethodViewModel @Inject constructor(
     val accountDetail: LiveData<Resource<ProfileDetailModel?>?> get() = _accountDetail
 
 
+    fun saveCardListState() {
+        viewModelScope.launch {
+            try {
+                _savedCardListState.emit(
+                    ResponseHandler.success(
+                        repository.savedCard(
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _savedCardListState.emit(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun saveDirectDebitNewCardState(model: SaveNewCardRequest?) {
+        viewModelScope.launch {
+            try {
+                _saveDirectDebitNewCardState.emit(
+                    success(
+                        repository.saveDirectDebitNewCard(
+                            model
+                        )
+                    )
+                )
+            } catch (e: Exception) {
+                _saveDirectDebitNewCardState.emit(failure(e))
+            }
+        }
+    }
+
     fun saveCardList() {
         viewModelScope.launch {
             try {
-                _savedCardList.postValue(success(repository.savedCard()))
+                _savedCardList.postValue(
+                    success(
+                        repository.savedCard(
+                        ), errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _savedCardList.postValue(failure(e))
             }

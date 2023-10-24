@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.databinding.ActivityMakeOffPaymentBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.MakeOneOffPaymentSuccessfullyFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -52,6 +53,8 @@ class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
 
     private fun init() {
         binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
+
+
         binding.toolBarLyt.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
 
@@ -70,6 +73,8 @@ class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
             bundle.putParcelable(Constants.NAV_DATA_KEY, data as CrossingDetailsModelsResponse)
         }
         navController?.setGraph(navGraph!!, bundle)
+
+
     }
 
     override fun observeViewModel() {}

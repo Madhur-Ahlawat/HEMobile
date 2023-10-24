@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -49,15 +49,17 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
     }
 
     override fun observer() {
-        lifecycleScope.launch() {
-            observe(paymentMethodViewModel.saveDirectDebitNewCard, ::handleSaveNewCardResponse)
-
+        lifecycleScope.launch {
+            paymentMethodViewModel.saveDirectDebitNewCardState.collect {
+                handleSaveNewCardResponse(it)
+            }
         }
     }
 
     private fun handleSaveNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
         hideLoader()
         when (status) {
+
             is Resource.Success -> {
 
                 if (status.data?.statusCode?.equals("0") == true) {
@@ -76,12 +78,12 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
                     displayCustomMessage(
                         getString(R.string.str_warning),
                         getString(R.string.the_card_you_are_trying_to_add_is_already),
-                        getString(R.string.str_add_another_card_small),  getString(R.string.cancel),
+                        getString(R.string.str_add_another_card_small), getString(R.string.cancel),
                         object : DialogPositiveBtnListener {
                             override fun positiveBtnClick(dialog: DialogInterface) {
                                 val fragmentId = findNavController().currentDestination?.id
-                                findNavController().popBackStack(fragmentId!!,true)
-                                findNavController().navigate(fragmentId,arguments)
+                                findNavController().popBackStack(fragmentId!!, true)
+                                findNavController().navigate(fragmentId, arguments)
                             }
                         },
                         object : DialogNegativeBtnListener {
@@ -89,17 +91,6 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
                                 findNavController().navigate(R.id.action_directDebitFragment_to_paymentMethodFragment)
                             }
                         })
-
-                    /* val bundle = Bundle()
-
-                     bundle.putString(
-                         Constants.CARD_IS_ALREADY_REGISTERED,
-                         Constants.CARD_IS_ALREADY_REGISTERED
-                     )
-                     findNavController().navigate(
-                         R.id.directDebitFragment_to_paymentSuccessFragment2,
-                         bundle
-                     )*/
                 } else {
                     val bundle = Bundle()
 
@@ -114,6 +105,7 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
 
                 }
             }
+
 
             is Resource.DataError -> {
                 if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
@@ -135,8 +127,9 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
             else -> {
             }
         }
-
-
+        lifecycleScope.launch {
+            paymentMethodViewModel._saveDirectDebitNewCardState.emit(null)
+        }
     }
 
     override fun init() {
@@ -207,7 +200,7 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
         showLoader()
         val saveDirectDebitNewCard = SaveNewCardRequest(encodedschemeid, mandateid)
 
-        paymentMethodViewModel.saveDirectDebitNewCard(saveDirectDebitNewCard)
+        paymentMethodViewModel.saveDirectDebitNewCardState(saveDirectDebitNewCard)
 
     }
 

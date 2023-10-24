@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
         FragmentCreateAccountPrerequisiteBinding.inflate(inflater, container, false)
 
     override fun init() {
+      
         val content = SpannableString(getString(R.string.sign_in))
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
         binding.txtSignIn.text = content

@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.conduent.nationalhighways.ui.viewcharges.ViewChargesActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +27,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
     View.OnClickListener, OnRetryClickListener {
 
-    private var dataModel: NewCreateAccountRequestModel?=null
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountTypesBinding.inflate(inflater, container, false)
@@ -33,10 +34,10 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         binding.crossingCharges.setOnClickListener(this)
-        dataModel=arguments?.getParcelable(Constants.NAV_DATA_KEY,NewCreateAccountRequestModel::class.java)
     }
 
     override fun initCtrl() {
+      
         binding.prePayCard.setOnClickListener(this)
         binding.payCard.setOnClickListener(this)
     }

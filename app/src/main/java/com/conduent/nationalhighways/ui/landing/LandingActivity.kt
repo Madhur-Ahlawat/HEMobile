@@ -33,6 +33,11 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     @Inject
     lateinit var sessionManager: SessionManager
 //    private var loader: LoaderDialog? = null
+    private var navFlowFrom:String=""
+    private var plateNumber:String=""
+    private var email:String=""
+    private var mobileNumber:String=""
+    private var countryCode:String=""
 
     private lateinit var navController: NavController
     private var screenType: String = ""
@@ -61,13 +66,28 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
         Logg.logging("landingActivy", "test called $screenType")
 
+        if(intent?.hasExtra(Constants.NAV_FLOW_FROM)==true){
+            navFlowFrom =intent.getStringExtra(Constants.NAV_FLOW_FROM)?:""
+        }
+        if(intent?.hasExtra(Constants.PLATE_NUMBER)==true){
+            plateNumber =intent.getStringExtra(Constants.PLATE_NUMBER)?:""
+        }
+        if(intent?.hasExtra(Constants.EMAIL)==true){
+            email =intent.getStringExtra(Constants.EMAIL)?:""
+        }
+        if(intent?.hasExtra(Constants.MOBILE_NUMBER)==true){
+            mobileNumber =intent.getStringExtra(Constants.MOBILE_NUMBER)?:""
+        }
+        if(intent?.hasExtra(Constants.COUNTRY_TYPE)==true){
+            countryCode =intent.getStringExtra(Constants.COUNTRY_TYPE)?:""
+        }
         loadFragment(screenType)
 
         navControllerListener()
         if (screenType == LRDS_SCREEN) {
             binding.titleTxt.text = resources.getString(R.string.txt_my_account)
             binding.btnBack.visible()
-        }else if(screenType== LOGOUT_SCREEN||screenType== SESSION_TIME_OUT){
+        } else if (screenType == LOGOUT_SCREEN || screenType == SESSION_TIME_OUT) {
             binding.titleTxt.text = resources.getString(R.string.str_signed_out)
             binding.btnBack.gone()
         } else {
@@ -130,6 +150,11 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
             bundle.putString(Constants.SERVICE_TYPE, LRDS_SCREEN)
             bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
         }
+        bundle.putString(Constants.NAV_FLOW_FROM,navFlowFrom)
+        bundle.putString(Constants.PLATE_NUMBER,plateNumber)
+        bundle.putString(Constants.EMAIL,email)
+        bundle.putString(Constants.MOBILE_NUMBER,mobileNumber)
+        bundle.putString(Constants.COUNTRY_TYPE,countryCode)
 
         oldGraph.apply {
             when (screenType) {

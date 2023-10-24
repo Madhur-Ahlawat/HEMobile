@@ -314,10 +314,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     }
 
                     val check: Boolean = "tokenType" in data
-                    Log.e("TAG", "postMessage:check--> "+check )
 
                     if (check) {
-                        Log.e("TAG", "postMessage:checkBox--> "+checkBox )
 
                         responseModel =
                             Gson().fromJson(data, CardResponseModel::class.java)
@@ -648,8 +646,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$doubleAmount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 
-                Log.e("TAG", "onPageFinished: flow " + flow)
-                Log.e("TAG", "onPageFinished: paymentListSize " + paymentListSize)
                 when (flow) {
                     Constants.SUSPENDED -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
@@ -727,7 +723,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                     Constants.PAY_FOR_CROSSINGS -> {
 
-
+                        view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'block'; document.getElementById('title').innerText = 'Payment Details';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('title_break').style.display = '';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")

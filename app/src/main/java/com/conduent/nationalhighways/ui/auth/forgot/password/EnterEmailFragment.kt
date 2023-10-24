@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -68,6 +69,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     ) = FragmentEnterEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
+      
         sessionManager.clearAll()
 //        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 

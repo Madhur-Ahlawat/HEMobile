@@ -50,6 +50,7 @@ object ResponseHandler {
                     return Resource.DataError(errorResponse.message, errorResponse)
                 }
             } catch (e: Exception) {
+                Log.e("TAG", "success: message "+e.message )
                 return Resource.DataError(e.message)
             }
         }

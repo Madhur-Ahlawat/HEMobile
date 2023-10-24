@@ -31,6 +31,7 @@ import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
@@ -155,6 +156,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
                 setData()
             }
+            else->{
+                binding.inputMobileNumber.setText(NewCreateAccountRequestModel.mobileNumber?:"")
+            }
         }
 
         isViewCreated = true
@@ -186,7 +190,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         isItMobileNumber = false
         requiredMobileNumber = true
         data = navData as ProfileDetailModel?
-        if (requireActivity() is CreateAccountActivity) {
+        if (requireActivity() is CreateAccountActivity || requireActivity() is MakeOffPaymentActivity) {
         } else {
             title?.text = getString(R.string.profile_phone_number)
         }
@@ -313,7 +317,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         }
                     }
                 } else {
-                    binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                    if(NewCreateAccountRequestModel.countryCode?.isEmpty()==true){
+                        binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                    }else{
+                        binding.inputCountry.setSelectedValue(NewCreateAccountRequestModel.countryCode?:"")
+                    }
                 }
 
                 requiredCountryCode =
@@ -414,7 +422,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         data = navData as ProfileDetailModel?
                         if (data != null) {
-                            Log.e("TAG", "isitmobilenumber --> " + isItMobileNumber)
                             if (isItMobileNumber) {
                                 val phone = data?.personalInformation?.phoneCell
                                 if (phone.isNullOrEmpty().not() && phone.equals(

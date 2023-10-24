@@ -41,13 +41,14 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.Serializable
 
 @AndroidEntryPoint
 class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     PaymentMethodAdapter.PaymentMethodCallback, View.OnClickListener {
     private lateinit var paymentMethodAdapter: PaymentMethodAdapter
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
+    private var directDebitPaymentList: ArrayList<CardListResponseModel?>? = ArrayList()
+    private var cardPaymentList: ArrayList<CardListResponseModel?>? = ArrayList()
     private val viewModel: PaymentMethodViewModel by viewModels()
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var rowId: String = ""
@@ -72,6 +73,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     override fun initCtrl() {
         paymentList = ArrayList()
+        directDebitPaymentList = ArrayList()
+        cardPaymentList = ArrayList()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -152,6 +155,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                 paymentList = status.data?.creditCardListType?.cardsList
 
+                directDebitPaymentList = (paymentList?.filter { it?.bankAccount == true }
+                    ?: ArrayList()) as ArrayList<CardListResponseModel?>?
+                cardPaymentList = (paymentList?.filter { it?.bankAccount == false }
+                    ?: ArrayList()) as ArrayList<CardListResponseModel?>?
+
                 for (i in 0 until paymentList.orEmpty().size) {
                     checkNullValuesOfModel(paymentList?.get(i))
                 }
@@ -202,8 +210,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e("TAG", "onDestroy: " )
-//        hideLoader()
     }
 
     override fun onClick(v: View?) {
@@ -212,12 +218,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             R.id.addNewPaymentMethod -> {
                 val bundle = Bundle()
 
-                if (accountInformation?.accSubType.equals(Constants.PAYG)) {
+                if (accountInformation?.accSubType.equals(Constants.PAYG) || directDebitPaymentList.orEmpty().size==1) {
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
                     bundle.putDouble(Constants.DATA, 0.0)
                     bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
-
-
                     findNavController().navigate(
                         R.id.action_paymentMethodFragment_to_nmiPaymentFragment,
                         bundle
@@ -226,8 +230,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 } else {
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
-
-
                     findNavController().navigate(
                         R.id.action_paymentMethodFragment_to_selectPaymentMethodFragment,
                         bundle
@@ -269,7 +271,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     override fun paymentMethodCallback(position: Int, value: String) {
-        Log.e("TAG", "paymentMethodCallback: paymentList > "+paymentList?.get(position) )
         if (value == Constants.DELETE_CARD) {
             accountNumber = paymentList?.get(position)?.cardNumber.toString()
             this.position = position
@@ -375,7 +376,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                         )
 
 
-
                     }
 
                 }
@@ -399,7 +399,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         } else if (value == Constants.MAKE_DEFAULT) {
             makeDefault = true
             hideLoader()
-            Log.e("TAG", "paymentMethodCallback: isVisible " + loader?.isVisible)
             showLoader()
             makeSecondaryCardAsPrimary(
                 paymentList?.get(position)?.cardType,
@@ -413,6 +412,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         super.onDestroyView()
         hideLoader()
     }
+
     private fun checkNullValuesOfModel(model: CardListResponseModel?) {
         if (model?.check == null) {
             model?.check = false
@@ -515,7 +515,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
         hideLoader()
 
-        Log.e("TAG", "handleDeleteCardResponse: " )
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("500") == true || status.data?.statusCode?.equals(
@@ -544,7 +543,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
                     bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
-                    Log.e("TAG", "handleDeleteCardResponse: 11 > " )
                     findNavController().navigate(
                         R.id.paymentMethodFragment_to_action_paymentSuccessFragment,
                         bundle
@@ -603,10 +601,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         message: String,
 
         ) {
-        Log.e(
-            "TAG",
-            "deletePaymentDialog() called with: title = $title, rowId = $rowId_, message = $message"
-        )
 
         displayCustomMessage(title,
             message,
@@ -620,7 +614,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    Log.e("TAG", "positiveBtnClick: deletecard api ")
                     showLoader()
                     if (paymentList?.get(position)?.primaryCard == true && paymentList.orEmpty().size > 1) {
                         rowId = paymentList?.get(position)?.rowId ?: ""

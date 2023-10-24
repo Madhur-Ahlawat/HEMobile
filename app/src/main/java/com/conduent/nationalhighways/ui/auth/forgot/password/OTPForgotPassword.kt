@@ -138,7 +138,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         if (arguments != null) {
             data = arguments?.getParcelable("data")
             response = arguments?.getParcelable("response")
-            Log.e("TAG", "initCtrl: isItMobileNumber " + isItMobileNumber)
             if (isItMobileNumber) {
                 NewCreateAccountRequestModel.sms_referenceId = response?.referenceId
             } else {
@@ -315,8 +314,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                        otpSuccessRedirection()
-//                        confirmEmailCode()
+                        confirmEmailCode()
                     }
 
                 }
@@ -633,7 +631,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-//                otpSuccessRedirection()
                 when (resource.errorModel?.status) {
 
                     500 -> {
@@ -661,18 +658,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun otpSuccessRedirection() {
-        Log.e(
-            "TAG",
-            "otpSuccessRedirection: referenceId " + NewCreateAccountRequestModel.referenceId
-        )
-        Log.e(
-            "TAG",
-            "otpSuccessRedirection: sms_referenceId " + NewCreateAccountRequestModel.sms_referenceId
-        )
-        Log.e(
-            "TAG",
-            "otpSuccessRedirection: emailSecurityCode " + NewCreateAccountRequestModel.emailSecurityCode
-        )
         val bundle = Bundle()
         when (navFlowCall) {
             ACCOUNT_CREATION_MOBILE_FLOW -> {

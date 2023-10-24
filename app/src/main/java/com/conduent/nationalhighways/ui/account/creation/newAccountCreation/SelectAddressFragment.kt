@@ -56,6 +56,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         FragmentSelectAddressBinding.inflate(inflater, container, false)
 
     override fun init() {
+      
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         val linearLayoutManager = LinearLayoutManager(requireActivity())

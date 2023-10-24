@@ -10,9 +10,11 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentMod
 import com.conduent.nationalhighways.databinding.FragmentMakeOneOffPaymentSuccessfullyBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.currentTime
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 
 
 class MakeOneOffPaymentSuccessfullyFragment :
@@ -30,7 +32,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
     override fun init() {
         binding.createAccount.setOnClickListener(this)
         binding.backToMainMenu.setOnClickListener(this)
-        binding?.feedbackBt?.setMovementMethod(LinkMovementMethod.getInstance())
+        binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
 
     }
 
@@ -43,7 +45,6 @@ class MakeOneOffPaymentSuccessfullyFragment :
         if (arguments?.getString(Constants.DATA) != null) {
             amount = arguments?.getString(Constants.DATA) ?: ""
         }
-
 
         binding.accountNumber.text = oneOfPaymentResponse?.referenceNumber
         binding.vechicleRegistration.text = NewCreateAccountRequestModel.plateNumber
@@ -81,13 +82,30 @@ class MakeOneOffPaymentSuccessfullyFragment :
         when (v?.id) {
 
             R.id.createAccount -> {
-                findNavController().navigate(R.id.action_make_one_off_payment_successfully_to_createAccountPrerequisite)
+                var plateNumber = ""
+                if (NewCreateAccountRequestModel.vehicleList.size > 0) {
+                    plateNumber = NewCreateAccountRequestModel.vehicleList.get(0).plateNumber ?: ""
+                }
+
+                NewCreateAccountRequestModel.vehicleList = ArrayList()
+                NewCreateAccountRequestModel.plateNumber = plateNumber
+
+                requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
+                    putString(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
+                    putString(Constants.NAV_FLOW_FROM, Constants.ONE_OFF_PAYMENT_SUCCESS)
+                    putString(Constants.PLATE_NUMBER, plateNumber)
+                    putString(Constants.EMAIL, NewCreateAccountRequestModel.emailAddress)
+                    putString(Constants.MOBILE_NUMBER, NewCreateAccountRequestModel.mobileNumber)
+                    putString(Constants.COUNTRY_TYPE, NewCreateAccountRequestModel.countryCode)
+                }
             }
 
             R.id.backToMainMenu -> {
-                NewCreateAccountRequestModel.emailAddress=""
-                NewCreateAccountRequestModel.mobileNumber=""
-                findNavController().navigate(R.id.action_make_one_off_payment_successfully_to_landingFragment)
+                NewCreateAccountRequestModel.emailAddress = ""
+                NewCreateAccountRequestModel.mobileNumber = ""
+                requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
+                    putString(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
+                }
             }
         }
     }

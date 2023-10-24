@@ -12,7 +12,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -39,8 +38,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class
-CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicleBinding>(),
+class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicleBinding>(),
     View.OnClickListener {
     private var data: CrossingDetailsModelsResponse? = null
     private var isViewCreated = false
@@ -57,8 +55,14 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
 
     override fun init() {
         isCrossingCall = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS, true)
-        arguments?.getString(Constants.PLATE_NUMBER, "").toString()
-            .let { plateNumber = it.replace("null", "") }
+        if (NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
+            binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.plateNumber.toString())
+            binding.findVehicle.enable()
+        }
+        if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
+            arguments?.getString(Constants.PLATE_NUMBER, "").toString()
+                .let { plateNumber = it.replace("null", "") }
+        }
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
@@ -242,7 +246,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                         isVehicleExist = true
                     }
                 }
-                Log.e("TAG", "onClick: isVehicleExist " + isVehicleExist)
                 if (isVehicleExist) {
                     NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = true
                     val bundleData = Bundle()
@@ -382,7 +385,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                     if (it.size > 0) {
 
                         if (it[0].vehicleClass.equals("E", true) == true) {
-                            Log.e("TAG", "apiResponseDVRM1: E " + navFlowCall)
                             NewCreateAccountRequestModel.isExempted = true
                             bundle.putParcelable(Constants.VEHICLE_DETAIL, it[0])
                             bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
@@ -392,7 +394,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                             )
 
                         } else if (it[0].vehicleClass.equals("A", true) == true) {
-                            Log.e("TAG", "apiResponseDVRM1: A ")
                             NewCreateAccountRequestModel.isRucEligible = true
                             if (it.isNotEmpty()) {
                                 bundle.putParcelable(
@@ -408,7 +409,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                             )
 
                         } else {
-                            Log.e("TAG", "apiResponseDVRM1: Else ")
                             bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                             data?.apply {
                                 isExempted = it[0].isExempted
@@ -423,44 +423,50 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                             bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                             arguments?.getInt(Constants.VEHICLE_INDEX)
                                 ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                            if(!binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                                    .replace("-", "").equals(NewCreateAccountRequestModel.plateNumber)){
-                                NewCreateAccountRequestModel.referenceId= ""
-                                NewCreateAccountRequestModel.emailAddress= ""
-                                NewCreateAccountRequestModel.mobileNumber= ""
-                                NewCreateAccountRequestModel.countryCode= ""
-                                NewCreateAccountRequestModel.telephoneNumber= ""
-                                NewCreateAccountRequestModel.telephone_countryCode=""
-                                NewCreateAccountRequestModel.communicationTextMessage=false
-                                NewCreateAccountRequestModel.termsCondition=false
-                                NewCreateAccountRequestModel.twoStepVerification=false
-                                NewCreateAccountRequestModel.personalAccount=false
-                                NewCreateAccountRequestModel.firstName=""
-                                NewCreateAccountRequestModel.lastName=""
-                                NewCreateAccountRequestModel.companyName=""
-                                NewCreateAccountRequestModel.addressline1=""
-                                NewCreateAccountRequestModel.addressline2=""
-                                NewCreateAccountRequestModel.townCity=""
-                                NewCreateAccountRequestModel.state=""
-                                NewCreateAccountRequestModel.country=""
-                                NewCreateAccountRequestModel.zipCode=""
-                                NewCreateAccountRequestModel.selectedAddressId=-1
-                                NewCreateAccountRequestModel.prePay=false
-                                NewCreateAccountRequestModel.plateCountry=""
-                                NewCreateAccountRequestModel.plateNumber=""
-                                NewCreateAccountRequestModel.plateNumberIsNotInDVLA=false
-                                NewCreateAccountRequestModel.vehicleList = mutableListOf<NewVehicleInfoDetails>()
-                                NewCreateAccountRequestModel.addedVehicleList = ArrayList<VehicleResponse?>()
-                                NewCreateAccountRequestModel.addedVehicleList2 = ArrayList<VehicleResponse?>()
-                                NewCreateAccountRequestModel.isRucEligible=false
-                                NewCreateAccountRequestModel.isExempted=false
-                                NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
-                                NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
-                                NewCreateAccountRequestModel.isMaxVehicleAdded=false
+                            if (!binding.editNumberPlate.getText().toString().trim()
+                                    .replace(" ", "")
+                                    .replace("-", "")
+                                    .equals(NewCreateAccountRequestModel.plateNumber)
+                            ) {
+                                NewCreateAccountRequestModel.referenceId = ""
+                                NewCreateAccountRequestModel.emailAddress = ""
+                                NewCreateAccountRequestModel.mobileNumber = ""
+                                NewCreateAccountRequestModel.countryCode = ""
+                                NewCreateAccountRequestModel.telephoneNumber = ""
+                                NewCreateAccountRequestModel.telephone_countryCode = ""
+                                NewCreateAccountRequestModel.communicationTextMessage = false
+                                NewCreateAccountRequestModel.termsCondition = false
+                                NewCreateAccountRequestModel.twoStepVerification = false
+                                NewCreateAccountRequestModel.personalAccount = false
+                                NewCreateAccountRequestModel.firstName = ""
+                                NewCreateAccountRequestModel.lastName = ""
+                                NewCreateAccountRequestModel.companyName = ""
+                                NewCreateAccountRequestModel.addressline1 = ""
+                                NewCreateAccountRequestModel.addressline2 = ""
+                                NewCreateAccountRequestModel.townCity = ""
+                                NewCreateAccountRequestModel.state = ""
+                                NewCreateAccountRequestModel.country = ""
+                                NewCreateAccountRequestModel.zipCode = ""
+                                NewCreateAccountRequestModel.selectedAddressId = -1
+                                NewCreateAccountRequestModel.prePay = false
+                                NewCreateAccountRequestModel.plateCountry = ""
+                                NewCreateAccountRequestModel.plateNumber = ""
+                                NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
+                                NewCreateAccountRequestModel.vehicleList =
+                                    mutableListOf<NewVehicleInfoDetails>()
+                                NewCreateAccountRequestModel.addedVehicleList =
+                                    ArrayList<VehicleResponse?>()
+                                NewCreateAccountRequestModel.addedVehicleList2 =
+                                    ArrayList<VehicleResponse?>()
+                                NewCreateAccountRequestModel.isRucEligible = false
+                                NewCreateAccountRequestModel.isExempted = false
+                                NewCreateAccountRequestModel.isVehicleAlreadyAdded = false
+                                NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = false
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = false
                                 NewCreateAccountRequestModel.isManualAddress = false
-                                NewCreateAccountRequestModel.emailSecurityCode=""
-                                NewCreateAccountRequestModel.smsSecurityCode=""
-                                NewCreateAccountRequestModel.password=""
+                                NewCreateAccountRequestModel.emailSecurityCode = ""
+                                NewCreateAccountRequestModel.smsSecurityCode = ""
+                                NewCreateAccountRequestModel.password = ""
                             }
                             NewCreateAccountRequestModel.plateNumber =
                                 binding.editNumberPlate.getText().toString().trim().replace(" ", "")
@@ -476,7 +482,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
             }
 
             is Resource.DataError -> {
-                Log.e("TAG", "apiResponseDVRM1: errorCode 11-> " + resource.errorModel?.errorCode)
                 if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
                 } else {
@@ -519,44 +524,48 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         arguments?.getInt(Constants.VEHICLE_INDEX)
                             ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                        if(!binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                                .replace("-", "").equals(NewCreateAccountRequestModel.plateNumber)){
-                            NewCreateAccountRequestModel.referenceId= ""
-                            NewCreateAccountRequestModel.emailAddress= ""
-                            NewCreateAccountRequestModel.mobileNumber= ""
-                            NewCreateAccountRequestModel.countryCode= ""
-                            NewCreateAccountRequestModel.telephoneNumber= ""
-                            NewCreateAccountRequestModel.telephone_countryCode=""
-                            NewCreateAccountRequestModel.communicationTextMessage=false
-                            NewCreateAccountRequestModel.termsCondition=false
-                            NewCreateAccountRequestModel.twoStepVerification=false
-                            NewCreateAccountRequestModel.personalAccount=false
-                            NewCreateAccountRequestModel.firstName=""
-                            NewCreateAccountRequestModel.lastName=""
-                            NewCreateAccountRequestModel.companyName=""
-                            NewCreateAccountRequestModel.addressline1=""
-                            NewCreateAccountRequestModel.addressline2=""
-                            NewCreateAccountRequestModel.townCity=""
-                            NewCreateAccountRequestModel.state=""
-                            NewCreateAccountRequestModel.country=""
-                            NewCreateAccountRequestModel.zipCode=""
-                            NewCreateAccountRequestModel.selectedAddressId=-1
-                            NewCreateAccountRequestModel.prePay=false
-                            NewCreateAccountRequestModel.plateCountry=""
-                            NewCreateAccountRequestModel.plateNumber=""
-                            NewCreateAccountRequestModel.plateNumberIsNotInDVLA=false
-                            NewCreateAccountRequestModel.vehicleList = mutableListOf<NewVehicleInfoDetails>()
-                            NewCreateAccountRequestModel.addedVehicleList = ArrayList<VehicleResponse?>()
-                            NewCreateAccountRequestModel.addedVehicleList2 = ArrayList<VehicleResponse?>()
-                            NewCreateAccountRequestModel.isRucEligible=false
-                            NewCreateAccountRequestModel.isExempted=false
-                            NewCreateAccountRequestModel.isVehicleAlreadyAdded=false
-                            NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal=false
-                            NewCreateAccountRequestModel.isMaxVehicleAdded=false
+                        if (!binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                                .replace("-", "").equals(NewCreateAccountRequestModel.plateNumber)
+                        ) {
+                            NewCreateAccountRequestModel.referenceId = ""
+                            NewCreateAccountRequestModel.emailAddress = ""
+                            NewCreateAccountRequestModel.mobileNumber = ""
+                            NewCreateAccountRequestModel.countryCode = ""
+                            NewCreateAccountRequestModel.telephoneNumber = ""
+                            NewCreateAccountRequestModel.telephone_countryCode = ""
+                            NewCreateAccountRequestModel.communicationTextMessage = false
+                            NewCreateAccountRequestModel.termsCondition = false
+                            NewCreateAccountRequestModel.twoStepVerification = false
+                            NewCreateAccountRequestModel.personalAccount = false
+                            NewCreateAccountRequestModel.firstName = ""
+                            NewCreateAccountRequestModel.lastName = ""
+                            NewCreateAccountRequestModel.companyName = ""
+                            NewCreateAccountRequestModel.addressline1 = ""
+                            NewCreateAccountRequestModel.addressline2 = ""
+                            NewCreateAccountRequestModel.townCity = ""
+                            NewCreateAccountRequestModel.state = ""
+                            NewCreateAccountRequestModel.country = ""
+                            NewCreateAccountRequestModel.zipCode = ""
+                            NewCreateAccountRequestModel.selectedAddressId = -1
+                            NewCreateAccountRequestModel.prePay = false
+                            NewCreateAccountRequestModel.plateCountry = ""
+                            NewCreateAccountRequestModel.plateNumber = ""
+                            NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
+                            NewCreateAccountRequestModel.vehicleList =
+                                mutableListOf<NewVehicleInfoDetails>()
+                            NewCreateAccountRequestModel.addedVehicleList =
+                                ArrayList<VehicleResponse?>()
+                            NewCreateAccountRequestModel.addedVehicleList2 =
+                                ArrayList<VehicleResponse?>()
+                            NewCreateAccountRequestModel.isRucEligible = false
+                            NewCreateAccountRequestModel.isExempted = false
+                            NewCreateAccountRequestModel.isVehicleAlreadyAdded = false
+                            NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = false
+                            NewCreateAccountRequestModel.isMaxVehicleAdded = false
                             NewCreateAccountRequestModel.isManualAddress = false
-                            NewCreateAccountRequestModel.emailSecurityCode=""
-                            NewCreateAccountRequestModel.smsSecurityCode=""
-                            NewCreateAccountRequestModel.password=""
+                            NewCreateAccountRequestModel.emailSecurityCode = ""
+                            NewCreateAccountRequestModel.smsSecurityCode = ""
+                            NewCreateAccountRequestModel.password = ""
                         }
                         NewCreateAccountRequestModel.plateNumber =
                             binding.editNumberPlate.getText().toString().trim().replace(" ", "")
@@ -625,7 +634,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
             }
 
             is Resource.DataError -> {
-                Log.e("TAG", "apiResponseDVRM1: errorCode 22-> " + resource.errorCode)
                 if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
                 } else {
@@ -681,7 +689,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
     }
 
     private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
-        Log.d("response how many time", "two times")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -699,10 +706,7 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                             binding.editNumberPlate.editText.text.toString()
                         )
 
-                        Log.d("responseData", Gson().toJson(apiData))
-
                         if (vehicleList.contains(apiData[0]) && isCrossingCall.not()) {
-                            Log.e("TAG", "apiResponseDVRM: 11 ")
                             accountData.isVehicleAlreadyAddedLocal = true
                             val bundleData = Bundle()
                             bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -722,7 +726,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                         }
 
                         if (apiData[0]?.isExempted?.equals("Y", true) == true) {
-                            Log.e("TAG", "apiResponseDVRM: 22 ")
                             NewCreateAccountRequestModel.isExempted = true
                             bundle.putParcelable(Constants.VEHICLE_DETAIL, apiData[0])
                             bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
@@ -735,7 +738,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                         }
 
                         if (apiData[0]?.isRUCEligible?.equals("Y", true) == true) {
-                            Log.e("TAG", "apiResponseDVRM: 33 ")
                             if (apiData.isNotEmpty()) {
                                 bundle.putParcelable(
                                     Constants.VEHICLE_DETAIL,
@@ -758,7 +760,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                                 bundle
                             )
                         } else if (apiData[0]?.isRUCEligible?.equals("N", true) == true) {
-                            Log.e("TAG", "apiResponseDVRM: 44 ")
                             NewCreateAccountRequestModel.isRucEligible = true
                             if (apiData.isNotEmpty()) {
                                 bundle.putParcelable(
@@ -781,7 +782,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
                 }
 
                 is Resource.DataError -> {
-                    Log.e("TAG", "apiResponseDVRM1: errorCode 33-> " + resource.errorCode)
                     if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                         displaySessionExpireDialog()
                     } else {
@@ -864,7 +864,6 @@ CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindVehicle
             }
 
             is Resource.DataError -> {
-                Log.e("TAG", "apiResponseDVRM1: errorCode 44-> " + resource.errorCode)
                 if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
                 } else {

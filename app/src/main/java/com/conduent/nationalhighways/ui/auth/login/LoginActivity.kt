@@ -237,8 +237,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             sessionManager.getLoggedInUser()
         )
 
-        binding.edtEmail.editText.setText("anilkumar.thallapelli@conduent.com")
-        binding.edtPwd.editText.setText("Welcome1")
+//        binding.edtEmail.editText.setText("anilkumar.thallapelli@conduent.com")
+//        binding.edtPwd.editText.setText("Welcome1")
         binding.btnLogin.enable()
     }
 
@@ -505,7 +505,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    Log.e("TAG", "negativeBtnClick: twoFAEnable " + twoFAEnable)
                     if (twoFAEnable) {
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
@@ -654,7 +653,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     override fun onRetryClick(apiUrl: String) {
-        Log.e("TAG", "onRetryClick: noOfApiTries --> " + viewModel.noOfApiTries.value)
         if ((viewModel.noOfApiTries.value ?: 0) <= 4) {
             /*
                         if (apiUrl.contains(BuildConfig.LOGIN)) {

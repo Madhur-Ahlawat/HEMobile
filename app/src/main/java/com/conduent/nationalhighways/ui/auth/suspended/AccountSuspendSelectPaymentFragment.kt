@@ -29,7 +29,6 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,7 +71,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         if (!isViewCreated) {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.saveCardList()
+            viewModel.saveCardListState()
         }
 
         isViewCreated = false
@@ -122,8 +121,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     override fun observer() {
         lifecycleScope.launch {
-            observe(viewModel.savedCardList, ::handleSaveCardResponse)
-
+            viewModel.savedCardState.collect {
+                handleSaveCardResponse(it)
+            }
         }
     }
 
@@ -163,7 +163,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     override fun onClick(v: View?) {
-        Log.e("TAG", "onClick:paymentList " + paymentList.toString())
         when (v?.id) {
 
             R.id.btnContinue -> {
@@ -206,7 +205,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
-        Log.e("TAG", "handleSaveCardResponse() called with ")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -215,7 +213,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 paymentList?.clear()
                 real_paymentList?.clear()
                 real_paymentList=status.data?.creditCardListType?.cardsList
-                Log.e("TAG", "handleSaveCardResponse: cardsList "+status.data?.creditCardListType?.cardsList.orEmpty().size )
                 for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
                     if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
                         paymentList?.add(status.data.creditCardListType.cardsList.get(i))
@@ -228,7 +225,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 if (paymentList.orEmpty().size == 1) {
                     paymentList?.get(0)?.primaryCard = true
                 }
-                Log.e("TAG", "handleSaveCardResponse: paymentList "+paymentList.orEmpty().size )
                 if (paymentList?.isNotEmpty() == true) {
 
                     for (i in 0 until (paymentList?.size ?: 0)) {
@@ -256,6 +252,10 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     binding.noCardFoundLayout.visible()
                     binding.rvPaymentMethods.gone()
                     binding.btnContinue.gone()
+                }
+
+                lifecycleScope.launch {
+                    viewModel._savedCardListState.emit(null)
                 }
 
 
