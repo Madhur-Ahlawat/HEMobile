@@ -47,8 +47,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             data = it as CrossingDetailsModelsResponse
         }
 
-        Log.e("TAG", "init: navFlowFrom " + navFlowFrom)
-
         setData()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)
@@ -63,7 +61,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             additionalCrossingsCount = data?.additionalCrossingCount
             val charge = data?.chargingRate?.toDouble()
             val unSettledTrips = data?.unsettledTripChange
-            Log.e("TAG", "setData: unSettledTrips--> " + unSettledTrips)
             vehicleRegisration.text = data?.plateNo
             recentCrossings.text =
                 unSettledTrips.toString()

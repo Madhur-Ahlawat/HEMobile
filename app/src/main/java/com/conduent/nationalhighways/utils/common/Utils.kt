@@ -749,7 +749,6 @@ object Utils {
     }
 
     fun getVehicleType(activity: Activity, vehicleClass: String): String {
-        Log.e("TAG", "getVehicleType: vehicleClass -> "+vehicleClass )
         return when (vehicleClass) {
             "A" -> {
                 activity.resources.getString(R.string.vehicle_type_A)
@@ -872,7 +871,6 @@ object Utils {
     }
 
     fun maskPhoneNumber(phoneNumber: String): String {
-        Log.e("TAG", "maskPhoneNumber: phoneNumber " + phoneNumber)
         if (phoneNumber.isNotEmpty()) {
             val star = phoneNumber.length - 6
             return if (star == 4) {
@@ -910,7 +908,6 @@ object Utils {
     fun areNotificationsEnabled(context: Context): Boolean {
         val notificationManagerCompat = NotificationManagerCompat.from(context)
         val status = notificationManagerCompat.areNotificationsEnabled()
-        Log.e("TAG", "areNotificationsEnabled: status --> "+status )
         return status
     }
 

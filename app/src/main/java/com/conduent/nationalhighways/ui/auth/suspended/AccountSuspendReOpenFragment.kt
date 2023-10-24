@@ -131,10 +131,6 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             binding.btnTopUpNow.text = getString(R.string.str_continue)
             binding.layoutPaymentReferenceNumber.visible()
             binding.layoutPaymentReferenceNumber.visible()
-            Log.e("TAG", "initCtrl: newCard "+newCard )
-            Log.e("TAG", "initCtrl: type "+responseModel?.card?.type )
-
-
         } else {
             binding.tvYouWillAlsoNeed.text = getString(R.string.str_you_have_less_than, "£5.00")
             binding.tvYouWillAlsoNeed.visible()

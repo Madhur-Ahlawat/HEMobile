@@ -111,7 +111,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         if (data == null) {
             data = CrossingDetailsModelsResponse()
         }
-        Log.e("TAG", "setBtnActivated: plateCountry--?  " + data?.plateCountry)
         binding.vehicleRegTv.editText.filters = arrayOf(LengthFilter(10))
         binding.vehicleRegTv.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
 
@@ -276,7 +275,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     private fun setPreSelectedVehicleType() {
         if (typeOfVehicle.size > 0 && data != null && data?.plateNo?.isNotEmpty() == true) {
-            Log.e("TAG", "setPreSelectedVehicleType: 11 > "+(data?.vehicleType?:"") )
             data?.vehicleClass =Utils.getManuallyAddedVehicleClass(requireActivity(),(data?.vehicleType?:""))
             binding.typeVehicle.setSelectedValue(data?.vehicleType?:"")
             typeOfVehicleChecked = true
@@ -361,7 +359,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         binding.vehiclePlateNumber.text = plateNumber
         binding.makeInputLayout.setText(vehicleMake)
         binding.colorInputLayout.setText(vehicleColor)
-        Log.e("TAG", "setPreSelectedVehicleType: 22 >"+vehicleClass )
 
         binding.typeVehicle.setSelectedValue(
             Utils.getVehicleType(
@@ -591,9 +588,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun checkButton() {
-        Log.e("TAG", "checkButton:vehicleClassSelected " + vehicleClassSelected)
         if (NewCreateAccountRequestModel.isExempted) {
-            Log.e("TAG", "setPreSelectedVehicleType: 33 >"+vehicleClassSelected )
 
             binding.typeVehicle.setSelectedValue(vehicleClassSelected)
             if (typeOfVehicleChecked && binding.checkBoxTerms.isChecked
@@ -649,7 +644,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         } else {
             data?.plateCountry = "NON-UK"
         }
-        Log.e("TAG", "setBtnActivated: plateCountry " + data?.plateCountry)
         binding.nextBtn.isEnabled = true
     }
 
@@ -698,8 +692,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         binding.modelInputLayout.getText().toString()
                     dataModel.vehicleColor =
                         binding.colorInputLayout.getText().toString()
-                    Log.e("TAG", "onClick: -vehicleClassSelected-> "+vehicleClassSelected )
-                    Log.e("TAG", "onClick: -vehicleClass-> "+data?.vehicleClass )
                     if (vehicleClassSelected.isNotEmpty()) {
                         dataModel.vehicleClass =
                             Utils.getManuallyAddedVehicleClass(
@@ -877,7 +869,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             when (navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
-                    Log.e("TAG", "checkRUC: plateCountry --> " + data?.plateCountry)
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     val model = CrossingDetailsModelsRequest(
                         newVehicleInfoDetails.plateNumber.toString().uppercase(),

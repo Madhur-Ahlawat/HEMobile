@@ -163,7 +163,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             R.id.btnPay -> {
                 if (Utils.validateAmount(binding.lowBalance, 10, true)) {
                     if (responseModel != null) {
-                        Log.e("TAG", "onClick: checkCheckBox " + responseModel?.checkCheckBox)
                         if (responseModel?.checkCheckBox == true) {
                             newPaymentMethod("Y")
                         } else {

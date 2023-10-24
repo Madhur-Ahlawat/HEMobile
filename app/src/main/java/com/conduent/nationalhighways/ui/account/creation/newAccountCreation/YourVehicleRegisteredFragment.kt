@@ -36,7 +36,6 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
-        Log.e("TAG", "init: data " + data)
         if (data == null) {
             data = CrossingDetailsModelsResponse()
         }
@@ -62,8 +61,6 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                     data?.plateCountry = Constants.COUNTRY_TYPE_UK
                     data?.veicleUKnonUK = true
                 }
-                Log.e("TAG", "onClick:plateCountry " + data?.plateCountry)
-                Log.e("TAG", "onClick:veicleUKnonUK " + data?.veicleUKnonUK)
                 val bundle = Bundle()
                 bundle.putString(Constants.data_type, "dvla")
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)

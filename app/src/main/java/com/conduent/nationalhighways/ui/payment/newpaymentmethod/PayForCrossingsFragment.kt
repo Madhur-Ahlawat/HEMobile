@@ -63,8 +63,6 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         if (!edit_summary) {
             data?.unsettledTripChange = data?.unSettledTrips ?: 0
         }
-        Log.e("TAG", "init: unsettled_trip_api-- " + unsettled_trip_api)
-        Log.e("TAG", "init: navFlowFrom-- " + navFlowFrom)
         val additionalCrossings =
             (navData as CrossingDetailsModelsResponse).additionalCrossingCount
         val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse).additionalCharge
@@ -174,9 +172,6 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
 
-
-        Log.e("TAG", "onClick:plateNo11 plateNo --> " + data?.plateNo)
-        Log.e("TAG", "onClick:plateNo11 unsettled_trip_api --> " + unsettled_trip_api)
         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
         bundle.putString(Constants.NAV_FLOW_FROM, Constants.PAY_FOR_CROSSINGS)

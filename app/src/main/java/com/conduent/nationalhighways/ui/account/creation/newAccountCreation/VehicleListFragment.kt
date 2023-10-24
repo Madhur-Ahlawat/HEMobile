@@ -226,8 +226,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
 
                 } else {
-                    Log.e("TAG", "onClick: personalAccount "+NewCreateAccountRequestModel.personalAccount )
-                    Log.e("TAG", "onClick: personalAccount "+vehicleList.size )
                     if (NewCreateAccountRequestModel.personalAccount) {
                         if (vehicleList.size > BuildConfig.PERSONAL.toInt()) {
                             NewCreateAccountRequestModel.isMaxVehicleAdded = true

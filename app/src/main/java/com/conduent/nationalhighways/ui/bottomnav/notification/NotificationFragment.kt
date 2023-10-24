@@ -118,7 +118,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     }
 
     private fun initAdapter(notifications: MutableList<AlertMessage>) {
-        Log.e("TAG", "initAdapter: notifications " + notifications)
         mLayoutManager = LinearLayoutManager(context)
         mLayoutManager!!.orientation = RecyclerView.VERTICAL
         binding.notificationsRecyclerview.layoutManager = mLayoutManager

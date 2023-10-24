@@ -35,7 +35,6 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
         when (v?.id) {
 
             R.id.tryPaymentAgain -> {
-                Log.e("TAG", "onClick: -> ")
                 findNavController().popBackStack()
             }
         }

@@ -132,7 +132,6 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     }
 
     private fun checkData() {
-        Log.e("TAG", "checkData: mList "+mList.size )
         if (mList.size == 0) {
             binding.dataCl.gone()
             binding.noDataCl.visible()

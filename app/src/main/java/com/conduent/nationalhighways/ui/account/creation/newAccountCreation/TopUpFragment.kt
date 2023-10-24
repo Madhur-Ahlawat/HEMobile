@@ -135,8 +135,6 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                         binding.lowBalance.editText.text.toString().trim().replace("$", "£")
                             .replace("£", "").replace(",","").replace(" ","")
 
-                    Log.e("TAG", "onClick: amount "+amount )
-                    Log.e("TAG", "onClick: thresholdAmount "+thresholdAmount )
                     val request = AccountTopUpUpdateThresholdRequest(
                         amount,
                         thresholdAmount

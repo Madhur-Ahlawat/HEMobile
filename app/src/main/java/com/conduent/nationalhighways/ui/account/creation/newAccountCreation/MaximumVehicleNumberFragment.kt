@@ -59,8 +59,6 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
         binding.descTv.gone()
 
-        Log.e("TAG", "init: isExempted --> " + NewCreateAccountRequestModel.isExempted)
-        Log.e("TAG", "init: navFlowCall --> " + navFlowCall)
         if (NewCreateAccountRequestModel.isExempted) {
 
             binding.maximumVehicleAdded.text = getString(
@@ -282,19 +280,6 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                             }
 
                             else -> {
-                                Log.e("TAG", "onClick: navCall " + navCall)
-                                Log.e(
-                                    "TAG",
-                                    "onClick: addedVehicleList2 " + NewCreateAccountRequestModel.addedVehicleList2.isEmpty()
-                                )
-                                Log.e(
-                                    "TAG",
-                                    "onClick: vehicleList " + NewCreateAccountRequestModel.vehicleList.size
-                                )
-                                Log.e(
-                                    "TAG",
-                                    "onClick: isVehicleAlreadyAdded " + NewCreateAccountRequestModel.isVehicleAlreadyAdded
-                                )
                                 if (NewCreateAccountRequestModel.addedVehicleList2.isEmpty()) {
                                     if (navCall) {
                                         if (NewCreateAccountRequestModel.vehicleList.size > 0) {

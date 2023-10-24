@@ -270,7 +270,6 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 businessName = personalInformation?.customerName,
                 mfaEnabled = if (binding.twoFactor.isChecked) "Y" else "N"
             )
-            Log.e("TAG", "updateStandardUserProfile: request -@-> "+request.toString() )
 
 
             viewModel.updateUserDetails(request)
@@ -306,7 +305,6 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 phoneEvening = "",
                 mfaEnabled = if (binding.twoFactor.isChecked) "Y" else "N"
             )
-            Log.e("TAG", "updateStandardUserProfile: request --> "+request.toString() )
 
             viewModel.updateUserDetails(request)
         }

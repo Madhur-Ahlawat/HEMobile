@@ -185,8 +185,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             is Resource.Success -> {
 
                 if (oldSmsOption != binding.switchCommunication.isChecked) {
-                    Log.e("TAG", "onClick: 33 " + personalInformationModel?.phoneCell?.isEmpty())
-                    Log.e("TAG", "onClick: 33 " + personalInformationModel?.phoneCell)
                     if (personalInformationModel?.phoneCell?.isEmpty() == true) {
                         verifyMobileNumber()
                     } else {
@@ -202,8 +200,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                         )
                     }
                 } else {
-                    Log.e("TAG", "onClick: 44")
-
                     val bundle = Bundle()
                     bundle.putString(
                         Constants.NAV_FLOW_KEY,
@@ -278,7 +274,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
 
     override fun onClick(v: View?) {
-        Log.e("TAG", "onClick: navFlowCall --> " + navFlowCall)
         when (v?.id) {
             R.id.btnNext -> {
 
@@ -309,16 +304,9 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                             findNavController().popBackStack()
                         } else {
                             if (oldPushOption != binding.switchNotification.isChecked) {
-                                Log.e("TAG", "onClick: 11")
                                 showLoader()
                                 callPushNotificationApi()
                             } else {
-                                Log.e("TAG", "onClick: 22")
-                                Log.e(
-                                    "TAG",
-                                    "onClick: 22 " + personalInformationModel?.phoneCell?.isEmpty()
-                                )
-                                Log.e("TAG", "onClick: 22 " + personalInformationModel?.phoneCell)
                                 if (personalInformationModel?.phoneCell?.isEmpty() == true) {
                                     verifyMobileNumber()
                                 } else {
@@ -515,7 +503,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     }
 
     private fun verifyMobileNumber() {
-        Log.e("TAG", "verifyMobileNumber: ")
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
         findNavController().navigate(

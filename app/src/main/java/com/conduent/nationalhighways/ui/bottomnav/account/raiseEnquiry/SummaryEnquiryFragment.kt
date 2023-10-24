@@ -145,7 +145,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
     override fun observer() {
-        Log.e("TAG", "observer: isViewCreated " + isViewCreated)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         if (!isViewCreated) {
@@ -159,7 +158,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
     private fun enquiryResponseModel(resource: Resource<EnquiryResponseModel?>?) {
-        Log.e("TAG", "enquiryResponseModel: apiSuccess " + apiSuccess)
         if (!apiSuccess) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()

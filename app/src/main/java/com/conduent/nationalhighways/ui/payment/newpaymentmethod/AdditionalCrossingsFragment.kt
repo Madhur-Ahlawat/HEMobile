@@ -84,8 +84,6 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                 requiredNoAdditionalCrossings = true
             }
             val charge = data?.chargingRate?.replace("£", "")?.replace("$", "")?.toDouble()
-            Log.e("TAG", "init: charge " + charge)
-            Log.e("TAG", "init: unsettledTripChange " + data?.unsettledTripChange)
             if (charge != null) {
                 val mUnSettledTrips = data?.unsettledTripChange
                 val additionalCrossingsCount = data?.additionalCrossingCount
@@ -136,14 +134,12 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             before: Int,
             count: Int
         ) {
-            Log.e("TAG", "onTextChanged: 11122 ")
             requiredNoAdditionalCrossings =
                 if (charSequence.toString().isNotEmpty() && charSequence.toString()
                         .toInt() > 0 && charSequence.toString().toInt() <= 50
                 ) {
                     val charge = data?.chargingRate?.toDouble()
                     if (charge != null) {
-                        Log.e("TAG", "onTextChanged: --> " + charge)
                         data?.additionalCrossingCount =
                             binding.numberAdditionalCrossings.editText.text.toString().toInt()
 
@@ -157,17 +153,8 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                         if (additionalCrossingsCount != null && additionalCrossingsCount > 0) {
                             additionalCrossingsAmount = charge * additionalCrossingsCount
                         }
-                        Log.e(
-                            "TAG",
-                            "onTextChanged: --> recentCrossingsAmount -> " + recentCrossingsAmount
-                        )
-                        Log.e(
-                            "TAG",
-                            "onTextChanged: --> additionalCrossingsAmount -> " + additionalCrossingsAmount
-                        )
 
                         val total = recentCrossingsAmount + additionalCrossingsAmount
-                        Log.e("TAG", "onTextChanged: --> total -> " + total)
 
                         binding.recentCrossing.text = getString(R.string.currency_symbol) + String.format(
                             "%.2f",
@@ -185,7 +172,6 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                             "%.2f",
                             data?.totalAmount
                         )
-                        Log.e("TAG", "onTextChanged: --> totalAmount -> " + data?.totalAmount)
 
                     }
                     binding.numberAdditionalCrossings.removeError()
@@ -222,7 +208,6 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     }
 
     override fun observer() {
-        Log.e("TAG", "observer: viewCreated --> "+viewCreated )
         if(!viewCreated){
             displayCustomMessage(
                 getString(R.string.additional_crossings_txt),
@@ -241,7 +226,6 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         when (v?.id) {
 
             R.id.btnNext -> {
-                Log.e("TAG", "init: navFlowFrom "+navFlowFrom )
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putDouble(
