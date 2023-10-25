@@ -29,6 +29,7 @@ object ResponseHandler {
             }
         } else {
             try {
+//                Log.e("TAG", "success: response errorBody "+response?.errorBody().toString() )
                 val errorResponse =
                     Gson().fromJson(
                         response?.errorBody()?.string(),
@@ -43,7 +44,6 @@ object ResponseHandler {
                         ErrorResponseModel("", "", "", 401, 401, "")
                     )
                 } else {
-
                     if (TextUtils.isEmpty(errorResponse.message)) {
                         return Resource.DataError(errorResponse.exception, errorResponse)
                     }

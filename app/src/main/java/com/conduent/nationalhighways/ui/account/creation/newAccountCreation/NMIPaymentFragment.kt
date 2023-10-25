@@ -666,6 +666,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         if (paymentListSize != 0 && paymentListSize != 1) {
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
+                        }else{
+                            view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
                         }
 
                     }
@@ -745,6 +748,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                     else -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'block'; document.getElementById('title').innerText = 'How do you want to pay?';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('title_break').style.display = '';})()")
 
                         if (!NewCreateAccountRequestModel.prePay) {
                             view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
