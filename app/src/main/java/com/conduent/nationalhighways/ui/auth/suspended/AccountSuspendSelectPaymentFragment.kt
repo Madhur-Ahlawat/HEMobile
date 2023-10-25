@@ -153,7 +153,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             before: Int,
             count: Int
         ) {
-            lowBalance = Utils.validateAmount(binding.topBalance, 10, true)
+            lowBalance = Utils.validateAmount(binding.topBalance, 10.00, true)
             checkButton()
             checkNewPaymentMethodButton()
         }

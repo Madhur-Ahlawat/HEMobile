@@ -161,7 +161,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         when (v?.id) {
 
             R.id.btnPay -> {
-                if (Utils.validateAmount(binding.lowBalance, 10, true)) {
+                if (Utils.validateAmount(binding.lowBalance, 10.00, true)) {
                     if (responseModel != null) {
                         if (responseModel?.checkCheckBox == true) {
                             newPaymentMethod("Y")
