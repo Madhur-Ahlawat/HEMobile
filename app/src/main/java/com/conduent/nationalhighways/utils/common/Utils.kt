@@ -157,7 +157,7 @@ object Utils {
     }
     fun validateAmount(
         nhTextInputCell: NHTextInputCell,
-        minimumAmount: Int,
+        minimumAmount: Double,
         isTopUp: Boolean
     ): Boolean {
         var isValid = false
@@ -172,7 +172,7 @@ object Utils {
             }
             isValid = if (mText.toDouble().toInt() <= 999999) {
 
-                if (mText.toDouble().toInt() < minimumAmount) {
+                if (mText.toDouble() < minimumAmount) {
                     if (isTopUp) {
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_more))
                     } else {

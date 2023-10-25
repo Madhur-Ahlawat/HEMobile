@@ -43,6 +43,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     private var paymentListSize: Int = 0
     private var apiLowBalanceAmount: String = ""
     private var apiTopUpAmountBalance: String = ""
+    private var gtwLowBalance:GenericTextWatcher?=null
+    private var gtwTopBalance:GenericTextWatcher?=null
     private var isClick = false
     val formatter = DecimalFormat("#,###.00")
     override fun getFragmentBinding(
@@ -69,8 +71,10 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         binding.topUpBtn.setOnClickListener(this)
         binding.lowBalance.editText.setOnFocusChangeListener { _, b -> lowBalanceDecimal(b) }
         binding.top.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
-        binding.top.editText.addTextChangedListener(GenericTextWatcher(true))
-        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher(false))
+        gtwTopBalance=GenericTextWatcher(true)
+        gtwLowBalance=GenericTextWatcher(false)
+        binding.top.editText.addTextChangedListener(gtwTopBalance)
+        binding.lowBalance.editText.addTextChangedListener(gtwLowBalance)
         lowBalance=true
         topUpBalance=true
         checkButton()
@@ -92,10 +96,10 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             count: Int
         ) {
             if(isTopUp){
-                topUpBalance=Utils.validateAmount(binding.top,10,true)
+                topUpBalance=Utils.validateAmount(binding.top, apiTopUpAmountBalance.toDouble(),true)
             }
             else{
-                lowBalance=Utils.validateAmount(binding.lowBalance,5,false)
+                lowBalance=Utils.validateAmount(binding.lowBalance,apiLowBalanceAmount.toDouble(),false)
             }
             checkButton()
         }
@@ -249,15 +253,18 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     if (statusCode == "0") {
                         binding.apply {
                             if (thresholdAmountVo?.customerAmount?.isNotEmpty() == true) {
-                                binding.lowBalance.editText.setText(thresholdAmountVo.customerAmount)
-                                apiLowBalanceAmount = thresholdAmountVo.customerAmount
+                                binding.lowBalance.editText.removeTextChangedListener(gtwLowBalance)
+                                binding.lowBalance.editText.setText("£"+formatter.format(thresholdAmountVo.thresholdAmount!!.toDouble()))
+                                binding.lowBalance.editText.addTextChangedListener(gtwLowBalance)
+                                this@TopUpFragment.apiLowBalanceAmount = thresholdAmountVo.thresholdAmount
 
                             }
 
                             if (thresholdAmountVo?.thresholdAmount?.isNotEmpty() == true) {
-                                binding.top.editText.setText(thresholdAmountVo.thresholdAmount)
-                                apiTopUpAmountBalance = thresholdAmountVo.thresholdAmount
-
+                                binding.top.editText.removeTextChangedListener(gtwTopBalance)
+                                binding.top.editText.setText("£"+formatter.format(thresholdAmountVo.customerAmount!!.toDouble()))
+                                binding.top.editText.addTextChangedListener(gtwTopBalance)
+                                this@TopUpFragment.apiTopUpAmountBalance = thresholdAmountVo.customerAmount
                             }
 
                         }
@@ -296,7 +303,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                         binding.lowBalance.editText.text.toString().trim().replace("£", "")
 
 
-                    if (navFlow != Constants.THRESHOLD && apiLowBalanceAmount == thresholdAmount
+                    if (navFlow != Constants.THRESHOLD && apiLowBalanceAmount.toInt().toString() == thresholdAmount.toInt().toString()
                             .trim()
                     ) {
                         bundle.putString(Constants.THRESHOLD_AMOUNT, "")
