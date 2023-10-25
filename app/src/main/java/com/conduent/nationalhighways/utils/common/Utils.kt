@@ -162,10 +162,16 @@ object Utils {
     ): Boolean {
         var isValid = false
         var mText = nhTextInputCell.editText.getText().toString().trim()
+        Log.e("TOPUP",mText)
         mText =
-            mText.replace("$", "").replace("£", "").replace(",", "").replace(" ", "")
+            mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "").replace(" ", "")
+        Log.e("TOPUP",mText+"\n\n")
         if (mText.isNotEmpty()) {
+            if(mText.length==1 && mText.equals(".")){
+                mText="0"
+            }
             isValid = if (mText.toDouble().toInt() <= 999999) {
+
                 if (mText.toDouble().toInt() < minimumAmount) {
                     if (isTopUp) {
                         nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_more))

@@ -200,19 +200,39 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     }
 
     private fun topBalanceDecimal(b: Boolean) {
-        val mText = binding.top.getText().toString().trim()
-        var updatedText: Int =
-            mText.replace("$", "").replace("£", "").replace(",", "").replace(" ", "")
-                .replace(" ", "").toDouble().toInt()
-        binding.top.setText("£"+formatter.format(updatedText))
+        if(!b){
+            var mText = binding.top.getText().toString().trim()
+            if(mText.isEmpty()){
+                mText= "0.0"
+            }
+            var updatedText: Int =0
+
+               mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "").replace(" ", "")
+                    .replace(" ", "")
+            if(mText.length==1 && mText.equals(".")){
+                mText="0.0"
+            }
+            updatedText=mText.toDouble().toInt()
+            binding.top.setText("£"+formatter.format(updatedText))
+        }
     }
 
     private fun lowBalanceDecimal(b: Boolean) {
-        val mText = binding.lowBalance.getText().toString().trim()
-        var updatedText: Int =
-            mText.replace("$", "").replace("£", "").replace(",", "").replace(" ", "")
-                .replace(" ", "").toDouble().toInt()
-        binding.lowBalance.setText("£"+formatter.format(updatedText))
+        if(!b){
+            var mText = binding.lowBalance.getText().toString().trim()
+            if(mText.isEmpty()){
+                mText= "0.0"
+            }
+            var updatedText: Int =0
+
+            mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "").replace(" ", "")
+                .replace(" ", "")
+            if(mText.length==1 && mText.equals(".")){
+                mText="0.0"
+            }
+            updatedText=mText.toDouble().toInt()
+            binding.lowBalance.setText("£"+formatter.format(updatedText))
+        }
     }
 
     private fun checkButton() {

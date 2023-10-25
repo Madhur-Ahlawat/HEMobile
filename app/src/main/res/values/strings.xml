@@ -1599,6 +1599,7 @@
     <string name="str_dont_allow">Don\'t Allow</string>
     <string name="payment_Amount">Payment Amount</string>
     <string name="str_buy_crossings_for_vehicle">BUY CROSSINGS FOR THIS VEHICLE</string>
+    <string name="top_up_success">Top Up Success</string>
 
 
 </resources>

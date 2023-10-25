@@ -129,7 +129,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             binding.tvYouWillNeedToPay.gone()
             binding.tvYouWillAlsoNeed.gone()
             binding.btnTopUpNow.text = getString(R.string.str_continue)
-            binding.layoutPaymentReferenceNumber.visible()
+            HomeActivityMain.setTitle(getString(R.string.top_up_success))
             binding.layoutPaymentReferenceNumber.visible()
         } else {
             binding.tvYouWillAlsoNeed.text = getString(R.string.str_you_have_less_than, "£5.00")

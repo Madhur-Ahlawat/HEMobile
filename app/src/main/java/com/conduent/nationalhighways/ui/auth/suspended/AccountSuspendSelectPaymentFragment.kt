@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,7 +78,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
         binding.btnContinue.setOnClickListener(this)
         binding.btnAddNewPayment.setOnClickListener(this)
-        binding.topBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal() }
+        binding.topBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -105,17 +104,28 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         cursorPosition = binding.topBalance.editText.selectionStart
         edtLength = binding.topBalance.editText.text?.length
         Selection.setSelection(binding.topBalance.editText.text, edtLength!! - 1)
-        if(navFlowCall.equals(Constants.PAYMENT_TOP_UP)){
+        if (navFlowCall.equals(Constants.PAYMENT_TOP_UP)) {
             HomeActivityMain.setTitle("Top Up New Payment Method")
         }
     }
 
-    private fun topBalanceDecimal() {
-        val mText = binding.topBalance.getText().toString().trim()
-        var updatedText: Int =
-            mText.replace("$", "").replace("£", "").replace(",", "").replace(" ", "")
-                .replace(" ", "").toDouble().toInt()
-        binding.topBalance.setText("£"+formatter.format(updatedText))
+    private fun topBalanceDecimal(b: Boolean) {
+        if (!b) {
+            var mText = binding.topBalance.getText().toString().trim()
+            if(mText.isEmpty()){
+                mText= "0"
+            }
+            var updatedText: Int =0
+
+            mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "").replace(" ", "")
+                .replace(" ", "")
+            if(mText.length==1 && mText.equals(".")){
+                mText="0"
+            }
+            updatedText=mText.toDouble().toInt()
+            binding.topBalance.setText("£" + formatter.format(updatedText))
+        }
+
     }
 
 
@@ -166,8 +176,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         when (v?.id) {
 
             R.id.btnContinue -> {
-                topBalanceDecimal()
-                val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "")
+                topBalanceDecimal(false)
+                val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "").replace("£.", "")
                     .replace("$", "").replace(",", "").replace(" ", "").toDouble().toInt()
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
@@ -212,7 +222,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             is Resource.Success -> {
                 paymentList?.clear()
                 real_paymentList?.clear()
-                real_paymentList=status.data?.creditCardListType?.cardsList
+                real_paymentList = status.data?.creditCardListType?.cardsList
                 for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
                     if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
                         paymentList?.add(status.data.creditCardListType.cardsList?.get(i))

@@ -127,7 +127,7 @@ class PaymentMethodAdapter(
     }
 
     fun updateList(paymentList: MutableList<CardListResponseModel?>?) {
-        this.paymentList = paymentList
+        this.paymentList = paymentList!!
         notifyDataSetChanged()
 
     }
