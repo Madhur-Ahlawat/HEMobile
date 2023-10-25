@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -153,8 +152,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             is Resource.Success -> {
 
                 paymentList?.clear()
-                status?.data?.let {
-                    it?.creditCardListType?.let {
+                status.data?.let {
+                    it.creditCardListType?.let {
                         it.cardsList?.let {
                             paymentList?.addAll(it)
                         }
@@ -214,10 +213,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     override fun onClick(v: View?) {
         when (v?.id) {
 
@@ -226,9 +221,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
                 bundle.putDouble(Constants.DATA, 0.0)
                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
-                if (accountInformation?.accSubType.equals(Constants.PAYG) || directDebitPaymentList.orEmpty().size==1) {
+                if (accountInformation?.accSubType.equals(Constants.PAYG)) {
 
-                    if (paymentList?.get(0)?.emandateStatus == "ACTIVE" && paymentList?.get(0)?.bankAccount == true) {
+                    if (directDebitPaymentList.orEmpty().size == 1) {
                         bundle.putBoolean(Constants.IS_DIRECT_DEBIT, true)
                     } else {
                         bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
@@ -242,7 +237,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 } else {
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
 
-                    if (paymentList?.get(0)?.emandateStatus == "ACTIVE" && paymentList?.get(0)?.bankAccount == true) {
+                    if (directDebitPaymentList.orEmpty().size == 1) {
                         bundle.putBoolean(Constants.IS_DIRECT_DEBIT, true)
                         findNavController().navigate(
                             R.id.action_paymentMethodFragment_to_nmiPaymentFragment,
@@ -255,7 +250,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             bundle
                         )
                     }
-
 
 
                 }
