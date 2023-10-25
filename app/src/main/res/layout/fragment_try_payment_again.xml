@@ -28,9 +28,11 @@
 
         <TextView
             android:id="@+id/title_tv"
-            style="@style/MediumTextBlack"
+            style="@style/BoldText"
+            android:textStyle="bold"
             android:text="@string/str_your_payment_has_been_declined"
-            android:layout_marginTop="@dimen/margin_25dp"
+            android:textColor="@color/dark_blue_color"
+            android:layout_marginTop="@dimen/margin_35dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/warningIcon"/>
