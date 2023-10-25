@@ -310,7 +310,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                                 if (personalInformationModel?.phoneCell?.isEmpty() == true) {
                                     verifyMobileNumber()
                                 } else {
-                                    showLoader()
                                     updateSmsOption()
                                 }
                             }
