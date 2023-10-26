@@ -112,18 +112,20 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private fun topBalanceDecimal(b: Boolean) {
         if (!b) {
             var mText = binding.topBalance.getText().toString().trim()
-            if(mText.isEmpty()){
+            if(mText.isNullOrEmpty()){
                 mText= "0"
             }
-            var updatedText: Int =0
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "").replace(" ", "")
                 .replace(" ", "")
             if(mText.length==1 && mText.equals(".")){
                 mText="0"
             }
-            updatedText=mText.toDouble().toInt()
-            binding.topBalance.setText("£" + formatter.format(updatedText))
+            var formatedAmount = formatter.format(mText.toDouble().toInt())
+            if (!formatedAmount.isNullOrEmpty() && formatedAmount.equals(".00")) {
+                formatedAmount = "0.00"
+            }
+            binding.topBalance.setText("£" + formatedAmount)
         }
 
     }
