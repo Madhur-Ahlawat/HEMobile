@@ -88,7 +88,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
                 }
 
                 NewCreateAccountRequestModel.vehicleList = ArrayList()
-                NewCreateAccountRequestModel.plateNumber = plateNumber
+                NewCreateAccountRequestModel.onOffVehiclePlateNumber = plateNumber
 
                 requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
                     putString(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)

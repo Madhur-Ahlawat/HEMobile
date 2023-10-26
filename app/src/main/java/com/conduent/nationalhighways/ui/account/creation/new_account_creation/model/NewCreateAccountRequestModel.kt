@@ -43,7 +43,7 @@ object NewCreateAccountRequestModel{
     var password:String=""
 
     var sms_referenceId: String? = ""
-
+    var onOffVehiclePlateNumber:String=""
 
 
 }
