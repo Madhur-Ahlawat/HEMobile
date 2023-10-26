@@ -83,11 +83,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var phoneCountryCode: String = ""
     private var isItMobileNumber: Boolean = false
-    var phoneCell: String = ""
-    var phoneCellCountryCode: String = ""
-    var phoneDay: String = ""
-    var phoneDayCountryCode: String = ""
-    val dashboardViewmodel: DashboardViewModel by activityViewModels()
+    private var phoneCell: String = ""
+    private var phoneCellCountryCode: String = ""
+    private var phoneDay: String = ""
+    private var phoneDayCountryCode: String = ""
+    private val dashboardViewmodel: DashboardViewModel by activityViewModels()
 
 
     override fun getFragmentBinding(
