@@ -242,6 +242,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private fun isEnable() {
         emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
             if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
+                binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_8_characters_or_more))
                 false
             } else {
                 if (binding.edtEmail.editText.getText().toString().length > 100) {
