@@ -170,33 +170,39 @@ object Utils {
             if(mText.length==1 && mText.equals(".")){
                 mText="0"
             }
-            isValid = if (mText.toDouble().toInt() <= 999999) {
+            isValid = if (mText.toDouble().toInt() <= 100000) {
 
                 if (mText.toDouble() < minimumAmount) {
                     if (isTopUp) {
-                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_more))
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_more,minimumAmount.toString()))
                     } else {
-                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_more))
+                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_more,minimumAmount.toString()))
                     }
                     false
 
-                } else if (mText.toDouble().toInt() > 100000) {
-                    if (isTopUp) {
-                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
-                    } else {
-                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.low_balance_amount_must_be_80_000_or_less))
-                    }
-                    false
-                } else {
+                }
+                else {
                     nhTextInputCell.removeError()
                     true
                 }
-            } else {
+            }
+            else if(mText.length>8) {
                 if (isTopUp) {
                     nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_8_characters))
                 } else {
                     nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_8_characters))
                 }
+                false
+            }
+            else if (mText.toDouble().toInt() > 100000) {
+                if (isTopUp) {
+                    nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
+                } else {
+                    nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.low_balance_amount_must_be_80_000_or_less))
+                }
+                false
+            }
+            else{
                 false
             }
         } else {
@@ -987,7 +993,7 @@ object Utils {
         dialog.show()
     }
     fun isStringOnlyInt(input: String): Boolean {
-        return input.toIntOrNull() != null
+        return input.toBigIntegerOrNull() != null
     }
 
     fun getCountryCodeRequiredText(text: String) = text.substringAfter('(').replace(")", "")
