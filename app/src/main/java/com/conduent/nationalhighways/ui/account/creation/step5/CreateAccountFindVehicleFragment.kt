@@ -55,8 +55,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     override fun init() {
         isCrossingCall = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS, true)
-        if (NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
-            binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.plateNumber.toString())
+        if (NewCreateAccountRequestModel.onOffVehiclePlateNumber.isNotEmpty()) {
+            binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.onOffVehiclePlateNumber.toString())
             binding.findVehicle.enable()
         }
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
@@ -199,6 +199,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
+                NewCreateAccountRequestModel.onOffVehiclePlateNumber=""
                 isClicked = true
 
                 val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
