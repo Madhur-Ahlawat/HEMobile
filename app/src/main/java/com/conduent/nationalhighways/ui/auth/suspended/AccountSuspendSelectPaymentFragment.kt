@@ -77,6 +77,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
 
         binding.btnContinue.setOnClickListener(this)
+        binding.btnMainAddNewPayment.setOnClickListener(this)
         binding.btnAddNewPayment.setOnClickListener(this)
         binding.topBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
@@ -112,17 +113,18 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private fun topBalanceDecimal(b: Boolean) {
         if (!b) {
             var mText = binding.topBalance.getText().toString().trim()
-            if(mText.isEmpty()){
-                mText= "0"
+            if (mText.isEmpty()) {
+                mText = "0"
             }
-            var updatedText: Int =0
+            var updatedText: Int = 0
 
-            mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "").replace(" ", "")
+            mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
-            if(mText.length==1 && mText.equals(".")){
-                mText="0"
+                .replace(" ", "")
+            if (mText.length == 1 && mText.equals(".")) {
+                mText = "0"
             }
-            updatedText=mText.toDouble().toInt()
+            updatedText = mText.toDouble().toInt()
             binding.topBalance.setText("£" + formatter.format(updatedText))
         }
 
@@ -177,7 +179,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             R.id.btnContinue -> {
                 topBalanceDecimal(false)
-                val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "").replace("£.", "")
+                val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "")
+                    .replace("£.", "")
                     .replace("$", "").replace(",", "").replace(" ", "").toDouble().toInt()
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
@@ -194,24 +197,32 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
 
             R.id.btnAddNewPayment -> {
-                val topUpAmount =
-                    binding.topBalance.getText().toString().trim().replace("£", "")
-                        .replace(".00", "")
-                        .replace("$", "").replace(",", "")
-                val bundle = Bundle()
-                bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+                addPayment()
+            }
 
-                findNavController().navigate(
-                    R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment,
-                    bundle
-                )
+            R.id.btnMainAddNewPayment -> {
+                addPayment()
             }
         }
+    }
+
+    private fun addPayment() {
+        val topUpAmount =
+            binding.topBalance.getText().toString().trim().replace("£", "")
+                .replace(".00", "")
+                .replace("$", "").replace(",", "")
+        val bundle = Bundle()
+        bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+        bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+
+        findNavController().navigate(
+            R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment,
+            bundle
+        )
     }
 
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
@@ -225,7 +236,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 real_paymentList = status.data?.creditCardListType?.cardsList
                 for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
                     if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
-                        paymentList?.add(status.data.creditCardListType.cardsList?.get(i))
+                        paymentList?.add(status.data.creditCardListType.cardsList.get(i))
                     }
                 }
                 for (i in 0 until paymentList.orEmpty().size) {
@@ -253,10 +264,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     binding.rvPaymentMethods.visible()
                     binding.btnContinue.visible()
                     binding.noCardFoundLayout.gone()
-//                    binding.btnAddNewPayment.gone()
+                    binding.btnAddNewPayment.visible()
+                    binding.btnMainAddNewPayment.gone()
 
                 } else {
-//                    binding.btnAddNewPayment.visible()
+                    binding.btnMainAddNewPayment.visible()
+                    binding.btnAddNewPayment.gone()
                     binding.noCardFoundLayout.visible()
                     binding.rvPaymentMethods.gone()
                     binding.btnContinue.gone()

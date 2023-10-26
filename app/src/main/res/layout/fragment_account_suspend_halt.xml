@@ -156,28 +156,54 @@
                 style="@style/PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_30dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
                 android:text="@string/str_continue"
                 android:textSize="@dimen/font_14sp"
                 app:isEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/btnAddNewPayment" />
+                app:layout_constraintBottom_toTopOf="@id/bottom_cl" />
 
 
-            <com.conduent.apollo.ui.CMButton
-                android:id="@+id/btnAddNewPayment"
-                style="@style/PrimaryButton"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bottom_cl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="52dp"
-                android:text="@string/str_new_payment_method"
-                android:textSize="@dimen/font_14sp"
-                app:isEnabled="true"
+                android:layout_marginBottom="@dimen/margin_10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent">
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/btnAddNewPayment"
+                    style="@style/secondaryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_new_payment_method"
+                    android:textSize="@dimen/font_14sp"
+                    app:isEnabled="true"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/btnMainAddNewPayment"
+                    style="@style/PrimaryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_new_payment_method"
+                    android:textSize="@dimen/font_14sp"
+                    app:isEnabled="true"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
