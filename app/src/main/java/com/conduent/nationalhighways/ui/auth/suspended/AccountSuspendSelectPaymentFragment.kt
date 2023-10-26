@@ -113,19 +113,20 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private fun topBalanceDecimal(b: Boolean) {
         if (!b) {
             var mText = binding.topBalance.getText().toString().trim()
-            if (mText.isEmpty()) {
-                mText = "0"
+            if(mText.isNullOrEmpty()){
+                mText= "0"
             }
-            var updatedText: Int = 0
 
-            mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
+            mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "").replace(" ", "")
                 .replace(" ", "")
-                .replace(" ", "")
-            if (mText.length == 1 && mText.equals(".")) {
-                mText = "0"
+            if(mText.length==1 && mText.equals(".")){
+                mText="0"
             }
-            updatedText = mText.toDouble().toInt()
-            binding.topBalance.setText("£" + formatter.format(updatedText))
+            var formatedAmount = formatter.format(mText.toDouble().toInt())
+            if (!formatedAmount.isNullOrEmpty() && formatedAmount.equals(".00")) {
+                formatedAmount = "0.00"
+            }
+            binding.topBalance.setText("£" + formatedAmount)
         }
 
     }
@@ -179,8 +180,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             R.id.btnContinue -> {
                 topBalanceDecimal(false)
-                val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "")
-                    .replace("£.", "")
+                val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "").replace("£.", "")
                     .replace("$", "").replace(",", "").replace(" ", "").toDouble().toInt()
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
@@ -236,7 +236,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 real_paymentList = status.data?.creditCardListType?.cardsList
                 for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
                     if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
-                        paymentList?.add(status.data.creditCardListType.cardsList.get(i))
+                        paymentList?.add(status.data.creditCardListType.cardsList?.get(i))
                     }
                 }
                 for (i in 0 until paymentList.orEmpty().size) {

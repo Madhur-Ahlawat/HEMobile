@@ -425,7 +425,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
             when (data.replenishmentInformation?.reBillPayType) {
                 Constants.MASTERCARD -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.mastercard))
+                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.ic_mastercard))
                 }
 
                 Constants.VISA -> {
@@ -434,7 +434,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
 
                 Constants.MAESTRO -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
+                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.maestro))
                 }
             }
         }
