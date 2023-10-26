@@ -254,13 +254,11 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
                     binding.rvPaymentMethods.visible()
                     binding.btnContinue.visible()
-
                     binding.noCardFoundLayout.gone()
-
-                    binding.btnAddNewPayment.gone()
+//                    binding.btnAddNewPayment.gone()
 
                 } else {
-                    binding.btnAddNewPayment.visible()
+//                    binding.btnAddNewPayment.visible()
                     binding.noCardFoundLayout.visible()
                     binding.rvPaymentMethods.gone()
                     binding.btnContinue.gone()

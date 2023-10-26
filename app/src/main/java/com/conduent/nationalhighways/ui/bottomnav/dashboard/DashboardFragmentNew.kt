@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,7 +61,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var paymentHistoryDatesList: MutableList<String> = ArrayList()
     private var paymentHistoryHashMap: MutableMap<String,MutableList<TransactionData>> = hashMapOf()
     private var transactionsAdapter: TransactionsAdapter? = null
-    val dfDate = SimpleDateFormat("dd MMM yyyy")
+    val dfDate = SimpleDateFormat("dd MMM yyyy",Locale.ENGLISH)
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
     private var personalInformation: PersonalInformation? = null
@@ -301,29 +302,35 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
     fun getDatesList(transactionsList:MutableList<TransactionData>) {
-        var temTransactionDate:String?=null
-        var listOfTransactionsOnSameDate:MutableList<TransactionData> = mutableListOf()
-        transactionsList.forEach {
-            if(temTransactionDate==null){
-                temTransactionDate=it.transactionDate
-                listOfTransactionsOnSameDate.add(it)
-            }
-            else{
-                if(dfDate.parse(temTransactionDate)==dfDate.parse(it.transactionDate)){
+        try{
+            var temTransactionDate:String?=null
+            var listOfTransactionsOnSameDate:MutableList<TransactionData> = mutableListOf()
+            transactionsList.forEach {
+                if(temTransactionDate==null){
+                    temTransactionDate=it.transactionDate
                     listOfTransactionsOnSameDate.add(it)
-                    paymentHistoryHashMap.put(it.transactionDate!!,listOfTransactionsOnSameDate)
                 }
                 else{
-                    listOfTransactionsOnSameDate.clear()
-                    listOfTransactionsOnSameDate.add(it)
-                    paymentHistoryHashMap.put(it.transactionDate!!,listOfTransactionsOnSameDate)
 
+                    if(dfDate.parse(temTransactionDate.toString().trim())==dfDate.parse(it.transactionDate.toString().trim())){
+                        listOfTransactionsOnSameDate.add(it)
+                        paymentHistoryHashMap.put(it.transactionDate?:"",listOfTransactionsOnSameDate)
+                    }
+                    else{
+                        listOfTransactionsOnSameDate.clear()
+                        listOfTransactionsOnSameDate.add(it)
+                        paymentHistoryHashMap.put(it.transactionDate?:"",listOfTransactionsOnSameDate)
+
+                    }
                 }
+
+                paymentHistoryDatesList.add(it.transactionDate!!)
+
             }
-
-            paymentHistoryDatesList.add(it.transactionDate!!)
-
+        }catch (e:Exception){
+            Log.e("TAG", "getDatesList: message "+e.message )
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
