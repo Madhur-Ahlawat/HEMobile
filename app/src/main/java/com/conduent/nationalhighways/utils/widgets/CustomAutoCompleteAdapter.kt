@@ -32,7 +32,7 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val results = FilterResults()
-                val suggestions = ArrayList<String>()
+                var suggestions:MutableList<String> = mutableListOf()
 
                 if (constraint == null || constraint.isEmpty()) {
                     suggestions.addAll(originalItems)
@@ -44,6 +44,7 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                             suggestions.add(item)
                         }
                     }
+                    suggestions= suggestions.filter { it.toLowerCase().startsWith(filterPattern!!) }.toMutableList()
                 }
                 results.values = suggestions
                 results.count = suggestions.size
@@ -54,7 +55,7 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                 clear()
                 if (results != null && results.count > 0) {
                     val filteredList = results.values as List<String>
-                    addAll(filteredList)
+                    addAll(filteredList.sortedBy { it.substring(0,it.indexOf(" ")-1)})
                 }
                 if (results?.count ?: 0 > 0) {
                     notifyDataSetChanged()

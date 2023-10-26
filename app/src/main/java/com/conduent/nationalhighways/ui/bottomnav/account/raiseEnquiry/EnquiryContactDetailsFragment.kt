@@ -226,6 +226,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             1 -> {
                 requiredEmail = if (binding.emailEt.editText.text.toString().trim().isNotEmpty()) {
                     if (binding.emailEt.editText.text.toString().trim().length < 8) {
+                        binding.emailEt.setError(getString(R.string.email_address_must_be_8_characters_or_more))
                         false
                     } else {
                         if (binding.emailEt.editText.text.toString().length > 100) {
