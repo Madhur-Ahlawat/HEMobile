@@ -12,8 +12,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5dp"
             android:layout_marginHorizontal="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_5dp"
             android:layout_marginBottom="@dimen/_20dp"
             android:gravity="start|top"
             android:orientation="vertical">
@@ -46,8 +46,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layerFullName"
@@ -66,8 +65,10 @@
                     <TextView
                         android:id="@+id/fullName"
                         style="@style/RegularTextBlack"
-
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        android:layout_width="0dp"
+                        app:layout_constraintEnd_toStartOf="@+id/editFullName"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtFullName" />
                     <ImageView
@@ -95,8 +96,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layerCompanyName"
@@ -143,8 +143,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -162,8 +161,10 @@
                     <TextView
                         android:id="@+id/address"
                         style="@style/RegularTextBlack"
-
+                        android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        app:layout_constraintEnd_toStartOf="@+id/editAddress"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtAddress" />
                     <ImageView
@@ -191,8 +192,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -243,8 +243,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -383,49 +382,49 @@
 
             </androidx.cardview.widget.CardView>
 
-<!--
-            <androidx.cardview.widget.CardView
-                android:id="@+id/accountTypeCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+            <!--
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/accountTypeCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="@dimen/margin_15dp"
+                            android:layout_marginEnd="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:elevation="3dp"
+                            app:cardCornerRadius="5dp"
+                            >
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
-
-
-                    <TextView
-                        android:id="@+id/typeofAccount"
-                        style="@style/RegularTextBlack"
-                        android:text="Pre-pay"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editAccount"/>
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/margin_15dp">
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                                <TextView
+                                    android:id="@+id/typeofAccount"
+                                    style="@style/RegularTextBlack"
+                                    android:text="Pre-pay"
+                                    android:layout_marginTop="@dimen/margin_5dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/edit"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:layout_marginEnd="@dimen/margin_20dp"
+                                    android:id="@+id/editAccount"/>
 
 
-            </androidx.cardview.widget.CardView>
--->
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+            -->
 
 
             <androidx.cardview.widget.CardView
@@ -480,14 +479,12 @@
                 android:id="@+id/emailCardProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -533,8 +530,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -554,12 +550,12 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        tools:text="********"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="left|center"
                         app:layout_constraintEnd_toStartOf="@+id/editPassword"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtPassword" />
+                        app:layout_constraintTop_toBottomOf="@id/txtPassword"
+                        tools:text="********" />
 
                     <ImageView
                         android:id="@+id/editPassword"
