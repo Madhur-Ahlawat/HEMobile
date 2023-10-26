@@ -214,7 +214,6 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
-                .replace(" ", "")
             if (mText.length == 1 && mText.equals(".")) {
                 mText = "0.0"
             }
@@ -234,7 +233,6 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             }
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
-                .replace(" ", "")
                 .replace(" ", "")
             if (mText.length == 1 && mText.equals(".")) {
                 mText = "0.0"
