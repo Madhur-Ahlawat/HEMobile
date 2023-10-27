@@ -1382,8 +1382,8 @@
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
     <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an \naccount to:</string>
-    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;
-        \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;</string>
+    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for crossings you’ve made since yesterday
+        \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for future crossings</string>
     <string name="str_pay_for_crossing_numberplate_point1">Pay for crossings you’ve made since yesterday</string>
     <string name="str_pay_for_crossing_numberplate_point2">Pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>

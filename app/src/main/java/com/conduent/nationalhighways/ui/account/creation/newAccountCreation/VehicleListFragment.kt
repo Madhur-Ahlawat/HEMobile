@@ -13,7 +13,6 @@ import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
-import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -31,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     VehicleListAdapter.VehicleListCallBack, View.OnClickListener {
 
-    private lateinit var vehicleList: MutableList<NewVehicleInfoDetails>
+    private lateinit var vehicleList: ArrayList<NewVehicleInfoDetails>
     private lateinit var vehicleAdapter: VehicleListAdapter
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -79,6 +78,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     override fun onResume() {
         super.onResume()
+        invalidateList()
     }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
@@ -87,7 +87,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         when (status) {
             is Resource.Success -> {
                 apiStatus = true
-                invalidateList()
             }
 
             is Resource.DataError -> {
@@ -168,14 +167,8 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     private fun invalidateList() {
         val accountData = NewCreateAccountRequestModel
-        vehicleList?.clear()
-        vehicleList?.addAll(accountData.vehicleList as ArrayList<NewVehicleInfoDetails>)
-        if(vehicleAdapter==null){
-            vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
-        }
-        else{
-            vehicleAdapter.notifyDataSetChanged()
-        }
+        vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
+        vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
         val size = vehicleAdapter.itemCount
         var text = "vehicle"
         if (size > 1) {

@@ -52,7 +52,8 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.editTwoStepVerification.setOnClickListener(this)
         binding.editAccountSubType.setOnClickListener(this)
         title = requireActivity().findViewById(R.id.title_txt)
-
+        binding.emailAddressSummary.visible()
+        binding.emailCardProfile.gone()
         dataModel = NewCreateAccountRequestModel
         (dataModel!!.firstName + " " + dataModel!!.lastName).also { binding.fullName.text = it }
         if (!dataModel!!.personalAccount) {

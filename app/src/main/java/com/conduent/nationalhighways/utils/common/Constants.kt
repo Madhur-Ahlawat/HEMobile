@@ -25,6 +25,7 @@ object Constants {
     const val EXPIRED = "EXPIRED"
     const val MASTERCARD = "MASTERCARD"
     const val MAESTRO = "MAESTRO"
+    const val CASH = "CASH"
     const val VISA = "VISA"
     const val RETRY_COUNT = 3
     const val ITEM_COUNT : Long = 20

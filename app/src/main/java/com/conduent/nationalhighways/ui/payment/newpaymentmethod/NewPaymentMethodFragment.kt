@@ -155,7 +155,15 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 status.data?.let {
                     it.creditCardListType?.let {
                         it.cardsList?.let {
-                            paymentList?.addAll(it)
+                            it?.forEach {
+                                if(it?.bankAccountType.equals("CURRENT") && it?.emandateStatus.equals("ACTIVE")){
+                                    paymentList!!.add(0,it!!)
+                                }
+                                else{
+                                    paymentList!!.add(it)
+                                }
+
+                            }
                         }
                     }
                 }

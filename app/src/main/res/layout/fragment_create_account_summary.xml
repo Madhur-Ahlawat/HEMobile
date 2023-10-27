@@ -196,6 +196,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:id="@+id/emailAddressSummary"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
@@ -488,6 +489,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:id="@+id/emailProfileManagement"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 

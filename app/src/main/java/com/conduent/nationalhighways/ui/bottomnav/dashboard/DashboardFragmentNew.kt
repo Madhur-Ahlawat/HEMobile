@@ -592,8 +592,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                             cardNumber.text = resources.getString(
                                 R.string.str_maskcardnumber,
                                 data.accountInformation.paymentTypeInfo.takeLast(4)
-                            )
-                        } else {
+                            )                        } else if(data?.accountInformation?.paymentTypeInfo?.length!! ==4){
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo
+                        }else {
                             cardNumber.text = resources.getString(
                                 R.string.str_maskcardnumber,
                                 data.accountInformation.paymentTypeInfo
@@ -621,15 +622,24 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             when (data.replenishmentInformation?.reBillPayType) {
                 Constants.MASTERCARD -> {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.mastercard))
+                    cardLogo.visible()
+                    viewCard.visible()
                 }
 
                 Constants.VISA -> {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
-
+                    cardLogo.visible()
+                    viewCard.visible()
                 }
 
                 Constants.MAESTRO -> {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
+                    cardLogo.visible()
+                    viewCard.visible()
+                }
+                Constants.CASH -> {
+                    cardLogo.gone()
+                    viewCard.gone()
                 }
             }
             getPaymentHistoryList(startIndex)
