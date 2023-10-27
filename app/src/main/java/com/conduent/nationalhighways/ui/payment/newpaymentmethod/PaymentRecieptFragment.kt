@@ -106,13 +106,17 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         if (!NewCreateAccountRequestModel.mobileNumber.isNullOrEmpty()) {
             binding.apply {
                 selectTextMessage.isChecked = true
-                edtEmail.visible()
+                inputCountry.visible()
+                inputCountryHelper.visible()
+                inputMobileNumber.visible()
                 inputMobileNumber.editText.setText(NewCreateAccountRequestModel.mobileNumber)
             }
         } else {
             binding.apply {
                 selectTextMessage.isChecked = false
-                edtEmail.gone()
+                inputCountry.gone()
+                inputCountryHelper.gone()
+                inputMobileNumber.gone()
             }
         }
         binding.edtEmail.editText.addTextChangedListener {
