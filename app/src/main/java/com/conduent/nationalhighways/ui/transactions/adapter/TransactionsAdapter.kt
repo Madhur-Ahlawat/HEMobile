@@ -5,16 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.databinding.ItemAllTansactionsBinding
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
 import com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 
 class TransactionsAdapter(
-    var context: ViewAllTransactionsFragment,
+    var context: Fragment,
     var transactionItemList: MutableList<String>,
     var transactionItemHashMap: MutableMap<String, MutableList<TransactionData>>
 ) :
@@ -42,10 +46,16 @@ class TransactionsAdapter(
         var recentTransactionItem = transactionItemList.get(position)
         Log.e("POSXJ220", transactionItemList.get(position))
         binding?.apply {
-            headerDate!!.text = recentTransactionItem
+            if(context is DashboardFragmentNew){
+                headerDate.gone()
+            }
+            else{
+                headerDate!!.text = recentTransactionItem
+                headerDate.visible()
+            }
             innerAdapter = TransactionsInnerAdapter(
                 context, Utils.sortTransactionsDateWiseDescending(
-                    transactionItemHashMap.get(recentTransactionItem)!!
+                    transactionItemHashMap.get(recentTransactionItem)?: mutableListOf()
                 )!!
             )
             var layoutManager = LinearLayoutManager(context.requireContext())

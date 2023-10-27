@@ -217,11 +217,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         when (v?.id) {
 
             R.id.addNewPaymentMethod -> {
-                findNavController().navigate(
-                    R.id.action_paymentMethodFragment_to_deletePaymentMethodFragment,
-                    Bundle()
-                )
-                return
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
                 bundle.putDouble(Constants.DATA, 0.0)

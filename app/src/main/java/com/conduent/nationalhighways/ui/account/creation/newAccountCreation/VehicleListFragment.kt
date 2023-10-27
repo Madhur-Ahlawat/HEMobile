@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
+import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -20,6 +21,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
+import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -29,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     VehicleListAdapter.VehicleListCallBack, View.OnClickListener {
 
-    private lateinit var vehicleList: ArrayList<NewVehicleInfoDetails>
+    private lateinit var vehicleList: MutableList<NewVehicleInfoDetails>
     private lateinit var vehicleAdapter: VehicleListAdapter
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private var loader: LoaderDialog? = null
@@ -45,7 +47,26 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
     }
+    private fun sortVehilcesListInDescendingOrder(vehiclesList: MutableList<NewVehicleInfoDetails>): MutableList<NewVehicleInfoDetails> {
+        var transactionListSorted: MutableList<NewVehicleInfoDetails> = mutableListOf()
+        for (vehicle in vehiclesList) {
+            if (transactionListSorted?.isEmpty() == true) {
+                transactionListSorted.add(vehicle!!)
+            } else {
+                if (DateUtils.compareDates(
+                        transactionListSorted.last().effectiveStartDate,
+                        vehicle?.effectiveStartDate
+                    )
+                ) {
+                    transactionListSorted.add(transactionListSorted.size - 1, vehicle!!)
 
+                } else {
+                    transactionListSorted.add(vehicle!!)
+                }
+            }
+        }
+        return transactionListSorted
+    }
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
         binding.btnAddNewVehicle.setOnClickListener(this)
@@ -58,7 +79,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     override fun onResume() {
         super.onResume()
-        invalidateList()
     }
 
     private fun addVehicleApiCall(status: Resource<EmptyApiResponse?>?) {
@@ -67,6 +87,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         when (status) {
             is Resource.Success -> {
                 apiStatus = true
+                invalidateList()
             }
 
             is Resource.DataError -> {
@@ -147,8 +168,14 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     private fun invalidateList() {
         val accountData = NewCreateAccountRequestModel
-        vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
-        vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
+        vehicleList?.clear()
+        vehicleList?.addAll(accountData.vehicleList as ArrayList<NewVehicleInfoDetails>)
+        if(vehicleAdapter==null){
+            vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
+        }
+        else{
+            vehicleAdapter.notifyDataSetChanged()
+        }
         val size = vehicleAdapter.itemCount
         var text = "vehicle"
         if (size > 1) {

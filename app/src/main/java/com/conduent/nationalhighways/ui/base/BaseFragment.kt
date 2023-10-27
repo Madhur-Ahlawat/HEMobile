@@ -212,9 +212,11 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         cancelVisibility: Int = View.VISIBLE
     ) {
 
-        val dialog = Dialog(requireActivity())
+        val dialog = Dialog(requireActivity(),R.style.CustomDialogTheme1)
+
         dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setDimAmount(0.5f) // Adjust the dim amount as needed (0.0f for completely transparent, 1.0f for completely opaque)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(R.layout.custom_dialog)
         val title = dialog.findViewById<TextView>(R.id.title)

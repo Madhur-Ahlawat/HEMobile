@@ -250,8 +250,8 @@ class BottomNavigationView @JvmOverloads constructor(
 
         // Get previous selected item and color it passive
         val selectedNavigationItem = navigationItems[selectedPosition]
-        selectedNavigationItem.textView.setTextColor(params.passiveColor)
-        selectedNavigationItem.imageView.setColorFilter(params.passiveColor)
+//        selectedNavigationItem.textView.setTextColor(params.passiveColor)
+//        selectedNavigationItem.imageView.setColorFilter(params.passiveColor)
 
         // Play click sound
         if (withClickSound) navigationItem.view.playSoundEffect(SoundEffectConstants.CLICK)
@@ -260,8 +260,8 @@ class BottomNavigationView @JvmOverloads constructor(
         selectedPosition = navigationItem.position
 
         // Set recently selected item and color it active
-        navigationItem.textView.setTextColor(params.activeColor)
-        navigationItem.imageView.setColorFilter(params.activeColor)
+//        navigationItem.textView.setTextColor(params.activeColor)
+//        navigationItem.imageView.setColorFilter(params.activeColor)
 
         // Notify active view changed
         itemChangeListener?.onNavigationItemChanged(navigationItem)
@@ -329,8 +329,8 @@ class BottomNavigationView @JvmOverloads constructor(
         colorAnimation.addUpdateListener { animator ->
 
             val navigationItemColor = animator.animatedValue as Int
-            navigationItem.textView.setTextColor(navigationItemColor)
-            navigationItem.imageView.setColorFilter(navigationItemColor)
+//            navigationItem.textView.setTextColor(navigationItemColor)
+//            navigationItem.imageView.setColorFilter(navigationItemColor)
         }
 
         colorAnimation.start()
@@ -341,8 +341,8 @@ class BottomNavigationView @JvmOverloads constructor(
      */
     fun clearSelection() {
         val selectedNavigationItem = navigationItems[selectedPosition]
-        selectedNavigationItem.textView.setTextColor(params.passiveColor)
-        selectedNavigationItem.imageView.setColorFilter(params.passiveColor)
+//        selectedNavigationItem.textView.setTextColor(params.passiveColor)
+//        selectedNavigationItem.imageView.setColorFilter(params.passiveColor)
     }
 
 }

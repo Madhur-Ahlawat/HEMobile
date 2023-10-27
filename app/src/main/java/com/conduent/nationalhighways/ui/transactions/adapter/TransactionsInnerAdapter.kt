@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.transactions.adapter;
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
@@ -10,6 +11,7 @@ import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.databinding.ItemAllTansactionsBinding
 import com.conduent.nationalhighways.databinding.ItemCrossingsBinding
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
 import com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -17,7 +19,7 @@ import java.text.SimpleDateFormat
 
 
 class TransactionsInnerAdapter(
-    var viewAllTransactionsFragment: ViewAllTransactionsFragment,
+    var viewAllTransactionsFragment: Fragment,
     var transactionItemsList: List<TransactionData>
 ) :
     RecyclerView.Adapter<TransactionsInnerAdapter.TransactionViewHolder>() {
@@ -96,15 +98,33 @@ class TransactionsInnerAdapter(
             val bundle = Bundle()
             HomeActivityMain.crossing = transactionItemsList.get(pos)
             if (HomeActivityMain.crossing!!.activity?.toLowerCase().equals("toll")) {
-                viewAllTransactionsFragment.findNavController().navigate(
-                    R.id.action_crossingHistoryFragment_to_tollDetails,
-                    bundle
-                )
+                if(viewAllTransactionsFragment is ViewAllTransactionsFragment){
+                    (viewAllTransactionsFragment as ViewAllTransactionsFragment).findNavController().navigate(
+                        R.id.action_crossingHistoryFragment_to_tollDetails,
+                        bundle
+                    )
+                }
+                else{
+                    (viewAllTransactionsFragment as DashboardFragmentNew).findNavController().navigate(
+                        R.id.action_dashBoardFragment_to_tollDetails,
+                        bundle
+                    )
+                }
+
             } else {
-                viewAllTransactionsFragment.findNavController().navigate(
-                    R.id.action_crossingHistoryFragment_to_topUpDetails,
-                    bundle
-                )
+                if(viewAllTransactionsFragment is ViewAllTransactionsFragment) {
+                    (viewAllTransactionsFragment as ViewAllTransactionsFragment).findNavController().navigate(
+                        R.id.action_crossingHistoryFragment_to_topUpDetails,
+                        bundle
+                    )
+                }
+                else{
+                    (viewAllTransactionsFragment as DashboardFragmentNew).findNavController().navigate(
+                        R.id.action_dashBoardFragment_to_topUpDetails,
+                        bundle
+                    )
+                }
+
             }
         }
     }

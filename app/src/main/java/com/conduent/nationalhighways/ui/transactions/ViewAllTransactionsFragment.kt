@@ -44,7 +44,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     private var noOfPages = 0
     private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
         hashMapOf()
-    private var paymentHistoryDatesList: MutableList<String> = ArrayList()
+    private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var mLayoutManager: LinearLayoutManager? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
     val dfDate = SimpleDateFormat("dd MMM yyyy")

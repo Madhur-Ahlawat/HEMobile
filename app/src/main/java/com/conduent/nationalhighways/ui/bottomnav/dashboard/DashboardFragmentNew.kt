@@ -58,16 +58,17 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener,
     View.OnClickListener {
-    private var paymentHistoryDatesList: MutableList<String> = ArrayList()
-    private var paymentHistoryHashMap: MutableMap<String,MutableList<TransactionData>> = hashMapOf()
+    private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
+    private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
+        hashMapOf()
     private var transactionsAdapter: TransactionsAdapter? = null
-    val dfDate = SimpleDateFormat("dd MMM yyyy",Locale.ENGLISH)
+    val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
     private var personalInformation: PersonalInformation? = null
     private var loader: LoaderDialog? = null
-    private val countPerPage = 10
-    private var startIndex = 1
+    private val countPerPage = 100
+    private var startIndex = 0
     private var noOfPages = 1
     private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
 
@@ -112,7 +113,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         crossing = recentTransactionItem
                         val bundle = Bundle()
 //                        bundle.putInt(Constants.FROM, Constants.FROM_ALL_TRANSACTIONS_TO_DETAILS)
-                        if(crossing!!.activity?.toLowerCase().equals("toll")){
+                        if (crossing!!.activity?.toLowerCase().equals("toll")) {
                             findNavController().navigate(
                                 R.id.action_dashBoardFragment_to_tollDetails,
                                 bundle
@@ -154,13 +155,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun initTransactionsRecyclerView() {
+        transactionsAdapter = TransactionsAdapter(
+            this@DashboardFragmentNew,
+            paymentHistoryDatesList,
+            paymentHistoryHashMap
+        )
         mLayoutManager = LinearLayoutManager(requireContext())
+        mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
         binding.rvRecenrTransactions.run {
             if (itemDecorationCount == 0) {
-                addItemDecoration(RecyclerViewItemDecorator(10, 1))
+                addItemDecoration(RecyclerViewItemDecorator(0, 1))
             }
-            binding.rvRecenrTransactions.layoutManager = mLayoutManager
-            adapter = recentTransactionAdapter
+            adapter = transactionsAdapter
         }
     }
 
@@ -261,15 +267,16 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 resource.data?.transactionList?.transaction?.let {
                     if (it.isNotEmpty()) {
                         binding.tvNoHistory.gone()
-                        binding.boxViewAll.visible()
-                        binding.rvRecenrTransactions.visible()
                         paymentHistoryListData?.clear()
                         paymentHistoryListData?.addAll(it)
-//                        paymentHistoryListData =
-//                            sortTransactionsDateWiseDescending(HomeActivityMain.paymentHistoryListData).toMutableList()
+                        paymentHistoryListData =
+                            Utils.sortTransactionsDateWiseDescending(paymentHistoryListData)
+                                .toMutableList()
                         paymentHistoryDatesList.clear()
                         getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
+                        binding.boxViewAll.visible()
+                        binding.rvRecenrTransactions.visible()
 //                        paymentHistoryListData =
 //                            sortTransactionsDateWiseDescending(
 //                                paymentHistoryListData ?: ArrayList()
@@ -301,25 +308,37 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
         }
     }
-    fun getDatesList(transactionsList:MutableList<TransactionData>) {
-        try{
-            var temTransactionDate:String?=null
-            var listOfTransactionsOnSameDate:MutableList<TransactionData> = mutableListOf()
-            transactionsList.forEach {
-                if(temTransactionDate==null){
-                    temTransactionDate=it.transactionDate
-                    listOfTransactionsOnSameDate.add(it)
-                }
-                else{
 
-                    if(dfDate.parse(temTransactionDate.toString().trim())==dfDate.parse(it.transactionDate.toString().trim())){
+    fun getDatesList(transactionsList: MutableList<TransactionData>) {
+        try {
+            var temTransactionDate: String? = null
+            var listOfTransactionsOnSameDate: MutableList<TransactionData> = mutableListOf()
+            transactionsList.forEach {
+                if (temTransactionDate == null) {
+                    temTransactionDate = it.transactionDate
+                    listOfTransactionsOnSameDate.add(it)
+                    paymentHistoryHashMap.put(
+                        it.transactionDate ?: "",
+                        listOfTransactionsOnSameDate
+                    )
+                } else {
+
+                    if (dfDate.parse(
+                            temTransactionDate.toString().trim()
+                        ) == dfDate.parse(it.transactionDate.toString().trim())
+                    ) {
                         listOfTransactionsOnSameDate.add(it)
-                        paymentHistoryHashMap.put(it.transactionDate?:"",listOfTransactionsOnSameDate)
-                    }
-                    else{
+                        paymentHistoryHashMap.put(
+                            it.transactionDate ?: "",
+                            listOfTransactionsOnSameDate
+                        )
+                    } else {
                         listOfTransactionsOnSameDate.clear()
                         listOfTransactionsOnSameDate.add(it)
-                        paymentHistoryHashMap.put(it.transactionDate?:"",listOfTransactionsOnSameDate)
+                        paymentHistoryHashMap.put(
+                            it.transactionDate ?: "",
+                            listOfTransactionsOnSameDate
+                        )
 
                     }
                 }
@@ -327,8 +346,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 paymentHistoryDatesList.add(it.transactionDate!!)
 
             }
-        }catch (e:Exception){
-            Log.e("TAG", "getDatesList: message "+e.message )
+        } catch (e: Exception) {
+            Log.e("TAG", "getDatesList: message " + e.message)
         }
 
     }
@@ -447,7 +466,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         binding.apply {
             tvAvailableBalanceHeading.visible()
             tvAvailableBalance.visible()
-            tvAvailableBalance.text=getString(R.string.str_zero_euro)
+            tvAvailableBalance.text = getString(R.string.str_zero_euro)
 //            tvAvailableBalance.apply {
 //                visible()
 //                text = data.replenishmentInformation?.currentBalance?.run {
@@ -613,8 +632,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
                 }
             }
-            boxViewAll.visible()
-            rvRecenrTransactions.visible()
             getPaymentHistoryList(startIndex)
         }
     }
@@ -632,7 +649,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             )
         val request = AccountPaymentHistoryRequest(
             index,
-            Constants.PAYMENT,
+            Constants.ALL_TRANSACTION,
             countPerPage
         )
         dashboardViewModel.paymentHistoryDetails(request)
