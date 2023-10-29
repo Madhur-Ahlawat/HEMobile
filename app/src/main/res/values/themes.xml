@@ -16,13 +16,15 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue_color</item>
+        <item name="colorAccent">@color/blue_color</item>
         <item name="android:colorAccent">@color/blue_color</item>
         <item name="backgroundColor">@color/white</item>
 
 
         <!-- Customize your theme here. -->
     </style>
-
+    <style name="CustomDialogTheme1" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>    <!-- Add other attributes as needed --></style>
     <style name="Theme.CreateAccount" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
@@ -48,7 +50,7 @@
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_color</item>
+        <item name="android:statusBarColor">@color/blue_color</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
@@ -62,7 +64,7 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorControlActivated">@color/black</item>
         <item name="colorControlNormal">@color/tool_bar_clr</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_color</item>
+        <item name="android:statusBarColor">@color/blue_color</item>
     </style>
 
     <style name="Theme.HEMobileLight" parent="Theme.AppCompat.Light.NoActionBar">
@@ -72,6 +74,7 @@
         <item name="colorPrimaryDark">@color/blue_color</item>
         <item name="colorOnPrimary">@color/blue_color</item>
         <item name="colorAccent">@color/blue_color</item>
+        <item name="android:colorAccent">@color/blue_color</item>
     </style>
 
     <style name="Theme.ToolBar" parent="Theme.MaterialComponents">

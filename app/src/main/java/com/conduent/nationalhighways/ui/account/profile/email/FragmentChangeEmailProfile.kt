@@ -79,6 +79,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
         btnEnabled =
             if (binding.edtEmail.getText().toString().trim().length > 0) {
                 if (binding.edtEmail.getText().toString().trim().length < 8) {
+                    binding.edtEmail.setError(getString(R.string.email_address_must_be_8_characters_or_more))
                     false
                 } else {
                     if (binding.edtEmail.getText().toString().length > 100) {

@@ -297,12 +297,14 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     private fun isEnable() {
         btnEnabled = if (binding.edtEmail.editText.getText().toString().trim().isNotEmpty()) {
             if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
+                binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_8_characters_or_more))
                 false
             } else {
                 if (binding.edtEmail.editText.getText().toString().length > 100) {
                     binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                     false
-                } else {
+                }
+                else {
                     if (!Utils.isLastCharOfStringACharacter(
                             binding.edtEmail.editText.getText().toString().trim()
                         ) || Utils.countOccurenceOfChar(

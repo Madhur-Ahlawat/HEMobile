@@ -5,17 +5,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/_25dp"
+        android:layout_marginStart="@dimen/_22dp"
         android:layout_marginEnd="@dimen/_24dp">
 
         <LinearLayout
             android:id="@+id/llCheckvehicleDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_2dp"
-            android:layout_alignParentTop="true"
             android:layout_above="@id/btnOk"
-            android:layout_marginStart="@dimen/_24dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginHorizontal="@dimen/_2dp"
             android:layout_marginEnd="@dimen/_24dp"
             android:gravity="center"
             android:orientation="vertical">
@@ -39,7 +38,7 @@
                 android:textSize="@dimen/font_16sp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
-              android:id="@+id/desc_tv"
+                android:id="@+id/desc_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_13dp"

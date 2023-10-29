@@ -265,9 +265,11 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                                         thresholdAmountVo.thresholdAmount!!.toDouble()
                                     )
                                 )
+
                                 binding.lowBalance.editText.addTextChangedListener(gtwLowBalance)
                                 this@TopUpFragment.apiLowBalanceAmount =
                                     thresholdAmountVo.thresholdAmount
+                                binding.minimumAmount.text=getString(R.string.str_minimum_amount,this@TopUpFragment.apiLowBalanceAmount)
 
                             }
 
@@ -281,6 +283,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                                 binding.top.editText.addTextChangedListener(gtwTopBalance)
                                 this@TopUpFragment.apiTopUpAmountBalance =
                                     thresholdAmountVo.customerAmount
+                                binding.minimumAMountTopUp.text=(getString(R.string.top_up_amount,this@TopUpFragment.apiTopUpAmountBalance))
+
                             }
 
                         }

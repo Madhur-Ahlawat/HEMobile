@@ -106,13 +106,17 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         if (!NewCreateAccountRequestModel.mobileNumber.isNullOrEmpty()) {
             binding.apply {
                 selectTextMessage.isChecked = true
-                edtEmail.visible()
+                inputCountry.visible()
+                inputCountryHelper.visible()
+                inputMobileNumber.visible()
                 inputMobileNumber.editText.setText(NewCreateAccountRequestModel.mobileNumber)
             }
         } else {
             binding.apply {
                 selectTextMessage.isChecked = false
-                edtEmail.gone()
+                inputCountry.gone()
+                inputCountryHelper.gone()
+                inputMobileNumber.gone()
             }
         }
         binding.edtEmail.editText.addTextChangedListener {
@@ -126,6 +130,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         super.onResume()
         viewModel.getCountries()
     }
+
     override fun initCtrl() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (arguments?.getParcelable(
@@ -262,12 +267,14 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                             )
                         } else {
                             inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
-                            (navData as CrossingDetailsModelsResponse).fullCountryCode=Constants.UNITED_KINGDOM
+                            (navData as CrossingDetailsModelsResponse).fullCountryCode =
+                                Constants.UNITED_KINGDOM
 
                         }
                     } else {
                         inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
-                        (navData as CrossingDetailsModelsResponse).fullCountryCode=Constants.UNITED_KINGDOM
+                        (navData as CrossingDetailsModelsResponse).fullCountryCode =
+                            Constants.UNITED_KINGDOM
                     }
                 }
 
@@ -341,7 +348,8 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
-                NewCreateAccountRequestModel.countryCode=binding.inputCountry.getSelectedDescription()
+                NewCreateAccountRequestModel.countryCode =
+                    binding.inputCountry.getSelectedDescription()
                 if (edit_summary) {
                     findNavController().navigate(
                         R.id.action_crossingRecieptFragment_editsummary_to_crossingCheckAnswersFragment,
@@ -383,7 +391,9 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
             if (index == 1) {
                 val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
-                if (binding.inputCountry.getSelectedDescription().equals(Constants.UNITED_KINGDOM, true)) {
+                if (binding.inputCountry.getSelectedDescription()
+                        .equals(Constants.UNITED_KINGDOM, true)
+                ) {
                     requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
                         if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
                             binding.inputMobileNumber.removeError()
@@ -393,6 +403,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                             false
                         }
                     } else {
+                        binding.inputMobileNumber.removeError()
                         false
                     }
                 } else {
@@ -406,6 +417,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                             false
                         }
                     } else {
+                        binding.inputMobileNumber.removeError()
                         false
                     }
                 }
@@ -421,6 +433,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     private fun isEnable(): Boolean {
         isEmailValid = if (binding.edtEmail.editText.getText().toString().trim().isNotEmpty()) {
             if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
+                binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_8_characters_or_more))
                 false
             } else {
                 if (binding.edtEmail.editText.getText().toString().length > 100) {
@@ -533,7 +546,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             (navData as CrossingDetailsModelsResponse).fullCountryCode =
                 binding.inputCountry.selectedItemDescription
         } else {
-            binding.btnContinue.enable()
+            binding.btnContinue.disable()
         }
     }
 
