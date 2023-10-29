@@ -18,6 +18,8 @@ class PaymentMethodAdapter(
     private val paymentMethodCallback: PaymentMethodCallback
 ) :
     RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder>() {
+    private var isDirectDebit: Boolean=false
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -66,8 +68,7 @@ class PaymentMethodAdapter(
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             holder.binding.delete.visibility = View.VISIBLE
-
-
+            isDirectDebit=true
         } else {
             val htmlText =
                 Html.fromHtml(
@@ -92,7 +93,12 @@ class PaymentMethodAdapter(
 
         } else {
             holder.binding.textDefault.visibility = View.GONE
-            holder.binding.textMakeDefault.visibility = View.VISIBLE
+            if(isDirectDebit){
+                holder.binding.textMakeDefault.visibility = View.GONE
+            }
+            else{
+                holder.binding.textMakeDefault.visibility = View.VISIBLE
+            }
 
 
         }

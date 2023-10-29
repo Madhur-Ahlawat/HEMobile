@@ -747,6 +747,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     }
 
                     else -> {
+                        view?.loadUrl("javascript:(function(){document.getElementById('nameerrormesages').style.display = '';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'block'; document.getElementById('title').innerText = 'How do you want to pay?';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('title_break').style.display = '';})()")
 

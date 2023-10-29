@@ -41,8 +41,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     private val viewModel: AccountTopUpPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var paymentListSize: Int = 0
-    private var apiLowBalanceAmount: String = "5"
-    private var apiTopUpAmountBalance: String = "10"
+    private var apiLowBalanceAmount: String = "5.00"
+    private var apiTopUpAmountBalance: String = "10.00"
     private var gtwLowBalance: GenericTextWatcher? = null
     private var gtwTopBalance: GenericTextWatcher? = null
     private var isClick = false
@@ -55,6 +55,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -66,6 +67,16 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             if (!isViewCreated) {
                 getThresholdAmount()
             }
+        }
+        else{
+            binding.minimumAMountTopUp.text = (getString(
+                R.string.top_up_amount_value,
+                this@TopUpFragment.apiTopUpAmountBalance
+            ))
+            binding.minimumAmount.text = (getString(
+                R.string.str_minimum_amount,
+                this@TopUpFragment.apiLowBalanceAmount
+            ))
         }
         isViewCreated = true
         binding.topUpBtn.setOnClickListener(this)
@@ -98,10 +109,18 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         ) {
             if (isTopUp) {
                 topUpBalance =
-                    Utils.validateAmount(binding.top, apiTopUpAmountBalance.toDouble(), true)
+                    Utils.validateAmount(
+                        binding.top,
+                        formatter.format(apiTopUpAmountBalance.toDouble()).toDouble(),
+                        true
+                    )
             } else {
                 lowBalance =
-                    Utils.validateAmount(binding.lowBalance, apiLowBalanceAmount.toDouble(), false)
+                    Utils.validateAmount(
+                        binding.lowBalance,
+                        formatter.format(apiLowBalanceAmount.toDouble()).toDouble(),
+                        false
+                    )
             }
             checkButton()
         }
@@ -267,9 +286,14 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                                 )
 
                                 binding.lowBalance.editText.addTextChangedListener(gtwLowBalance)
+
                                 this@TopUpFragment.apiLowBalanceAmount =
-                                    thresholdAmountVo.thresholdAmount
-                                binding.minimumAmount.text=getString(R.string.str_minimum_amount,this@TopUpFragment.apiLowBalanceAmount)
+                                    formatter.format(thresholdAmountVo.thresholdAmount.toDouble())
+
+                                binding.minimumAmount.text = getString(
+                                    R.string.str_minimum_amount,
+                                    this@TopUpFragment.apiLowBalanceAmount
+                                )
 
                             }
 
@@ -281,9 +305,18 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                                     )
                                 )
                                 binding.top.editText.addTextChangedListener(gtwTopBalance)
-                                this@TopUpFragment.apiTopUpAmountBalance =
-                                    thresholdAmountVo.customerAmount
-                                binding.minimumAMountTopUp.text=(getString(R.string.top_up_amount,this@TopUpFragment.apiTopUpAmountBalance))
+                                this@TopUpFragment.apiTopUpAmountBalance = formatter.format(
+                                    thresholdAmountVo.customerAmount.toDouble()
+                                )
+
+                                binding.minimumAMountTopUp.text = (getString(
+                                    R.string.top_up_amount_value,
+                                    this@TopUpFragment.apiTopUpAmountBalance
+                                ))
+                                binding.minimumAmount.text = (getString(
+                                    R.string.str_minimum_amount,
+                                    this@TopUpFragment.apiLowBalanceAmount
+                                ))
 
                             }
 

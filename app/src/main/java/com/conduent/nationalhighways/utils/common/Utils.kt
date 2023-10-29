@@ -122,7 +122,8 @@ object Utils {
                         transaction?.transactionDate + " " + transaction?.exitTime
                     )
                 ) {
-                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
+                    transactionListSorted.add(transactionListSorted.get(transactionListSorted.size-1))
+                    transactionListSorted.add(transactionListSorted.size - 2, transaction!!)
 
                 } else {
                     transactionListSorted.add(transaction!!)
@@ -186,23 +187,12 @@ object Utils {
                     true
                 }
             }
-            else if(mText.length>8) {
-                if (isTopUp) {
-                    nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_8_characters))
-                } else {
-                    nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_8_characters))
-                }
-                false
-            }
-            else if (mText.toDouble().toInt() > 100000) {
+            else {
                 if (isTopUp) {
                     nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
                 } else {
                     nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.low_balance_amount_must_be_80_000_or_less))
                 }
-                false
-            }
-            else{
                 false
             }
         } else {
