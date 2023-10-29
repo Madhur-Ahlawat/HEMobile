@@ -649,6 +649,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     else -> {
                         binding.edtOtp.setErrorText(resource.errorModel?.message.toString())
                     }
+
                 }
             }
 

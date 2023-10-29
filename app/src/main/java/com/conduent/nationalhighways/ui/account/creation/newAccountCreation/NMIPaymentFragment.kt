@@ -574,7 +574,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             maskedCardNumber// card masked number only we need to send last four digit
         model.creditCardNumber = cardToken// card number should be token number
         model.cavv = cavv // 3ds cavv
-        model.correspDeliveryMode = "EMAIL"
+//        model.correspDeliveryMode = "EMAIL"
         model.password = data.password  //model password
         model.firstName = data.firstName
         model.creditCardType = creditCardType.uppercase() // need to send upper case
