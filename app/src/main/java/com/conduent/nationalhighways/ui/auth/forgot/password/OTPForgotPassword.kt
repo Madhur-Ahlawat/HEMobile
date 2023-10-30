@@ -226,11 +226,19 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                findNavController().navigate(
-                    R.id.action_otpForgotFragment_to_resetForgotPassword,
-                    bundle
-                )
+                if(navFlowCall==Constants.PROFILE_MANAGEMENT){
+                    findNavController().navigate(
+                        R.id.action_otpForgotFragment_to_profileManagementFragment,
+                        bundle
+                    )
+                }
+                else{
+                    findNavController().navigate(
+                        R.id.action_otpForgotFragment_to_resetForgotPassword,
+                        bundle
+                    )
+                }
+
             }
 
             is Resource.DataError -> {
@@ -633,7 +641,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 otpSuccessRedirection()
             }
 
-            is Resource.DataError -> {
+            is Resource.DataError -> {9
                 otpSuccessRedirection()
 
                 when (resource.errorModel?.status) {

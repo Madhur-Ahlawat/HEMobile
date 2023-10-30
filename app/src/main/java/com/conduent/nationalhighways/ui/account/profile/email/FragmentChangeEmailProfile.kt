@@ -238,7 +238,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
+            if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall==Constants.PROFILE_MANAGEMENT) {
                 binding.edtEmail.setError(getString(R.string.an_account_with_this_email_address_already_exists))
             }
 

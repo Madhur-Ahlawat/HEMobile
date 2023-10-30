@@ -43,7 +43,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var position: Int = 0
-    private var lowBalance: Boolean = false
     private var loader: LoaderDialog? = null
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
