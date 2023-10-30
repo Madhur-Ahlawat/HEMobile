@@ -56,16 +56,16 @@ class ThreeDSWebviewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         binding.webView.settings.javaScriptEnabled = true
 
         binding.webView.loadUrl("file:///android_asset/threeDSGateWay.html")
-        val file = File("file:///android_asset/threeDSGateWay.html")
-        file.setReadable(true, true)
+//        val file = File("file:///android_asset/threeDSGateWay.html")
+//        file.setReadable(true, true)
 
-        if (file.exists()) {
-            Log.e("TAG", "init:exists " )
-            // File exists, proceed with loading
-        } else {
-            Log.e("TAG", "init:not exists " )
-            // File doesn't exist, handle the error
-        }
+//        if (file.exists()) {
+//            Log.e("TAG", "init:exists " )
+//            // File exists, proceed with loading
+//        } else {
+//            Log.e("TAG", "init:not exists " )
+//            // File doesn't exist, handle the error
+//        }
 
 
 

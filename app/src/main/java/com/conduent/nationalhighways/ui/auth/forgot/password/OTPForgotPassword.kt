@@ -631,7 +631,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                otpSuccessRedirection()
+//                otpSuccessRedirection()
 
                 when (resource.errorModel?.status) {
 

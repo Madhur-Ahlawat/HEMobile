@@ -146,6 +146,10 @@
         <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment"
             app:destination="@id/tryPaymentAgainFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendedPaymentFragment"
+            app:destination="@id/accountSuspendedPaymentFragment" />
+
     </fragment>
 
     <fragment

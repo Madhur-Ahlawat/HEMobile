@@ -39,6 +39,7 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
 
     }
 
+/*
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
@@ -52,6 +53,7 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
             )
         }
     }
+*/
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

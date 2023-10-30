@@ -1359,6 +1359,7 @@
     <string name="str_while_your_new_direct_debit">While your new Direct Debit gets set up, we’ll still use your current default payment method.</string>
     <string name="str_your_direct_debit_for">Your Direct Debit for %s is pending. While it gets set up, we’ll use your current default payment method.</string>
     <string name="str_your_direct_debit_was_not_setup">Your Direct Debit was not setup</string>
+    <string name="str_your_credit_card_was_not_setup">Your Credit Card was not setup</string>
     <string name="str_you_can_try">You can try again or contact your bank for more details.</string>
     <string name="the_card_you_are_trying_to_add_is_already">The card you are trying to add is already registered to your account.</string>
     <string name="do_you_want_to_add_another_card">Do you want to add another card?</string>
