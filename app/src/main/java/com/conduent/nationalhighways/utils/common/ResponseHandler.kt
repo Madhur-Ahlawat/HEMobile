@@ -6,6 +6,7 @@ import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.ErrorResponseModel
 import com.conduent.nationalhighways.data.remote.NoConnectivityException
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import retrofit2.Response
 import java.io.InterruptedIOException
 import java.net.SocketTimeoutException
@@ -31,23 +32,20 @@ object ResponseHandler {
             try {
 //                Log.e("TAG", "success: response errorBody "+response?.errorBody().toString() )
                 val errorResponse =
-                    Gson().fromJson(
-                        response?.errorBody()?.string(),
-                        ErrorResponseModel::class.java
-                    )
-                Log.e("TAG", "success: response error " + errorResponse.error.equals("invalid_token"))
-                Log.e("TAG", "success: response error--> " + errorResponse.error)
+                    parseError(response)
+                Log.e("TAG", "success: response error " + errorResponse?.error.equals("invalid_token"))
+                Log.e("TAG", "success: response error--> " + errorResponse?.error)
 
-                if (response?.code() == Constants.TOKEN_FAIL && errorResponse.error.equals("invalid_token")) {
+                if (response?.code() == Constants.TOKEN_FAIL && errorResponse?.error.equals("invalid_token")) {
                     return Resource.DataError(
                         "Token Expired",
                         ErrorResponseModel("", "", "", 401, 401, "")
                     )
                 } else {
-                    if (TextUtils.isEmpty(errorResponse.message)) {
-                        return Resource.DataError(errorResponse.exception, errorResponse)
+                    if (TextUtils.isEmpty(errorResponse?.message)) {
+                        return Resource.DataError(errorResponse?.exception, errorResponse)
                     }
-                    return Resource.DataError(errorResponse.message, errorResponse)
+                    return Resource.DataError(errorResponse?.message, errorResponse)
                 }
             } catch (e: Exception) {
                 Log.e("TAG", "success: message "+e.message )
@@ -55,6 +53,24 @@ object ResponseHandler {
             }
         }
     }
+
+    private fun <T> parseError(response: Response<T>?): ErrorResponseModel? {
+        val gson = Gson()
+        val errorBody = response?.errorBody()?.string()
+//        Log.e("TAG", "parseError: errorBody $errorBody")
+
+        return try {
+            Log.e("TAG", "parseError: message try -> " )
+            gson.fromJson(errorBody, ErrorResponseModel::class.java)
+                ?: ErrorResponseModel("invalid_token", null, null, 0, 0, null)
+        } catch (e: JsonSyntaxException) {
+            Log.e("TAG", "parseError: message -> " +e.message)
+            ErrorResponseModel("invalid_token", null, errorBody, 0, 0, null)
+        }
+    }
+
+
+
 
     fun <T> failure(e: Exception?): Resource<T?> {
         Log.e("TAG", "failure: e " + e)

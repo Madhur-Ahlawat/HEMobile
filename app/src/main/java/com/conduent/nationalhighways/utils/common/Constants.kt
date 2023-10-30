@@ -11,6 +11,7 @@ object Constants {
     const val FIND_VEHICLE="FIND_VEHICLE"
     const val DIRECT_DEBIT_DELETE="direct_debit_delete"
     const val DIRECT_DEBIT_NOT_SET_UP="direct_debit_not_set_up"
+    const val CREDIT_NOT_SET_UP="credit_not_set_up"
     const val ACCOUNT_CLOSURE = "ACCOUNT CLOSURE"
     const val ACCOUNT_HOLDER_REQUEST = "ACCOUNT HOLDER REQUEST"
     const val Mobile_App="Mobile App"

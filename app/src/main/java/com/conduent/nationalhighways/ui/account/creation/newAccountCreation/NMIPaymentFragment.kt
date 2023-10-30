@@ -36,6 +36,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -803,23 +804,28 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     val bundle = Bundle()
 
                     bundle.putParcelable(Constants.DATA, responseModel)
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
 
                     findNavController().navigate(
                         R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
                         bundle
                     )
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
+                    val fragmentId = findNavController().currentDestination?.id
+                    findNavController().popBackStack(fragmentId!!,true)
+                    findNavController().navigate(fragmentId,arguments)
+
                     displayCustomMessage(
                         getString(R.string.str_warning),
                         getString(R.string.the_card_you_are_trying_to_add_is_already),
                         getString(R.string.str_add_another_card_small),  getString(R.string.cancel),
                         object : DialogPositiveBtnListener {
                             override fun positiveBtnClick(dialog: DialogInterface) {
-                                val fragmentId = findNavController().currentDestination?.id
-                                findNavController().popBackStack(fragmentId!!,true)
-                                findNavController().navigate(fragmentId,arguments)
+//                                val fragmentId = findNavController().currentDestination?.id
+//                                findNavController().popBackStack(fragmentId!!,true)
+//                                findNavController().navigate(fragmentId,arguments)
                             }
                         },
                         object : DialogNegativeBtnListener {
@@ -827,19 +833,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                 findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentMethodFragment)
                             }
                         })
-
-                 /* val bundle = Bundle()
-
-                    bundle.putString(
-                        Constants.CARD_IS_ALREADY_REGISTERED,
-                        Constants.CARD_IS_ALREADY_REGISTERED
-                    )
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-
-                    findNavController().navigate(
-                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-                        bundle
-                    )*/
                 } else if (status.data?.statusCode?.equals("1333") == true) {
                     val bundle = Bundle()
 
@@ -864,7 +857,16 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
                 } else {
-                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                    val bundle = Bundle()
+
+                    bundle.putString(
+                        Constants.CARD_IS_ALREADY_REGISTERED,
+                        Constants.CREDIT_NOT_SET_UP
+                    )
+                    findNavController().navigate(
+                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
+                        bundle
+                    )
                 }
             }
 

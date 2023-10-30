@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -18,6 +19,7 @@ import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseMod
 import com.conduent.nationalhighways.databinding.FragmentNewCardSuccessScreenBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -39,6 +41,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     private var paymentList: CardListResponseModel? = null
     private var isViewCreated: Boolean = false
     private var accountNumber: String = ""
+    private val dashboardViewModel: DashboardViewModel by activityViewModels()
 
 
     override fun getFragmentBinding(
@@ -158,13 +161,24 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
             binding.cancelBtn.visibility = View.VISIBLE
             binding.feedbackBt.gone()
+        } else if (flow == Constants.CREDIT_NOT_SET_UP) {
+            binding.maximumVehicleAdded.text =
+                getString(R.string.str_your_credit_card_was_not_setup)
+            binding.textMaximumVehicle.text = getString(R.string.str_you_can_try)
+            binding.textDefault.visibility = View.GONE
+            binding.cardView.visibility = View.INVISIBLE
+            binding.btnContinue.text = getString(R.string.str_try_again)
+
+
+            binding.cancelBtn.visibility = View.VISIBLE
+            binding.feedbackBt.gone()
         }
     }
 
     override fun init() {
         binding.btnContinue.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
-        binding.feedbackBt?.movementMethod = LinkMovementMethod.getInstance()
+        binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun observer() {
@@ -194,14 +208,39 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
                     }
 
                     getString(R.string.str_try_again) -> {
-                        findNavController().popBackStack()
+                        if (flow == Constants.CREDIT_NOT_SET_UP) {
+                            Log.e("TAG", "onClick: accountSubType --> "+dashboardViewModel.accountSubType.value )
+                            Log.e("TAG", "onClick: directDebitCardListSize --> "+dashboardViewModel.directDebitCardListSize.value )
+                            Log.e("TAG", "onClick: paymentListSize --> "+dashboardViewModel.paymentListSize.value )
+                            if (dashboardViewModel.accountSubType.value.equals(Constants.PAYG)) {
+                                findNavController().popBackStack()
+                            } else {
+                                if (dashboardViewModel.directDebitCardListSize.value == 0) {
+                                    val bundle =Bundle()
+                                    bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
+                                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                                    bundle.putDouble(Constants.DATA, 0.0)
+                                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, dashboardViewModel.paymentListSize.value?:0)
+
+                                    findNavController().navigate(
+                                        R.id.action_paymentSuccessFragment_to_selectPaymentMethodFragment,
+                                        bundle
+                                    )
+
+                                } else {
+                                    findNavController().popBackStack()
+                                }
+                            }
+                        } else {
+                            findNavController().popBackStack()
+                        }
                     }
                 }
 
             }
 
             R.id.cancel_btn -> {
-                if (flow == Constants.CARD_IS_ALREADY_REGISTERED || flow == Constants.DIRECT_DEBIT_NOT_SET_UP) {
+                if (flow == Constants.CARD_IS_ALREADY_REGISTERED || flow == Constants.DIRECT_DEBIT_NOT_SET_UP || flow == Constants.CREDIT_NOT_SET_UP) {
                     findNavController().navigate(R.id.action_paymentSuccessFragment_to_paymentMethodFragment)
                 } else {
                     findNavController().popBackStack()

@@ -42,6 +42,12 @@ class PaymentMethodViewModel @Inject constructor(
     private val _deleteCard = MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
     val deleteCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _deleteCard
 
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val _deleteCard_State = MutableStateFlow<Resource<PaymentMethodDeleteResponseModel?>?>(null)
+    val deleteCardState: StateFlow<Resource<PaymentMethodDeleteResponseModel?>?> get() = _deleteCard_State
+
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _defaultCard = MutableLiveData<Resource<PaymentMethodEditResponse?>?>()
     val defaultCard: LiveData<Resource<PaymentMethodEditResponse?>?> get() = _defaultCard
@@ -122,6 +128,15 @@ class PaymentMethodViewModel @Inject constructor(
                 _deleteCard.postValue(success(repository.deleteCard(model)))
             } catch (e: Exception) {
                 _deleteCard.postValue(failure(e))
+            }
+        }
+    }
+    fun deleteCardState(model: PaymentMethodDeleteModel?) {
+        viewModelScope.launch {
+            try {
+                _deleteCard_State.emit(success(repository.deleteCard(model)))
+            } catch (e: Exception) {
+                _deleteCard_State.emit(failure(e))
             }
         }
     }

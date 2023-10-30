@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation.step5.businessaccount
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,8 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
+        Log.e("TAG", "init: vehicleClass !! "+data?.vehicleClass )
+
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
         if (navFlowCall == Constants.TRANSFER_CROSSINGS || navFlowCall == Constants.PAY_FOR_CROSSINGS) {

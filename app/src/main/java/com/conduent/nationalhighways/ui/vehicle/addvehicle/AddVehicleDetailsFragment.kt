@@ -111,6 +111,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         if (data == null) {
             data = CrossingDetailsModelsResponse()
         }
+
         binding.vehicleRegTv.editText.filters = arrayOf(LengthFilter(10))
         binding.vehicleRegTv.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
 
@@ -135,12 +136,14 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 }
             }
         }
+
         setPreSelectedVehicleType()
         binding.typeVehicle.dropDownItemSelectListener = this
         binding.model = false
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
             mScreeType = it
         }
+
 
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId ->
             radioButtonChecked = R.id.radioButtonYes == checkedId || R.id.radioButtonNo == checkedId
@@ -204,7 +207,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     )
                 }
             }
-
 
 
             if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
@@ -275,8 +277,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     private fun setPreSelectedVehicleType() {
         if (typeOfVehicle.size > 0 && data != null && data?.plateNo?.isNotEmpty() == true) {
-            data?.vehicleClass =Utils.getManuallyAddedVehicleClass(requireActivity(),(data?.vehicleType?:""))
-            binding.typeVehicle.setSelectedValue(data?.vehicleType?:"")
+            data?.vehicleClass =
+                Utils.getManuallyAddedVehicleClass(requireActivity(), (data?.vehicleType ?: ""))
+            binding.typeVehicle.setSelectedValue(data?.vehicleType ?: "")
             typeOfVehicleChecked = true
         }
     }
