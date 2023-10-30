@@ -30,6 +30,11 @@ button[type=button] {
     color: white;
     background-color: #002E5F;
 }
+/*input:disabled {*/
+/*    color:solid black;*/
+/*    opacity:1.0;*/
+/*    border-bottom: 0px;*/
+/*}*/
 @font-face {
     font-family: 'opensans_regular';
     src: url('OpenSans-Regular.ttf') format('truetype');
@@ -51,7 +56,7 @@ h3 {
     font-size: 16;
     color: #555B5A;
 }
-#hint {
+#hint, #checkboxHint {
     font-family: 'opensans_regular';
     font-size: 16;
     color: #000000;
@@ -79,9 +84,34 @@ table,.separator {
     font-family: 'OpenSans-Bold';
     font-size: 16;
 }
+#currency1 {
+    font-family: 'opensans_regular';
+    font-size: 16;
+}
+#checkBoxhide {
+    padding-bottom:15px;
+    padding-left:-1px;
+
+}
 #title {
     font-family: 'OpenSans-Semibold';
     font-size: 16;
+}
+#amountLabel {
+    font-family: 'opensans_regular';
+    font-size: 16;
+    padding-bottom:5px;
+}
+#subtitle {
+    font-family: 'opensans_regular';
+    font-size: 14;
+}
+#headerTable {
+    padding-top:10px;
+    padding-bottom:10px;
+}
+#breakPoint {
+    padding-bottom:10px;
 }
 #demoPayButton {
     font-family: 'opensans_regular';
@@ -95,4 +125,8 @@ table,.separator {
 .image-container img {
     height: 41px;
     margin-right: 10px;
+}
+#currency1 {
+    font-family: 'OpenSans-Bold';
+    font-size: 16;
 }
