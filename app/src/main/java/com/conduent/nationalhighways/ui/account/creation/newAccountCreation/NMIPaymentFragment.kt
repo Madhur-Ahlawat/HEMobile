@@ -758,6 +758,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     }
 
                     else -> {
+                        view?.loadUrl("javascript:(function(){document.getElementById('nameerrormesages').style.display = '';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'block'; document.getElementById('title').innerText = 'How do you want to pay?';})()")
 
                         if (!NewCreateAccountRequestModel.prePay) {

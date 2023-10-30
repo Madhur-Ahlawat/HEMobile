@@ -70,7 +70,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private val countPerPage = 100
     private var startIndex = 0
     private var noOfPages = 1
-    private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -267,11 +266,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 resource.data?.transactionList?.transaction?.let {
                     if (it.isNotEmpty()) {
                         binding.tvNoHistory.gone()
+                        binding.rvRecenrTransactions.visible()
                         paymentHistoryListData?.clear()
                         paymentHistoryListData?.addAll(it)
                         paymentHistoryListData =
-                            Utils.sortTransactionsDateWiseDescending(paymentHistoryListData)
-                                .toMutableList()
+                            Utils.sortTransactionsDateWiseDescending(paymentHistoryListData).toMutableList()
                         paymentHistoryDatesList.clear()
                         getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
@@ -310,46 +309,33 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     fun getDatesList(transactionsList: MutableList<TransactionData>) {
-        try {
-            var temTransactionDate: String? = null
-            var listOfTransactionsOnSameDate: MutableList<TransactionData> = mutableListOf()
-            transactionsList.forEach {
-                if (temTransactionDate == null) {
-                    temTransactionDate = it.transactionDate
-                    listOfTransactionsOnSameDate.add(it)
-                    paymentHistoryHashMap.put(
-                        it.transactionDate ?: "",
-                        listOfTransactionsOnSameDate
-                    )
-                } else {
-
-                    if (dfDate.parse(
-                            temTransactionDate.toString().trim()
-                        ) == dfDate.parse(it.transactionDate.toString().trim())
-                    ) {
-                        listOfTransactionsOnSameDate.add(it)
-                        paymentHistoryHashMap.put(
-                            it.transactionDate ?: "",
-                            listOfTransactionsOnSameDate
-                        )
-                    } else {
-                        listOfTransactionsOnSameDate.clear()
-                        listOfTransactionsOnSameDate.add(it)
-                        paymentHistoryHashMap.put(
-                            it.transactionDate ?: "",
-                            listOfTransactionsOnSameDate
-                        )
-
-                    }
-                }
-
+        var tempDate: String? = null
+        transactionsList.forEach {
+            if (tempDate == null) {
+                tempDate = it.transactionDate
+                paymentHistoryDatesList.clear()
                 paymentHistoryDatesList.add(it.transactionDate!!)
 
+            } else {
+                if (!dfDate.parse(tempDate).equals(dfDate.parse(it.transactionDate))) {
+                    paymentHistoryDatesList.add(it.transactionDate!!)
+                    tempDate = it.transactionDate
+                }
             }
-        } catch (e: Exception) {
-            Log.e("TAG", "getDatesList: message " + e.message)
+            var transactionsListTemp =
+                paymentHistoryHashMap.get(it.transactionDate) ?: mutableListOf()
+            var transactionExistesInTempList=false
+            transactionsListTemp.forEach {it2->
+                if(it2.transactionNumber.equals(it.transactionNumber)){
+                    transactionExistesInTempList=true
+                }
+            }
+            if(transactionExistesInTempList==false){
+                transactionsListTemp?.add(it)
+            }
+            paymentHistoryHashMap.remove(it.transactionDate!!)
+            paymentHistoryHashMap.put(it.transactionDate!!, transactionsListTemp!!)
         }
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -592,8 +578,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                             cardNumber.text = resources.getString(
                                 R.string.str_maskcardnumber,
                                 data.accountInformation.paymentTypeInfo.takeLast(4)
-                            )
-                        } else {
+                            )                        } else if(data?.accountInformation?.paymentTypeInfo?.length!! ==4){
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo
+                        }else {
                             cardNumber.text = resources.getString(
                                 R.string.str_maskcardnumber,
                                 data.accountInformation.paymentTypeInfo
@@ -621,15 +608,24 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             when (data.replenishmentInformation?.reBillPayType) {
                 Constants.MASTERCARD -> {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.mastercard))
+                    cardLogo.visible()
+                    viewCard.visible()
                 }
 
                 Constants.VISA -> {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
-
+                    cardLogo.visible()
+                    viewCard.visible()
                 }
 
                 Constants.MAESTRO -> {
                     cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
+                    cardLogo.visible()
+                    viewCard.visible()
+                }
+                Constants.CASH -> {
+                    cardLogo.gone()
+                    viewCard.gone()
                 }
             }
             getPaymentHistoryList(startIndex)

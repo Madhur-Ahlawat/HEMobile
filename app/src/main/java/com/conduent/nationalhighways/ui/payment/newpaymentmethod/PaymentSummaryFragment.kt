@@ -186,17 +186,12 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             }
 
             R.id.editEmail -> {
-                findNavController().navigate(
-                    R.id.action_crossingCheckAnswersFragment_to_crossingRecieptFragment,
-                    enableEditMode()
-                )
+                findNavController().popBackStack()
             }
 
             R.id.editMobileNumber -> {
-                findNavController().navigate(
-                    R.id.action_crossingCheckAnswersFragment_to_crossingRecieptFragment,
-                    enableEditMode()
-                )
+                findNavController().popBackStack()
+
             }
 
 //            R.id.editPaymentAmount -> {

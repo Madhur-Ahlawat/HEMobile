@@ -58,6 +58,8 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.recyclerView.gone()
         binding.checkBoxTerms.gone()
         binding.btnNext.gone()
+        binding.emailProfileManagement.visible()
+        binding.emailAddressSummary.gone()
         binding.emailCardProfile.visible()
         binding.biometricsCard.visible()
         binding.passwordCard.visible()

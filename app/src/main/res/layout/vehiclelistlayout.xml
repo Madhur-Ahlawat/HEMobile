@@ -39,8 +39,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/vehiclePlateNumber"
             android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@id/txtPlateNumber"
+            app:layout_constraintTop_toTopOf="@id/update_vehicle"
+            app:layout_constraintBottom_toBottomOf="@+id/update_vehicle"
             android:text="AJ66MHA" />
 
         <ImageView
@@ -50,7 +50,7 @@
             android:padding="@dimen/_8dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPlateNumber"
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/update_vehicle"
             android:layout_marginEnd="12dp"/>
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_8dp"
             android:src="@drawable/delete"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPlateNumber"
             app:layout_constraintEnd_toStartOf="@id/update_vehicle"
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/delete_vehicle"
