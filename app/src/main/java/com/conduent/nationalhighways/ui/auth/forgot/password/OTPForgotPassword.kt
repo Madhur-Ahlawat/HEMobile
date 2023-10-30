@@ -122,6 +122,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         if (arguments?.containsKey(Constants.IS_MOBILE_NUMBER) == true) {
             isItMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER) ?: false
         }
+        if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
+            navFlowCall = arguments?.getString(Constants.NAV_FLOW_KEY)?: ""
+        }
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
         }
@@ -750,6 +753,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                     bundle
                                 )
                             }
+                            Constants.PROFILE_MANAGEMENT -> {
+                                updateProfileEmail(HomeActivityMain.accountDetailsData!!.personalInformation, HomeActivityMain.accountDetailsData?.accountInformation)
+                            }
 
                             else -> {
                                 findNavController().navigate(
@@ -821,6 +827,40 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun updateStandardUserProfile(
         dataModel: com.conduent.nationalhighways.data.model.profile.PersonalInformation?,
         accountInformation: com.conduent.nationalhighways.data.model.profile.AccountInformation?
+    ) {
+
+        dataModel?.run {
+            val request = UpdateProfileRequest(
+                firstName = firstName,
+                lastName = lastName,
+                addressLine1 = addressLine1,
+                addressLine2 = addressLine2,
+                city = city,
+                state = state,
+                zipCode = zipcode,
+                zipCodePlus = zipCodePlus,
+                country = country,
+                emailAddress = emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = pemailUniqueCode,
+                phoneCell = phoneCell,
+                phoneDay = phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = "",
+                phoneCellCountryCode = phoneCellCountryCode,
+                phoneDayCountryCode = phoneDayCountryCode,
+                mfaEnabled = accountInformation?.mfaEnabled
+            )
+
+            viewModelProfile.updateUserDetails(request)
+        }
+
+    }
+
+    private fun updateProfileEmail(
+        dataModel: com.conduent.nationalhighways.data.model.account.PersonalInformation?,
+        accountInformation: com.conduent.nationalhighways.data.model.account.AccountInformation?
     ) {
 
         dataModel?.run {

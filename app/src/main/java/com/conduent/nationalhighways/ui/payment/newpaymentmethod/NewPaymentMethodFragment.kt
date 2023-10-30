@@ -316,7 +316,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             requireActivity(),
                             paymentList?.get(position)?.cardNumber
                         ),
-                        paymentList?.get(position)?.expMonth + "/" + paymentList?.get(position)?.expYear
+                        paymentList?.get(position)?.expMonth + "/" + if(paymentList?.get(position)?.expYear!!.length>2)  paymentList?.get(position)?.expYear!!.substring(2,paymentList?.get(position)?.expYear!!.length) else paymentList?.get(position)?.expYear!!
                     )
                 )
 
@@ -672,6 +672,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             loader?.dismiss()
             loader = null
         }
+    }
+
+    companion object {
+        var isDirectDebit: Boolean=false
     }
 
 }

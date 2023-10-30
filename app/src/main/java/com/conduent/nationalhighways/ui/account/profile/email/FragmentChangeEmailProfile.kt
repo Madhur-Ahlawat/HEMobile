@@ -22,6 +22,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.Constants.DATA
 import com.conduent.nationalhighways.utils.common.Constants.EMAIL_SELECTION_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -194,6 +195,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                     val bundle = Bundle()
                     binding.data?.referenceId = resource.data?.referenceId
                     bundle.putParcelable(DATA, binding.data)
+                    bundle.putString(NAV_FLOW_KEY, navFlowCall)
                     bundle.putBoolean(Constants.IS_EDIT_EMAIL,arguments?.getBoolean(Constants.IS_EDIT_EMAIL) as Boolean)
                     bundle.putParcelable(
                         "response",
