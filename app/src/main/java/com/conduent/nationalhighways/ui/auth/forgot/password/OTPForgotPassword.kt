@@ -634,6 +634,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                otpSuccessRedirection()
 
                 when (resource.errorModel?.status) {
 
@@ -652,6 +653,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     else -> {
                         binding.edtOtp.setErrorText(resource.errorModel?.message.toString())
                     }
+
                 }
             }
 
