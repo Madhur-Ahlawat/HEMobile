@@ -771,6 +771,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         }else{
                             view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = '';})()")
+
                         }
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")

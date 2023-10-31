@@ -300,6 +300,7 @@ object Constants {
     const val PROFILE_MANAGEMENT_COMMUNICATION_CHANGED = "profileManagementCommunicationChanged"
     const val PROFILE_MANAGEMENT_MOBILE_CHANGE = "profileManagementMobileChange"
     const val PROFILE_MANAGEMENT_2FA_CHANGE = "profileManagement2faChange"
+    const val PROFILE_MANAGEMENT_EMAIL_CHANGE = "PROFILE_MANAGEMENT_EMAIL_CHANGE"
     const val PROFILE_TWO_FACTOR_VERIFICATION = "Profile Two Factor Verification"
     const val TWOFA="twofa"
     const val ACCOUNT_CREATION_EMAIL_FLOW = "accountCreationEmailFlow"

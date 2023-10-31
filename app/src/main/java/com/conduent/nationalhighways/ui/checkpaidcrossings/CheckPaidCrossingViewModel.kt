@@ -77,10 +77,8 @@ class CheckPaidCrossingViewModel @Inject constructor(
                         _loginWithRefAndPlateNumber.postValue(Resource.Success(response.body()))
                     } else {
                         _loginWithRefAndPlateNumber.postValue(
-                            Resource.DataError(
-                                errorManager.getError(
-                                    response.code()
-                                ).description
+                            Resource.DataError(msg=
+                            response.code().toString().trim()
                             )
                         )
                     }
