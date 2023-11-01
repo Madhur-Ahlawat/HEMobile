@@ -55,7 +55,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
     override fun onResume() {
         super.onResume()
         binding.apply {
-            crossingAmount.text = crossing?.balance
+            crossingAmount.text = crossing?.amount
             tvPaymentDateValue.text = crossing?.transactionDate
             tvPaymentTimeValue.text = crossing?.exitTime
             tvPaymentReferenceValue.text = crossing?.transactionNumber

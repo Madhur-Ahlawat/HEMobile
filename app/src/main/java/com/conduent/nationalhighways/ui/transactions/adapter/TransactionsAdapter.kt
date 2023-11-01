@@ -35,16 +35,7 @@ class TransactionsAdapter(
     }
 
     override fun getItemCount(): Int {
-        if (context is DashboardFragmentNew) {
-            if (transactionItemList.size < 2) {
-                return transactionItemList.size
-            } else {
-                return 2
-            }
-        } else {
-            return transactionItemList.size
-
-        }
+        return transactionItemList.size
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
