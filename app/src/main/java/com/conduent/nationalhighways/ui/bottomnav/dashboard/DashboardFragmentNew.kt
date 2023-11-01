@@ -66,6 +66,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
     private var personalInformation: PersonalInformation? = null
+    private var accountResponse: AccountResponse? = null
     private var loader: LoaderDialog? = null
     private val countPerPage = 100
     private var startIndex = 0
@@ -78,55 +79,49 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     lateinit var api: ApiService
     private val dashboardViewModel: DashboardViewModel by activityViewModels()
 
-    fun createPaymentsHistoryListAdapter() = GenericRecyclerViewAdapter(
-        getViewLayout = { R.layout.item_recent_tansactions },
-        areItemsSame = ::areRecentTransactionsSame,
-        areItemContentsEqual = ::areRecentTransactionsSame,
-        onBind = { recentTransactionItem, viewDataBinding, _ ->
-            with(viewDataBinding as ItemRecentTansactionsBinding) {
-                viewDataBinding.apply {
-                    valueCurrentBalance.text = recentTransactionItem.balance
-                    tvTransactionType.text =
-                        recentTransactionItem.activity?.substring(0, 1)!!
-                            .uppercase(Locale.getDefault())
-                            .plus(
+    fun createPaymentsHistoryListAdapter() =
+        GenericRecyclerViewAdapter(getViewLayout = { R.layout.item_recent_tansactions },
+            areItemsSame = ::areRecentTransactionsSame,
+            areItemContentsEqual = ::areRecentTransactionsSame,
+            onBind = { recentTransactionItem, viewDataBinding, _ ->
+                with(viewDataBinding as ItemRecentTansactionsBinding) {
+                    viewDataBinding.apply {
+                        valueCurrentBalance.text = recentTransactionItem.balance
+                        tvTransactionType.text = recentTransactionItem.activity?.substring(0, 1)!!
+                            .uppercase(Locale.getDefault()).plus(
                                 recentTransactionItem.activity.substring(
-                                    1,
-                                    recentTransactionItem.activity.length
+                                    1, recentTransactionItem.activity.length
                                 ).lowercase(Locale.getDefault())
                             )
-                    if (recentTransactionItem.amount?.contains("-") == false) {
-                        verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
-                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
-                        topup = "+" + recentTransactionItem.amount
-                        valueTopUpAmount.text = topup
-                        valueTopUpAmount.setTextColor(resources.getColor(R.color.green_status))
-                    } else {
-                        verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
-                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_car_grey))
-                        topup = "-" + recentTransactionItem.amount
-                        valueTopUpAmount.text = topup
-                        valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
-                    }
-                    root.setOnClickListener {
-                        crossing = recentTransactionItem
-                        val bundle = Bundle()
-                        if (crossing?.activity?.lowercase(Locale.getDefault()).equals("toll")) {
-                            findNavController().navigate(
-                                R.id.action_dashBoardFragment_to_tollDetails,
-                                bundle
-                            )
+                        if (recentTransactionItem.amount?.contains("-") == false) {
+                            verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
+                            indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
+                            topup = "+" + recentTransactionItem.amount
+                            valueTopUpAmount.text = topup
+                            valueTopUpAmount.setTextColor(resources.getColor(R.color.green_status))
                         } else {
-                            findNavController().navigate(
-                                R.id.action_dashBoardFragment_to_topUpDetails,
-                                bundle
-                            )
+                            verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
+                            indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_car_grey))
+                            topup = "-" + recentTransactionItem.amount
+                            valueTopUpAmount.text = topup
+                            valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
+                        }
+                        root.setOnClickListener {
+                            crossing = recentTransactionItem
+                            val bundle = Bundle()
+                            if (crossing?.activity?.lowercase(Locale.getDefault()).equals("toll")) {
+                                findNavController().navigate(
+                                    R.id.action_dashBoardFragment_to_tollDetails, bundle
+                                )
+                            } else {
+                                findNavController().navigate(
+                                    R.id.action_dashBoardFragment_to_topUpDetails, bundle
+                                )
+                            }
                         }
                     }
                 }
-            }
-        }
-    )
+            })
 
     fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
         return ((item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber))
@@ -138,8 +133,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
+        inflater: LayoutInflater, container: ViewGroup?
     ) = FragmentDashboardNewBinding.inflate(inflater, container, false)
 
     override fun init() {
@@ -154,9 +148,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun initTransactionsRecyclerView() {
         transactionsAdapter = TransactionsAdapter(
-            this@DashboardFragmentNew,
-            paymentHistoryDatesList,
-            paymentHistoryHashMap
+            this@DashboardFragmentNew, paymentHistoryDatesList, paymentHistoryHashMap
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
@@ -231,10 +223,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         personalInformation = accountResponse.personalInformation
 
         accountResponse.apply {
-            if (accountInformation?.accountType.equals("BUSINESS", true)
-                || ((accountInformation?.accSubType.equals(
-                    "STANDARD",
+            if (accountInformation?.accountType.equals(
+                    "BUSINESS",
                     true
+                ) || ((accountInformation?.accSubType.equals(
+                    "STANDARD", true
                 ) && accountInformation?.accountType.equals(
                     "PRIVATE", true
                 )))
@@ -310,31 +303,41 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     fun getDatesList(transactionsList: MutableList<TransactionData>) {
         var tempDate: String? = null
-        transactionsList.forEach {
+
+        var limitedList = 2
+        if (accountResponse?.accountInformation?.accSubType.equals(Constants.PAYG)) {
+            limitedList = 5
+        }
+        var transactionSize = transactionsList.size
+        if (transactionsList.size > limitedList) {
+            transactionSize = limitedList
+        }
+        for (i in 0 until transactionSize) {
+            val model = transactionsList.get(i)
             if (tempDate == null) {
-                tempDate = it.transactionDate
+                tempDate = model.transactionDate
                 paymentHistoryDatesList.clear()
-                paymentHistoryDatesList.add(it.transactionDate!!)
+                paymentHistoryDatesList.add(model.transactionDate!!)
 
             } else {
-                if (!dfDate.parse(tempDate).equals(dfDate.parse(it.transactionDate))) {
-                    paymentHistoryDatesList.add(it.transactionDate!!)
-                    tempDate = it.transactionDate
+                if (!dfDate.parse(tempDate).equals(dfDate.parse(model.transactionDate))) {
+                    paymentHistoryDatesList.add(model.transactionDate!!)
+                    tempDate = model.transactionDate
                 }
             }
             var transactionsListTemp =
-                paymentHistoryHashMap.get(it.transactionDate) ?: mutableListOf()
+                paymentHistoryHashMap.get(model.transactionDate) ?: mutableListOf()
             var transactionExistesInTempList = false
             transactionsListTemp.forEach { it2 ->
-                if (it2.transactionNumber.equals(it.transactionNumber)) {
+                if (it2.transactionNumber.equals(model.transactionNumber)) {
                     transactionExistesInTempList = true
                 }
             }
             if (transactionExistesInTempList == false) {
-                transactionsListTemp.add(it)
+                transactionsListTemp.add(model)
             }
-            paymentHistoryHashMap.remove(it.transactionDate!!)
-            paymentHistoryHashMap.put(it.transactionDate, transactionsListTemp)
+            paymentHistoryHashMap.remove(model.transactionDate!!)
+            paymentHistoryHashMap.put(model.transactionDate, transactionsListTemp)
         }
     }
 
@@ -363,8 +366,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun hideNotification() {
         if (requireActivity() is HomeActivityMain) {
             HomeActivityMain.dataBinding!!.bottomNavigationView.navigationItems.let { list ->
-                val badgeCountBtn =
-                    list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
+                val badgeCountBtn = list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
                 badgeCountBtn.gone()
             }
         }
@@ -393,12 +395,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        cardNumber.text =  data.accountInformation?.paymentTypeInfo
+                        cardNumber.text = data.accountInformation?.paymentTypeInfo
 
                         DashboardUtils.setAccountStatusNew(
-                            it,
-                            indicatorAccountStatus,
-                            binding.cardIndicatorAccountStatus
+                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus
                         )
                     }
                     it.type?.let {
@@ -416,7 +416,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 cardLogo.gone()
             } else {
                 cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(cardType?:""))
+                cardLogo.setImageResource(Utils.setCardImage(cardType ?: ""))
             }
         }
         getPaymentHistoryList(startIndex)
@@ -452,9 +452,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         DashboardUtils.setAccountStatusNew(
-                            it,
-                            indicatorAccountStatus,
-                            binding.cardIndicatorAccountStatus
+                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus
                         )
                     }
 
@@ -473,7 +471,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 cardLogo.gone()
             } else {
                 cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(cardType?:""))
+                cardLogo.setImageResource(Utils.setCardImage(cardType ?: ""))
             }
             boxViewAll.visible()
             getPaymentHistoryList(startIndex)
@@ -514,8 +512,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
 
                 findNavController().navigate(
-                    R.id.action_dashBoardFragment_to_accountSuspendedPaymentFragment,
-                    bundle
+                    R.id.action_dashBoardFragment_to_accountSuspendedPaymentFragment, bundle
                 )
             }
 
@@ -525,16 +522,14 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        cardNumber.text = data.accountInformation?.paymentTypeInfo?:""
+                        cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
 
                         DashboardUtils.setAccountStatusNew(
-                            it,
-                            indicatorAccountStatus,
-                            binding.cardIndicatorAccountStatus
+                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus
                         )
                     }
                     it.accountFinancialstatus?.let {
-                        valueAutopay.setText(it)
+                        valueAutopay.text = it
                     }
                     it.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
@@ -552,7 +547,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             } else {
                 viewCard.visible()
                 cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(cardType?:""))
+                cardLogo.setImageResource(Utils.setCardImage(cardType ?: ""))
             }
             getPaymentHistoryList(startIndex)
         }
@@ -564,15 +559,14 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         if (loader?.isVisible == false && loader?.isAdded == true) {
             loader?.showsDialog
         }
-        dateRangeModel =
-            PaymentDateRangeModel(
-                filterType = Constants.PAYMENT_FILTER_SPECIFIC,
-                DateUtils.lastPriorDate(-30), DateUtils.currentDate(), ""
-            )
+        dateRangeModel = PaymentDateRangeModel(
+            filterType = Constants.PAYMENT_FILTER_SPECIFIC,
+            DateUtils.lastPriorDate(-30),
+            DateUtils.currentDate(),
+            ""
+        )
         val request = AccountPaymentHistoryRequest(
-            index,
-            Constants.ALL_TRANSACTION,
-            countPerPage
+            index, Constants.ALL_TRANSACTION, countPerPage
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }

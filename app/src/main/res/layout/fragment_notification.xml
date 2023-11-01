@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/str_priority"
-                android:textSize="@dimen/_18sp"
+                android:textSize="@dimen/font_18sp"
                 app:fontFamily="@font/open_sans_bold" />
 
 
@@ -46,7 +46,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/str_standard"
-                android:textSize="@dimen/_18sp"
+                android:textSize="@dimen/font_18sp"
                 app:fontFamily="@font/open_sans_bold" />
 
 
@@ -126,11 +126,25 @@
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="@dimen/_26_7dp"
-                android:layout_marginBottom="@dimen/_19dp"
+                android:layout_above="@id/feedback_to_improve_mb"
+                android:layout_marginLeft="@dimen/margin_20dp"
+                android:layout_marginRight="@dimen/margin_20dp"
                 android:text="@string/clear_notification"
                 android:textColor="@color/white" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/feedback_to_improve_mb"
+                style="@style/secondaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/margin_20dp"
+                android:layout_marginRight="@dimen/margin_20dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:text="@string/feed_back_to_improve_service"
+                android:textColorLink="@color/dark_blue_color"
+                app:radius="@dimen/_5dp" />
+
         </RelativeLayout>
     </RelativeLayout>
 </layout>
