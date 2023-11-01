@@ -25,7 +25,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
@@ -67,7 +66,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
             paymentList = arguments?.getParcelableArrayList(Constants.DATA)
         }
-        if(arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE)==true){
+        if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
             paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         }
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
@@ -116,7 +115,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
 
         }
-        if(navFlowCall.equals(Constants.PAYMENT_TOP_UP)){
+        if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             HomeActivityMain.setTitle("Top Up New Payment Method")
         }
     }
@@ -126,7 +125,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         binding.btnPay.setOnClickListener(this)
         binding.btnCancel.setOnClickListener(this)
-        binding.lowBalance.setText("£" + formatter.format(topUpAmount)
+        binding.lowBalance.setText(
+            "£" + formatter.format(topUpAmount)
         )
         if (paymentList?.isNotEmpty() == true) {
             binding.ivCardType.setImageResource(
@@ -196,15 +196,15 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         var primaryCard = "N"
         var easyPay = "N"
 
-        if(paymentListSize==0){
-             primaryCard = "Y"
+        if (paymentListSize == 0) {
+            primaryCard = "Y"
 
         }
-            if(responseModel?.checkCheckBox==true){
-                easyPay="Y"
-            }else{
-                easyPay="N"
-            }
+        if (responseModel?.checkCheckBox == true) {
+            easyPay = "Y"
+        } else {
+            easyPay = "N"
+        }
 
         cardModel = PaymentWithNewCardModel(
             addressLine1 = personalInformation?.addressLine1.toString(),
@@ -261,7 +261,15 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             paymentType = "",
             primaryCard = "",
             maskedCardNumber = "",
-            easyPay = ""
+            easyPay = "",
+            cavv = paymentSuccessResponse?.cavv,
+            xid = paymentSuccessResponse?.xid,
+            threeDsVersion = paymentSuccessResponse?.threeDsVersion,
+            directoryServerId = paymentSuccessResponse?.directoryServerId,
+            cardHolderAuth = paymentSuccessResponse?.cardHolderAuth,
+            eci = paymentSuccessResponse?.eci
+
+
         )
         Log.d("paymentRequest", Gson().toJson(model))
         manualTopUpViewModel.paymentWithExistingCard(model)
@@ -274,7 +282,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("500") == true) {
-                    ErrorUtil.showError(binding.root, status.data.message)
+                    findNavController().navigate(
+                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
+                    )
                 } else {
                     val bundle = Bundle()
                     bundle.putParcelable(Constants.DATA, responseModel)
@@ -298,7 +308,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
                 } else {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
+                    findNavController().navigate(
+                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
+                    )
                 }
             }
 

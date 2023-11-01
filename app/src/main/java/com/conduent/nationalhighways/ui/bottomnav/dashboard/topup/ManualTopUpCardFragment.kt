@@ -131,7 +131,8 @@ class ManualTopUpCardFragment : BaseFragment<FragmentManualTopUpCardBinding>(),
                             paymentType ="",
                             primaryCard = "",
                             maskedCardNumber = "",
-                            easyPay = ""
+                            easyPay = "",
+
                         )
                         manualTopUpViewModel.paymentWithExistingCard(model)
                     }

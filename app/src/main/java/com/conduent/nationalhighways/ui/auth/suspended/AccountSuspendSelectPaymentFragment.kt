@@ -190,14 +190,13 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putParcelableArrayList(Constants.DATA, paymentList as ArrayList)
+                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+
                 findNavController().navigate(
                     R.id.action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment,
                     bundle
                 )
-//                findNavController().navigate(
-//                    R.id.action_accountSuspendedPaymentFragment_to_accountSuspendedFinalPayFragment,
-//                    bundle
-//                )
+
             }
 
             R.id.btnAddNewPayment -> {

@@ -332,6 +332,9 @@ interface ApiService {
     @GET(ACCOUNT_DETAILS)
     suspend fun getAccountDetailsData(): Response<AccountResponse?>?
 
+    @GET(Heart_Beat)
+    suspend fun getHeartBeat(@Query("agencyId") agencyId: String? = AGENCY_ID,referenceId:String):Response<EmptyApiResponse?>?
+
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValue(): Response<ThresholdAmountApiResponse?>?
 

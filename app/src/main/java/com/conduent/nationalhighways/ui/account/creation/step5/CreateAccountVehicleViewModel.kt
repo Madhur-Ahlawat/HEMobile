@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModel
 import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModelItem
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
@@ -38,6 +39,10 @@ class CreateAccountVehicleViewModel @Inject constructor(
 
     private val validVehicleMutData = MutableLiveData<Resource<String?>?>()
     val validVehicleLiveData: LiveData<Resource<String?>?> get() = validVehicleMutData
+
+    private val heartBeatMutableLiveData = MutableLiveData<Resource<EmptyApiResponse?>?>()
+    val heartBeatLiveData: LiveData<Resource<EmptyApiResponse?>?> get() = heartBeatMutableLiveData
+
 
     fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.launch {
@@ -126,7 +131,28 @@ class CreateAccountVehicleViewModel @Inject constructor(
     }
 
 
+    fun heartBeat(agencyId:String,referenceId:String) {
+
+        viewModelScope.launch {
+            try {
+                heartBeatMutableLiveData.postValue(
+                    ResponseHandler.success(
+                        repo.getHeartBeat(
+                            agencyId,referenceId
+                        ), errorManager
+                    )
+                )
+
+            } catch (e: Exception) {
+                heartBeatMutableLiveData.postValue(ResponseHandler.failure(e))
+            }
+        }
+
+    }
+
+
 }
+
 
 /* suspend fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
       viewModelScope.async {

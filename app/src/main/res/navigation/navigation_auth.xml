@@ -133,7 +133,17 @@
             android:id="@+id/action_accountSuspendedPaymentFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/threeDSWebiewFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.payments.topup.ThreeDsWebViewFragment"
+        android:label="ThreeDSWebviewFragment"
+        tools:layout="@layout/fragment_three_d_s_webview">
+        <action
+            android:id="@+id/action_threeDSWebViewFragment_to_accountSuspendedFinalPayFragment"
+            app:destination="@+id/accountSuspendedFinalPayFragment"
+            />
 
+    </fragment>
     <fragment
         android:id="@+id/accountSuspendedFinalPayFragment"
         android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendPayFragment"

@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
@@ -44,6 +45,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var isViewCreated = false
     private var plateNumber = ""
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
+
     private var loader: LoaderDialog? = null
     private var time = (1 * 1000).toLong()
     private var isCrossingCall = false
@@ -192,13 +194,24 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
             observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
+            observe(viewModel.heartBeatLiveData, ::heartBeatApiResponse)
+
         }
         isViewCreated = true
+    }
+
+    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
+
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
+                NewCreateAccountRequestModel.referenceId?.let {
+                    viewModel.heartBeat(Constants.AGENCY_ID,
+                        it
+                    )
+                }
                 NewCreateAccountRequestModel.onOffVehiclePlateNumber=""
                 isClicked = true
 

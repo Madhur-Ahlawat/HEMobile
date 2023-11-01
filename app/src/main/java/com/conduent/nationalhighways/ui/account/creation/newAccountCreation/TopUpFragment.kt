@@ -14,10 +14,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountGetThresholdResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.conduent.nationalhighways.databinding.FragmentTopUpBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.topup.AccountTopUpPaymentViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -46,6 +49,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     private var gtwLowBalance: GenericTextWatcher? = null
     private var gtwTopBalance: GenericTextWatcher? = null
     private var isClick = false
+    private val createAccountViewModel: CreateAccountVehicleViewModel by viewModels()
+
     val formatter = DecimalFormat("#,###.00")
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -139,7 +144,14 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         lifecycleScope.launch {
             observe(viewModel.thresholdLiveData, ::getThresholdApiResponse)
             observe(viewModel.updateAmountLiveData, ::updateThresholdApiResponse)
+            observe(createAccountViewModel.heartBeatLiveData, ::heartBeatApiResponse)
+
         }
+    }
+
+    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
+
+
     }
 
     override fun onResume() {
@@ -173,6 +185,17 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     isClick = true
 
                 } else {
+                    NewCreateAccountRequestModel.referenceId?.let {
+                        createAccountViewModel.heartBeat(Constants.AGENCY_ID,
+                            it
+                        )
+                    }
+                    NewCreateAccountRequestModel.sms_referenceId?.let {
+                        createAccountViewModel.heartBeat(Constants.AGENCY_ID,
+                            it
+                        )
+                    }
+
                     val amount = binding.top.editText.text.toString().trim().replace("$", "£")
                         .replace("£", "")
                     val thresholdAmount =

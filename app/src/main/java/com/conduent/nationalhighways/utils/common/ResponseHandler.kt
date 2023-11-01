@@ -38,7 +38,7 @@ object ResponseHandler {
                 Log.e("TAG", "success: response error " + errorResponse.error.equals("invalid_token"))
                 Log.e("TAG", "success: response error--> " + errorResponse.error)
 
-                if (response?.code() == Constants.TOKEN_FAIL && errorResponse.error.equals("invalid_token")) {
+                if (response?.code() == Constants.TOKEN_FAIL && errorResponse.error.equals("invalid_token",true)) {
                     return Resource.DataError(
                         "Token Expired",
                         ErrorResponseModel("", "", "", 401, 401, "")
