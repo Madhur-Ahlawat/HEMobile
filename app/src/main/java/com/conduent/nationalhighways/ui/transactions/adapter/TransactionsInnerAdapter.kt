@@ -97,7 +97,7 @@ class TransactionsInnerAdapter(
             pos = position!!
             val bundle = Bundle()
             HomeActivityMain.crossing = transactionItemsList.get(pos)
-            if (HomeActivityMain.crossing!!.activity?.toLowerCase().equals("toll")) {
+            if (HomeActivityMain.crossing?.activity?.lowercase().equals("toll")) {
                 if(viewAllTransactionsFragment is ViewAllTransactionsFragment){
                     (viewAllTransactionsFragment as ViewAllTransactionsFragment).findNavController().navigate(
                         R.id.action_crossingHistoryFragment_to_tollDetails,

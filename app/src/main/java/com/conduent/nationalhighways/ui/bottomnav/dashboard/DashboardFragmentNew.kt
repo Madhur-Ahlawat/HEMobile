@@ -93,7 +93,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                                 recentTransactionItem.activity.substring(
                                     1,
                                     recentTransactionItem.activity.length
-                                )!!.lowercase(Locale.getDefault())
+                                ).lowercase(Locale.getDefault())
                             )
                     if (recentTransactionItem.amount?.contains("-") == false) {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
@@ -111,8 +111,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     root.setOnClickListener {
                         crossing = recentTransactionItem
                         val bundle = Bundle()
-//                        bundle.putInt(Constants.FROM, Constants.FROM_ALL_TRANSACTIONS_TO_DETAILS)
-                        if (crossing!!.activity?.toLowerCase().equals("toll")) {
+                        if (crossing?.activity?.lowercase(Locale.getDefault()).equals("toll")) {
                             findNavController().navigate(
                                 R.id.action_dashBoardFragment_to_tollDetails,
                                 bundle
@@ -231,7 +230,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun handleAccountType(accountResponse: AccountResponse) {
         personalInformation = accountResponse.personalInformation
 
-        accountResponse?.apply {
+        accountResponse.apply {
             if (accountInformation?.accountType.equals("BUSINESS", true)
                 || ((accountInformation?.accSubType.equals(
                     "STANDARD",
@@ -267,10 +266,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     if (it.isNotEmpty()) {
                         binding.tvNoHistory.gone()
                         binding.rvRecenrTransactions.visible()
-                        paymentHistoryListData?.clear()
-                        paymentHistoryListData?.addAll(it)
+                        paymentHistoryListData.clear()
+                        paymentHistoryListData.addAll(it)
                         paymentHistoryListData =
-                            Utils.sortTransactionsDateWiseDescending(paymentHistoryListData).toMutableList()
+                            Utils.sortTransactionsDateWiseDescending(paymentHistoryListData)
+                                .toMutableList()
                         paymentHistoryDatesList.clear()
                         getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
@@ -324,17 +324,17 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
             var transactionsListTemp =
                 paymentHistoryHashMap.get(it.transactionDate) ?: mutableListOf()
-            var transactionExistesInTempList=false
-            transactionsListTemp.forEach {it2->
-                if(it2.transactionNumber.equals(it.transactionNumber)){
-                    transactionExistesInTempList=true
+            var transactionExistesInTempList = false
+            transactionsListTemp.forEach { it2 ->
+                if (it2.transactionNumber.equals(it.transactionNumber)) {
+                    transactionExistesInTempList = true
                 }
             }
-            if(transactionExistesInTempList==false){
-                transactionsListTemp?.add(it)
+            if (transactionExistesInTempList == false) {
+                transactionsListTemp.add(it)
             }
             paymentHistoryHashMap.remove(it.transactionDate!!)
-            paymentHistoryHashMap.put(it.transactionDate!!, transactionsListTemp!!)
+            paymentHistoryHashMap.put(it.transactionDate, transactionsListTemp)
         }
     }
 
@@ -342,7 +342,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData?>): MutableList<TransactionData> {
         var transactionListSorted: MutableList<TransactionData> = mutableListOf()
         for (transaction in transactions) {
-            if (transactionListSorted?.isEmpty() == true) {
+            if (transactionListSorted.isEmpty() == true) {
                 transactionListSorted.add(transaction!!)
             } else {
                 if (compareDates(
@@ -376,21 +376,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         binding.apply {
             tvAvailableBalanceHeading.gone()
             tvAvailableBalance.gone()
-//            tvAvailableBalance.apply {
-//                visible()
-//                text = data.replenishmentInformation?.currentBalance?.run {
-//                    get(0) + " " + drop(1)
-//                }
-//            }
 
             tvAccountStatusHeading.visible()
             cardIndicatorAccountStatus.visible()
 
             boxTopupAmount.gone()
-//            valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
-
             boxLowBalanceThreshold.gone()
-//            valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
 
             boxTopupMethod.gone()
             buttonTopup.gone()
@@ -398,28 +389,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
 
-//            tvAccountStatus.text = data.accountInformation?.accountStatus
-//            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
-//            tvAccountType.text = data.accountInformation?.type
             data.let {
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        cardNumber.text = Utils.setMaskWithDots(
-                            requireActivity(),
-                            data.accountInformation?.paymentTypeInfo
-                        )
+                        cardNumber.text =  data.accountInformation?.paymentTypeInfo
+
                         DashboardUtils.setAccountStatusNew(
                             it,
                             indicatorAccountStatus,
                             binding.cardIndicatorAccountStatus
                         )
                     }
-//                    it.accountFinancialstatus?.let {
-//                        DashboardUtils.setAccountFinancialStatus(it, valueAutopay)
-//                    }
                     it.type?.let {
-                        //                DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
@@ -428,19 +410,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     sessionManager.saveAccountEmailId(email)
                 }
             }
-            when (data.replenishmentInformation?.reBillPayType) {
-                Constants.MASTERCARD -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.ic_mastercard))
-                }
 
-                Constants.VISA -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
-
-                }
-
-                Constants.MAESTRO -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.maestro))
-                }
+            val cardType = data.replenishmentInformation?.reBillPayType?.uppercase()
+            if (cardType.equals("CASH")) {
+                cardLogo.gone()
+            } else {
+                cardLogo.visible()
+                cardLogo.setImageResource(Utils.setCardImage(cardType?:""))
             }
         }
         getPaymentHistoryList(startIndex)
@@ -453,17 +429,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             tvAvailableBalanceHeading.visible()
             tvAvailableBalance.visible()
             tvAvailableBalance.text = getString(R.string.str_zero_euro)
-//            tvAvailableBalance.apply {
-//                visible()
-//                text = data.replenishmentInformation?.currentBalance?.run {
-//                    get(0) + " " + drop(1)
-//                }
-//            }
 
             tvAccountStatusHeading.visible()
             cardIndicatorAccountStatus.visible()
-
-//            valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
 
             boxLowBalanceThreshold.visible()
             valueLowBalanceThreshold.text = getString(R.string.str_zero_euro)
@@ -479,11 +447,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
             boxCardType.visible()
-            cardLogo.gone()
             cardNumber.text = getString(R.string.no_payment_method_required)
-//            tvAccountStatus.text = data.accountInformation?.accountStatus
-//            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
-//            tvAccountType.text = data.accountInformation?.type
             data.let {
                 it.accountInformation?.let {
                     it.accountStatus?.let {
@@ -493,12 +457,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                             binding.cardIndicatorAccountStatus
                         )
                     }
-//                    it.accountFinancialstatus?.let {
-//                        DashboardUtils.setAccountFinancialStatus(it, valueAutopay)
-//                    }
 
                     it.type?.let {
-                        //                DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
@@ -507,19 +467,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     sessionManager.saveAccountEmailId(email)
                 }
             }
-            when (data.replenishmentInformation?.reBillPayType) {
-                Constants.MASTERCARD -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.mastercard))
-                }
 
-                Constants.VISA -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
-
-                }
-
-                Constants.MAESTRO -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
-                }
+            val cardType = data.replenishmentInformation?.reBillPayType?.uppercase()
+            if (cardType.equals("CASH")) {
+                cardLogo.gone()
+            } else {
+                cardLogo.visible()
+                cardLogo.setImageResource(Utils.setCardImage(cardType?:""))
             }
             boxViewAll.visible()
             getPaymentHistoryList(startIndex)
@@ -534,7 +488,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             tvAvailableBalance.apply {
                 visible()
                 text = data.replenishmentInformation?.currentBalance?.run {
-                    get(0) + " " + drop(1)
+                    get(0) + "" + drop(1)
                 }
             }
 
@@ -567,25 +521,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-//            tvAccountStatus.text = data.accountInformation?.accountStatus
-//            tvTopUpType.text = data.accountInformation?.accountFinancialstatus
-//            tvAccountType.text = data.accountInformation?.type
             data.let {
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        if (data.accountInformation?.paymentTypeInfo?.length!! >= 4) {
-                            cardNumber.text = resources.getString(
-                                R.string.str_maskcardnumber,
-                                data.accountInformation.paymentTypeInfo.takeLast(4)
-                            )                        } else if(data?.accountInformation?.paymentTypeInfo?.length!! ==4){
-                            cardNumber.text = data.accountInformation?.paymentTypeInfo
-                        }else {
-                            cardNumber.text = resources.getString(
-                                R.string.str_maskcardnumber,
-                                data.accountInformation.paymentTypeInfo
-                            )
-                        }
+                        cardNumber.text = data.accountInformation?.paymentTypeInfo?:""
+
                         DashboardUtils.setAccountStatusNew(
                             it,
                             indicatorAccountStatus,
@@ -593,10 +534,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         )
                     }
                     it.accountFinancialstatus?.let {
-                        DashboardUtils.setAccountFinancialStatus(it, valueAutopay)
+                        valueAutopay.setText(it)
                     }
                     it.type?.let {
-                        //                DashboardUtils.setAccountType(it, data.accountInformation.accSubType, tvAccountType)
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
@@ -605,28 +545,14 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     sessionManager.saveAccountEmailId(email)
                 }
             }
-            when (data.replenishmentInformation?.reBillPayType) {
-                Constants.MASTERCARD -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.mastercard))
-                    cardLogo.visible()
-                    viewCard.visible()
-                }
 
-                Constants.VISA -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
-                    cardLogo.visible()
-                    viewCard.visible()
-                }
-
-                Constants.MAESTRO -> {
-                    cardLogo.setImageDrawable(resources.getDrawable(R.drawable.visablue))
-                    cardLogo.visible()
-                    viewCard.visible()
-                }
-                Constants.CASH -> {
-                    cardLogo.gone()
-                    viewCard.gone()
-                }
+            val cardType = data.replenishmentInformation?.reBillPayType?.uppercase()
+            if (cardType.equals("CASH")) {
+                cardLogo.gone()
+            } else {
+                viewCard.visible()
+                cardLogo.visible()
+                cardLogo.setImageResource(Utils.setCardImage(cardType?:""))
             }
             getPaymentHistoryList(startIndex)
         }

@@ -9,7 +9,7 @@
         android:id="@+id/dashBoardFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew"
         android:label="Account Summary"
-        tools:layout="@layout/fragment_dashboard">
+        tools:layout="@layout/fragment_dashboard_new">
         <action
             android:id="@+id/action_dashBoardFragment_to_notificationsFrament"
             app:destination="@id/notificationFragment" />

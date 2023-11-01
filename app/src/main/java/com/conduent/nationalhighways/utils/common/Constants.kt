@@ -24,6 +24,7 @@ object Constants {
     const val REPLENISHMENTINFORMATION = "ReplenishmentInformation"
     const val EXISTING_CARD = "existing_card"
     const val EXPIRED = "EXPIRED"
+    const val CURRENT = "CURRENT"
     const val MASTERCARD = "MASTERCARD"
     const val MAESTRO = "MAESTRO"
     const val CASH = "CASH"
