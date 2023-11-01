@@ -82,6 +82,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 R.string.str_minimum_amount,
                 this@TopUpFragment.apiLowBalanceAmount.toDouble().toInt().toString()
             ))
+            binding.lowBalance.setText("£" + formatter.format(this@TopUpFragment.apiLowBalanceAmount.toDouble()))
+            binding.top.setText("£" + formatter.format(this@TopUpFragment.apiTopUpAmountBalance.toDouble()))
+
         }
         isViewCreated = true
         binding.topUpBtn.setOnClickListener(this)

@@ -103,7 +103,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 arguments?.getParcelable(Constants.PERSONALDATA)
 
         }
-        NewCreateAccountRequestModel.prePay = false
 
         if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
             crossingDetailModelResponse = arguments?.getParcelable(Constants.NAV_DATA_KEY)
@@ -733,14 +732,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('hint1').innerHTML = 'Save the payment method against the account';})()")
-                        } else {
-                            view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').innerHTML = 'Save the payment method against the account';})()")
                         }
                         else{
+                            view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').innerHTML = 'Save the payment method against the account';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').value = 'Make default payment method';})()")
-
                         }
                         view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
@@ -790,19 +787,16 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('payment').innerText  ='You chose to pay as you go. We’ll collect payment from your card each time you cross.';})()")
                         } else {
-                            view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').innerText  ='${amountData}';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = '';})()")
-                            view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display ='';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('headerTable').style.display ='';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('title').style.display ='';})()")
-
-                            view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = '';})()")
                         }
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
