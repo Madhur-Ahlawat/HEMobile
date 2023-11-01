@@ -266,7 +266,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 } else {
                     findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
 
-                    //  ErrorUtil.showError(binding.root, resource.errorMsg)
 
                     AdobeAnalytics.setActionTrackPaymentMethod(
                         "Confirm ",
@@ -387,10 +386,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     }
 
-    private fun showErrorPopup(errorMsg: String) {
-        ErrorUtil.showError(binding.root, errorMsg)
 
-    }
 
     private fun makeOneOffPaymentApi(
         responseModel: CardResponseModel?,
@@ -879,8 +875,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     )
                 } else {
 
-
-                    ErrorUtil.showError(binding.root, status.data?.message)
+                    findNavController().navigate(
+                        R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment
+                    )
                 }
             }
 
