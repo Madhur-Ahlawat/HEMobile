@@ -44,8 +44,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     private val viewModel: AccountTopUpPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var paymentListSize: Int = 0
-    private var apiLowBalanceAmount: String = "5.00"
-    private var apiTopUpAmountBalance: String = "10.00"
+    private var apiLowBalanceAmount: String = "5"
+    private var apiTopUpAmountBalance: String = "10"
     private var gtwLowBalance: GenericTextWatcher? = null
     private var gtwTopBalance: GenericTextWatcher? = null
     private var isClick = false
@@ -76,12 +76,15 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         else{
             binding.minimumAMountTopUp.text = (getString(
                 R.string.top_up_amount_value,
-                this@TopUpFragment.apiTopUpAmountBalance
+                this@TopUpFragment.apiTopUpAmountBalance.toDouble().toInt().toString()
             ))
             binding.minimumAmount.text = (getString(
                 R.string.str_minimum_amount,
-                this@TopUpFragment.apiLowBalanceAmount
+                this@TopUpFragment.apiLowBalanceAmount.toDouble().toInt().toString()
             ))
+            binding.lowBalance.setText("£" + formatter.format(this@TopUpFragment.apiLowBalanceAmount.toDouble()))
+            binding.top.setText("£" + formatter.format(this@TopUpFragment.apiTopUpAmountBalance.toDouble()))
+
         }
         isViewCreated = true
         binding.topUpBtn.setOnClickListener(this)

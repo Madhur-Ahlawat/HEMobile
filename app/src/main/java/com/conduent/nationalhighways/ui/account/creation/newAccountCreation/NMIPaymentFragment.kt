@@ -103,7 +103,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 arguments?.getParcelable(Constants.PERSONALDATA)
 
         }
-        NewCreateAccountRequestModel.prePay = false
 
         if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
             crossingDetailModelResponse = arguments?.getParcelable(Constants.NAV_DATA_KEY)
@@ -660,6 +659,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$doubleAmount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 
+                val amountData= getString(R.string.currency_symbol) + String.format(
+                    "%.2f",
+                    topUpAmount.toDouble()
+                )
                 when (flow) {
                     Constants.SUSPENDED -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
@@ -674,6 +677,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').innerText  ='Save the payment method against the account.';})()")
 
                         if (paymentListSize != 0 && paymentListSize != 1) {
@@ -707,9 +711,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
                         if (isDrectDebit!! && paymentListSize == 1) {
-                            view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
-                            view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
-                            view?.loadUrl("javascript:(function(){document.getElementById('hint1').innerHTML = 'Save the payment method against the account';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
                         }
                     }
 
@@ -728,11 +731,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('hint1').innerHTML = 'Save the payment method against the account';})()")
-                        } else {
+                        }
+                        else{
+                            view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').innerHTML = 'Save the payment method against the account';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
-                            view?.loadUrl("javascript:(function(){document.getElementById('hint').value = 'Make default payment method';})()")
-
+                            view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').value = 'Make default payment method';})()")
                         }
                         view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
@@ -776,20 +780,22 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                         if (!NewCreateAccountRequestModel.prePay) {
                             view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('payment').innerText  ='You chose to pay as you go. We’ll collect payment from your card each time you cross.';})()")
                         } else {
+                            view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').style.display = '';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').innerText  ='${amountData}';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = '';})()")
-                            view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display ='';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('headerTable').style.display ='';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('title').style.display ='';})()")
-
-                            view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = '';})()")
                         }
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
