@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/str_priority"
-                android:textSize="@dimen/_18sp"
+                android:textSize="@dimen/font_18sp"
                 app:fontFamily="@font/open_sans_bold" />
 
 
@@ -46,7 +46,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/str_standard"
-                android:textSize="@dimen/_18sp"
+                android:textSize="@dimen/font_18sp"
                 app:fontFamily="@font/open_sans_bold" />
 
 
