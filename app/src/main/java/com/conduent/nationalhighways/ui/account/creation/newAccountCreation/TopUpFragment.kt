@@ -166,15 +166,15 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 val bundle = Bundle()
 
                 if (navFlow == Constants.THRESHOLD) {
-                    val amount = binding.top.editText.text.toString().trim().replace("$", "£")
+                    val topupAmount = binding.top.editText.text.toString().trim().replace("$", "£")
                         .replace("£", "").replace(",", "").replace(" ", "")
                     val thresholdAmount =
                         binding.lowBalance.editText.text.toString().trim().replace("$", "£")
                             .replace("£", "").replace(",", "").replace(" ", "")
 
                     val request = AccountTopUpUpdateThresholdRequest(
-                        amount,
-                        thresholdAmount
+                        thresholdAmount,
+                        topupAmount
                     )
                     /* loader?.show(
                          requireActivity().supportFragmentManager,
