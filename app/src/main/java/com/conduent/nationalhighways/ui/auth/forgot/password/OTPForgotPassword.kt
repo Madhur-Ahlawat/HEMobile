@@ -44,6 +44,7 @@ import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_MOBILE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.FORGOT_PASSWORD_FLOW
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
@@ -120,6 +121,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     override fun initCtrl() {
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
+
+
         if (arguments?.containsKey(Constants.IS_MOBILE_NUMBER) == true) {
             isItMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER) ?: false
         }
@@ -321,6 +324,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
+                        //otpSuccessRedirection()
                         confirmEmailCode()
                     }
 
@@ -697,6 +701,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                         }
                     }
+                }else if(editRequest.equals(EDIT_MOBILE,true)){
+                    findNavController().navigate(
+                        R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
+                    )
                 } else if (editRequest.equals(EDIT_ACCOUNT_TYPE, true)) {
                     findNavController().navigate(
                         R.id.action_AccountChangeType_forgotPassword_to_vehicleListFragment,

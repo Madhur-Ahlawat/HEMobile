@@ -185,16 +185,21 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     isClick = true
 
                 } else {
-                    NewCreateAccountRequestModel.referenceId?.let {
-                        createAccountViewModel.heartBeat(Constants.AGENCY_ID,
-                            it
-                        )
+                    if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true){
+                        NewCreateAccountRequestModel.referenceId?.let {
+                            createAccountViewModel.heartBeat(Constants.AGENCY_ID,
+                                it
+                            )
+                        }
                     }
-                    NewCreateAccountRequestModel.sms_referenceId?.let {
-                        createAccountViewModel.heartBeat(Constants.AGENCY_ID,
-                            it
-                        )
+                    if (NewCreateAccountRequestModel.sms_referenceId?.trim()?.isNotEmpty()==true){
+                        NewCreateAccountRequestModel.sms_referenceId?.let {
+                            createAccountViewModel.heartBeat(Constants.AGENCY_ID,
+                                it
+                            )
+                        }
                     }
+
 
                     val amount = binding.top.editText.text.toString().trim().replace("$", "£")
                         .replace("£", "")

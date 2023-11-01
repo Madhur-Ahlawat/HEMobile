@@ -285,6 +285,7 @@ object Constants {
     const val OPTSMS = "optSms"
     const val TwoStepVerification = "twoStepVerification"
     const val EDIT_SUMMARY = "editSummary"
+    const val EDIT_MOBILE="editmobile"
     const val EDIT_EMAIL = "editEmail"
     const val EDIT_CATEGORY_DATA = "editCategoryData"
     const val EDIT_CATEGORY_DATA_NOCHANGES = "editCategoryDataNoChanges"

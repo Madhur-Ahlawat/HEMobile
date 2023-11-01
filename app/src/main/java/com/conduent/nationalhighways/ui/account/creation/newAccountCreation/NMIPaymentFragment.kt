@@ -103,7 +103,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 arguments?.getParcelable(Constants.PERSONALDATA)
 
         }
-        NewCreateAccountRequestModel.prePay = false
 
         if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
             crossingDetailModelResponse = arguments?.getParcelable(Constants.NAV_DATA_KEY)

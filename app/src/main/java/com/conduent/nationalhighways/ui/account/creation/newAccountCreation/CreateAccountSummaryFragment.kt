@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehi
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_MOBILE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
@@ -185,16 +186,22 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         when (v?.id) {
 
             R.id.btnNext -> {
-                NewCreateAccountRequestModel.referenceId?.let {
-                    viewModel.heartBeat(Constants.AGENCY_ID,
-                        it
-                    )
+                if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true){
+                    NewCreateAccountRequestModel.referenceId?.let {
+                        viewModel.heartBeat(Constants.AGENCY_ID,
+                            it
+                        )
+                    }
                 }
-                NewCreateAccountRequestModel.sms_referenceId?.let {
-                    viewModel.heartBeat(Constants.AGENCY_ID,
-                        it
-                    )
+
+                if (NewCreateAccountRequestModel.sms_referenceId?.trim()?.isNotEmpty() == true){
+                    NewCreateAccountRequestModel.sms_referenceId?.let {
+                        viewModel.heartBeat(Constants.AGENCY_ID,
+                            it
+                        )
+                    }
                 }
+
                 if (!NewCreateAccountRequestModel.prePay) {
                     val bundle = Bundle()
 
@@ -251,9 +258,13 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
 
             R.id.editMobileNumber -> {
+                val bundle = Bundle()
+                bundle.putString(NAV_FLOW_KEY, EDIT_MOBILE)
+                bundle.putString(NAV_FLOW_FROM, EDIT_SUMMARY)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_mobileNumberFragment,
-                    enableEditMode()
+                   bundle
                 )
             }
 

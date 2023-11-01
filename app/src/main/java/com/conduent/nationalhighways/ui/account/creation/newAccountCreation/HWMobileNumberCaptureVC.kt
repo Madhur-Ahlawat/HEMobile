@@ -35,6 +35,7 @@ import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
+import com.conduent.nationalhighways.utils.common.Constants.EDIT_MOBILE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
@@ -80,7 +81,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         title = requireActivity().findViewById(R.id.title_txt)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        if (!isViewCreated) {
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
+        }
         viewModel.getCountries()
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
@@ -92,7 +96,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         binding.btnNext.setOnClickListener(this)
         when (navFlowCall) {
-            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
+            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY, EDIT_MOBILE -> {
                 if (!isViewCreated) {
                     oldMobileNumber = NewCreateAccountRequestModel.mobileNumber ?: ""
                     oldMobileCountryCode = NewCreateAccountRequestModel.countryCode ?: ""
@@ -156,8 +160,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
                 setData()
             }
-            else->{
-                binding.inputMobileNumber.setText(NewCreateAccountRequestModel.mobileNumber?:"")
+
+            else -> {
+                binding.inputMobileNumber.setText(NewCreateAccountRequestModel.mobileNumber ?: "")
             }
         }
 
@@ -317,10 +322,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         }
                     }
                 } else {
-                    if(NewCreateAccountRequestModel.countryCode?.isEmpty()==true){
+                    if (NewCreateAccountRequestModel.countryCode?.isEmpty() == true) {
                         binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
-                    }else{
-                        binding.inputCountry.setSelectedValue(NewCreateAccountRequestModel.countryCode?:"")
+                    } else {
+                        binding.inputCountry.setSelectedValue(
+                            NewCreateAccountRequestModel.countryCode ?: ""
+                        )
                     }
                 }
 
@@ -371,7 +378,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         when (v?.id) {
             binding.btnNext.id -> {
                 val mobileNumber = binding.inputMobileNumber.getText().toString().trim()
-                val countryCode = binding.inputCountry.selectedItemDescription.toString()
+                val countryCode = binding.inputCountry.selectedItemDescription
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
 
@@ -381,10 +388,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     countryCode == oldTelephoneCountryCode && mobileNumber == oldTelephoneNumber
                 }
                 when (navFlowCall) {
-
-                    EDIT_SUMMARY -> {
-
-
+                    EDIT_MOBILE -> {
                         if (noChanges) {
                             findNavController().navigate(
                                 R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,
@@ -397,26 +401,41 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         }
                     }
 
+                    EDIT_SUMMARY -> {
+
+
+                        /* if (noChanges) {
+                             findNavController().navigate(
+                                 R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,
+                                 bundle
+                             )
+                         } else {*/
+                        val res: Int =
+                            R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
+                        handleNavFlow(mobileNumber, countryCode, bundle, res)
+                        //}
+                    }
+
                     EDIT_ACCOUNT_TYPE -> {
-                        if (noChanges) {
+                        /* if (noChanges) {
+                             findNavController().navigate(
+                                 R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
+                                 bundle
+                             )
+                         } else {*/
+                        assignNumbers(mobileNumber, countryCode)
+
+                        if (isItMobileNumber) {
+                            hitApi()
+                        } else {
                             findNavController().navigate(
                                 R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
                                 bundle
                             )
-                        } else {
-                            assignNumbers(mobileNumber, countryCode)
-
-                            if (isItMobileNumber) {
-                                hitApi()
-                            } else {
-                                findNavController().navigate(
-                                    R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
-                                    bundle
-                                )
-                            }
-
-
                         }
+
+
+                        // }
                     }
 
                     PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {

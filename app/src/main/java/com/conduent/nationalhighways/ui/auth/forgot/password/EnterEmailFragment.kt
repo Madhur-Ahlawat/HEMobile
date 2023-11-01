@@ -268,16 +268,16 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     }
 
     private fun handleEditNavigation(emailText: String) {
-       /* if (emailText == oldEmail) {
+        if (emailText == oldEmail) {
             findNavController().popBackStack()
-        } else {*/
+        } else {
             NewCreateAccountRequestModel.emailAddress = emailText
             checkEmailAddress()
-        //}
+        }
     }
 
     private fun handleAccountEditNavigation(emailText: String) {
-       /* if (emailText == oldEmail) {
+        if (emailText == oldEmail) {
             val bundle = Bundle()
             bundle.putString(
                 Constants.NAV_FLOW_KEY,
@@ -287,10 +287,10 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                 R.id.action_forgotPasswordFragment_to_createPasswordFragment,
                 bundle
             )
-        } else {*/
+        } else {
             NewCreateAccountRequestModel.emailAddress = emailText
             checkEmailAddress()
-       // }
+        }
     }
 
 

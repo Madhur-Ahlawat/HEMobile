@@ -169,7 +169,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     }
 
                     PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT,
-                    PROFILE_MANAGEMENT_ADDRESS_CHANGED, PROFILE_MANAGEMENT -> {
+                    PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
                         if (arguments?.getString(Constants.NAV_FLOW_FROM)
                                 .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                         ) {
