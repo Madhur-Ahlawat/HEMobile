@@ -66,8 +66,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 .let { plateNumber = it.replace("null", "") }
             arguments?.getString(Constants.PLATE_NUMBER, "").toString()
                 .let { oldPlateNumber = it.replace("null", "") }
-            if(plateNumber.isNotEmpty() && oldPlateNumber.isEmpty()){
-                oldPlateNumber=plateNumber
+            if (plateNumber.isNotEmpty() && oldPlateNumber.isEmpty()) {
+                oldPlateNumber = plateNumber
             }
         }
         navData?.let {
@@ -219,7 +219,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             it
                         )
                     }
-                    if (NewCreateAccountRequestModel.sms_referenceId?.trim()?.isNotEmpty()==true){
+                    if (NewCreateAccountRequestModel.sms_referenceId?.trim()
+                            ?.isNotEmpty() == true
+                    ) {
                         NewCreateAccountRequestModel.sms_referenceId?.let {
                             viewModel.heartBeat(
                                 Constants.AGENCY_ID,
@@ -517,7 +519,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     var isVehicleExist = false
@@ -673,7 +678,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     var isVehicleExist = false
@@ -821,7 +829,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 }
 
                 is Resource.DataError -> {
-                    if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                            Constants.INVALID_TOKEN
+                        )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                    ) {
                         displaySessionExpireDialog(resource.errorModel)
                     } else {
                         var isVehicleExist = false
@@ -907,7 +918,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     val numberPlate =
