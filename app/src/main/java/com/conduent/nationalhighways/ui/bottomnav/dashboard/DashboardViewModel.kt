@@ -96,9 +96,14 @@ class DashboardViewModel @Inject constructor(
 
     var personalInformationData: MutableLiveData<PersonalInformation> = MutableLiveData()
     var accountInformationData: MutableLiveData<AccountInformation> = MutableLiveData()
-
+var accountSubType:MutableLiveData<String> = MutableLiveData()
+var directDebitCardListSize:MutableLiveData<Int> = MutableLiveData()
+var paymentListSize:MutableLiveData<Int> = MutableLiveData()
 
     init {
+        accountSubType.value=""
+        directDebitCardListSize.value=0
+        paymentListSize.value=0
         personalInformationData.value = PersonalInformation(
             "", "", "", "", "",
             "", "", "", "", "", "", "",

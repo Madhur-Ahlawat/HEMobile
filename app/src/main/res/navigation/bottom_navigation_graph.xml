@@ -364,6 +364,9 @@
             android:id="@+id/action_otpForgotFragment_to_resetForgotPassword"
             app:destination="@id/resetFragment" />
         <action
+            android:id="@+id/action_otpForgotFragment_to_profileManagementFragment"
+            app:destination="@id/profileManagementFragment" />
+        <action
             android:id="@+id/action_forgotOtpFragment_to_createAccountSummaryFragment"
             app:destination="@id/createAccountSummaryFragment" />
     </fragment>
@@ -669,6 +672,9 @@
         <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment"
             app:destination="@id/tryPaymentAgainFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendedPaymentFragment"
+            app:destination="@id/accountSuspendedPaymentFragment" />
     </fragment>
 
     <fragment
@@ -764,6 +770,11 @@
             android:id="@+id/action_paymentSuccessFragment_to_paymentMethodFragment"
             app:destination="@id/paymentMethodFragment"
             app:popUpTo="@id/paymentMethodFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_paymentSuccessFragment_to_selectPaymentMethodFragment"
+            app:destination="@id/selectPaymentMethodFragment"
+            app:popUpTo="@id/selectPaymentMethodFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_paymentSuccessFragment_to_nmiPaymentFragment"

@@ -5,11 +5,13 @@ import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TwoS
 object Constants {
 
 
-    const val DIRECT_DEBIT: String = "directdebit"
-    const val IS_DIRECT_DEBIT: String = "IS_DIRECT_DEBIT"
-    const val FIND_VEHICLE = "FIND_VEHICLE"
-    const val DIRECT_DEBIT_DELETE = "direct_debit_delete"
-    const val DIRECT_DEBIT_NOT_SET_UP = "direct_debit_not_set_up"
+
+    const val DIRECT_DEBIT: String="directdebit"
+    const val IS_DIRECT_DEBIT: String="IS_DIRECT_DEBIT"
+    const val FIND_VEHICLE="FIND_VEHICLE"
+    const val DIRECT_DEBIT_DELETE="direct_debit_delete"
+    const val DIRECT_DEBIT_NOT_SET_UP="direct_debit_not_set_up"
+    const val CREDIT_NOT_SET_UP="credit_not_set_up"
     const val ACCOUNT_CLOSURE = "ACCOUNT CLOSURE"
     const val ACCOUNT_HOLDER_REQUEST = "ACCOUNT HOLDER REQUEST"
     const val Mobile_App = "Mobile App"
@@ -141,11 +143,11 @@ object Constants {
     const val ALLOWED_CHARACTERS_IN_ADDRESS = "',.-"
     const val ALLOWED_CHARACTERS_IN_POSTCODE = "',.-"
 
-    const val CURRENTBALANCE = "currentBalance"
-    const val SUSPENDED = "suspended"
-    const val NOTSUSPENDED = "notsuspended"
-    const val THRESHOLD_AMOUNT = "threshold_amount"
-    const val THRESHOLD = "threshold_amount"
+    const val CURRENTBALANCE="currentBalance"
+    const val SUSPENDED="suspended"
+    const val NOTSUSPENDED="notsuspended"
+    const val THRESHOLD_AMOUNT="threshold_amount"
+    const val THRESHOLD="threshold_amount"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
     const val PLATE_NUMBER = "plateNumber"
     const val OLD_PLATE_NUMBER = "oldPlateNumber"
@@ -299,6 +301,7 @@ object Constants {
     const val PROFILE_MANAGEMENT_COMMUNICATION_CHANGED = "profileManagementCommunicationChanged"
     const val PROFILE_MANAGEMENT_MOBILE_CHANGE = "profileManagementMobileChange"
     const val PROFILE_MANAGEMENT_2FA_CHANGE = "profileManagement2faChange"
+    const val PROFILE_MANAGEMENT_EMAIL_CHANGE = "PROFILE_MANAGEMENT_EMAIL_CHANGE"
     const val PROFILE_TWO_FACTOR_VERIFICATION = "Profile Two Factor Verification"
     const val TWOFA = "twofa"
     const val ACCOUNT_CREATION_EMAIL_FLOW = "accountCreationEmailFlow"

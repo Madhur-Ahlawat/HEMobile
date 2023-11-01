@@ -432,6 +432,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 vehicleClass = it[0].vehicleClass
                                 vehicleMake = it[0].vehicleMake
                                 vehicleModel = it[0].vehicleModel
+                                vehicleType = Utils.getVehicleType(requireActivity(),it[0].vehicleClass?:"")
                                 plateNo = binding.editNumberPlate.editText.text.toString()
                             }
                             bundle.putParcelable(Constants.NAV_DATA_KEY, data)

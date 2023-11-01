@@ -2,11 +2,13 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -49,7 +51,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     private var directDebitPaymentList: ArrayList<CardListResponseModel?>? = ArrayList()
     private var cardPaymentList: ArrayList<CardListResponseModel?>? = ArrayList()
     private val viewModel: PaymentMethodViewModel by viewModels()
-    private val dashboardViewModel: DashboardViewModel by viewModels()
+    private val dashboardViewModel: DashboardViewModel by activityViewModels()
     private var rowId: String = ""
     private var makeDefault: Boolean = false
     private var isDirectDebitDelete: Boolean = false
@@ -106,9 +108,14 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         lifecycleScope.launch {
             observe(viewModel.savedCardList, ::handleSaveCardResponse)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
-            observe(viewModel.deleteCard, ::handleDeleteCardResponse)
-
             observe(viewModel.defaultCard, ::handleDefaultCardResponse)
+
+
+            viewModel.deleteCardState.collect {
+                handleDeleteCardResponse(it)
+            }
+
+
 
         }
     }
@@ -122,16 +129,17 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 personalInformation = status.data?.personalInformation
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
+                dashboardViewModel.accountSubType.value = accountInformation?.accSubType
+                dashboardViewModel.personalInformationData.value=personalInformation
+                dashboardViewModel.accountInformationData.value=accountInformation
 
                 if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                     binding.cardViewThresholdLimit.visibility = View.GONE
                     binding.cardViewTopYourBalance.visibility = View.GONE
-
                 } else {
                     binding.cardViewThresholdLimit.visibility = View.VISIBLE
                     binding.cardViewTopYourBalance.visibility = View.VISIBLE
                 }
-
             }
 
             is Resource.DataError -> {
@@ -155,12 +163,14 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 status.data?.let {
                     it.creditCardListType?.let {
                         it.cardsList?.let {
-                            it?.forEach {
-                                if(it?.bankAccountType.equals("CURRENT") && it?.emandateStatus.equals("ACTIVE")){
-                                    paymentList!!.add(0,it!!)
-                                }
-                                else{
-                                    paymentList!!.add(it)
+                            it.forEach {
+                                if (it?.bankAccountType.equals("CURRENT") && it?.emandateStatus.equals(
+                                        "ACTIVE"
+                                    )
+                                ) {
+                                    paymentList?.add(0, it!!)
+                                } else {
+                                    paymentList?.add(it)
                                 }
 
                             }
@@ -170,6 +180,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                 directDebitPaymentList = (paymentList?.filter { it?.bankAccount == true }
                     ?: ArrayList()) as ArrayList<CardListResponseModel?>?
+                dashboardViewModel.directDebitCardListSize.value=directDebitPaymentList.orEmpty().size
+                dashboardViewModel.paymentListSize.value=paymentList.orEmpty().size
                 cardPaymentList = (paymentList?.filter { it?.bankAccount == false }
                     ?: ArrayList()) as ArrayList<CardListResponseModel?>?
 
@@ -316,7 +328,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             requireActivity(),
                             paymentList?.get(position)?.cardNumber
                         ),
-                        paymentList?.get(position)?.expMonth + "/" + paymentList?.get(position)?.expYear
+                        paymentList?.get(position)?.expMonth + "/" + if(paymentList?.get(position)?.expYear!!.length>2)  paymentList?.get(position)?.expYear!!.substring(2,paymentList?.get(position)?.expYear!!.length) else paymentList?.get(position)?.expYear!!
                     )
                 )
 
@@ -538,6 +550,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
+        Log.e("TAG", "handleDeleteCardResponse() called with: status = $status")
         hideLoader()
 
         when (status) {
@@ -587,7 +600,13 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
             else -> {
             }
+
+
         }
+        lifecycleScope.launch {
+            viewModel._deleteCard_State.emit(null)
+        }
+
     }
 
     private fun handleDefaultCardResponse(status: Resource<PaymentMethodEditResponse?>?) {
@@ -595,11 +614,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         when (status) {
             is Resource.Success -> {
                 showLoader()
-
+                Log.e("TAG", "handleDefaultCardResponse: makeDefault "+makeDefault )
                 if (makeDefault) {
                     viewModel.saveCardList()
                 } else {
-                    viewModel.deleteCard(PaymentMethodDeleteModel(rowId))
+                    viewModel.deleteCardState(PaymentMethodDeleteModel(rowId))
 
                 }
 
@@ -647,7 +666,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             paymentList?.get(position + 1)?.rowId
                         )
                     } else {
-                        viewModel.deleteCard(PaymentMethodDeleteModel(rowId_))
+                        viewModel.deleteCardState(PaymentMethodDeleteModel(rowId_))
                     }
 
 
@@ -672,6 +691,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             loader?.dismiss()
             loader = null
         }
+    }
+
+    companion object {
+        var isDirectDebit: Boolean=false
     }
 
 }

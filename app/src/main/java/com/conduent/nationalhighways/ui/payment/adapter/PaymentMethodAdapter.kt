@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.PaymentmethodadapterlayoutBinding
+import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewPaymentMethodFragment
+import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewPaymentMethodFragment.Companion.isDirectDebit
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 
@@ -18,7 +20,6 @@ class PaymentMethodAdapter(
     private val paymentMethodCallback: PaymentMethodCallback
 ) :
     RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder>() {
-    private var isDirectDebit: Boolean=false
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -68,7 +69,7 @@ class PaymentMethodAdapter(
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             holder.binding.delete.visibility = View.VISIBLE
-            isDirectDebit=true
+            NewPaymentMethodFragment.isDirectDebit=true
         } else {
             val htmlText =
                 Html.fromHtml(

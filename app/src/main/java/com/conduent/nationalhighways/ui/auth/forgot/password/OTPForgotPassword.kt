@@ -46,6 +46,7 @@ import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOB
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.FORGOT_PASSWORD_FLOW
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
@@ -121,6 +122,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
         if (arguments?.containsKey(Constants.IS_MOBILE_NUMBER) == true) {
             isItMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER) ?: false
+        }
+        if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
+            navFlowCall = arguments?.getString(Constants.NAV_FLOW_KEY)?: ""
         }
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
@@ -221,13 +225,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 Log.d("Success", "Updated successfully")
                 val data = navData as ProfileDetailModel?
                 val bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_FROM, Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                findNavController().navigate(
-                    R.id.action_otpForgotFragment_to_resetForgotPassword,
-                    bundle
-                )
+                if(navFlowCall==PROFILE_MANAGEMENT){
+                    findNavController().navigate(
+                        R.id.action_otpForgotFragment_to_resetForgotPassword,
+                        bundle
+                    )
+                }
+
             }
 
             is Resource.DataError -> {
@@ -631,7 +638,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                otpSuccessRedirection()
+//                otpSuccessRedirection()
 
                 when (resource.errorModel?.status) {
 
@@ -752,7 +759,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                     bundle
                                 )
                             }
-
                             else -> {
                                 findNavController().navigate(
                                     R.id.action_email_forgotOtpFragment_to_createAccountSummaryFragment,
@@ -767,6 +773,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             R.id.action_forgotOtpFragment_to_createPasswordFragment,
                             bundle
                         )
+                    }
+                    PROFILE_MANAGEMENT -> {
+                        updateProfileEmail(HomeActivityMain.accountDetailsData!!.personalInformation, HomeActivityMain.accountDetailsData?.accountInformation)
                     }
 
                     else -> {
@@ -847,6 +856,41 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 phoneCellCountryCode = phoneCellCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode,
                 mfaEnabled = accountInformation?.mfaEnabled
+            )
+
+            viewModelProfile.updateUserDetails(request)
+        }
+
+    }
+
+    private fun updateProfileEmail(
+        dataModel: com.conduent.nationalhighways.data.model.account.PersonalInformation?,
+        accountInformation: com.conduent.nationalhighways.data.model.account.AccountInformation?
+    ) {
+
+        dataModel?.run {
+            val request = UpdateProfileRequest(
+                firstName = firstName,
+                lastName = lastName,
+                addressLine1 = addressLine1,
+                addressLine2 = addressLine2,
+                city = city,
+                state = state,
+                zipCode = zipcode,
+                zipCodePlus = zipCodePlus,
+                country = country,
+                emailAddress = emailAddress,
+                primaryEmailStatus = Constants.PENDING_STATUS,
+                primaryEmailUniqueID = pemailUniqueCode,
+                phoneCell = phoneCell,
+                phoneDay = phoneDay,
+                phoneFax = "",
+                smsOption = "Y",
+                phoneEvening = "",
+                phoneCellCountryCode = phoneCellCountryCode,
+                phoneDayCountryCode = phoneDayCountryCode,
+                mfaEnabled = accountInformation?.mfaEnabled,
+                securityCode = binding.edtOtp.getText().toString().trim(), referenceId = arguments?.getString(Constants.REFERENCE_ID)
             )
 
             viewModelProfile.updateUserDetails(request)

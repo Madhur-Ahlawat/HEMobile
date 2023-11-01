@@ -24,7 +24,7 @@ data class PersonalInformation(
     @SerializedName("cellPhone") val cellPhone: String?=null,
     @SerializedName("eveningPhone") val eveningPhone: String?,
     @SerializedName("fax") val fax: String?,
-    @SerializedName("emailAddress") val emailAddress: String?,
+    @SerializedName("emailAddress") var emailAddress: String?="",
     @SerializedName("mobileAlerts") val mobileAlerts: String?,
     @SerializedName("surveyOptIn") val surveyOptIn: String?,
     @SerializedName("vrAlexaTc") val vrAlexaTc: Boolean?,

@@ -261,6 +261,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                             bundle
                         )
                     }
+                    Constants.PROFILE_MANAGEMENT -> {
+                    }
 
                     else -> {
                         findNavController().popBackStack()

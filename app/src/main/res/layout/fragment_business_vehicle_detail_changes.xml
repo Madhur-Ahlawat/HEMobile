@@ -64,6 +64,7 @@
                         android:id="@+id/seperator1"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/_3_5dp"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/reg_num" />
@@ -87,6 +88,8 @@
                         android:id="@+id/seperator2"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
+                        android:visibility="gone"
+
                         android:layout_marginTop="@dimen/_3_5dp"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/typeOfVehicle" />
@@ -110,6 +113,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
                         android:layout_marginTop="@dimen/_3_5dp"
+                        android:visibility="gone"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/vehicleMake" />
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -130,6 +134,8 @@
                         android:id="@+id/seperator4"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
+                        android:visibility="gone"
+
                         android:layout_marginTop="@dimen/_3_5dp"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/vehicleModel" />
@@ -151,6 +157,7 @@
                         android:id="@+id/seperator5"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_1dp"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/_3_5dp"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/vehicleColor" />

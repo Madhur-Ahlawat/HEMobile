@@ -36,6 +36,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -721,7 +722,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         if (paymentListSize >= 2) {
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
-                        } else if (paymentListSize == 0) {
+                        }
+                        else if(paymentListSize==0){
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('hint1').innerHTML = 'Save the payment method against the account';})()")
@@ -820,14 +822,19 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     val bundle = Bundle()
 
                     bundle.putParcelable(Constants.DATA, responseModel)
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
 
                     findNavController().navigate(
                         R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
                         bundle
                     )
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
+                    val fragmentId = findNavController().currentDestination?.id
+                    findNavController().popBackStack(fragmentId!!,true)
+                    findNavController().navigate(fragmentId,arguments)
+
                     displayCustomMessage(
                         getString(R.string.str_warning),
                         getString(R.string.the_card_you_are_trying_to_add_is_already),
@@ -881,7 +888,16 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
                     displaySessionExpireDialog()
                 } else {
-                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                    val bundle = Bundle()
+
+                    bundle.putString(
+                        Constants.CARD_IS_ALREADY_REGISTERED,
+                        Constants.CREDIT_NOT_SET_UP
+                    )
+                    findNavController().navigate(
+                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
+                        bundle
+                    )
                 }
             }
 
