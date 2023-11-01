@@ -23,6 +23,7 @@ import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
@@ -54,6 +55,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     var accountInformationModel: AccountInformation? = null
     val dashboardViewmodel: DashboardViewModel by activityViewModels()
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
+    private val viewModel: CreateAccountVehicleViewModel by viewModels()
+
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -174,6 +177,13 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     override fun observer() {
         observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
         observe(webServiceViewModel.pushNotification, ::handlePushNotificationResponse)
+        observe(viewModel.heartBeatLiveData, ::heartBeatApiResponse)
+
+
+    }
+
+    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
+
 
     }
 
@@ -383,6 +393,11 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 */
 
                     EDIT_ACCOUNT_TYPE -> {
+                        NewCreateAccountRequestModel.referenceId?.let {
+                            viewModel.heartBeat(Constants.AGENCY_ID,
+                                it
+                            )
+                        }
                         NewCreateAccountRequestModel.communicationTextMessage =
                             binding.switchCommunication.isChecked
                         findNavController().navigate(
@@ -391,6 +406,11 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     }
 
                     else -> {
+                        NewCreateAccountRequestModel.referenceId?.let {
+                            viewModel.heartBeat(Constants.AGENCY_ID,
+                                it
+                            )
+                        }
                         NewCreateAccountRequestModel.communicationTextMessage =
                             binding.switchCommunication.isChecked
 

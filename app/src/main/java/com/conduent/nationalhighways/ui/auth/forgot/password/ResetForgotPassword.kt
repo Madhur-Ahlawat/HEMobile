@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
+import android.content.Intent
 import android.text.Html
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
@@ -15,6 +16,7 @@ import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
@@ -64,16 +66,33 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
             PROFILE_MANAGEMENT -> {
 
-                title?.text = getString(R.string.profile_name)
-                val data = navData as PersonalInformation?
-                binding.title.text = getString(R.string.name_change_successful)
-                binding.subTitle.text = Html.fromHtml(
-                    getString(
-                        R.string.you_will_receive_a_confirmation_email,
-                        data?.emailAddress
-                    ), Html.FROM_HTML_MODE_COMPACT
-                )
-                binding.btnSubmit.text = getString(R.string.str_continue)
+                if (arguments?.getString(Constants.NAV_FLOW_FROM)
+                        .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
+                ) {
+                    title?.text = getString(R.string.profile_email_address)
+                    val data = navData as PersonalInformation?
+                    binding.title.text = getString(R.string.email_address_change_successful)
+                    binding.subTitle.text = Html.fromHtml(
+                        getString(
+                            R.string.you_will_receive_a_confirmation_email,
+                            data?.emailAddress
+                        ), Html.FROM_HTML_MODE_COMPACT
+                    )
+                    sessionManager.clearAll()
+                    binding.btnSubmit.text = getString(R.string.sign_in)
+                } else {
+                    title?.text = getString(R.string.profile_name)
+                    val data = navData as PersonalInformation?
+                    binding.title.text = getString(R.string.name_change_successful)
+                    binding.subTitle.text = Html.fromHtml(
+                        getString(
+                            R.string.you_will_receive_a_confirmation_email,
+                            data?.emailAddress
+                        ), Html.FROM_HTML_MODE_COMPACT
+                    )
+                    binding.btnSubmit.text = getString(R.string.str_continue)
+                }
+
             }
 
             PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
@@ -151,7 +170,20 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
                     PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT,
                     PROFILE_MANAGEMENT_ADDRESS_CHANGED, PROFILE_MANAGEMENT -> {
-                        findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
+                        if (arguments?.getString(Constants.NAV_FLOW_FROM)
+                                .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
+                        ) {
+                            Intent(requireActivity(), LandingActivity::class.java).apply {
+                                putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
+                                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(this)
+                            }
+                            requireActivity().finish()
+                        } else {
+                            findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
+                        }
+
                     }
 
                     PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {

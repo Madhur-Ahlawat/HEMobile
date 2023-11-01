@@ -28,13 +28,16 @@ import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
 import com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
+import com.conduent.nationalhighways.ui.bottomnav.account.AccountFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
+import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.DeletePaymentMethodSuccessFragment
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment
+import com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
@@ -153,7 +156,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding?.idToolBarLyt?.gone()
         dataBinding?.backButton?.setOnClickListener {
             val currentDestination = navController.currentDestination
-            if (currentDestination?.id == R.id.caseEnquiryHistoryListFragment) {
+            if((currentDestination?.id == R.id.notificationFragment) || (currentDestination?.id == R.id.crossingHistoryFragment) || (currentDestination?.id == R.id.accountFragment)){
+                dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
+            }
+            else if (currentDestination?.id == R.id.caseEnquiryHistoryListFragment) {
                 redirectToAccountFragment()
             } else {
                 onBackPressedDispatcher.onBackPressed()
@@ -500,7 +506,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
             navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
-                if (fragment is DeletePaymentMethodSuccessFragment ||
+                if((fragment is NotificationFragment) || (fragment is ViewAllTransactionsFragment) || (fragment is AccountFragment)){
+                   dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
+                }
+                else if (fragment is DeletePaymentMethodSuccessFragment ||
                     fragment is AccountSuspendReOpenFragment ||
                     fragment is NewCardSuccessScreenFragment
                 ) {

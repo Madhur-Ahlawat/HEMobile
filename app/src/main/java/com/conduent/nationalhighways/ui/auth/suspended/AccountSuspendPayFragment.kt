@@ -28,7 +28,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
@@ -46,7 +45,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var position: Int = 0
-    private var lowBalance: Boolean = false
     private var loader: LoaderDialog? = null
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
@@ -265,7 +263,15 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             paymentType = "",
             primaryCard = "",
             maskedCardNumber = "",
-            easyPay = ""
+            easyPay = "",
+            cavv = paymentSuccessResponse?.cavv,
+            xid = paymentSuccessResponse?.xid,
+            threeDsVersion = paymentSuccessResponse?.threeDsVersion,
+            directoryServerId = paymentSuccessResponse?.directoryServerId,
+            cardHolderAuth = paymentSuccessResponse?.cardHolderAuth,
+            eci = paymentSuccessResponse?.eci
+
+
         )
         Log.d("paymentRequest", Gson().toJson(model))
         manualTopUpViewModel.paymentWithExistingCard(model)
@@ -278,7 +284,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("500") == true) {
-                    ErrorUtil.showError(binding.root, status.data.message)
+                    findNavController().navigate(
+                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
+                    )
                 } else {
                     val bundle = Bundle()
                     bundle.putParcelable(Constants.DATA, responseModel)
@@ -302,7 +310,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
+                    findNavController().navigate(
+                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
+                    )
                 }
             }
 
@@ -315,7 +325,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("0") == true) {

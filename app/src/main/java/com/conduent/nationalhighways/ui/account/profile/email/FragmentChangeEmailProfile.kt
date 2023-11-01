@@ -13,17 +13,22 @@ import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
-import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentChangeEmailProfileBinding
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.common.Constants.DATA
-import com.conduent.nationalhighways.utils.common.Constants.EMAIL_SELECTION_TYPE
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.ACCOUNTINFORMATION
+import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
+import com.conduent.nationalhighways.utils.common.Constants.PERSONALDATA
+import com.conduent.nationalhighways.utils.common.Constants.REPLENISHMENTINFORMATION
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -194,8 +199,11 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                 } else {
                     val bundle = Bundle()
                     binding.data?.referenceId = resource.data?.referenceId
-                    bundle.putParcelable(DATA, binding.data)
+                    bundle.putParcelable(NAV_DATA_KEY, binding.data)
                     bundle.putString(NAV_FLOW_KEY, navFlowCall)
+                    bundle.putParcelable(REPLENISHMENTINFORMATION, HomeActivityMain.accountDetailsData?.replenishmentInformation)
+                    bundle.putParcelable(PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation?.apply { emailAddress =binding.edtEmail.getText().toString().trim() })
+                    bundle.putString(Constants.REFERENCE_ID, resource.data?.referenceId)
                     bundle.putBoolean(Constants.IS_EDIT_EMAIL,arguments?.getBoolean(Constants.IS_EDIT_EMAIL) as Boolean)
                     bundle.putParcelable(
                         "response",
@@ -238,7 +246,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
+            if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall==Constants.PROFILE_MANAGEMENT) {
                 binding.edtEmail.setError(getString(R.string.an_account_with_this_email_address_already_exists))
             }
 

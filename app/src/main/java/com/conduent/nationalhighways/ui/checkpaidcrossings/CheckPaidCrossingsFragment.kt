@@ -130,7 +130,13 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                     )
                 }
                 is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
+                    if(status.errorMsg.contains("401")){
+                        binding.editReferenceNumber.setErrorText(getString(R.string.error_check_paid_crossings))
+                    }
+                    else{
+                        binding.editReferenceNumber.removeError()
+                        ErrorUtil.showError(binding.root, status.errorMsg)
+                    }
                 }
                 else -> {
                 }

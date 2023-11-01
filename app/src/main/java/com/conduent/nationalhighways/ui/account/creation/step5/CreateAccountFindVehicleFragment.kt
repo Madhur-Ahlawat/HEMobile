@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
@@ -55,10 +56,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
 
     override fun init() {
-        Log.e("TAG", "init: navFlowCall "+navFlowCall )
         isCrossingCall = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS, true)
-        Log.e("TAG", "init: isCrossingCall "+isCrossingCall )
-
         if (NewCreateAccountRequestModel.onOffVehiclePlateNumber.isNotEmpty()) {
             binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.onOffVehiclePlateNumber.toString())
             binding.findVehicle.enable()
@@ -201,14 +199,26 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
             observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
+            observe(viewModel.heartBeatLiveData, ::heartBeatApiResponse)
+
         }
         isViewCreated = true
+    }
+
+    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
+
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
                 NewCreateAccountRequestModel.onOffVehiclePlateNumber = ""
+                NewCreateAccountRequestModel.referenceId?.let {
+                    viewModel.heartBeat(Constants.AGENCY_ID,
+                        it
+                    )
+                }
+                NewCreateAccountRequestModel.onOffVehiclePlateNumber=""
                 isClicked = true
 
 

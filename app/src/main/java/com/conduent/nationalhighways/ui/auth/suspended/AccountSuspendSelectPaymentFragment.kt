@@ -196,10 +196,13 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 //                    R.id.action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment,
 //                    bundle
 //                )
+                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+
                 findNavController().navigate(
-                    R.id.action_accountSuspendedPaymentFragment_to_accountSuspendedFinalPayFragment,
+                    R.id.action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment,
                     bundle
                 )
+
             }
 
             R.id.btnAddNewPayment -> {

@@ -26,7 +26,14 @@ data class PaymentWithExistingCardModel(
     val useAddressCheck: String?="N",
     var zipcode1: String?="",
     var zipcode2: String?="",
-    val transactionAmount: String?
+    val transactionAmount: String?,
+    var cavv:String?="",
+    var xid:String?="",
+    var threeDsVersion:String?="",
+    var directoryServerId:String?="",
+    var cardHolderAuth:String?="",
+    var eci:String?=""
+
 ) : Parcelable
 
 

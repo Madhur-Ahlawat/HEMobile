@@ -13,8 +13,9 @@ class CreateAccountRespository @Inject constructor(private val apiService: ApiSe
     suspend fun createAccount(model: CreateAccountRequestModel?) =
         apiService.createAccount(model = model)
 
-    suspend fun createAccountNew(model: AccountCreationRequest?) =
-        apiService.createAccountNew(model = model)
+    suspend fun getHeartBeat(agencyId: String, referenceId: String) =
+        apiService.getHeartBeat(agencyId, referenceId)
+
 
     suspend fun emailVerificationApiCall(requestParam: EmailVerificationRequest?) =
         apiService.sendEmailVerification(request = requestParam)
