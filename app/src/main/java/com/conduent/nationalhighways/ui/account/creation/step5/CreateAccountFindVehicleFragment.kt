@@ -218,7 +218,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             Constants.AGENCY_ID,
                             it
                         )
-                    }
+                    }}
                     if (NewCreateAccountRequestModel.sms_referenceId?.trim()
                             ?.isNotEmpty() == true
                     ) {
@@ -339,7 +339,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 }
             }
         }
-    }
 
     private fun checkVehicle(numberPlate: String) {
         if (isCrossingCall) {
