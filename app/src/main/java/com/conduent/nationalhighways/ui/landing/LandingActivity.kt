@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.utils.common.Constants.FAILED_RETRY_SCREEN
 import com.conduent.nationalhighways.utils.common.Constants.LANDING_SCREEN
 import com.conduent.nationalhighways.utils.common.Constants.LOGOUT_SCREEN
 import com.conduent.nationalhighways.utils.common.Constants.LRDS_SCREEN
+import com.conduent.nationalhighways.utils.common.Constants.SERVER_ERROR
 import com.conduent.nationalhighways.utils.common.Constants.SESSION_TIME_OUT
 import com.conduent.nationalhighways.utils.common.Constants.START_NOW_SCREEN
 import com.conduent.nationalhighways.utils.common.Logg
@@ -90,6 +91,9 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         } else if (screenType == LOGOUT_SCREEN || screenType == SESSION_TIME_OUT) {
             binding.titleTxt.text = resources.getString(R.string.str_signed_out)
             binding.btnBack.gone()
+        } else if (screenType == SERVER_ERROR ) {
+            binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
+            binding.btnBack.gone()
         } else {
             binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
             binding.btnBack.visible()
@@ -146,8 +150,8 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 NavArgument.Builder().setDefaultValue(intent.extras).build()
             )
 
-        if (this.screenType == LRDS_SCREEN) {
-            bundle.putString(Constants.SERVICE_TYPE, LRDS_SCREEN)
+        if (this.screenType == LRDS_SCREEN|| this.screenType==SERVER_ERROR) {
+            bundle.putString(Constants.SERVICE_TYPE, this.screenType)
             bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
         }
         bundle.putString(Constants.NAV_FLOW_FROM,navFlowFrom)
@@ -163,7 +167,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 LOGOUT_SCREEN -> setStartDestination(R.id.logoutFragment)
                 SESSION_TIME_OUT -> setStartDestination(R.id.sessionTimeOutFragment)
                 FAILED_RETRY_SCREEN -> setStartDestination(R.id.failedRetryFragment)
-                LRDS_SCREEN -> {
+                LRDS_SCREEN , SERVER_ERROR-> {
                     setStartDestination(R.id.serviceUnavailableFragment)
                 }
             }

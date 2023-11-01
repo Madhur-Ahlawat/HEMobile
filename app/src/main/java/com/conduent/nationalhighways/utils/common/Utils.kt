@@ -51,7 +51,7 @@ import java.util.regex.Pattern
 
 
 object Utils {
-    public val amountFormatter = DecimalFormat("#,###.00")
+    val amountFormatter = DecimalFormat("#,###.00")
     private var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-"
     private var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-"
     private var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
@@ -105,28 +105,30 @@ object Utils {
         ALLOWED_CHARS_POSTCODE
 //        getSplCharString(ALLOWED_CHARS_POSTCODE)
     }
+
     fun capitalizeString(str: String?): String? {
         return if (str == null || str.length == 0) str else str.substring(0, 1)
-            .uppercase(Locale.getDefault()) + str.substring(1).toLowerCase()
+            .uppercase(Locale.getDefault()) + str.substring(1).lowercase(Locale.getDefault())
     }
-    @RequiresApi(Build.VERSION_CODES.O)
+
+    @RequiresApi(VERSION_CODES.O)
     fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
         var transactionListSorted: MutableList<TransactionData> = mutableListOf()
         for (transaction in transactions) {
-            if (transactionListSorted?.isEmpty() == true) {
-                transaction!!.showDateHeader = true
-                transactionListSorted.add(transaction!!)
+            if (transactionListSorted.isEmpty() == true) {
+                transaction.showDateHeader = true
+                transactionListSorted.add(transaction)
             } else {
                 if (DateUtils.compareDates(
                         transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
-                        transaction?.transactionDate + " " + transaction?.exitTime
+                        transaction.transactionDate + " " + transaction.exitTime
                     )
                 ) {
-                    transactionListSorted.add(transactionListSorted.get(transactionListSorted.size-1))
-                    transactionListSorted.add(transactionListSorted.size - 2, transaction!!)
+                    transactionListSorted.add(transactionListSorted.get(transactionListSorted.size - 1))
+                    transactionListSorted.add(transactionListSorted.size - 2, transaction)
 
                 } else {
-                    transactionListSorted.add(transaction!!)
+                    transactionListSorted.add(transaction)
                 }
             }
 
@@ -134,60 +136,70 @@ object Utils {
         return transactionListSorted
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    @RequiresApi(VERSION_CODES.O)
     fun sortAlertsDateWiseDescending(transactions: MutableList<AlertMessage>): MutableList<AlertMessage> {
         var transactionListSorted: MutableList<AlertMessage> = mutableListOf()
         for (transaction in transactions) {
-            if (transactionListSorted?.isEmpty() == true) {
-                transactionListSorted.add(transaction!!)
+            if (transactionListSorted.isEmpty() == true) {
+                transactionListSorted.add(transaction)
             } else {
                 if (DateUtils.compareDates(
                         transactionListSorted.last().createTs,
-                        transaction?.createTs
+                        transaction.createTs
                     )
                 ) {
-                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
+                    transactionListSorted.add(transactionListSorted.size - 1, transaction)
 
                 } else {
-                    transactionListSorted.add(transaction!!)
+                    transactionListSorted.add(transaction)
                 }
             }
 
         }
         return transactionListSorted
     }
+
     fun validateAmount(
         nhTextInputCell: NHTextInputCell,
         minimumAmount: Double,
         isTopUp: Boolean
     ): Boolean {
         var isValid = false
-        var mText = nhTextInputCell.editText.getText().toString().trim()
-        Log.e("TOPUP",mText)
+        var mText = nhTextInputCell.editText.text.toString().trim()
+        Log.e("TOPUP", mText)
         mText =
-            mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "").replace(" ", "")
-        Log.e("TOPUP",mText+"\n\n")
+            mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
+                .replace(" ", "")
+        Log.e("TOPUP", mText + "\n\n")
         if (mText.isNotEmpty()) {
-            if(mText.length==1 && mText.equals(".")){
-                mText="0"
+            if (mText.length == 1 && mText.equals(".")) {
+                mText = "0"
             }
             isValid = if (mText.toDouble().toInt() <= 100000) {
 
                 if (mText.toDouble() < minimumAmount) {
                     if (isTopUp) {
-                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_top_up_amount_must_be_more,minimumAmount.toString()))
+                        nhTextInputCell.setErrorText(
+                            nhTextInputCell.context.getString(
+                                R.string.str_top_up_amount_must_be_more,
+                                minimumAmount.toString()
+                            )
+                        )
                     } else {
-                        nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.str_low_balance_must_be_more,minimumAmount.toString()))
+                        nhTextInputCell.setErrorText(
+                            nhTextInputCell.context.getString(
+                                R.string.str_low_balance_must_be_more,
+                                minimumAmount.toString()
+                            )
+                        )
                     }
                     false
 
-                }
-                else {
+                } else {
                     nhTextInputCell.removeError()
                     true
                 }
-            }
-            else {
+            } else {
                 if (isTopUp) {
                     nhTextInputCell.setErrorText(nhTextInputCell.context.getString(R.string.top_up_amount_must_be_80_000_or_less))
                 } else {
@@ -732,15 +744,15 @@ object Utils {
                 "A"
             }
 
-            activity.resources.getString(R.string.vehicle_type_B)  -> {
+            activity.resources.getString(R.string.vehicle_type_B) -> {
                 "B"
             }
 
-            activity.resources.getString(R.string.vehicle_type_C)  -> {
+            activity.resources.getString(R.string.vehicle_type_C) -> {
                 "C"
             }
 
-            activity.resources.getString(R.string.vehicle_type_D)  -> {
+            activity.resources.getString(R.string.vehicle_type_D) -> {
                 "D"
             }
 
@@ -889,7 +901,6 @@ object Utils {
     }
 
 
-
     fun getYesterdayDate(): String {
         val dateFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
         val cal = Calendar.getInstance()
@@ -947,7 +958,7 @@ object Utils {
             val number = NumberFormat.getCurrencyInstance(Locale.UK)
 
             return if (balance?.contains("(") == true && balance.contains(")")) {
-                val doublePayment = balance.replace("(", "")?.replace(")", "")?.toDouble()
+                val doublePayment = balance.replace("(", "").replace(")", "")?.toDouble()
                 number.format(doublePayment)
             } else {
                 val doublePayment = balance?.toDouble()
@@ -982,6 +993,7 @@ object Utils {
         }
         dialog.show()
     }
+
     fun isStringOnlyInt(input: String): Boolean {
         return input.toBigIntegerOrNull() != null
     }
@@ -989,28 +1001,29 @@ object Utils {
     fun getCountryCodeRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
 
-    fun setMaskWithDots(activity: Activity,info:String?):String{
-       return if((info?.length?:0)>=4){
-            activity.resources.getString(R.string.str_maskcardnumber,info?.takeLast(4))
-        }else{
-            activity.resources.getString(R.string.str_maskcardnumber,info)
+    fun setMaskWithDots(activity: Activity, info: String?): String {
+        return if ((info?.length ?: 0) >= 4) {
+            activity.resources.getString(R.string.str_maskcardnumber, info?.takeLast(4))
+        } else {
+            activity.resources.getString(R.string.str_maskcardnumber, info)
         }
 
     }
-    fun setStarmaskcardnumber(activity: Activity,info:String?):String{
-       return if((info?.length?:0)>=4){
-            activity.resources.getString(R.string.str_starmaskcardnumber,info?.takeLast(4))
-        }else{
-            activity.resources.getString(R.string.str_starmaskcardnumber,info)
+
+    fun setStarmaskcardnumber(activity: Activity, info: String?): String {
+        return if ((info?.length ?: 0) >= 4) {
+            activity.resources.getString(R.string.str_starmaskcardnumber, info?.takeLast(4))
+        } else {
+            activity.resources.getString(R.string.str_starmaskcardnumber, info)
         }
 
     }
 
     fun maskCardNumber(cardNumber: String): String {
-        return if((cardNumber.length)>=4){
-            "****"+cardNumber.takeLast(4)
-        }else{
-            "****"+cardNumber
+        return if ((cardNumber.length) >= 4) {
+            "****" + cardNumber.takeLast(4)
+        } else {
+            "****" + cardNumber
         }
 
 //        return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "****")
@@ -1018,12 +1031,16 @@ object Utils {
 
 
     fun setCardImage(cardType: String): Int {
-        if (cardType.equals("visa", true)) {
+        if (cardType.uppercase().equals(Constants.VISA, true)) {
             return R.drawable.visablue
-        } else if (cardType.equals("maestro", true)) {
+        } else if (cardType.uppercase().equals(Constants.MAESTRO, true)) {
             return R.drawable.maestro
-        } else {
+        } else if (cardType.uppercase().equals(Constants.MASTERCARD, true)) {
             return R.drawable.mastercard
+        } else if (cardType.uppercase().equals(Constants.CURRENT, true)) {
+            return R.drawable.directdebit
+        } else {
+            return R.color.white
         }
     }
 

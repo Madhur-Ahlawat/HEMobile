@@ -256,8 +256,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             is Resource.DataError -> {
-                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(resource.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
@@ -345,8 +345,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             is Resource.DataError -> {
-                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(response.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
                 }
@@ -540,8 +540,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             is Resource.DataError -> {
-                if (response.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(response.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
                 }
@@ -699,8 +699,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             is Resource.DataError -> {
-                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(resource.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }

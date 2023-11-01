@@ -18,11 +18,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.ErrorResponseModel
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.RetryListener
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import okhttp3.Interceptor
 
 
@@ -39,7 +43,7 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
 
     }
 
-   /* override fun onWindowFocusChanged(hasFocus: Boolean) {
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
             // allow screenshots when activity is focused
@@ -51,7 +55,7 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
                 WindowManager.LayoutParams.FLAG_SECURE
             )
         }
-    }*/
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -185,9 +189,19 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
             .show()
     }
 
-    fun displaySessionExpireDialog(){
-        Utils.displaySesionExpiryDialog(this)
+    fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel) {
+        if(errorResponsModel.errorCode== Constants.TOKEN_FAIL && errorResponsModel.error.equals(
+                Constants.INVALID_TOKEN)){
+            Utils.displaySesionExpiryDialog(this)
+        }else if(errorResponsModel.errorCode== Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
+                Constants.SERVER_ERROR)){
+            startNewActivityByClearingStack(LandingActivity::class.java) {
+                putString(Constants.SHOW_SCREEN, Constants.SERVER_ERROR)
+            }
+
+        }
     }
+
 }
 
 fun AppCompatActivity.onBackPressed(callback: () -> Unit) {

@@ -1235,11 +1235,11 @@
 
     <string name="plus_top_up">+ TOP UP</string>
     <string name="txt_low_threshold_balance">Low Balance Threshold</string>
-    <string name="txt_topup_method">Top-Up Method</string>
+    <string name="txt_topup_method">Top-Up\nMethod</string>
     <string name="txt_dumy_card_number">••••••7890</string>
     <string name="txt_recent_transacions">Recent Transactions</string>
     <string name="top_up">Top Up</string>
-    <string name="txt_topup_amount">Top-Up Amount</string>
+    <string name="txt_topup_amount">Top-Up\nAmount</string>
     <string name="vehicle_deleted">Vehicle Deleted</string>
     <string name="vehicle_added_to_your_account">Vehicle added to your account</string>
     <string name="vehicles_not_added">Vehicles not added</string>

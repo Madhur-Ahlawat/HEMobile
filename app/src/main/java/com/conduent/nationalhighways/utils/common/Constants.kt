@@ -24,6 +24,7 @@ object Constants {
     const val REPLENISHMENTINFORMATION = "ReplenishmentInformation"
     const val EXISTING_CARD = "existing_card"
     const val EXPIRED = "EXPIRED"
+    const val CURRENT = "CURRENT"
     const val MASTERCARD = "MASTERCARD"
     const val MAESTRO = "MAESTRO"
     const val CASH = "CASH"
@@ -333,8 +334,12 @@ object Constants {
     const val ENQUIRY_STATUS = "enquiry_status"
     const val ACCOUNT_CONTACT_US = "account_contact_us"
 
-    const val API_TIMEOUT_ERROR = 100100
-    const val TOKEN_FAIL = 401
+    const val API_TIMEOUT_ERROR=100100
+     const val TOKEN_FAIL = 401
+     const val INTERNAL_SERVER_ERROR = 500
+     const val INVALID_TOKEN = "invalid_token"
+     const val SERVER_ERROR = "server_error"
+
 
 
 }

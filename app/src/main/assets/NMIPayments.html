@@ -32,7 +32,7 @@
         <table width="95%" class="center">
             <tr><td><label id="amountLabel" style="display: none;">$0.00</label></td></tr>
         </table>
-        <table width="95%" class="center" id="amounInput" style="border-bottom: 1.5px solid gray; display: none;">
+        <table width="95%" class="center" id="amounInput" style="border-bottom: 1.5px solid gray;">
             <tr><td width="0.07%"><label id="currency1" style="display: none;">&#163;</label></td><td width="98%">
                 <input type="number"  name="amount" id="amount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" onblur="checkNumber()" style="display: none; border-bottom: none;"/></td></tr>
         </table>
@@ -46,25 +46,25 @@
         <table width="95%" class="center">
         </table>
         <table width="95%" class="center">
-            <tr class="separator"><td><label class="topSpace" for="lname" id="label">Name on card</label></td></tr>
+            <tr class="separator"><td><label class="topSpace" for="lname" id="labelNameOnCard">Name on card</label></td></tr>
             <tr><td><div id="name"></div></td></tr>
             <tr><td><label id="nameerrormesages" style="display: none;"></label></td></tr>
             <tr><td><br></td></tr>
 
-            <tr class="separator"><td><label id="label">Card Number</label></td></tr>
+            <tr class="separator"><td><label id="labelCardNumber">Card Number</label></td></tr>
             <tr><td><div id="ccNumber"></div></td></tr>
             <tr><td><label id="ccerrormesages" style="display: none;"></label></td></tr>
-            <tr><td><label id="hint">Accepted credit and debit card types</label></td></tr>
+            <tr><td><label id="hintCardTypes">Accepted credit and debit card types</label></td></tr>
             <tr  class = "image-container"><td><img src="allcardsaccepted2x.png" height="200" width="200"/></td></tr>
             <tr><td><br></td></tr>
 
             <tr class="separator"><td><label for="Credit card number" id="label">Expiry Date</label></td></tr>
             <tr><td width="95%"><div id="ccExp"></div></td></tr>
-            <tr><td><label id="cscerrormesages" style="display: none;"></td></label> </tr>
-            <tr><td><label id="hint">For example, 09/25</label></td></tr>
+            <tr><td><label id="cscerrormesages" style="display: none;"></label></td></tr>
+            <tr><td><label id="hintExpiry">For example, 09/25</label></td></tr>
             <tr><td><br></td></tr>
 
-            <tr class="separator"><td><label id="label">Card Security Code</label></td></tr>
+            <tr class="separator"><td><label id="labelCardSecurityCode">Card Security Code</label></td></tr>
         </table>
         <table width="95%" class="center">
             <tr><td><div id="cvv"></div></td><td width="0.07%"><img src="cvv.png" height="35" width="35"/></td></tr>

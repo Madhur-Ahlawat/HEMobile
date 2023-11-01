@@ -60,6 +60,8 @@ object DashboardUtils {
         } else {
             tvTitle.text = tvTitle.context.getString(R.string.manual_top_up)
         }
+        tvTitle.text = status
+
     }
 
     fun setAccountType(type: String, subType: String?, tvTitle: AppCompatTextView) {

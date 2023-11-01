@@ -1,4 +1,4 @@
-package com.conduent.nationalhighways.ui.transactions.adapter;
+package com.conduent.nationalhighways.ui.transactions.adapter
 
 import android.os.Build
 import android.util.Log
@@ -24,8 +24,7 @@ class TransactionsAdapter(
 ) :
     RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder>() {
     class TransactionViewHolder(binding: ItemAllTansactionsBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     private var binding: ItemAllTansactionsBinding? = null
     private var pos: Int = -1
@@ -36,7 +35,16 @@ class TransactionsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return transactionItemList.size
+        if (context is DashboardFragmentNew) {
+            if (transactionItemList.size < 2) {
+                return transactionItemList.size
+            } else {
+                return 2
+            }
+        } else {
+            return transactionItemList.size
+
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -46,17 +54,16 @@ class TransactionsAdapter(
         var recentTransactionItem = transactionItemList.get(position)
         Log.e("POSXJ220", transactionItemList.get(position))
         binding?.apply {
-            if(context is DashboardFragmentNew){
+            if (context is DashboardFragmentNew) {
                 headerDate.gone()
-            }
-            else{
-                headerDate!!.text = recentTransactionItem
+            } else {
+                headerDate.text = recentTransactionItem
                 headerDate.visible()
             }
             innerAdapter = TransactionsInnerAdapter(
                 context, Utils.sortTransactionsDateWiseDescending(
-                    transactionItemHashMap.get(recentTransactionItem)?: mutableListOf()
-                )!!
+                    transactionItemHashMap.get(recentTransactionItem) ?: mutableListOf()
+                )
             )
             var layoutManager = LinearLayoutManager(context.requireContext())
             rvCrossings.layoutManager = layoutManager

@@ -116,7 +116,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
 
-
         }
     }
 
@@ -130,8 +129,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
                 dashboardViewModel.accountSubType.value = accountInformation?.accSubType
-                dashboardViewModel.personalInformationData.value=personalInformation
-                dashboardViewModel.accountInformationData.value=accountInformation
+                dashboardViewModel.personalInformationData.value = personalInformation
+                dashboardViewModel.accountInformationData.value = accountInformation
 
                 if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                     binding.cardViewThresholdLimit.visibility = View.GONE
@@ -143,8 +142,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
+                    displaySessionExpireDialog(status.errorModel)
                 }
             }
 
@@ -180,8 +182,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                 directDebitPaymentList = (paymentList?.filter { it?.bankAccount == true }
                     ?: ArrayList()) as ArrayList<CardListResponseModel?>?
-                dashboardViewModel.directDebitCardListSize.value=directDebitPaymentList.orEmpty().size
-                dashboardViewModel.paymentListSize.value=paymentList.orEmpty().size
+                dashboardViewModel.directDebitCardListSize.value =
+                    directDebitPaymentList.orEmpty().size
+                dashboardViewModel.paymentListSize.value = paymentList.orEmpty().size
                 cardPaymentList = (paymentList?.filter { it?.bankAccount == false }
                     ?: ArrayList()) as ArrayList<CardListResponseModel?>?
 
@@ -221,8 +224,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
+                    displaySessionExpireDialog(status.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }
@@ -312,12 +318,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             accountNumber = paymentList?.get(position)?.cardNumber.toString()
             this.position = position
             val bundle = Bundle()
-
             if (paymentList?.get(position)?.primaryCard == true) {
-
             } else {
                 isDirectDebitDelete = false
             }
+
             if (paymentList.orEmpty().size >= 2) {
                 deletePaymentDialog(
                     getString(R.string.str_remove_payment_method),
@@ -328,11 +333,14 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             requireActivity(),
                             paymentList?.get(position)?.cardNumber
                         ),
-                        paymentList?.get(position)?.expMonth + "/" + if(paymentList?.get(position)?.expYear!!.length>2)  paymentList?.get(position)?.expYear!!.substring(2,paymentList?.get(position)?.expYear!!.length) else paymentList?.get(position)?.expYear!!
+                        paymentList?.get(position)?.expMonth + "/" + if (paymentList?.get(position)?.expYear!!.length > 2) paymentList?.get(
+                            position
+                        )?.expYear!!.substring(
+                            2,
+                            paymentList?.get(position)?.expYear!!.length
+                        ) else paymentList?.get(position)?.expYear!!
                     )
                 )
-
-
             } else {
                 if (paymentList.orEmpty().size == 1) {
                     if (accountInformation?.accSubType.equals(Constants.PAYG)) {
@@ -359,11 +367,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     if (paymentList.orEmpty().size > 1) {
                         rowId = paymentList?.get(position)?.rowId ?: ""
                         showLoader()
-
-                        makeSecondaryCardAsPrimary(
-                            paymentList?.get(position + 1)?.cardType,
-                            paymentList?.get(position + 1)?.rowId
-                        )
+                        viewModel.deleteCardState(PaymentMethodDeleteModel(rowId))
                     }
 
                 }
@@ -591,8 +595,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
+                    displaySessionExpireDialog(status.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }
@@ -614,7 +621,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         when (status) {
             is Resource.Success -> {
                 showLoader()
-                Log.e("TAG", "handleDefaultCardResponse: makeDefault "+makeDefault )
+                Log.e("TAG", "handleDefaultCardResponse: makeDefault " + makeDefault)
                 if (makeDefault) {
                     viewModel.saveCardList()
                 } else {
@@ -626,8 +633,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
+                    displaySessionExpireDialog(status.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }
@@ -659,17 +669,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
                     showLoader()
-                    if (paymentList?.get(position)?.primaryCard == true && paymentList.orEmpty().size > 1) {
-                        rowId = paymentList?.get(position)?.rowId ?: ""
-                        makeSecondaryCardAsPrimary(
-                            paymentList?.get(position + 1)?.cardType,
-                            paymentList?.get(position + 1)?.rowId
-                        )
-                    } else {
-                        viewModel.deleteCardState(PaymentMethodDeleteModel(rowId_))
-                    }
-
-
+                    viewModel.deleteCardState(PaymentMethodDeleteModel(rowId_))
                 }
             })
     }
@@ -694,7 +694,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     companion object {
-        var isDirectDebit: Boolean=false
+        var isDirectDebit: Boolean = false
     }
 
 }

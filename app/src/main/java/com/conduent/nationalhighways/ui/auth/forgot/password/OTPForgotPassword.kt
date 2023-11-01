@@ -241,8 +241,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(resource.errorModel)
                 } else {
                     showError(binding.root, resource.errorMsg)
                 }
@@ -275,8 +275,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(resource.errorModel)
                 } else {
                     showError(binding.root, resource.errorMsg)
                 }
@@ -326,6 +326,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     else -> {
                         //otpSuccessRedirection()
                         confirmEmailCode()
+//                        otpSuccessRedirection()
                     }
 
                 }
@@ -550,8 +551,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(status.errorModel)
                 } else {
                     Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
@@ -616,8 +617,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 }
 
                 is Resource.DataError -> {
-                    if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                        displaySessionExpireDialog()
+                    if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                        displaySessionExpireDialog(status.errorModel)
                     } else {
                         showError(binding.root, status.errorMsg)
                     }
@@ -642,8 +643,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-//                otpSuccessRedirection()
-
                 when (resource.errorModel?.status) {
 
                     500 -> {
@@ -655,7 +654,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     Constants.TOKEN_FAIL -> {
-                        displaySessionExpireDialog()
+                        displaySessionExpireDialog(resource.errorModel)
+                    }
+                    Constants.INTERNAL_SERVER_ERROR -> {
+                        displaySessionExpireDialog(resource.errorModel)
                     }
 
                     else -> {
@@ -973,8 +975,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(status.errorModel)
                 } else {
                     AdobeAnalytics.setLoginActionTrackError(
                         "login",
@@ -1031,8 +1033,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(resource.errorModel)
                 } else {
                     requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                         putBoolean(Constants.FIRST_TYM_REDIRECTS, true)

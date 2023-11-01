@@ -54,7 +54,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        binding?.apply {
+        binding.apply {
             crossingAmount.text = crossing?.balance
             tvPaymentDateValue.text = crossing?.transactionDate
             tvPaymentTimeValue.text = crossing?.exitTime
@@ -62,11 +62,11 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
             tvTypeOfPaymentValue.text = crossing?.activity
             tvPaymentMethodValue.text = crossing?.rebillPaymentType?.substring(
                 0,
-                crossing?.rebillPaymentType?.indexOf("-")!!
+                crossing?.rebillPaymentType?.indexOf("-")?:0
             )
             tvChannelValue.text = Constants.Mobile_App
             tvFourDigitsOfTheCardValue.text = crossing?.rebillPaymentType?.substring(
-                crossing?.rebillPaymentType?.indexOf("-")!! + 1,
+                (crossing?.rebillPaymentType?.indexOf("-")?:0) + 1,
                 crossing?.rebillPaymentType?.length!!
             )
         }
