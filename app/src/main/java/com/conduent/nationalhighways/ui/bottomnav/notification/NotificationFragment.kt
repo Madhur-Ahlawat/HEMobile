@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav.notification
 
 import android.content.Context
 import android.os.Build
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -100,6 +101,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     }
 
     override fun init() {
+        binding.feedbackToImproveMb.setMovementMethod(LinkMovementMethod.getInstance())
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
