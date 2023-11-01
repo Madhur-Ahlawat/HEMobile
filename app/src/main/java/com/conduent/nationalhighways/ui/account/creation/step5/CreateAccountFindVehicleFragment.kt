@@ -212,115 +212,129 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
-                NewCreateAccountRequestModel.onOffVehiclePlateNumber = ""
-                NewCreateAccountRequestModel.referenceId?.let {
-                    viewModel.heartBeat(Constants.AGENCY_ID,
-                        it
-                    )
-                }
-                NewCreateAccountRequestModel.onOffVehiclePlateNumber=""
-                isClicked = true
-
-
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
-                bundle.putString(
-                    Constants.PLATE_NUMBER,
-                    binding.editNumberPlate.editText.text.toString()
-                )
-                if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.editText.text
-                        .toString().trim() && isCrossingCall.not()
-                ) {
-                    if (edit_summary) {
-                        findNavController().navigate(
-                            R.id.action_findVehicleFragment_to_accountSummaryFragment,
-                            bundle
-                        )
-                    } else {
-                        findNavController().navigate(
-                            R.id.action_findVehicleFragment_to_vehicleListFragment,
-                            bundle
+                if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty() == true) {
+                    NewCreateAccountRequestModel.referenceId?.let {
+                        viewModel.heartBeat(
+                            Constants.AGENCY_ID,
+                            it
                         )
                     }
-                    return
-                }
-
-                binding.findVehicle.isEnabled = false
-                val numberPlate =
-                    binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
-                        .replace("-", "")
-                NewCreateAccountRequestModel.plateNumber = numberPlate
-
-                Handler(Looper.getMainLooper()).postDelayed({
-                    binding.findVehicle.isEnabled = true
-                }, time)
-
-
-                val addedVehicleList = NewCreateAccountRequestModel.addedVehicleList
-                var isVehicleExist = false
-                for (obj in addedVehicleList) {
-                    if (obj?.plateInfo?.number.equals(numberPlate, true)) {
-                        isVehicleExist = true
-                    }
-                }
-                if (isVehicleExist) {
-                    NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = true
-                    val bundleData = Bundle()
-                    bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundleData.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
-                    bundleData.putString(Constants.PLATE_NUMBER, plateNumber)
-                    findNavController().navigate(
-                        R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                        bundleData
-                    )
-                } else {
-                    val vehicleList = NewCreateAccountRequestModel.vehicleList
-                    val size = addedVehicleList.size + vehicleList.size
-
-                    if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
-                        val accountType =
-                            HomeActivityMain.accountDetailsData?.accountInformation?.accountType
-
-                        if (accountType == Constants.BUSINESS_ACCOUNT &&
-                            ((size >= BuildConfig.BUSINESS.toInt()) || vehicleList.size >= 10)
-                        ) {
-                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                            findNavController().navigate(
-                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                                bundle
+                    if (NewCreateAccountRequestModel.sms_referenceId?.trim()?.isNotEmpty()==true){
+                        NewCreateAccountRequestModel.sms_referenceId?.let {
+                            viewModel.heartBeat(
+                                Constants.AGENCY_ID,
+                                it
                             )
-                        } else if (accountType != Constants.BUSINESS_ACCOUNT &&
-                            ((size >= BuildConfig.PERSONAL.toInt()) || vehicleList.size >= 10)
-                        ) {
-                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                        }
+                    }
+
+                    NewCreateAccountRequestModel.onOffVehiclePlateNumber = ""
+
+
+                    NewCreateAccountRequestModel.onOffVehiclePlateNumber = ""
+                    isClicked = true
+
+
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+                    bundle.putString(
+                        Constants.PLATE_NUMBER,
+                        binding.editNumberPlate.editText.text.toString()
+                    )
+                    if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.editText.text
+                            .toString().trim() && isCrossingCall.not()
+                    ) {
+                        if (edit_summary) {
                             findNavController().navigate(
-                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                R.id.action_findVehicleFragment_to_accountSummaryFragment,
                                 bundle
                             )
                         } else {
-                            checkVehicle(numberPlate)
+                            findNavController().navigate(
+                                R.id.action_findVehicleFragment_to_vehicleListFragment,
+                                bundle
+                            )
                         }
-                    } else {
-                        if (NewCreateAccountRequestModel.personalAccount && size >= BuildConfig.PERSONAL.toInt()) {
-                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                            findNavController().navigate(
-                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                                bundle
-                            )
-                        } else if (!NewCreateAccountRequestModel.personalAccount && size >= BuildConfig.BUSINESS.toInt()) {
-                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                            findNavController().navigate(
-                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                                bundle
-                            )
-                        } else {
-                            checkVehicle(numberPlate)
+                        return
+                    }
+
+                    binding.findVehicle.isEnabled = false
+                    val numberPlate =
+                        binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
+                            .replace("-", "")
+                    NewCreateAccountRequestModel.plateNumber = numberPlate
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        binding.findVehicle.isEnabled = true
+                    }, time)
+
+
+                    val addedVehicleList = NewCreateAccountRequestModel.addedVehicleList
+                    var isVehicleExist = false
+                    for (obj in addedVehicleList) {
+                        if (obj?.plateInfo?.number.equals(numberPlate, true)) {
+                            isVehicleExist = true
                         }
                     }
+                    if (isVehicleExist) {
+                        NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = true
+                        val bundleData = Bundle()
+                        bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundleData.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+                        bundleData.putString(Constants.PLATE_NUMBER, plateNumber)
+                        findNavController().navigate(
+                            R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                            bundleData
+                        )
+                    } else {
+                        val vehicleList = NewCreateAccountRequestModel.vehicleList
+                        val size = addedVehicleList.size + vehicleList.size
+
+                        if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
+                            val accountType =
+                                HomeActivityMain.accountDetailsData?.accountInformation?.accountType
+
+                            if (accountType == Constants.BUSINESS_ACCOUNT &&
+                                ((size >= BuildConfig.BUSINESS.toInt()) || vehicleList.size >= 10)
+                            ) {
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                                findNavController().navigate(
+                                    R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                    bundle
+                                )
+                            } else if (accountType != Constants.BUSINESS_ACCOUNT &&
+                                ((size >= BuildConfig.PERSONAL.toInt()) || vehicleList.size >= 10)
+                            ) {
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                                findNavController().navigate(
+                                    R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                    bundle
+                                )
+                            } else {
+                                checkVehicle(numberPlate)
+                            }
+                        } else {
+                            if (NewCreateAccountRequestModel.personalAccount && size >= BuildConfig.PERSONAL.toInt()) {
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                                findNavController().navigate(
+                                    R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                    bundle
+                                )
+                            } else if (!NewCreateAccountRequestModel.personalAccount && size >= BuildConfig.BUSINESS.toInt()) {
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                                findNavController().navigate(
+                                    R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                    bundle
+                                )
+                            } else {
+                                checkVehicle(numberPlate)
+                            }
+                        }
+                    }
+
+
                 }
-
-
             }
         }
     }

@@ -393,11 +393,14 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 */
 
                     EDIT_ACCOUNT_TYPE -> {
-                        NewCreateAccountRequestModel.referenceId?.let {
-                            viewModel.heartBeat(Constants.AGENCY_ID,
-                                it
-                            )
+                        if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true){
+                            NewCreateAccountRequestModel.referenceId?.let {
+                                viewModel.heartBeat(Constants.AGENCY_ID,
+                                    it
+                                )
+                            }
                         }
+
                         NewCreateAccountRequestModel.communicationTextMessage =
                             binding.switchCommunication.isChecked
                         findNavController().navigate(
@@ -406,10 +409,12 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     }
 
                     else -> {
-                        NewCreateAccountRequestModel.referenceId?.let {
-                            viewModel.heartBeat(Constants.AGENCY_ID,
-                                it
-                            )
+                        if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true){
+                            NewCreateAccountRequestModel.referenceId?.let {
+                                viewModel.heartBeat(Constants.AGENCY_ID,
+                                    it
+                                )
+                            }
                         }
                         NewCreateAccountRequestModel.communicationTextMessage =
                             binding.switchCommunication.isChecked

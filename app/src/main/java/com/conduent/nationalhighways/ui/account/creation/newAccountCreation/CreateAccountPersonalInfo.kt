@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPersonalInfoNewBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -46,12 +47,13 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
     private var requiredCompanyName = false
     private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
+    private val createAccountHeartBeatViewModel: CreateAccountVehicleViewModel by viewModels()
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPersonalInfoNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-      
+
         binding.inputFirstName.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.inputLastName.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.inputCompanyName.editText.addTextChangedListener(GenericTextWatcher(2))
@@ -60,6 +62,14 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         binding.btnNext.setOnClickListener(this)
         if (NewCreateAccountRequestModel.personalAccount) {
             enablePersonalView()
+        }
+
+        if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true){
+            NewCreateAccountRequestModel.referenceId?.let {
+                createAccountHeartBeatViewModel.heartBeat(Constants.AGENCY_ID,
+                    it
+                )
+            }
         }
 
         when(navFlowCall){
@@ -99,6 +109,12 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
     override fun observer() {
         observe(viewModel.updateProfileApiVal, ::handleUpdateProfileDetail)
+        observe(createAccountHeartBeatViewModel.heartBeatLiveData, ::heartBeatApiResponse)
+
+    }
+
+    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
+
     }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
