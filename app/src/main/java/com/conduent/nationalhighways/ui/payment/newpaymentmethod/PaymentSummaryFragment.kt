@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
+import com.conduent.nationalhighways.utils.common.Constants.OLD_PLATE_NUMBER
 import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
 
@@ -218,6 +219,10 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         bundle.putBoolean(EDIT_SUMMARY, true)
         bundle.putString(
             PLATE_NUMBER,
+            data?.plateNo?.trim()
+        )
+        bundle.putString(
+            OLD_PLATE_NUMBER,
             data?.plateNo?.trim()
         )
         bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)

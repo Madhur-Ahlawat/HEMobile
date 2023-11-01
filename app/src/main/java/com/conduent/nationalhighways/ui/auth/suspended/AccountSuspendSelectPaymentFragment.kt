@@ -196,10 +196,13 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 //                    R.id.action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment,
 //                    bundle
 //                )
+                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
+
                 findNavController().navigate(
-                    R.id.action_accountSuspendedPaymentFragment_to_accountSuspendedFinalPayFragment,
+                    R.id.action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment,
                     bundle
                 )
+
             }
 
             R.id.btnAddNewPayment -> {
@@ -289,8 +292,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(status.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }

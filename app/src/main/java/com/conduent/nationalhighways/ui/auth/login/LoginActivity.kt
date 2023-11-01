@@ -378,8 +378,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
-                if (status.errorModel?.errorCode == Constants.API_TIMEOUT_ERROR) {
-
+                if (status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR) {
+                    displaySessionExpireDialog(status.errorModel)
                 } else {
                     binding.btnLogin.isEnabled = true
 

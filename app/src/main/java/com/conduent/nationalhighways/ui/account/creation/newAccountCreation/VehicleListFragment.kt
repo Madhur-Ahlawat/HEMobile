@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
@@ -33,6 +34,8 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     private lateinit var vehicleList: ArrayList<NewVehicleInfoDetails>
     private lateinit var vehicleAdapter: VehicleListAdapter
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
+    private val viewModel: CreateAccountVehicleViewModel by viewModels()
+
     private var loader: LoaderDialog? = null
     private var apiRequestCount = 0
     override fun getFragmentBinding(
@@ -47,7 +50,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     }
     private fun sortVehilcesListInDescendingOrder(vehiclesList: MutableList<NewVehicleInfoDetails>): MutableList<NewVehicleInfoDetails> {
-        var transactionListSorted: MutableList<NewVehicleInfoDetails> = mutableListOf()
+        val transactionListSorted: MutableList<NewVehicleInfoDetails> = mutableListOf()
         for (vehicle in vehiclesList) {
             if (transactionListSorted?.isEmpty() == true) {
                 transactionListSorted.add(vehicle!!)
@@ -74,6 +77,12 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     override fun observer() {
         observe(vehicleMgmtViewModel.addVehicleApiVal, ::addVehicleApiCall)
+        observe(viewModel.heartBeatLiveData, ::heartBeatApiResponse)
+
+    }
+
+    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
+
     }
 
     override fun onResume() {
@@ -90,9 +99,9 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             }
 
             is Resource.DataError -> {
-                if (status.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
                     sessionExpiry = true
-                    displaySessionExpireDialog()
+                    displaySessionExpireDialog(status.errorModel)
                 }
                 apiStatus = false
             }
@@ -254,6 +263,16 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                                 bundle
                             )
                         } else {
+                            NewCreateAccountRequestModel.referenceId?.let {
+                                viewModel.heartBeat(Constants.AGENCY_ID,
+                                    it
+                                )
+                            }
+                            NewCreateAccountRequestModel.sms_referenceId?.let {
+                                viewModel.heartBeat(Constants.AGENCY_ID,
+                                    it
+                                )
+                            }
                             findNavController().navigate(
                                 R.id.action_vehicleListFragment_to_createAccountSummaryFragment,
                                 bundle

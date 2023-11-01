@@ -22,16 +22,20 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.ErrorResponseModel
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
@@ -68,7 +72,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         }
         Log.e("TAG", "onCreateView: navFlowCall " + navFlowCall)
         Log.e("TAG", "onCreateView: navFlowFrom " + navFlowFrom)
-        Log.e("TAG", "onCreateView: navData " + navData.toString())
+        Log.e("TAG", "onCreateView: edit_summary " + edit_summary)
         return binding.root
     }
 
@@ -143,8 +147,14 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     }
 
 
-    fun displaySessionExpireDialog() {
-        Utils.displaySesionExpiryDialog(requireActivity())
+    fun displaySessionExpireDialog(errorResponsModel:ErrorResponseModel) {
+        if(errorResponsModel.errorCode==Constants.TOKEN_FAIL && errorResponsModel.error.equals(Constants.INVALID_TOKEN)){
+            Utils.displaySesionExpiryDialog(requireActivity())
+        }else if(errorResponsModel.errorCode==Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(Constants.SERVER_ERROR)){
+            requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
+                putString(Constants.SHOW_SCREEN, Constants.SERVER_ERROR)
+            }
+        }
     }
 
 

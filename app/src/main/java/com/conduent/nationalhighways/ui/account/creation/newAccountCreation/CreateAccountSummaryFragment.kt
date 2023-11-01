@@ -7,14 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
@@ -22,16 +25,21 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
 import com.conduent.nationalhighways.utils.extn.visible
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener {
     private var dataModel: NewCreateAccountRequestModel?=null
     private lateinit var title: TextView
+    private val viewModel: CreateAccountVehicleViewModel by viewModels()
+
 
     private lateinit var vehicleAdapter: VehicleListAdapter
 
@@ -163,6 +171,13 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     }
 
     override fun observer() {
+        observe(viewModel.heartBeatLiveData, ::heartBeatApiResponse)
+
+    }
+
+    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
+
+
     }
 
     override fun onClick(v: View?) {
@@ -170,6 +185,16 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         when (v?.id) {
 
             R.id.btnNext -> {
+                NewCreateAccountRequestModel.referenceId?.let {
+                    viewModel.heartBeat(Constants.AGENCY_ID,
+                        it
+                    )
+                }
+                NewCreateAccountRequestModel.sms_referenceId?.let {
+                    viewModel.heartBeat(Constants.AGENCY_ID,
+                        it
+                    )
+                }
                 if (!NewCreateAccountRequestModel.prePay) {
                     val bundle = Bundle()
 
@@ -217,7 +242,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
 
             R.id.editEmailAddress -> {
-                var bundle = Bundle()
+                val bundle = Bundle()
                 bundle.putBoolean(Constants.IS_EDIT_EMAIL,true)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_emailAddressFragment,

@@ -28,9 +28,8 @@
                     });
                     
                     threeDSsecureInterface.on('complete', function(e) {
-                        window.appInterface.postMessage("sucess");
                         var apiResponse = JSON.stringify(e, null, "");
-                        window.appInterface.postMessage("{\"action\":\"threeDSecure\", \"parameter\":{\"threeDSecure\":"+apiResponse+"}}");
+                        window.appInterface.postMessage(apiResponse);
                     });
                     
                     threeDSsecureInterface.on('failure', function(e) {

@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModel
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
@@ -43,6 +44,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var data: CrossingDetailsModelsResponse? = null
     private var isViewCreated = false
     private var plateNumber = ""
+    private var oldPlateNumber = ""
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var time = (1 * 1000).toLong()
@@ -62,6 +64,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
             arguments?.getString(Constants.PLATE_NUMBER, "").toString()
                 .let { plateNumber = it.replace("null", "") }
+            arguments?.getString(Constants.PLATE_NUMBER, "").toString()
+                .let { oldPlateNumber = it.replace("null", "") }
+            if(plateNumber.isNotEmpty() && oldPlateNumber.isEmpty()){
+                oldPlateNumber=plateNumber
+            }
         }
         navData?.let {
             data = it as CrossingDetailsModelsResponse
@@ -192,17 +199,28 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
             observe(viewModel.validVehicleLiveData, ::apiResponseValidVehicle)
+            observe(viewModel.heartBeatLiveData, ::heartBeatApiResponse)
+
         }
         isViewCreated = true
+    }
+
+    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
+
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
+                NewCreateAccountRequestModel.onOffVehiclePlateNumber = ""
+                NewCreateAccountRequestModel.referenceId?.let {
+                    viewModel.heartBeat(Constants.AGENCY_ID,
+                        it
+                    )
+                }
                 NewCreateAccountRequestModel.onOffVehiclePlateNumber=""
                 isClicked = true
 
-                val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
 
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -211,11 +229,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     Constants.PLATE_NUMBER,
                     binding.editNumberPlate.editText.text.toString()
                 )
-
                 if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.editText.text
                         .toString().trim() && isCrossingCall.not()
                 ) {
-                    if (editCall) {
+                    if (edit_summary) {
                         findNavController().navigate(
                             R.id.action_findVehicleFragment_to_accountSummaryFragment,
                             bundle
@@ -309,12 +326,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun checkVehicle(numberPlate: String) {
-
         if (isCrossingCall) {
             if (edit_summary) {
-                if (data?.plateNo.equals(
+                if (oldPlateNumber.uppercase().equals(
                         binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
-                            .replace("-", "")
+                            .replace("-", "").uppercase()
                     )
                 ) {
                     val bundle = Bundle()
@@ -419,7 +435,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 vehicleClass = it[0].vehicleClass
                                 vehicleMake = it[0].vehicleMake
                                 vehicleModel = it[0].vehicleModel
-                                vehicleType = Utils.getVehicleType(requireActivity(),it[0].vehicleClass?:"")
+                                vehicleType = Utils.getVehicleType(
+                                    requireActivity(),
+                                    it[0].vehicleClass ?: ""
+                                )
                                 plateNo = binding.editNumberPlate.editText.text.toString()
                             }
                             bundle.putParcelable(Constants.NAV_DATA_KEY, data)
@@ -484,8 +503,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(resource.errorModel)
                 } else {
                     var isVehicleExist = false
                     val numberPlate =
@@ -501,6 +520,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         Constants.PLATE_NUMBER,
                         binding.editNumberPlate.editText.text.toString()
                     )
+                    bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
 
                     if (navData == null) {
                         navData =
@@ -524,6 +544,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
                         bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
                         arguments?.getInt(Constants.VEHICLE_INDEX)
                             ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                         if (!binding.editNumberPlate.getText().toString().trim().replace(" ", "")
@@ -589,6 +610,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     private fun apiResponsePlateInfo(resource: Resource<GetPlateInfoResponseModel?>?) {
         val bundle = Bundle()
+        bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
+
         bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -636,8 +659,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(resource.errorModel)
                 } else {
                     var isVehicleExist = false
                     val numberPlate =
@@ -784,8 +807,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 }
 
                 is Resource.DataError -> {
-                    if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                        displaySessionExpireDialog()
+                    if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                        displaySessionExpireDialog(resource.errorModel)
                     } else {
                         var isVehicleExist = false
                         val numberPlate =
@@ -796,7 +819,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 isVehicleExist = true
                             }
                         }
-                        val bundle = Bundle()
+                        val
+
+                                bundle = Bundle()
+                        bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
+
                         if (navData == null) {
                             navData =
                                 CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString())
@@ -866,8 +893,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
 
             is Resource.DataError -> {
-                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
-                    displaySessionExpireDialog()
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    displaySessionExpireDialog(resource.errorModel)
                 } else {
                     val numberPlate =
                         binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
