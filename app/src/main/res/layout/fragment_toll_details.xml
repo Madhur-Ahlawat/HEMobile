@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <ScrollView
         android:layout_width="match_parent"
-        android:fillViewport="false"
+        android:fillViewport="true"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
