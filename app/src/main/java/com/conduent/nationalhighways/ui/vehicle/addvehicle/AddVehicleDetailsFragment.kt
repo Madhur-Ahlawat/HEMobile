@@ -100,7 +100,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             colorInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
         }
         oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
-
+        Log.e("TAG", "init: oldPlateNumber " + oldPlateNumber)
         navData?.let {
             try {
                 data = it as CrossingDetailsModelsResponse
@@ -131,13 +131,17 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         nonUKVehicleModel?.vehicleColor ?: "",
                         nonUKVehicleModel?.vehicleClass ?: "",
                         nonUKVehicleModel?.vehicleModel ?: "",
-                        nonUKVehicleModel?.isUK ?: false
+                        nonUKVehicleModel?.isUK ?: false, 1
                     )
                 }
             }
         }
 
-        setPreSelectedVehicleType()
+        if (edit_summary == true && navFlowCall == Constants.PAY_FOR_CROSSINGS) {
+
+        } else {
+            setPreSelectedVehicleType()
+        }
         binding.typeVehicle.dropDownItemSelectListener = this
         binding.model = false
         arguments?.getInt(Constants.VEHICLE_SCREEN_KEY, 0)?.let {
@@ -190,7 +194,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     updateView(
                         data?.plateNo.toString(), data?.vehicleMake ?: "",
                         data?.vehicleColor ?: "", data?.vehicleClass ?: "",
-                        data?.vehicleModel ?: "", data?.veicleUKnonUK ?: false
+                        data?.vehicleModel ?: "", data?.veicleUKnonUK ?: false, 2
                     )
                     binding.vehiclePlateNumber.text = data?.plateNo.toString().uppercase()
 
@@ -203,7 +207,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         nonUKVehicleModel?.vehicleColor ?: "",
                         nonUKVehicleModel?.vehicleClass ?: "",
                         nonUKVehicleModel?.vehicleModel ?: "",
-                        nonUKVehicleModel?.isUK ?: false
+                        nonUKVehicleModel?.isUK ?: false, 3
                     )
                 }
             }
@@ -357,20 +361,37 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         vehicleColor: String = "",
         vehicleClass: String = "",
         vehicleModel: String = "",
-        isUK: Boolean = false
+        isUK: Boolean = false,
+        type: Int
     ) {
-        binding.vehiclePlateNumber.text = plateNumber
-        binding.makeInputLayout.setText(vehicleMake)
-        binding.colorInputLayout.setText(vehicleColor)
+        Log.e("TAG", "updateView: type -> " + type)
+        if (edit_summary == true && navFlowCall.equals(Constants.PAY_FOR_CROSSINGS)) {
 
-        binding.typeVehicle.setSelectedValue(
-            Utils.getVehicleType(
-                requireActivity(),
-                vehicleClass
+        } else {
+            binding.vehiclePlateNumber.text = plateNumber
+            binding.makeInputLayout.setText(vehicleMake)
+            binding.colorInputLayout.setText(vehicleColor)
+
+            binding.typeVehicle.setSelectedValue(
+                Utils.getVehicleType(
+                    requireActivity(),
+                    vehicleClass
+                )
             )
-        )
-        binding.modelInputLayout.setText(vehicleModel)
+            binding.modelInputLayout.setText(vehicleModel)
 
+            if (isUK) {
+                binding.radioButtonYes.isChecked = true
+            } else {
+                binding.radioButtonNo.isChecked = true
+            }
+            typeOfVehicleChecked = true
+            radioButtonChecked = true
+
+            makeInputCheck = true
+            modelInputCheck = true
+            colourInputCheck = true
+        }
         if (vehicleClass.equals("D", true) && NewCreateAccountRequestModel.plateCountry.equals(
                 Constants.COUNTRY_TYPE_UK
             )
@@ -394,17 +415,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             }
 
         }
-        if (isUK) {
-            binding.radioButtonYes.isChecked = true
-        } else {
-            binding.radioButtonNo.isChecked = true
-        }
-        typeOfVehicleChecked = true
-        radioButtonChecked = true
 
-        makeInputCheck = true
-        modelInputCheck = true
-        colourInputCheck = true
         checkValidation()
     }
 
@@ -413,9 +424,13 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         navData?.let {
             if (it is CrossingDetailsModelsResponse) {
                 it.apply {
-                    binding.makeInputLayout.editText.setText(vehicleMake)
-                    binding.modelInputLayout.editText.setText(vehicleModel)
-                    binding.colorInputLayout.editText.setText(vehicleColor)
+                    if (edit_summary == true && navFlowCall.equals(Constants.PAY_FOR_CROSSINGS)) {
+
+                    } else {
+                        binding.makeInputLayout.editText.setText(vehicleMake)
+                        binding.modelInputLayout.editText.setText(vehicleModel)
+                        binding.colorInputLayout.editText.setText(vehicleColor)
+                    }
                 }
             }
 

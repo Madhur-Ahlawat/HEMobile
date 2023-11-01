@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AccountInformation(
-    @SerializedName("status") val status: String?,
+    @SerializedName("status") var status: String?,
     @SerializedName("number") val number: String?,
     @SerializedName("type") val type: String?,
     @SerializedName("openViolationCount") val openViolationCount: Int?,

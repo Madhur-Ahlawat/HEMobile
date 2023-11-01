@@ -332,6 +332,9 @@ object Constants {
 
     const val API_TIMEOUT_ERROR=100100
      const val TOKEN_FAIL = 401
+     const val INTERNAL_SERVER_ERROR = 500
+     const val INVALID_TOKEN = "invalid_token"
+     const val SERVER_ERROR = "server_error"
 
 
 

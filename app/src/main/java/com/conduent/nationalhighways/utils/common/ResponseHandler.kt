@@ -19,27 +19,25 @@ object ResponseHandler {
         Log.e("TAG", "success: response isSuccessful " + response?.isSuccessful)
 
         return if (response?.isSuccessful == true) {
-            Log.e("TAG", "success: success " )
             if (response.code() == Constants.TOKEN_FAIL) {
                 return Resource.DataError(
                     "Token Expired",
-                    ErrorResponseModel("", "", "", 401, 401, "")
+                    ErrorResponseModel(Constants.INVALID_TOKEN, "", Constants.INVALID_TOKEN, 401, 401, "")
                 )
             } else {
                 Resource.Success(response.body())
             }
         } else {
             try {
-//                Log.e("TAG", "success: response errorBody "+response?.errorBody().toString() )
                 val errorResponse =
                     parseError(response)
-                Log.e("TAG", "success: response error " + errorResponse?.error.equals("invalid_token"))
+                Log.e("TAG", "success: response error " + errorResponse?.error.equals(Constants.INVALID_TOKEN))
                 Log.e("TAG", "success: response error--> " + errorResponse?.error)
 
-                if (response?.code() == Constants.TOKEN_FAIL && errorResponse?.error.equals("invalid_token")) {
+                if (response?.code() == Constants.TOKEN_FAIL && errorResponse?.error.equals(Constants.INVALID_TOKEN)) {
                     return Resource.DataError(
                         "Token Expired",
-                        ErrorResponseModel("", "", "", 401, 401, "")
+                        ErrorResponseModel(Constants.INVALID_TOKEN, "", Constants.INVALID_TOKEN, 401, 401, "")
                     )
                 } else {
                     if (TextUtils.isEmpty(errorResponse?.message)) {
@@ -62,10 +60,10 @@ object ResponseHandler {
         return try {
             Log.e("TAG", "parseError: message try -> " )
             gson.fromJson(errorBody, ErrorResponseModel::class.java)
-                ?: ErrorResponseModel("invalid_token", null, null, 0, 0, null)
+                ?: ErrorResponseModel(Constants.INVALID_TOKEN, null, Constants.INVALID_TOKEN, 0, 0, null)
         } catch (e: JsonSyntaxException) {
             Log.e("TAG", "parseError: message -> " +e.message)
-            ErrorResponseModel("invalid_token", null, errorBody, 0, 0, null)
+            ErrorResponseModel(Constants.INVALID_TOKEN, null, errorBody, 0, 0, null)
         }
     }
 
