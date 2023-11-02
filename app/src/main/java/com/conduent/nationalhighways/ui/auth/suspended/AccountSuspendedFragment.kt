@@ -57,7 +57,7 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
 
         }
 
-        val balance = currentBalance.replace("£", "")
+        val balance = currentBalance.replace("£", "").replace(",","")
         if (balance.isNotEmpty()){
             val doubleBalance = balance.toDouble()
             val intBalance = doubleBalance.toInt()
