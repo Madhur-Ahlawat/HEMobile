@@ -185,6 +185,7 @@ android {
 
         // Firebase Cloud Messaging (Kotlin)
         implementation("com.google.firebase:firebase-messaging-ktx")
+        implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
 
         //Crypto shared pref
