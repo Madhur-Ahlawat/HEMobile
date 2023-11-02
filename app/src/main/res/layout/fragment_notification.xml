@@ -55,13 +55,27 @@
         <RelativeLayout
             android:id="@+id/no_data_rl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/llyt"
             android:layout_marginTop="@dimen/margin_50dp">
 
             <include
                 android:id="@+id/include_no_data"
                 layout="@layout/include_no_data" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/feedback_to_improve_no_mb"
+                style="@style/secondaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/margin_20dp"
+                android:layout_marginRight="@dimen/margin_20dp"
+                android:layout_marginBottom="@dimen/margin_5dp"
+                android:text="@string/feed_back_to_improve_service"
+                android:textColorLink="@color/dark_blue_color"
+                app:radius="@dimen/_5dp" />
+
 
         </RelativeLayout>
 
@@ -110,6 +124,7 @@
                 android:id="@+id/notifications_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@id/bottom_ll"
                 android:layout_below="@+id/rl_checkbox"
                 android:layout_marginHorizontal="@dimen/_8dp"
                 android:clickable="true"
@@ -118,33 +133,46 @@
                 android:paddingBottom="@dimen/_190sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:itemCount="3"
+                tools:itemCount="18"
                 tools:listitem="@layout/item_notifications" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHButton
-                android:id="@+id/btn_clear_notification"
-                style="@style/PrimaryButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/feedback_to_improve_mb"
-                android:layout_marginLeft="@dimen/margin_20dp"
-                android:layout_marginRight="@dimen/margin_20dp"
-                android:text="@string/clear_notification"
-                android:textColor="@color/white" />
-
-            <com.conduent.nationalhighways.utils.widgets.NHButton
-                android:id="@+id/feedback_to_improve_mb"
-                style="@style/secondaryButton"
+            <LinearLayout
+                android:id="@+id/bottom_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="@dimen/margin_20dp"
-                android:layout_marginRight="@dimen/margin_20dp"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:text="@string/feed_back_to_improve_service"
-                android:textColorLink="@color/dark_blue_color"
-                app:radius="@dimen/_5dp" />
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <com.conduent.nationalhighways.utils.widgets.NHButton
+                    android:id="@+id/btn_clear_notification"
+                    style="@style/PrimaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/margin_20dp"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    android:layout_marginRight="@dimen/margin_20dp"
+                    android:text="@string/clear_notification"
+                    android:textColor="@color/white" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHButton
+                    android:id="@+id/feedback_to_improve_mb"
+                    style="@style/secondaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_20dp"
+                    android:layout_marginRight="@dimen/margin_20dp"
+                    android:layout_marginBottom="@dimen/margin_5dp"
+                    android:text="@string/feed_back_to_improve_service"
+                    android:textColorLink="@color/dark_blue_color"
+                    app:radius="@dimen/_5dp" />
+
+            </LinearLayout>
+
 
         </RelativeLayout>
+
+
     </RelativeLayout>
 </layout>

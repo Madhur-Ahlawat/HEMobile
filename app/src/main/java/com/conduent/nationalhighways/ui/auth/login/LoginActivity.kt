@@ -96,23 +96,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
 
-
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
                     if (loader?.isVisible == true) {
                         loader?.dismiss()
                     }
-
-
-                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                    intent.putExtra(Constants.CROSSINGCOUNT, "")
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                    intent.putExtra(
-                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                    )
-                    startActivity(intent)
-
 
                     if (crossingCount > 0) {
 

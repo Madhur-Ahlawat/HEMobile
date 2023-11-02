@@ -102,6 +102,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     override fun init() {
         binding.feedbackToImproveMb.setMovementMethod(LinkMovementMethod.getInstance())
+        binding.feedbackToImproveNoMb.setMovementMethod(LinkMovementMethod.getInstance())
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -138,8 +139,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         binding.btnClearNotification.setOnClickListener {
             numberOfAlertsTOBeCleared = 0
             if (isPrioritySelected) {
-                priority_notifications?.forEach {
-                    if (it?.isSelectListItem == true) {
+                priority_notifications.forEach {
+                    if (it.isSelectListItem == true) {
                         binding.btnClearNotification.isEnabled = false
                         binding.btnClearNotification.isFocusable = false
                         numberOfAlertsTOBeCleared++
@@ -155,8 +156,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                     }
                 }
             } else {
-                standard_notifications?.forEach {
-                    if (it?.isSelectListItem == true) {
+                standard_notifications.forEach {
+                    if (it.isSelectListItem == true) {
                         numberOfAlertsTOBeCleared++
                         binding.btnClearNotification.isEnabled = false
                         binding.btnClearNotification.isFocusable = false
@@ -191,18 +192,18 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     fun selectAllNotification() {
         if (isPrioritySelected) {
-            priority_notifications?.forEach { it?.isSelectListItem = true }
+            priority_notifications.forEach { it.isSelectListItem = true }
         } else {
-            standard_notifications?.forEach { it?.isSelectListItem = true }
+            standard_notifications.forEach { it.isSelectListItem = true }
         }
         mAdapter?.notifyDataSetChanged()
     }
 
     fun unSelectAllNotifications() {
         if (isPrioritySelected) {
-            priority_notifications?.forEach { it?.isSelectListItem = false }
+            priority_notifications.forEach { it.isSelectListItem = false }
         } else {
-            standard_notifications?.forEach { it?.isSelectListItem = false }
+            standard_notifications.forEach { it.isSelectListItem = false }
 
         }
         mAdapter?.notifyDataSetChanged()

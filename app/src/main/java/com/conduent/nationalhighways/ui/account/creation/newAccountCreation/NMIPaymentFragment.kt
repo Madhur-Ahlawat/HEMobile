@@ -838,10 +838,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
-                    val fragmentId = findNavController().currentDestination?.id
-                    findNavController().popBackStack(fragmentId!!, true)
-                    findNavController().navigate(fragmentId, arguments)
-
                     displayCustomMessage(
                         getString(R.string.str_warning),
                         getString(R.string.the_card_you_are_trying_to_add_is_already),

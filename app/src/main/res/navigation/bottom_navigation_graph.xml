@@ -674,7 +674,9 @@
             app:destination="@id/tryPaymentAgainFragment" />
         <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendedPaymentFragment"
-            app:destination="@id/accountSuspendedPaymentFragment" />
+            app:destination="@id/accountSuspendedPaymentFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/accountSuspendedPaymentFragment"/>
     </fragment>
 
     <fragment

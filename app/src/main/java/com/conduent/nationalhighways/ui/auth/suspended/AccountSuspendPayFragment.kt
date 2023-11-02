@@ -351,10 +351,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         getString(R.string.str_add_another_card_small), getString(R.string.cancel),
                         object : DialogPositiveBtnListener {
                             override fun positiveBtnClick(dialog: DialogInterface) {
-
                                 val fragmentId = findNavController().currentDestination?.id
                                 findNavController().popBackStack(fragmentId!!,true)
-                                findNavController().navigate(fragmentId,arguments)
                             }
                         },
                         object : DialogNegativeBtnListener {
