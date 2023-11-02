@@ -484,7 +484,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 NewCreateAccountRequestModel.country = ""
                                 NewCreateAccountRequestModel.zipCode = ""
                                 NewCreateAccountRequestModel.selectedAddressId = -1
-                                NewCreateAccountRequestModel.prePay = false
+                               // NewCreateAccountRequestModel.prePay = false
                                 NewCreateAccountRequestModel.plateCountry = ""
                                 NewCreateAccountRequestModel.plateNumber = ""
                                 NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
@@ -588,7 +588,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             NewCreateAccountRequestModel.country = ""
                             NewCreateAccountRequestModel.zipCode = ""
                             NewCreateAccountRequestModel.selectedAddressId = -1
-                            NewCreateAccountRequestModel.prePay = false
+                            //NewCreateAccountRequestModel.prePay = false
                             NewCreateAccountRequestModel.plateCountry = ""
                             NewCreateAccountRequestModel.plateNumber = ""
                             NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false

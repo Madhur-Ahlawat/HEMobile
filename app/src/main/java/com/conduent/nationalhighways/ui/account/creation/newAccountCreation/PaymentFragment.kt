@@ -34,11 +34,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
         topUpAmount = arguments?.getString(Constants.DATA).toString()
         topUpBalance = true
         binding.paymentAmount.setText(topUpAmount)
-        if(NewCreateAccountRequestModel.prePay){
-            binding.youChooseToPay.visibility = View.GONE
-        }else{
-//            binding.paymentAmount.visibility = View.GONE
-        }
+
     }
 
     override fun initCtrl() {
