@@ -85,11 +85,12 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
             adapter = transactionsAdapter
         }
         getPaymentHistoryList(1)
-    }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+            HomeActivityMain.setTitle(getString(R.string.transactions))
+        }
 
-    override fun onResume() {
-        super.onResume()
-//        getPaymentHistoryList(currentPage+1)
+
     }
 
     override fun initCtrl() {
@@ -118,6 +119,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                     if (it.isNotEmpty()) {
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData?.clear()
+                        paymentHistoryHashMap.clear()
                         paymentHistoryListData?.addAll(it)
                         paymentHistoryListData =
                             sortTransactionsDateWiseDescending(paymentHistoryListData).toMutableList()
