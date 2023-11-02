@@ -1605,6 +1605,7 @@
     <string name="top_up_success">Top Up Success</string>
     <string name="email_address_must_be_8_characters_or_more">Email address must be 8 characters or more</string>
     <string name="profile_email_address">Profile email address</string>
+    <string name="crossing_details">Crossing Details</string>
 
 
 </resources>
