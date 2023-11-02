@@ -36,11 +36,9 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
-import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -97,7 +95,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     override fun initCtrl() {
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT, false)
-
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
@@ -658,10 +655,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 view?.loadUrl("javascript:(function(){document.getElementById('amount').value = '$doubleAmount';})()")
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 
-                val amountData= getString(R.string.currency_symbol) + String.format(
-                    "%.2f",
-                    topUpAmount.toDouble()
-                )
+
                 when (flow) {
                     Constants.SUSPENDED -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
@@ -787,7 +781,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
-                            view?.loadUrl("javascript:(function(){document.getElementById('payment').innerText  ='You chose to pay as you go. We’ll collect payment from your card each time you cross.';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('headerTable').style.display ='';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display ='none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
+
+
+
+                            view?.loadUrl("javascript:(function(){document.getElementById('title').innerText  ='You chose to pay as you go. We’ll collect payment from your card each time you cross.';})()")
                         } else {
                             view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = '';})()")

@@ -96,26 +96,22 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
 
+
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
                     if (loader?.isVisible == true) {
                         loader?.dismiss()
                     }
 
                     if (crossingCount > 0) {
-
-
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                         intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
                         intent.putExtra(Constants.PERSONALDATA, personalInformation)
                         intent.putExtra(Constants.NAV_FLOW_FROM, from)
-
-
                         intent.putExtra(
                             Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                         )
                         startActivity(intent)
-
                     }
                 } else {
                     startNewActivityByClearingStack(HomeActivityMain::class.java) {
@@ -132,9 +128,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
-
-
-
                 AdobeAnalytics.setLoginActionTrackError(
                     "login",
                     "login",
@@ -164,9 +157,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 resource.data?.let {
                     if (it.transactionList != null) {
                         crossingCount = it.transactionList.count ?: 0
-
                     }
-
                 }
             }
 
