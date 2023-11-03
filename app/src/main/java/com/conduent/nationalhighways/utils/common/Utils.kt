@@ -661,7 +661,6 @@ object Utils {
     }
 
     fun removeGivenStringCharactersFromString(characterString: String, input: String): String {
-        var input = input
         characterString.forEach {
             input.replace(it.toString(), "")
         }
