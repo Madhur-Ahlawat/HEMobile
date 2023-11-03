@@ -53,7 +53,7 @@ class ProfileViewModel @Inject constructor(
     val emailValidation: LiveData<Resource<EmailVerificationResponse?>?> get() = _emailValidation
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _emailVerificationApiVal = MutableLiveData<Resource<EmailVerificationResponse?>?>()
+    var _emailVerificationApiVal = MutableLiveData<Resource<EmailVerificationResponse?>?>()
     val emailVerificationApiVal: LiveData<Resource<EmailVerificationResponse?>?> get() = _emailVerificationApiVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

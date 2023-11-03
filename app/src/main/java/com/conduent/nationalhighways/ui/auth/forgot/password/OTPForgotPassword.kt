@@ -324,7 +324,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                        confirmEmailCode()
+                        otpSuccessRedirection()
+//                        confirmEmailCode()
                     }
 
                 }
@@ -890,15 +891,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneCell,
+                phoneCell = phoneDay,
                 phoneDay = phoneDay,
                 phoneFax = "",
-                smsOption = "Y",
+                smsOption = HomeActivityMain.accountDetailsData?.accountInformation?.smsOption,
                 phoneEvening = "",
-                phoneCellCountryCode = phoneCellCountryCode,
+                phoneCellCountryCode = phoneDayCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode,
                 mfaEnabled = accountInformation?.mfaEnabled,
-                securityCode = binding.edtOtp.getText().toString().trim(), referenceId = arguments?.getString(Constants.REFERENCE_ID)
+                securityCode = binding.edtOtp.getText().toString().trim(), referenceId = arguments?.getString(Constants.REFERENCE_ID),
+                correspDeliveryMode = accountInformation?.stmtDelivaryMethod, businessName = accountInformation?.businessName
             )
 
             viewModelProfile.updateUserDetails(request)

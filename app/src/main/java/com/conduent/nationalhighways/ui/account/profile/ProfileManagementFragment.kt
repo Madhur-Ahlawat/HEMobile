@@ -129,7 +129,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
                         binding.address.text =
                             personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
-                        binding.emailAddressProfile.text = personalInformation?.emailAddress
+                        binding.emailAddressProfile.text = personalInformation?.userName?.toLowerCase()
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)

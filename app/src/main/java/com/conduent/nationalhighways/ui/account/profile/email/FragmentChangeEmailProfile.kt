@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
+import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
@@ -48,7 +49,10 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navData?.let {
             data = it as ProfileDetailModel
+            binding?.edtEmail?.setText(data?.personalInformation?.userName?.toLowerCase())
         }
+        HomeActivityMain.setTitle(getString(R.string.profile_email_address))
+        (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
 
     override fun initCtrl() {
@@ -89,7 +93,6 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                     false
                 } else {
                     if (binding.edtEmail.getText().toString().length > 100) {
-                        binding.edtEmail.setError(getString(R.string.email_address_must_be_100_characters_or_fewer))
                         false
                     } else {
                         if (!Utils.isLastCharOfStringACharacter(
@@ -214,6 +217,8 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                             true
                         )
                     )
+                    bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL, binding.edtEmail.getText().toString().trim()))
+
                     findNavController().navigate(
                         R.id.action_change_email_profile_to_confirm_security_code,
                         bundle
@@ -232,6 +237,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             else -> {
             }
         }
+        viewModel._emailVerificationApiVal.postValue(null)
     }
 
     private fun handleEmailCheck(response: Resource<Boolean?>?) {
