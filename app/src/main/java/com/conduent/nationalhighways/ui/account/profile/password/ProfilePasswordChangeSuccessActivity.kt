@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.ui.account.profile.password
 
 import android.content.Intent
+import android.text.Html
+import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityChangePasswordSuccessProfileBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
@@ -40,11 +42,17 @@ class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePassword
 
     private fun initCtrl() {
         try {
-            binding.message.text =
-                "We’ve sent a confirmation email to\n${HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress}".toLowerCase()
+            binding.message.text = Html.fromHtml(
+            getString(
+                R.string.you_will_receive_a_confirmation_email,
+                intent.getStringExtra(Constants.EMAIL)?.toLowerCase()
+            ), Html.FROM_HTML_MODE_COMPACT)
         } catch (e: Exception) {
-            binding.message.text =
-                "We’ve sent a confirmation email to\n${HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress}"
+            binding.message.text = Html.fromHtml(
+                getString(
+                    R.string.you_will_receive_a_confirmation_email,
+                    intent.getStringExtra(Constants.EMAIL)
+                ), Html.FROM_HTML_MODE_COMPACT)
         }
         binding.btnContinue.setOnClickListener {
             Intent(this@ProfilePasswordChangeSuccessActivity, LoginActivity::class.java).apply {

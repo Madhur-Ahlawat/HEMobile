@@ -1606,6 +1606,7 @@
     <string name="email_address_must_be_8_characters_or_more">Email address must be 8 characters or more</string>
     <string name="profile_email_address">Profile email address</string>
     <string name="crossing_details">Crossing Details</string>
+    <string name="profile_password">Profile password</string>
     <string name="str_rooted_device" >This app can not run on a rooted device.</string>
     <string name="str_alert">Alert</string>
 
