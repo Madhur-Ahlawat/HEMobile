@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.landing
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -42,6 +43,8 @@ import javax.inject.Inject
 class SplashActivity : AppCompatActivity() {
 
     private var binding: ActivitySplashNewBinding? = null
+    var mIsRooted: Boolean = false
+
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -51,6 +54,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashNewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        mIsRooted = checkIfRootConditionAndDisplayMessage()
+
 
 
 
@@ -75,6 +80,36 @@ class SplashActivity : AppCompatActivity() {
         }
 
 
+    }
+    private fun checkIfRootConditionAndDisplayMessage(): Boolean {
+
+        //In some devices app restarts if opened from launcher even if app is running and user is logged in,
+        // Below code prevents app from restarting
+        if (!isTaskRoot
+            && intent.hasCategory(Intent.CATEGORY_LAUNCHER)
+            && intent.action != null
+            && intent.action.equals(Intent.ACTION_MAIN)
+        ) {
+            finish()
+            return true
+        }
+
+        if (Utils.isRooted(this)) {
+            if (!isFinishing) { // Added condition for a leaked window exception (if Activity is not finishing show dialog else not)
+               /* displayMessage(
+                    LanguageHelper.getLabel(Constants.KEY_GLOBAL_ROOTED_DEVICE_MESSAGE),
+                    LanguageHelper.getLabel(Constants.KEY_GLOBAL_EXIT),
+                    MessageType.APP_NAME,
+                    object : DialogPositiveBtnListener {
+                        override fun positiveBtnClick(dialog: DialogInterface) {
+                            finish()
+                        }
+                    })*/
+            }
+            return true
+        } else {
+            return false
+        }
     }
 
 

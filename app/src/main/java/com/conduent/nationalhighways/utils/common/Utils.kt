@@ -37,7 +37,9 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+import com.google.firebase.crashlytics.internal.common.CommonUtils
 import okhttp3.Interceptor
+import java.io.File
 import java.lang.reflect.Field
 import java.text.DateFormat
 import java.text.DecimalFormat
@@ -1064,4 +1066,33 @@ object Utils {
         context.startActivity(intent)
 
     }
+    fun isRooted(context: Context): Boolean {
+        return CommonUtils.isRooted() || isRooted2() || isEmulator(context)
+    }
+
+    fun isEmulator(context: Context): Boolean {
+        val androidId: String = Settings.Secure.getString(context.contentResolver, "android_id")
+        return "sdk" == Build.PRODUCT || "google_sdk" == Build.PRODUCT || androidId == null
+    }
+    private fun isRooted2(): Boolean {
+        return findBinary("su")
+    }
+    fun findBinary(binaryName: String): Boolean {
+        var found = false
+        if (!found) {
+            val places = arrayOf(
+                "/sbin/", "/system/bin/", "/system/xbin/",
+                "/data/local/xbin/", "/data/local/bin/",
+                "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/"
+            )
+            for (where in places) {
+                if (File(where + binaryName).exists()) {
+                    found = true
+                    break
+                }
+            }
+        }
+        return found
+    }
+
 }

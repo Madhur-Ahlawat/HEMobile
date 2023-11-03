@@ -14,13 +14,15 @@
         android:overScrollMode="never">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="18dp"
             android:paddingTop="@dimen/_20dp"
             android:paddingEnd="@dimen/margin_18dp"
+            android:gravity="center"
             android:paddingBottom="@dimen/margin_20dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -122,19 +124,19 @@
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/succesful_card_added"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_horizontal"
                 android:text="@string/str_you_have_successfully_added_new_card"
                 android:textAlignment="center"
-                android:textColor="@color/dark_blue_color"
+                android:textColor="@color/black"
                 android:textSize="15sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/ivWarning"
                 app:layout_constraintStart_toStartOf="@id/ivWarning"
-                app:layout_constraintTop_toBottomOf="@+id/layout_payment_reference_number" />
+                app:layout_constraintTop_toBottomOf="@+id/tvYouWillAlsoNeed" />
 
 
             <androidx.cardview.widget.CardView
@@ -189,15 +191,13 @@
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btnTopUpNow"
                 style="@style/PrimaryButton"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30dp"
                 android:layout_marginBottom="@dimen/margin_20dp"
                 android:text="@string/str_go_to_dashboard"
                 app:isEnabled="true"
-                app:layout_constraintBottom_toTopOf="@id/feedback_bt"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                />
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/feedback_bt"
@@ -209,12 +209,10 @@
                 android:textColor="@color/new_btn_color"
                 android:textColorLink="@color/new_btn_color"
                 app:borderColor="@color/new_btn_color"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                 />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
     </ScrollView>
