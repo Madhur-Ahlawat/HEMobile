@@ -14,9 +14,11 @@
 
         <CheckBox
             android:id="@+id/selectNotification"
-            android:layout_width="@dimen/_32dp"
-            android:layout_height="@dimen/_32dp"
-            android:buttonTint="@color/color_E0E0E0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_2dp"
+            android:background="@drawable/check_selector"
+            android:button="@null"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/cl_text" />
 

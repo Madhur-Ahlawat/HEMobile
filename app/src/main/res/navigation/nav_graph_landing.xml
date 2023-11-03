@@ -20,6 +20,9 @@
             android:id="@+id/action_landingFragment_to_startNow"
             app:destination="@id/startNow" />
         <action
+            android:id="@+id/action_landingFragment_to_registerReminderFragment"
+            app:destination="@id/registerReminderFragment" />
+        <action
             android:id="@+id/action_landingFragment_to_serviceUnavailableFragment"
             app:destination="@id/serviceUnavailableFragment"
             app:popUpTo="@id/serviceUnavailableFragment"
@@ -55,5 +58,10 @@
         android:name="com.conduent.nationalhighways.ui.landing.FailedRetryFragment"
         android:label="FailedRetryFragment"
         tools:layout="@layout/fragment_failed_retry" />
+    <fragment
+        android:id="@+id/registerReminderFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.RegisterReminderFragment"
+        android:label="RegisterReminderFragment"
+        tools:layout="@layout/fragment_register_reminder" />
 
 </navigation>

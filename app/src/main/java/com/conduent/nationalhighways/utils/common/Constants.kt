@@ -339,6 +339,7 @@ object Constants {
      const val INTERNAL_SERVER_ERROR = 500
      const val INVALID_TOKEN = "invalid_token"
      const val SERVER_ERROR = "server_error"
+     const val API_STATE = "API_STATE"
 
 
 
