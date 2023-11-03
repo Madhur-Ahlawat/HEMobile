@@ -126,7 +126,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
 
-
         binding.webView.settings.apply {
             loadWithOverviewMode = true
             useWideViewPort = true
@@ -662,6 +661,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='CONTINUE';})()")
@@ -688,6 +688,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
                         if (paymentListSize == 1) {
@@ -714,6 +715,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').innerText  ='Save the payment method against the account.';})()")
@@ -765,6 +767,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('title').innerText  ='Payment Details';})()")
 
+                        view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = '';})()")
+
                     }
 
                     else -> {
@@ -777,6 +784,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('headerTable').style.display ='';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display ='none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")

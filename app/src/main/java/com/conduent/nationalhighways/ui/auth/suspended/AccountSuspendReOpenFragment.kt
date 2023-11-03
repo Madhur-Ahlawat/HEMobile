@@ -54,7 +54,6 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
-
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
             responseModel = arguments?.getParcelable<CardResponseModel>(Constants.DATA)
 
@@ -86,7 +85,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
 
         } else {
-            binding.cardView.gone()
+           /* binding.succesfulCardAdded.gone()
+
+            binding.cardView.gone()*/
 
         }
         if (currentBalance.isNotEmpty()) {
@@ -140,7 +141,6 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             binding.tvAccountSuspended.text = getString(R.string.str_account_reopened)
             binding.layoutPaymentReferenceNumber.visible()
             binding.layoutPaymentReferenceNumber.visible()
-            binding.succesfulCardAdded.gone()
         }
 
     }

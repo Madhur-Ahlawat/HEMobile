@@ -15,9 +15,11 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentChangePasswordProfileBinding
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
@@ -40,6 +42,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
     private var isConfirmPasswordValid: Boolean = false
     private val viewModel: ProfileViewModel by viewModels()
     private var data: SecurityCodeResponseModel? = null
+    private var profileDetailModel:ProfileDetailModel?=null
     private var loader: LoaderDialog? = null
     private var passwordVisibile: Boolean = false
     private var confirmPasswordVisibile: Boolean = false
@@ -57,10 +60,15 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
+        navData?.let {
+            if(it is ProfileDetailModel){
+                profileDetailModel=navData as ProfileDetailModel
+            }
+        }
 
         data = arguments?.getParcelable("data")
-
+        HomeActivityMain.setTitle(getString(R.string.profile_password))
+        (requireActivity() as HomeActivityMain).showHideToolbar(true)
         //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
 
@@ -200,6 +208,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                         requireActivity(),
                         ProfilePasswordChangeSuccessActivity::class.java
                     ).apply {
+                        putExtra(Constants.EMAIL,profileDetailModel?.personalInformation?.emailAddress)
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(this)

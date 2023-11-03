@@ -189,8 +189,8 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (((card.type.localeCompare('visa') == "0") || (card.type.localeCompare('maestro') == "0") || (card.type.localeCompare('mastercard') == "0")) && (pattern.test(e.check.name)))
             {
                 var amt =  document.getElementById("amount").value;
-                invokeCommand("amounttoIncrease",amt)
-//                window.appInterface.postMessage("amounttoIncrease"+ amt);
+                //invokeCommand("amounttoIncrease",amt)
+                window.appInterface.postMessage("amounttoIncrease"+ amt);
                 window.appInterface.postMessage("3DStarted");
                 document.getElementById("form1").style.display="none";
                 const options = {
