@@ -266,6 +266,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                     country.dataSet.clear()
                     country.dataSet.addAll(countriesList)
                 }
+                binding.country.setSelectedValue(UK_COUNTRY)
 
                 binding.country.clearFocus()
                 binding.country.setDropDownItemSelectListener(this)

@@ -324,8 +324,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                        otpSuccessRedirection()
-//                        confirmEmailCode()
+                        //otpSuccessRedirection()
+                        confirmEmailCode()
                     }
 
                 }
