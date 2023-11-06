@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -258,6 +257,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 resource.data?.transactionList?.transaction?.let {
                     if (it.isNotEmpty()) {
                         binding.tvNoHistory.gone()
+                        binding.boxViewAll.visible()
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData.clear()
                         paymentHistoryListData.addAll(it)
@@ -267,8 +267,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         paymentHistoryDatesList.clear()
                         getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
-                        binding.boxViewAll.visible()
-                        binding.rvRecenrTransactions.visible()
 //                        paymentHistoryListData =
 //                            sortTransactionsDateWiseDescending(
 //                                paymentHistoryListData ?: ArrayList()

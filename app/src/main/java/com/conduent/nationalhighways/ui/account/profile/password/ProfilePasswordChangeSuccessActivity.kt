@@ -54,7 +54,8 @@ class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePassword
                     intent.getStringExtra(Constants.EMAIL)
                 ), Html.FROM_HTML_MODE_COMPACT)
         }
-        binding.btnContinue.setOnClickListener {
+        binding.btnSignin.setOnClickListener {
+            sessionManager.clearAll()
             Intent(this@ProfilePasswordChangeSuccessActivity, LoginActivity::class.java).apply {
                 putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

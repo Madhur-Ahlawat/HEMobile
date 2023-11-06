@@ -89,7 +89,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
             HomeActivityMain.setTitle(getString(R.string.transactions))
         }
-
+        initLoaderDialog()
 
     }
 
@@ -100,7 +100,10 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     override fun observer() {
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
     }
-
+    private fun initLoaderDialog() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
         if (loader?.isVisible == true) {
@@ -117,6 +120,10 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                 }
                 resource.data?.transactionList?.transaction?.let {
                     if (it.isNotEmpty()) {
+                        binding?.apply {
+                            ivNoTransactions.gone()
+                            tvNoTransactions.gone()
+                        }
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData?.clear()
                         paymentHistoryHashMap.clear()
@@ -127,13 +134,19 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                         getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
                     } else {
-                        binding.rvRecenrTransactions.gone()
+                        binding?.apply {
+                            rvRecenrTransactions.gone()
+                            ivNoTransactions.visible()
+                            tvNoTransactions.visible()
+                        }
 //                        binding.paginationLayout.gone()
                     }
                 } ?: run {
-                    binding.rvRecenrTransactions.gone()
-//                    binding.paginationLayout.gone()
-                }
+                    binding?.apply {
+                        rvRecenrTransactions.gone()
+                        ivNoTransactions.visible()
+                        tvNoTransactions.visible()
+                    }                }
             }
 
             is Resource.DataError -> {
@@ -150,6 +163,9 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     private fun getPaymentHistoryList(
         index: Int
     ) {
+        if (loader?.isVisible == false && loader?.isAdded == true) {
+            loader?.showsDialog
+        }
         val request = AccountPaymentHistoryRequest(
             index,
             Constants.ALL_TRANSACTION,

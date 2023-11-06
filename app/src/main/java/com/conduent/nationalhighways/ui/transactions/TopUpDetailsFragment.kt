@@ -66,7 +66,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
                 0,
                 crossing?.rebillPaymentType?.indexOf("-")?:0
             )
-            tvChannelValue.text = Constants.Mobile_App
+            tvChannelValue.text = crossing?.paymentSource
             tvFourDigitsOfTheCardValue.text = crossing?.rebillPaymentType?.substring(
                 (crossing?.rebillPaymentType?.indexOf("-")?:0) + 1,
                 crossing?.rebillPaymentType?.length!!

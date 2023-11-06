@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.databinding.ItemAllTansactionsBinding
@@ -46,15 +47,8 @@ class TransactionsInnerAdapter(
             valueCurrentBalance.text = recentTransactionItem.balance
             if (recentTransactionItem.activity?.toLowerCase()?.contains("toll") == false) {
                 indicatorIconEuro.visible()
-                indicatorIconTransactionType.post {
-                    Runnable {
-                        indicatorIconTransactionType.setImageDrawable(
-                            viewAllTransactionsFragment.resources.getDrawable(
-                                R.drawable.ic_euro_circular_green
-                            )
-                        )
-                    }
-                }
+                indicatorIconEuro.visible()
+                Glide.with(indicatorIconTransactionType).load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_euro_circular_green))
                 tvTransactionType.text =
                     viewAllTransactionsFragment.resources.getString(R.string.top_up)
                 verticalStripTransactionType.background.setTint(
@@ -80,16 +74,7 @@ class TransactionsInnerAdapter(
                 topup = "-" + recentTransactionItem.amount
                 valueTopUpAmount.text = topup
                 indicatorIconEuro.gone()
-
-                indicatorIconTransactionType.post {
-                    Runnable {
-                        indicatorIconTransactionType.setImageDrawable(
-                            viewAllTransactionsFragment.resources.getDrawable(
-                                R.drawable.ic_car_grey
-                            )
-                        )
-                    }
-                }
+                Glide.with(indicatorIconTransactionType).load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_car_grey))
                 valueTopUpAmount.setTextColor(viewAllTransactionsFragment.resources.getColor(R.color.red_status))
             }
         }

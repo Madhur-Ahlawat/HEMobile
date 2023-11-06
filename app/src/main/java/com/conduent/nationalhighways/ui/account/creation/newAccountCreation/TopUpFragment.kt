@@ -82,8 +82,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 R.string.str_minimum_amount,
                 this@TopUpFragment.apiLowBalanceAmount.toDouble().toInt().toString()
             ))
-            binding.lowBalance.setText("£" + formatter.format(this@TopUpFragment.apiLowBalanceAmount.toDouble()))
-            binding.top.setText("£" + formatter.format(this@TopUpFragment.apiTopUpAmountBalance.toDouble()))
+//            binding.lowBalance.setText("£" + formatter.format(this@TopUpFragment.apiLowBalanceAmount.toDouble()))
+//            binding.top.setText("£" + formatter.format(this@TopUpFragment.apiTopUpAmountBalance.toDouble()))
 
         }
         isViewCreated = true
@@ -309,17 +309,17 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     if (statusCode == "0") {
                         binding.apply {
                             if (thresholdAmountVo?.customerAmount?.isNotEmpty() == true) {
-                                binding.lowBalance.editText.removeTextChangedListener(gtwLowBalance)
-                                binding.lowBalance.editText.setText(
-                                    "£" + formatter.format(
-                                        thresholdAmountVo.thresholdAmount!!.toDouble()
-                                    )
-                                )
-
-                                binding.lowBalance.editText.addTextChangedListener(gtwLowBalance)
+//                                binding.lowBalance.editText.removeTextChangedListener(gtwLowBalance)
+//                                binding.lowBalance.editText.setText(
+//                                    "£" + formatter.format(
+//                                        thresholdAmountVo.thresholdAmount!!.toDouble()
+//                                    )
+//                                )
+//
+//                                binding.lowBalance.editText.addTextChangedListener(gtwLowBalance)
 
                                 this@TopUpFragment.apiLowBalanceAmount =
-                                    formatter.format(thresholdAmountVo.thresholdAmount.toDouble())
+                                    formatter.format(thresholdAmountVo.thresholdAmount?.toDouble())
 
                                 binding.minimumAmount.text = getString(
                                     R.string.str_minimum_amount,
@@ -329,16 +329,16 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                             }
 
                             if (thresholdAmountVo?.thresholdAmount?.isNotEmpty() == true) {
-                                binding.top.editText.removeTextChangedListener(gtwTopBalance)
-                                binding.top.editText.setText(
-                                    "£" + formatter.format(
-                                        thresholdAmountVo.customerAmount!!.toDouble()
-                                    )
-                                )
-                                binding.top.editText.addTextChangedListener(gtwTopBalance)
-                                this@TopUpFragment.apiTopUpAmountBalance = formatter.format(
-                                    thresholdAmountVo.customerAmount.toDouble()
-                                )
+//                                binding.top.editText.removeTextChangedListener(gtwTopBalance)
+//                                binding.top.editText.setText(
+//                                    "£" + formatter.format(
+//                                        thresholdAmountVo.customerAmount!!.toDouble()
+//                                    )
+//                                )
+//                                binding.top.editText.addTextChangedListener(gtwTopBalance)
+//                                this@TopUpFragment.apiTopUpAmountBalance = formatter.format(
+//                                    thresholdAmountVo.customerAmount.toDouble()
+//                                )
 
                                 binding.minimumAMountTopUp.text = (getString(
                                     R.string.top_up_amount_value,

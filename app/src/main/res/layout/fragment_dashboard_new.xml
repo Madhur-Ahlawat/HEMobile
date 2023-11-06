@@ -19,12 +19,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_payment_history"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_18ssp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="@+id/box_cardType"
+                app:layout_constraintStart_toStartOf="@+id/box_cardType"
+                app:layout_constraintTop_toBottomOf="@id/box_cardType" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/box_accountInformation"
@@ -399,8 +400,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/_8dp"
-                android:elevation="@dimen/_1dp"
-                android:nestedScrollingEnabled="true"
+                android:visibility="gone"
+                android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -457,13 +458,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/logo" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/guideline2" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"

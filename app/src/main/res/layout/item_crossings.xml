@@ -28,12 +28,8 @@
             android:layout_width="17.002dp"
             android:layout_height="18dp"
             android:layout_marginStart="@dimen/margin_14dp"
-            android:fontFamily="@font/open_sans"
             android:gravity="center"
             android:src="@drawable/ic_euro_circular_green"
-            android:text="@string/top_up"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/vertical_strip_transaction_type"
             app:layout_constraintTop_toTopOf="parent" />
