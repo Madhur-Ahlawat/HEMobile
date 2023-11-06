@@ -298,9 +298,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     when (data) {
                         "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt", "cancelClicked" -> hideLoader()
                         "3DStarted" -> showLoader()
-                        "3DSNotIntiated" -> findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentMethodFragment)
+                        "3DSNotIntiated" -> findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
 
-                        "cardtypeerror" -> findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentMethodFragment)
+                        "cardtypeerror" -> findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
 
                         "3DStarted1" -> threeDStarted = true
 
@@ -331,7 +331,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         expYear = "20" + responseModel?.card?.exp?.subSequence(2, 4).toString()
                         isTrusted = responseModel?.initiatedBy?.isTrusted == true
                         maskedCardNumber =
-                            Utils.maskCardNumber(responseModel?.card?.number.toString())
+                            Utils.maskSixteenDigitCardNumber(responseModel?.card?.number.toString())
                         cardToken = responseModel?.token.toString()
                         creditCardType = responseModel?.card?.type.toString()
 
@@ -396,7 +396,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         showLoader()
         val paymentTypeInfo = PaymentTypeInfo(
             responseModel?.card?.type?.uppercase(Locale.ROOT),
-            Utils.maskCardNumber(responseModel?.card?.number ?: ""),
+            Utils.maskSixteenDigitCardNumber(responseModel?.card?.number ?: ""),
             responseModel?.token,
             responseModel?.card?.exp?.subSequence(0, 2).toString(),
             "20${responseModel?.card?.exp?.subSequence(2, 4)}",
@@ -468,7 +468,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             firstName = responseModel?.check?.name ?: "",
             middleName = "",
             lastName = "",
-            maskedCardNumber = Utils.maskCardNumber(responseModel?.card?.number.toString()),
+            maskedCardNumber = Utils.maskSixteenDigitCardNumber(responseModel?.card?.number.toString()),
             paymentType = "card",
             primaryCard = s,
             saveCard = "",
@@ -514,6 +514,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.tcAccepted = "Y"
         model.mailPreference = "Y"
         model.emailPreference = "Y"
+        model.postCode=NewCreateAccountRequestModel.zipCode
         if (NewCreateAccountRequestModel.twoStepVerification) {
             model.mfaFlag = "Y"
 
@@ -562,14 +563,14 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.cardholderAuth = ""
         }
 
-        if (htmlTopUpAmount.trim().isNotEmpty()) {
-            model.transactionAmount =
-                String.format("%.2f", htmlTopUpAmount.toDouble()) // html Amount
+        if (NewCreateAccountRequestModel.prePay){
+            if (htmlTopUpAmount.trim().isNotEmpty()) {
+                model.transactionAmount =
+                    String.format("%.2f", htmlTopUpAmount.toDouble()) // html Amount
 
-        }else{
-            model.transactionAmount ="0.00"
-
+            }
         }
+
         model.thresholdAmount =
             String.format("%.2f", thresholdAmount.toDouble())  // threshold Amount
         model.securityCode = ""
@@ -582,7 +583,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             maskedCardNumber// card masked number only we need to send last four digit
         model.creditCardNumber = cardToken// card number should be token number
         model.cavv = cavv // 3ds cavv
-//        model.correspDeliveryMode = "EMAIL"
         model.password = data.password  //model password
         model.firstName = data.firstName
         model.creditCardType = creditCardType.uppercase() // need to send upper case
@@ -596,7 +596,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.cardLastName = data.lastName  // model name
         model.lastName = data.lastName
         model.digitPin = "2465"
-        //model.correspDeliveryFrequency = "MONTHLY"
+        model.correspDeliveryFrequency = ""
+        model.correspDeliveryMode=""
         model.eci = eci // 3ds eci
         model.replenishmentAmount = String.format("%.2f", topUpAmount.toDouble()) // top up amount
         model.directoryServerId = directoryServerId // 3ds serverId
@@ -619,7 +620,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             item.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass.toString())
             item.plateTypeDesc = "STANDARD"
             item.plateCountry = "UK"
-            item.vehicleYear = ""
+            item.vehicleYear = "2023"
             listVehicle.add(item)
 
         }

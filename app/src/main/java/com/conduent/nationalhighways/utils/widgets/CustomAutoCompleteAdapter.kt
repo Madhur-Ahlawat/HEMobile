@@ -34,7 +34,7 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                 val results = FilterResults()
                 var suggestions:MutableList<String> = mutableListOf()
 
-                if (constraint == null || constraint.isEmpty()) {
+                if (constraint.isNullOrEmpty()) {
                     suggestions.addAll(originalItems)
                 } else {
                     val filterPattern = constraint.toString().lowercase().trim()
@@ -44,7 +44,7 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                             suggestions.add(item)
                         }
                     }
-                    suggestions= suggestions.filter { it.toLowerCase().startsWith(filterPattern!!) }.toMutableList()
+                    suggestions= suggestions.filter { it.lowercase().startsWith(filterPattern) }.toMutableList()
                 }
                 results.values = suggestions
                 results.count = suggestions.size
@@ -55,7 +55,10 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                 clear()
                 if (results != null && results.count > 0) {
                     val filteredList = results.values as List<String>
-                    addAll(filteredList.sortedBy { it.substring(0,it.indexOf(" ")-1)})
+                    if (filteredList.isNotEmpty()){
+                        addAll(filteredList.sortedBy { it.substring(0,it.length-1)})
+
+                    }
                 }
                 if ((results?.count ?: 0) > 0) {
                     notifyDataSetChanged()

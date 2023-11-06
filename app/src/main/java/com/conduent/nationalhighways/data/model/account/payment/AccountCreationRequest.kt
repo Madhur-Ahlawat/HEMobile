@@ -4,6 +4,7 @@ package com.conduent.nationalhighways.data.model.account.payment
 class AccountCreationRequest {
     var eveningPhone: String? = null
     var lastName: String? = null
+    var postCode:String?=null
     var zipCode1: String? = null
     var billingAddressLine1: String? = null
     var city: String? = null
@@ -30,7 +31,7 @@ class AccountCreationRequest {
     var eveningPhoneCountryCode: String? = null
     var ftvehicleList: FtVehicleList=FtVehicleList()
     var emailPreference: String? = null
-//    var correspDeliveryMode: String? = null
+    var correspDeliveryMode: String? = null
     var cardCity: String? = null
     var cardZipCode: String? = null
     var thresholdAmount: String? = null
@@ -39,7 +40,7 @@ class AccountCreationRequest {
     var accountType: String? = null
     var securityCode: String? = null
     var threeDsVer: String? = null
-//    var correspDeliveryFrequency: String? = null
+    var correspDeliveryFrequency: String? = null
     var replenishmentAmount: String? = null
     var cavv: String? = null
     var firstName: String? = null
