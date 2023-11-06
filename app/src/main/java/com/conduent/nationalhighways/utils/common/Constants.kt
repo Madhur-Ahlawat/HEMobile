@@ -5,13 +5,12 @@ import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TwoS
 object Constants {
 
 
-
-    const val DIRECT_DEBIT: String="directdebit"
-    const val IS_DIRECT_DEBIT: String="IS_DIRECT_DEBIT"
-    const val FIND_VEHICLE="FIND_VEHICLE"
-    const val DIRECT_DEBIT_DELETE="direct_debit_delete"
-    const val DIRECT_DEBIT_NOT_SET_UP="direct_debit_not_set_up"
-    const val CREDIT_NOT_SET_UP="credit_not_set_up"
+    const val DIRECT_DEBIT: String = "directdebit"
+    const val IS_DIRECT_DEBIT: String = "IS_DIRECT_DEBIT"
+    const val FIND_VEHICLE = "FIND_VEHICLE"
+    const val DIRECT_DEBIT_DELETE = "direct_debit_delete"
+    const val DIRECT_DEBIT_NOT_SET_UP = "direct_debit_not_set_up"
+    const val CREDIT_NOT_SET_UP = "credit_not_set_up"
     const val ACCOUNT_CLOSURE = "ACCOUNT CLOSURE"
     const val ACCOUNT_HOLDER_REQUEST = "ACCOUNT HOLDER REQUEST"
     const val Mobile_App = "Mobile App"
@@ -144,11 +143,11 @@ object Constants {
     const val ALLOWED_CHARACTERS_IN_ADDRESS = "',.-"
     const val ALLOWED_CHARACTERS_IN_POSTCODE = "',.-"
 
-    const val CURRENTBALANCE="currentBalance"
-    const val SUSPENDED="suspended"
-    const val NOTSUSPENDED="notsuspended"
-    const val THRESHOLD_AMOUNT="threshold_amount"
-    const val THRESHOLD="threshold_amount"
+    const val CURRENTBALANCE = "currentBalance"
+    const val SUSPENDED = "suspended"
+    const val NOTSUSPENDED = "notsuspended"
+    const val THRESHOLD_AMOUNT = "threshold_amount"
+    const val THRESHOLD = "threshold_amount"
     const val CREATE_ACCOUNT_DATA = "create_account_data"
     const val PLATE_NUMBER = "plateNumber"
     const val OLD_PLATE_NUMBER = "oldPlateNumber"
@@ -286,7 +285,7 @@ object Constants {
     const val OPTSMS = "optSms"
     const val TwoStepVerification = "twoStepVerification"
     const val EDIT_SUMMARY = "editSummary"
-    const val EDIT_MOBILE="editmobile"
+    const val EDIT_MOBILE = "editmobile"
     const val EDIT_EMAIL = "editEmail"
     const val EDIT_CATEGORY_DATA = "editCategoryData"
     const val EDIT_CATEGORY_DATA_NOCHANGES = "editCategoryDataNoChanges"
@@ -334,12 +333,14 @@ object Constants {
     const val ENQUIRY_STATUS = "enquiry_status"
     const val ACCOUNT_CONTACT_US = "account_contact_us"
 
-    const val API_TIMEOUT_ERROR=100100
-     const val TOKEN_FAIL = 401
-     const val INTERNAL_SERVER_ERROR = 500
-     const val INVALID_TOKEN = "invalid_token"
-     const val SERVER_ERROR = "server_error"
+    const val API_TIMEOUT_ERROR = 100100
+    const val TOKEN_FAIL = 401
+    const val INTERNAL_SERVER_ERROR = 500
+    const val INVALID_TOKEN = "invalid_token"
+    const val SERVER_ERROR = "server_error"
+    const val API_STATE = "API_STATE"
 
 
-
+    //Notification Types
+    const val GEO_FENCE_NOTIFICATION="geofenceNotification"
 }

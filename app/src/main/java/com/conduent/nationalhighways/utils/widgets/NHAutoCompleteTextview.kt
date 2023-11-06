@@ -60,7 +60,7 @@ class NHAutoCompleteTextview @JvmOverloads constructor(
             }
         }
         this.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
-            if (hasFocus == false) {
+            if (!hasFocus) {
                 if(dataSet.size>0){
                     if (dataSet.any { it == text.toString() }) {
                     } else {

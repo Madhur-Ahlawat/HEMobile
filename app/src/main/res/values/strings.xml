@@ -1551,6 +1551,9 @@
     <string name="click_here_to_search_using_your_number_plate"><i>Click here to search using your number plate</i></string>
     <string name="click_here_to_register_your_number_plate_and_create_an_automatic_top_up_account"><i>Click here to register your number plate and create an automatic top up account</i></string>
     <string name="click_here_to_receive_notifications_when_you_cross"><i>Click here to receive notifications when you\ncross</i></string>
+    <string name="str_register_reminders">Register to receive reminders from DartCharge after you cross to help ensure you never miss another payment.</string>
+    <string name="str_geo_location_enabled">Geo location enabled</string>
+    <string name="str_register_to_receive_notifications">Register to Receive Notifications</string>
     <string name="receive_notifications">Receive Notifications</string>
     <string name="dart_charge_guidance_and_documents">DART CHARGE GUIDANCE AND\nDOCUMENTS</string>
     <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossing in various ways.</string>
@@ -1609,6 +1612,10 @@
     <string name="profile_password">Profile password</string>
     <string name="mobile_app">Mobile App</string>
     <string name="no_recent_crossings_nor_payments">No recent crossings\nor payments.</string>
-
+    <string name="str_rooted_device" >This app can not run on a rooted device.</string>
+    <string name="str_alert">Alert</string>
+    <string name="str_password_match_current_password">Password must match current password</string>
+    <string name="str_did_you_cross_today">Did you cross today?</string>
+    <string name="str_responsible_paying">As a reminder if you are responsible for paying the charge you have until midnight tomorrow to pay</string>
 
 </resources>

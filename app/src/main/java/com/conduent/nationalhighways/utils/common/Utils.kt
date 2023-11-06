@@ -661,7 +661,6 @@ object Utils {
     }
 
     fun removeGivenStringCharactersFromString(characterString: String, input: String): String {
-        var input = input
         characterString.forEach {
             input.replace(it.toString(), "")
         }
@@ -1021,14 +1020,23 @@ object Utils {
 
     }
 
-    fun maskCardNumber(cardNumber: String): String {
+    fun maskSixteenDigitCardNumber(cardNumber: String): String {
+        return if ((cardNumber.length) >= 4) {
+            "************" + cardNumber.takeLast(4)
+        } else {
+            "************$cardNumber"
+        }
+    }
+
+
+
+        fun maskCardNumber(cardNumber: String): String {
         return if ((cardNumber.length) >= 4) {
             "****" + cardNumber.takeLast(4)
         } else {
-            "****" + cardNumber
+            "****$cardNumber"
         }
 
-//        return cardNumber.replace(cardNumber.substring(0, cardNumber.length - 4), "****")
     }
 
 

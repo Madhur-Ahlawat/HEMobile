@@ -1,39 +1,28 @@
 package com.conduent.nationalhighways.ui.landing
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivitySplashNewBinding
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
-import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
-import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.utils.BiometricUtils
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import javax.inject.Inject
@@ -43,12 +32,11 @@ import javax.inject.Inject
 class SplashActivity : AppCompatActivity() {
 
     private var binding: ActivitySplashNewBinding? = null
-    var mIsRooted: Boolean = false
+    private var mIsRooted: Boolean =false
 
 
     @Inject
     lateinit var sessionManager: SessionManager
-    var firstTym = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,27 +45,29 @@ class SplashActivity : AppCompatActivity() {
         mIsRooted = checkIfRootConditionAndDisplayMessage()
 
 
+        if (!mIsRooted){
+            if (!Utils.areNotificationsEnabled(this)) {
 
 
-        if (!Utils.areNotificationsEnabled(this)) {
+                // Notifications are not enabled, request the user to enable them
+                if (Build.VERSION.SDK_INT >= 33) {
+                    notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                } else {
+                    displayCustomMessage(
+                        resources.getString(R.string.str_notification_title),
+                        resources.getString(R.string.str_notification_desc),
+                        resources.getString(R.string.str_allow),
+                        resources.getString(R.string.str_dont_allow)
+                    )
 
-
-            // Notifications are not enabled, request the user to enable them
-            if (Build.VERSION.SDK_INT >= 33) {
-                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                }
             } else {
-                displayCustomMessage(
-                    resources.getString(R.string.str_notification_title),
-                    resources.getString(R.string.str_notification_desc),
-                    resources.getString(R.string.str_allow),
-                    resources.getString(R.string.str_dont_allow)
-                )
+                redirectNextScreenWithHandler()
 
             }
-        } else {
-            redirectNextScreenWithHandler()
-
         }
+
+
 
 
     }
@@ -94,21 +84,16 @@ class SplashActivity : AppCompatActivity() {
             return true
         }
 
-        if (Utils.isRooted(this)) {
+        return if (Utils.isRooted(this)) {
             if (!isFinishing) { // Added condition for a leaked window exception (if Activity is not finishing show dialog else not)
-               /* displayMessage(
-                    LanguageHelper.getLabel(Constants.KEY_GLOBAL_ROOTED_DEVICE_MESSAGE),
-                    LanguageHelper.getLabel(Constants.KEY_GLOBAL_EXIT),
-                    MessageType.APP_NAME,
-                    object : DialogPositiveBtnListener {
-                        override fun positiveBtnClick(dialog: DialogInterface) {
-                            finish()
-                        }
-                    })*/
+                displayAlertMessage(
+                    getString(R.string.str_alert),
+                    getString(R.string.str_rooted_device)
+                )
             }
-            return true
+            true
         } else {
-            return false
+            false
         }
     }
 
@@ -120,19 +105,13 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private val notificationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             redirectNextScreenWithHandler()
         }
 
 
     override fun onResume() {
         super.onResume()
-        if (!firstTym) {
-            redirectNextScreenWithHandler()
-        }
-        if (firstTym) {
-            firstTym = false
-        }
         AdobeAnalytics.setLifeCycleCallAdobe(true)
     }
 
@@ -153,61 +132,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun showBiometrics() {
-        if (BiometricUtils.checkBioMetricAvailability(this)) {
-            val prompt = BiometricUtils.biometricPromptForAllAuth(
-                "Verify Credentials",
-                "Confirm your identity before proceeding"
-            )
 
-            val biometricPrompt = BiometricPrompt(this,
-                ContextCompat.getMainExecutor(this),
-                object : BiometricPrompt.AuthenticationCallback() {
-
-                    override fun onAuthenticationError(
-                        errorCode: Int,
-                        errString: CharSequence
-                    ) {
-                        super.onAuthenticationError(errorCode, errString)
-                        navigateLandingActivity()
-//                        Toast.makeText(
-//                            applicationContext,
-//                            "Authentication error: $errString", Toast.LENGTH_SHORT
-//                        ).show()
-                    }
-
-                    override fun onAuthenticationSucceeded(
-                        result: BiometricPrompt.AuthenticationResult
-                    ) {
-                        super.onAuthenticationSucceeded(result)
-                        Toast.makeText(
-                            applicationContext,
-                            "Authentication succeeded!", Toast.LENGTH_SHORT
-                        ).show()
-                        navigateHomeActivity()
-                    }
-
-//                    override fun onAuthenticationFailed() {
-//                        super.onAuthenticationFailed()
-//                        Toast.makeText(
-//                            applicationContext,
-//                            "Authentication failed", Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-                })
-            biometricPrompt.authenticate(prompt)
-
-        } else {
-            navigateLandingActivity()
-        }
-    }
-
-    private fun navigateHomeActivity() {
-        val intent = Intent(this, HomeActivityMain::class.java)
-        intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
-        startActivity(intent)
-        finish()
-    }
 
     private fun navigateAuthActivity() {
         startActivity(
@@ -222,6 +147,48 @@ class SplashActivity : AppCompatActivity() {
             Intent(this, LandingActivity::class.java)
         )
         finish()
+    }
+
+    private fun displayAlertMessage(
+        fTitle: String?,
+        message: String
+
+    ) {
+
+        val dialog = Dialog(this)
+        dialog.setCancelable(false)
+
+
+        val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(this))
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+
+
+
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        ) //Controlling width and height.
+
+
+        binding.title.text = fTitle
+        binding.message.text = message
+        binding.backLl.gone()
+        binding.cancelBtn.setOnClickListener {
+            redirectNextScreenWithHandler()
+            dialog.dismiss()
+        }
+
+        binding.okBtn.setOnClickListener {
+            Utils.redirectToNotificationPermissionSettings(this)
+            dialog.dismiss()
+        }
+        dialog.show()
+
+
     }
 
     private fun displayCustomMessage(

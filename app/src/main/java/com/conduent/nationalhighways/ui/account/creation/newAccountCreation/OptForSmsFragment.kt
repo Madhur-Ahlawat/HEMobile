@@ -147,9 +147,9 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 title?.text = getString(R.string.communication_preferences)
                 oldSmsOption = sessionManager.fetchSmsOption().equals("Y")
                 oldPushOption = Utils.areNotificationsEnabled(requireContext())
+
                 binding.switchCommunication.isChecked = sessionManager.fetchSmsOption().equals("Y")
-                binding.switchNotification.isChecked =
-                    Utils.areNotificationsEnabled(requireContext())
+                binding.switchNotification.isChecked = oldPushOption
 
             }
 
@@ -312,6 +312,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     }
 
                     Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                        Log.e("TAG", "onClick: oldSmsOption "+oldSmsOption )
+                        Log.e("TAG", "onClick: oldPushOption "+oldPushOption )
                         if ((oldSmsOption == binding.switchCommunication.isChecked) && (oldPushOption == binding.switchNotification.isChecked)) {
                             findNavController().popBackStack()
                         } else {

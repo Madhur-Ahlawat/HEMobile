@@ -104,8 +104,9 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="@dimen/margin_20dp"
+                    android:background="@drawable/check_selector"
+                    android:button="@null"
                     android:layout_marginTop="@dimen/_28dp"
-                    android:buttonTint="#E0E0E0"
                     android:gravity="center" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView

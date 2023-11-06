@@ -359,13 +359,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun getCountryCode(selectedItem: String): String {
-        val data = selectedItem
         val openingParenIndex = selectedItem.indexOf("(")
         val closingParenIndex = selectedItem.indexOf(")")
 
         val extractedText =
             if (openingParenIndex != -1 && closingParenIndex != -1 && closingParenIndex > openingParenIndex) {
-                data.substring(openingParenIndex + 1, closingParenIndex)
+                selectedItem.substring(openingParenIndex + 1, closingParenIndex)
             } else {
                 ""
             }

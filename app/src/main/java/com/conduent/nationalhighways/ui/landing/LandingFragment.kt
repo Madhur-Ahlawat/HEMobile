@@ -34,6 +34,7 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.openActivityWithData
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -176,8 +177,10 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     override fun initCtrl() {
         LandingActivity.showToolBar(false)
         binding.btnGuidanceAndDocuments.setOnClickListener {
-            requireActivity().startNormalActivity(
-                RaiseEnquiryActivity::class.java
+            var bundle = Bundle()
+            bundle.putString(Constants.API_STATE,apiState)
+            requireActivity().openActivityWithData(
+                RaiseEnquiryActivity::class.java,bundle
             )
 //            when (apiState) {
 //
@@ -307,6 +310,10 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 }
             }
 
+        }
+
+        binding.receiveNotifications.setOnClickListener {
+            findNavController().navigate(R.id.action_landingFragment_to_registerReminderFragment)
         }
     }
 
