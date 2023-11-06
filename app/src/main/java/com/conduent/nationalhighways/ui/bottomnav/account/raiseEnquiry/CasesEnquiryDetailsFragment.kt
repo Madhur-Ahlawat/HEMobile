@@ -79,6 +79,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
         }
         binding.dateTimeDataTv.text=DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created?:"")
+
     }
 
     override fun initCtrl() {

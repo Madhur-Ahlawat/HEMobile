@@ -49,6 +49,7 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.FORGOT_PASSWORD_FLOW
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Logg
@@ -127,7 +128,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             isItMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER) ?: false
         }
         if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
-            navFlowCall = arguments?.getString(Constants.NAV_FLOW_KEY)?: ""
+            navFlowCall = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
         }
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
@@ -225,23 +226,41 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
         when (resource) {
             is Resource.Success -> {
-                Log.d("Success", "Updated successfully")
-                val data = navData as ProfileDetailModel?
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_FROM, Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
-                if(navFlowCall==PROFILE_MANAGEMENT){
+
+                if (navFlowCall.equals(PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)) {
+                    val bundle = Bundle()
+                    bundle.putString(
+                        Constants.NAV_FLOW_KEY,
+                        PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
+                    )
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                     findNavController().navigate(
                         R.id.action_otpForgotFragment_to_resetForgotPassword,
                         bundle
                     )
+                } else {
+                    val data = navData as ProfileDetailModel?
+                    val bundle = Bundle()
+                    bundle.putString(
+                        Constants.NAV_FLOW_FROM,
+                        Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE
+                    )
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
+                    if (navFlowCall == PROFILE_MANAGEMENT) {
+                        findNavController().navigate(
+                            R.id.action_otpForgotFragment_to_resetForgotPassword,
+                            bundle
+                        )
+                    }
                 }
-
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     showError(binding.root, resource.errorMsg)
@@ -275,7 +294,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     showError(binding.root, resource.errorMsg)
@@ -324,8 +346,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     else -> {
-                        otpSuccessRedirection()
-//                        confirmEmailCode()
+                        confirmEmailCode()
                     }
 
                 }
@@ -375,7 +396,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
 
-                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                    PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             arguments?.getParcelable(
                                 Constants.NAV_DATA_KEY,
@@ -550,7 +571,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
@@ -579,6 +603,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                         }
 
+                        1308 ->{
+                            binding.edtOtp.setErrorText(getString(R.string.str_password_match_current_password))
+                        }
                         else -> {
                             binding.edtOtp.setErrorText(status.errorMsg)
                         }
@@ -616,7 +643,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 }
 
                 is Resource.DataError -> {
-                    if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                            Constants.INVALID_TOKEN
+                        )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                    ) {
                         displaySessionExpireDialog(status.errorModel)
                     } else {
                         showError(binding.root, status.errorMsg)
@@ -642,27 +672,37 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                when (resource.errorModel?.status) {
 
-                    500 -> {
-                        binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
-                    }
 
-                    900 -> {
-                        binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
-                    }
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
+                    displaySessionExpireDialog(resource.errorModel)
+                } else {
 
-                    Constants.TOKEN_FAIL -> {
-                        displaySessionExpireDialog(resource.errorModel)
-                    }
-                    Constants.INTERNAL_SERVER_ERROR -> {
-                        displaySessionExpireDialog(resource.errorModel)
-                    }
+                    when (resource.errorModel?.errorCode) {
 
-                    else -> {
-                        binding.edtOtp.setErrorText(resource.errorModel?.message.toString())
-                    }
+                        2051 -> {
+                            binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
+                        }
 
+                        2050 -> {
+                            binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
+                        }
+
+                        5260 -> {
+                            binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
+                        }
+
+                        1308 ->{
+                            binding.edtOtp.setErrorText(getString(R.string.str_password_match_current_password))
+                        }
+                        
+                        else -> {
+                            binding.edtOtp.setErrorText(resource.errorMsg)
+                        }
+                    }
                 }
             }
 
@@ -702,7 +742,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                         }
                     }
-                }else if(editRequest.equals(EDIT_MOBILE,true)){
+                } else if (editRequest.equals(EDIT_MOBILE, true)) {
                     findNavController().navigate(
                         R.id.action_forgotOtpFragment_to_createAccountSummaryFragment
                     )
@@ -718,7 +758,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 }
             }
 
-            Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+            PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                 loader?.show(
                     requireActivity().supportFragmentManager,
                     Constants.LOADER_DIALOG
@@ -768,6 +808,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                     bundle
                                 )
                             }
+
                             else -> {
                                 findNavController().navigate(
                                     R.id.action_email_forgotOtpFragment_to_createAccountSummaryFragment,
@@ -783,8 +824,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             bundle
                         )
                     }
+
                     PROFILE_MANAGEMENT -> {
-                        updateProfileEmail(HomeActivityMain.accountDetailsData!!.personalInformation, HomeActivityMain.accountDetailsData?.accountInformation)
+                        updateProfileEmail(
+                            HomeActivityMain.accountDetailsData!!.personalInformation,
+                            HomeActivityMain.accountDetailsData?.accountInformation
+                        )
                     }
 
                     else -> {
@@ -873,8 +918,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun updateProfileEmail(
-        dataModel: com.conduent.nationalhighways.data.model.account.PersonalInformation?,
-        accountInformation: com.conduent.nationalhighways.data.model.account.AccountInformation?
+        dataModel: PersonalInformation?,
+        accountInformation: AccountInformation?
     ) {
 
         dataModel?.run {
@@ -899,8 +944,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 phoneCellCountryCode = phoneDayCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode,
                 mfaEnabled = accountInformation?.mfaEnabled,
-                securityCode = binding.edtOtp.getText().toString().trim(), referenceId = arguments?.getString(Constants.REFERENCE_ID),
-                correspDeliveryMode = accountInformation?.stmtDelivaryMethod, businessName = accountInformation?.businessName
+                securityCode = binding.edtOtp.getText().toString().trim(),
+                referenceId = arguments?.getString(Constants.REFERENCE_ID),
+                correspDeliveryMode = accountInformation?.stmtDelivaryMethod,
+                businessName = accountInformation?.businessName
             )
 
             viewModelProfile.updateUserDetails(request)
@@ -975,7 +1022,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     AdobeAnalytics.setLoginActionTrackError(
@@ -1033,7 +1083,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {

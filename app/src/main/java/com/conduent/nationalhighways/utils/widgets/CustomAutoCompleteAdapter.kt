@@ -57,7 +57,7 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                     val filteredList = results.values as List<String>
                     addAll(filteredList.sortedBy { it.substring(0,it.indexOf(" ")-1)})
                 }
-                if (results?.count ?: 0 > 0) {
+                if ((results?.count ?: 0) > 0) {
                     notifyDataSetChanged()
                 } else {
                     notifyDataSetInvalidated()
