@@ -14,6 +14,8 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
+import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboard
 
 class TransactionsAdapterDashboard(
     var context: Fragment,
@@ -57,6 +59,9 @@ class TransactionsAdapterDashboard(
             var layoutManager = LinearLayoutManager(context.requireContext())
             rvCrossings.layoutManager = layoutManager
             rvCrossings.adapter = innerAdapter
+            if (rvCrossings.itemDecorationCount == 0) {
+                rvCrossings.addItemDecoration(RecyclerViewItemDecoratorDashboard(3, 0))
+            }
         }
     }
 
