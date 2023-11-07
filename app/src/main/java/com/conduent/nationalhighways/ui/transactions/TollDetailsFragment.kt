@@ -10,16 +10,11 @@ import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.FragmentTollDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.accountDetailsData
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.checkedCrossing
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -66,7 +61,7 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
             }
             tvPaymentStatusValue.text = Utils.capitalizeString(crossing?.tranSettleStatus)
         }
-        HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
+        HomeActivityMain.setTitle(resources.getString(R.string.crossing_details))
     }
 
     override fun initCtrl() {

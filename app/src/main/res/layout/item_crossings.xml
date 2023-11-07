@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:elevation="@dimen/margin_1dp"
     android:layout_height="@dimen/_62dp"
-    android:layout_marginTop="@dimen/_3dp"
+    android:layout_marginTop="@dimen/_5dp"
     android:layout_width="match_parent"
     app:cardCornerRadius="@dimen/margin_5dp">
 
@@ -29,6 +29,7 @@
             android:layout_height="18dp"
             android:layout_marginStart="@dimen/margin_14dp"
             android:gravity="center"
+            android:nestedScrollingEnabled="false"
             android:src="@drawable/ic_euro_circular_green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/vertical_strip_transaction_type"

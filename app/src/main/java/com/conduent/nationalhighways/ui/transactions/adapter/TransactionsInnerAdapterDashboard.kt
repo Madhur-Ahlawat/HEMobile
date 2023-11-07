@@ -19,11 +19,11 @@ import com.conduent.nationalhighways.utils.extn.visible
 import java.text.SimpleDateFormat
 
 
-class TransactionsInnerAdapter(
+class TransactionsInnerAdapterDashboard(
     var viewAllTransactionsFragment: Fragment,
     var transactionItemsList: List<TransactionData>
 ) :
-    RecyclerView.Adapter<TransactionsInnerAdapter.TransactionViewHolder>() {
+    RecyclerView.Adapter<TransactionsInnerAdapterDashboard.TransactionViewHolder>() {
     class TransactionViewHolder(binding: ItemCrossingsBinding) :
         RecyclerView.ViewHolder(binding.root) {
     }
