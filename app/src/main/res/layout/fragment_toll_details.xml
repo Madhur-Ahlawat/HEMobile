@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_22dp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="@string/payment_amount"
+                android:text="@string/txt_crossing_amount"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintEnd_toEndOf="@id/crossing_amount"

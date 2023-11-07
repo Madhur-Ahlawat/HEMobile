@@ -35,7 +35,7 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dat
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapter
+import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapterDashboard
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.DateUtils.compareDates
 import com.conduent.nationalhighways.utils.common.Constants
@@ -48,7 +48,6 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
-import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -60,7 +59,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
         hashMapOf()
-    private var transactionsAdapter: TransactionsAdapter? = null
+    private var transactionsAdapter: TransactionsAdapterDashboard? = null
     val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
@@ -146,15 +145,15 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun initTransactionsRecyclerView() {
-        transactionsAdapter = TransactionsAdapter(
+        transactionsAdapter = TransactionsAdapterDashboard(
             this@DashboardFragmentNew, paymentHistoryDatesList, paymentHistoryHashMap
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
         binding.rvRecenrTransactions.run {
-            if (itemDecorationCount == 0) {
-                addItemDecoration(RecyclerViewItemDecorator(0, 1))
-            }
+//            if (itemDecorationCount == 0) {
+//                addItemDecoration(RecyclerViewItemDecoratorDashboard(5, 1))
+//            }
             adapter = transactionsAdapter
         }
     }
@@ -259,30 +258,23 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         binding.tvNoHistory.gone()
                         binding.boxViewAll.visible()
                         binding.rvRecenrTransactions.visible()
-                        paymentHistoryListData.clear()
-                        paymentHistoryListData.addAll(it)
+                        paymentHistoryListData?.clear()
+                        paymentHistoryHashMap.clear()
+                        paymentHistoryListData?.addAll(it)
                         paymentHistoryListData =
-                            Utils.sortTransactionsDateWiseDescending(paymentHistoryListData)
-                                .toMutableList()
+                            Utils.sortTransactionsDateWiseDescending(paymentHistoryListData).toMutableList()
                         paymentHistoryDatesList.clear()
                         getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
-//                        paymentHistoryListData =
-//                            sortTransactionsDateWiseDescending(
-//                                paymentHistoryListData ?: ArrayList()
-//                            ).toMutableList()
-
                     } else {
                         binding.boxViewAll.gone()
                         binding.rvRecenrTransactions.gone()
                         binding.tvNoHistory.visible()
-//                        binding.paginationLayout.gone()
                     }
                 } ?: run {
                     binding.boxViewAll.gone()
                     binding.rvRecenrTransactions.gone()
                     binding.tvNoHistory.visible()
-//                    binding.paginationLayout.gone()
                 }
             }
 
@@ -290,7 +282,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 binding.boxViewAll.gone()
                 binding.rvRecenrTransactions.gone()
                 binding.tvNoHistory.visible()
-//                binding.paginationLayout.gone()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
 

@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
+import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -177,6 +178,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     private fun invalidateList() {
         val accountData = NewCreateAccountRequestModel
         vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
+
         vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
         val size = vehicleAdapter.itemCount
         var text = "vehicle"
