@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 threeDSecureInterface.on('error', function(e) {
-                    invokeCommand("errorMessage",JSON.stringify(e, null, ""))
+                    invokeCommand("errorMessage","errorMessage"+JSON.stringify(e, null, ""))
                 });
             } else {
                 //errorPayment

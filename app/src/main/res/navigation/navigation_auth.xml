@@ -132,6 +132,9 @@
         <action
             android:id="@+id/action_accountSuspendedPaymentFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment"
+            app:destination="@id/threeDSWebiewFragment" />
     </fragment>
     <fragment
         android:id="@+id/threeDSWebiewFragment"

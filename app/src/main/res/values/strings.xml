@@ -976,7 +976,7 @@
     <string name="should_be_company_name">This should be your company name</string>
     <string name="primary_account_holder_last_name">Primary account holder’s last name</string>
     <string name="would_you_like_to_receive">Would you like to receive \ncommunications about \nyour account by text message?</string>
-    <string name="would_you_like_to_receive_push">Would you like to receive \npush notification about \nyour account?</string>
+    <string name="would_you_like_to_receive_push">Would you like to receive\npush notifications about\nyour account?</string>
     <string name="this_will_be_in_addition">This will be in addition to receiving notifications by email.</string>
     <string name="this_will_be_in_addition_push">This will be enabled in your device settings.</string>
     <string name="agree_terms_condition">I agree to the <u>terms and conditions</u> and understand that standard text message and data charges may apply</string>
@@ -1521,11 +1521,11 @@
     <string name="str_signed_out">Signed out</string>
     <string name="str_you_have_signed_out">You\'ve signed out of your account</string>
     <string name="str_timeout">Timeout</string>
-    <string name="str_for_your_security_account_holder">For your security,you\'ll be signed out in %s minutes</string>
+    <string name="str_for_your_security_account_holder">For your security, you\'ll be signed out in %s minutes</string>
     <string name="str_for_your_security_non_account_holder">For your security, your session will expire and your answers will be deleted in %s minutes</string>
     <string name="str_stay_on_the_app">Stay on the app</string>
     <string name="str_delete_my_answers">Delete my answers</string>
-    <string name="str_for_your_security">For your security,you\'ll be signed out in %s minutes</string>
+    <string name="str_for_your_security">For your security, you\'ll be signed out in %s minutes</string>
     <string name="str_sign_out">Sign out</string>
     <string name="str_stay_signed_in">Stay signed In</string>
     <string name="str_no_enquiries_have_been_raised">No enquiries have been raised</string>
@@ -1618,5 +1618,6 @@
     <string name="str_password_match_current_password">Password must match current password</string>
     <string name="str_did_you_cross_today">Did you cross today?</string>
     <string name="str_responsible_paying">As a reminder if you are responsible for paying the charge you have until midnight tomorrow to pay</string>
+    <string name="submit_feedback">Submit Feedback</string>
 
 </resources>

@@ -154,7 +154,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
         }
 
-        Log.d("referenceId",Gson().toJson(NewCreateAccountRequestModel.sms_referenceId+"  "+NewCreateAccountRequestModel.referenceId))
+        Log.d(
+            "referenceId",
+            Gson().toJson(NewCreateAccountRequestModel.sms_referenceId + "  " + NewCreateAccountRequestModel.referenceId)
+        )
 
 
         setInputParamsData()
@@ -231,6 +234,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             is Resource.Success -> {
 
                 if (navFlowCall.equals(PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)) {
+                    sessionManager.saveSmsOption("Y")
                     val bundle = Bundle()
                     bundle.putString(
                         Constants.NAV_FLOW_KEY,
@@ -461,15 +465,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun confirmEmailCode() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        if (phoneCountryCode.isNotEmpty()&&phoneCountryCode!=null){
+        if (phoneCountryCode.isNotEmpty() && phoneCountryCode != null) {
             val request = ConfirmEmailRequest(
                 response?.referenceId ?: "",
-                phoneCountryCode+data?.optionValue,
+                phoneCountryCode + data?.optionValue,
                 binding.edtOtp.getText().toString().trim()
             )
             createAccountViewModel.confirmEmailApi(request)
 
-        }else{
+        } else {
             val request = ConfirmEmailRequest(
                 response?.referenceId ?: "",
                 data?.optionValue,
@@ -619,9 +623,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                         }
 
-                        1308 ->{
+                        1308 -> {
                             binding.edtOtp.setErrorText(getString(R.string.str_password_match_current_password))
                         }
+
                         else -> {
                             binding.edtOtp.setErrorText(status.errorMsg)
                         }
@@ -711,7 +716,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                         }
 
-                        1308 ->{
+                        1308 -> {
                             binding.edtOtp.setErrorText(getString(R.string.str_password_match_current_password))
                         }
 
@@ -1019,6 +1024,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+
                     val intent = Intent(requireActivity(), AuthActivity::class.java)
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
