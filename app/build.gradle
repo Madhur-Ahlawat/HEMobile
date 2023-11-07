@@ -268,7 +268,7 @@ android {
 
 
         implementation 'androidx.activity:activity-ktx:1.6.1'
-
+        implementation 'com.github.bumptech.glide:glide:4.16.0'
 
     }
 
@@ -285,4 +285,5 @@ dependencies {
     implementation 'androidx.webkit:webkit:1.7.0'
     implementation 'androidx.paging:paging-common-ktx:3.1.1'
     implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 }

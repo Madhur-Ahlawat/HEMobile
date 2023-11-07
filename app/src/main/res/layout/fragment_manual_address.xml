@@ -15,88 +15,103 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/margin_20dp"
             android:paddingTop="@dimen/margin_16dp"
             android:paddingEnd="@dimen/margin_20dp"
             android:paddingBottom="20dp">
-
-            <TextView
-                android:id="@+id/txtHeading"
-                style="@style/MediumTextBlack"
-                android:layout_width="0dp"
-                android:text="@string/what_is_your_address"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-                android:id="@+id/address"
-                style="@style/input_text"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/data_ll"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:labelText="@string/txt_building_number_and_street"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtHeading"
-                app:maxLength="200" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:paddingStart="@dimen/margin_20dp"
+               >
 
-            <TextView
-                android:id="@+id/txtThisShouldBeVehicle"
-                style="@style/RegularTextBlack"
-                android:layout_width="0dp"
-                android:text="@string/str_address_example"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/address" />
+                <TextView
+                    android:id="@+id/txtHeading"
+                    style="@style/MediumTextBlack"
+                    android:layout_width="0dp"
+                    android:text="@string/what_is_your_address"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-                android:id="@+id/address2"
-                style="@style/input_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:labelText="@string/str_address_line2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtThisShouldBeVehicle"
-                app:maxLength="50" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                    android:id="@+id/address"
+                    style="@style/input_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:labelText="@string/txt_building_number_and_street"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtHeading"
+                    app:maxLength="200" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-                android:id="@+id/townCity"
-                style="@style/input_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:labelText="@string/str_town_city"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/address2"
-                app:maxLength="50" />
+                <TextView
+                    android:id="@+id/txtThisShouldBeVehicle"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="0dp"
+                    android:text="@string/str_address_example"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/address" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-                android:id="@+id/postCode"
-                style="@style/input_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:labelText="@string/postcode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/townCity"
-                app:maxLength="10" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                    android:id="@+id/address2"
+                    style="@style/input_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:labelText="@string/str_address_line2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtThisShouldBeVehicle"
+                    app:maxLength="50" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                    android:id="@+id/townCity"
+                    style="@style/input_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:labelText="@string/str_town_city"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/address2"
+                    app:maxLength="50" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                    android:id="@+id/postCode"
+                    style="@style/input_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:labelText="@string/postcode"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/townCity"
+                    app:maxLength="10" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
                 android:id="@+id/country"
                 style="@style/input_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="35dp"
                 android:hint="@string/country_code"
+                android:backgroundTint="@color/label_color"
+                android:layout_marginLeft="16dp"
                 android:textSize="@dimen/font_16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/postCode" />
+                app:layout_constraintTop_toBottomOf="@+id/data_ll" />
 
 
             <com.conduent.apollo.ui.CMButton
@@ -108,6 +123,8 @@
                 android:layout_marginBottom="30dp"
                 android:text="@string/str_continue"
                 app:isEnabled="false"
+                android:layout_marginLeft="@dimen/margin_20dp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/country" />

@@ -30,7 +30,9 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -89,7 +91,8 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
         btnEnabled =
             if (binding.edtEmail.getText().toString().trim().length > 0) {
                 if (binding.edtEmail.getText().toString().trim().length < 8) {
-                    binding.edtEmail.setError(getString(R.string.email_address_must_be_8_characters_or_more))
+                    binding.txtError.visible()
+                    binding.txtError.setText(getString(R.string.email_address_must_be_8_characters_or_more))
                     false
                 } else {
                     if (binding.edtEmail.getText().toString().length > 100) {
@@ -113,7 +116,8 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                                 binding.edtEmail.getText().toString().trim(), '@'
                             ) < 1)
                         ) {
-                            binding.edtEmail.setError(getString(R.string.str_email_format_error_message))
+                            binding.txtError.visible()
+                            binding.txtError.setText(getString(R.string.str_email_format_error_message))
                             false
                         } else {
                             if (Utils.hasSpecialCharacters(
@@ -148,16 +152,19 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                                         )
                                     )
                                 if (filterTextForSpecialChars!!.length > 0) {
-                                    binding.edtEmail.setError("Email address must not include $commaSeperatedString")
+                                    binding.txtError.visible()
+                                    binding.txtError.setText("Email address must not include $commaSeperatedString")
                                     false
                                 } else if (!Patterns.EMAIL_ADDRESS.matcher(
                                         binding.edtEmail.getText().toString()
                                     ).matches()
                                 ) {
-                                    binding.edtEmail.setError(getString(R.string.str_email_format_error_message))
+                                    binding.txtError.visible()
+                                    binding.txtError.setText(getString(R.string.str_email_format_error_message))
                                     false
                                 } else {
-                                    binding.edtEmail.setError(null)
+                                    binding.txtError.gone()
+                                    binding.txtError.setText("")
                                     true
                                 }
                             } else if (!(Utils.countOccurenceOfChar(
@@ -166,17 +173,20 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                                     binding.edtEmail.getText().toString().trim(), '@'
                                 ) < 2)
                             ) {
-                                binding.edtEmail.setError(getString(R.string.str_email_format_error_message))
+                                binding.txtError.visible()
+                                binding.txtError.setText(getString(R.string.str_email_format_error_message))
                                 false
                             } else {
-                                binding.edtEmail.setError(null)
+                                binding.txtError.gone()
+                                binding.txtError.setText("")
                                 true
                             }
                         }
                     }
                 }
             } else {
-                binding.edtEmail.setError(null)
+                binding.txtError.gone()
+                binding.txtError.setText("")
                 false
             }
         return btnEnabled
@@ -253,7 +263,8 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                 loader?.dismiss()
             }
             if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall==Constants.PROFILE_MANAGEMENT) {
-                binding.edtEmail.setError(getString(R.string.an_account_with_this_email_address_already_exists))
+                binding.txtError.visible()
+                binding.txtError.setText(getString(R.string.an_account_with_this_email_address_already_exists))
             }
 
         }
