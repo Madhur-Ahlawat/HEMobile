@@ -515,6 +515,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.mailPreference = "Y"
         model.emailPreference = "Y"
         model.postCode=NewCreateAccountRequestModel.zipCode
+        model.addressLine2="Small Heath"
         if (NewCreateAccountRequestModel.twoStepVerification) {
             model.mfaFlag = "Y"
 
@@ -600,7 +601,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.correspDeliveryMode=""
         model.eci = eci // 3ds eci
         model.replenishmentAmount = String.format("%.2f", topUpAmount.toDouble()) // top up amount
-        model.directoryServerId = directoryServerId // 3ds serverId
+        model.directoryServerID = directoryServerId // 3ds serverId
         if (NewCreateAccountRequestModel.communicationTextMessage) {
             model.smsOption = "Y"
 
@@ -618,7 +619,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             item.vehicleColor = obj.vehicleColor
             item.vehiclePlate = obj.plateNumber
             item.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass.toString())
-            item.plateTypeDesc = "STANDARD"
+           // item.plateTypeDesc = "STANDARD"
             item.plateCountry = "UK"
             item.vehicleYear = "2023"
             listVehicle.add(item)

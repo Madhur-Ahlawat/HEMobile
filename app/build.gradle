@@ -268,7 +268,7 @@ android {
 
 
         implementation 'androidx.activity:activity-ktx:1.6.1'
-
+        implementation 'com.github.bumptech.glide:glide:4.16.0'
 
     }
 

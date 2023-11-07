@@ -39,7 +39,6 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     View.OnClickListener {
     private var dataModel: NewCreateAccountRequestModel?=null
     private lateinit var title: TextView
-    private val viewModel: CreateAccountVehicleViewModel by viewModels()
 
 
     private lateinit var vehicleAdapter: VehicleListAdapter
@@ -172,7 +171,6 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     }
 
     override fun observer() {
-        observe(viewModel.heartBeatLiveData, ::heartBeatApiResponse)
 
     }
 
@@ -186,21 +184,11 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         when (v?.id) {
 
             R.id.btnNext -> {
-                if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true){
-                    NewCreateAccountRequestModel.referenceId?.let {
-                        viewModel.heartBeat(Constants.AGENCY_ID,
-                            it
-                        )
-                    }
-                }
+                emailHeartBeatApi()
+                smsHeartBeatApi()
 
-                if (NewCreateAccountRequestModel.sms_referenceId?.trim()?.isNotEmpty() == true){
-                    NewCreateAccountRequestModel.sms_referenceId?.let {
-                        viewModel.heartBeat(Constants.AGENCY_ID,
-                            it
-                        )
-                    }
-                }
+
+
 
                 if (!NewCreateAccountRequestModel.prePay) {
                     val bundle = Bundle()

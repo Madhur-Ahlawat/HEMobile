@@ -1610,11 +1610,12 @@
     <string name="profile_email_address">Profile email address</string>
     <string name="crossing_details">Crossing Details</string>
     <string name="profile_password">Profile password</string>
+    <string name="mobile_app">Mobile App</string>
+    <string name="no_recent_crossings_nor_payments">No recent crossings\nor payments.</string>
     <string name="str_rooted_device" >This app can not run on a rooted device.</string>
     <string name="str_alert">Alert</string>
     <string name="str_password_match_current_password">Password must match current password</string>
     <string name="str_did_you_cross_today">Did you cross today?</string>
     <string name="str_responsible_paying">As a reminder if you are responsible for paying the charge you have until midnight tomorrow to pay</string>
-
 
 </resources>
