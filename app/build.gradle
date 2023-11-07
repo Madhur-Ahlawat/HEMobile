@@ -286,5 +286,5 @@ dependencies {
     implementation 'androidx.paging:paging-common-ktx:3.1.1'
     implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
-//    implementation 'com.codemybrainsout.rating:ratingdialog:1.0.8'
+    implementation 'com.codemybrainsout.rating:ratingdialog:2.0.0'
 }

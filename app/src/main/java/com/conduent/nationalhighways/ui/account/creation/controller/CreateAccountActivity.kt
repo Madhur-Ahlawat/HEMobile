@@ -1,7 +1,9 @@
 package com.conduent.nationalhighways.ui.account.creation.controller
 
 import android.content.DialogInterface.OnShowListener
+import android.util.Log
 import android.util.TypedValue
+import com.codemybrainsout.ratingdialog.RatingDialog
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
@@ -51,25 +53,35 @@ class CreateAccountActivity : BaseActivity<Any>(),LogoutListener {
     }
 
     private fun ratingDialog() {
-//        val builder: RatingDialog.Builder = RatingDialog.Builder(this)
-//        builder.title(this.getString(R.string.app_name))
-//        builder.positiveButtonText(this.getString(R.string.not_now))
-//        builder.ratingBarColor(R.color.blue_color)
-//        builder.playstoreUrl("https://play.google.com/store/apps/details?id=com.conduent.nationalhighways")
-//        builder.icon(getDrawable(R.drawable.transactions))
-//        builder.session(12)
-//
-//// create the dialog and show it
-//
-//// create the dialog and show it
-//        val dialog: RatingDialog = builder.build()
-//        dialog.setOnShowListener(OnShowListener {
-//            dialog.getIconImageView().setScaleX(0.8f)
-//            dialog.getIconImageView().setScaleY(0.8f)
-//            dialog.getTitleTextView().setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-//            dialog.getTitleTextView().setTextColor(this.getColor(R.color.grayColorIcon))
-//        })
-//        dialog.show()
+       /* val ratingDialog: RatingDialog = RatingDialog.Builder(this)
+            .threshold(3)
+            .session(1)
+            .onRatingBarFormSubmit { feedback -> Log.i("TAG", "onRatingBarFormSubmit: $feedback") }
+            .build()
+
+        ratingDialog.show()*/
+
+        val ratingDialog = RatingDialog.Builder(this)
+            .icon(R.mipmap.ic_launcher)
+            .session(3)
+            .threshold(3)
+            .title(text = R.string.rating_dialog_experience, textColor = R.color.primaryTextColor)
+            .positiveButton(text = R.string.rating_dialog_maybe_later, textColor = R.color.colorPrimary, background = R.drawable.button_selector_positive)
+            .negativeButton(text = R.string.rating_dialog_never, textColor = R.color.secondaryTextColor)
+            .formTitle(R.string.submit_feedback)
+            .formHint(R.string.rating_dialog_suggestions)
+            .feedbackTextColor(R.color.feedbackTextColor)
+            .formSubmitText(R.string.rating_dialog_submit)
+            .formCancelText(R.string.rating_dialog_cancel)
+            .ratingBarColor(R.color.ratingBarColor)
+            .playstoreUrl("https://play.google.com/store/apps/details?id=com.conduent.nationalhighways")
+            .onThresholdCleared { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdCleared: $rating $thresholdCleared") }
+            .onThresholdFailed { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdFailed: $rating $thresholdCleared") }
+            .onRatingChanged { rating, thresholdCleared -> Log.e("TAG", "onRatingChanged: $rating $thresholdCleared") }
+            .onRatingBarFormSubmit { feedback -> Log.e("TAG", "onRatingBarFormSubmit: $feedback") }
+            .build()
+
+        ratingDialog.show()
     }
 
     override fun observeViewModel() {}
