@@ -37,6 +37,7 @@ class AccountCreationRequest {
     var thresholdAmount: String? = null
     var smsSecurityCd: String? = null
     var address1: String? = null
+    var addressLine2:String?=null
     var accountType: String? = null
     var securityCode: String? = null
     var threeDsVer: String? = null
@@ -47,7 +48,7 @@ class AccountCreationRequest {
     var creditCExpYear: String? = null
     var creditCExpMonth: String? = null
     var creditCardNumber: String? = null
-    var directoryServerId: String? = null
+    var directoryServerID: String? = null
     var mfaFlag: String? = null
     var planType:String?=null
     var companyName:String?=null

@@ -64,17 +64,12 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             enablePersonalView()
         }
 
-        if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true){
-            NewCreateAccountRequestModel.referenceId?.let {
-                createAccountHeartBeatViewModel.heartBeat(Constants.AGENCY_ID,
-                    it
-                )
-            }
-        }
 
         when(navFlowCall){
 
             EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
+                emailHeartBeatApi()
+                smsHeartBeatApi()
                 binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
                 binding.inputLastName.setText(NewCreateAccountRequestModel.lastName)
                 binding.inputCompanyName.setText(NewCreateAccountRequestModel.companyName)

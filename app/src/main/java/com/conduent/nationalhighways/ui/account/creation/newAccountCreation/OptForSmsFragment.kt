@@ -55,7 +55,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     var accountInformationModel: AccountInformation? = null
     val dashboardViewmodel: DashboardViewModel by activityViewModels()
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
-    private val viewModel: CreateAccountVehicleViewModel by viewModels()
 
 
     @Inject
@@ -177,15 +176,10 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     override fun observer() {
         observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
         observe(webServiceViewModel.pushNotification, ::handlePushNotificationResponse)
-        observe(viewModel.heartBeatLiveData, ::heartBeatApiResponse)
 
 
     }
 
-    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
-
-
-    }
 
     private fun handlePushNotificationResponse(resource: Resource<EmptyApiResponse?>) {
         if (loader?.isVisible == true) {
@@ -227,7 +221,10 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
@@ -261,6 +258,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                             bundle
                         )
                     }
+
                     Constants.PROFILE_MANAGEMENT -> {
                     }
 
@@ -272,7 +270,10 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
@@ -292,6 +293,9 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
+                        emailHeartBeatApi()
+                        smsHeartBeatApi()
+
                         NewCreateAccountRequestModel.communicationTextMessage =
                             binding.switchCommunication.isChecked
                         if (binding.switchCommunication.isChecked == oldCommunicationTextMessage) {
@@ -395,13 +399,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 */
 
                     EDIT_ACCOUNT_TYPE -> {
-                        if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true){
-                            NewCreateAccountRequestModel.referenceId?.let {
-                                viewModel.heartBeat(Constants.AGENCY_ID,
-                                    it
-                                )
-                            }
-                        }
+                        emailHeartBeatApi()
+                        smsHeartBeatApi()
 
                         NewCreateAccountRequestModel.communicationTextMessage =
                             binding.switchCommunication.isChecked
@@ -411,13 +410,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     }
 
                     else -> {
-                        if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true){
-                            NewCreateAccountRequestModel.referenceId?.let {
-                                viewModel.heartBeat(Constants.AGENCY_ID,
-                                    it
-                                )
-                            }
-                        }
+                        emailHeartBeatApi()
                         NewCreateAccountRequestModel.communicationTextMessage =
                             binding.switchCommunication.isChecked
 

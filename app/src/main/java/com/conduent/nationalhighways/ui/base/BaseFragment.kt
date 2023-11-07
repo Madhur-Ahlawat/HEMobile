@@ -20,12 +20,15 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.ErrorResponseModel
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -47,6 +50,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     var backButton: Boolean = true
     var edit_summary: Boolean = false
     private var backPressListener: BackPressListener? = null
+    private val viewModel: CreateAccountVehicleViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -128,6 +133,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     abstract fun initCtrl()
     abstract fun observer()
+
+
 
     override fun onResume() {
         super.onResume()
@@ -254,6 +261,26 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         dialog.show()
 
 
+    }
+
+    fun emailHeartBeatApi(){
+        if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true&&NewCreateAccountRequestModel.referenceId!=null){
+            NewCreateAccountRequestModel.referenceId?.let {
+                viewModel.heartBeat(Constants.AGENCY_ID,
+                    it
+                )
+            }
+        }
+    }
+    fun smsHeartBeatApi(){
+
+        if (NewCreateAccountRequestModel.sms_referenceId?.trim()?.isNotEmpty() == true&&NewCreateAccountRequestModel.sms_referenceId!=null){
+            NewCreateAccountRequestModel.sms_referenceId?.let {
+                viewModel.heartBeat(Constants.AGENCY_ID,
+                    it
+                )
+            }
+        }
     }
 
 }
