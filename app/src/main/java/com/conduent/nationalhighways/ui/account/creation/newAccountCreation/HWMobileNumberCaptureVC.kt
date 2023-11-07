@@ -370,6 +370,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
         return extractedText
     }
+    private fun getRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
 
     override fun onClick(v: View?) {
@@ -623,7 +624,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
-            Constants.SMS, binding.inputMobileNumber.getText().toString().trim()
+            Constants.SMS, getRequiredText(binding.inputCountry.getSelectedDescription())+binding.inputMobileNumber.getText().toString().trim()
         )
         createAccountViewModel.emailVerificationApi(request)
 
@@ -637,6 +638,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         when (resource) {
             is Resource.Success -> {
 
+
+                Log.d("sms_referenceId",Gson().toJson(resource.data?.referenceId))
                 val bundle = Bundle()
                 bundle.putParcelable(
                     "data", RequestOTPModel(

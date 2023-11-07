@@ -212,23 +212,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.findVehicle -> {
-                if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty() == true) {
-                    NewCreateAccountRequestModel.referenceId?.let {
-                        viewModel.heartBeat(
-                            Constants.AGENCY_ID,
-                            it
-                        )
-                    }}
-                    if (NewCreateAccountRequestModel.sms_referenceId?.trim()
-                            ?.isNotEmpty() == true
-                    ) {
-                        NewCreateAccountRequestModel.sms_referenceId?.let {
-                            viewModel.heartBeat(
-                                Constants.AGENCY_ID,
-                                it
-                            )
-                        }
-                    }
+                    emailHeartBeatApi()
+                    smsHeartBeatApi()
 
                     NewCreateAccountRequestModel.onOffVehiclePlateNumber = ""
 

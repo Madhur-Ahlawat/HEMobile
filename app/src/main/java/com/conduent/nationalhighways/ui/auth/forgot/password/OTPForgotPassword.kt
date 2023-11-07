@@ -57,6 +57,7 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -151,6 +152,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 NewCreateAccountRequestModel.referenceId = response?.referenceId
             }
         }
+
+        Log.d("referenceId",Gson().toJson(NewCreateAccountRequestModel.sms_referenceId+"  "+NewCreateAccountRequestModel.referenceId))
 
 
         setInputParamsData()
@@ -425,6 +428,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun hitTWOFAVerifyAPI() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
         val request = VerifyRequestOtpReq(
             binding.edtOtp.getText().toString().trim(),
             response?.referenceId ?: "",
@@ -436,12 +440,24 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun confirmEmailCode() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        val request = ConfirmEmailRequest(
-            response?.referenceId ?: "",
-            data?.optionValue,
-            binding.edtOtp.getText().toString().trim()
-        )
-        createAccountViewModel.confirmEmailApi(request)
+        if (phoneCountryCode.isNotEmpty()&&phoneCountryCode!=null){
+            val request = ConfirmEmailRequest(
+                response?.referenceId ?: "",
+                phoneCountryCode+data?.optionValue,
+                binding.edtOtp.getText().toString().trim()
+            )
+            createAccountViewModel.confirmEmailApi(request)
+
+        }else{
+            val request = ConfirmEmailRequest(
+                response?.referenceId ?: "",
+                data?.optionValue,
+                binding.edtOtp.getText().toString().trim()
+            )
+            createAccountViewModel.confirmEmailApi(request)
+
+        }
+
     }
 
     private fun loadUI() {

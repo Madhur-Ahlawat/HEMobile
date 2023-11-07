@@ -45,7 +45,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private var isNewPasswordValid: Boolean = false
     private var isConfirmPasswordValid: Boolean = false
     private val viewModel: ForgotPasswordViewModel by viewModels()
-    private val createAccountHeartBeatViewModel: CreateAccountVehicleViewModel by viewModels()
 
     private var data: SecurityCodeResponseModel? = null
     private var loader: LoaderDialog? = null
@@ -184,7 +183,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
     override fun observer() {
         observe(viewModel.resetPassword, ::handleResetResponse)
-        observe(createAccountHeartBeatViewModel.heartBeatLiveData, ::heartBeatApiResponse)
 
         //observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
     }
@@ -196,11 +194,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 if (navFlow != Constants.FORGOT_PASSWORD_FLOW) {
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                    NewCreateAccountRequestModel.referenceId?.let {
-                        createAccountHeartBeatViewModel.heartBeat(Constants.AGENCY_ID,
-                            it
-                        )
-                    }
+                    emailHeartBeatApi()
                     NewCreateAccountRequestModel.password =
                         binding.edtNewPassword.getText().toString().trim()
                     findNavController().navigate(
