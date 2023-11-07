@@ -20,7 +20,6 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -348,11 +347,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 enable = true
             )
         }
-        if (isNewPasswordValid && isConfirmPasswordValid) {
-            binding.btnSubmit.isEnabled = true
-        } else {
-            binding.btnSubmit.isEnabled = false
-        }
+        binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
     private fun isEnable(text: String) {
@@ -360,11 +355,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         var commaSeperatedString = ""
         isNewPasswordValid = true
 
-        if (binding.edtNewPassword.getText().toString().length == 0) {
+        if (binding.edtNewPassword.getText().toString().isEmpty()) {
             isNewPasswordValid = false
             binding.edtNewPassword.setErrorText(getString(R.string.str_enter_your_password))
         } else if (hasSpecialCharacters(
-                binding.edtNewPassword.editText.getText().toString(),
+                binding.edtNewPassword.editText.text.toString(),
                 splCharsPassword
             ) || binding.edtNewPassword.getText().toString().contains(" ")
         ) {
@@ -393,7 +388,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars!!
                     )
                 )
-            if (filterTextForSpecialChars!!.length > 0) {
+            if (filterTextForSpecialChars.isNotEmpty()) {
                 binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
                 false
             } else {

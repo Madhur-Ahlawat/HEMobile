@@ -116,7 +116,9 @@ class AccountPaymentHistoryItemDetailFragment :
         }
         //Bitmap.createScaledBitmap(bitmap, 595, 842, true)
         val canvas = bitmap?.let { Canvas(it) }
-        view.draw(canvas)
+        if (canvas != null) {
+            view.draw(canvas)
+        }
 
         val pdfDocument = PdfDocument()
         val pageInfo =

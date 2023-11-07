@@ -27,6 +27,7 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.PaymentTypeInfo
 import com.conduent.nationalhighways.data.model.makeoneofpayment.VehicleList
 import com.conduent.nationalhighways.data.model.payment.AddCardModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
+import com.conduent.nationalhighways.data.model.payment.NmiErrorModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.NmiPaymentFragmentBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
@@ -304,7 +305,19 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                         "3DStarted1" -> threeDStarted = true
 
+
                         else -> {
+
+                            if(data.startsWith("errorMessage")){
+
+                                val nmiErrorModel =
+                                    Gson().fromJson(data.replace("errorMessage",""), NmiErrorModel::class.java)
+
+                                if (nmiErrorModel.type!="integrationError"){
+                                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                                }
+                            }
+
                             if (data == "paymentFailed" && threeDStarted) {
                                 hideLoader()
                                 findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
