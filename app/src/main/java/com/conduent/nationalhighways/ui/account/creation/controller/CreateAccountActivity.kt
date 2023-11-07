@@ -46,17 +46,17 @@ class CreateAccountActivity : BaseActivity<Any>(),LogoutListener {
             sessionManager.getLoggedInUser()
         )
 
-//        ratingDialog()
+        ratingDialog()
 
     }
 
-//    private fun ratingDialog() {
-//        val builder: RatingDialog.Builder = Builder(context)
-//        builder.title(context.getString(R.string.take_a_minute_to_rate_us))
-//        builder.positiveButtonText(context.getString(R.string.rating_no_thanks))
-//        builder.ratingBarColor(R.color.ratingsTeal)
-//        builder.playstoreUrl("https://play.google.com/store/apps/details?id=yourAppPackageName")
-//        builder.icon(getDrawable(com.conduent.nationalhighways.R.drawable.rating_icon))
+    private fun ratingDialog() {
+//        val builder: RatingDialog.Builder = RatingDialog.Builder(this)
+//        builder.title(this.getString(R.string.app_name))
+//        builder.positiveButtonText(this.getString(R.string.not_now))
+//        builder.ratingBarColor(R.color.blue_color)
+//        builder.playstoreUrl("https://play.google.com/store/apps/details?id=com.conduent.nationalhighways")
+//        builder.icon(getDrawable(R.drawable.transactions))
 //        builder.session(12)
 //
 //// create the dialog and show it
@@ -66,11 +66,11 @@ class CreateAccountActivity : BaseActivity<Any>(),LogoutListener {
 //        dialog.setOnShowListener(OnShowListener {
 //            dialog.getIconImageView().setScaleX(0.8f)
 //            dialog.getIconImageView().setScaleY(0.8f)
-//            dialog.getTitleTextView().setTextSize(TypedValue.COMPLEX_UNIT_SP, 14)
-//            dialog.getTitleTextView().setTextColor(context.getColor(R.color.ratingsGray))
+//            dialog.getTitleTextView().setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+//            dialog.getTitleTextView().setTextColor(this.getColor(R.color.grayColorIcon))
 //        })
 //        dialog.show()
-//    }
+    }
 
     override fun observeViewModel() {}
 
