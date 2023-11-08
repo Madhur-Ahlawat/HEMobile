@@ -136,12 +136,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
 
         if (arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION) != null) {
             replenishmentInformation =
-                arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)
+                arguments?.getParcelable(Constants.REPLENISHMENTINFORMATION)
         }
 
         if (arguments != null) {
@@ -171,12 +171,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun setInputParamsData() {
-        val profile_navData = navData as ProfileDetailModel?
+        val profileNavdata = navData as ProfileDetailModel?
 
-        phoneCell = profile_navData?.personalInformation?.phoneCell ?: ""
-        phoneCellCountryCode = profile_navData?.personalInformation?.phoneCellCountryCode ?: ""
-        phoneDay = profile_navData?.personalInformation?.phoneDay ?: ""
-        phoneDayCountryCode = profile_navData?.personalInformation?.phoneDayCountryCode ?: ""
+        phoneCell = profileNavdata?.personalInformation?.phoneCell ?: ""
+        phoneCellCountryCode = profileNavdata?.personalInformation?.phoneCellCountryCode ?: ""
+        phoneDay = profileNavdata?.personalInformation?.phoneDay ?: ""
+        phoneDayCountryCode = profileNavdata?.personalInformation?.phoneDayCountryCode ?: ""
 
         if (!isItMobileNumber) {
             phoneDay = data?.optionValue.toString()
@@ -686,14 +686,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             loader?.dismiss()
         }
 
-
         when (resource) {
             is Resource.Success -> {
                 otpSuccessRedirection()
             }
 
             is Resource.DataError -> {
-
 
                 if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
                         Constants.INVALID_TOKEN
@@ -709,6 +707,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         }
 
                         2050 -> {
+                            binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
+                        }
+
+                        2 -> {
                             binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
                         }
 

@@ -28,8 +28,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/data_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="visible"
                 tools:context=".ui.bottomnav.account.raiseEnquiry.CasesEnquiryDetailsFragment">
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -105,7 +108,6 @@
                             android:id="@+id/category_data_tv"
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
-                            android:text="@{viewModel.enquiryDetailsModel.category}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/category_tv" />
 
@@ -142,7 +144,6 @@
                             android:id="@+id/subcategory_data_tv"
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
-                            android:text="@{viewModel.enquiryDetailsModel.subcategory}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/subcategory_tv" />
 
