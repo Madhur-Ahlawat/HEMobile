@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_payment_history"
-            android:textColor="@color/black"
+            android:textColor="@color/red"
             android:textSize="@dimen/_18ssp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,6 +35,12 @@
             app:layout_constraintBottom_toBottomOf="@id/guideline2"
             app:layout_constraintTop_toTopOf="@id/guideline2">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.4" />
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_available_balance_heading"
                 android:layout_width="wrap_content"
@@ -50,38 +57,34 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_available_balance"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/_4dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15dp"
-                android:layout_marginRight="@dimen/_10dp"
-                android:ellipsize="marquee"
-                android:fadingEdge="horizontal"
                 android:fontFamily="@font/open_sans"
-                android:marqueeRepeatLimit="marquee_forever"
                 android:padding="0dp"
+                android:gravity="center_vertical|end"
                 android:paddingVertical="0dp"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
                 android:textColor="@color/color_00837B"
                 android:textSize="@dimen/font_38sp"
                 app:autoSizePresetSizes="@array/button_text_auto_size"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline3"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="£10,00000.00" />
+                tools:text="£10000.00" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_account_number_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_14dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
                 android:text="@string/txt_account_number"
                 android:textColor="@color/label_color"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_available_balance_heading" />
+                app:layout_constraintTop_toTopOf="@id/tv_account_number_value"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_account_number_value"/>
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_account_number_value"
@@ -91,34 +94,32 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/label_color"
                 android:textSize="@dimen/_20sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_account_number_heading"
                 app:layout_constraintEnd_toEndOf="@id/tv_available_balance"
-                app:layout_constraintTop_toTopOf="@id/tv_account_number_heading"
+                app:layout_constraintTop_toBottomOf="@id/tv_available_balance"
                 tools:text="118324408" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_account_status_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_14dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
                 android:text="@string/txt_account_status"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_account_number_heading" />
+                app:layout_constraintTop_toTopOf="@id/card_indicator_account_status"
+                app:layout_constraintBottom_toBottomOf="@+id/card_indicator_account_status"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_indicator_account_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/green_status"
-                android:visibility="gone"
                 app:cardCornerRadius="@dimen/_5dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_account_status_heading"
+                android:layout_marginTop="@dimen/_12dp"
                 app:layout_constraintEnd_toEndOf="@id/tv_available_balance"
-                app:layout_constraintTop_toTopOf="@id/tv_account_status_heading">
+                app:layout_constraintTop_toBottomOf="@id/tv_account_number_value">
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/indicator_account_status"
@@ -140,11 +141,11 @@
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_44dp"
-                android:layout_marginTop="@dimen/_14dp"
+                android:layout_marginTop="@dimen/_12dp"
                 android:text="@string/plus_top_up"
                 android:textSize="@dimen/_14sp"
                 app:isEnabled="true"
-                app:layout_constraintTop_toBottomOf="@id/tv_account_status_heading"
+                app:layout_constraintTop_toBottomOf="@id/card_indicator_account_status"
                 app:radius="@dimen/_5dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -310,7 +311,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_18dp"
-            android:background="@drawable/bg_rounded_corner_10dp"
+            android:background="@drawable/bg_rounded_corner_6dp"
             android:elevation="@dimen/_2dp"
             android:paddingVertical="@dimen/_2dp"
             app:layout_constraintEnd_toEndOf="@id/box_accountInformation"
@@ -368,9 +369,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center_vertical"
                 android:text="@string/txt_recent_transacions"
                 android:textColor="@color/black"
-                android:gravity="center_vertical"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -393,9 +394,9 @@
             android:id="@+id/rv_recenrTransactions"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:orientation="vertical"
             android:layout_marginTop="@dimen/_8dp"
             android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/box_cardType"
@@ -459,5 +460,8 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.3" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

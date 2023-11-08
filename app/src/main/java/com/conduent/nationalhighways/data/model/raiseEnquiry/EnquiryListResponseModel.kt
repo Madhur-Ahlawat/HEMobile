@@ -7,25 +7,20 @@ import kotlinx.parcelize.Parcelize
 data class EnquiryListResponseModel(
     val serviceRequestList: ServiceRequestModel,
     val statusCode: Int
-) : Parcelable {
-}
+) : Parcelable
 
 @Parcelize
-data class ServiceRequestModel(val serviceRequest: ArrayList<ServiceRequest>) : Parcelable {
-
-}
+data class ServiceRequestModel(val serviceRequest: ArrayList<ServiceRequest>) : Parcelable
 
 @Parcelize
 data class ServiceRequest(
     val id: String? = null,
     val created: String? = null,
-    val status: String? = null, val category: String? = null,
-    val subcategory: String? = null, val description: String? = null,
+    val status: String? = null, var category: String? = null,
+    var subcategory: String? = null, val description: String? = null,
     val fileList: ArrayList<FileList> = ArrayList(),
     var closedDate: String? = null
 ) : Parcelable
 
 @Parcelize
-data class FileList(val filename: String, val fileId: String) : Parcelable {
-
-}
+data class FileList(val filename: String, val fileId: String) : Parcelable

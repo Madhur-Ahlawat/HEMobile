@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.ACCOUNTINFORMATION
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PERSONALDATA
@@ -33,6 +34,7 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBinding>() {
@@ -50,7 +52,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navData?.let {
             data = it as ProfileDetailModel
-            binding?.edtEmail?.setText(data?.personalInformation?.userName?.lowercase())
+            binding.edtEmail?.setText(data?.personalInformation?.userName?.lowercase(Locale.getDefault()))
         }
         HomeActivityMain.setTitle(getString(R.string.profile_email_address))
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
@@ -65,7 +67,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             btnNext.setOnClickListener {
                 hideKeyboard()
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                val request = UserNameCheckReq(binding.edtEmail.getText().toString().trim())
+                val request = UserNameCheckReq(binding.edtEmail.text.toString().trim())
                 viewModel.userNameAvailabilityCheck(request)
 //                viewModel.emailVerificationApi(
 //                    EmailVerificationRequest(
@@ -80,69 +82,69 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
     }
 
     fun checkButton() {
-        binding?.btnNext?.isEnabled = btnEnabled
-        binding?.btnNext?.isFocusable = btnEnabled
+        binding.btnNext?.isEnabled = btnEnabled
+        binding.btnNext?.isFocusable = btnEnabled
     }
 
     private var commaSeperatedString: String? = null
     private var filterTextForSpecialChars: String? = null
     private fun isEnable(): Boolean {
         btnEnabled =
-            if (binding.edtEmail.getText().toString().trim().length > 0) {
-                if (binding.edtEmail.getText().toString().trim().length < 8) {
+            if (binding.edtEmail.text.toString().trim().length > 0) {
+                if (binding.edtEmail.text.toString().trim().length < 8) {
                     binding.txtError.visible()
-                    binding.txtError.setText(getString(R.string.email_address_must_be_8_characters_or_more))
+                    binding.txtError.text = getString(R.string.email_address_must_be_8_characters_or_more)
                     false
                 } else {
-                    if (binding.edtEmail.getText().toString().length > 100) {
+                    if (binding.edtEmail.text.toString().length > 100) {
                         false
                     } else {
                         if (!Utils.isLastCharOfStringACharacter(
-                                binding.edtEmail.getText().toString().trim()
+                                binding.edtEmail.text.toString().trim()
                             ) || Utils.countOccurenceOfChar(
-                                binding.edtEmail.getText().toString().trim(), '@'
-                            ) > 1 || binding.edtEmail.getText().toString().trim().contains(
+                                binding.edtEmail.text.toString().trim(), '@'
+                            ) > 1 || binding.edtEmail.text.toString().trim().contains(
                                 Utils.TWO_OR_MORE_DOTS
-                            ) || (binding.edtEmail.getText().toString().trim().last()
-                                .toString().equals(".") || binding.edtEmail.getText()
+                            ) || (binding.edtEmail.text.toString().trim().last()
+                                .toString().equals(".") || binding.edtEmail.text
                                 .toString().first().toString().equals("."))
-                            || (binding.edtEmail.getText().toString().trim().last().toString()
-                                .equals("-") || binding.edtEmail.getText().toString().first()
+                            || (binding.edtEmail.text.toString().trim().last().toString()
+                                .equals("-") || binding.edtEmail.text.toString().first()
                                 .toString().equals("-"))
                             || (Utils.countOccurenceOfChar(
-                                binding.edtEmail.getText().toString().trim(), '.'
+                                binding.edtEmail.text.toString().trim(), '.'
                             ) < 1) || (Utils.countOccurenceOfChar(
-                                binding.edtEmail.getText().toString().trim(), '@'
+                                binding.edtEmail.text.toString().trim(), '@'
                             ) < 1)
                         ) {
                             binding.txtError.visible()
-                            binding.txtError.setText(getString(R.string.str_email_format_error_message))
+                            binding.txtError.text = getString(R.string.str_email_format_error_message)
                             false
                         } else {
                             if (Utils.hasSpecialCharacters(
-                                    binding.edtEmail.getText().toString().trim(),
+                                    binding.edtEmail.text.toString().trim(),
                                     Utils.splCharEmailCode
                                 )
                             ) {
                                 filterTextForSpecialChars =
                                     Utils.removeGivenStringCharactersFromString(
                                         Utils.LOWER_CASE,
-                                        binding.edtEmail.getText().toString().trim()
+                                        binding.edtEmail.text.toString().trim()
                                     )
                                 filterTextForSpecialChars =
                                     Utils.removeGivenStringCharactersFromString(
                                         Utils.UPPER_CASE,
-                                        binding.edtEmail.getText().toString().trim()
+                                        binding.edtEmail.text.toString().trim()
                                     )
                                 filterTextForSpecialChars =
                                     Utils.removeGivenStringCharactersFromString(
                                         Utils.DIGITS,
-                                        binding.edtEmail.getText().toString().trim()
+                                        binding.edtEmail.text.toString().trim()
                                     )
                                 filterTextForSpecialChars =
                                     Utils.removeGivenStringCharactersFromString(
                                         Utils.ALLOWED_CHARS_EMAIL,
-                                        binding.edtEmail.getText().toString().trim()
+                                        binding.edtEmail.text.toString().trim()
                                     )
                                 commaSeperatedString =
                                     Utils.makeCommaSeperatedStringForPassword(
@@ -152,32 +154,32 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                                     )
                                 if (filterTextForSpecialChars!!.length > 0) {
                                     binding.txtError.visible()
-                                    binding.txtError.setText("Email address must not include $commaSeperatedString")
+                                    binding.txtError.text = "Email address must not include $commaSeperatedString"
                                     false
                                 } else if (!Patterns.EMAIL_ADDRESS.matcher(
-                                        binding.edtEmail.getText().toString()
+                                        binding.edtEmail.text.toString()
                                     ).matches()
                                 ) {
                                     binding.txtError.visible()
-                                    binding.txtError.setText(getString(R.string.str_email_format_error_message))
+                                    binding.txtError.text = getString(R.string.str_email_format_error_message)
                                     false
                                 } else {
                                     binding.txtError.gone()
-                                    binding.txtError.setText("")
+                                    binding.txtError.text = ""
                                     true
                                 }
                             } else if (!(Utils.countOccurenceOfChar(
-                                    binding.edtEmail.getText().toString().trim(), '@'
+                                    binding.edtEmail.text.toString().trim(), '@'
                                 ) > 0 && Utils.countOccurenceOfChar(
-                                    binding.edtEmail.getText().toString().trim(), '@'
+                                    binding.edtEmail.text.toString().trim(), '@'
                                 ) < 2)
                             ) {
                                 binding.txtError.visible()
-                                binding.txtError.setText(getString(R.string.str_email_format_error_message))
+                                binding.txtError.text = getString(R.string.str_email_format_error_message)
                                 false
                             } else {
                                 binding.txtError.gone()
-                                binding.txtError.setText("")
+                                binding.txtError.text = ""
                                 true
                             }
                         }
@@ -185,7 +187,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                 }
             } else {
                 binding.txtError.gone()
-                binding.txtError.setText("")
+                binding.txtError.text = ""
                 false
             }
         return btnEnabled
@@ -203,42 +205,53 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
         }
         when (resource) {
             is Resource.Success -> {
-                if (resource.data?.statusCode?.equals("500") == true) {
-                    showError(
-                        binding.root,
-                        resource.data.message
-                    )
-                } else {
-                    val bundle = Bundle()
-                    binding.data?.referenceId = resource.data?.referenceId
-                    bundle.putParcelable(NAV_DATA_KEY, binding.data)
-                    bundle.putString(NAV_FLOW_KEY, navFlowCall)
-                    bundle.putParcelable(REPLENISHMENTINFORMATION, HomeActivityMain.accountDetailsData?.replenishmentInformation)
-                    bundle.putParcelable(PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation?.apply { emailAddress =binding.edtEmail.getText().toString().trim() })
-                    bundle.putString(Constants.REFERENCE_ID, resource.data?.referenceId)
-                    bundle.putBoolean(Constants.IS_EDIT_EMAIL,arguments?.getBoolean(Constants.IS_EDIT_EMAIL) as Boolean)
-                    bundle.putParcelable(
-                        "response",
-                        SecurityCodeResponseModel(
-                            resource.data?.emailStatusCode,
-                            0L,
-                            resource.data?.referenceId,
-                            true
-                        )
-                    )
-                    bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL, binding.edtEmail.getText().toString().trim()))
 
-                    findNavController().navigate(
-                        R.id.action_change_email_profile_to_confirm_security_code,
-                        bundle
+                val bundle = Bundle()
+                binding.data?.referenceId = resource.data?.referenceId
+                bundle.putParcelable(NAV_DATA_KEY, binding.data)
+                bundle.putString(NAV_FLOW_KEY, navFlowCall)
+                bundle.putParcelable(
+                    REPLENISHMENTINFORMATION,
+                    HomeActivityMain.accountDetailsData?.replenishmentInformation
+                )
+                bundle.putParcelable(
+                    PERSONALDATA,
+                    HomeActivityMain.accountDetailsData?.personalInformation?.apply {
+                        emailAddress = binding.edtEmail.text.toString().trim()
+                    })
+                bundle.putString(Constants.REFERENCE_ID, resource.data?.referenceId)
+                bundle.putBoolean(
+                    Constants.IS_EDIT_EMAIL,
+                    arguments?.getBoolean(Constants.IS_EDIT_EMAIL) as Boolean
+                )
+                bundle.putParcelable(
+                    "response",
+                    SecurityCodeResponseModel(
+                        resource.data?.emailStatusCode,
+                        0L,
+                        resource.data?.referenceId,
+                        true
                     )
-                }
+                )
+                bundle.putParcelable(
+                    "data",
+                    RequestOTPModel(Constants.EMAIL, binding.edtEmail.text.toString().trim())
+                )
+
+                findNavController().navigate(
+                    R.id.action_change_email_profile_to_confirm_security_code,
+                    bundle
+                )
+
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
-                }else {
+                } else {
                     showError(binding.root, resource.errorMsg)
                 }
             }
@@ -254,16 +267,16 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
         if (response?.data == true) {
             val request = EmailVerificationRequest(
                 Constants.EMAIL,
-                binding.edtEmail.getText().toString().trim()
+                binding.edtEmail.text.toString().trim()
             )
             viewModel.emailVerificationApi(request)
         } else {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall==Constants.PROFILE_MANAGEMENT) {
+            if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall == Constants.PROFILE_MANAGEMENT) {
                 binding.txtError.visible()
-                binding.txtError.setText(getString(R.string.an_account_with_this_email_address_already_exists))
+                binding.txtError.text = getString(R.string.an_account_with_this_email_address_already_exists)
             }
 
         }

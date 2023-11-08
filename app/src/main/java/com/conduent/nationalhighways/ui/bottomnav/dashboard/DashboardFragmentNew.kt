@@ -37,6 +37,7 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.pay
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapterDashboard
+import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsInnerAdapterDashboard
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.DateUtils.compareDates
 import com.conduent.nationalhighways.utils.common.Constants
@@ -49,6 +50,8 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
+import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
+import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -60,7 +63,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
         hashMapOf()
-    private var transactionsAdapter: TransactionsAdapterDashboard? = null
+    private var transactionsAdapter: TransactionsInnerAdapterDashboard? = null
     val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
@@ -146,15 +149,15 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun initTransactionsRecyclerView() {
-        transactionsAdapter = TransactionsAdapterDashboard(
-            this@DashboardFragmentNew, paymentHistoryDatesList, paymentHistoryHashMap
+        transactionsAdapter = TransactionsInnerAdapterDashboard(
+            this@DashboardFragmentNew, paymentHistoryListData
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
         binding.rvRecenrTransactions.run {
-//            if (itemDecorationCount == 0) {
-//                addItemDecoration(RecyclerViewItemDecoratorDashboard(5, 1))
-//            }
+            if (itemDecorationCount == 0) {
+                addItemDecoration(RecyclerViewItemDecoratorDashboardParentAdapter(3, 0))
+            }
             adapter = transactionsAdapter
         }
     }
@@ -261,11 +264,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData?.clear()
                         paymentHistoryHashMap.clear()
-                        paymentHistoryListData?.addAll(it)
+                        it?.forEachIndexed { index, transactionData ->
+                            if (index <= 1) {
+                                paymentHistoryListData?.add(transactionData)
+                            }
+                            else{
+                                return@forEachIndexed
+                            }
+                        }
                         paymentHistoryListData =
-                            Utils.sortTransactionsDateWiseDescending(paymentHistoryListData).toMutableList()
+                            Utils.sortTransactionsDateWiseDescending(paymentHistoryListData)
+                                .toMutableList()
                         paymentHistoryDatesList.clear()
-                        getDatesList(paymentHistoryListData)
+//                        getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
                     } else {
                         binding.boxViewAll.gone()

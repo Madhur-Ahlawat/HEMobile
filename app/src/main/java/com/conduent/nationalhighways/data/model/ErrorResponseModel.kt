@@ -11,7 +11,7 @@ data class ErrorResponseModel(
     @SerializedName("error_description", alternate = ["message"])
     val message: String?,
     val status: Int?,
-    val errorCode: Int?,
+    var errorCode: Int?,
     val timestamp: String?
 ) {
     companion object {
