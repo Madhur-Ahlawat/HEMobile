@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.DialogFragment
@@ -121,7 +122,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             })
 
-    fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
+    private fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
         return ((item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber))
     }
 
@@ -491,13 +492,26 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupMethod.visible()
 
             buttonTopup.visible()
+
             binding.buttonTopup.setOnClickListener {
+                val bundle = Bundle()
                 val title = requireActivity().findViewById<TextView>(R.id.title_txt)
 
                 title.text = getString(R.string.top_up)
 
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+
+
+                if (data.accountInformation?.status.equals(Constants.SUSPENDED,true)){
+                    bundle.putString(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    bundle.putString(
+                        Constants.CURRENTBALANCE, data.replenishmentInformation?.currentBalance)
+
+                }else{
+                    bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+
+                }
+
+
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
 
                 findNavController().navigate(

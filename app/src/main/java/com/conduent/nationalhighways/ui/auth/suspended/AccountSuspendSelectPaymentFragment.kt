@@ -105,7 +105,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         cursorPosition = binding.topBalance.editText.selectionStart
         edtLength = binding.topBalance.editText.text?.length
         Selection.setSelection(binding.topBalance.editText.text, edtLength!! - 1)
-        if (navFlowCall.equals(Constants.PAYMENT_TOP_UP)) {
+        if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             HomeActivityMain.setTitle("Top Up New Payment Method")
         }
     }

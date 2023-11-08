@@ -21,7 +21,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.ACCOUNTINFORMATION
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PERSONALDATA
@@ -51,7 +50,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navData?.let {
             data = it as ProfileDetailModel
-            binding?.edtEmail?.setText(data?.personalInformation?.userName?.toLowerCase())
+            binding?.edtEmail?.setText(data?.personalInformation?.userName?.lowercase())
         }
         HomeActivityMain.setTitle(getString(R.string.profile_email_address))
         (requireActivity() as HomeActivityMain).showHideToolbar(true)

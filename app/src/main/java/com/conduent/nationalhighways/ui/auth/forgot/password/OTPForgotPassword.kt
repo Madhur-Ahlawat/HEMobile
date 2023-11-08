@@ -233,7 +233,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         when (resource) {
             is Resource.Success -> {
 
-                if (navFlowCall.equals(PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)) {
+                if (navFlowCall == PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
                     sessionManager.saveSmsOption("Y")
                     val bundle = Bundle()
                     bundle.putString(
@@ -957,12 +957,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneDay,
+                phoneCell = phoneCell,
                 phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = HomeActivityMain.accountDetailsData?.accountInformation?.smsOption,
                 phoneEvening = "",
-                phoneCellCountryCode = phoneDayCountryCode,
+                phoneCellCountryCode = phoneCellCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode,
                 mfaEnabled = accountInformation?.mfaEnabled,
                 securityCode = binding.edtOtp.getText().toString().trim(),
