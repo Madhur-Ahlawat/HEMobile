@@ -339,6 +339,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                         false
                     }
                 } else {
+                    binding.mobileNumberEt.setErrorText(getString(R.string.enter_your_mobile_number))
                     true
                 }
                 checkButton()

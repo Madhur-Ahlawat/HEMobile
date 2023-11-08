@@ -1619,5 +1619,6 @@
     <string name="str_did_you_cross_today">Did you cross today?</string>
     <string name="str_responsible_paying">As a reminder if you are responsible for paying the charge you have until midnight tomorrow to pay</string>
     <string name="submit_feedback">Submit Feedback</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
 
 </resources>
