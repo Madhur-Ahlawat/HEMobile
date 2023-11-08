@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.account.profile.password
 import android.content.Intent
 import android.text.Html
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityChangePasswordSuccessProfileBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
@@ -20,6 +21,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePasswordSuccessProfileBinding>(),LogoutListener {
 
+    @Inject
+    lateinit var api: ApiService
     @Inject
     lateinit var sessionManager: SessionManager
     private lateinit var binding: ActivityChangePasswordSuccessProfileBinding
@@ -79,7 +82,7 @@ class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePassword
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityBiometricBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
@@ -63,6 +64,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var navFlowFrom: String = ""
+
+
+    @Inject
+    lateinit var api: ApiService
 
     override fun initViewBinding() {
         binding = ActivityBiometricBinding.inflate(layoutInflater)
@@ -432,7 +437,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

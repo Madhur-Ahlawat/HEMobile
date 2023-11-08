@@ -140,6 +140,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     fun hitAPIs(): () -> Unit? {
+        Log.e("TAG", "hitAPIs: ", )
         getDashBoardAllData()
         dashboardViewModel.getAlertsApi()
         return {}
@@ -632,7 +633,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

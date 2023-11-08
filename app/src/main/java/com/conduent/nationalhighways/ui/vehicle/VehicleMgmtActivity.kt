@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.vehicle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityVehicleMgmtBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.vehicle.vehiclehistory.VehicleHistoryCrossingHistoryFragment
@@ -28,6 +29,8 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
     @Inject
     lateinit var sessionManager: SessionManager
 
+    @Inject
+    lateinit var api: ApiService
     override fun initViewBinding() {
         binding = ActivityVehicleMgmtBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -134,7 +137,7 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

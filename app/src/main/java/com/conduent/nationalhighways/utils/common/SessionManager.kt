@@ -52,6 +52,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val PUBLIC_KEY: String = ""
         val CATEGORIES_DATA="categories_data"
         val SUB_CATEGORIES_DATA="sub_categories_data"
+        val LAST_TOKEN_TIME="last_token_time"
     }
 
     /**
@@ -356,16 +357,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         return prefs.getBoolean(PHONE_NUMBER, false)
     }
 
-
-    fun saveBooleanData(key: String, privateKey: Boolean) {
-        prefs.edit().apply {
-            putBoolean(key, privateKey)
-        }.apply()
-    }
-
-    fun fetchBooleanData(key: String): Boolean {
-        return prefs.getBoolean(key, false)
-    }
     fun fetchSubCategoriesData(): ArrayList<CaseCategoriesModel> {
         val json = prefs.getString(SUB_CATEGORIES_DATA, null)
         val type = object : TypeToken<ArrayList<CaseCategoriesModel>>() {}.type
@@ -381,4 +372,26 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         }.apply()
 
     }
+
+
+    fun saveBooleanData(key: String, privateKey: Boolean) {
+        prefs.edit().apply {
+            putBoolean(key, privateKey)
+        }.apply()
+    }
+
+    fun fetchBooleanData(key: String): Boolean {
+        return prefs.getBoolean(key, false)
+    }
+
+    fun saveStringData(key: String, privateKey: String) {
+        prefs.edit().apply {
+            putString(key, privateKey)
+        }.apply()
+    }
+
+    fun fetchStringData(key: String): String {
+        return prefs.getString(key,"")?:""
+    }
+
 }

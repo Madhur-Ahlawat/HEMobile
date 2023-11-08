@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityViewChargesBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -27,6 +28,10 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
 
     @Inject
     lateinit var sessionManager: SessionManager
+
+
+    @Inject
+    lateinit var api: ApiService
 
     override fun initViewBinding() {
         loader = LoaderDialog()
@@ -144,7 +149,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {
