@@ -51,7 +51,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
     private var currentBalance: String = ""
-    private var navFlow: String = ""
     private val formatter = DecimalFormat("#,###.00")
     private var paymentListSize: Int = 0
 
@@ -86,10 +85,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 arguments?.getParcelable(Constants.PERSONALDATA)
 
         }
-        if (arguments?.getString(Constants.NAV_FLOW_KEY) != null) {
-            navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
-
-        }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
     }
@@ -98,7 +93,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         val linearLayoutManager = LinearLayoutManager(requireContext())
         binding.rvPaymentMethods.layoutManager = linearLayoutManager
         suspendPaymentMethodAdapter =
-            SuspendPaymentMethodAdapter(requireActivity(), paymentList, this, navFlow)
+            SuspendPaymentMethodAdapter(requireActivity(), paymentList, this, navFlowCall)
         binding.rvPaymentMethods.adapter = suspendPaymentMethodAdapter
         binding.topBalance.setText("£10.00")
         binding.topBalance.editText.addTextChangedListener(GenericTextWatcher())
@@ -189,7 +184,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 bundle.putInt(Constants.POSITION, position)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putParcelableArrayList(Constants.DATA, paymentList as ArrayList)
 //                findNavController().navigate(
@@ -222,7 +217,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 .replace("$", "").replace(",", "")
         val bundle = Bundle()
         bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
-        bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
         bundle.putString(Constants.CURRENTBALANCE, currentBalance)
@@ -269,7 +264,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
 
 
-                    suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
+                    suspendPaymentMethodAdapter.updateList(paymentList, navFlowCall)
                     binding.rvPaymentMethods.visible()
                     binding.btnContinue.visible()
                     binding.noCardFoundLayout.gone()
@@ -392,7 +387,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         paymentList?.get(position)?.primaryCard = true
 
         paymentList?.get(position)?.isSelected = true
-        suspendPaymentMethodAdapter.updateList(paymentList, navFlow)
+        suspendPaymentMethodAdapter.updateList(paymentList, navFlowCall)
         cardSelection = paymentList?.get(position)?.isSelected == true
         checkButton()
 

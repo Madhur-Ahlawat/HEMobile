@@ -789,7 +789,25 @@
         android:id="@+id/tryPaymentAgainFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TryPaymentAgainFragment"
         android:label="TryPaymentAgainFragment"
-        tools:layout="@layout/fragment_try_payment_again" />
+        tools:layout="@layout/fragment_try_payment_again" >
+
+        <action
+            android:id="@+id/action_tryPaymentAgainFragment_to_selectPaymentMethodFragment"
+            app:destination="@id/selectPaymentMethodFragment"
+            app:popUpTo="@id/selectPaymentMethodFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_tryPaymentAgainFragment_to_accountSuspendedPaymentFragment"
+            app:destination="@id/accountSuspendedPaymentFragment"
+            app:popUpTo="@id/accountSuspendedPaymentFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_tryPaymentAgainFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment"
+            app:popUpTo="@id/paymentMethodFragment"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/enquiryCategoryFragment"

@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.PaymentScreenModel
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityAccountPaymentBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.history.AccountPaymentHistoryFragment
@@ -27,6 +28,8 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
 
     private lateinit var binding: ActivityAccountPaymentBinding
     private lateinit var navController: NavController
+    @Inject
+    lateinit var api: ApiService
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -75,7 +78,7 @@ class AccountPaymentActivity : BaseActivity<ActivityAccountPaymentBinding>(), Lo
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

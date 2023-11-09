@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.checkpaidcrossings
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
@@ -25,6 +26,8 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
 
     override fun observeViewModel() {}
 
+    @Inject
+    lateinit var api: ApiService
     override fun initViewBinding() {
         binding = ActivityCreateAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -96,7 +99,7 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

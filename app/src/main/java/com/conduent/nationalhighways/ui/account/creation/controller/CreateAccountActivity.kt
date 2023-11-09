@@ -5,6 +5,7 @@ import android.util.Log
 import android.util.TypedValue
 import com.codemybrainsout.ratingdialog.RatingDialog
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
@@ -23,6 +24,8 @@ class CreateAccountActivity : BaseActivity<Any>(),LogoutListener {
     @Inject
     lateinit var sessionManager: SessionManager
 
+    @Inject
+    lateinit var api: ApiService
     override fun initViewBinding() {
         binding = ActivityCreateAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -116,7 +119,7 @@ class CreateAccountActivity : BaseActivity<Any>(),LogoutListener {
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

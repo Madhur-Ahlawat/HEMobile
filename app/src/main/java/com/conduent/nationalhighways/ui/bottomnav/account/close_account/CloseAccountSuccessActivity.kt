@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCloseAccountSuccessBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.Constants
@@ -21,6 +22,8 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
 
     @Inject
     lateinit var sessionManager: SessionManager
+    @Inject
+    lateinit var api:ApiService
     var email = ""
     var accountSubType: String = ""
     lateinit var binding: ActivityCloseAccountSuccessBinding
@@ -78,7 +81,7 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

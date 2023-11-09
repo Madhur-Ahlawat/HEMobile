@@ -1,16 +1,13 @@
 package com.conduent.nationalhighways.ui.base
 
-import android.app.Activity
 import android.app.Application
-import android.os.Bundle
 import android.util.Log
-import android.view.Window
-import android.view.WindowManager
 import com.adobe.marketing.mobile.*
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
 import com.conduent.nationalhighways.data.remote.ApiService
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.logout.LogoutListener
@@ -21,6 +18,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -53,6 +51,39 @@ class BaseApplication : Application() {
                 var tryCount = 0
                 var response: Response<LoginResponse?>? = null
 
+                saveDateinSession(sessionManager)
+                while (!responseOK && tryCount < 3) {
+                    try {
+                        response = runBlocking {
+                            api.refreshToken(refresh_token = refresh)
+                        }
+                        responseOK = response?.isSuccessful == true
+                    } catch (e: Exception) {
+                        responseOK = false
+                    } finally {
+                        tryCount++
+                    }
+                }
+
+                if (responseOK) {
+                    saveToken(sessionManager, response)
+                    delegate.invoke()
+                }
+            }
+        }
+
+        fun saveDateinSession(sessionManager: SessionManager) {
+            val dateFormat = SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
+            val dateString = dateFormat.format(Date())
+            sessionManager.saveStringData(SessionManager.LAST_TOKEN_TIME, dateString)
+        }
+
+        fun getNewToken(api: ApiService, sessionManager: SessionManager) {
+            sessionManager.fetchRefreshToken()?.let { refresh ->
+                var responseOK = false
+                var tryCount = 0
+                var response: Response<LoginResponse?>? = null
+
                 while (!responseOK && tryCount < 3) {
                     try {
                         response = runBlocking {
@@ -67,7 +98,6 @@ class BaseApplication : Application() {
                 }
                 if (responseOK) {
                     saveToken(sessionManager, response)
-                    delegate.invoke()
                 }
             }
         }
@@ -124,10 +154,10 @@ class BaseApplication : Application() {
             MobileCore.start {
                 MobileCore.configureWithAppID(ADOBE_ENVIRONMENT_KEY)
                 Logg.logging("BaseApplication ", "ADOBE_ENVIRONMENT_KEY $ADOBE_ENVIRONMENT_KEY")
-                Logg.logging("BaseApplication ", "it  ${it.toString()}")
+                Logg.logging("BaseApplication ", "it  $it")
             }
         } catch (e: java.lang.Exception) {
-            Logg.logging("BaseApplication ", "it InvalidInitException  ${e.toString()}")
+            Logg.logging("BaseApplication ", "it InvalidInitException  $e")
         }
         MobileCore.setPrivacyStatus(MobilePrivacyStatus.OPT_IN)
     }

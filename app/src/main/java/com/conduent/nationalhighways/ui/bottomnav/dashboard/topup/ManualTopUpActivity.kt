@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav.dashboard.topup
 
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityManualTopUpBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -15,6 +16,8 @@ class ManualTopUpActivity : BaseActivity<Any>(), LogoutListener {
 
     private lateinit var binding : ActivityManualTopUpBinding
 
+    @Inject
+    lateinit var api: ApiService
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -47,7 +50,7 @@ class ManualTopUpActivity : BaseActivity<Any>(), LogoutListener {
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {
