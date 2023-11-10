@@ -166,14 +166,14 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         when (v?.id) {
             R.id.btn_submit -> {
                 hideKeyboard()
-                val validation = viewModel.checkPassword(
-                    newPassword = binding.edtNewPassword.editText.text.toString().trim(),
-                    currentPassword = binding.edtCurrentPassword.editText.text.toString()
-                        .trim(),
-                    confirmPassword = binding.edtConfirmPassword.editText.text.toString()
-                        .trim()
-                )
-                if (validation.first) {
+//                val validation = viewModel.checkPassword(
+//                    newPassword = binding.edtNewPassword.editText.text.toString().trim(),
+//                    currentPassword = binding.edtCurrentPassword.editText.text.toString()
+//                        .trim(),
+//                    confirmPassword = binding.edtConfirmPassword.editText.text.toString()
+//                        .trim()
+//                )
+//                if (validation.first) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     disableButton()
                     viewModel.updatePassword(
@@ -183,9 +183,9 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                             confirmPassword = binding.edtConfirmPassword.editText.text.toString()
                         )
                     )
-                } else {
-                    showError(binding.root, validation.second)
-                }
+//                } else {
+//                    showError(binding.root, validation.second)
+//                }
             }
         }
     }

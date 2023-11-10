@@ -179,8 +179,6 @@ abstract class BaseActivity<T> : AppCompatActivity() {
             )
             if (lastTokenTime != null) {
                 val diff = Utils.getTimeDifference(lastTokenTime, Date())
-                Log.e("TAG", "onUserInteraction: lastTokenTime "+lastTokenTime+" *Date* "+Date()+" " +
-                        "*minutes* "+diff.second+" *hour* "+diff.first+"*third*"+diff.third )
                 if (diff.first >= 1 || (diff.first == 0L && diff.second > 13)) {
                     BaseApplication.getNewToken(apiServiceAb, smAb)
                     BaseApplication.saveDateinSession(smAb)
