@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -233,7 +234,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         when (resource) {
             is Resource.Success -> {
 
-                if (navFlowCall.equals(PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)) {
+                if (navFlowCall == PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
                     sessionManager.saveSmsOption("Y")
                     val bundle = Bundle()
                     bundle.putString(
@@ -252,8 +253,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         Constants.NAV_FLOW_FROM,
                         Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE
                     )
+
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
+                    bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     if (navFlowCall == PROFILE_MANAGEMENT) {
                         findNavController().navigate(
                             R.id.action_otpForgotFragment_to_resetForgotPassword,
@@ -959,12 +962,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneDay,
+                phoneCell = phoneCell,
                 phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = HomeActivityMain.accountDetailsData?.accountInformation?.smsOption,
                 phoneEvening = "",
-                phoneCellCountryCode = phoneDayCountryCode,
+                phoneCellCountryCode = phoneCellCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode,
                 mfaEnabled = accountInformation?.mfaEnabled,
                 securityCode = binding.edtOtp.getText().toString().trim(),

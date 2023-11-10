@@ -1,15 +1,18 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.content.Intent
+import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
@@ -28,6 +31,7 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -36,6 +40,8 @@ import javax.inject.Inject
 class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnClickListener {
 
     private var title: TextView? = null
+    private var personalInformation: com.conduent.nationalhighways.data.model.account.PersonalInformation? = null
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -44,7 +50,11 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     @Inject
     lateinit var sessionManager: SessionManager
     override fun init() {
-        binding?.feedbackBt?.setMovementMethod(LinkMovementMethod.getInstance())
+        binding?.feedbackBt?.movementMethod = LinkMovementMethod.getInstance()
+
+        if (arguments?.getParcelable<com.conduent.nationalhighways.data.model.account.PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
+        }
 
         binding.btnSubmit.setOnClickListener(this)
         title = requireActivity().findViewById(R.id.title_txt)
@@ -70,24 +80,27 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                         .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                 ) {
                     title?.text = getString(R.string.profile_email_address)
-                    val data = navData as PersonalInformation?
+
+
+
                     binding.title.text = getString(R.string.email_address_change_successful)
                     binding.subTitle.text = Html.fromHtml(
                         getString(
                             R.string.you_will_receive_a_confirmation_email,
-                            data?.emailAddress
+                            personalInformation?.emailAddress
                         ), Html.FROM_HTML_MODE_COMPACT
                     )
                     sessionManager.clearAll()
                     binding.btnSubmit.text = getString(R.string.sign_in)
                 } else {
+
                     title?.text = getString(R.string.profile_name)
-                    val data = navData as PersonalInformation?
+
                     binding.title.text = getString(R.string.name_change_successful)
                     binding.subTitle.text = Html.fromHtml(
                         getString(
                             R.string.you_will_receive_a_confirmation_email,
-                            data?.emailAddress
+                            personalInformation?.emailAddress
                         ), Html.FROM_HTML_MODE_COMPACT
                     )
                     binding.btnSubmit.text = getString(R.string.str_continue)

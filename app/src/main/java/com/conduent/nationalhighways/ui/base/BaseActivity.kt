@@ -19,21 +19,36 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.ErrorResponseModel
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.RetryListener
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import okhttp3.Interceptor
+import java.util.Date
+import javax.inject.Inject
 
 
 abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
 
     abstract fun observeViewModel()
     protected abstract fun initViewBinding()
+
+    @Inject
+    lateinit var smAb: SessionManager
+
+    @Inject
+    lateinit var apiServiceAb: ApiService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,19 +58,19 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
 
     }
 
-   /* override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) {
-            // allow screenshots when activity is focused
-            window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        } else {
-            // hide information (blank view) on app switcher
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_SECURE,
-                WindowManager.LayoutParams.FLAG_SECURE
-            )
-        }
-    }*/
+    /* override fun onWindowFocusChanged(hasFocus: Boolean) {
+         super.onWindowFocusChanged(hasFocus)
+         if (hasFocus) {
+             // allow screenshots when activity is focused
+             window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+         } else {
+             // hide information (blank view) on app switcher
+             window.setFlags(
+                 WindowManager.LayoutParams.FLAG_SECURE,
+                 WindowManager.LayoutParams.FLAG_SECURE
+             )
+         }
+     }*/
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -158,14 +173,28 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        // BaseApplication.registerSessionListener(this)
-    }
-
     override fun onUserInteraction() {
         super.onUserInteraction()
-        // BaseApplication.resetSession()
+        GlobalScope.launch(Dispatchers.IO){
+            val lastTokenTime = Utils.convertStringToDate(
+                smAb.fetchStringData(SessionManager.LAST_TOKEN_TIME),
+                Constants.dd_mm_yyyy_hh_mm_ss
+            )
+            if (lastTokenTime != null) {
+                val diff = Utils.getTimeDifference(lastTokenTime, Date())
+                Log.e("TAG", "onUserInteraction: lastTokenTime "+lastTokenTime+" *Date* "+Date()+" " +
+                        "*minutes* "+diff.second+" *hour* "+diff.first+"*third*"+diff.third )
+                if (diff.first >= 1 || (diff.first == 0L && diff.second > 13)) {
+                    BaseApplication.getNewToken(apiServiceAb, smAb)
+                    BaseApplication.saveDateinSession(smAb)
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                // Update UI with the result
+            }
+        }
+
     }
 
     override fun onRetryClick(chain: Interceptor.Chain, context: Context) {
@@ -190,11 +219,15 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
     }
 
     fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel) {
-        if(errorResponsModel.errorCode== Constants.TOKEN_FAIL && errorResponsModel.error.equals(
-                Constants.INVALID_TOKEN)){
+        if (errorResponsModel.errorCode == Constants.TOKEN_FAIL && errorResponsModel.error.equals(
+                Constants.INVALID_TOKEN
+            )
+        ) {
             Utils.displaySesionExpiryDialog(this)
-        }else if(errorResponsModel.errorCode== Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
-                Constants.SERVER_ERROR)){
+        } else if (errorResponsModel.errorCode == Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
+                Constants.SERVER_ERROR
+            )
+        ) {
             startNewActivityByClearingStack(LandingActivity::class.java) {
                 putString(Constants.SHOW_SCREEN, Constants.SERVER_ERROR)
             }

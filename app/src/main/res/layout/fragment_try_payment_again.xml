@@ -63,13 +63,13 @@
         <com.conduent.apollo.ui.CMButton
             android:id="@+id/tryPaymentAgain"
             style="@style/PrimaryButton"
-            android:layout_marginBottom="@dimen/margin_15dp"
+            android:layout_marginBottom="@dimen/margin_30dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/cancelPayment"
+            app:layout_constraintBottom_toTopOf="@id/cancel_bt"
             android:text="@string/str_try_again" />
         <com.conduent.apollo.ui.CMButton
-            android:id="@+id/cancelPayment"
+            android:id="@+id/cancel_bt"
             style="@style/secondaryButton"
             android:layout_marginBottom="@dimen/margin_30dp"
             app:layout_constraintLeft_toLeftOf="parent"

@@ -343,4 +343,8 @@ object Constants {
 
     //Notification Types
     const val GEO_FENCE_NOTIFICATION="geofenceNotification"
+
+
+    //DateFormats
+    const val dd_mm_yyyy_hh_mm_ss="dd/MM/yyyy HH:mm:ss"
 }

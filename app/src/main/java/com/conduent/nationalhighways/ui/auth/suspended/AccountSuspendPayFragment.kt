@@ -117,7 +117,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
 
         }
-        if (navFlowCall.equals(Constants.PAYMENT_TOP_UP)) {
+        if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             HomeActivityMain.setTitle("Top Up New Payment Method")
         }
     }
@@ -283,11 +283,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         }
         when (status) {
             is Resource.Success -> {
-                if (status.data?.statusCode?.equals("500") == true) {
-                    findNavController().navigate(
-                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
-                    )
-                } else {
+
                     val bundle = Bundle()
                     bundle.putParcelable(Constants.DATA, responseModel)
                     bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
@@ -303,16 +299,16 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         bundle
                     )
 
-                }
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    findNavController().navigate(
-                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
-                    )
+                    redirectToTryAgainPage()
                 }
             }
 
@@ -352,7 +348,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         object : DialogPositiveBtnListener {
                             override fun positiveBtnClick(dialog: DialogInterface) {
                                 val fragmentId = findNavController().currentDestination?.id
-                                findNavController().popBackStack(fragmentId!!,true)
+                                findNavController().popBackStack(fragmentId!!, true)
                             }
                         },
                         object : DialogNegativeBtnListener {
@@ -360,9 +356,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                                 val bundle = Bundle()
                                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
                                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                                bundle.putString(Constants.NAV_FLOW_FROM,navFlowFrom)
-                                bundle.putString(Constants.CURRENTBALANCE,currentBalance)
+                                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                                bundle.putString(Constants.CURRENTBALANCE, currentBalance)
 
                                 findNavController().navigate(
                                     R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendedPaymentFragment,
@@ -371,25 +367,36 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                             }
                         })
                 } else {
-                    findNavController().navigate(
-                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
-                    )
+                    redirectToTryAgainPage()
                 }
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    findNavController().navigate(
-                        R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment
-                    )
+                    redirectToTryAgainPage()
                 }
             }
 
             else -> {
             }
         }
+    }
+
+    private fun redirectToTryAgainPage() {
+        val bundle = Bundle()
+        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+        findNavController().navigate(
+            R.id.action_accountSuspendedFinalPayFragment_to_tryPaymentAgainFragment, bundle
+        )
     }
 }
 
