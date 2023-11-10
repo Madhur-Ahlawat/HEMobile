@@ -90,13 +90,13 @@ object ApiModule {
 //            .authenticator(tokenAuthenticator)
             .callTimeout(0, TimeUnit.SECONDS)
             .connectTimeout(
-                1, TimeUnit.SECONDS
+                30, TimeUnit.SECONDS
             )
             .readTimeout(
-                1, TimeUnit.SECONDS
+                30, TimeUnit.SECONDS
             )
             .writeTimeout(
-                1, TimeUnit.SECONDS
+                30, TimeUnit.SECONDS
             )
         return builder.build()
     }
