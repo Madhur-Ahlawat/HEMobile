@@ -79,7 +79,11 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             isEnable(it.toString())
         }
         binding.edtConfirmPassword.editText.addTextChangedListener { isEnable1(it.toString()) }
-        binding.edtCurrentPassword.editText.addTextChangedListener {  }
+        binding.edtCurrentPassword.editText.addTextChangedListener {
+            if(it?.toString().isNullOrEmpty()){
+                binding.edtCurrentPassword.removeError()
+            }
+        }
 
 
 
@@ -421,10 +425,10 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                 )
             if (filterTextForSpecialChars!!.length > 0) {
                 binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
-                false
+                isNewPasswordValid = false
             } else {
                 binding.edtNewPassword.removeError()
-                true
+                isNewPasswordValid = true
             }
         } else if (!binding.edtNewPassword.getText().toString().contains(Utils.NUMBER)) {
             isNewPasswordValid = false

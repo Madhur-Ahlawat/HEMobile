@@ -25,7 +25,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
 
     override fun initCtrl() {
         binding.tryPaymentAgain.setOnClickListener(this)
-
+        binding.cancelPayment.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -36,6 +36,9 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
 
             R.id.tryPaymentAgain -> {
                 findNavController().popBackStack()
+            }
+            R.id.cancelPayment -> {
+                findNavController().popBackStack(R.id.paymentMethodFragment,false)
             }
         }
     }
