@@ -25,8 +25,8 @@ import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadF
 import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
 import com.conduent.nationalhighways.ui.vehicle.vehiclegroup.adapter.VehicleGroupCrossingHistoryAdapter
 import com.conduent.nationalhighways.utils.StorageHelper
-import com.conduent.nationalhighways.utils.StorageHelper.checkStoragePermissions
-import com.conduent.nationalhighways.utils.StorageHelper.requestStoragePermission
+/*import com.conduent.nationalhighways.utils.StorageHelper.checkStoragePermissions
+import com.conduent.nationalhighways.utils.StorageHelper.requestStoragePermission*/
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -205,7 +205,7 @@ class VehicleGroupCrossingHistoryFragment :
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tvDownload -> {
-                if (!checkStoragePermissions(requireActivity())) {
+                /*if (!checkStoragePermissions(requireActivity())) {
                     requestStoragePermission(
                         requireActivity(),
                         onScopeResultLaucher = onScopeResultLauncher,
@@ -220,7 +220,7 @@ class VehicleGroupCrossingHistoryFragment :
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                         dialog.show(requireActivity().supportFragmentManager, Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG)
                     }
-                }
+                }*/
             }
             R.id.tvFilter -> {
             }

@@ -149,7 +149,7 @@ android {
         // Architectural Components
         implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
         implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-        kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+       // kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
         // coroutines
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
@@ -198,6 +198,7 @@ android {
         //Biometric dependency
         implementation "androidx.biometric:biometric:1.1.0"
 
+
         // -------------- Testing Dependencies -------------- //
 
         def espressoTestVersion = '3.5.1'
@@ -206,7 +207,7 @@ android {
         def kotlinRunnerVersion = '1.1.1'
         def mockitoTestVersion = '2.13.0'
         def mockk_version = "1.10.0"
-        def nav_test_version = "2.5.3"
+        def nav_test_version = "2.7.5"
         def test_version = "1.2.0"
 
         implementation 'androidx.test:runner:1.5.2'

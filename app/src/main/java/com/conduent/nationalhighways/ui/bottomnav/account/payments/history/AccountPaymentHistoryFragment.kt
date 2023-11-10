@@ -139,7 +139,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tvDownload -> {
-                if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+                /*if (!StorageHelper.checkStoragePermissions(requireActivity())) {
                     StorageHelper.requestStoragePermission(
                         requireActivity(),
                         onScopeResultLaucher = onScopeResultLauncher,
@@ -154,7 +154,7 @@ class AccountPaymentHistoryFragment : BaseFragment<FragmentAccountPaymentHistory
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
                         dialog.show(requireActivity().supportFragmentManager, Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG)
                     }
-                }
+                }*/
             }
             R.id.tvFilter -> {
                 openFilterDrawer()

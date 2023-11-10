@@ -1,7 +1,9 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -28,6 +30,7 @@ import com.conduent.nationalhighways.utils.FilePath
 import com.conduent.nationalhighways.utils.StorageHelper
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.RequestPermissionListener
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
@@ -39,7 +42,7 @@ import java.io.File
 
 @AndroidEntryPoint
 class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), BackPressListener,
-    OnRetryClickListener {
+    OnRetryClickListener, RequestPermissionListener {
 
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     val apiViewModel: RaiseAPIViewModel by viewModels()
@@ -142,7 +145,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
 
     private fun getBundleData(): Bundle {
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         if (editRequest == Constants.EDIT_SUMMARY) {
             bundle.putString(Constants.Edit_REQUEST_KEY, Constants.EDIT_COMMENTS_DATA)
         } else {
@@ -160,7 +163,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
         if (previousFile.isEmpty()) {
             visibleChooseFileBt()
         } else {
-            hideChooseFileBt(2)
+            hideChooseFileBt()
         }
         binding.commentsEt.setText(viewModel.edit_enquiryModel.value?.comments.toString())
         binding.charactersRemTv.setText(
@@ -173,7 +176,6 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
     override fun observer() {
         binding.viewModel = viewModel
-//        binding.lifecycleOwner = this
         if (!isViewCreated) {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -199,11 +201,14 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                     viewModel.edit_enquiryModel.value?.fileName = resource.data?.fileName ?: ""
                     viewModel.edit_enquiryModel.value?.file = file ?: File("")
 
-                    hideChooseFileBt(1)
+                    hideChooseFileBt()
                 }
 
                 is Resource.DataError -> {
-                    if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                            Constants.INVALID_TOKEN
+                        )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                    ) {
                         displaySessionExpireDialog(resource.errorModel)
                     } else if (resource.errorModel?.errorCode == Constants.API_TIMEOUT_ERROR) {
 
@@ -219,15 +224,14 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
     }
 
-    private fun hideChooseFileBt(type: Int) {
+    private fun hideChooseFileBt() {
 
         if (fileInMb >= 1) {
-            binding.fileNameTv.setText(
+            binding.fileNameTv.text =
                 viewModel.edit_enquiryModel.value?.fileName + " (" + String.format(
                     "%.2f",
                     fileInMb
                 ) + "MB)"
-            )
         } else {
             val kilobytes = (fileInMb * 1000).toInt()
             binding.fileNameTv.setText(viewModel.edit_enquiryModel.value?.fileName + " (" + kilobytes + "KB)")
@@ -237,15 +241,34 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
     }
 
     private fun checkPermission() {
-        if (!StorageHelper.checkStoragePermissions(requireActivity())) {
-            StorageHelper.requestStoragePermission(
-                requireActivity(),
-                onScopeResultLaucher = onScopeResultLauncher,
-                onPermissionlaucher = onPermissionLauncher
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkRuntimePermission(
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Constants.READ_STORAGE_REQUEST_CODE,
+                this as RequestPermissionListener
             )
         } else {
-            openFileManager()
+            checkRuntimePermission(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Constants.READ_STORAGE_REQUEST_CODE,
+                this as RequestPermissionListener
+            )
         }
+
+        /* if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+             StorageHelper.requestStoragePermission(
+                 requireActivity(),
+                 onScopeResultLaucher = onScopeResultLauncher,
+                 onPermissionlaucher = onPermissionLauncher
+             )
+         } else {
+             openFileManager()
+         }*/
+    }
+
+    override fun onPermissionGranted() {
+        openFileManager()
     }
 
     private fun openFileManager() {

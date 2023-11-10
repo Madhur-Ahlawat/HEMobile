@@ -158,15 +158,9 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        // BaseApplication.registerSessionListener(this)
-    }
 
-    override fun onUserInteraction() {
-        super.onUserInteraction()
-        // BaseApplication.resetSession()
-    }
+
+
 
     override fun onRetryClick(chain: Interceptor.Chain, context: Context) {
         Log.e("TAG", "onRetryClick:--> ")
@@ -185,7 +179,7 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
             .setMessage(message)
             .setPositiveButton(
                 "OK"
-            ) { dialog, which -> dialog.dismiss() }
+            ) { dialog, _ -> dialog.dismiss() }
             .show()
     }
 

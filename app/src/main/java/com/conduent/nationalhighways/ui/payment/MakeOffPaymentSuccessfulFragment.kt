@@ -152,7 +152,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.downloadReceipt -> {
-                if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+                /*if (!StorageHelper.checkStoragePermissions(requireActivity())) {
                     StorageHelper.requestStoragePermission(
                         requireActivity(),
                         onScopeResultLaucher = onScopeResultLauncher,
@@ -160,7 +160,7 @@ class MakeOffPaymentSuccessfulFragment : BaseFragment<FragmentMakeOffPaymentSucc
                     )
                 } else {
                     generatePDF()
-                }
+                }*/
             }
         }
     }

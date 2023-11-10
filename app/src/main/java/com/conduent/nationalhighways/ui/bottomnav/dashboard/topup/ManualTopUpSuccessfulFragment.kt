@@ -69,7 +69,7 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
             }
 
             R.id.downloadReceipt -> {
-                if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+                /*if (!StorageHelper.checkStoragePermissions(requireActivity())) {
                     StorageHelper.requestStoragePermission(
                         requireActivity(),
                         onScopeResultLaucher = onScopeResultLauncher,
@@ -77,7 +77,7 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
                     )
                 } else {
                     generatePDF(model)
-                }
+                }*/
             }
         }
     }

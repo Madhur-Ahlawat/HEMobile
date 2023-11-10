@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.base
 
 import android.app.Dialog
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -19,6 +20,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
@@ -37,6 +39,7 @@ import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
+import com.conduent.nationalhighways.utils.common.RequestPermissionListener
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 
@@ -51,7 +54,6 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     var edit_summary: Boolean = false
     private var backPressListener: BackPressListener? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -280,6 +282,31 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
                     it
                 )
             }
+        }
+    }
+
+    fun checkRuntimePermission(
+        requestName: String,
+        requestCode: Int,
+        listener: RequestPermissionListener
+    ) {
+        if (activity?.checkSelfPermission(requestName) == PackageManager.PERMISSION_GRANTED) {
+            listener.onPermissionGranted()
+        } else {
+            requestPermissions(arrayOf(requestName), requestCode)
+        }
+
+    }
+
+    override fun onRequestPermissionsResult(RC: Int, per: Array<String?>, PResult: IntArray) {
+        when (RC) {
+            Constants.READ_STORAGE_REQUEST_CODE ->
+                if (PResult.isNotEmpty() && PResult[0] == PackageManager.PERMISSION_GRANTED) {
+                    (this as RequestPermissionListener).onPermissionGranted()
+                } else {
+
+                }
+
         }
     }
 

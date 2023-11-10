@@ -53,7 +53,6 @@ import java.util.regex.Pattern
 
 
 object Utils {
-    val amountFormatter = DecimalFormat("#,###.00")
     private var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-"
     private var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-"
     private var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
@@ -69,7 +68,6 @@ object Utils {
     var SPECIAL_CHARACTERS = "!@#\$%^&*₹()+<>?/;:{}[]\\\\|~\"_\',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
 
 
-    var PASSWORD_RULE1 = ".{8,64}"
     var LOWER_CASE = "qwertyuiopasdfghjklzxcvbnm"
     var UPPER_CASE = "QWERTYUIOPASDFGHJKLZXCVBNM"
     var UK_MOBILE_REGEX: Regex = Regex("[0]{0,1}7[0-9]{9}")
@@ -1041,16 +1039,16 @@ object Utils {
 
 
     fun setCardImage(cardType: String): Int {
-        if (cardType.uppercase().equals(Constants.VISA, true)) {
-            return R.drawable.visablue
+        return if (cardType.uppercase().equals(Constants.VISA, true)) {
+            R.drawable.visablue
         } else if (cardType.uppercase().equals(Constants.MAESTRO, true)) {
-            return R.drawable.maestro
+            R.drawable.maestro
         } else if (cardType.uppercase().equals(Constants.MASTERCARD, true)) {
-            return R.drawable.mastercard
+            R.drawable.mastercard
         } else if (cardType.uppercase().equals(Constants.CURRENT, true)) {
-            return R.drawable.directdebit
+            R.drawable.directdebit
         } else {
-            return R.color.white
+            R.color.white
         }
     }
 
@@ -1078,14 +1076,14 @@ object Utils {
         return CommonUtils.isRooted() || isRooted2() || isEmulator(context)
     }
 
-    fun isEmulator(context: Context): Boolean {
+    private fun isEmulator(context: Context): Boolean {
         val androidId: String = Settings.Secure.getString(context.contentResolver, "android_id")
         return "sdk" == Build.PRODUCT || "google_sdk" == Build.PRODUCT || androidId == null
     }
     private fun isRooted2(): Boolean {
         return findBinary("su")
     }
-    fun findBinary(binaryName: String): Boolean {
+    private fun findBinary(binaryName: String): Boolean {
         var found = false
         if (!found) {
             val places = arrayOf(

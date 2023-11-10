@@ -115,7 +115,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
             }
 
             R.id.download -> {
-                if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+               /* if (!StorageHelper.checkStoragePermissions(requireActivity())) {
                     StorageHelper.requestStoragePermission(
                         requireActivity(),
                         onScopeResultLaucher = onScopeResultLauncher,
@@ -133,7 +133,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(), View.OnC
                             Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG
                         )
                     }
-                }
+                }*/
             }
 
             R.id.removeVehicleBtn -> {

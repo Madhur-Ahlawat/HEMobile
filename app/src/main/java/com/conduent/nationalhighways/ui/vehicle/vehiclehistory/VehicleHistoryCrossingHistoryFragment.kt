@@ -232,7 +232,7 @@ class VehicleHistoryCrossingHistoryFragment :
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.download_crossing_history_btn -> {
-                if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+               /* if (!StorageHelper.checkStoragePermissions(requireActivity())) {
                     StorageHelper.requestStoragePermission(
                         requireActivity(),
                         onScopeResultLaucher = onScopeResultLauncher,
@@ -250,7 +250,7 @@ class VehicleHistoryCrossingHistoryFragment :
                             Constants.DOWNLOAD_FORMAT_SELECTION_DIALOG
                         )
                     }
-                }
+                }*/
             }
             R.id.back_to_vehicle_list_btn -> {
                 findNavController().popBackStack(R.id.vehicleHistoryListFragment, false)

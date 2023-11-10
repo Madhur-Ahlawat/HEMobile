@@ -22,7 +22,7 @@ object StorageHelper {
     private const val IMAGE_FOLDER_NAME = "Images"
     private const val IMAGE_FORMAT = ".jpg"
 
-    fun checkStoragePermissions(context: Context): Boolean {
+    /*fun checkStoragePermissions(context: Context): Boolean {
         var ret = true
         if (SDK_INT >= Build.VERSION_CODES.R) {
             ret = Environment.isExternalStorageManager()
@@ -68,7 +68,7 @@ object StorageHelper {
             )
         }
     }
-
+*/
     fun writeResponseBodyToDisk(
         activity: Activity,
         selectionType: String,

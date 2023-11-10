@@ -315,7 +315,7 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
     }
 
     private fun checkPermission() {
-        if (!StorageHelper.checkStoragePermissions(requireActivity())) {
+        /*if (!StorageHelper.checkStoragePermissions(requireActivity())) {
             StorageHelper.requestStoragePermission(
                 requireActivity(),
                 onScopeResultLaucher = onScopeResultLauncher,
@@ -323,7 +323,7 @@ class NewCaseCommentsFragment : BaseFragment<FragmentNewCaseCommentBinding>(),
             )
         } else {
             openFileManager()
-        }
+        }*/
     }
 
     private val fileManagerResult =
