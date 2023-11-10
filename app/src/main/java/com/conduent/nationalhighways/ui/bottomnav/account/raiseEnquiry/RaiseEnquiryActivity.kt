@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
-import android.content.Context
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -15,7 +14,6 @@ import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.Interceptor
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,6 +30,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
     override fun observeViewModel() {
 
     }
+
 
     override fun initViewBinding() {
         binding = ActivityRaiseEnquiryBinding.inflate(layoutInflater)
@@ -57,37 +56,47 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                 when (destination.id) {
 
                     R.id.guidanceDocumentsFragment -> {
-                        binding.toolBarLyt.titleTxt.setText(resources.getString(R.string.str_guidance_and_documents))
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_guidance_and_documents)
                     }
+
                     R.id.aboutthisserviceFragment -> {
-                        binding.toolBarLyt.titleTxt.setText(getString(R.string.about_this_service))
+                        binding.toolBarLyt.titleTxt.text = getString(R.string.about_this_service)
                     }
+
                     R.id.contactDartChargeFragment -> {
-                        binding.toolBarLyt.titleTxt.setText(resources.getString(R.string.str_contact_dart_charge))
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_contact_dart_charge)
                     }
+
                     R.id.dartChargeAccountTypeEnquiryFragment -> {
                         binding.toolBarLyt.titleTxt.text = getString(R.string.str_raise_new_enquiry)
                     }
+
                     R.id.viewChargesFragment -> {
-                        binding.toolBarLyt.titleTxt.setText(getString(R.string.charges_and_fines))
+                        binding.toolBarLyt.titleTxt.text = getString(R.string.charges_and_fines)
                     }
+
                     R.id.fragmentTermsAndConditions -> {
-                        binding.toolBarLyt.titleTxt.setText("Dart Charge Terms and Conditions")
+                        binding.toolBarLyt.titleTxt.text = "Dart Charge Terms and Conditions"
                     }
+
                     R.id.generalTermsAndConditionsFragment -> {
-                        binding.toolBarLyt.titleTxt.setText("Terms & Conditions")
+                        binding.toolBarLyt.titleTxt.text = "Terms & Conditions"
                     }
+
                     R.id.paygtermsandconditions -> {
-                        binding.toolBarLyt.titleTxt.setText("PAYG Terms & Conditions")
+                        binding.toolBarLyt.titleTxt.text = "PAYG Terms & Conditions"
                     }
+
                     R.id.privacyPolicyFragment -> {
-                        binding.toolBarLyt.titleTxt.setText("Privacy Policy")
+                        binding.toolBarLyt.titleTxt.text = "Privacy Policy"
                     }
+
                     R.id.otherwaystopayFragment -> {
-                        binding.toolBarLyt.titleTxt.setText("Other ways to pay")
+                        binding.toolBarLyt.titleTxt.text = "Other ways to pay"
                     }
+
                     R.id.thirdPartySoftwareFragment -> {
-                        binding.toolBarLyt.titleTxt.setText("Third party software")
+                        binding.toolBarLyt.titleTxt.text = "Third party software"
                     }
 
                     R.id.enquiryStatusFragment -> {
@@ -151,8 +160,9 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
         Utils.sessionExpired(this, this, sessionManager)
     }
 
-    override fun onRetryClick(chain: Interceptor.Chain, context: Context) {
-        super.onRetryClick(chain, context)
-    }
+//    override fun onRetryClick(chain: Interceptor.Chain, context: Context) {
+//        super.onRetryClick(chain, context)
+//        Log.e("TAG", "onRetryClick: '" )
+//    }
 
 }

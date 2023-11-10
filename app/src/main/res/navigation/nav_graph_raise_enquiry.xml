@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_raise_enquiry"
-    app:startDestination="@id/guidanceDocumentsFragment">
+    app:startDestination="@id/enquiryCommentsFragment">
     <fragment
         android:id="@+id/thirdPartySoftwareFragment"
         android:name="com.conduent.nationalhighways.ui.landing.ThirdPartySoftwareFragment"

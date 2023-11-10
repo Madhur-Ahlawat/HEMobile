@@ -6,7 +6,6 @@ import com.conduent.nationalhighways.data.remote.*
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.loader.RetryListener
-import com.conduent.nationalhighways.ui.loader.RetryListenerImpl
 import com.conduent.nationalhighways.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
@@ -34,7 +33,7 @@ object ApiModule {
 
     @Provides
     fun provideRetryListener(): RetryListener {
-        return RetryListenerImpl()
+        return RetryListener.RetryListenerImpl()
     }
 
     @Provides

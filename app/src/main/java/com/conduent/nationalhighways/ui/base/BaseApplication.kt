@@ -25,6 +25,7 @@ class BaseApplication : Application() {
 
     @Inject
     lateinit var api: ApiService //ms
+
     private var accountResponse: AccountResponse? = null
 
     fun setAccountSavedData(accountResponse: AccountResponse) {

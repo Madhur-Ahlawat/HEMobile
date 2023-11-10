@@ -1129,6 +1129,14 @@
     <string name="str_confirm_password_error_message">Confirm your password</string>
     <string name="str_your_password_must_match">Your passwords must match</string>
 
+    <string name="str_new_password_must_be_8_characters">New password must be 8 characters or more</string>
+    <string name="str_new_password_must_contain_at_least_one_character">New password must contain at least 1 number</string>
+    <string name="str_new_password_must_least_contain_one_upper_case">New password must contain at least 1 upper case letter</string>
+    <string name="str_new_password_must_least_contain_one_lower_case">New password must contain at least 1 lower case letter</string>
+    <string name="str_new_password_must_not_include_disallowed_character">Password must not include [disallowed character]</string>
+    <string name="str_new_your_password_must_match">Your new passwords must match</string>
+    <string name="str_newpassword_cannot_be_same_current_password">New password cannot be the same as the current password</string>
+
     <!--Mobile Number Error Message-->
     <string name="str_phoneNumber_error_message">Enter your mobile phone number</string>
     <string name="str_uk_phoneNumber_error_message">The UK mobile phone number entered is invalid, please try again</string>
@@ -1270,7 +1278,7 @@
     <string name="txt_type_of_payment">Type of payment</string>
     <string name="txt_channel">Channel</string>
     <string name="txt_last_digits_of_card">Last four digit of card</string>
-    <string name="email_reciept">Email Reciept</string>
+    <string name="email_reciept">Email Receipt</string>
     <string name="vehicles_added_to_your_account">Vehicles added to your account</string>
     <string name="name_change_successful">Name change successful</string>
     <string name="address_change_successful">Address change successful</string>

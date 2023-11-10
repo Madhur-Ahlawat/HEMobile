@@ -1,11 +1,9 @@
 package com.conduent.nationalhighways.ui.base
 
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.Window
@@ -23,14 +21,12 @@ import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.RetryListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
-import okhttp3.Interceptor
 
 
-abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
+abstract class BaseActivity<T> : AppCompatActivity() {
 
     abstract fun observeViewModel()
     protected abstract fun initViewBinding()
@@ -43,19 +39,19 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
 
     }
 
-   /* override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) {
-            // allow screenshots when activity is focused
-            window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        } else {
-            // hide information (blank view) on app switcher
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_SECURE,
-                WindowManager.LayoutParams.FLAG_SECURE
-            )
-        }
-    }*/
+    /* override fun onWindowFocusChanged(hasFocus: Boolean) {
+         super.onWindowFocusChanged(hasFocus)
+         if (hasFocus) {
+             // allow screenshots when activity is focused
+             window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+         } else {
+             // hide information (blank view) on app switcher
+             window.setFlags(
+                 WindowManager.LayoutParams.FLAG_SECURE,
+                 WindowManager.LayoutParams.FLAG_SECURE
+             )
+         }
+     }*/
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -158,21 +154,6 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
 
     }
 
-
-
-
-
-    override fun onRetryClick(chain: Interceptor.Chain, context: Context) {
-        Log.e("TAG", "onRetryClick:--> ")
-        runOnUiThread {
-//            showDialog("csc","sc")
-//            Utils.displayRetryDialog(this, chain)
-//            val fragment = RetryDialog("")
-//            fragment.show(supportFragmentManager, "my_dialog_fragment_tag")
-
-        }
-    }
-
     protected open fun showDialog(title: String?, message: String?) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(title)
@@ -184,11 +165,15 @@ abstract class BaseActivity<T> : AppCompatActivity(), RetryListener {
     }
 
     fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel) {
-        if(errorResponsModel.errorCode== Constants.TOKEN_FAIL && errorResponsModel.error.equals(
-                Constants.INVALID_TOKEN)){
+        if (errorResponsModel.errorCode == Constants.TOKEN_FAIL && errorResponsModel.error.equals(
+                Constants.INVALID_TOKEN
+            )
+        ) {
             Utils.displaySesionExpiryDialog(this)
-        }else if(errorResponsModel.errorCode== Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
-                Constants.SERVER_ERROR)){
+        } else if (errorResponsModel.errorCode == Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
+                Constants.SERVER_ERROR
+            )
+        ) {
             startNewActivityByClearingStack(LandingActivity::class.java) {
                 putString(Constants.SHOW_SCREEN, Constants.SERVER_ERROR)
             }

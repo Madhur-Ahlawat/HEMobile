@@ -666,8 +666,11 @@ object Utils {
     }
 
     fun makeCommaSeperatedStringForPassword(input: String): String {
+        var textInput=input
+        textInput= textInput.toSet().joinToString("")
+
         var output1 = ""
-        input.forEachIndexed { index, c ->
+        textInput.forEachIndexed { index, c ->
             if (index > 0) {
                 output1 = output1 + ", " + c.toString()
             } else {
