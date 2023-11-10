@@ -42,6 +42,9 @@ import com.conduent.nationalhighways.utils.common.Utils.splCharAddress2
 import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
 import com.conduent.nationalhighways.utils.common.Utils.splCharTownCity
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.invisible
+import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Matcher
@@ -80,8 +83,6 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         FragmentManualAddressBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         if (NewCreateAccountRequestModel.zipCode.isNotEmpty()) {
             binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
@@ -163,7 +164,11 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
 
     override fun initCtrl() {
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
         binding.btnFindAddress.setOnClickListener(this)
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         viewModel.getCountries()
     }
 
@@ -636,6 +641,11 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
     }
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
+        if(item.isEmpty()){
+            binding.labelCountryCode.invisible()
+        }else{
+            binding.labelCountryCode.visible()
+        }
         if (selected) {
             requiredCountry = true
             country = item
@@ -648,6 +658,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 country = ""
             }
         }
+
         checkButton()
 
     }

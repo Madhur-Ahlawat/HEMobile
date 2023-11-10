@@ -420,5 +420,4 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
 
         binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
-
 }

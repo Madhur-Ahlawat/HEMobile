@@ -643,7 +643,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 val bundle = Bundle()
                 bundle.putParcelable(
                     "data", RequestOTPModel(
-                        Constants.SMS, binding.inputMobileNumber.getText().toString().trim()
+                        Constants.SMS,
+                                binding.inputMobileNumber.getText().toString().trim()
                     )
                 )
                 bundle.putString(Constants.PHONE_COUNTRY_CODE,

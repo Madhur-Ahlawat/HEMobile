@@ -8,6 +8,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityAuthBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -37,6 +38,8 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
     private var navFlowFrom: String = ""
 
 
+    @Inject
+    lateinit var api: ApiService
     @Inject
     lateinit var sessionManager: SessionManager
     override fun initViewBinding() {
@@ -182,7 +185,7 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityContactDartChargeBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -23,6 +24,8 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
     var mValue = Constants.FROM_CASES_TO_CASES_VALUE
     private lateinit var navController: NavController
 
+    @Inject
+    lateinit var api: ApiService
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -117,7 +120,7 @@ class ContactDartChargeActivity : BaseActivity<Any?>(), LogoutListener {
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

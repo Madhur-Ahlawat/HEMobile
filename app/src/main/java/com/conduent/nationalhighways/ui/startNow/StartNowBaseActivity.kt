@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityStartNowBaseBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -20,6 +21,9 @@ import javax.inject.Inject
 class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>(), LogoutListener {
     @Inject
     lateinit var sessionManager: SessionManager
+
+    @Inject
+    lateinit var api: ApiService
     private lateinit var navController: NavController
     private var screenType: String = ""
     private lateinit var binding: ActivityStartNowBaseBinding
@@ -91,7 +95,7 @@ class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>(), Logout
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

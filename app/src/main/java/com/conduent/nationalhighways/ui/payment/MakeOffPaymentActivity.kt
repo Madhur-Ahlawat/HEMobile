@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.databinding.ActivityMakeOffPaymentBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
@@ -31,6 +32,9 @@ class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
 
     @Inject
     lateinit var sessionManager: SessionManager
+
+    @Inject
+    lateinit var api: ApiService
     private var data: CrossingDetailsModelsResponse? = null
 
     override fun initViewBinding() {
@@ -107,7 +111,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

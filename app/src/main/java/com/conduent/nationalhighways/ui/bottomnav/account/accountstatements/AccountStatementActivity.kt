@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.data.model.account.StatementListModel
 import com.conduent.nationalhighways.data.model.account.ViewStatementsReqModel
 import com.conduent.nationalhighways.data.model.contactdartcharge.CreateNewCaseReq
 import com.conduent.nationalhighways.data.model.contactdartcharge.CreateNewCaseResp
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityAccountStatementBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -39,6 +40,8 @@ class AccountStatementActivity : BaseActivity<ActivityAccountStatementBinding>()
     private var mCsv = -1
 
 
+    @Inject
+    lateinit var api: ApiService
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -481,7 +484,7 @@ class AccountStatementActivity : BaseActivity<ActivityAccountStatementBinding>()
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

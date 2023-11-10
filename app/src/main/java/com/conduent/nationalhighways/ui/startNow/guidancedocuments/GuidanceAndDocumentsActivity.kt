@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.startNow.guidancedocuments
 
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityGuidanceAndDocumentsBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -15,6 +16,8 @@ class GuidanceAndDocumentsActivity : BaseActivity<Any?>(),LogoutListener {
 
     private lateinit var binding: ActivityGuidanceAndDocumentsBinding
 
+    @Inject
+    lateinit var api: ApiService
     @Inject
     lateinit var sessionManager: SessionManager
     override fun initViewBinding() {
@@ -66,7 +69,7 @@ class GuidanceAndDocumentsActivity : BaseActivity<Any?>(),LogoutListener {
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

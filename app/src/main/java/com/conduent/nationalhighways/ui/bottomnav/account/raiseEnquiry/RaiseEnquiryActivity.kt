@@ -4,6 +4,7 @@ import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityRaiseEnquiryBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
@@ -21,6 +22,9 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
 
     @Inject
     lateinit var sessionManager: SessionManager
+
+    @Inject
+    lateinit var api: ApiService
 
     private lateinit var binding: ActivityRaiseEnquiryBinding
     lateinit var navController: NavController
@@ -157,7 +161,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
 //    override fun onRetryClick(chain: Interceptor.Chain, context: Context) {

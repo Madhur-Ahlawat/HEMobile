@@ -325,7 +325,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
         if (binding.edtConformPassword.getText().toString().length == 0) {
             isConfirmPasswordValid = false
-            binding.edtConformPassword.setErrorText(getString(R.string.str_confirm_password_error_message))
+            binding.edtConformPassword.removeError()
         } else if (binding.edtNewPassword.getText()
                 .toString() != binding.edtConformPassword.getText().toString()
         ) {
