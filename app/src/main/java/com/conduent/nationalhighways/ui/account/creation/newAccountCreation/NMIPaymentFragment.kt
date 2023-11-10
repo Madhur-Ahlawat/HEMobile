@@ -56,7 +56,7 @@ import javax.inject.Inject
 class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnClickListener {
 
 
-    private var isDrectDebit: Boolean? = false
+    private var isDrectDebit: Boolean = false
     private val viewModel: CreateAccountViewModel by viewModels()
     private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
     private val oneOfPaymentViewModel: MakeOneOfPaymentViewModel by viewModels()
@@ -95,7 +95,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     override fun initCtrl() {
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
-        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT, false)
+        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT, false) ?: false
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
@@ -161,9 +161,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         R.id.action_nmiPaymentFragment_to_accountCreatedSuccessfullyFragment,
                         bundle
                     )
+                } else {
+                    redirectToTryAgainPaymentScreen()
                 }
-
-
             }
 
             is Resource.DataError -> {
@@ -173,13 +173,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
-                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                    redirectToTryAgainPaymentScreen()
                 }
             }
 
             else -> {
-                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
-
+                redirectToTryAgainPaymentScreen()
             }
 
         }
@@ -266,9 +265,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
-                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
-
-
+                    redirectToTryAgainPaymentScreen()
                     AdobeAnalytics.setActionTrackPaymentMethod(
                         "Confirm ",
                         " one of payment: payment confirm",
@@ -282,8 +279,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             else -> {
-                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
-
+                redirectToTryAgainPaymentScreen()
             }
         }
 
@@ -299,28 +295,33 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     when (data) {
                         "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt", "cancelClicked" -> hideLoader()
                         "3DStarted" -> showLoader()
-                        "3DSNotIntiated" -> findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                        "3DSNotIntiated" -> redirectToTryAgainPaymentScreen()
 
-                        "cardtypeerror" -> findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+
+                        "cardtypeerror" -> redirectToTryAgainPaymentScreen()
+
 
                         "3DStarted1" -> threeDStarted = true
 
-
                         else -> {
 
-                            if(data.startsWith("errorMessage")){
+                            if (data.startsWith("errorMessage")) {
 
                                 val nmiErrorModel =
-                                    Gson().fromJson(data.replace("errorMessage",""), NmiErrorModel::class.java)
+                                    Gson().fromJson(
+                                        data.replace("errorMessage", ""),
+                                        NmiErrorModel::class.java
+                                    )
 
-                                if (nmiErrorModel.type!="integrationError"){
-                                    findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                                if (nmiErrorModel.type != "integrationError") {
+                                    redirectToTryAgainPaymentScreen()
                                 }
                             }
 
+
                             if (data == "paymentFailed" && threeDStarted) {
                                 hideLoader()
-                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment)
+                                redirectToTryAgainPaymentScreen()
 
                             }
 
@@ -399,7 +400,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
     }
-
 
 
     private fun makeOneOffPaymentApi(
@@ -527,8 +527,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.tcAccepted = "Y"
         model.mailPreference = "Y"
         model.emailPreference = "Y"
-        model.postCode=NewCreateAccountRequestModel.zipCode
-        model.addressLine2="Small Heath"
+        model.postCode = NewCreateAccountRequestModel.zipCode
+        model.addressLine2 = "Small Heath"
         if (NewCreateAccountRequestModel.twoStepVerification) {
             model.mfaFlag = "Y"
 
@@ -577,7 +577,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.cardholderAuth = ""
         }
 
-        if (NewCreateAccountRequestModel.prePay){
+        if (NewCreateAccountRequestModel.prePay) {
             if (htmlTopUpAmount.trim().isNotEmpty()) {
                 model.transactionAmount =
                     String.format("%.2f", htmlTopUpAmount.toDouble()) // html Amount
@@ -611,7 +611,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.lastName = data.lastName
         model.digitPin = "2465"
         model.correspDeliveryFrequency = ""
-        model.correspDeliveryMode=""
+        model.correspDeliveryMode = ""
         model.eci = eci // 3ds eci
         model.replenishmentAmount = String.format("%.2f", topUpAmount.toDouble()) // top up amount
         model.directoryServerID = directoryServerId // 3ds serverId
@@ -632,7 +632,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             item.vehicleColor = obj.vehicleColor
             item.vehiclePlate = obj.plateNumber
             item.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass.toString())
-           // item.plateTypeDesc = "STANDARD"
+            // item.plateTypeDesc = "STANDARD"
             item.plateCountry = "UK"
             item.vehicleYear = "2023"
             listVehicle.add(item)
@@ -720,7 +720,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
-                        if (isDrectDebit!! && paymentListSize == 1) {
+                        if (isDrectDebit && paymentListSize == 1) {
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
                         }
@@ -742,8 +742,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('hint1').innerHTML = 'Save the payment method against the account';})()")
-                        }
-                        else{
+                        } else {
                             view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').innerHTML = 'Save the payment method against the account';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
@@ -875,36 +874,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                 findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentMethodFragment)
                             }
                         })
-
-                    /* val bundle = Bundle()
-
-                       bundle.putString(
-                           Constants.CARD_IS_ALREADY_REGISTERED,
-                           Constants.CARD_IS_ALREADY_REGISTERED
-                       )
-                       bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-
-                       findNavController().navigate(
-                           R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-                           bundle
-                       )*/
                 } else if (status.data?.statusCode?.equals("1333") == true) {
-                    val bundle = Bundle()
-
-                    bundle.putString(
-                        Constants.CARD_IS_ALREADY_REGISTERED,
-                        Constants.CREDIT_NOT_SET_UP
-                    )
-
-                    findNavController().navigate(
-                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-                        bundle
-                    )
+                    redirectToTryAgainPaymentScreen()
                 } else {
-
-                    findNavController().navigate(
-                        R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment
-                    )
+                    redirectToTryAgainPaymentScreen()
                 }
             }
 
@@ -941,6 +914,21 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 )
             }
         }
+    }
+
+    private fun redirectToTryAgainPaymentScreen() {
+        val bundle = Bundle()
+        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, isDrectDebit)
+
+        findNavController().navigate(
+            R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment,
+            bundle
+        )
     }
 
 }

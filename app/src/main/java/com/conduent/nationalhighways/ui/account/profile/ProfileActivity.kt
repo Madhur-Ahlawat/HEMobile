@@ -17,6 +17,7 @@ import javax.inject.Inject
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 
 
 @AndroidEntryPoint
@@ -29,6 +30,8 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
     private lateinit var binding: ActivityProfileBinding
     private var loader: LoaderDialog? = null
 
+    @Inject
+    lateinit var api: ApiService
 
     override fun initViewBinding() {
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -76,7 +79,7 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(), LogoutListener {
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

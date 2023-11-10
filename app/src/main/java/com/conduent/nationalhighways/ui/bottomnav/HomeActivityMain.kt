@@ -74,6 +74,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             Color.parseColor("#007AFF")
         )
     )
+
     @Inject
     lateinit var api: ApiService
     private lateinit var navController: NavController
@@ -139,6 +140,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     fun hitAPIs(): () -> Unit? {
+        Log.e("TAG", "hitAPIs: ", )
         getDashBoardAllData()
         dashboardViewModel.getAlertsApi()
         return {}
@@ -156,24 +158,47 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding?.idToolBarLyt?.gone()
         dataBinding?.backButton?.setOnClickListener {
             val currentDestination = navController.currentDestination
-            if((currentDestination?.id == R.id.notificationFragment) || (currentDestination?.id == R.id.crossingHistoryFragment) || (currentDestination?.id == R.id.accountFragment)){
+            if ((currentDestination?.id == R.id.notificationFragment) || (currentDestination?.id == R.id.crossingHistoryFragment) || (currentDestination?.id == R.id.accountFragment)) {
                 dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
-            }
-            else if (currentDestination?.id == R.id.caseEnquiryHistoryListFragment) {
+            } else if (currentDestination?.id == R.id.caseEnquiryHistoryListFragment) {
                 redirectToAccountFragment()
             } else {
                 onBackPressedDispatcher.onBackPressed()
             }
         }
-        dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(getColor(R.color.hyperlink_blue2))
-        dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-        dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-        dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
+        dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(
+            getColor(R.color.hyperlink_blue2)
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(
+            getColor(R.color.new_btn_color)
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(
+            getColor(R.color.new_btn_color)
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(
+            getColor(R.color.new_btn_color)
+        )
 
-        dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(getColor(R.color.hyperlink_blue2))
-        dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-        dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-        dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(getColor(R.color.new_btn_color))
+        dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(
+            getColor(
+                R.color.hyperlink_blue2
+            )
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(
+            getColor(
+                R.color.new_btn_color
+            )
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(
+            getColor(
+                R.color.new_btn_color
+            )
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(
+            getColor(
+                R.color.new_btn_color
+            )
+        )
         if (navController.currentDestination?.id != R.id.dashBoardFragment) {
             dashboardClick()
         }
@@ -191,26 +216,58 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
             navController.navigate(R.id.enquiryCategoryFragment, bundle)
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
-            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(getColor(R.color.hyperlink_blue2))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(getColor(R.color.hyperlink_blue2))
+            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(
+                getColor(R.color.hyperlink_blue2)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(
+                getColor(R.color.hyperlink_blue2)
+            )
             from = ""
 
         } else {
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
-            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(getColor(R.color.hyperlink_blue2))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(getColor(R.color.hyperlink_blue2))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(getColor(R.color.new_btn_color))
+            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(
+                getColor(R.color.hyperlink_blue2)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(
+                getColor(R.color.hyperlink_blue2)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(
+                getColor(R.color.new_btn_color)
+            )
+            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(
+                getColor(R.color.new_btn_color)
+            )
 
         }
 
@@ -257,32 +314,66 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
                     when (navigationItem.position) {
                         0 -> {
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(getColor(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(
+                                getColor(R.color.hyperlink_blue2)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.backgroundTintList =
+                                getColorStateList(R.color.hyperlink_blue2)
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
 
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(getColor(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(getColor(R.color.new_btn_color))
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(
+                                getColor(R.color.hyperlink_blue2)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
                                 dashboardClick()
                             }
                         }
 
                         1 -> {
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(getColor(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(
+                                getColor(R.color.hyperlink_blue2)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.backgroundTintList =
+                                getColorStateList(R.color.hyperlink_blue2)
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
 
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(getColor(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(getColor(R.color.new_btn_color))
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(
+                                getColor(R.color.hyperlink_blue2)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
                             if (navController.currentDestination?.id != R.id.crossingHistoryFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
@@ -294,16 +385,33 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         2 -> {
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(getColor(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(
+                                getColor(R.color.hyperlink_blue2)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.backgroundTintList =
+                                getColorStateList(R.color.hyperlink_blue2)
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
 
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(getColor(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(getColor(R.color.new_btn_color))
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(
+                                getColor(R.color.hyperlink_blue2)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
                             if (navController.currentDestination?.id != R.id.notificationFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
@@ -315,16 +423,33 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         3 -> {
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(getColor(R.color.hyperlink_blue2))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setBackgroundTintList(getColorStateList(R.color.hyperlink_blue2))
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.imageView?.setColorFilter(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.setColorFilter(
+                                getColor(R.color.hyperlink_blue2)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.imageView?.backgroundTintList =
+                                getColorStateList(R.color.hyperlink_blue2)
 
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(getColor(R.color.new_btn_color))
-                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(getColor(R.color.hyperlink_blue2))
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(0)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(1)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(2)?.textView?.setTextColor(
+                                getColor(R.color.new_btn_color)
+                            )
+                            dataBinding?.bottomNavigationView?.navigationItems?.get(3)?.textView?.setTextColor(
+                                getColor(R.color.hyperlink_blue2)
+                            )
                             if (navController.currentDestination?.id != R.id.accountFragment) {
                                 accountFragmentClick()
                             }
@@ -368,7 +493,19 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun observeViewModel() {
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
-
+        Log.e(
+            "TAG",
+            "observeViewModel: FIRST_TYM_REDIRECTS " + intent.hasExtra(Constants.FIRST_TYM_REDIRECTS)
+        )
+        if (intent.hasExtra(Constants.FIRST_TYM_REDIRECTS)) {
+            Log.e(
+                "TAG",
+                "observeViewModel: FIRST_TYM_REDIRECTS -> " + intent.getBooleanExtra(
+                    Constants.FIRST_TYM_REDIRECTS,
+                    false
+                )
+            )
+        }
         if (intent.hasExtra(Constants.FIRST_TYM_REDIRECTS) && intent.getBooleanExtra(
                 Constants.FIRST_TYM_REDIRECTS,
                 false
@@ -457,7 +594,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     ErrorUtil.showError(dataBinding?.root, status.errorMsg)
@@ -493,7 +633,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {
@@ -506,10 +646,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
             navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
-                if((fragment is NotificationFragment) || (fragment is ViewAllTransactionsFragment) || (fragment is AccountFragment)){
-                   dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
-                }
-                else if (fragment is DeletePaymentMethodSuccessFragment ||
+                if ((fragment is NotificationFragment) || (fragment is ViewAllTransactionsFragment) || (fragment is AccountFragment)) {
+                    dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
+                } else if (fragment is DeletePaymentMethodSuccessFragment ||
                     fragment is AccountSuspendReOpenFragment ||
                     fragment is NewCardSuccessScreenFragment
                 ) {
