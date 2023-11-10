@@ -145,11 +145,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 oldSmsOption = sessionManager.fetchSmsOption().equals("Y")
-                oldPushOption = Utils.areNotificationsEnabled(requireContext())
-
                 binding.switchCommunication.isChecked = sessionManager.fetchSmsOption().equals("Y")
-                binding.switchNotification.isChecked = oldPushOption
-
             }
 
         }
@@ -161,6 +157,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         super.onResume()
         when (navFlowCall) {
             Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                oldPushOption = sessionManager.fetchNotificationOption() ?: false
                 binding.switchNotification.isChecked =
                     sessionManager.fetchNotificationOption() ?: false
             }
@@ -185,23 +182,16 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
+
         when (resource) {
             is Resource.Success -> {
 
+                sessionManager.saveNotificationOption(binding.switchNotification.isChecked)
                 if (oldSmsOption != binding.switchCommunication.isChecked) {
                     if (personalInformationModel?.phoneCell?.isEmpty() == true) {
                         verifyMobileNumber()
                     } else {
-                        val bundle = Bundle()
-                        bundle.putString(
-                            Constants.NAV_FLOW_KEY,
-                            Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
-                        )
-                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                        findNavController().navigate(
-                            R.id.action_optForSmsFragment_to_resetForgotPassword,
-                            bundle
-                        )
+                        updateSmsOption()
                     }
                 } else {
                     val bundle = Bundle()
@@ -247,6 +237,11 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             is Resource.Success -> {
                 when (navFlowCall) {
                     Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                        if(binding.switchCommunication.isChecked){
+                            sessionManager.saveSmsOption("Y")
+                        }else{
+                            sessionManager.saveSmsOption("N")
+                        }
                         val bundle = Bundle()
                         bundle.putString(
                             Constants.NAV_FLOW_KEY,
@@ -316,8 +311,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                     }
 
                     Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                        Log.e("TAG", "onClick: oldSmsOption "+oldSmsOption )
-                        Log.e("TAG", "onClick: oldPushOption "+oldPushOption )
                         if ((oldSmsOption == binding.switchCommunication.isChecked) && (oldPushOption == binding.switchNotification.isChecked)) {
                             findNavController().popBackStack()
                         } else {

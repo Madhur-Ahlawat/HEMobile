@@ -333,12 +333,21 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                 .equals(Constants.UNITED_KINGDOM, true))
                         ) {
                             binding.mobileNumberEt.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
+                            false
                         } else {
-                            binding.mobileNumberEt.setErrorText(getString(R.string.non_UK_number_invalid))
+                            if(!(binding.mobileNumberEt.getText().toString().length>=8 && binding.mobileNumberEt.getText().toString().length<=15)){
+                                binding.mobileNumberEt.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                                false
+                            }
+                            else{
+                                binding.mobileNumberEt.removeError()
+                                true
+                            }
                         }
                         false
                     }
                 } else {
+                    binding.mobileNumberEt.removeError()
                     true
                 }
                 checkButton()

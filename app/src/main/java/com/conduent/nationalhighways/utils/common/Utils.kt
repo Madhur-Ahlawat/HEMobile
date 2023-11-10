@@ -23,6 +23,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogRetryBinding
 import com.conduent.nationalhighways.databinding.DialogSessionexpiryBinding
@@ -483,7 +484,7 @@ object Utils {
     }
 
     fun sessionExpired(
-        context: Activity, listener: LogoutListener? = null, sessionManager: SessionManager
+        context: Activity, listener: LogoutListener? = null, sessionManager: SessionManager,apiService:ApiService
     ) {
         if (sessionManager.getLoggedInUser()) {
             displayCustomMessage(
@@ -494,7 +495,7 @@ object Utils {
                 context.getString(R.string.str_stay_signed_in),
                 context.getString(R.string.str_sign_out),
                 listener,
-                sessionManager
+                sessionManager,apiService
             )
 
         } else {
@@ -506,7 +507,7 @@ object Utils {
                 context.getString(R.string.str_stay_on_the_app),
                 context.getString(R.string.str_delete_my_answers),
                 listener,
-                sessionManager
+                sessionManager,apiService
             )
 
         }
@@ -554,7 +555,8 @@ object Utils {
         positiveBtnTxt: String,
         negativeBtnTxt: String,
         listener: LogoutListener? = null,
-        sessionManager: SessionManager
+        sessionManager: SessionManager,
+        apiService:ApiService
     ) {
 
         val dialog = Dialog(context)
@@ -593,6 +595,9 @@ object Utils {
 
         binding.okBtn.setOnClickListener {
 //            pListener?.positiveBtnClick(dialog)
+
+            BaseApplication.getNewToken(api = apiService, sessionManager)
+
             countDownTimer.cancel()
             LogoutUtil.stopLogoutTimer()
             LogoutUtil.startLogoutTimer(listener)
@@ -1099,6 +1104,30 @@ object Utils {
             }
         }
         return found
+    }
+
+    fun convertStringToDate(dateString: String,dateFormat:String): Date? {
+        val dateFormat = SimpleDateFormat(dateFormat, Locale.getDefault())
+        return try {
+            dateFormat.parse(dateString)
+        } catch (e: Exception) {
+            Date()
+        }
+    }
+
+    fun getTimeDifference(startTime: Date, endTime: Date): Triple<Long, Long, Long> {
+
+        return try {
+            val differenceInMillis = endTime.time - startTime.time
+            val hours = differenceInMillis / (1000 * 60 * 60)
+            val minutes = differenceInMillis % (1000 * 60 * 60) / (1000 * 60)
+            val seconds = differenceInMillis % (1000 * 60) / 1000
+
+             Triple(hours, minutes, seconds)
+        } catch (e: Exception) {
+            Triple(0,0,0)
+        }
+
     }
 
 }

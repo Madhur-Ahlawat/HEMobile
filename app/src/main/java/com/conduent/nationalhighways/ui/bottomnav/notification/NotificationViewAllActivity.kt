@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityViewallNotificationBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationViewAllAdapter
@@ -31,6 +32,8 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
     @Inject
     lateinit var sessionManager: SessionManager
 
+    @Inject
+    lateinit var api: ApiService
     override fun initViewBinding() {
         binding = ActivityViewallNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -137,7 +140,7 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

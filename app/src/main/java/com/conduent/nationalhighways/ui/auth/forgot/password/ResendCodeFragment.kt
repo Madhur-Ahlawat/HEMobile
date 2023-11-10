@@ -59,7 +59,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
     override fun initCtrl() {
 
-        if(arguments?.containsKey(Constants.PHONE_COUNTRY_CODE) == true){
+        if (arguments?.containsKey(Constants.PHONE_COUNTRY_CODE) == true) {
             phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
         }
         if (arguments?.containsKey(Constants.IS_MOBILE_NUMBER) == true) {
@@ -212,7 +212,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
                 bundle.putString(Constants.PHONE_COUNTRY_CODE, phoneCountryCode)
-                bundle.putBoolean(Constants.IS_MOBILE_NUMBER,isItMobileNumber)
+                bundle.putBoolean(Constants.IS_MOBILE_NUMBER, isItMobileNumber)
 
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,
@@ -223,7 +223,10 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
@@ -240,11 +243,15 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     private fun hitApi() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
+        var optionValue = data?.optionValue
+        if (phoneCountryCode.isNotEmpty()) {
+            optionValue = phoneCountryCode + data?.optionValue
+        }
         val request = EmailVerificationRequest(
             data?.optionType,
-            data?.optionValue
+            optionValue
         )
         createAccountViewModel.emailVerificationApi(request)
 
@@ -275,8 +282,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                     val data = navData as ProfileDetailModel?
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
-                }else if(navFlowCall==Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
-                 {
+                } else if (navFlowCall == Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
                     val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         arguments?.getParcelable(
                             Constants.NAV_DATA_KEY,
@@ -286,9 +292,9 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                         arguments?.getParcelable(Constants.NAV_DATA_KEY)
                     }
 
-                     bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
-                 } else if (navFlowCall == Constants.PROFILE_MANAGEMENT_2FA_CHANGE) {
+                } else if (navFlowCall == Constants.PROFILE_MANAGEMENT_2FA_CHANGE) {
                     val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         arguments?.getParcelable(
                             Constants.NAV_DATA_KEY,
@@ -304,7 +310,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)
                 bundle.putString(Constants.PHONE_COUNTRY_CODE, phoneCountryCode)
-                bundle.putBoolean(Constants.IS_MOBILE_NUMBER,isItMobileNumber)
+                bundle.putBoolean(Constants.IS_MOBILE_NUMBER, isItMobileNumber)
 
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,
@@ -313,7 +319,10 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)

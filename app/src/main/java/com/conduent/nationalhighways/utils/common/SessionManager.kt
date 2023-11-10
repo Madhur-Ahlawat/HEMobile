@@ -3,7 +3,9 @@ package com.conduent.nationalhighways.utils.common
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,6 +50,9 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val TOUCH_ID_ENABLED: String = "touch_ID"
         val PRIVATE_KEY: String = ""
         val PUBLIC_KEY: String = ""
+        val CATEGORIES_DATA="categories_data"
+        val SUB_CATEGORIES_DATA="sub_categories_data"
+        val LAST_TOKEN_TIME="last_token_time"
     }
 
     /**
@@ -99,6 +104,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     fun fetchRefreshToken(): String? {
         return prefs.getString(Refresh_TOKEN, null)
     }
+
     fun fetchSmsOption(): String? {
         return prefs.getString(SMS_OPTION, null)
     }
@@ -108,6 +114,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
             putString(ACCOUNT_NUMBER, accountNumber)
         }.apply()
     }
+
     fun saveSmsOption(sms_option: String) {
         prefs.edit().apply {
             putString(SMS_OPTION, sms_option)
@@ -119,6 +126,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
             putString(ACCOUNT_STATUS, accountStatus)
         }.apply()
     }
+
     fun saveNotificationOption(notificationOption: Boolean) {
         prefs.edit().apply {
             putBoolean(NOTIFICATION_OPTION, notificationOption)
@@ -134,10 +142,12 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     fun fetchFirstName(): String? {
         return prefs.getString(FIRST_NAME, null)
     }
-    fun fetchNotificationOption(): Boolean? {
+
+    fun fetchNotificationOption(): Boolean {
         return prefs.getBoolean(NOTIFICATION_OPTION, false)
     }
-  fun saveLastName(name: String) {
+
+    fun saveLastName(name: String) {
         prefs.edit().apply {
             putString(LAST_NAME, name)
         }.apply()
@@ -342,9 +352,46 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         }.apply()
     }
 
+
     fun fetchPhoneNumber(): Boolean {
         return prefs.getBoolean(PHONE_NUMBER, false)
     }
 
+    fun fetchSubCategoriesData(): ArrayList<CaseCategoriesModel> {
+        val json = prefs.getString(SUB_CATEGORIES_DATA, null)
+        val type = object : TypeToken<ArrayList<CaseCategoriesModel>>() {}.type
+        return Gson().fromJson(json, type) ?: ArrayList()
+    }
+
+    fun saveSubCategoriesData(arrayList: List<CaseCategoriesModel?>?){
+        val gson = Gson()
+        val json = gson.toJson(arrayList)
+
+        prefs.edit().apply {
+            putString(SUB_CATEGORIES_DATA, json)
+        }.apply()
+
+    }
+
+
+    fun saveBooleanData(key: String, privateKey: Boolean) {
+        prefs.edit().apply {
+            putBoolean(key, privateKey)
+        }.apply()
+    }
+
+    fun fetchBooleanData(key: String): Boolean {
+        return prefs.getBoolean(key, false)
+    }
+
+    fun saveStringData(key: String, privateKey: String) {
+        prefs.edit().apply {
+            putString(key, privateKey)
+        }.apply()
+    }
+
+    fun fetchStringData(key: String): String {
+        return prefs.getString(key,"")?:""
+    }
 
 }

@@ -1,32 +1,48 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.os.Build
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
+import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.ServiceRequest
 import com.conduent.nationalhighways.databinding.FragmentCasesEnquiryDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBinding>() {
 
-    val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
-    var serviceRequest: ServiceRequest? = null
+    private val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
+    private var serviceRequest: ServiceRequest? = null
+
+    private val apiViewModel: RaiseAPIViewModel by viewModels()
+    private var loader: LoaderDialog? = null
+    private var isViewCreated: Boolean = false
+
+    @Inject
+    lateinit var sm: SessionManager
+
+    private var categoryList: ArrayList<CaseCategoriesModel> = ArrayList()
+    private var subcategoryList: ArrayList<CaseCategoriesModel?>? = ArrayList()
+    private var apiCallPos: Int = 0
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -35,9 +51,9 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
     override fun init() {
         if (requireActivity() is RaiseEnquiryActivity) {
-            binding.btnNext.setText(resources.getString(R.string.str_go_to_start_menu))
+            binding.btnNext.text = resources.getString(R.string.str_go_to_start_menu)
         } else {
-            binding.btnNext.setText(resources.getString(R.string.str_continue))
+            binding.btnNext.text = resources.getString(R.string.str_continue)
         }
         if (arguments?.containsKey(Constants.EnquiryResponseModel) == true) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -47,7 +63,6 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
                     ) != null
                 ) {
                     serviceRequest = arguments?.getParcelable(
-
                         Constants.EnquiryResponseModel, ServiceRequest::class.java
                     )
                 }
@@ -58,10 +73,12 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
                     )
                 }
             }
-
         }
 
         viewModel.enquiryDetailsModel.value = serviceRequest
+
+        binding.categoryDataTv.text = viewModel.enquiryDetailsModel.value?.category
+        binding.subcategoryDataTv.text = viewModel.enquiryDetailsModel.value?.subcategory
 
         binding.btnNext.setOnClickListener {
             if (requireActivity() is RaiseEnquiryActivity) {
@@ -75,20 +92,152 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
             binding.dateEnquiryClosedCv.gone()
         } else {
             binding.dateEnquiryClosedCv.visible()
-            binding.dateEnquiryClosedTv.text=DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.closedDate?:"")
+            binding.dateEnquiryClosedTv.text = DateUtils.convertDateToFullDate(
+                viewModel.enquiryDetailsModel.value?.closedDate ?: ""
+            )
 
         }
-        binding.dateTimeDataTv.text=DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created?:"")
+        binding.dateTimeDataTv.text =
+            DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created ?: "")
 
+        setCategoryData()
+    }
+
+    private fun setCategoryData() {
+        if (sm.fetchSubCategoriesData().size == 0) {
+            loader = LoaderDialog()
+            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            apiViewModel.getCategories()
+        } else {
+            getCategoryDataFromSession()
+        }
     }
 
     override fun initCtrl() {
+
 
     }
 
     override fun observer() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        if (!isViewCreated) {
+
+            observe(apiViewModel.categoriesLiveData, ::categoriesData)
+            observe(apiViewModel.subcategoriesLiveData, ::subCategoriesData)
+        }
+        isViewCreated = true
+
     }
+
+    private fun categoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+                if (resource.data.orEmpty().isNotEmpty()) {
+                    categoryList.clear()
+                    categoryList = resource.data as ArrayList<CaseCategoriesModel>
+                    callSubCategoryApi()
+
+                }
+            }
+
+            is Resource.DataError -> {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
+                    displaySessionExpireDialog(resource.errorModel)
+                }
+            }
+
+            else -> {
+
+            }
+        }
+    }
+
+    private fun callSubCategoryApi() {
+        if (categoryList.size > apiCallPos) {
+            apiViewModel.getSubCategories(categoryList[apiCallPos].name.toString())
+        } else {
+            getCategoryDataFromSession()
+        }
+        apiCallPos++
+    }
+
+    private fun getCategoryDataFromSession() {
+        val subCategories = sm.fetchSubCategoriesData()
+
+        for (i in 0 until subCategories.size) {
+            val subcategorySplit = subCategories[i].name?.split("~")
+            var seletedArea = ""
+            var selectSubArea = ""
+            if (subcategorySplit.orEmpty().isNotEmpty()) {
+                seletedArea = subcategorySplit?.get(0).toString()
+            }
+            if (subcategorySplit.orEmpty().size > 1) {
+                selectSubArea = subcategorySplit?.get(1).toString()
+            }
+
+
+            if (seletedArea == viewModel.enquiryDetailsModel.value?.category.toString()
+                && selectSubArea == viewModel.enquiryDetailsModel.value?.subcategory.toString()
+            ) {
+                binding.categoryDataTv.text = Utils.capitalizeString(subCategories[i].category)
+                binding.subcategoryDataTv.text = subCategories[i].value
+                break
+            }
+        }
+
+        binding.dataLl.visible()
+    }
+
+    private fun subCategoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
+        if (categoryList.size <= apiCallPos) {
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+        }
+        if (apiCallPos == 1) {
+            subcategoryList?.clear()
+        }
+
+        when (resource) {
+            is Resource.Success -> {
+                if (resource.data.orEmpty().isNotEmpty()) {
+                    resource.data?.forEach {
+                        it?.apply {
+                            category = categoryList[apiCallPos - 1].name ?: ""
+                        }
+                    }
+                    resource.data?.let { subcategoryList?.addAll(it) }
+
+                    callSubCategoryApi()
+                    if (categoryList.size <= apiCallPos) {
+                        sm.saveSubCategoriesData(subcategoryList)
+                    }
+                }
+            }
+
+            is Resource.DataError -> {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
+                    displaySessionExpireDialog(resource.errorModel)
+                }
+            }
+
+            else -> {
+
+            }
+        }
+    }
+
 
 }

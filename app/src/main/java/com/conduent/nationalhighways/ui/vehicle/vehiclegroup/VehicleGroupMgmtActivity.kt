@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.vehicle.vehiclegroup
 
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityVehicleGroupMgmtBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -20,6 +21,8 @@ class VehicleGroupMgmtActivity : BaseActivity<ActivityVehicleGroupMgmtBinding>()
     @Inject
     lateinit var sessionManager : SessionManager
 
+    @Inject
+    lateinit var api: ApiService
     override fun initViewBinding() {
         binding = ActivityVehicleGroupMgmtBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -54,7 +57,7 @@ class VehicleGroupMgmtActivity : BaseActivity<ActivityVehicleGroupMgmtBinding>()
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager)
+        Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {

@@ -29,7 +29,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         Log.e(TAG, "geofenceTransition- geofenceTransition -> "+geofenceTransition)
 
         // Test that the reported transition was of interest.
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition==Geofence.GEOFENCE_TRANSITION_EXIT) {
             notificationUtils.showNotification(
                 context.resources.getString(R.string.str_did_you_cross_today),
                 context.resources.getString(R.string.str_responsible_paying),

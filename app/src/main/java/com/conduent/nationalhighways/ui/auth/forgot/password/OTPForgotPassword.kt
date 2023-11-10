@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -136,12 +137,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
 
         if (arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION) != null) {
             replenishmentInformation =
-                arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)
+                arguments?.getParcelable(Constants.REPLENISHMENTINFORMATION)
         }
 
         if (arguments != null) {
@@ -154,7 +155,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
         }
 
-        Log.d("referenceId",Gson().toJson(NewCreateAccountRequestModel.sms_referenceId+"  "+NewCreateAccountRequestModel.referenceId))
+        Log.d(
+            "referenceId",
+            Gson().toJson(NewCreateAccountRequestModel.sms_referenceId + "  " + NewCreateAccountRequestModel.referenceId)
+        )
 
 
         setInputParamsData()
@@ -168,12 +172,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun setInputParamsData() {
-        val profile_navData = navData as ProfileDetailModel?
+        val profileNavdata = navData as ProfileDetailModel?
 
-        phoneCell = profile_navData?.personalInformation?.phoneCell ?: ""
-        phoneCellCountryCode = profile_navData?.personalInformation?.phoneCellCountryCode ?: ""
-        phoneDay = profile_navData?.personalInformation?.phoneDay ?: ""
-        phoneDayCountryCode = profile_navData?.personalInformation?.phoneDayCountryCode ?: ""
+        phoneCell = profileNavdata?.personalInformation?.phoneCell ?: ""
+        phoneCellCountryCode = profileNavdata?.personalInformation?.phoneCellCountryCode ?: ""
+        phoneDay = profileNavdata?.personalInformation?.phoneDay ?: ""
+        phoneDayCountryCode = profileNavdata?.personalInformation?.phoneDayCountryCode ?: ""
 
         if (!isItMobileNumber) {
             phoneDay = data?.optionValue.toString()
@@ -230,7 +234,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         when (resource) {
             is Resource.Success -> {
 
-                if (navFlowCall.equals(PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)) {
+                if (navFlowCall == PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
+                    sessionManager.saveSmsOption("Y")
                     val bundle = Bundle()
                     bundle.putString(
                         Constants.NAV_FLOW_KEY,
@@ -248,8 +253,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         Constants.NAV_FLOW_FROM,
                         Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE
                     )
+
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
+                    bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     if (navFlowCall == PROFILE_MANAGEMENT) {
                         findNavController().navigate(
                             R.id.action_otpForgotFragment_to_resetForgotPassword,
@@ -461,15 +468,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun confirmEmailCode() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        if (phoneCountryCode.isNotEmpty()&&phoneCountryCode!=null){
+        if (phoneCountryCode.isNotEmpty() && phoneCountryCode != null) {
             val request = ConfirmEmailRequest(
                 response?.referenceId ?: "",
-                phoneCountryCode+data?.optionValue,
+                phoneCountryCode + data?.optionValue,
                 binding.edtOtp.getText().toString().trim()
             )
             createAccountViewModel.confirmEmailApi(request)
 
-        }else{
+        } else {
             val request = ConfirmEmailRequest(
                 response?.referenceId ?: "",
                 data?.optionValue,
@@ -619,9 +626,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                         }
 
-                        1308 ->{
+                        1308 -> {
                             binding.edtOtp.setErrorText(getString(R.string.str_password_match_current_password))
                         }
+
                         else -> {
                             binding.edtOtp.setErrorText(status.errorMsg)
                         }
@@ -681,14 +689,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             loader?.dismiss()
         }
 
-
         when (resource) {
             is Resource.Success -> {
                 otpSuccessRedirection()
             }
 
             is Resource.DataError -> {
-
 
                 if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
                         Constants.INVALID_TOKEN
@@ -707,11 +713,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
                         }
 
+                        2 -> {
+                            binding.edtOtp.setErrorText(getString(R.string.str_security_code_expired_message))
+                        }
+
                         5260 -> {
                             binding.edtOtp.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                         }
 
-                        1308 ->{
+                        1308 -> {
                             binding.edtOtp.setErrorText(getString(R.string.str_password_match_current_password))
                         }
 
@@ -952,12 +962,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneDay,
+                phoneCell = phoneCell,
                 phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = HomeActivityMain.accountDetailsData?.accountInformation?.smsOption,
                 phoneEvening = "",
-                phoneCellCountryCode = phoneDayCountryCode,
+                phoneCellCountryCode = phoneCellCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode,
                 mfaEnabled = accountInformation?.mfaEnabled,
                 securityCode = binding.edtOtp.getText().toString().trim(),
@@ -1019,6 +1029,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+
                     val intent = Intent(requireActivity(), AuthActivity::class.java)
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)

@@ -30,6 +30,8 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -113,6 +115,13 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                         totalCount = response.size
                         mList.clear()
                         mList.addAll(response)
+                        val dateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+
+                        mList.sortedWith(compareBy(
+                            { if (it?.vehicleInfo?.effectiveStartDate.isNullOrEmpty()) null else dateFormat.parse(it?.vehicleInfo?.effectiveStartDate?:"") },
+                            { it?.plateInfo?.number }))
+
+
                         isLoading = false
                         mAdapter.setList(mList)
                         checkData()

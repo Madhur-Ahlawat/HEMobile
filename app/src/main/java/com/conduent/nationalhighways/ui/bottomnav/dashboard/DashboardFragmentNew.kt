@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.DialogFragment
@@ -35,7 +36,8 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dat
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapter
+import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapterDashboard
+import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsInnerAdapterDashboard
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.DateUtils.compareDates
 import com.conduent.nationalhighways.utils.common.Constants
@@ -49,6 +51,7 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
+import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -60,7 +63,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
         hashMapOf()
-    private var transactionsAdapter: TransactionsAdapter? = null
+    private var transactionsAdapter: TransactionsInnerAdapterDashboard? = null
     val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
@@ -122,7 +125,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             })
 
-    fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
+    private fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
         return ((item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber))
     }
 
@@ -146,14 +149,14 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun initTransactionsRecyclerView() {
-        transactionsAdapter = TransactionsAdapter(
-            this@DashboardFragmentNew, paymentHistoryDatesList, paymentHistoryHashMap
+        transactionsAdapter = TransactionsInnerAdapterDashboard(
+            this@DashboardFragmentNew, paymentHistoryListData
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
         binding.rvRecenrTransactions.run {
             if (itemDecorationCount == 0) {
-                addItemDecoration(RecyclerViewItemDecorator(0, 1))
+                addItemDecoration(RecyclerViewItemDecoratorDashboardParentAdapter(3, 0))
             }
             adapter = transactionsAdapter
         }
@@ -259,30 +262,31 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         binding.tvNoHistory.gone()
                         binding.boxViewAll.visible()
                         binding.rvRecenrTransactions.visible()
-                        paymentHistoryListData.clear()
-                        paymentHistoryListData.addAll(it)
+                        paymentHistoryListData?.clear()
+                        paymentHistoryHashMap.clear()
+                        it?.forEachIndexed { index, transactionData ->
+                            if (index <= 1) {
+                                paymentHistoryListData?.add(transactionData)
+                            }
+                            else{
+                                return@forEachIndexed
+                            }
+                        }
                         paymentHistoryListData =
                             Utils.sortTransactionsDateWiseDescending(paymentHistoryListData)
                                 .toMutableList()
                         paymentHistoryDatesList.clear()
-                        getDatesList(paymentHistoryListData)
+//                        getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
-//                        paymentHistoryListData =
-//                            sortTransactionsDateWiseDescending(
-//                                paymentHistoryListData ?: ArrayList()
-//                            ).toMutableList()
-
                     } else {
                         binding.boxViewAll.gone()
                         binding.rvRecenrTransactions.gone()
                         binding.tvNoHistory.visible()
-//                        binding.paginationLayout.gone()
                     }
                 } ?: run {
                     binding.boxViewAll.gone()
                     binding.rvRecenrTransactions.gone()
                     binding.tvNoHistory.visible()
-//                    binding.paginationLayout.gone()
                 }
             }
 
@@ -290,7 +294,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 binding.boxViewAll.gone()
                 binding.rvRecenrTransactions.gone()
                 binding.tvNoHistory.visible()
-//                binding.paginationLayout.gone()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
 
@@ -500,13 +503,26 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupMethod.visible()
 
             buttonTopup.visible()
+
             binding.buttonTopup.setOnClickListener {
+                val bundle = Bundle()
                 val title = requireActivity().findViewById<TextView>(R.id.title_txt)
 
                 title.text = getString(R.string.top_up)
 
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+
+
+                if (data.accountInformation?.status.equals(Constants.SUSPENDED,true)){
+                    bundle.putString(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    bundle.putString(
+                        Constants.CURRENTBALANCE, data.replenishmentInformation?.currentBalance)
+
+                }else{
+                    bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+
+                }
+
+
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
 
                 findNavController().navigate(
