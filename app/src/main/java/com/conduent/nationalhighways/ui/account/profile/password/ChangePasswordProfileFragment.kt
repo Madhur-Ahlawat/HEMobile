@@ -391,8 +391,8 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         isNewPasswordValid = true
 
         if (binding.edtNewPassword.getText().toString().length == 0) {
+            binding.edtNewPassword.removeError()
             isNewPasswordValid = false
-            binding.edtNewPassword.setErrorText(getString(R.string.str_enter_your_password))
         } else if (Utils.hasSpecialCharacters(
                 binding.edtNewPassword.editText.getText().toString(),
                 Utils.splCharsPassword
@@ -510,7 +510,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
 
         if (binding.edtNewPassword.getText().toString().length == 0) {
             isNewPasswordValid = false
-            binding.edtNewPassword.setErrorText(getString(R.string.str_enter_your_password))
+            binding.edtNewPassword.removeError()
         } else if (Utils.hasSpecialCharacters(
                 binding.edtNewPassword.editText.getText().toString(),
                 Utils.splCharsPassword
