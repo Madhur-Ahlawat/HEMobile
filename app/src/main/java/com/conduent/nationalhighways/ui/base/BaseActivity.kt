@@ -53,6 +53,8 @@ abstract class BaseActivity<T> : AppCompatActivity() {
         initViewBinding()
         observeViewModel()
 
+        BaseApplication.CurrentContext = this
+
     }
 
     /* override fun onWindowFocusChanged(hasFocus: Boolean) {

@@ -3,16 +3,13 @@ package com.conduent.nationalhighways.di
 import android.content.Context
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.data.remote.*
-import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
-import com.conduent.nationalhighways.ui.loader.RetryListener
+import com.conduent.nationalhighways.ui.loader.RetryCallback
 import com.conduent.nationalhighways.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -32,8 +29,8 @@ object ApiModule {
     }
 
     @Provides
-    fun provideRetryListener(): RetryListener {
-        return RetryListener.RetryListenerImpl()
+    fun provideRetryListener(): RetryCallback {
+        return RetryCallback.RetryListenerImpl()
     }
 
     @Provides
@@ -41,7 +38,7 @@ object ApiModule {
     fun provideHeaderInterceptor(
         @Singleton sessionManager: SessionManager,
         context: Context,
-        retryListener: RetryListener
+        retryListener: RetryCallback
     ): HeaderInterceptor {
         return HeaderInterceptor(sessionManager, context, retryListener)
     }

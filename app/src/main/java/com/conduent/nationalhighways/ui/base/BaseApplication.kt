@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.base
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import com.adobe.marketing.mobile.*
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
@@ -31,6 +32,8 @@ class BaseApplication : Application() {
     @Inject
     lateinit var api: ApiService //ms
 
+
+
     private var accountResponse: AccountResponse? = null
     fun getAccountSavedData(): AccountResponse {
         return accountResponse!!
@@ -41,6 +44,10 @@ class BaseApplication : Application() {
     }
 
     companion object {
+
+        var CurrentContext: Context? = null
+
+
         var INSTANCE: BaseApplication? = null
         var logoutListener: LogoutListener? = null
         var timer: Timer? = null

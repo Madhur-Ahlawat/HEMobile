@@ -1,12 +1,17 @@
 package com.conduent.nationalhighways.data.remote
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
-import com.conduent.nationalhighways.ui.loader.RetryListener
+import android.util.Log
+import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.loader.RetryCallback
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils.getVersionName
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,10 +19,14 @@ import javax.inject.Singleton
 class HeaderInterceptor @Inject constructor(
     private val sessionManager: SessionManager,
     val context: Context,
-    val retryListener: RetryListener
+    val retryListener: RetryCallback
 ) : Interceptor {
 
+    var dispatchRetry: (() -> Unit)? = null
+
     override fun intercept(chain: Interceptor.Chain): Response {
+        Log.e("TAG", "showRetryDialog: request ---> "+chain.request())
+
         val requestBuilder = chain.request().newBuilder()
         // requestBuilder.addHeader("ContentType", "application/x-www-form-urlencoded")
         // If token has been saved, add it to the request
@@ -36,76 +45,40 @@ class HeaderInterceptor @Inject constructor(
                 )
             }
         }
-//
-//        var response: Response? = null // Declare the response variable
-////
-//        try {
-//            Log.e("TAG", "intercept: ")
-//            response = chain.proceed(requestBuilder.build())
-//        } catch (e: Exception) {
-//            Log.e("TAG", "intercept: exception ")
-//        }
 
-//        var retryCount = 0
-//        val maxRetry = 3
+        var response: Response? = null // Declare the response variable
 
-//        showRetryDialog(response)
+        try {
+            Log.e("TAG", "intercept: ")
+            response = chain.proceed(requestBuilder.build())
 
+        } catch (e: Exception) {
+            var retrycount = sessionManager.fetchIntData(SessionManager.RETRY_API_TIME)
+            Log.e("TAG", "intercept: exception " + retrycount)
 
-        /*
-                while (response == null && (retryCount < maxRetry)) {
-                    Log.e("TAG", "checkretryOption: retryCount " + retryCount)
-                    try {
+            sessionManager.saveIntData(SessionManager.RETRY_API_TIME, retrycount++)
+            Log.e("TAG", "intercept: exception !! " + retrycount)
 
-                        // Attempt to make the API call
-                        */
-        /*response = chain.proceed(chain.request())
-                        if (!response.isSuccessful) {
-                            // Handle non-successful responses here
-                            // You can check response codes, headers, or any other criteria
-                            // to decide whether to retry or not
-                            if (response.code == 500) {
-                                // Server error, retry
-
-                                retryCount++
-                                response = null // Reset response to null for retry
-                            } else {
-                                // Handle other errors or return the response
-                                //                        return null
-                                return response
-                            }
-                        }*//*
-
-            } catch (e: IOException) {
-                // Handle network exceptions, e.g., timeouts
-                retryCount++
-                response = null // Reset response to null for retry
+            if (retrycount <= 3) {
+                response=null
+                dispatchRetry ={ response=chain.proceed(chain.request())}
+                retryListener.onRetryClick(chain, sessionManager, retryListener, dispatchRetry!!)
+//                response?.close()
+            } else {
+                sessionManager.saveIntData(SessionManager.RETRY_API_TIME, 0)
+                val intent = Intent(context, LandingActivity::class.java)
+                intent.putExtra(Constants.SHOW_SCREEN, Constants.FAILED_RETRY_SCREEN)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                context.startActivity(intent)
             }
+
         }
-*/
 
+        return response ?: throw IOException("Response is null")
 
-//        return response ?: throw IOException("Response is null")
-
-
-        return chain.proceed(requestBuilder.build())
+//        return chain.proceed(requestBuilder.build())
     }
 
-/*
-    private fun showRetryDialog(response: Response?) {
-        val retryDialog = AlertDialog.Builder(context)
-            .setMessage("Network error occurred. Do you want to retry?")
-            .setCancelable(false)
-            .setPositiveButton("Retry") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
 
-        retryDialog.show()
-    }
-*/
 
 }

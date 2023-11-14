@@ -53,6 +53,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val CATEGORIES_DATA="categories_data"
         val SUB_CATEGORIES_DATA="sub_categories_data"
         val LAST_TOKEN_TIME="last_token_time"
+        val RETRY_API_TIME="retry_api_time"
     }
 
     /**
@@ -392,6 +393,15 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
     fun fetchStringData(key: String): String {
         return prefs.getString(key,"")?:""
+    }
+  fun saveIntData(key: String, privateKey:Int) {
+        prefs.edit().apply {
+            putInt(key, privateKey)
+        }.apply()
+    }
+
+    fun fetchIntData(key: String): Int {
+        return prefs.getInt(key,0)?:0
     }
 
 }
