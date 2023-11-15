@@ -11,9 +11,12 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.CountDownTimer
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
@@ -54,6 +57,8 @@ import java.util.regex.Pattern
 
 
 object Utils {
+    lateinit var progressBar: Dialog
+
     private var ALLOWED_CHARS_BUILDING_STREE_NO = "\',.-"
     private var ALLOWED_CHARS_ADDRESS_LINE_2 = "\',.-"
     private var ALLOWED_CHARS_TOWN_OR_CITY = "-.,\'"
@@ -484,7 +489,10 @@ object Utils {
     }
 
     fun sessionExpired(
-        context: Activity, listener: LogoutListener? = null, sessionManager: SessionManager,apiService:ApiService
+        context: Activity,
+        listener: LogoutListener? = null,
+        sessionManager: SessionManager,
+        apiService: ApiService
     ) {
         if (sessionManager.getLoggedInUser()) {
             displayCustomMessage(
@@ -495,7 +503,7 @@ object Utils {
                 context.getString(R.string.str_stay_signed_in),
                 context.getString(R.string.str_sign_out),
                 listener,
-                sessionManager,apiService
+                sessionManager, apiService
             )
 
         } else {
@@ -507,7 +515,7 @@ object Utils {
                 context.getString(R.string.str_stay_on_the_app),
                 context.getString(R.string.str_delete_my_answers),
                 listener,
-                sessionManager,apiService
+                sessionManager, apiService
             )
 
         }
@@ -556,7 +564,7 @@ object Utils {
         negativeBtnTxt: String,
         listener: LogoutListener? = null,
         sessionManager: SessionManager,
-        apiService:ApiService
+        apiService: ApiService
     ) {
 
         val dialog = Dialog(context)
@@ -671,8 +679,8 @@ object Utils {
     }
 
     fun makeCommaSeperatedStringForPassword(input: String): String {
-        var textInput=input
-        textInput= textInput.toSet().joinToString("")
+        var textInput = input
+        textInput = textInput.toSet().joinToString("")
 
         var output1 = ""
         textInput.forEachIndexed { index, c ->
@@ -965,7 +973,7 @@ object Utils {
             val number = NumberFormat.getCurrencyInstance(Locale.UK)
 
             return if (balance?.contains("(") == true && balance.contains(")")) {
-                val doublePayment = balance.replace("(", "").replace(")", "")?.toDouble()
+                val doublePayment = balance.replace("(", "").replace(")", "").toDouble()
                 number.format(doublePayment)
             } else {
                 val doublePayment = balance?.toDouble()
@@ -1035,8 +1043,7 @@ object Utils {
     }
 
 
-
-        fun maskCardNumber(cardNumber: String): String {
+    fun maskCardNumber(cardNumber: String): String {
         return if ((cardNumber.length) >= 4) {
             "****" + cardNumber.takeLast(4)
         } else {
@@ -1080,6 +1087,7 @@ object Utils {
         context.startActivity(intent)
 
     }
+
     fun isRooted(context: Context): Boolean {
         return CommonUtils.isRooted() || isRooted2() || isEmulator(context)
     }
@@ -1088,9 +1096,11 @@ object Utils {
         val androidId: String = Settings.Secure.getString(context.contentResolver, "android_id")
         return "sdk" == Build.PRODUCT || "google_sdk" == Build.PRODUCT || androidId == null
     }
+
     private fun isRooted2(): Boolean {
         return findBinary("su")
     }
+
     private fun findBinary(binaryName: String): Boolean {
         var found = false
         if (!found) {
@@ -1109,7 +1119,7 @@ object Utils {
         return found
     }
 
-    fun convertStringToDate(dateString: String,dateFormat:String): Date? {
+    fun convertStringToDate(dateString: String, dateFormat: String): Date? {
         val dateFormat = SimpleDateFormat(dateFormat, Locale.getDefault())
         return try {
             dateFormat.parse(dateString)
@@ -1126,11 +1136,89 @@ object Utils {
             val minutes = differenceInMillis % (1000 * 60 * 60) / (1000 * 60)
             val seconds = differenceInMillis % (1000 * 60) / 1000
 
-             Triple(hours, minutes, seconds)
+            Triple(hours, minutes, seconds)
         } catch (e: Exception) {
-            Triple(0,0,0)
+            Triple(0, 0, 0)
         }
 
     }
+
+
+    private fun ratingDialog(activity: Activity) {
+//         val ratingDialog: RatingDialog = RatingDialog.Builder(activity)
+//             .threshold(3)
+//             .session(1)
+//             .onRatingBarFormSubmit { feedback -> Log.i("TAG", "onRatingBarFormSubmit: $feedback") }
+//             .build()
+//
+//         ratingDialog.show()
+
+
+//        val ratingDialog = RatingDialog.Builder(this)
+//            .icon(R.mipmap.ic_launcher)
+//            .session(3)
+//            .threshold(3)
+//            .title(text = R.string.rating_dialog_experience, textColor = R.color.primaryTextColor)
+//            .positiveButton(text = R.string.rating_dialog_maybe_later, textColor = R.color.colorPrimary, background = R.drawable.button_selector_positive)
+//            .negativeButton(text = R.string.rating_dialog_never, textColor = R.color.secondaryTextColor)
+//            .formTitle(R.string.submit_feedback)
+//            .formHint(R.string.rating_dialog_suggestions)
+//            .feedbackTextColor(R.color.feedbackTextColor)
+//            .formSubmitText(R.string.rating_dialog_submit)
+//            .formCancelText(R.string.rating_dialog_cancel)
+//            .ratingBarColor(R.color.ratingBarColor)
+//            .playstoreUrl("https://play.google.com/store/apps/details?id=com.conduent.nationalhighways")
+//            .onThresholdCleared { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdCleared: $rating $thresholdCleared") }
+//            .onThresholdFailed { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdFailed: $rating $thresholdCleared") }
+//            .onRatingChanged { rating, thresholdCleared -> Log.e("TAG", "onRatingChanged: $rating $thresholdCleared") }
+//            .onRatingBarFormSubmit { feedback -> Log.e("TAG", "onRatingBarFormSubmit: $feedback") }
+//            .build()
+
+//        ratingDialog.show()
+    }
+
+    fun vibrate(activity: Activity) {
+        val vibrator: Vibrator =
+            activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
+            // Create a VibrationEffect object for the default vibration strength
+            val vibrationEffect =
+                VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
+            // Vibrate the device with the created VibrationEffect
+            vibrator.vibrate(vibrationEffect)
+        } else {
+            // For older versions of Android, vibrate without VibrationEffect
+            vibrator.vibrate(200)
+        }
+    }
+
+    fun showProgressBar(context: Context, isProgressVisibile: Boolean) {
+        try {
+            if (isProgressVisibile) {
+                if (this::progressBar.isInitialized) {
+                    progressBar.dismiss()
+                }
+            }
+            if (isProgressVisibile) {
+                progressBar = Dialog(context)
+                progressBar.setContentView(R.layout.dialog_loader)
+                progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                progressBar.window?.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                progressBar.setCancelable(false)
+                progressBar.show()
+            } else {
+                if (this::progressBar.isInitialized) {
+                    progressBar.dismiss()
+                }
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
 
 }

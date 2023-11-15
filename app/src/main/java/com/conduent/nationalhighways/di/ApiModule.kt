@@ -4,6 +4,7 @@ import android.content.Context
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.data.remote.*
 import com.conduent.nationalhighways.ui.loader.RetryCallback
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
@@ -38,7 +39,7 @@ object ApiModule {
     fun provideHeaderInterceptor(
         @Singleton sessionManager: SessionManager,
         context: Context,
-        retryListener: RetryCallback
+        retryListener: RetryCallback,
     ): HeaderInterceptor {
         return HeaderInterceptor(sessionManager, context, retryListener)
     }
@@ -52,8 +53,10 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideNetworkRetryInterceptor(context: Context): NetworkRetryInterceptor {
-        return NetworkRetryInterceptor(context)
+    fun provideNetworkRetryInterceptor(
+        context: Context, retryListener: RetryCallback,
+    ): TimeoutRetryInterceptor {
+        return TimeoutRetryInterceptor(context, retryListener)
     }
 
     @Provides
@@ -74,6 +77,7 @@ object ApiModule {
         @ApplicationContext context: Context,
         logging: HttpLoggingInterceptor,
         headerInterceptor: HeaderInterceptor,
+        timeOutRetryInterceptor: TimeoutRetryInterceptor,
         networkConnectionInterceptor: NetworkConnectionInterceptor,
         responseInterceptor: ResponseInterceptor,
         tokenAuthenticator: TokenAuthenticator,
@@ -81,18 +85,16 @@ object ApiModule {
         val builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) builder.addInterceptor(logging)
         builder.addInterceptor(headerInterceptor)
-//            .addInterceptor(networkConnectionInterceptor)
-//            .addInterceptor(responseInterceptor)
-//            .authenticator(tokenAuthenticator)
+            .addInterceptor(timeOutRetryInterceptor)
             .callTimeout(0, TimeUnit.SECONDS)
             .connectTimeout(
-                30, TimeUnit.SECONDS
+                Constants.TIME_OUT_SEC, TimeUnit.SECONDS
             )
             .readTimeout(
-                30, TimeUnit.SECONDS
+                Constants.TIME_OUT_SEC, TimeUnit.SECONDS
             )
             .writeTimeout(
-                30, TimeUnit.SECONDS
+                Constants.TIME_OUT_SEC, TimeUnit.SECONDS
             )
         return builder.build()
     }

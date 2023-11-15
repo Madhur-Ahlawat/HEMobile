@@ -1628,5 +1628,7 @@
     <string name="str_responsible_paying">As a reminder if you are responsible for paying the charge you have until midnight tomorrow to pay</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="enter_your_mobile_number">Enter your mobile number</string>
+    <string name="str_push_notifications">Push notifications</string>
+    <string name="str_receive_reminders_push_notification">To receive the reminders you will need to enable notifications in the Settings of your phone and also below.</string>
 
 </resources>

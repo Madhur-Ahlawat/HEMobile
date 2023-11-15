@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.base
 
+import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,6 +15,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.ErrorResponseModel
@@ -22,6 +24,7 @@ import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -30,8 +33,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import okhttp3.Interceptor
 import java.util.Date
 import javax.inject.Inject
 
@@ -42,10 +43,10 @@ abstract class BaseActivity<T> : AppCompatActivity() {
     protected abstract fun initViewBinding()
 
     @Inject
-    lateinit var smAb: SessionManager
+    lateinit var smBa: SessionManager
 
     @Inject
-    lateinit var apiServiceAb: ApiService
+    lateinit var apiServiceBa: ApiService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -176,14 +177,14 @@ abstract class BaseActivity<T> : AppCompatActivity() {
         super.onUserInteraction()
         GlobalScope.launch(Dispatchers.IO){
             val lastTokenTime = Utils.convertStringToDate(
-                smAb.fetchStringData(SessionManager.LAST_TOKEN_TIME),
+                smBa.fetchStringData(SessionManager.LAST_TOKEN_TIME),
                 Constants.dd_mm_yyyy_hh_mm_ss
             )
             if (lastTokenTime != null) {
                 val diff = Utils.getTimeDifference(lastTokenTime, Date())
                 if (diff.first >= 1 || (diff.first == 0L && diff.second > 13)) {
-                    BaseApplication.getNewToken(apiServiceAb, smAb)
-                    BaseApplication.saveDateinSession(smAb)
+                    BaseApplication.getNewToken(apiServiceBa, smBa)
+                    BaseApplication.saveDateinSession(smBa)
                 }
             }
 
@@ -221,6 +222,7 @@ abstract class BaseActivity<T> : AppCompatActivity() {
 
         }
     }
+
 
 }
 

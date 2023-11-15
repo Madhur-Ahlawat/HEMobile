@@ -20,7 +20,6 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
@@ -106,19 +105,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                     // Implement your custom back navigation logic
                 } else {
-                    val vibrator: Vibrator =
-                        requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        // Create a VibrationEffect object for the default vibration strength
-                        val vibrationEffect =
-                            VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
-                        // Vibrate the device with the created VibrationEffect
-                        vibrator.vibrate(vibrationEffect)
-                    } else {
-                        // For older versions of Android, vibrate without VibrationEffect
-                        vibrator.vibrate(200)
-                    }
+                  Utils.vibrate(requireActivity())
                 }
             }
         }
@@ -137,17 +124,20 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     abstract fun observer()
 
 
-
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
+        checkBackIcon()
+
+    }
+
+    fun checkBackIcon() {
         val backIcon: ImageView? = requireActivity().findViewById(R.id.back_button)
         if (!backButton) {
             backIcon?.visibility = View.GONE
         } else {
             backIcon?.visibility = View.VISIBLE
         }
-
     }
 
     override fun onPause() {
@@ -156,10 +146,16 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     }
 
 
-    fun displaySessionExpireDialog(errorResponsModel:ErrorResponseModel) {
-        if(errorResponsModel.errorCode==Constants.TOKEN_FAIL && errorResponsModel.error.equals(Constants.INVALID_TOKEN)){
+    fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel) {
+        if (errorResponsModel.errorCode == Constants.TOKEN_FAIL && errorResponsModel.error.equals(
+                Constants.INVALID_TOKEN
+            )
+        ) {
             Utils.displaySesionExpiryDialog(requireActivity())
-        }else if(errorResponsModel.errorCode==Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(Constants.SERVER_ERROR)){
+        } else if (errorResponsModel.errorCode == Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
+                Constants.SERVER_ERROR
+            )
+        ) {
             requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
                 putString(Constants.SHOW_SCREEN, Constants.SERVER_ERROR)
             }
@@ -231,7 +227,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         cancelVisibility: Int = View.VISIBLE
     ) {
 
-        val dialog = Dialog(requireActivity(),R.style.CustomDialogTheme1)
+        val dialog = Dialog(requireActivity(), R.style.CustomDialogTheme1)
 
         dialog.setCancelable(false)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -265,20 +261,27 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     }
 
-    fun emailHeartBeatApi(){
-        if (NewCreateAccountRequestModel.referenceId?.trim()?.isNotEmpty()==true&&NewCreateAccountRequestModel.referenceId!=null){
+    fun emailHeartBeatApi() {
+        if (NewCreateAccountRequestModel.referenceId?.trim()
+                ?.isNotEmpty() == true && NewCreateAccountRequestModel.referenceId != null
+        ) {
             NewCreateAccountRequestModel.referenceId?.let {
-                viewModel.heartBeat(Constants.AGENCY_ID,
+                viewModel.heartBeat(
+                    Constants.AGENCY_ID,
                     it
                 )
             }
         }
     }
-    fun smsHeartBeatApi(){
 
-        if (NewCreateAccountRequestModel.sms_referenceId?.trim()?.isNotEmpty() == true&&NewCreateAccountRequestModel.sms_referenceId!=null){
+    fun smsHeartBeatApi() {
+
+        if (NewCreateAccountRequestModel.sms_referenceId?.trim()
+                ?.isNotEmpty() == true && NewCreateAccountRequestModel.sms_referenceId != null
+        ) {
             NewCreateAccountRequestModel.sms_referenceId?.let {
-                viewModel.heartBeat(Constants.AGENCY_ID,
+                viewModel.heartBeat(
+                    Constants.AGENCY_ID,
                     it
                 )
             }

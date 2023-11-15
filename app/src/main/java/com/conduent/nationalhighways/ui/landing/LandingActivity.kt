@@ -1,13 +1,18 @@
 package com.conduent.nationalhighways.ui.landing
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.ActivityLandingBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
@@ -22,6 +27,7 @@ import com.conduent.nationalhighways.utils.common.Constants.SESSION_TIME_OUT
 import com.conduent.nationalhighways.utils.common.Constants.START_NOW_SCREEN
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,6 +64,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         fun setToolBarTitle(title: String) {
             binding.titleTxt.text = title
         }
+
     }
 
     override fun initViewBinding() {
@@ -91,7 +98,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         } else if (screenType == LOGOUT_SCREEN || screenType == SESSION_TIME_OUT) {
             binding.titleTxt.text = resources.getString(R.string.str_signed_out)
             binding.btnBack.gone()
-        } else if (screenType == SERVER_ERROR ) {
+        } else if (screenType == SERVER_ERROR || screenType== FAILED_RETRY_SCREEN ) {
             binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
             binding.btnBack.gone()
         } else {
@@ -101,8 +108,26 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
+        backClickListener()
 
     }
+
+    private fun backClickListener() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.btnBack.visibility== View.VISIBLE) {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                    // Implement your custom back navigation logic
+                } else {
+                    Utils.vibrate(this@LandingActivity)
+                }
+            }
+        }
+
+        this.onBackPressedDispatcher.addCallback(this, callback)
+    }
+
 
     private fun navControllerListener() {
         navController.addOnDestinationChangedListener(object :
@@ -122,8 +147,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
         initCtrl()
-
-
+        sessionManager.setLoggedInUser(false)
     }
 
     override fun onPause() {
@@ -150,7 +174,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 NavArgument.Builder().setDefaultValue(intent.extras).build()
             )
 
-        if (this.screenType == LRDS_SCREEN|| this.screenType==SERVER_ERROR) {
+        if (this.screenType == LRDS_SCREEN|| this.screenType==SERVER_ERROR ) {
             bundle.putString(Constants.SERVICE_TYPE, this.screenType)
             bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
         }
@@ -166,7 +190,10 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 LANDING_SCREEN -> setStartDestination(R.id.landingFragment)
                 LOGOUT_SCREEN -> setStartDestination(R.id.logoutFragment)
                 SESSION_TIME_OUT -> setStartDestination(R.id.sessionTimeOutFragment)
-                FAILED_RETRY_SCREEN -> setStartDestination(R.id.failedRetryFragment)
+                FAILED_RETRY_SCREEN -> {
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                    setStartDestination(R.id.failedRetryFragment)
+                }
                 LRDS_SCREEN , SERVER_ERROR-> {
                     setStartDestination(R.id.serviceUnavailableFragment)
                 }

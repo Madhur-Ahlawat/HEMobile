@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.landing
 
 import android.Manifest
 import android.app.PendingIntent
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -15,11 +16,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentRegisterReminderBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.receiver.GeofenceBroadcastReceiver
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.setToolBarTitle
 import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
 import com.conduent.nationalhighways.utils.GeofenceUtils
+import com.conduent.nationalhighways.utils.common.Utils
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
@@ -45,16 +49,41 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     override fun initCtrl() {
         if (checkLocationPermission()) {
-            binding.switchCommunication.isChecked = true
+            binding.switchGeoLocation.isChecked = true
         } else {
-            binding.switchCommunication.isChecked = true
+            binding.switchGeoLocation.isChecked = true
         }
 
-        binding.switchCommunication.setOnClickListener {
-            if (binding.switchCommunication.isChecked) {
+        binding.switchGeoLocation.setOnClickListener {
+            if (binding.switchGeoLocation.isChecked) {
                 requestLocationPermission()
             }
         }
+
+        binding.switchNotification.setOnClickListener {
+            if (!Utils.areNotificationsEnabled(requireContext())) {
+                displayCustomMessage(
+                    resources.getString(R.string.str_notification_title),
+                    resources.getString(R.string.str_notification_desc),
+                    resources.getString(R.string.str_allow),
+                    resources.getString(R.string.str_dont_allow),
+                    object : DialogPositiveBtnListener {
+                        override fun positiveBtnClick(dialog: DialogInterface) {
+                            binding.switchNotification.isChecked = true
+                            Utils.redirectToNotificationPermissionSettings(requireContext())
+                        }
+                    },
+                    object : DialogNegativeBtnListener {
+                        override fun negativeBtnClick(dialog: DialogInterface) {
+                            binding.switchNotification.isChecked = false
+                        }
+                    },
+                    View.VISIBLE
+                )
+            }
+        }
+
+
     }
 
     private fun requestLocationPermission() {

@@ -8,7 +8,7 @@
         android:id="@+id/thirdPartySoftwareFragment"
         android:name="com.conduent.nationalhighways.ui.landing.ThirdPartySoftwareFragment"
         android:label="thirdPartySoftwareFragment"
-        tools:layout="@layout/fragment_third_party_software"/>
+        tools:layout="@layout/fragment_third_party_software" />
     <fragment
         android:id="@+id/aboutthisserviceFragment"
         android:name="com.conduent.nationalhighways.ui.landing.AboutThisServiceFragment"
@@ -22,7 +22,7 @@
         android:id="@+id/viewChargesFragment"
         android:name="com.conduent.nationalhighways.ui.landing.ViewChargesFragment"
         android:label="@string/str_view_charges"
-        tools:layout="@layout/fragment_view_charges" >
+        tools:layout="@layout/fragment_view_charges">
         <action
             android:id="@+id/action_contactDartChargeFragment_to_enquiryStatusFragment"
             app:destination="@id/enquiryStatusFragment" />
@@ -251,7 +251,6 @@
         android:id="@+id/casesEnquiryDetailsFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.CasesEnquiryDetailsFragment"
         android:label="CasesEnquiryDetailsFragment"
-        tools:layout="@layout/fragment_cases_enquiry_details">
-    </fragment>
+        tools:layout="@layout/fragment_cases_enquiry_details"></fragment>
 
 </navigation>
