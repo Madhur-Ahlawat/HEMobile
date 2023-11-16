@@ -102,7 +102,7 @@
     <string name="str_not_received_resend">If you have not received the email please click resend</string>
     <string name="str_resend_message">Please check your text message, if you have not received the text message, please click resend</string>
     <string name="str_make_one_of_payment">Pay for crossings without an account</string>
-    <string name="one_of_payment">Pay for Crossings</string>
+    <string name="one_of_payment">Pay For Crossings</string>
     <string name="str_make_one_of_payment_continue">Make a one off payment \nMake a payment for crossings without creating an account</string>
     <string name="str_charges_for_crossing">The charges for crossings</string>
     <string name="str_six_am_morning_txt">\u2022  You have made since 6 am yesterday morning</string>
@@ -213,7 +213,7 @@
     <string name="str_password_reset_successfull">Password Reset Successfully</string>
     <string name="str_pay_dart_ford_crossing_charge">Pay the Dartford Crossing charge (Dart Charge)</string>
     <string name="str_pay_dart_ford_crossing_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossing in various ways.</string>
-    <string name="str_about_this_service">About this service</string>
+    <string name="str_about_this_service">About This Service</string>
     <string name="str_crossing_service_update">Crossing service updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
     <string name="str_start_now">Start now</string>
@@ -893,7 +893,7 @@
     <string name="str_free_text_field_can_be_used_to_distingush">The free text field can be used to help you distinguish different vehicles associated with your account</string>
     <string name="str_vehicle_added_successfully">Vehicle added successfully</string>
     <string name="str_how_can_i_make">How can I make accessibility requests?</string>
-    <string name="str_guidance_and_documents">Guidance and Documents</string>
+    <string name="str_dart_charge_forms_guidance">Dart Charge Forms and Guidance</string>
     <string name="str_guidance_and_documents_answers">Scheme user information is available in braille, large print and alternative languages. This is available on request by using the Dart Charge Online enquiries or through the Dart Charge contact centre.</string>
     <string name="no_file_chosen">No file chosen</string>
     <string name="select">Select</string>
@@ -1233,7 +1233,7 @@
     <string name="str_personal_details">Personal Details</string>
     <string name="str_play">Play</string>
     <string name="str_account_suspended">Account Suspended</string>
-    <string name="str_sign_in_validation">Sign in Validation</string>
+    <string name="str_sign_in_validation">Sign In Validation</string>
     <string name="str_no_I_will_do_it_later">NO I\'LL DO IT LATER</string>
     <string name="str_new_payment_method">+ NEW PAYMENT METHOD</string>
     <string name="str_you_have_no_payment_method">You have no payment methods on file</string>
@@ -1314,9 +1314,8 @@
     <string name="name_must_not_contain_hypen_more_than_once">Name must not contain hypen more than once!</string>
     <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be 50 characters or fewer</string>
     <string name="password_must_not_have_special_characters">Password must not have special characters!</string>
-    <string name="profile_mobile_number">Profile mobile number</string>
-    <string name="profile_telephone_number">Profile telephone number</string>
-    <string name="profile_phone_number">Profile phone number</string>
+    <string name="profile_mobile_number">Profile Mobile Number</string>
+    <string name="profile_phone_number">Profile Phone Number</string>
     <string name="would_you_like_to_opt_in_to_two_step_verification">Would you like to opt in to two-step verification?</string>
     <string name="this_will_make_access_to_your_account_more_secure">This will make access to your account more secure.</string>
     <string name="two_factor_verification">Two Factor Verification</string>
@@ -1415,7 +1414,7 @@
     <string name="confirm_your_password">Confirm your password</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="transactions">Transactions</string>
-    <string name="check_for_previous_crossings">Check for previous crossings</string>
+    <string name="check_for_previous_crossings">Check Previous Crossing Details</string>
     <string name="paid_for_please_note">After you’ve made a one-off payment, you can check which crossings you’ve paid for. Please note it can take up to one day for your payment to be matched to crossings</string>
     <string name="for_example_hd542321725_or_1_898008009">For example, HD542321725 or 1–898008009</string>
     <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
@@ -1488,7 +1487,7 @@
     <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
     <string name="str_terms_conditions">Terms &amp; Conditions</string>
     <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
-    <string name="str_third_party_software">Third party software</string>
+    <string name="str_third_party_software">Third Party Software</string>
     <string name="str_dart_charge_contact_centre">Dart Charge contact centre</string>
     <string name="str_contact_dart_charge_team">Contact the Dart Charge team</string>
     <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
@@ -1584,9 +1583,13 @@
     <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="str_using_this_mobile_app"><ul><li>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></li>\n<li>pay or setup an account <a href="https://pay-dartford-crossing-charge.service.gov.uk/forms-and-guidance">by post</a></li>\n<li>pay or setup an account by phoning the Dart Charge contact centre</li></ul></string>
-    <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge. Or you can:</string>
-    <string name="about_this_service">About this Service</string>
+    <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge.</string>
+    <string name="str_or_you_can">Or you can:</string>
+    <string name="about_this_service">About This Service</string>
+    <string name="str_other_ways_topay">Other Ways To Pay</string>
     <string name="charges_and_fines">Charges and Fines</string>
+    <string name="str_privacy_policy">Privacy Policy</string>
+    <string name="str_payg_terms_conditions">PAYG Terms &amp; Conditions</string>
     <string name="enquiry_status">Enquiry Status</string>
     <string name="str_no_priority_notifications">There are no priority notifications to view</string>
     <string name="str_no_standard_notifications">There are no standard notifications to view</string>
@@ -1616,9 +1619,9 @@
     <string name="str_buy_crossings_for_vehicle">BUY CROSSINGS FOR THIS VEHICLE</string>
     <string name="top_up_success">Top Up Success</string>
     <string name="email_address_must_be_8_characters_or_more">Email address must be 8 characters or more</string>
-    <string name="profile_email_address">Profile email address</string>
+    <string name="profile_email_address">Profile Email Address</string>
     <string name="crossing_details">Crossing Details</string>
-    <string name="profile_password">Profile password</string>
+    <string name="profile_password">Profile Password</string>
     <string name="mobile_app">Mobile App</string>
     <string name="no_recent_crossings_nor_payments">No recent crossings\nor payments.</string>
     <string name="str_rooted_device" >This app can not run on a rooted device.</string>

@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.data.model.notification.NotificationModel
 import com.conduent.nationalhighways.databinding.FragmentNotificationBinding
 import com.conduent.nationalhighways.listener.FilterDialogListener
 import com.conduent.nationalhighways.listener.NotificationItemClick
+import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationAdapterNew
@@ -31,13 +32,14 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), FilterDialogListener,
-    View.OnClickListener, NotificationItemClick {
+    View.OnClickListener, NotificationItemClick, BackPressListener {
 
     private var mAdapter: NotificationAdapterNew? = null
     private var isPrioritySelected: Boolean = true
@@ -101,8 +103,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     }
 
     override fun init() {
-        binding.feedbackToImproveMb.setMovementMethod(LinkMovementMethod.getInstance())
-        binding.feedbackToImproveNoMb.setMovementMethod(LinkMovementMethod.getInstance())
+        binding.feedbackToImproveMb.movementMethod = LinkMovementMethod.getInstance()
+        binding.feedbackToImproveNoMb.movementMethod = LinkMovementMethod.getInstance()
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -111,7 +113,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         selectPriority()
         setClickListeners()
         initAdapter(priority_notifications)
-
+        setBackPressListener(this)
 //        binding.filterTxt.setOnClickListener {
 //            FilterDialog.newInstance(
 //                getString(R.string.str_sort),
@@ -242,15 +244,15 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         } else {
             var areAllItemsSelected = true
             if (isPrioritySelected) {
-                for (i in 0..(priority_notifications!!.size - 1)) {
-                    if (!priority_notifications!!.get(i)!!.isSelectListItem) {
+                for (i in 0..(priority_notifications.size - 1)) {
+                    if (!priority_notifications.get(i).isSelectListItem) {
                         areAllItemsSelected = false
                         break
                     }
                 }
             } else {
-                for (i in 0..(standard_notifications!!.size - 1)) {
-                    if (!standard_notifications!!.get(i)!!.isSelectListItem) {
+                for (i in 0..(standard_notifications.size - 1)) {
+                    if (!standard_notifications.get(i).isSelectListItem) {
                         areAllItemsSelected = false
                         break
                     }
@@ -273,17 +275,17 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         when (resource) {
             is Resource.Success -> {
                 if (resource.data?.messageList.isNullOrEmpty() == false) {
-                    priority_notifications?.clear()
-                    standard_notifications?.clear()
+                    priority_notifications.clear()
+                    standard_notifications.clear()
                     resource.data?.messageList?.forEach {
                         if (it?.isDeleted.equals("Y")) {
 
                         } else {
                             if (it?.category.equals(Constants.PRIORITY)) {
-                                priority_notifications?.add(it!!)
+                                priority_notifications.add(it!!)
                             }
                             if (it?.category.equals(Constants.STANDARD)) {
-                                standard_notifications?.add(it!!)
+                                standard_notifications.add(it!!)
                             }
                         }
                     }
@@ -304,11 +306,15 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
-                } else {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                } else if(resource.errorModel?.errorCode.toString().equals("1220")){
                     checkData()
+                }else{
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
 
@@ -342,15 +348,15 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     }
 
     private fun handleDismissAlertResponse(resource: Resource<String?>?) {
-        if(numberOfAlertsTOBeCleared>0){
+        if (numberOfAlertsTOBeCleared > 0) {
             numberOfAlertsTOBeCleared--
         }
-        if(numberOfAlertsTOBeCleared==0){
+        if (numberOfAlertsTOBeCleared == 0) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            binding.btnClearNotification.isEnabled=true
-            binding.btnClearNotification.isFocusable=true
+            binding.btnClearNotification.isEnabled = true
+            binding.btnClearNotification.isFocusable = true
         }
         when (resource) {
             is Resource.Success -> {
@@ -393,6 +399,12 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     }
 
     override fun onClick(notificationModel: NotificationModel, pos: Int) {
+    }
+
+    override fun onBackButtonPressed() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).backPressLogic()
+        }
     }
 
 

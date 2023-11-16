@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav.account
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
+import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
@@ -37,7 +39,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickListener,
-    OnLogOutListener {
+    OnLogOutListener, BackPressListener {
 
     private val viewModel: NominatedContactListViewModel by viewModels()
     private val raise_viewModel: RaiseNewEnquiryViewModel by viewModels()
@@ -62,16 +64,15 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         setPaymentsVisibility()
         initUI()
         binding.contactUs.visible()
-
+        setBackPressListener(this)
     }
 
     private fun initUI() {
         title = requireActivity().findViewById(R.id.title_txt)
         binding.run {
-            if(HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.EXEMPT_ACCOUNT)){
+            if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.EXEMPT_ACCOUNT)) {
                 paymentManagement.gone()
-            }
-            else{
+            } else {
                 paymentManagement.visible()
             }
             if (isSecondaryUser)
@@ -113,7 +114,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 valueTitle6.alpha = 1f
                 iconArrow6.alpha = 1f
             }
-            valueName.setText(Utils.capitalizeString(sessionManager.fetchFirstName()) + " " + Utils.capitalizeString(sessionManager.fetchLastName()))
+            valueName.text =
+                Utils.capitalizeString(sessionManager.fetchFirstName()) + " " + Utils.capitalizeString(
+                    sessionManager.fetchLastName()
+                )
 
         }
 
@@ -251,6 +255,15 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("TAG", "onDestroy: ")
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+
+    }
+
     private fun handleContactListResponse(status: Resource<NominatedContactRes?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -280,7 +293,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status?.errorMsg)
+                ErrorUtil.showError(binding.root, status.errorMsg)
             }
 
             else -> {
@@ -310,6 +323,12 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
 
 
+    }
+
+    override fun onBackButtonPressed() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).backPressLogic()
+        }
     }
 
 

@@ -123,8 +123,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     override fun init() {
         WebView.setWebContentsDebuggingEnabled(true)
         binding.webView.settings.javaScriptEnabled = true
-
-
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
 

@@ -35,6 +35,18 @@
             android:textColorLink="@color/btn_color"
             android:textSize="@dimen/_16sp" />
         <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/tv_heading1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_26dp"
+            android:layout_marginTop="@dimen/_14dp"
+            android:lineSpacingExtra="@dimen/_5dp"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/str_or_you_can"
+            android:textColor="@color/black"
+            android:textColorLink="@color/btn_color"
+            android:textSize="@dimen/_16sp" />
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/tv_guideline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

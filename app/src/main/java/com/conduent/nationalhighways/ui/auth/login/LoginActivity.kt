@@ -35,7 +35,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.*
@@ -47,8 +46,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener,
-    OnRetryClickListener {
+class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener {
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
     private val viewModel: LoginViewModel by viewModels()
@@ -77,10 +75,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             observe(viewModel.login, ::handleLoginResponse)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
-        }
-
-        viewModel.retryEvent.observe(this) {
-//            Utils.displayRetryDialog(this, this, BuildConfig.LOGIN)
         }
 
 
@@ -616,10 +610,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         startActivity(intent)
     }
 
-
-    override fun onRetryClick(apiUrl: String) {
-
-    }
 
 }
 

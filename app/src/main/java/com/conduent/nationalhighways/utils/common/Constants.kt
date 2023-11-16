@@ -1,7 +1,5 @@
 package com.conduent.nationalhighways.utils.common
 
-import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TwoStepVerificationFragment
-
 object Constants {
 
 

@@ -115,7 +115,6 @@
                 android:id="@+id/card_indicator_account_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/green_status"
                 app:cardCornerRadius="@dimen/_5dp"
                 android:layout_marginTop="@dimen/_12dp"
                 app:layout_constraintEnd_toEndOf="@id/tv_available_balance"
