@@ -23,6 +23,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.NotificationManagerCompat
+import com.codemybrainsout.ratingdialog.RatingDialog
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
@@ -1145,36 +1146,36 @@ object Utils {
 
 
     private fun ratingDialog(activity: Activity) {
-//         val ratingDialog: RatingDialog = RatingDialog.Builder(activity)
-//             .threshold(3)
-//             .session(1)
-//             .onRatingBarFormSubmit { feedback -> Log.i("TAG", "onRatingBarFormSubmit: $feedback") }
-//             .build()
-//
-//         ratingDialog.show()
+       /*  val ratingDialog: RatingDialog = RatingDialog.Builder(activity)
+             .threshold(3)
+             .session(1)
+             .onRatingBarFormSubmit { feedback -> Log.i("TAG", "onRatingBarFormSubmit: $feedback") }
+             .build()
+
+         ratingDialog.show()*/
 
 
-//        val ratingDialog = RatingDialog.Builder(this)
-//            .icon(R.mipmap.ic_launcher)
-//            .session(3)
-//            .threshold(3)
-//            .title(text = R.string.rating_dialog_experience, textColor = R.color.primaryTextColor)
-//            .positiveButton(text = R.string.rating_dialog_maybe_later, textColor = R.color.colorPrimary, background = R.drawable.button_selector_positive)
-//            .negativeButton(text = R.string.rating_dialog_never, textColor = R.color.secondaryTextColor)
-//            .formTitle(R.string.submit_feedback)
-//            .formHint(R.string.rating_dialog_suggestions)
-//            .feedbackTextColor(R.color.feedbackTextColor)
-//            .formSubmitText(R.string.rating_dialog_submit)
-//            .formCancelText(R.string.rating_dialog_cancel)
-//            .ratingBarColor(R.color.ratingBarColor)
-//            .playstoreUrl("https://play.google.com/store/apps/details?id=com.conduent.nationalhighways")
-//            .onThresholdCleared { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdCleared: $rating $thresholdCleared") }
-//            .onThresholdFailed { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdFailed: $rating $thresholdCleared") }
-//            .onRatingChanged { rating, thresholdCleared -> Log.e("TAG", "onRatingChanged: $rating $thresholdCleared") }
-//            .onRatingBarFormSubmit { feedback -> Log.e("TAG", "onRatingBarFormSubmit: $feedback") }
-//            .build()
+        val ratingDialog = RatingDialog.Builder(activity)
+            .icon(R.mipmap.ic_launcher)
+            .session(3)
+            .threshold(3)
+            .title(text = R.string.rating_dialog_experience, textColor = R.color.primaryTextColor)
+            .positiveButton(text = R.string.rating_dialog_maybe_later, textColor = R.color.colorPrimary, background = R.drawable.button_selector_positive)
+            .negativeButton(text = R.string.rating_dialog_never, textColor = R.color.secondaryTextColor)
+            .formTitle(R.string.submit_feedback)
+            .formHint(R.string.rating_dialog_suggestions)
+            .feedbackTextColor(R.color.feedbackTextColor)
+            .formSubmitText(R.string.rating_dialog_submit)
+            .formCancelText(R.string.rating_dialog_cancel)
+            .ratingBarColor(R.color.ratingBarColor)
+            .playstoreUrl("https://play.google.com/store/apps/details?id=com.conduent.nationalhighways")
+            .onThresholdCleared { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdCleared: $rating $thresholdCleared") }
+            .onThresholdFailed { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdFailed: $rating $thresholdCleared") }
+            .onRatingChanged { rating, thresholdCleared -> Log.e("TAG", "onRatingChanged: $rating $thresholdCleared") }
+            .onRatingBarFormSubmit { feedback -> Log.e("TAG", "onRatingBarFormSubmit: $feedback") }
+            .build()
 
-//        ratingDialog.show()
+        ratingDialog.show()
     }
 
     fun vibrate(activity: Activity) {
