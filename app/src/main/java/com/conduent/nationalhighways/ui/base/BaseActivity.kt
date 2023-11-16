@@ -58,7 +58,7 @@ abstract class BaseActivity<T> : AppCompatActivity() {
 
     }
 
-    /* override fun onWindowFocusChanged(hasFocus: Boolean) {
+     override fun onWindowFocusChanged(hasFocus: Boolean) {
          super.onWindowFocusChanged(hasFocus)
          if (hasFocus) {
              // allow screenshots when activity is focused
@@ -70,7 +70,7 @@ abstract class BaseActivity<T> : AppCompatActivity() {
                  WindowManager.LayoutParams.FLAG_SECURE
              )
          }
-     }*/
+     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

@@ -115,7 +115,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
         setupWebView()
-        if (navFlowCall.equals(Constants.PAYMENT_TOP_UP) && paymentListSize == 0) {
+        if (navFlowCall == Constants.PAYMENT_TOP_UP && paymentListSize == 0) {
             HomeActivityMain.setTitle("Top Up New Payment Method")
         }
     }
@@ -123,6 +123,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     override fun init() {
         WebView.setWebContentsDebuggingEnabled(true)
         binding.webView.settings.javaScriptEnabled = true
+
+
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
 

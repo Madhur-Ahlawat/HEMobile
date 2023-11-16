@@ -41,7 +41,7 @@ object ApiModule {
         context: Context,
         retryListener: RetryCallback,
     ): HeaderInterceptor {
-        return HeaderInterceptor(sessionManager, context, retryListener)
+        return HeaderInterceptor(sessionManager, context)
     }
 
 

@@ -340,13 +340,13 @@ object Constants {
     const val SERVER_ERROR = "server_error"
     const val API_STATE = "API_STATE"
     const val READ_STORAGE_REQUEST_CODE: Int = 1001
-const val TIME_OUT_SEC=30L
+    const val TIME_OUT_SEC = 30L
 
 
     //Notification Types
-    const val GEO_FENCE_NOTIFICATION="geofenceNotification"
+    const val GEO_FENCE_NOTIFICATION = "geofenceNotification"
 
 
     //DateFormats
-    const val dd_mm_yyyy_hh_mm_ss="dd/MM/yyyy HH:mm:ss"
+    const val dd_mm_yyyy_hh_mm_ss = "dd/MM/yyyy HH:mm:ss"
 }

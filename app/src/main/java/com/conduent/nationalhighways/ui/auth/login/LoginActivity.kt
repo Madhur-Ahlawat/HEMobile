@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -80,9 +79,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
         }
 
-        viewModel.retryEvent.observe(this, androidx.lifecycle.Observer {
+        viewModel.retryEvent.observe(this) {
 //            Utils.displayRetryDialog(this, this, BuildConfig.LOGIN)
-        })
+        }
 
 
     }
@@ -116,7 +115,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 } else {
                     startNewActivityByClearingStack(HomeActivityMain::class.java) {
                         putString(Constants.NAV_FLOW_FROM, from)
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS,true)
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                     }
 
                 }
@@ -217,71 +216,82 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
 
-    private fun isEnable() {
-        emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
-            if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
-                binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_8_characters_or_more))
-                false
-            } else {
-                if (binding.edtEmail.editText.getText().toString().length > 100) {
-                    binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
+    private fun isEnable(b: Boolean) {
+        if (!b){
+            emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
+                if (binding.edtEmail.editText.text.toString().trim().length < 8) {
+                    binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_8_characters_or_more))
                     false
                 } else {
-                    if (!Utils.isLastCharOfStringACharacter(
-                            binding.edtEmail.editText.getText().toString().trim()
-                        ) || Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '@'
-                        ) > 1 || binding.edtEmail.editText.getText().toString().trim().contains(
-                            Utils.TWO_OR_MORE_DOTS
-                        ) || (binding.edtEmail.editText.getText().toString().trim().last()
-                            .toString() == "." || binding.edtEmail.editText.text
-                            .toString().first().toString() == ".")
-                        || (binding.edtEmail.editText.getText().toString().trim().last()
-                            .toString() == "-" || binding.edtEmail.editText.getText().toString()
-                            .first()
-                            .toString() == "-")
-                        || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '.'
-                        ) < 1) || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '@'
-                        ) < 1)
-                    ) {
-                        binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                    if (binding.edtEmail.editText.text.toString().length > 100) {
+                        binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                         false
                     } else {
-                        if (Utils.hasSpecialCharacters(
-                                binding.edtEmail.editText.getText().toString().trim(),
-                                Utils.splCharEmailCode
-                            )
+                        if (!Utils.isLastCharOfStringACharacter(
+                                binding.edtEmail.editText.text.toString().trim()
+                            ) || Utils.countOccurenceOfChar(
+                                binding.edtEmail.editText.text.toString().trim(), '@'
+                            ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
+                                Utils.TWO_OR_MORE_DOTS
+                            ) || (binding.edtEmail.editText.text.toString().trim().last()
+                                .toString() == "." || binding.edtEmail.editText.text
+                                .toString().first().toString() == ".")
+                            || (binding.edtEmail.editText.text.toString().trim().last()
+                                .toString() == "-" || binding.edtEmail.editText.text.toString()
+                                .first()
+                                .toString() == "-")
+                            || (Utils.countOccurenceOfChar(
+                                binding.edtEmail.editText.text.toString().trim(), '.'
+                            ) < 1) || (Utils.countOccurenceOfChar(
+                                binding.edtEmail.editText.text.toString().trim(), '@'
+                            ) < 1)
                         ) {
-                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                                Utils.LOWER_CASE,
-                                binding.edtEmail.getText().toString().trim()
-                            )
-                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                                Utils.UPPER_CASE,
-                                binding.edtEmail.getText().toString().trim()
-                            )
-                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                                Utils.DIGITS,
-                                binding.edtEmail.getText().toString().trim()
-                            )
-                            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
-                                Utils.ALLOWED_CHARS_EMAIL,
-                                binding.edtEmail.getText().toString().trim()
-                            )
-                            commaSeparatedString =
-                                Utils.makeCommaSeperatedStringForPassword(
-                                    Utils.removeAllCharacters(
-                                        Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
-                                    )
+                            binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                            false
+                        } else {
+                            if (Utils.hasSpecialCharacters(
+                                    binding.edtEmail.editText.text.toString().trim(),
+                                    Utils.splCharEmailCode
                                 )
-                            if (filterTextForSpecialChars!!.isNotEmpty()) {
-                                binding.edtEmail.setErrorText("Email address must not include $commaSeparatedString")
-                                false
-                            } else if (!Patterns.EMAIL_ADDRESS.matcher(
-                                    binding.edtEmail.getText().toString()
-                                ).matches()
+                            ) {
+                                filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                    Utils.LOWER_CASE,
+                                    binding.edtEmail.getText().toString().trim()
+                                )
+                                filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                    Utils.UPPER_CASE,
+                                    binding.edtEmail.getText().toString().trim()
+                                )
+                                filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                    Utils.DIGITS,
+                                    binding.edtEmail.getText().toString().trim()
+                                )
+                                filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                                    Utils.ALLOWED_CHARS_EMAIL,
+                                    binding.edtEmail.getText().toString().trim()
+                                )
+                                commaSeparatedString =
+                                    Utils.makeCommaSeperatedStringForPassword(
+                                        Utils.removeAllCharacters(
+                                            Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
+                                        )
+                                    )
+                                if (filterTextForSpecialChars!!.isNotEmpty()) {
+                                    binding.edtEmail.setErrorText("Email address must not include $commaSeparatedString")
+                                    false
+                                } else if (!Patterns.EMAIL_ADDRESS.matcher(
+                                        binding.edtEmail.getText().toString()
+                                    ).matches()
+                                ) {
+                                    binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
+                                    false
+                                } else {
+                                    binding.edtEmail.removeError()
+                                    true
+                                }
+                            } else if (Utils.countOccurenceOfChar(
+                                    binding.edtEmail.editText.text.toString().trim(), '@'
+                                ) !in (1..1)
                             ) {
                                 binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                                 false
@@ -289,23 +299,15 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                                 binding.edtEmail.removeError()
                                 true
                             }
-                        } else if (Utils.countOccurenceOfChar(
-                                binding.edtEmail.editText.text.toString().trim(), '@'
-                            ) !in (1..1)
-                        ) {
-                            binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
-                            false
-                        } else {
-                            binding.edtEmail.removeError()
-                            true
                         }
                     }
                 }
+            } else {
+                binding.edtEmail.removeError()
+                false
             }
-        } else {
-            binding.edtEmail.removeError()
-            false
         }
+
         checkButton()
     }
 
@@ -313,7 +315,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
         binding.apply {
             tvForgotPassword.setOnClickListener(this@LoginActivity)
-            edtEmail.editText.addTextChangedListener { isEnable() }
+            edtEmail.editText.addTextChangedListener { removeError() }
+            binding.edtEmail.editText.setOnFocusChangeListener { _, b -> isEnable(b) }
+
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginActivity)
             backButton.setOnClickListener(this@LoginActivity)
@@ -324,6 +328,11 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             fingerPrintLogin()
         }
 
+
+    }
+
+    private fun removeError() {
+        binding.edtEmail.removeError()
 
     }
 
@@ -535,25 +544,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
     }
 
-    private fun emailCheck() {
-        emailCheck =
-            if (!Patterns.EMAIL_ADDRESS.matcher(binding.edtEmail.getText().toString()).matches()) {
-                binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
-                false
-
-
-            } else {
-                binding.edtEmail.removeError()
-                true
-
-
-            }
-
-        checkButton()
-
-
-    }
-
 
     private fun passwordCheck() {
         passwordCheck = binding.edtPwd.getText().toString().trim().length >= 8
@@ -622,21 +612,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     private fun onBiometricSuccessful() {
         val intent = Intent(this, HomeActivityMain::class.java)
-        intent.putExtra(Constants.FIRST_TYM_REDIRECTS,true)
+        intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
         startActivity(intent)
     }
 
 
     override fun onRetryClick(apiUrl: String) {
-        if ((viewModel.noOfApiTries.value ?: 0) <= 4) {
-            /*
-                        if (apiUrl.contains(BuildConfig.LOGIN)) {
-                            binding.btnLogin.performClick()
-                        }
-            */
-        } else {
 
-        }
     }
 
 }

@@ -1,30 +1,19 @@
 package com.conduent.nationalhighways.ui.loader
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.AsyncTask
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import android.widget.FrameLayout
 import com.conduent.nationalhighways.databinding.DialogRetryBinding
-import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
-import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.extn.showToast
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.Interceptor
 import okhttp3.Request
 
 
@@ -37,7 +26,6 @@ interface RetryCallback {
     }
 
     class RetryListenerImpl : RetryCallback {
-        private lateinit var loaderLayout: FrameLayout
 
         override fun onTimeOut(
             request: Request,
@@ -48,19 +36,17 @@ interface RetryCallback {
             runOnUiThread {
                 BaseApplication.CurrentContext?.let {
 
-                    Log.e("TAG", "onRetryClick:dalog " + it)
-                    showRetryDialog(it, request,dispatchRetry)
+                    showRetryDialog(it, dispatchRetry)
                 }
             }
         }
 
         private fun showRetryDialog(
             context: Context,
-            request: Request,
             dispatchRetry: () -> Unit
         ) {
             if (context is Activity && !context.isFinishing) {
-                Log.e("TAG", "showRetryDialog:-context-> "+context)
+                Log.e("TAG", "showRetryDialog:-context-> $context")
 
 
                 val dialog = Dialog(context)
