@@ -60,7 +60,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                 when (destination.id) {
 
                     R.id.guidanceDocumentsFragment -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_guidance_and_documents)
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_dart_charge_forms_guidance)
                     }
 
                     R.id.aboutthisserviceFragment -> {
@@ -80,27 +80,27 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                     }
 
                     R.id.fragmentTermsAndConditions -> {
-                        binding.toolBarLyt.titleTxt.text = "Dart Charge Terms and Conditions"
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_dart_charge_forms_guidance)
                     }
 
                     R.id.generalTermsAndConditionsFragment -> {
-                        binding.toolBarLyt.titleTxt.text = "Terms & Conditions"
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_terms_conditions)
                     }
 
                     R.id.paygtermsandconditions -> {
-                        binding.toolBarLyt.titleTxt.text = "PAYG Terms & Conditions"
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_payg_terms_conditions)
                     }
 
                     R.id.privacyPolicyFragment -> {
-                        binding.toolBarLyt.titleTxt.text = "Privacy Policy"
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_privacy_policy)
                     }
 
                     R.id.otherwaystopayFragment -> {
-                        binding.toolBarLyt.titleTxt.text = "Other ways to pay"
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_other_ways_topay)
                     }
 
                     R.id.thirdPartySoftwareFragment -> {
-                        binding.toolBarLyt.titleTxt.text = "Third party software"
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_third_party_software)
                     }
 
                     R.id.enquiryStatusFragment -> {

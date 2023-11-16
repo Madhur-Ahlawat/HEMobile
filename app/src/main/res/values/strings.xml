@@ -893,7 +893,7 @@
     <string name="str_free_text_field_can_be_used_to_distingush">The free text field can be used to help you distinguish different vehicles associated with your account</string>
     <string name="str_vehicle_added_successfully">Vehicle added successfully</string>
     <string name="str_how_can_i_make">How can I make accessibility requests?</string>
-    <string name="str_guidance_and_documents">Guidance and Documents</string>
+    <string name="str_dart_charge_forms_guidance">Dart Charge Forms and Guidance</string>
     <string name="str_guidance_and_documents_answers">Scheme user information is available in braille, large print and alternative languages. This is available on request by using the Dart Charge Online enquiries or through the Dart Charge contact centre.</string>
     <string name="no_file_chosen">No file chosen</string>
     <string name="select">Select</string>
@@ -1488,7 +1488,7 @@
     <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
     <string name="str_terms_conditions">Terms &amp; Conditions</string>
     <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
-    <string name="str_third_party_software">Third party software</string>
+    <string name="str_third_party_software">Third Party Software</string>
     <string name="str_dart_charge_contact_centre">Dart Charge contact centre</string>
     <string name="str_contact_dart_charge_team">Contact the Dart Charge team</string>
     <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
@@ -1585,8 +1585,11 @@
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="str_using_this_mobile_app"><ul><li>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></li>\n<li>pay or setup an account <a href="https://pay-dartford-crossing-charge.service.gov.uk/forms-and-guidance">by post</a></li>\n<li>pay or setup an account by phoning the Dart Charge contact centre</li></ul></string>
     <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge. Or you can:</string>
-    <string name="about_this_service">About this Service</string>
+    <string name="about_this_service">About This Service</string>
+    <string name="str_other_ways_topay">Other Ways To Pay</string>
     <string name="charges_and_fines">Charges and Fines</string>
+    <string name="str_privacy_policy">Privacy Policy</string>
+    <string name="str_payg_terms_conditions">PAYG Terms &amp; Conditions</string>
     <string name="enquiry_status">Enquiry Status</string>
     <string name="str_no_priority_notifications">There are no priority notifications to view</string>
     <string name="str_no_standard_notifications">There are no standard notifications to view</string>
