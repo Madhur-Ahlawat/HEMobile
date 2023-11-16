@@ -26,27 +26,10 @@ class LoginViewModel @Inject constructor(
     val errorManager: ErrorManager
 ) : ViewModel() {
 
-    val retryEvent = MutableLiveData<Unit>()
-    val noOfApiTries = MutableLiveData<Int>()
-
-
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _login = MutableLiveData<Resource<LoginResponse?>?>()
     val login: LiveData<Resource<LoginResponse?>?> get() = _login
 
-
-//    /** Error handling as UI **/
-//    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-//    private val showSnackBarPrivate = MutableLiveData<SingleEvent<Any>>()
-//    val showSnackBar: LiveData<SingleEvent<Any>> get() = showSnackBarPrivate
-//
-//    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-//    private val showToastPrivate = MutableLiveData<SingleEvent<Any>>()
-//    val showToast: LiveData<SingleEvent<Any>> get() = showToastPrivate
-
-    init {
-        noOfApiTries.value = 0
-    }
 
     fun login(model: LoginModel?) {
         viewModelScope.launch {
@@ -54,14 +37,6 @@ class LoginViewModel @Inject constructor(
                 _login.postValue(success(repository.login(model), errorManager))
             } catch (e: Exception) {
                 _login.postValue(failure(e))
-
-                if (e is SocketTimeoutException) {
-                    noOfApiTries.value = noOfApiTries.value!! + 1
-                    // Handle timeout exception here.
-                    retryEvent.postValue(Unit) // Trigger the retry popup.
-                } else {
-                    // Handle other exceptions.
-                }
             }
         }
     }

@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -36,7 +35,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.extn.*
@@ -48,8 +46,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener,
-    OnRetryClickListener {
+class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickListener {
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
     private val viewModel: LoginViewModel by viewModels()
@@ -79,10 +76,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
         }
-
-        viewModel.retryEvent.observe(this, androidx.lifecycle.Observer {
-//            Utils.displayRetryDialog(this, this, BuildConfig.LOGIN)
-        })
 
 
     }
@@ -116,7 +109,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 } else {
                     startNewActivityByClearingStack(HomeActivityMain::class.java) {
                         putString(Constants.NAV_FLOW_FROM, from)
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS,true)
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                     }
 
                 }
@@ -219,38 +212,38 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     private fun isEnable() {
         emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
-            if (binding.edtEmail.editText.getText().toString().trim().length < 8) {
+            if (binding.edtEmail.editText.text.toString().trim().length < 8) {
                 binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_8_characters_or_more))
                 false
             } else {
-                if (binding.edtEmail.editText.getText().toString().length > 100) {
+                if (binding.edtEmail.editText.text.toString().length > 100) {
                     binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                     false
                 } else {
                     if (!Utils.isLastCharOfStringACharacter(
-                            binding.edtEmail.editText.getText().toString().trim()
+                            binding.edtEmail.editText.text.toString().trim()
                         ) || Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '@'
-                        ) > 1 || binding.edtEmail.editText.getText().toString().trim().contains(
+                            binding.edtEmail.editText.text.toString().trim(), '@'
+                        ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
                             Utils.TWO_OR_MORE_DOTS
-                        ) || (binding.edtEmail.editText.getText().toString().trim().last()
+                        ) || (binding.edtEmail.editText.text.toString().trim().last()
                             .toString() == "." || binding.edtEmail.editText.text
                             .toString().first().toString() == ".")
-                        || (binding.edtEmail.editText.getText().toString().trim().last()
-                            .toString() == "-" || binding.edtEmail.editText.getText().toString()
+                        || (binding.edtEmail.editText.text.toString().trim().last()
+                            .toString() == "-" || binding.edtEmail.editText.text.toString()
                             .first()
                             .toString() == "-")
                         || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '.'
+                            binding.edtEmail.editText.text.toString().trim(), '.'
                         ) < 1) || (Utils.countOccurenceOfChar(
-                            binding.edtEmail.editText.getText().toString().trim(), '@'
+                            binding.edtEmail.editText.text.toString().trim(), '@'
                         ) < 1)
                     ) {
                         binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                         false
                     } else {
                         if (Utils.hasSpecialCharacters(
-                                binding.edtEmail.editText.getText().toString().trim(),
+                                binding.edtEmail.editText.text.toString().trim(),
                                 Utils.splCharEmailCode
                             )
                         ) {
@@ -622,22 +615,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     private fun onBiometricSuccessful() {
         val intent = Intent(this, HomeActivityMain::class.java)
-        intent.putExtra(Constants.FIRST_TYM_REDIRECTS,true)
+        intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
         startActivity(intent)
     }
 
-
-    override fun onRetryClick(apiUrl: String) {
-        if ((viewModel.noOfApiTries.value ?: 0) <= 4) {
-            /*
-                        if (apiUrl.contains(BuildConfig.LOGIN)) {
-                            binding.btnLogin.performClick()
-                        }
-            */
-        } else {
-
-        }
-    }
 
 }
 

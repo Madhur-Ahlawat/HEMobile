@@ -9,7 +9,6 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/id_tool_bar_lyt"
-            layout="@layout/tool_bar_with_title_back"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:background="@color/white"
@@ -97,7 +96,7 @@
             android:background="@color/white"
             android:elevation="@dimen/_10sdp"
             android:orientation="horizontal"
-            app:active_color="@color/dark_blue_color"
+            app:active_color="@color/blue_color"
             app:animation_duration="300"
             app:item_padding="@dimen/_4sdp"
             app:item_text_size="@dimen/_10ssp"
@@ -106,7 +105,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_navigation"
             app:passive_color="@color/bottomPassiveColor"
-            app:pressed_color="@color/dark_blue_color"
+            app:pressed_color="@color/blue_color"
             app:scale_percent="5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

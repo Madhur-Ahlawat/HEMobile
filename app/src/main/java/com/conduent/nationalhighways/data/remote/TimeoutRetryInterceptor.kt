@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.data.remote
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -24,18 +25,21 @@ class TimeoutRetryInterceptor(
 
     var dispatchTimeout: (() -> Unit)? = null
     override fun intercept(chain: Interceptor.Chain): Response {
-
+//        Log.e("TAG", "intercept: request -> " + chain.request())
+        Log.e("TAG", "intercept: request url -> " + chain.request().url)
         var response: Response? = null // Declare the response variable
 
         try {
             response = chain.proceed(chain.request())
 
         } catch (e: Exception) {
-            BaseApplication.CurrentContext?.let { it1 -> Utils.showProgressBar(it1, false) }
-            dispatchTimeout = {
-                retryCall(chain.request(), retryListener, 0)
+            if (e.message.equals("timeout")) {
+                BaseApplication.CurrentContext?.let { it1 -> Utils.showProgressBar(it1, false) }
+                dispatchTimeout = {
+                    retryCall(chain.request(), retryListener, 0)
+                }
+                retryListener.onTimeOut(chain.request(), dispatchTimeout!!, 0)
             }
-            retryListener.onTimeOut(chain.request(), dispatchTimeout!!, 0)
         }
 
         return response ?: throw IOException("Response is null")

@@ -7,38 +7,31 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
-import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.AllTransactionsBinding
+import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.transactions.adapter.LoadMoreAdapter
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapter
-import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.Utils.sortTransactionsDateWiseDescending
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.isVisible
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
+class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), BackPressListener {
 
     private val countPerPage = 20
     private var noOfPages = 0
@@ -85,12 +78,12 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
             adapter = transactionsAdapter
         }
         getPaymentHistoryList(1)
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
             HomeActivityMain.setTitle(getString(R.string.transactions))
         }
         initLoaderDialog()
-
+        setBackPressListener(this)
     }
 
     override fun initCtrl() {
@@ -100,10 +93,12 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
     override fun observer() {
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
     }
+
     private fun initLoaderDialog() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
         if (loader?.isVisible == true) {
@@ -120,21 +115,21 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
                 }
                 resource.data?.transactionList?.transaction?.let {
                     if (it.isNotEmpty()) {
-                        binding?.apply {
+                        binding.apply {
                             ivNoTransactions.gone()
                             tvNoTransactions.gone()
                         }
                         binding.rvRecenrTransactions.visible()
-                        paymentHistoryListData?.clear()
+                        paymentHistoryListData.clear()
                         paymentHistoryHashMap.clear()
-                        paymentHistoryListData?.addAll(it)
+                        paymentHistoryListData.addAll(it)
                         paymentHistoryListData =
                             sortTransactionsDateWiseDescending(paymentHistoryListData).toMutableList()
                         paymentHistoryDatesList.clear()
                         getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
                     } else {
-                        binding?.apply {
+                        binding.apply {
                             rvRecenrTransactions.gone()
                             ivNoTransactions.visible()
                             tvNoTransactions.visible()
@@ -142,11 +137,12 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
 //                        binding.paginationLayout.gone()
                     }
                 } ?: run {
-                    binding?.apply {
+                    binding.apply {
                         rvRecenrTransactions.gone()
                         ivNoTransactions.visible()
                         tvNoTransactions.visible()
-                    }                }
+                    }
+                }
             }
 
             is Resource.DataError -> {
@@ -195,9 +191,15 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>() {
             }
             var transactionsListTemp =
                 paymentHistoryHashMap.get(it.transactionDate) ?: mutableListOf()
-            transactionsListTemp?.add(it)
+            transactionsListTemp.add(it)
             paymentHistoryHashMap.remove(it.transactionDate!!)
-            paymentHistoryHashMap.put(it.transactionDate!!, transactionsListTemp!!)
+            paymentHistoryHashMap.put(it.transactionDate, transactionsListTemp)
+        }
+    }
+
+    override fun onBackButtonPressed() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).backPressLogic()
         }
     }
 }

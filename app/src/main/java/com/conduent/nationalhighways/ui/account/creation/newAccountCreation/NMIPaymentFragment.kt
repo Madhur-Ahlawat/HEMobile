@@ -116,7 +116,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
         setupWebView()
         if (navFlowCall.equals(Constants.PAYMENT_TOP_UP) && paymentListSize == 0) {
-            HomeActivityMain.setTitle("Top Up New Payment Method")
+            HomeActivityMain.setTitle(resources.getString(R.string.str_top_up))
         }
     }
 
