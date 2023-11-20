@@ -4,7 +4,6 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelResponse
 import com.conduent.nationalhighways.databinding.FragmentMakeOneOffPaymentSuccessfullyBinding
@@ -12,9 +11,11 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.currentTime
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import javax.inject.Inject
 
 
 class MakeOneOffPaymentSuccessfullyFragment :
@@ -22,6 +23,8 @@ class MakeOneOffPaymentSuccessfullyFragment :
     private var oneOfPaymentResponse: OneOfPaymentModelResponse? = null
     private var amount: String = ""
 
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -30,6 +33,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
         FragmentMakeOneOffPaymentSuccessfullyBinding.inflate(inflater, container, false)
 
     override fun init() {
+        Utils.validationsToShowRatingDialog(requireActivity(),sessionManager)
         binding.createAccount.setOnClickListener(this)
         binding.backToMainMenu.setOnClickListener(this)
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()

@@ -71,7 +71,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 Constants.PAY_FOR_CROSSINGS -> {
                     binding.descTv.text = getString(
                         R.string.crossing_vehicle_exempt_detail_message,
-                        NewCreateAccountRequestModel.plateNumber
+                        NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
                     binding.inCorrectVehicleNumber.visible()
                     binding.descTv.visible()
@@ -83,7 +83,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 else -> {
                     binding.textMaximumVehicle.text = getString(
                         R.string.str_vehicle_exempt_detail_message,
-                        NewCreateAccountRequestModel.plateNumber
+                        NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
                     binding.cancelBtn.visibility = View.GONE
                     binding.btnContinue.text = getString(R.string.str_continue)
@@ -103,7 +103,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         getString(R.string.str_no_ruc_desc_pay_for_crossing)
                     binding.maximumVehicleAdded.text = getString(
                         R.string.str_vehicle_exempt_message,
-                        NewCreateAccountRequestModel.plateNumber
+                        NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
                 }
 
@@ -114,7 +114,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     binding.textMaximumVehicle.text = getString(R.string.str_no_ruc_desc)
                     binding.maximumVehicleAdded.text = getString(
                         R.string.str_vehicle_exempt_message,
-                        NewCreateAccountRequestModel.plateNumber
+                        NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
 
                 }
@@ -123,11 +123,11 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         if (NewCreateAccountRequestModel.isVehicleAlreadyAdded) {
             binding.textMaximumVehicle.text = getString(
                 R.string.str_vehicle_already_exist_desc,
-                NewCreateAccountRequestModel.plateNumber
+                NewCreateAccountRequestModel.plateNumber.uppercase()
             )
             binding.maximumVehicleAdded.text = getString(
                 R.string.str_vehicle_already_added_system,
-                NewCreateAccountRequestModel.plateNumber
+                NewCreateAccountRequestModel.plateNumber.uppercase()
             )
             binding.maximumVehicleAddedNote.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.VISIBLE
@@ -388,7 +388,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             )
         )
         if (sendPlateNumber) {
-            bundle.putString(Constants.PLATE_NUMBER, NewCreateAccountRequestModel.plateNumber)
+            bundle.putString(Constants.PLATE_NUMBER, NewCreateAccountRequestModel.plateNumber.uppercase())
         }
         return bundle
     }
@@ -396,7 +396,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
     private fun getBundle(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-        bundle.putString(Constants.PLATE_NUMBER, NewCreateAccountRequestModel.plateNumber)
+        bundle.putString(Constants.PLATE_NUMBER, NewCreateAccountRequestModel.plateNumber.uppercase())
 
         return bundle
     }

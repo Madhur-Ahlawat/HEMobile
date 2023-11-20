@@ -11,13 +11,18 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
+import javax.inject.Inject
 
 
 class AccountSuccessfullyCreationFragment :
     BaseFragment<FragmentAccountSuccessfullyCreationBinding>(), View.OnClickListener {
     private var createAccountResponseModel: CreateAccountResponseModel? = null
 
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -26,9 +31,8 @@ class AccountSuccessfullyCreationFragment :
         FragmentAccountSuccessfullyCreationBinding.inflate(inflater, container, false)
 
     override fun init() {
+        Utils.validationsToShowRatingDialog(requireActivity(),sessionManager)
         binding.signIn.setOnClickListener(this)
-
-
     }
 
     override fun initCtrl() {

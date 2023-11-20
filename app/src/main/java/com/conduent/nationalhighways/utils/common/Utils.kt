@@ -23,7 +23,6 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.NotificationManagerCompat
-import com.codemybrainsout.ratingdialog.RatingDialog
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
@@ -41,6 +40,7 @@ import com.conduent.nationalhighways.utils.extn.changeTextColor
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
+import com.conduent.nationalhighways.utils.rating.RatingDialog
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
 import okhttp3.Interceptor
@@ -1137,7 +1137,12 @@ object Utils {
             val minutes = differenceInMillis % (1000 * 60 * 60) / (1000 * 60)
             val seconds = differenceInMillis % (1000 * 60) / 1000
 
-            Triple(hours, minutes, seconds)
+            val millisecondsInMonth =
+                1000L * 60 * 60 * 24 * 30 // Approximation of a month in milliseconds
+            val months = differenceInMillis / millisecondsInMonth
+
+
+            Triple(hours, minutes, months)
         } catch (e: Exception) {
             Triple(0, 0, 0)
         }
@@ -1145,37 +1150,62 @@ object Utils {
     }
 
 
-    private fun ratingDialog(activity: Activity) {
-       /*  val ratingDialog: RatingDialog = RatingDialog.Builder(activity)
-             .threshold(3)
-             .session(1)
-             .onRatingBarFormSubmit { feedback -> Log.i("TAG", "onRatingBarFormSubmit: $feedback") }
-             .build()
+    fun validationsToShowRatingDialog(activity: Activity, sessionManager: SessionManager) {
+        if (sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME).isEmpty()) {
+            showRatingDialog(activity, sessionManager)
+        } else {
+            val lastTokenTime = Utils.convertStringToDate(
+                sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME),
+                Constants.dd_mm_yyyy_hh_mm_ss
+            )
+            if (lastTokenTime != null) {
+                val diff = Utils.getTimeDifference(lastTokenTime, Date())
+                if (diff.third >= 4) {
+                    showRatingDialog(activity, sessionManager)
 
-         ratingDialog.show()*/
+                }
+            }
+        }
 
+
+    }
+
+     fun showRatingDialog(activity: Activity, sessionManager: SessionManager) {
+        val dateFormat = SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
+        val dateString = dateFormat.format(Date())
+        sessionManager.saveStringData(SessionManager.LAST_RATING_TIME, dateString)
 
         val ratingDialog = RatingDialog.Builder(activity)
-            .icon(R.mipmap.ic_launcher)
-            .session(3)
-            .threshold(3)
-            .title(text = R.string.rating_dialog_experience, textColor = R.color.primaryTextColor)
-            .positiveButton(text = R.string.rating_dialog_maybe_later, textColor = R.color.colorPrimary, background = R.drawable.button_selector_positive)
-            .negativeButton(text = R.string.rating_dialog_never, textColor = R.color.secondaryTextColor)
-            .formTitle(R.string.submit_feedback)
-            .formHint(R.string.rating_dialog_suggestions)
-            .feedbackTextColor(R.color.feedbackTextColor)
-            .formSubmitText(R.string.rating_dialog_submit)
-            .formCancelText(R.string.rating_dialog_cancel)
-            .ratingBarColor(R.color.ratingBarColor)
-            .playstoreUrl("https://play.google.com/store/apps/details?id=com.conduent.nationalhighways")
-            .onThresholdCleared { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdCleared: $rating $thresholdCleared") }
-            .onThresholdFailed { dialog, rating, thresholdCleared -> Log.e("TAG", "onThresholdFailed: $rating $thresholdCleared") }
-            .onRatingChanged { rating, thresholdCleared -> Log.e("TAG", "onRatingChanged: $rating $thresholdCleared") }
+            .icon(R.mipmap.appicon)
+//            .session(3)
+//            .threshold(3)
+            .ratingBarColor(R.color.red_color)
+            .playstoreUrl("https://play.google.com/store/apps/details?id=com.doctormoney")
+            .onThresholdCleared { dialog, rating, thresholdCleared ->
+                Log.e(
+                    "TAG",
+                    "onThresholdCleared: $rating $thresholdCleared"
+                )
+            }
+            .onThresholdFailed { dialog, rating, thresholdCleared ->
+                Log.e(
+                    "TAG",
+                    "onThresholdFailed: $rating $thresholdCleared"
+                )
+            }
+            .onRatingChanged { rating, thresholdCleared ->
+                Log.e(
+                    "TAG",
+                    "onRatingChanged: $rating $thresholdCleared"
+                )
+            }
             .onRatingBarFormSubmit { feedback -> Log.e("TAG", "onRatingBarFormSubmit: $feedback") }
             .build()
+        ratingDialog.window?.setBackgroundDrawableResource(android.R.color.white) // Change to your desired color
 
         ratingDialog.show()
+
+
     }
 
     fun vibrate(activity: Activity) {
@@ -1219,6 +1249,14 @@ object Utils {
         } catch (e: Exception) {
 
         }
+    }
+
+
+    fun onBackPressed(context: Context) {
+        val intent = Intent()
+        intent.action = Intent.ACTION_MAIN
+        intent.addCategory(Intent.CATEGORY_HOME)
+        context.startActivity(intent)
     }
 
 

@@ -29,6 +29,7 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpVie
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
@@ -37,6 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>(),
@@ -56,6 +58,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     private var topUpAmount = 0.0
     private var paymentListSize: Int = 0
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -284,20 +287,20 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         when (status) {
             is Resource.Success -> {
 
-                    val bundle = Bundle()
-                    bundle.putParcelable(Constants.DATA, responseModel)
-                    bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
-                    bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                    bundle.putString(Constants.TRANSACTIONID, status.data?.transactionId)
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.DATA, responseModel)
+                bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+                bundle.putString(Constants.TRANSACTIONID, status.data?.transactionId)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
-                    findNavController().navigate(
-                        R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
-                        bundle
-                    )
+                findNavController().navigate(
+                    R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
+                    bundle
+                )
 
             }
 

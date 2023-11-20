@@ -27,6 +27,7 @@ import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -40,7 +41,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
     private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var mLayoutManager: LinearLayoutManager? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
-    val dfDate = SimpleDateFormat("dd MMM yyyy")
+    val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
     //    private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
     private var transactionsAdapter: TransactionsAdapter? = null

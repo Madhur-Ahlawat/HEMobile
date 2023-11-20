@@ -255,9 +255,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun changeBottomIconColors(pos: Int) {
+        Log.e("TAG", "changeBottomIconColors: pos "+pos )
         if (pos == 0) {
             setSelectedIcon(0)
-        } else {
             setDeselectedIcon(1)
             setDeselectedIcon(2)
             setDeselectedIcon(3)
@@ -265,7 +265,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         if (pos == 1) {
             setSelectedIcon(1)
-        } else {
             setDeselectedIcon(0)
             setDeselectedIcon(2)
             setDeselectedIcon(3)
@@ -273,7 +272,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         if (pos == 2) {
             setSelectedIcon(2)
-        } else {
             setDeselectedIcon(1)
             setDeselectedIcon(0)
             setDeselectedIcon(3)
@@ -281,7 +279,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         if (pos == 3) {
             setSelectedIcon(3)
-        } else {
             setDeselectedIcon(1)
             setDeselectedIcon(2)
             setDeselectedIcon(0)

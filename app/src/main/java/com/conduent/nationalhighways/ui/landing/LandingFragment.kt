@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.landing
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +32,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.openActivityWithData
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
@@ -123,6 +123,8 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     override fun onResume() {
         super.onResume()
+        sessionManager.setLoggedInUser(false)
+
 
 //        if (!isChecked) {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -178,9 +180,9 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         LandingActivity.showToolBar(false)
         binding.btnGuidanceAndDocuments.setOnClickListener {
             var bundle = Bundle()
-            bundle.putString(Constants.API_STATE,apiState)
+            bundle.putString(Constants.API_STATE, apiState)
             requireActivity().openActivityWithData(
-                RaiseEnquiryActivity::class.java,bundle
+                RaiseEnquiryActivity::class.java, bundle
             )
 //            when (apiState) {
 //
@@ -336,7 +338,10 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
                 }
 
                 is Resource.DataError -> {
-                    if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                            Constants.INVALID_TOKEN
+                        )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                    ) {
                         displaySessionExpireDialog(resource.errorModel)
                     } else {
                         ErrorUtil.showError(binding.root, resource.errorMsg)

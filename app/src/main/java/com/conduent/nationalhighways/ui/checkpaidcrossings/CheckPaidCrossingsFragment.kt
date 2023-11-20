@@ -93,7 +93,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                 isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 val checkPaidCrossingReq = CheckPaidCrossingsRequest(referenceNumber=
-                    binding.editReferenceNumber.getText().toString(), plateNumber = binding.editNumberPlate.getText().toString())
+                    binding.editReferenceNumber.getText().toString(), plateNumber = binding.editNumberPlate.getText().toString().uppercase())
                 viewModel.checkPaidCrossings(checkPaidCrossingReq)
             }
         }

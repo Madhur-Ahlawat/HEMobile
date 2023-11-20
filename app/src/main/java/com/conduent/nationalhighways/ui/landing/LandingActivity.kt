@@ -147,7 +147,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
         initCtrl()
-        sessionManager.setLoggedInUser(false)
     }
 
     override fun onPause() {
@@ -203,3 +202,5 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
 
     }
 }
+
+

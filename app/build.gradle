@@ -54,7 +54,7 @@ android {
     signingConfigs {
         conduentdev {
 
-            storeFile file("C:\\Users\\52364682\\AndroidStudioProjects\\HE-MAPP-Android\\app\\keystore.jks")
+            storeFile file("C:\\Users\\52409756\\StudioProjects\\HE-MAPP-Android\\app\\keystore.jks")
             storePassword "Conduent@123"
             keyAlias "conduent"
             keyPassword "Conduent@123"
@@ -277,9 +277,6 @@ android {
 
         implementation 'androidx.activity:activity-ktx:1.8.1'
         implementation 'com.github.bumptech.glide:glide:4.16.0'
-
-        implementation 'com.codemybrainsout.rating:ratingdialog:2.0.0'
-
     }
 
     hilt {

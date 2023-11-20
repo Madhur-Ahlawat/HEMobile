@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.DialogFragment
@@ -29,6 +28,7 @@ import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
 import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
+import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
@@ -36,7 +36,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dat
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapterDashboard
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsInnerAdapterDashboard
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.DateUtils.compareDates
@@ -50,7 +49,6 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
-import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -59,7 +57,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener,
-    View.OnClickListener {
+    View.OnClickListener, BackPressListener {
     private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
         hashMapOf()
@@ -141,6 +139,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun init() {
         initTransactionsRecyclerView()
         initLoaderDialog()
+        setBackPressListener(this)
     }
 
     private fun initLoaderDialog() {
@@ -262,13 +261,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         binding.tvNoHistory.gone()
                         binding.boxViewAll.visible()
                         binding.rvRecenrTransactions.visible()
-                        paymentHistoryListData?.clear()
+                        paymentHistoryListData.clear()
                         paymentHistoryHashMap.clear()
-                        it?.forEachIndexed { index, transactionData ->
+                        it.forEachIndexed { index, transactionData ->
                             if (index <= 1) {
-                                paymentHistoryListData?.add(transactionData)
-                            }
-                            else{
+                                paymentHistoryListData.add(transactionData)
+                            } else {
                                 return@forEachIndexed
                             }
                         }
@@ -512,12 +510,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
 
 
-                if (data.accountInformation?.status.equals(Constants.SUSPENDED,true)){
+                if (data.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                     bundle.putString(
-                        Constants.CURRENTBALANCE, data.replenishmentInformation?.currentBalance)
+                        Constants.CURRENTBALANCE, data.replenishmentInformation?.currentBalance
+                    )
 
-                }else{
+                } else {
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
 
                 }
@@ -625,6 +624,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             }
         }
+    }
+
+    override fun onBackButtonPressed() {
+        Utils.onBackPressed(requireContext())
     }
 }
 

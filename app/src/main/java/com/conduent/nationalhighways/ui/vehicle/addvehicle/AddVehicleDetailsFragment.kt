@@ -344,7 +344,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             }
 
             is Resource.DataError -> {
-                if (resource.errorCode != 5415) {
+                if (resource.errorModel?.errorCode != 5415) {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }

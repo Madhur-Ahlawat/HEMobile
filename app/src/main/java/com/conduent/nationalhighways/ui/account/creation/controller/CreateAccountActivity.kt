@@ -1,9 +1,5 @@
 package com.conduent.nationalhighways.ui.account.creation.controller
 
-import android.content.DialogInterface.OnShowListener
-import android.util.Log
-import android.util.TypedValue
-import com.codemybrainsout.ratingdialog.RatingDialog
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
@@ -19,8 +15,9 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class CreateAccountActivity : BaseActivity<Any>(),LogoutListener {
+class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
     lateinit var binding: ActivityCreateAccountBinding
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -57,14 +54,14 @@ class CreateAccountActivity : BaseActivity<Any>(),LogoutListener {
     override fun observeViewModel() {}
 
 
-
     override fun onBackPressed() {
+        super.onBackPressed()
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
-            navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
-                if (fragment is AccountSuccessfullyCreationFragment){
+            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                if (fragment is AccountSuccessfullyCreationFragment) {
 
-                }else{
+                } else {
                     onBackPressedDispatcher.onBackPressed()
                 }
 
@@ -86,7 +83,7 @@ class CreateAccountActivity : BaseActivity<Any>(),LogoutListener {
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {

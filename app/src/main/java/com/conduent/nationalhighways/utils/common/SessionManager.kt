@@ -53,7 +53,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val CATEGORIES_DATA="categories_data"
         val SUB_CATEGORIES_DATA="sub_categories_data"
         val LAST_TOKEN_TIME="last_token_time"
-        val RETRY_API_TIME="retry_api_time"
+        val LAST_RATING_TIME="last_rating_time"
     }
 
     /**

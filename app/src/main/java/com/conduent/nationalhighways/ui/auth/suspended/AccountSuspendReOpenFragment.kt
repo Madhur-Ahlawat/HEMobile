@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.text.Html
-import android.util.Log
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,13 @@ import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltReope
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReopenedBinding>(),
@@ -31,6 +32,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
     private var topUpAmount: String = ""
     private var newCard: Boolean = false
 
+    @Inject
+    lateinit var sessionManager: SessionManager
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -39,7 +43,8 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
 
     override fun initCtrl() {
-        binding?.feedbackBt?.setMovementMethod(LinkMovementMethod.getInstance())
+        Utils.validationsToShowRatingDialog(requireActivity(), sessionManager)
+        binding.feedbackBt?.movementMethod = LinkMovementMethod.getInstance()
         transactionId = arguments?.getString(Constants.TRANSACTIONID).toString()
         topUpAmount = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
 
@@ -85,9 +90,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
 
         } else {
-           /* binding.succesfulCardAdded.gone()
+            /* binding.succesfulCardAdded.gone()
 
-            binding.cardView.gone()*/
+             binding.cardView.gone()*/
 
         }
         if (currentBalance.isNotEmpty()) {
@@ -162,7 +167,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                             putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                            putBoolean(Constants.FIRST_TYM_REDIRECTS,true)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                         }
 
                     getString(R.string.str_continue) -> {

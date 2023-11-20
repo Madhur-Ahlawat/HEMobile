@@ -24,11 +24,13 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBinding>(),
@@ -42,6 +44,8 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     private var isViewCreated: Boolean = false
     private var accountNumber: String = ""
     private val dashboardViewModel: DashboardViewModel by activityViewModels()
+    @Inject
+    lateinit var sessionManager: SessionManager
 
 
     override fun getFragmentBinding(
@@ -52,6 +56,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
 
     override fun initCtrl() {
+        Utils.validationsToShowRatingDialog(requireActivity(),sessionManager)
         flow = arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED) ?: ""
         if (!isViewCreated) {
             loader = LoaderDialog()
