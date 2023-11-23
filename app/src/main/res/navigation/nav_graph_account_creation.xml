@@ -299,9 +299,6 @@
         android:label="@string/str_landing_screen"
         tools:layout="@layout/fragment_landing">
 
-        <action
-            android:id="@+id/action_landingFragment_to_startNow"
-            app:destination="@id/startNow" />
     </fragment>
 
     <fragment
@@ -759,6 +756,11 @@
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/vehicleListFragment"/>
+        <action
+            android:id="@+id/action_maximumFragment_vehicleListFragment_rucvehicle"
+            app:destination="@+id/vehicleListFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/findYourVehicleFragment"/>
 
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"

@@ -12,9 +12,10 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class AddVehicleResultFragment : BaseFragment<VehicleSuccessFragmentBinding>(),
     View.OnClickListener {
 

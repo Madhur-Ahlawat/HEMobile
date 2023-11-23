@@ -48,30 +48,39 @@
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/btnNext"
+                    app:layout_constraintBottom_toTopOf="@id/bottom_ll"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
-                <com.conduent.apollo.ui.CMButton
-                    android:id="@+id/btnNext"
-                    style="@style/PrimaryButton"
+                <LinearLayout
+                    android:id="@+id/bottom_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_30dp"
-                    android:text="@string/str_continue"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/btnAddNewVehicle" />
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <com.conduent.apollo.ui.CMButton
+                        android:id="@+id/btnNext"
+                        style="@style/PrimaryButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_continue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/btnAddNewVehicle" />
 
-                <com.conduent.apollo.ui.CMButton
-                    android:id="@+id/btnAddNewVehicle"
-                    style="@style/secondaryButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_another_vehicle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    <com.conduent.apollo.ui.CMButton
+                        android:id="@+id/btnAddNewVehicle"
+                        style="@style/secondaryButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_another_vehicle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+                </LinearLayout>
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

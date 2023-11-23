@@ -224,7 +224,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         negativeBtnTxt: String,
         pListener: DialogPositiveBtnListener?,
         nListener: DialogNegativeBtnListener?,
-        cancelVisibility: Int = View.VISIBLE
+        cancelVisibility: Int = View.VISIBLE,
+        cancelButtonColor:Int=0
     ) {
 
         val dialog = Dialog(requireActivity(), R.style.CustomDialogTheme1)
@@ -241,6 +242,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         val firstView = dialog.findViewById<View>(R.id.firstView)
         val secondView = dialog.findViewById<View>(R.id.secondView)
 
+        if(cancelButtonColor!=0){
+            cancel.setTextColor(cancelButtonColor)
+        }
         title.text = fTitle
         textMessage.text = message
         cancel.text = negativeBtnTxt

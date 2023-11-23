@@ -27,7 +27,6 @@ import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.FilePath
-import com.conduent.nationalhighways.utils.StorageHelper
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.RequestPermissionListener
@@ -70,9 +69,9 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
         saveEditData()
         binding.btnNext.setOnClickListener {
-            if (editRequest == Constants.EDIT_SUMMARY &&
+            if (editRequest == Constants.EDIT_SUMMARY /*&&
                 previousComments == viewModel.edit_enquiryModel.value?.comments &&
-                previousFile == viewModel.edit_enquiryModel.value?.fileName
+                previousFile == viewModel.edit_enquiryModel.value?.fileName*/
             ) {
                 findNavController().navigate(
                     R.id.action_enquiryCommentsFragment_to_enquirySummaryFragment, getBundleData()
@@ -105,11 +104,9 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 viewModel.edit_enquiryModel.value?.comments = p0.toString()
-                binding.charactersRemTv.setText(
-                    requireActivity().resources.getString(
-                        R.string.str_you_have_chars_remain,
-                        ("" + (500 - binding.commentsEt.text.toString().length))
-                    )
+                binding.charactersRemTv.text = requireActivity().resources.getString(
+                    R.string.str_you_have_chars_remain,
+                    ("" + (500 - binding.commentsEt.text.toString().length))
                 )
                 if (binding.commentsEt.text.toString().trim().isEmpty()) {
                     binding.btnNext.disable()
@@ -136,7 +133,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
     private fun visibleChooseFileBt() {
         binding.chooseFileBt.visible()
         binding.fileCv.gone()
-        binding.fileNameTv.setText("")
+        binding.fileNameTv.text = ""
     }
 
     override fun initCtrl() {
@@ -166,11 +163,9 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
             hideChooseFileBt()
         }
         binding.commentsEt.setText(viewModel.edit_enquiryModel.value?.comments.toString())
-        binding.charactersRemTv.setText(
-            requireActivity().resources.getString(
-                R.string.str_you_have_chars_remain,
-                ("" + (500 - binding.commentsEt.text.toString().length))
-            )
+        binding.charactersRemTv.text = requireActivity().resources.getString(
+            R.string.str_you_have_chars_remain,
+            ("" + (500 - binding.commentsEt.text.toString().length))
         )
     }
 
@@ -234,7 +229,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                 ) + "MB)"
         } else {
             val kilobytes = (fileInMb * 1000).toInt()
-            binding.fileNameTv.setText(viewModel.edit_enquiryModel.value?.fileName + " (" + kilobytes + "KB)")
+            binding.fileNameTv.text = viewModel.edit_enquiryModel.value?.fileName + " (" + kilobytes + "KB)"
         }
         binding.chooseFileBt.gone()
         binding.fileCv.visible()
@@ -285,26 +280,29 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                 result?.data?.data?.let {
                     val path: String? = FilePath.getPath(requireContext(), it)
                     path?.let { pat ->
-                        val file = File(pat)
-                        fileInMb = file.length().toFloat() / (1000 * 1000)
-                        val kilobytes = fileInMb * 1000
 
+                        if (Utils.checkFileTypeByExtension(pat)) {
+                            val file = File(pat)
+                            fileInMb = file.length().toFloat() / (1000 * 1000)
 
-                        val fileSizeInMB = file.length().toDouble() / (1024 * 1024)
-                        val kilobytes1 = fileSizeInMB * 1024
-
-
-
-                        if (fileInMb <= 8.0) { //checking file size which should be less than 8mb
-                            isApiCalled = true
-                            this.file = file
-                            uploadFileApi()
+                            if (fileInMb <= 8.0) { //checking file size which should be less than 8mb
+                                isApiCalled = true
+                                this.file = file
+                                uploadFileApi()
+                            } else {
+                                ErrorUtil.showError(
+                                    binding.root,
+                                    resources.getString(R.string.file_not_more_than_8mb)
+                                )
+                            }
                         } else {
+                            this.file = null
                             ErrorUtil.showError(
                                 binding.root,
-                                resources.getString(R.string.file_not_more_than_8mb)
+                                resources.getString(R.string.str_allowed_file_types)
                             )
                         }
+
                     } ?: run {
                         ErrorUtil.showError(binding.root, "Unable to upload the selected file")
                     }

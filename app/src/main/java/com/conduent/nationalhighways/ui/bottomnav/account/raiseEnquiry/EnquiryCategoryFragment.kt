@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -51,6 +52,9 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     override fun init() {
         if (arguments?.containsKey(Constants.Edit_REQUEST_KEY) == true) {
             editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
+        }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).setTitle(requireActivity().resources.getString(R.string.str_raise_new_enquiry))
         }
 
         setBackPressListener(this)
@@ -212,6 +216,23 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
                         categoryDropdown.dataSet.clear()
                         categoryDropdown.dataSet.addAll(categoryNameList)
                     }
+                    if (editRequest == Constants.EDIT_SUMMARY) {
+                        var selectedCategoryName=""
+                        var selectedCategoryPos=0
+                        for (i in 0 until categoryList.size){
+                            if(categoryList[i].value==binding.categoryDropdown.getSelectedValue().toString()){
+                                selectedCategoryName=categoryList[i].name?:""
+                                selectedCategoryPos=i
+                                break
+                            }
+                        }
+                        apiViewModel.getSubCategories(selectedCategoryName)
+                        viewModel.edit_enquiryModel.value?.category = categoryList.get(selectedCategoryPos)
+                        binding.apply {
+                            subcategoryDropdown.dataSet.clear()
+                        }
+                        viewModel.edit_enquiryModel.value?.subCategory = CaseCategoriesModel("", "")
+                    }
 
 
                 }
@@ -233,8 +254,18 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
     }
 
+    fun isCategory(selectedItem: String):Boolean{
+        for (i in 0 until categoryList.size){
+            if(selectedItem.equals(categoryList[i].value)){
+                return true
+            }
+        }
+        return false
+    }
+
     override fun onItemSlected(position: Int, selectedItem: String) {
-        if (selectedItem.equals("A general enquiry") || selectedItem.equals("A complaint")) {
+        Log.e("TAG", "onItemSlected: selectedItem "+isCategory(selectedItem) )
+        if (isCategory(selectedItem)) {
 //            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
             apiViewModel.getSubCategories(categoryList[position].name.toString())

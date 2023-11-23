@@ -63,7 +63,7 @@
                             android:id="@+id/reference_number_tv"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
-                            android:text="@string/reference_number"
+                            android:text="@string/str_reference_number"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 

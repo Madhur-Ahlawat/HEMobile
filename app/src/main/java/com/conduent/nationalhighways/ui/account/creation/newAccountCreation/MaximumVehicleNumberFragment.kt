@@ -63,7 +63,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
             binding.maximumVehicleAdded.text = getString(
                 R.string.vehicle_number_plate_is_exempt_from_dart_ncharge_payment,
-                NewCreateAccountRequestModel.plateNumber
+                NewCreateAccountRequestModel.plateNumber.uppercase()
             )
             binding.maximumVehicleAddedNote.visibility = View.GONE
             when (navFlowCall) {
@@ -308,10 +308,18 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
                                         } else {
                                             if (NewCreateAccountRequestModel.isRucEligible) {
-                                                findNavController().navigate(
-                                                    R.id.action_maximumFragment_to_findYourVehicleFragment,
-                                                    bundle()
-                                                )
+
+                                                if (NewCreateAccountRequestModel.vehicleList.size > 0) {
+                                                    findNavController().navigate(
+                                                        R.id.action_maximumFragment_vehicleListFragment_rucvehicle,
+                                                        bundle()
+                                                    )
+                                                }else {
+                                                    findNavController().navigate(
+                                                        R.id.action_maximumFragment_to_findYourVehicleFragment,
+                                                        bundle()
+                                                    )
+                                                }
                                             } else {
                                                 findNavController().popBackStack()
 
@@ -333,11 +341,6 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                                                 bundle()
                                             )
                                         }
-
-//                                        findNavController().navigate(
-//                                            R.id.action_maximumFragment_to_vehicleHomeListFragment,
-//                                            bundle()
-//                                        )
                                     } else {
                                         findNavController().navigate(
                                             R.id.action_maximumFragment_to_vehicleListFragment,
@@ -417,7 +420,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
                     requireActivity().finish()
                 }
-            })
+            },
+            cancelButtonColor = requireActivity().resources.getColor(R.color.hyperlink_blue2,null)
+        )
     }
 
 

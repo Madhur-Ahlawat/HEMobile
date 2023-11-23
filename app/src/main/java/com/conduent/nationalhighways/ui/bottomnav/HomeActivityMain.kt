@@ -184,18 +184,20 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 || destination.id == R.id.enquiryCommentsFragment
                 || destination.id == R.id.enquiryContactDetailsFragment
                 || destination.id == R.id.enquirySummaryFragment
-                || destination.id == R.id.enquirySuccessFragment
-            ) {
+                || destination.id == R.id.enquirySuccessFragment) {
                 dataBinding?.idToolBarLyt?.visible()
                 dataBinding?.titleTxt?.text =
                     getString(R.string.str_raise_new_enquiry)
             }
-            if (destination.id == R.id.caseEnquiryHistoryListFragment
-                || destination.id == R.id.casesEnquiryDetailsFragment
-            ) {
+            if (destination.id == R.id.casesEnquiryDetailsFragment) {
                 dataBinding?.idToolBarLyt?.visible()
                 dataBinding?.titleTxt?.text =
-                    getString(R.string.str_cases_and_enquiries)
+                    getString(R.string.enquiry_status)
+            }
+            if (destination.id == R.id.caseEnquiryHistoryListFragment) {
+                dataBinding?.idToolBarLyt?.visible()
+                dataBinding?.titleTxt?.text =
+                    getString(R.string.str_contact_us)
             }
             if (destination.id == R.id.enquirySuccessFragment || (destination.id == R.id.enquiryCategoryFragment && from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
                 dataBinding?.backButton?.gone()

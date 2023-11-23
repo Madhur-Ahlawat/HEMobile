@@ -224,12 +224,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 val bundle: Bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_FROM, Constants.ACCOUNT_CONTACT_US)
                 findNavController().navigate(R.id.caseEnquiryHistoryListFragment, bundle)
-                /*requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
-                    putInt(
-                        Constants.FROM_LOGIN_TO_CASES,
-                        Constants.FROM_LOGIN_TO_CASES_VALUE
-                    )
-                }*/
             }
 
 //            R.id.rl_account_statement -> {

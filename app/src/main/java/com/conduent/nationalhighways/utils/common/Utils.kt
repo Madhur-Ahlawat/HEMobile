@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
@@ -23,6 +24,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.NotificationManagerCompat
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
@@ -1179,7 +1182,7 @@ object Utils {
             .icon(R.mipmap.appicon)
 //            .session(3)
 //            .threshold(3)
-            .ratingBarColor(R.color.red_color)
+            .ratingBarColor(R.color.blue_color)
             .playstoreUrl("https://play.google.com/store/apps/details?id=com.doctormoney")
             .onThresholdCleared { dialog, rating, thresholdCleared ->
                 Log.e(
@@ -1259,5 +1262,33 @@ object Utils {
         context.startActivity(intent)
     }
 
+
+    fun getFileExtension(filePath: String): String {
+        return if (filePath.contains(".")) {
+            filePath.substring(filePath.lastIndexOf(".") + 1)
+        } else {
+            ""
+        }
+    }
+
+    fun checkFileTypeByExtension(filePath: String): Boolean {
+        val extension = getFileExtension(filePath)
+
+        return extension.equals("jpg", ignoreCase = true) ||
+                extension.equals("pdf", ignoreCase = true) ||
+                extension.equals("bmp", ignoreCase = true) ||
+                extension.equals("tif", ignoreCase = true)
+    }
+
+    fun returnSharedPreference(context: Context):SharedPreferences{
+        val masterAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+        return EncryptedSharedPreferences.create(
+            "HE_MOBILE",
+            masterAlias,
+            context,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+    }
 
 }

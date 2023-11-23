@@ -217,7 +217,7 @@
     <string name="str_crossing_service_update">Crossing service updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
     <string name="str_start_now">Start now</string>
-    <string name="str_use_this_service_to"><b>Use this service to:</b></string>
+    <string name="str_use_this_service_to"><b>Use the service to:</b></string>
 
     <string name="str_learn_about_"><u>Learn more about Dartford Crossings &amp; Dart Charge</u></string>
     <string name="str_timing">Timings : Every day, 8am to 8pm</string>
@@ -440,6 +440,7 @@
     <string name="select_the_sign_in_button_to_log_in_to_your_account">Select the sign in button to log in to your account</string>
     <string name="email_recovery">Email Recovery</string>
     <string name="contact_us">Contact us</string>
+    <string name="str_contact_us">Contact Us</string>
     <string name="str_no_active_contacts">No contacts currently</string>
     <string name="str_nominated_contacts_limit_reached">A total of %d contacts has been set-up, if you wish to add further nominated contacts you need to remove any one of the contact</string>
     <string name="str_logout_msg">You\'ve signed out of your account</string>
@@ -533,7 +534,6 @@
     <string name="make_enquiry">Make an enquiry</string>
     <string name="str_text_phone">Textphone</string>
     <string name="str_do_you_have">Do you have a Dart Charge account?</string>
-    <string name="cases_and_enquiry">Cases and enquiry</string>
     <string name="account_created_successfully">Account Created Successfully</string>
 
     <string name="cases_history">Case history</string>
@@ -546,7 +546,6 @@
     <string name="case_number">Case number</string>
     <string name="last_name">Last name</string>
     <string name="telephone">Telephone no (Optional)</string>
-    <string name="raise_new_query">‘Cases and enquiry</string>
     <string name="case_number_column">Case number : </string>
     <string name="submitted_date_column">Submitted date : </string>
     <string name="submitted_time_column">Submitted time : </string>
@@ -559,7 +558,7 @@
     <string name="str_category">Category</string>
     <string name="str_comments">Comments</string>
     <string name="str_summary">Summary</string>
-    <string name="str_raise_new_enquiry">Raise a new enquiry</string>
+    <string name="str_raise_new_enquiry">Raise a New Enquiry</string>
     <string name="str_submit_enquiry">Submit enquiry</string>
     <string name="resend_success">Resend Success</string>
     <string name="add_a_vehicle">Add a vehicle</string>
@@ -597,9 +596,6 @@
     <string name="str_description">Descritption</string>
     <string name="str_you_have_chars_remain">You have %1$s characters remaining</string>
     <string name="str_upload_file_optional">Upload file (Optional)</string>
-    <string name="str_upto_four_files_uploaded">\u25CF Up to 4 files can be uploaded</string>
-    <string name="str_file_size_may_be">\u25CF File size can be up to 8mb each</string>
-    <string name="str_permitted_file_types_are_doc_docx_xls">\u25CF Permitted file types are \n .doc/.docx, .xls/.xlsx, .pdf, .jpg, .mbp, .tiff, .csv</string>
     <string name="str_duplicate_statements">Duplicate Statments</string>
     <string name="str_transaction">Transaction</string>
     <string name="str_Your_enquiry_submitted">Your enquiry has been\nsubmitted successfully</string>
@@ -645,7 +641,7 @@
     <string name="txt_view_crossings">View crossings</string>
     <string name="txt_view_crossing">View crossing</string>
     <string name="str_account_type">Account type</string>
-    <string name="str_cases_and_enquiries">Cases and enquiry</string>
+    <string name="str_cases_and_enquiries">Cases and Enquiry</string>
     <string name="str_what_you_want_to_do">What you want to do?</string>
     <string name="edit_details">Edit details</string>
     <string name="change_password">Change password</string>
@@ -894,6 +890,7 @@
     <string name="str_vehicle_added_successfully">Vehicle added successfully</string>
     <string name="str_how_can_i_make">How can I make accessibility requests?</string>
     <string name="str_dart_charge_forms_guidance">Dart Charge Forms and Guidance</string>
+    <string name="str_dart_charge_terms_conditions">Dart Charge Terms and Conditions</string>
     <string name="str_guidance_and_documents_answers">Scheme user information is available in braille, large print and alternative languages. This is available on request by using the Dart Charge Online enquiries or through the Dart Charge contact centre.</string>
     <string name="no_file_chosen">No file chosen</string>
     <string name="select">Select</string>
@@ -946,14 +943,12 @@
     <string name="str_select_your_address">Select your address</string>
     <string name="str_if_you_dont_see">If you don\u0027t see your address you can enter it manually.</string>
     <string name="str_enter_address_manually">Enter address manually</string>
+    <string name="str_about_this_service_1">pay for the crossing</string>
+    <string name="str_about_this_service_2">sign in or set up a Dart Charge account</string>
+    <string name="str_about_this_service_3">check with crossings you\'ve paid for</string>
+    <string name="str_about_this_service_4">register to receive notifications when you cross</string>
 
 
-    <string name="str_use_service_guideline">
-        \u2022   pay for the crossing
-        \n\u2022 sign in or set up a Dart Charge account
-        \n\u2022 resolve a fine (Penalty Charge Notice)
-        \n\u2022 check with crossing you\u0027ve paid for
-    </string>
     <string name="a_valid_debit_or_credit_card">a valid debit or credit card</string>
     <string name="create_account">Create account</string>
     <string name="the_vehicle_registration_number_plate_you_want_to_add_to_the_account">the vehicle registration (number plate) you want to add to the account</string>
@@ -1071,7 +1066,7 @@
     <string name="str_model_error_message">Vehicle model must only include letters a to z, numbers 0 to 9, and special characters such as hyphens</string>
     <string name="str_colour_error_message">Vehicle colour must only include letters a to z, and the special character forward slash</string>
     <string name="str_vehicle_exempt_message">Vehicle %s is not charged\nNo Dart Charge payment is due</string>
-    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
+    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and cannot be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
     <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from\nDart Charge payment.</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
     <string name="str_no_ruc_desc_pay_for_crossing">Motorcycles, mopeds and quad bikes do not need to pay for a crossing.</string>
@@ -1458,14 +1453,15 @@
     <string name="can_provide_more_detail">Can you provide more detail?</string>
     <string name="str_dont_include_personal_text">Do not include personal or financial information, like your credit card details.</string>
     <string name="str_500_characters_remaining">You have 500 characters remaining.</string>
-    <string name="str_upload_file_">Upload file</string>
-    <string name="str_allowed_file_types">The selected file type must be a JPG, PDF, BMP or TIF.</string>
+    <string name="str_upload_file_">Upload File</string>
+    <string name="str_allowed_file_types">The selected file type must be a JPG, PDF, BMP or TIF</string>
     <string name="str_file_size_not_morethan_8mb">Also, the selected file type should be no more than 8MB.</string>
 
     <string name="what_contact_details">What are your contact details?</string>
     <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
     <string name="vehicle_registration_number_plate_optional">Vehicle Registration (number plate) Optional</string>
     <string name="country_code">Country Code</string>
+    <string name="str_country_code">Country code</string>
     <string name="details_of_enquiry">Details of enquiry</string>
     <string name="details_of_complaint">Details of complaint</string>
     <string name="str_check_your_answer_before_enquiry">Check your answers before sending your enquiry.</string>
@@ -1475,6 +1471,7 @@
     <string name="str_choose_file">Choose file</string>
     <string name="non_UK_number_invalid">The non-UK phone number entered is invalid, please try again</string>
     <string name="reference_number">Reference Number</string>
+    <string name="str_reference_number">Reference number</string>
     <string name="respond_enquiry_1day">We will respond to your enquiry within 1 day.</string>
     <string name="respond_complaint_5days">We will respond to your complaint within 5 days.</string>
     <string name="str_enquiry">Enquiry</string>
@@ -1484,11 +1481,11 @@
     <string name="str_status_of_complaint">Status of complaint</string>
     <string name="str_date_enquiry_closed">Date enquiry closed</string>
     <string name="str_date_complaint_closed">Date complaint closed</string>
-    <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
+    <string name="str_enquiry_reference_number">Enquiry reference number</string>
     <string name="str_terms_conditions">Terms &amp; Conditions</string>
     <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
     <string name="str_third_party_software">Third Party Software</string>
-    <string name="str_dart_charge_contact_centre">Dart Charge contact centre</string>
+    <string name="str_dart_charge_contact_centre">Dart Charge Contact Centre</string>
     <string name="str_contact_dart_charge_team">Contact the Dart Charge team</string>
     <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
     <string name="str_get_in_touch_about">Get in touch about:</string>
@@ -1545,7 +1542,7 @@
     <string name="str_dummy_text_2fa_options_sms">Mobile <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
     <string name="mobile_number">Mobile Number</string>
     <string name="phone_number_change_successful">Phone number change successful</string>
-    <string name="file_not_more_than_8mb">Selected file type should be no more than 8MB</string>
+    <string name="file_not_more_than_8mb">The selected file must be smaller than 8MB</string>
     <string name="str_contact_dart_charge_contact_centre">Contact the Dart Charge contact centre for help.</string>
     <string name="str_contact_every_day">Every day: 8am to 8pm</string>
     <string name="str_contact_telephone">Telephone: 0300 300 0120</string>
@@ -1558,7 +1555,7 @@
     <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>
     <string name="click_here_to_search_using_your_number_plate"><i>Click here to search using your number plate</i></string>
     <string name="click_here_to_register_your_number_plate_and_create_an_automatic_top_up_account"><i>Click here to register your number plate and create an automatic top up account</i></string>
-    <string name="click_here_to_receive_notifications_when_you_cross"><i>Click here to receive notifications when you\ncross</i></string>
+    <string name="click_here_to_receive_notifications_when_you_cross"><i>Click here to receive notifications when you cross</i></string>
     <string name="str_register_reminders">Register to receive reminders from DartCharge after you cross to help ensure you never miss another payment.</string>
     <string name="str_geo_location_enabled">Geo location enabled</string>
     <string name="str_register_to_receive_notifications">Register to Receive Notifications</string>
@@ -1582,7 +1579,8 @@
     <string name="third_party_software_full_message">The following open source software components are used under the MIT License.\nSee <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a> for more details.\n\nSnapKit\nClosures\nMoya/RxJava\nEureka\nMBProgressHUD\nAlamofire\nUIFloatLabelTextView\nActiveLabel\n\nThe following open source software components are used under the 3 clause BSD License. See <a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>.\n\nCardScan\n\nThe following open source software components are used under a commercial license.\n\nFirebase/Core\nFirebase/Crashlytics\nFabric</string>
     <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
-    <string name="str_using_this_mobile_app"><ul><li>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></li>\n<li>pay or setup an account <a href="https://pay-dartford-crossing-charge.service.gov.uk/forms-and-guidance">by post</a></li>\n<li>pay or setup an account by phoning the Dart Charge contact centre</li></ul></string>
+    <string name="str_other_ways_to_pay_1"><ul>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></ul></string>
+    <string name="str_other_ways_to_pay_2">pay or setup an account</string>
     <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge.</string>
     <string name="str_or_you_can">Or you can:</string>
     <string name="about_this_service">About This Service</string>
@@ -1637,5 +1635,8 @@
     <string name="str_enjoying_dart_charge_desc">Tap a star to rate it on the Play Store.</string>
     <string name="market_prefix" translatable="false">market://details?id=</string>
     <string name="error_no_google_play">Error! Couldn\'t find Google Play on this device.</string>
+    <string name="dart_charge_general_terms_and_conditions">Dart Charge General Terms and Conditions</string>
+    <string name="dart_charge_privacy_policy">Dart Charge Privacy Policy</string>
+    <string name="terms_and_conditions_for_payg">Terms and Conditions for PAYG</string>
 
 </resources>

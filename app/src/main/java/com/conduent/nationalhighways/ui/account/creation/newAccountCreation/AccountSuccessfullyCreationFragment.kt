@@ -14,9 +14,10 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class AccountSuccessfullyCreationFragment :
     BaseFragment<FragmentAccountSuccessfullyCreationBinding>(), View.OnClickListener {
     private var createAccountResponseModel: CreateAccountResponseModel? = null

@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.databinding.FragmentCasesEnquiryHistoryList
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.setTitle
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.adapter.CasesEnquiryListAdapter
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.listener.ItemClickListener
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
@@ -46,6 +47,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
         FragmentCasesEnquiryHistoryListBinding.inflate(inflater, container, false)
 
     override fun init() {
+
         binding.includeNoData.messageTv.text=resources.getString(R.string.str_no_enquiries_have_been_raised)
         setBackPressListener(this)
         if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {

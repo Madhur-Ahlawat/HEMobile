@@ -15,9 +15,10 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.currentTime
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class MakeOneOffPaymentSuccessfullyFragment :
     BaseFragment<FragmentMakeOneOffPaymentSuccessfullyBinding>(), View.OnClickListener {
     private var oneOfPaymentResponse: OneOfPaymentModelResponse? = null

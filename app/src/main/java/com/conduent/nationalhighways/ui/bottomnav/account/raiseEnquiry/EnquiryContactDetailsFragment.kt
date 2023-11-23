@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -20,7 +19,6 @@ import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPost
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -225,83 +223,70 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
             1 -> {
                 requiredEmail = if (binding.emailEt.editText.text.toString().trim().isNotEmpty()) {
-                    if (binding.emailEt.editText.text.toString().trim().length < 8) {
-                        binding.emailEt.setErrorText(getString(R.string.email_address_must_be_8_characters_or_more))
+
+                    if (binding.emailEt.editText.text.toString().length > 64) {
+                        binding.emailEt.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                         false
                     } else {
-                        if (binding.emailEt.editText.text.toString().length > 100) {
-                            binding.emailEt.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
+                        if (!Utils.isLastCharOfStringACharacter(
+                                binding.emailEt.editText.text.toString().trim()
+                            ) || Utils.countOccurenceOfChar(
+                                binding.emailEt.editText.text.toString().trim(), '@'
+                            ) > 1 || binding.emailEt.editText.text.toString().trim().contains(
+                                Utils.TWO_OR_MORE_DOTS
+                            ) || (binding.emailEt.editText.text.toString().trim().last()
+                                .toString() == "." || binding.emailEt.editText.text.toString()
+                                .first()
+                                .toString() == ".") || (binding.emailEt.editText.text.toString()
+                                .trim().last()
+                                .toString() == "-" || binding.emailEt.editText.text.toString()
+                                .first().toString() == "-") || (Utils.countOccurenceOfChar(
+                                binding.emailEt.editText.text.toString().trim(), '.'
+                            ) < 1) || (Utils.countOccurenceOfChar(
+                                binding.emailEt.editText.text.toString().trim(), '@'
+                            ) < 1)
+                        ) {
+                            binding.emailEt.setErrorText(getString(R.string.str_email_format_error_message))
                             false
                         } else {
-                            if (!Utils.isLastCharOfStringACharacter(
-                                    binding.emailEt.editText.text.toString().trim()
-                                ) || Utils.countOccurenceOfChar(
-                                    binding.emailEt.editText.text.toString().trim(), '@'
-                                ) > 1 || binding.emailEt.editText.text.toString().trim().contains(
-                                    Utils.TWO_OR_MORE_DOTS
-                                ) || (binding.emailEt.editText.text.toString().trim().last()
-                                    .toString() == "." || binding.emailEt.editText.text.toString()
-                                    .first()
-                                    .toString() == ".") || (binding.emailEt.editText.text.toString()
-                                    .trim().last()
-                                    .toString() == "-" || binding.emailEt.editText.text.toString()
-                                    .first().toString() == "-") || (Utils.countOccurenceOfChar(
-                                    binding.emailEt.editText.text.toString().trim(), '.'
-                                ) < 1) || (Utils.countOccurenceOfChar(
-                                    binding.emailEt.editText.text.toString().trim(), '@'
-                                ) < 1)
+                            if (Utils.hasSpecialCharacters(
+                                    binding.emailEt.editText.text.toString().trim(),
+                                    Utils.splCharEmailCode
+                                )
                             ) {
-                                binding.emailEt.setErrorText(getString(R.string.str_email_format_error_message))
-                                false
-                            } else {
-                                if (Utils.hasSpecialCharacters(
-                                        binding.emailEt.editText.text.toString().trim(),
-                                        Utils.splCharEmailCode
+                                filterTextForSpecialChars =
+                                    Utils.removeGivenStringCharactersFromString(
+                                        Utils.LOWER_CASE,
+                                        binding.emailEt.getText().toString().trim()
                                     )
-                                ) {
-                                    filterTextForSpecialChars =
-                                        Utils.removeGivenStringCharactersFromString(
-                                            Utils.LOWER_CASE,
-                                            binding.emailEt.getText().toString().trim()
-                                        )
-                                    filterTextForSpecialChars =
-                                        Utils.removeGivenStringCharactersFromString(
-                                            Utils.UPPER_CASE,
-                                            binding.emailEt.getText().toString().trim()
-                                        )
-                                    filterTextForSpecialChars =
-                                        Utils.removeGivenStringCharactersFromString(
-                                            Utils.DIGITS,
-                                            binding.emailEt.getText().toString().trim()
-                                        )
-                                    filterTextForSpecialChars =
-                                        Utils.removeGivenStringCharactersFromString(
+                                filterTextForSpecialChars =
+                                    Utils.removeGivenStringCharactersFromString(
+                                        Utils.UPPER_CASE,
+                                        binding.emailEt.getText().toString().trim()
+                                    )
+                                filterTextForSpecialChars =
+                                    Utils.removeGivenStringCharactersFromString(
+                                        Utils.DIGITS,
+                                        binding.emailEt.getText().toString().trim()
+                                    )
+                                filterTextForSpecialChars =
+                                    Utils.removeGivenStringCharactersFromString(
+                                        Utils.ALLOWED_CHARS_EMAIL,
+                                        binding.emailEt.getText().toString().trim()
+                                    )
+                                commaSeparatedString =
+                                    Utils.makeCommaSeperatedStringForPassword(
+                                        Utils.removeAllCharacters(
                                             Utils.ALLOWED_CHARS_EMAIL,
-                                            binding.emailEt.getText().toString().trim()
+                                            filterTextForSpecialChars!!
                                         )
-                                    commaSeparatedString =
-                                        Utils.makeCommaSeperatedStringForPassword(
-                                            Utils.removeAllCharacters(
-                                                Utils.ALLOWED_CHARS_EMAIL,
-                                                filterTextForSpecialChars!!
-                                            )
-                                        )
-                                    if (filterTextForSpecialChars!!.isNotEmpty()) {
-                                        binding.emailEt.setErrorText("Email address must not include $commaSeparatedString")
-                                        false
-                                    } else if (!Patterns.EMAIL_ADDRESS.matcher(
-                                            binding.emailEt.getText().toString()
-                                        ).matches()
-                                    ) {
-                                        binding.emailEt.setErrorText(getString(R.string.str_email_format_error_message))
-                                        false
-                                    } else {
-                                        binding.emailEt.removeError()
-                                        true
-                                    }
-                                } else if (Utils.countOccurenceOfChar(
-                                        binding.emailEt.editText.text.toString().trim(), '@'
-                                    ) !in (1..1)
+                                    )
+                                if (filterTextForSpecialChars!!.isNotEmpty()) {
+                                    binding.emailEt.setErrorText("Email address must not include $commaSeparatedString")
+                                    false
+                                } else if (!Patterns.EMAIL_ADDRESS.matcher(
+                                        binding.emailEt.getText().toString()
+                                    ).matches()
                                 ) {
                                     binding.emailEt.setErrorText(getString(R.string.str_email_format_error_message))
                                     false
@@ -309,6 +294,15 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                     binding.emailEt.removeError()
                                     true
                                 }
+                            } else if (Utils.countOccurenceOfChar(
+                                    binding.emailEt.editText.text.toString().trim(), '@'
+                                ) !in (1..1)
+                            ) {
+                                binding.emailEt.setErrorText(getString(R.string.str_email_format_error_message))
+                                false
+                            } else {
+                                binding.emailEt.removeError()
+                                true
                             }
                         }
                     }
@@ -322,34 +316,41 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             2 -> {
                 val phoneNumber = binding.mobileNumberEt.getText().toString().trim()
 
-                requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
-                    if (phoneNumber.matches(Utils.PHONENUMBER)) {
-                        binding.mobileNumberEt.removeError()
-                        true
+
+
+                if (phoneNumber.isNotEmpty()) {
+                    if(requiredCountryCode==false){
+
+                    }
+                    if (binding.countrycodeEt.getSelectedDescription()
+                            .equals(Constants.UNITED_KINGDOM, true)
+                    ) {
+                        requiredMobileNumber =
+                            if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
+                                binding.mobileNumberEt.removeError()
+                                true
+                            } else {
+                                binding.mobileNumberEt.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
+                                false
+                            }
+
                     } else {
-                        if ((binding.countrycodeEt.getSelectedDescription().equals(
-                                "UK +44", true
-                            ) || binding.countrycodeEt.getSelectedDescription()
-                                .equals(Constants.UNITED_KINGDOM, true))
-                        ) {
-                            binding.mobileNumberEt.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
-                            false
-                        } else {
-                            if(!(binding.mobileNumberEt.getText().toString().length>=8 && binding.mobileNumberEt.getText().toString().length<=15)){
+                        requiredMobileNumber =
+                            if (phoneNumber.matches(Utils.PHONENUMBER)) {
+                                binding.mobileNumberEt.removeError()
+                                true
+                            } else {
                                 binding.mobileNumberEt.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
                                 false
                             }
-                            else{
-                                binding.mobileNumberEt.removeError()
-                                true
-                            }
-                        }
-                        false
+
                     }
-                } else {
-                    binding.mobileNumberEt.removeError()
-                    true
+
+                }else{
+                    requiredCountryCode=true
+                    requiredMobileNumber=true
                 }
+
                 checkButton()
 
             }
@@ -404,7 +405,10 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
@@ -587,9 +591,9 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 } else {
                     requiredCountryCode = false
                 }
-                if(requiredCountryCode){
+                if (requiredCountryCode) {
                     saveCountryCodeToViewModel(item)
-                }else{
+                } else {
                     saveCountryCodeToViewModel("")
                 }
             } else {

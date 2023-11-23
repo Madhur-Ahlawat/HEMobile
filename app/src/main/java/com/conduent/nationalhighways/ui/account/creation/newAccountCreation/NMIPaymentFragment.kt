@@ -178,7 +178,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             else -> {
-                redirectToTryAgainPaymentScreen()
+
             }
 
         }
@@ -279,7 +279,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             else -> {
-                redirectToTryAgainPaymentScreen()
             }
         }
 
@@ -902,16 +901,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             else -> {
-                val bundle = Bundle()
 
-                bundle.putString(
-                    Constants.CARD_IS_ALREADY_REGISTERED,
-                    Constants.CREDIT_NOT_SET_UP
-                )
-                findNavController().navigate(
-                    R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-                    bundle
-                )
             }
         }
     }

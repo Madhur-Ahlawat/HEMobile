@@ -115,7 +115,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                         totalCount = response.size
                         mList.clear()
                         mList.addAll(response)
-                        val dateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault())
+                        val dateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.ENGLISH)
 
                         mList.sortedWith(compareBy(
                             { if (it?.vehicleInfo?.effectiveStartDate.isNullOrEmpty()) null else dateFormat.parse(it?.vehicleInfo?.effectiveStartDate?:"") },

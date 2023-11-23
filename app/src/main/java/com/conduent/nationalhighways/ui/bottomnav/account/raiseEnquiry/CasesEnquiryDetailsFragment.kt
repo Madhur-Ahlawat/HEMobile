@@ -11,6 +11,7 @@ import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategories
 import com.conduent.nationalhighways.data.model.raiseEnquiry.ServiceRequest
 import com.conduent.nationalhighways.databinding.FragmentCasesEnquiryDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -50,10 +51,14 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         FragmentCasesEnquiryDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
+
         if (requireActivity() is RaiseEnquiryActivity) {
             binding.btnNext.text = resources.getString(R.string.str_go_to_start_menu)
         } else {
             binding.btnNext.text = resources.getString(R.string.str_continue)
+        }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).setTitle(requireActivity().resources.getString(R.string.enquiry_status))
         }
         if (arguments?.containsKey(Constants.EnquiryResponseModel) == true) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -92,7 +97,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
             binding.dateEnquiryClosedCv.gone()
         } else {
             binding.dateEnquiryClosedCv.visible()
-            binding.dateEnquiryClosedTv.text = DateUtils.convertDateToFullDate(
+            binding.dateEnquiryClosedDataTv.text = DateUtils.convertDateToFullDate(
                 viewModel.enquiryDetailsModel.value?.closedDate ?: ""
             )
 

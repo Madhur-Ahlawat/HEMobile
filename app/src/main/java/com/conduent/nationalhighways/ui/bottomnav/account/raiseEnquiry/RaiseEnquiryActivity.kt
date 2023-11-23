@@ -80,7 +80,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                     }
 
                     R.id.fragmentTermsAndConditions -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_dart_charge_forms_guidance)
+                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_dart_charge_terms_conditions)
                     }
 
                     R.id.generalTermsAndConditionsFragment -> {
@@ -108,7 +108,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                     }
 
                     R.id.casesEnquiryDetailsFragment -> {
-                        binding.toolBarLyt.titleTxt.text = getString(R.string.cases_and_enquiry)
+                        binding.toolBarLyt.titleTxt.text = getString(R.string.enquiry_status)
                     }
 
                     else -> {
