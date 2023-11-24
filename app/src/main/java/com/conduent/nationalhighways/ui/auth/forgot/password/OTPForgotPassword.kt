@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -696,16 +695,21 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
             is Resource.DataError -> {
 
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && (resource.errorModel.error != null && resource.errorModel.error.equals(
                         Constants.INVALID_TOKEN
-                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                    )
+                            )) || (resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR && (resource.errorModel.error != null && resource.errorModel.error.equals(
+                        Constants.SERVER_ERROR
+                    )))
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
-
                     when (resource.errorModel?.errorCode) {
-
                         2051 -> {
+                            binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
+                        }
+
+                        1 -> {
                             binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
                         }
 

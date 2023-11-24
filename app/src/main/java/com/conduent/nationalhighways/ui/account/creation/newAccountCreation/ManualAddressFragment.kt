@@ -42,7 +42,6 @@ import com.conduent.nationalhighways.utils.common.Utils.splCharAddress2
 import com.conduent.nationalhighways.utils.common.Utils.splCharPostCode
 import com.conduent.nationalhighways.utils.common.Utils.splCharTownCity
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
@@ -74,7 +73,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         requiredCityTown = parcel.readByte() != 0.toByte()
         requiredPostcode = parcel.readByte() != 0.toByte()
         requiredCountry = parcel.readByte() != 0.toByte()
-        country = parcel.readString()?:""
+        country = parcel.readString() ?: ""
         isViewCreated = parcel.readByte() != 0.toByte()
     }
 
@@ -118,7 +117,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 binding.country.setSelectedValue(NewCreateAccountRequestModel.country)
                 requiredCountry = true
                 checkButton()
-                if(NewCreateAccountRequestModel.personalAccount){
+                if (NewCreateAccountRequestModel.personalAccount) {
                     setPersonalView()
                 }
             }
@@ -133,13 +132,13 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                     binding.townCity.editText.setText(it.city)
                     binding.country.setSelectedValue(it.country!!)
                 }
-                requiredAddress=true
-                requiredAddress2=true
-                requiredCountry=true
-                requiredPostcode=true
-                requiredCityTown=true
+                requiredAddress = true
+                requiredAddress2 = true
+                requiredCountry = true
+                requiredPostcode = true
+                requiredCityTown = true
                 checkButton()
-                if ((navData as ProfileDetailModel)?.accountInformation?.accountType.equals(
+                if ((navData as ProfileDetailModel).accountInformation?.accountType.equals(
                         Constants.PERSONAL_ACCOUNT,
                         true
                     )
@@ -203,7 +202,10 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
@@ -226,8 +228,9 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 NewCreateAccountRequestModel.country =
                     binding.country.selectedItemDescription.toString()
                 NewCreateAccountRequestModel.zipCode = binding.postCode.getText().toString()
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 if (navFlowCall.equals(Constants.PROFILE_MANAGEMENT, true)) {
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
                     val data = navData as ProfileDetailModel?
                     if (data?.accountInformation?.accountType.equals(
                             Constants.PERSONAL_ACCOUNT,
@@ -239,7 +242,15 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                         updateBusinessUserProfile(data)
                     }
                 } else {
-                    hitlrdsCheckApi()
+                    if (NewCreateAccountRequestModel.personalAccount) {
+                        loader?.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.LOADER_DIALOG
+                        )
+                        hitlrdsCheckApi()
+                    } else {
+                        redirectToNextPage()
+                    }
                 }
 
 
@@ -272,14 +283,17 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                     country.dataSet.addAll(countriesList)
                 }
                 binding.country.setSelectedValue(UK_COUNTRY)
-                requiredCountry=true
+                requiredCountry = true
 
                 binding.country.clearFocus()
                 binding.country.setDropDownItemSelectListener(this)
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
@@ -422,11 +436,11 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             }
 
             if (!(Utils.hasLowerCase(
-                    binding.postCode.editText.getText().toString().trim()
+                    binding.postCode.editText.text.toString().trim()
                 ) || Utils.hasUpperCase(
-                    binding.postCode.editText.getText().toString().trim()
+                    binding.postCode.editText.text.toString().trim()
                 )) || !hasDigits(
-                    binding.postCode.editText.getText().toString().trim()
+                    binding.postCode.editText.text.toString().trim()
                 ) || Utils.hasSpecialCharacters(
                     binding.postCode.getText().toString().trim(),
                     splCharPostCode
@@ -501,45 +515,17 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                     )
 
                 } else {
-                    when (navFlowCall) {
-
-                        EDIT_SUMMARY -> {
-                            if (navFlowFrom.equals(EDIT_FROM_POST_CODE)) {
-                                findNavController().navigate(
-                                    R.id.action_manualaddressfragment_to_createAccountSummary,
-                                    bundle()
-                                )
-                            } else {
-                                findNavController().popBackStack()
-                            }
-
-                        }
-
-                        else -> {
-                            if (NewCreateAccountRequestModel.personalAccount) {
-                                findNavController().navigate(
-                                    R.id.action_manualaddressfragment_to_createAccountTypesFragment,
-                                    bundle()
-                                )
-
-                            } else {
-                                findNavController().navigate(
-                                    R.id.action_manualaddressfragment_to_forgotPasswordFragment,
-                                    bundle()
-                                )
-
-                            }
-                        }
-
-                    }
-
+                    redirectToNextPage()
                 }
 
 
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
@@ -549,6 +535,41 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             else -> {
 
             }
+        }
+
+    }
+
+    private fun redirectToNextPage() {
+        when (navFlowCall) {
+
+            EDIT_SUMMARY -> {
+                if (navFlowFrom.equals(EDIT_FROM_POST_CODE)) {
+                    findNavController().navigate(
+                        R.id.action_manualaddressfragment_to_createAccountSummary,
+                        bundle()
+                    )
+                } else {
+                    findNavController().popBackStack()
+                }
+
+            }
+
+            else -> {
+                if (NewCreateAccountRequestModel.personalAccount) {
+                    findNavController().navigate(
+                        R.id.action_manualaddressfragment_to_createAccountTypesFragment,
+                        bundle()
+                    )
+
+                } else {
+                    findNavController().navigate(
+                        R.id.action_manualaddressfragment_to_forgotPasswordFragment,
+                        bundle()
+                    )
+
+                }
+            }
+
         }
 
     }
@@ -642,9 +663,9 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
     }
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
-        if(item.isEmpty()){
+        if (item.isEmpty()) {
             binding.labelCountryCode.invisible()
-        }else{
+        } else {
             binding.labelCountryCode.visible()
         }
         if (selected) {

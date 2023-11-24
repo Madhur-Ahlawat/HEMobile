@@ -801,10 +801,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             view?.loadUrl("javascript:(function(){document.getElementById('headerTable').style.display ='';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display ='none';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('subtitle').style.display = '';})()")
 
 
 
-                            view?.loadUrl("javascript:(function(){document.getElementById('title').innerText  ='You chose to pay as you go. We’ll collect payment from your card each time you cross.';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('subtitle').innerText  ='You chose to pay as you go. We’ll collect payment from your card each time you cross.';})()")
+                            view?.loadUrl("javascript:(function(){document.getElementById('title').innerText  ='How do you want to pay?';})()")
                         } else {
                             view?.loadUrl("javascript:(function(){document.getElementById('breakPoint').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = '';})()")

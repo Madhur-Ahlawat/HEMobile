@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.content.DialogInterface
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -421,7 +422,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     requireActivity().finish()
                 }
             },
-            cancelButtonColor = requireActivity().resources.getColor(R.color.hyperlink_blue2,null)
+            cancelButtonColor = requireActivity().resources.getColor(R.color.hyperlink_blue2,null),
+            typeFace = Typeface.createFromAsset(requireActivity().assets, "open_sans_semibold.ttf") // Replace "YourFont.ttf" with your font file
+
         )
     }
 

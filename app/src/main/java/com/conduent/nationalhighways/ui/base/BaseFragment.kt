@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -225,7 +226,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         pListener: DialogPositiveBtnListener?,
         nListener: DialogNegativeBtnListener?,
         cancelVisibility: Int = View.VISIBLE,
-        cancelButtonColor:Int=0
+        cancelButtonColor:Int=0,
+        typeFace:Typeface?=null
     ) {
 
         val dialog = Dialog(requireActivity(), R.style.CustomDialogTheme1)
@@ -244,6 +246,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
         if(cancelButtonColor!=0){
             cancel.setTextColor(cancelButtonColor)
+        }
+        if(typeFace!=null){
+            cancel.typeface = typeFace
         }
         title.text = fTitle
         textMessage.text = message

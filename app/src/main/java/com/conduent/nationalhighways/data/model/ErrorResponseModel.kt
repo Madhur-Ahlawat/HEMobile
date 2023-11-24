@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import retrofit2.Response
 
 data class ErrorResponseModel(
-    val error: String?,
+    var error: String?,
     val exception: String?,
     @SerializedName("error_description", alternate = ["message"])
     val message: String?,

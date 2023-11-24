@@ -9,6 +9,7 @@ import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.address.DataAddress
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
 import com.conduent.nationalhighways.data.repository.account.AccountCreationRepository
@@ -17,6 +18,8 @@ import com.conduent.nationalhighways.utils.common.ResponseHandler
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,6 +32,11 @@ class CreateAccountPostCodeViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _addresses = MutableLiveData<Resource<List<DataAddress?>?>?>()
     val addresses: LiveData<Resource<List<DataAddress?>?>?> get() = _addresses
+
+
+    val _addressesState = MutableStateFlow<Resource<List<DataAddress?>?>?>(null)
+    val addressesState: StateFlow<Resource<List<DataAddress?>?>?> get() = _addressesState
+
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _countriesList = MutableLiveData<Resource<List<CountriesModel?>?>?>()
@@ -50,6 +58,20 @@ class CreateAccountPostCodeViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 _addresses.postValue(failure(e))
+            }
+        }
+    }
+    fun fetchAddressState(search: String) {
+        viewModelScope.launch {
+            try {
+                _addressesState.emit(
+                    success(
+                        repository.getAddressListForPostalCode(search),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _addressesState.emit(failure(e))
             }
         }
     }

@@ -16,8 +16,8 @@ import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentSelectAddressBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.SelectAddressAdapter
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.request.LrdsEligibiltyRequest
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.request.LrdsEligibiltyRequest
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.response.LrdsEligibilityResponse
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.viewModel.LrdsEligibilityViewModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
@@ -34,7 +34,6 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,19 +55,38 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         FragmentSelectAddressBinding.inflate(inflater, container, false)
 
     override fun init() {
-      
+        if (arguments?.containsKey(Constants.ADDRESS_LIST) == true) {
+            mainList = arguments?.getParcelableArrayList(Constants.ADDRESS_LIST) ?: ArrayList()
+
+
+        }
+
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         val linearLayoutManager = LinearLayoutManager(requireActivity())
         binding.recylcerview.layoutManager = linearLayoutManager
         selectAddressAdapter = SelectAddressAdapter(requireContext(), mainList, this)
         binding.recylcerview.adapter = selectAddressAdapter
+
+        selectAddressAdapter?.updateList(mainList)
         binding.txtAddressCount.text = "${mainList.size} Addresses Found"
-        if (navFlowCall.equals(Constants.PROFILE_MANAGEMENT)) {
+
+        when (navFlowCall) {
+            EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
+                mainList.forEach { it?.isSelected = false }
+                if (NewCreateAccountRequestModel.selectedAddressId != -1) {
+                    mainList[NewCreateAccountRequestModel.selectedAddressId]?.isSelected =
+                        true
+                    selectAddressAdapter?.notifyDataSetChanged()
+                    binding.btnNext.isEnabled = true
+                }
+            }
+        }
+        if (navFlowCall.equals(PROFILE_MANAGEMENT)) {
             binding.btnEnterAddressManually.gone()
             binding.btnUpdateAddressManually.visible()
-        }
-        else{
+        } else {
             binding.btnEnterAddressManually.visible()
             binding.btnUpdateAddressManually.gone()
         }
@@ -84,8 +102,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
     override fun observer() {
         if (!isViewCreated) {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            viewModel.fetchAddress(NewCreateAccountRequestModel.zipCode)
+//            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+//            viewModel.fetchAddress(NewCreateAccountRequestModel.zipCode)
             observe(viewModel.addresses, ::handleAddressApiResponse)
             observe(lrdsViewModel.lrdsEligibilityCheck, ::handleLrdsApiResponse)
 
@@ -111,9 +129,12 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
-                }else {
+                } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
@@ -148,9 +169,12 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
             is Resource.DataError -> {
 //                ErrorUtil.showError(binding.root, response.errorMsg)
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(response.errorModel)
-                }else {
+                } else {
                     enterAddressManual()
                 }
             }
@@ -166,8 +190,9 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         when (v) {
             binding.btnNext -> {
 
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                 if (navFlowCall.equals(PROFILE_MANAGEMENT, true)) {
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+
                     val data = navData as ProfileDetailModel?
                     if (data?.accountInformation?.accountType.equals(
                             Constants.PERSONAL_ACCOUNT,
@@ -179,11 +204,19 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                         updateBusinessUserProfile(data)
                     }
                 } else {
-                    hitlrdsCheckApi()
+                    if (NewCreateAccountRequestModel.personalAccount) {
+                        loader?.show(
+                            requireActivity().supportFragmentManager,
+                            Constants.LOADER_DIALOG
+                        )
+                        hitlrdsCheckApi()
+                    } else {
+                        redirectToNextPage()
+                    }
                 }
             }
 
-            binding.btnEnterAddressManually,binding.btnUpdateAddressManually -> {
+            binding.btnEnterAddressManually, binding.btnUpdateAddressManually -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.NAV_FLOW_FROM, EDIT_FROM_POST_CODE)
@@ -211,8 +244,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         lrdsEligibilityCheck.city = NewCreateAccountRequestModel.townCity
         lrdsEligibilityCheck.state = NewCreateAccountRequestModel.townCity
         lrdsEligibilityCheck.action = Constants.LRDS_ELIGIBILITY_CHECK
-
-
 
 
         lrdsViewModel.getLrdsEligibilityResponse(lrdsEligibilityCheck)
@@ -270,43 +301,18 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                     )
 
                 } else {
-
-                    when (navFlowCall) {
-
-
-                        EDIT_SUMMARY -> {
-                            findNavController().navigate(
-                                R.id.action_selectaddressfragment_to_createAccountSummary,
-                                bundle
-                            )
-                        }
-
-                        else -> {
-                            if (NewCreateAccountRequestModel.personalAccount) {
-                                findNavController().navigate(
-                                    R.id.action_selectaddressfragment_to_createAccountTypesFragment,
-                                    bundle
-                                )
-
-                            } else {
-
-                                findNavController().navigate(
-                                    R.id.action_selectaddressfragment_to_forgotPasswordFragment,
-                                    bundle
-                                )
-
-                            }
-                        }
-
-                    }
+                    redirectToNextPage()
                 }
 
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(response.errorModel)
-                }else {
+                } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
                 }
             }
@@ -314,6 +320,45 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
             else -> {
 
             }
+        }
+
+    }
+
+    private fun redirectToNextPage() {
+        NewCreateAccountRequestModel.isManualAddress = false
+
+        val bundle = Bundle()
+        bundle.putString(
+            Constants.NAV_FLOW_KEY,
+            navFlowCall
+        )
+        when (navFlowCall) {
+
+
+            EDIT_SUMMARY -> {
+                findNavController().navigate(
+                    R.id.action_selectaddressfragment_to_createAccountSummary,
+                    bundle
+                )
+            }
+
+            else -> {
+                if (NewCreateAccountRequestModel.personalAccount) {
+                    findNavController().navigate(
+                        R.id.action_selectaddressfragment_to_createAccountTypesFragment,
+                        bundle
+                    )
+
+                } else {
+
+                    findNavController().navigate(
+                        R.id.action_selectaddressfragment_to_forgotPasswordFragment,
+                        bundle
+                    )
+
+                }
+            }
+
         }
 
     }
