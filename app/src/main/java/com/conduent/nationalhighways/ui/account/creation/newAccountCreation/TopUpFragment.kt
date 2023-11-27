@@ -70,7 +70,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         }
         else{
             binding.minimumAMountTopUp.text = (getString(
-                R.string.top_up_amount_value,
+                R.string.str_minimum_amount,
                 this@TopUpFragment.apiTopUpAmountBalance.toDouble().toInt().toString()
             ))
             binding.minimumAmount.text = (getString(
@@ -218,7 +218,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             if (mText.length == 1 && mText == ".") {
                 mText = "0.0"
             }
-            var forMatedAmount = formatter.format(mText.toDouble().toInt())
+            var forMatedAmount = formatter.format(mText.toDouble())
             if (!forMatedAmount.isNullOrEmpty() && forMatedAmount.equals(".00")) {
                 forMatedAmount = "0.00"
             }
@@ -238,7 +238,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             if (mText.length == 1 && mText == ".") {
                 mText = "0.0"
             }
-            var forMatedAmount = formatter.format(mText.toDouble().toInt())
+            var forMatedAmount = formatter.format(mText.toDouble())
             if (!forMatedAmount.isNullOrEmpty() && forMatedAmount.equals(".00")) {
                 forMatedAmount = "0.00"
             }
@@ -288,7 +288,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                                 this@TopUpFragment.apiTopUpAmountBalance = thresholdAmountVo.customerAmount.toString()
 
                                 binding.minimumAMountTopUp.text = (getString(
-                                    R.string.top_up_amount_value,
+                                    R.string.str_minimum_amount,
                                     this@TopUpFragment.apiTopUpAmountBalance
                                 ))
 

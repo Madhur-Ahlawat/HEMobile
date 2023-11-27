@@ -775,7 +775,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             NewCreateAccountRequestModel.isExempted = true
                             bundle.putParcelable(Constants.VEHICLE_DETAIL, apiData[0])
                             bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
-
+                            bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle

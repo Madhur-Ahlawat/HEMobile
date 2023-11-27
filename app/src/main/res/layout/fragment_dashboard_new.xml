@@ -8,19 +8,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/ivNoTransactions"
+            android:layout_width="@dimen/_73dp"
+            android:layout_height="@dimen/_73dp"
+            android:layout_marginTop="@dimen/_30dp"
+            android:src="@drawable/error_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box_viewAll"/>            app:tint="@color/new_btn_color" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNoHistory"
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/tvNoTransactions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_payment_history"
-            android:textColor="@color/red"
-            android:textSize="@dimen/_18ssp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/box_cardType"
-            app:layout_constraintStart_toStartOf="@+id/box_cardType"
-            app:layout_constraintTop_toBottomOf="@id/box_cardType" />
+            android:layout_marginTop="@dimen/_15dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:text="There are no recent transactions to view"
+            android:textColor="@color/new_btn_color"
+            android:textSize="@dimen/_16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivNoTransactions" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/box_accountInformation"
@@ -31,6 +41,7 @@
             android:backgroundTint="@color/white"
             android:elevation="@dimen/_3dp"
             android:paddingHorizontal="@dimen/_16dp"
+            android:paddingTop="@dimen/_8dp"
             android:paddingBottom="@dimen/_15dp"
             app:layout_constraintBottom_toBottomOf="@id/guideline2"
             app:layout_constraintTop_toTopOf="@id/guideline2">
@@ -58,7 +69,6 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_available_balance"
                 android:layout_width="0dp"
-                android:layout_marginTop="@dimen/_4dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:padding="0dp"
@@ -94,7 +104,7 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/label_color"
                 android:textSize="@dimen/_20sp"
-                app:layout_constraintEnd_toEndOf="@id/tv_available_balance"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_available_balance"
                 tools:text="118324408" />
 
@@ -117,7 +127,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/_5dp"
                 android:layout_marginTop="@dimen/_12dp"
-                app:layout_constraintEnd_toEndOf="@id/tv_available_balance"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_account_number_value">
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -396,6 +406,7 @@
             android:layout_marginTop="@dimen/_8dp"
             android:nestedScrollingEnabled="false"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/box_cardType"

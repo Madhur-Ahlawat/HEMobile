@@ -8,6 +8,7 @@ import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityRaiseEnquiryBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
@@ -129,7 +130,14 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                 }
             }
         navController.addOnDestinationChangedListener(listener)
-
+        AdobeAnalytics.setScreenTrack(
+            "Raise Enquiry",
+            "login",
+            "english",
+            "login", "",
+            "login",
+            sessionManager.getLoggedInUser()
+        )
     }
 
     private fun initCtrl() {

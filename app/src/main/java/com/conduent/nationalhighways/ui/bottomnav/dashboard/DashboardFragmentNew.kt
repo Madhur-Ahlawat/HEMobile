@@ -258,7 +258,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
                 resource.data?.transactionList?.transaction?.let {
                     if (it.isNotEmpty()) {
-                        binding.tvNoHistory.gone()
+                        binding.ivNoTransactions.gone()
+                        binding.tvNoTransactions.gone()
                         binding.boxViewAll.visible()
                         binding.rvRecenrTransactions.visible()
                         paymentHistoryListData.clear()
@@ -277,21 +278,21 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 //                        getDatesList(paymentHistoryListData)
                         transactionsAdapter?.notifyDataSetChanged()
                     } else {
-                        binding.boxViewAll.gone()
                         binding.rvRecenrTransactions.gone()
-                        binding.tvNoHistory.visible()
+                        binding.ivNoTransactions.visible()
+                        binding.tvNoTransactions.visible()
                     }
                 } ?: run {
-                    binding.boxViewAll.gone()
                     binding.rvRecenrTransactions.gone()
-                    binding.tvNoHistory.visible()
+                    binding.ivNoTransactions.visible()
+                    binding.tvNoTransactions.visible()
                 }
             }
 
             is Resource.DataError -> {
-                binding.boxViewAll.gone()
                 binding.rvRecenrTransactions.gone()
-                binding.tvNoHistory.visible()
+                binding.ivNoTransactions.visible()
+                binding.tvNoTransactions.visible()
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
 

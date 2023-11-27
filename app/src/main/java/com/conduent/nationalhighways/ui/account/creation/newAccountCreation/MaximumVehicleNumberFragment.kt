@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -20,6 +21,7 @@ import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
@@ -122,20 +124,17 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             }
         }
         if (NewCreateAccountRequestModel.isVehicleAlreadyAdded) {
-            binding.textMaximumVehicle.text = getString(
-                R.string.str_vehicle_already_exist_desc,
-                NewCreateAccountRequestModel.plateNumber.uppercase()
-            )
+            binding.textMaximumVehicle.text =
+                getString(R.string.you_have_already_added_this_vehicle_to_this_account)
             binding.maximumVehicleAdded.text = getString(
                 R.string.str_vehicle_already_added_system,
                 NewCreateAccountRequestModel.plateNumber.uppercase()
             )
-            binding.maximumVehicleAddedNote.visibility = View.VISIBLE
+            binding.maximumVehicleAddedNote.visibility = View.GONE
             binding.cancelBtn.visibility = View.VISIBLE
             binding.btnContinue.text = getString(R.string.str_add_another)
             binding.inCorrectVehicleNumber.gone()
         }
-
 
         if (NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal) {
             binding.maximumVehicleAdded.text = getString(
