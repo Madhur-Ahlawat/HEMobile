@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.databinding.ActivityMakeOffPaymentBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.MakeOneOffPaymentSuccessfullyFragment
@@ -56,6 +57,8 @@ class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
     }
 
     private fun init() {
+        NewCreateAccountRequestModel.onOffVehiclePlateNumber=""
+        NewCreateAccountRequestModel.plateNumber=""
         binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
 
 

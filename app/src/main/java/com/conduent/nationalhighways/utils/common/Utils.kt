@@ -776,7 +776,7 @@ object Utils {
             }
 
             else -> {
-                ""
+                vehicleClass
             }
         }
     }
@@ -800,7 +800,7 @@ object Utils {
             }
 
             else -> {
-                ""
+                vehicleClass
             }
         }
     }
@@ -934,6 +934,11 @@ object Utils {
 
     fun currentTime(): String {
         return SimpleDateFormat("hh:mm", Locale.getDefault()).format(Date())
+
+    }
+
+    fun currentTimeWithAMPM(): String {
+        return SimpleDateFormat("hh:mma", Locale.getDefault()).format(Date())
 
     }
 
@@ -1133,7 +1138,7 @@ object Utils {
     }
 
     fun getTimeDifference(startTime: Date, endTime: Date): Triple<Long, Long, Long> {
-
+        Log.e("TAG", "getTimeDifference() called with: startTime = $startTime, endTime = $endTime")
         return try {
             val differenceInMillis = endTime.time - startTime.time
             val hours = differenceInMillis / (1000 * 60 * 60)
@@ -1144,7 +1149,10 @@ object Utils {
                 1000L * 60 * 60 * 24 * 30 // Approximation of a month in milliseconds
             val months = differenceInMillis / millisecondsInMonth
 
-
+            Log.e(
+                "TAG",
+                "getTimeDifference: hours " + hours + " min-> " + minutes + " months-> " + months
+            )
             Triple(hours, minutes, months)
         } catch (e: Exception) {
             Triple(0, 0, 0)
@@ -1173,7 +1181,7 @@ object Utils {
 
     }
 
-     fun showRatingDialog(activity: Activity, sessionManager: SessionManager) {
+    fun showRatingDialog(activity: Activity, sessionManager: SessionManager) {
         val dateFormat = SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
         val dateString = dateFormat.format(Date())
         sessionManager.saveStringData(SessionManager.LAST_RATING_TIME, dateString)
@@ -1264,23 +1272,31 @@ object Utils {
 
 
     fun getFileExtension(filePath: String): String {
-        return if (filePath.contains(".")) {
-            filePath.substring(filePath.lastIndexOf(".") + 1)
+        if (filePath.length >= 3) {
+            return filePath.substring(filePath.length - 3)
         } else {
-            ""
+            return filePath
         }
+
+        /*
+                return if (filePath.contains(".")) {
+                    filePath.substring(filePath.lastIndexOf(".") + 1)
+                } else {
+                    ""
+                }
+        */
     }
 
     fun checkFileTypeByExtension(filePath: String): Boolean {
         val extension = getFileExtension(filePath)
-
+        Log.e("TAG", "checkFileTypeByExtension: extension " + extension)
         return extension.equals("jpg", ignoreCase = true) ||
                 extension.equals("pdf", ignoreCase = true) ||
                 extension.equals("bmp", ignoreCase = true) ||
                 extension.equals("tif", ignoreCase = true)
     }
 
-    fun returnSharedPreference(context: Context):SharedPreferences{
+    fun returnSharedPreference(context: Context): SharedPreferences {
         val masterAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         return EncryptedSharedPreferences.create(
             "HE_MOBILE",

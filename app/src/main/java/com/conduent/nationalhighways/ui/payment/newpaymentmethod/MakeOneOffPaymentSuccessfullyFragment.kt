@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.currentTime
+import com.conduent.nationalhighways.utils.common.Utils.currentTimeWithAMPM
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -55,7 +56,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
         binding.vechicleRegistration.text = NewCreateAccountRequestModel.plateNumber
         binding.amountPaid.text = amount
         binding.timeDate.text =
-            currentTime() + " " + getString(R.string.str_on) + " " + Utils.currentDate()
+            currentTimeWithAMPM() + " " + getString(R.string.str_on) + " " + Utils.currentDate()
         if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty() == true && NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true) {
             binding.emailConformationTxt.text = getString(
                 R.string.str_we_have_sent_confirmation_email,

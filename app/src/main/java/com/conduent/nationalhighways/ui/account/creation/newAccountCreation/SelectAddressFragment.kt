@@ -276,6 +276,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         NewCreateAccountRequestModel.townCity = mainList[position]?.town.toString()
         NewCreateAccountRequestModel.country =
             mainList[position]?.country.toString()
+        NewCreateAccountRequestModel.address_country_code = "UK"
         NewCreateAccountRequestModel.zipCode =
             mainList[position]?.postcode.toString().trim().replace(" ", "")
 
@@ -372,18 +373,20 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                 addressLine1 = NewCreateAccountRequestModel.addressline1,
                 addressLine2 = NewCreateAccountRequestModel.addressline2,
                 city = NewCreateAccountRequestModel.townCity,
-                state = state,
+                state = "HE",
                 zipCode = NewCreateAccountRequestModel.zipCode,
                 zipCodePlus = zipCodePlus,
-                country = NewCreateAccountRequestModel.country,
+                country = NewCreateAccountRequestModel.address_country_code,
                 emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
                 phoneCell = phoneNumber ?: "",
                 phoneDay = phoneDay,
                 phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = ""
+                smsOption = data.accountInformation?.smsOption,
+                phoneEvening = "",
+                phoneCellCountryCode = phoneCellCountryCode,
+                phoneDayCountryCode = phoneDayCountryCode
             )
 
             viewModelProfile.updateUserDetails(request)
@@ -402,17 +405,19 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                 state = personalInformation?.state,
                 zipCode = NewCreateAccountRequestModel.zipCode,
                 zipCodePlus = personalInformation?.zipCodePlus,
-                country = NewCreateAccountRequestModel.country,
+                country = NewCreateAccountRequestModel.address_country_code,
                 emailAddress = personalInformation?.emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
                 phoneCell = personalInformation?.phoneNumber ?: "",
                 phoneDay = personalInformation?.phoneDay,
                 phoneFax = "",
-                smsOption = "Y",
+                smsOption = data.accountInformation?.smsOption,
                 phoneEvening = "",
                 fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName
+                businessName = personalInformation?.customerName,
+                phoneDayCountryCode = personalInformation?.phoneDayCountryCode,
+                phoneCellCountryCode = personalInformation?.phoneCellCountryCode
             )
 
             viewModelProfile.updateUserDetails(request)

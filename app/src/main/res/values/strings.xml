@@ -1030,7 +1030,6 @@
     <string name="vehicle_registration_number_plate_error">Vehicle Registration (number plate) must be 10 characters or fewer</string>
     <string name="str_is_this_your_vehicle_looking_for">Is this the vehicle you’re looking for?</string>
     <string name="str_incorrect_vehicle_registration">INCORRECT VEHICLE REGISTRATION</string>
-    <string name="str_where_is_your_vehicle_registered">Where is your vehicle registered?</string>
     <string name="str_where_is_your_vehicle_is_registered">Where is your vehicle registered?</string>
     <string name="str_in_the_uk">In the UK</string>
     <string name="str_outside_the_uk">Outside the UK</string>
@@ -1038,7 +1037,6 @@
     <string name="str_do_you_want_to_add">Do you want to add another vehicle?</string>
     <string name="str_maximum_vehicle_registered">Maximum number of vehicles have been registered against the account</string>
     <string name="str_you_have_reached_the_maximum_vehicle">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
-    <string name="where_is_your_vehicle_registered">Where is your vehicle registered?</string>
     <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle</string>
     <string name="i_confirm_that_the_vehicle_information_provided_is_correct">I confirm that the vehicle information provided is correct.</string>
     <string name="str_vehicle_registration_number_plate">Vehicle Registration (number plate)</string>
@@ -1389,8 +1387,8 @@
     <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an \naccount to:</string>
     <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for crossings you’ve made since yesterday
         \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for future crossings</string>
-    <string name="str_pay_for_crossing_numberplate_point1">Pay for crossings you’ve made since yesterday</string>
-    <string name="str_pay_for_crossing_numberplate_point2">Pay for future crossings</string>
+    <string name="str_pay_for_crossing_numberplate_point1">pay for crossings you’ve made since yesterday</string>
+    <string name="str_pay_for_crossing_numberplate_point2">pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment amount gets calculated?</string>
     <string name="str_pay_for_crossing_point1">Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
@@ -1438,6 +1436,7 @@
     <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
                     \n\nIf you pay the wrong Dart Charge for your type of vehicle, you could receive a Penalty Charge Notice.]]></string>
     <string name="pay_new_amount">PAY NEW AMOUNT</string>
+    <string name="str_continue_with_selection">Continue with your selection</string>
     <string name="purchase_no_crossings">Purchase No Crossings</string>
     <string name="to_continue_you_must_pay_for_at_least_one_recent_additional_crossing">To continue, you must pay for at least one recent/additional crossing.</string>
     <string name="payment_method_deleted">Payment method deleted</string>

@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.utils.common
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.gson.Gson
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
@@ -207,11 +208,13 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun clearAll() {
+        val last_rating_time=fetchStringData(LAST_RATING_TIME)
         prefs.edit().clear().apply()
         HomeActivityMain.accountDetailsData = null
         HomeActivityMain.crossing = null
         HomeActivityMain.dateRangeModel = null
         HomeActivityMain.paymentHistoryListData = mutableListOf()
+        saveStringData(LAST_RATING_TIME,last_rating_time)
     }
 
     fun setSessionTime(code: Long?) {

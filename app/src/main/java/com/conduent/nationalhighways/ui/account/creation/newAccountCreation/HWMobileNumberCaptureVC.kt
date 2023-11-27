@@ -256,7 +256,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
@@ -345,7 +348,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
@@ -370,6 +376,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
         return extractedText
     }
+
     private fun getRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
 
@@ -417,25 +424,23 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
 
                     EDIT_ACCOUNT_TYPE -> {
-                        /* if (noChanges) {
-                             findNavController().navigate(
-                                 R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
-                                 bundle
-                             )
-                         } else {*/
-                        assignNumbers(mobileNumber, countryCode)
-
-                        if (isItMobileNumber) {
-                            hitApi()
-                        } else {
+                        if (noChanges) {
                             findNavController().navigate(
                                 R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
                                 bundle
                             )
+                        } else {
+                            assignNumbers(mobileNumber, countryCode)
+
+                            if (isItMobileNumber) {
+                                hitApi()
+                            } else {
+                                findNavController().navigate(
+                                    R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
+                                    bundle
+                                )
+                            }
                         }
-
-
-                        // }
                     }
 
                     PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
@@ -540,7 +545,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
@@ -624,7 +632,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
-            Constants.SMS, getRequiredText(binding.inputCountry.getSelectedDescription())+binding.inputMobileNumber.getText().toString().trim()
+            Constants.SMS,
+            getRequiredText(binding.inputCountry.getSelectedDescription()) + binding.inputMobileNumber.getText()
+                .toString().trim()
         )
         createAccountViewModel.emailVerificationApi(request)
 
@@ -639,12 +649,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             is Resource.Success -> {
 
 
-                Log.d("sms_referenceId",Gson().toJson(resource.data?.referenceId))
+                Log.d("sms_referenceId", Gson().toJson(resource.data?.referenceId))
                 val bundle = Bundle()
                 bundle.putParcelable(
                     "data", RequestOTPModel(
                         Constants.SMS,
-                                binding.inputMobileNumber.getText().toString().trim()
+                        binding.inputMobileNumber.getText().toString().trim()
                     )
                 )
                 bundle.putString(Constants.PHONE_COUNTRY_CODE,
@@ -702,7 +712,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)

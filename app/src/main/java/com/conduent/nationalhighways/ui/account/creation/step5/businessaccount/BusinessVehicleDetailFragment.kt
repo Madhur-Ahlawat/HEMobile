@@ -248,6 +248,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                             plateNo = data?.plateNo ?: ""
                             expirationDate = data?.expirationDate ?: ""
                             unusedTrip = data?.unusedTrip ?: ""
+                            vehicleClass = data?.vehicleClass
                         })
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
