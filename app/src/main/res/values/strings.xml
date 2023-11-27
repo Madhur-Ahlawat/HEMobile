@@ -1071,6 +1071,7 @@
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
     <string name="str_no_ruc_desc_pay_for_crossing">Motorcycles, mopeds and quad bikes do not need to pay for a crossing.</string>
     <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\n Telephone: 0300 300 0120 \n Every day: 8am to 8pm</string>
+    <string name="str_vehicle_already_exist">Vehicle %s already exists in the system and cannot be added to the account.</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
     <string name="you_have_already_added_this_vehicle_to_this_account">You have already added this vehicle to this account.</string>
     <string name="vehicle_s_mha_has_already_been_assigned_to_this_account">Vehicle %s MHA has already been assigned to this account</string>
@@ -1576,7 +1577,7 @@
     <string name="date_time_submitted"><![CDATA[Date & time submitted]]></string>
     <string name="status_of_enquiry">Status of enquiry</string>
     <string name="date_enquiry_closed">Date enquiry closed</string>
-    <string name="third_party_software_full_message">The following open source software components are used under the MIT License.\nSee <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a> for more details.\n\nSnapKit\nClosures\nMoya/RxJava\nEureka\nMBProgressHUD\nAlamofire\nUIFloatLabelTextView\nActiveLabel\n\nThe following open source software components are used under the 3 clause BSD License. See <a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>.\n\nCardScan\n\nThe following open source software components are used under a commercial license.\n\nFirebase/Core\nFirebase/Crashlytics\nFabric</string>
+    <string name="third_party_software_full_message">The following open source software components are used under the MIT License.\nSee <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a> for more details.\n\nAEPAnalytics\nAEPCore\nAEPIdentity\nRxJava\nEureka\nMBProgressHUD\nAlamofire\nUIFloatLabelTextView\nActiveLabel\n\nThe following open source software components are used under the 3 clause BSD License. See <a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>.\n\nCardScan\n\nThe following open source software components are used under a commercial license.\n\nFirebase/Core\nFirebase/Crashlytics\nFabric</string>
     <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="str_other_ways_to_pay_1"><ul>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></ul></string>

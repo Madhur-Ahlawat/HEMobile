@@ -21,19 +21,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/inputCountry_helper"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_3dp"
+            android:layout_marginTop="@dimen/_20dp"
+            android:text="@string/country_code"
+            android:textColor="@color/label_color"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/inputCountry"
+            app:layout_constraintTop_toBottomOf="@id/txtTitleTop" />
         <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
             android:id="@+id/inputCountry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_24dp"
             android:hint="@string/country_code"
             app:inputType="number"
             android:textSize="@dimen/font_16sp"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtTitleTop" />
+            app:layout_constraintTop_toBottomOf="@+id/inputCountry_helper" />
 
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
             android:layout_width="0dp"

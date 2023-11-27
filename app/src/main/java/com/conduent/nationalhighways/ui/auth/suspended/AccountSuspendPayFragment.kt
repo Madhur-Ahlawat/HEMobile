@@ -2,12 +2,14 @@ package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -36,6 +38,7 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import java.text.DecimalFormat
 import java.util.Locale
 import javax.inject.Inject
@@ -67,10 +70,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         FragmentAccountSuspendPayBinding.inflate(inflater, container, false)
 
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initCtrl() {
-        if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
+        if (arguments?.getParcelable(Constants.DATA, Any::class.java) != null && arguments?.getParcelable(Constants.DATA, Any::class.java) is CardListResponseModel) {
             paymentList = arguments?.getParcelableArrayList(Constants.DATA)
         }
+
         if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
             paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         }

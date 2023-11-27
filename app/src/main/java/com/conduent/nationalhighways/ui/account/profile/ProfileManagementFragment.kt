@@ -132,7 +132,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         binding.emailAddressProfile.text = personalInformation?.userName?.lowercase()
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
-                            binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
+                            binding.txtMobileNumber.text = getString(R.string.mobile_number)
                             personalInformation?.phoneCell?.let {
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneCellCountryCode + " " + it

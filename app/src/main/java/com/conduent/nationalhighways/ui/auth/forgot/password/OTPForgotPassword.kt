@@ -351,7 +351,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     TWOFA -> {
-                        hitTWOFAVerifyAPI()
+                        otpSuccessRedirection()
+//                        hitTWOFAVerifyAPI()
                     }
 
                     else -> {
