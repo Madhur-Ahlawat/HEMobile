@@ -405,7 +405,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                             binding.inputMobileNumber.removeError()
                             true
                         } else {
-                            binding.inputMobileNumber.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                            binding.inputMobileNumber.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message_tryagain))
                             false
                         }
                     } else {

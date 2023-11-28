@@ -41,7 +41,7 @@
             app:maxLength="50"
             android:maxLength="50"
             app:imeOptions="actionNext"
-            app:labelText="@string/str_last_name"
+            app:labelText="@string/str_last_name_"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enquiry_reference_number_et" />

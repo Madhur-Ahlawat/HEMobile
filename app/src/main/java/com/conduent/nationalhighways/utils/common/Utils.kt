@@ -938,7 +938,7 @@ object Utils {
     }
 
     fun currentTimeWithAMPM(): String {
-        return SimpleDateFormat("hh:mma", Locale.getDefault()).format(Date())
+        return SimpleDateFormat("hh:mma", Locale.getDefault()).format(Date()).replace("AM","am").replace("PM","pm")
 
     }
 
