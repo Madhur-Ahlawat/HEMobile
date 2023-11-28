@@ -73,7 +73,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
                (String.format("%.2f", chargingRate?.toDouble()))
             )
             binding.btnOk.text = resources.getString(R.string.pay_new_amount)
-            binding.btnFeedback.text = resources.getString(R.string.str_continue_with_selection)
+            binding.btnFeedback.setText(getString(R.string.continue_with_your_selection))
         } else {
             binding.descTv.text = resources.getString(R.string.our_records_show_the_numberplate,
                 crossingDetailModel?.plateNo, crossingDetailModel?.dvlaclass?.let { Utils.getVehicleType(
