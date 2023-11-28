@@ -72,6 +72,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             when (navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
+                    binding.btnContinue.setText(getString(R.string.return_to_landing_page))
                     binding.descTv.text = getString(
                         R.string.crossing_vehicle_exempt_detail_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()

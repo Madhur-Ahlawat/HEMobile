@@ -73,6 +73,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
                (String.format("%.2f", chargingRate?.toDouble()))
             )
             binding.btnOk.text = resources.getString(R.string.pay_new_amount)
+            binding.btnFeedback.setText(getString(R.string.continue_with_your_selection))
         } else {
             val chargingRate = "£" + crossingDetailModel?.chargingRate
             binding.descTv.text = resources.getString(R.string.our_records_show_the_numberplate,
