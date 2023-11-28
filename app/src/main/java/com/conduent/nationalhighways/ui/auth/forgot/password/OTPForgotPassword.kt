@@ -50,6 +50,7 @@ import com.conduent.nationalhighways.utils.common.Constants.FORGOT_PASSWORD_FLOW
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Logg
@@ -256,7 +257,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    if (navFlowCall == PROFILE_MANAGEMENT) {
+                    if (navFlowCall == PROFILE_MANAGEMENT || navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE) {
                         findNavController().navigate(
                             R.id.action_otpForgotFragment_to_resetForgotPassword,
                             bundle
@@ -351,8 +352,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     TWOFA -> {
-                        otpSuccessRedirection()
-//                        hitTWOFAVerifyAPI()
+//                        otpSuccessRedirection()
+                        hitTWOFAVerifyAPI()
                     }
 
                     else -> {
@@ -881,6 +882,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         dataModel: com.conduent.nationalhighways.data.model.profile.PersonalInformation?,
         accountInformation: com.conduent.nationalhighways.data.model.profile.AccountInformation?
     ) {
+        var mfaEnabled="Y"
+        if(accountInformation?.mfaEnabled=="false"){
+            mfaEnabled ="N"
+        }
         dataModel?.run {
             val request = UpdateProfileRequest(
                 firstName = firstName,
@@ -904,7 +909,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 businessName = customerName,
                 phoneCellCountryCode = phoneCellCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode,
-                mfaEnabled = accountInformation?.mfaEnabled
+                mfaEnabled = mfaEnabled
 
             )
 

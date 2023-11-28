@@ -204,17 +204,18 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     @SuppressLint("SuspiciousIndentation")
     private fun newPaymentMethod(s: String) {
         var primaryCard = "N"
-        var easyPay = "N"
+        var easyPay = s
 
         if (paymentListSize == 0) {
             primaryCard = "Y"
 
         }
-        if (responseModel?.checkCheckBox == true) {
+       /* if (responseModel?.checkCheckBox == true) {
             easyPay = "Y"
         } else {
-            easyPay = "N"
-        }
+//            easyPay = "N"
+            easyPay = "Y"
+        }*/
 
         cardModel = PaymentWithNewCardModel(
             addressLine1 = personalInformation?.addressLine1.toString(),

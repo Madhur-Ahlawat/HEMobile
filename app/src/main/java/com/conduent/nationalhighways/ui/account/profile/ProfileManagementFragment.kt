@@ -103,6 +103,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         }
         super.onStart()
     }
+
     override fun observer() {
         observe(viewModel.accountDetail, ::handleAccountDetail)
     }
@@ -126,10 +127,14 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         } else {
                             binding.twoStepVerification.text = getString(R.string.no)
                         }
+                        if (personalInformation?.addressLine1?.isEmpty() == true && personalInformation?.city?.isEmpty() == true && personalInformation?.zipcode?.isEmpty() == true) {
 
-                        binding.address.text =
-                            personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
-                        binding.emailAddressProfile.text = personalInformation?.userName?.lowercase()
+                        } else {
+                            binding.address.text =
+                                personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
+                        }
+                        binding.emailAddressProfile.text =
+                            personalInformation?.userName?.lowercase()
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.mobile_number)
@@ -147,9 +152,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
-                        binding.accountType.text=accountInformation!!.accountType
+                        binding.accountType.text = accountInformation!!.accountType
 
-                        if (accountInformation?.accountType.equals(
+                        if (accountInformation.accountType.equals(
                                 Constants.BUSINESS_ACCOUNT,
                                 true
                             )
@@ -159,16 +164,19 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         } else {
                             binding.companyNameCard.gone()
                         }
-                        binding.password.text = accountInformation?.password
+                        binding.password.text = accountInformation.password
                     }
                 }
 
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
-                }else {
+                } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }
             }

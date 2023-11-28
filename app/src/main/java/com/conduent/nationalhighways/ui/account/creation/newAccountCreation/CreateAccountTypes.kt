@@ -48,12 +48,20 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.prePayCard -> {
-                NewCreateAccountRequestModel.prePay = true
-                handleNavigation()
+                if(navFlowCall.equals(EDIT_ACCOUNT_TYPE) &&  NewCreateAccountRequestModel.prePay){
+                    findNavController().popBackStack()
+                }else{
+                    NewCreateAccountRequestModel.prePay = true
+                    handleNavigation()
+                }
             }
             R.id.payCard -> {
-                NewCreateAccountRequestModel.prePay=false
-                handleNavigation()
+                if(navFlowCall.equals(EDIT_ACCOUNT_TYPE) && !NewCreateAccountRequestModel.prePay){
+                    findNavController().popBackStack()
+                }else {
+                    NewCreateAccountRequestModel.prePay = false
+                    handleNavigation()
+                }
             }
             R.id.crossingCharges -> {
                 val openURL = Intent(requireContext(),ViewChargesActivity::class.java)

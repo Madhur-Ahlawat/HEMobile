@@ -100,7 +100,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             colorInputLayout.editText.filters = arrayOf<InputFilter>(LengthFilter(50))
         }
         oldPlateNumber = arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
-        Log.e("TAG", "init: oldPlateNumber " + oldPlateNumber)
         navData?.let {
             try {
                 data = it as CrossingDetailsModelsResponse
@@ -109,8 +108,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             }
         }
         if (data == null) {
+            Log.e("TAG", "init:((((*** " )
             data = CrossingDetailsModelsResponse()
         }
+        Log.e("TAG", "init: vehcilc als " + data?.vehicleClass)
 
         binding.vehicleRegTv.editText.filters = arrayOf(LengthFilter(10))
         binding.vehicleRegTv.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
@@ -212,7 +213,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 }
             }
 
-
+            Log.e("TAG", "init: vehicleClass "+data?.vehicleClass )
             if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
                 if (data?.vehicleClass == "D") {
                     binding.typeVehicle.visible()
@@ -281,10 +282,13 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     private fun setPreSelectedVehicleType() {
         if (typeOfVehicle.size > 0 && data != null && data?.plateNo?.isNotEmpty() == true) {
-            data?.vehicleClass =
-                Utils.getManuallyAddedVehicleClass(requireActivity(), (data?.vehicleType ?: ""))
-            binding.typeVehicle.setSelectedValue(data?.vehicleType ?: "")
-            typeOfVehicleChecked = true
+            if(data?.vehicleClass?.isEmpty()==true && data?.vehicleType?.isNotEmpty() == true){
+                data?.vehicleClass =
+                    Utils.getManuallyAddedVehicleClass(requireActivity(), (data?.vehicleType ?: ""))
+                binding.typeVehicle.setSelectedValue(data?.vehicleType ?: "")
+                typeOfVehicleChecked = true
+            }
+
         }
     }
 
@@ -675,6 +679,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             R.id.editVehicle -> {
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                bundle.putBoolean(Constants.EDIT_VEHICLE, true)
                 bundle.putString(
                     Constants.PLATE_NUMBER,
                     binding.vehiclePlateNumber.text.toString()
@@ -730,7 +735,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         }
                     }
 
-                    checkRUC(dataModel)
+                    checkRUC(dataModel,1)
                     return
                 } else {
                     nonUKVehicleModel?.let {
@@ -759,6 +764,9 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                                 binding.modelInputLayout.getText().toString()
                             dataModel.vehicleColor =
                                 binding.colorInputLayout.getText().toString()
+                            if(arguments?.containsKey(Constants.IS_DBLA_AVAILABLE)==true){
+                                dataModel.isDblaAvailable=arguments?.getBoolean(Constants.IS_DBLA_AVAILABLE)
+                            }
                             if (vehicleClassSelected.isNotEmpty()) {
                                 dataModel.vehicleClass =
                                     Utils.getManuallyAddedVehicleClass(
@@ -775,7 +783,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                                     }
                             }
 
-                            checkRUC(dataModel)
+                            checkRUC(dataModel,2)
 
                         }
                         return
@@ -815,7 +823,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             binding.vehiclePlateNumber.text.toString().uppercase()
                         newVehicleInfoDetails.isDblaAvailable = false
                         newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
-                        checkRUC(newVehicleInfoDetails)
+                        checkRUC(newVehicleInfoDetails,3)
 
 
                     } else {
@@ -834,7 +842,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             binding.vehiclePlateNumber.text.toString().uppercase()
                         newVehicleInfoDetails.isDblaAvailable = false
                         newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
-                        checkRUC(newVehicleInfoDetails)
+                        checkRUC(newVehicleInfoDetails,4)
 
 
                     }
@@ -867,7 +875,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
     }
 
-    private fun checkRUC(newVehicleInfoDetails: NewVehicleInfoDetails) {
+    private fun checkRUC(newVehicleInfoDetails: NewVehicleInfoDetails,from:Int) {
+        Log.e("TAG", "checkRUC: from "+from )
         val bundle: Bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         if (newVehicleInfoDetails.vehicleClass.equals("A", true)) {

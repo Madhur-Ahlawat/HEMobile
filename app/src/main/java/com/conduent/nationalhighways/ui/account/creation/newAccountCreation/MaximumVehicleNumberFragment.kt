@@ -103,8 +103,10 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 Constants.PAY_FOR_CROSSINGS -> {
                     binding.cancelBtn.gone()
                     binding.inCorrectVehicleNumber.visible()
+                    binding.btnContinue.text = resources.getString(R.string.return_to_landingpage)
                     binding.textMaximumVehicle.text =
                         getString(R.string.str_no_ruc_desc_pay_for_crossing)
+                    binding.textMaximumVehicle.gravity=Gravity.CENTER
                     binding.maximumVehicleAdded.text = getString(
                         R.string.str_vehicle_exempt_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()
@@ -126,7 +128,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         }
         if (NewCreateAccountRequestModel.isVehicleAlreadyAdded) {
             binding.textMaximumVehicle.text =
-                getString(R.string.you_have_already_added_this_vehicle_to_this_account)
+                getString(R.string.str_vehicle_already_exist_desc,
+                    NewCreateAccountRequestModel.plateNumber.uppercase()
+                )
             binding.maximumVehicleAdded.text = getString(
                 R.string.str_vehicle_already_added_system,
                 NewCreateAccountRequestModel.plateNumber.uppercase()

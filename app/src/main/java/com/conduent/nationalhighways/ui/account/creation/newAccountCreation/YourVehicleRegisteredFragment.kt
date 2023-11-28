@@ -39,7 +39,8 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
         if (data == null) {
             data = CrossingDetailsModelsResponse()
         }
-        Log.e("TAG", "init: vehicleClass "+data?.vehicleClass )
+//        data?.vehicleClass = nonUKVehicleModel?.vehicleClass
+        Log.e("TAG", "init: vehicleClass @ -> " + nonUKVehicleModel?.vehicleClass)
     }
 
     override fun initCtrl() {
@@ -61,6 +62,12 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                     NewCreateAccountRequestModel.plateCountry = Constants.COUNTRY_TYPE_UK
                     data?.plateCountry = Constants.COUNTRY_TYPE_UK
                     data?.veicleUKnonUK = true
+                }
+                if(data?.vehicleClass?.isEmpty() == true){
+                    data?.vehicleClass = nonUKVehicleModel?.vehicleClass
+                }
+                if(data?.plateNo?.isEmpty() == true){
+                    data?.plateNo = nonUKVehicleModel?.plateNumber ?: ""
                 }
                 val bundle = Bundle()
                 bundle.putString(Constants.data_type, "dvla")

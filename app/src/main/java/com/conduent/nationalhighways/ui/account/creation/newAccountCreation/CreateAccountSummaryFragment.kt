@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -122,7 +123,11 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val vehicleList = dataModel!!.vehicleList as ArrayList<NewVehicleInfoDetails>
+        val vehicleList = dataModel?.vehicleList as ArrayList<NewVehicleInfoDetails>
+        Log.e("TAG", "init: "+vehicleList.size )
+        for (i in 0 until vehicleList.size){
+            Log.e("TAG", "init: isDblaAvailable "+vehicleList[i].isDblaAvailable )
+        }
         vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this, false)
         binding.recyclerView.adapter = vehicleAdapter
 
@@ -310,6 +315,10 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         plateNumber: String?,
         isDblaAvailable: Boolean?
     ) {
+        Log.e(
+            "TAG",
+            "vehicleListCallBack() called with: position = $position, value = $value, plateNumber = $plateNumber, isDblaAvailable = $isDblaAvailable"
+        )
         enableEditMode()
         if (value == Constants.REMOVE_VEHICLE) {
             val bundle = Bundle()
@@ -323,6 +332,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 bundle.putString(Constants.PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                bundle.putBoolean(Constants.EDIT_SUMMARY, true)
 
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountFindVehicleFragment,

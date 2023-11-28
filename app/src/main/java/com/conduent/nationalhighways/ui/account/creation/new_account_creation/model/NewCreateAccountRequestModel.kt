@@ -23,6 +23,7 @@ object NewCreateAccountRequestModel{
     var townCity:String=""
     var state:String=""
     var country:String=""
+    var address_country_code:String=""
     var zipCode:String=""
     var selectedAddressId:Int =-1
     var prePay:Boolean=false
@@ -43,7 +44,7 @@ object NewCreateAccountRequestModel{
     var password:String=""
 
     var sms_referenceId: String? = ""
-    var onOffVehiclePlateNumber:String=""
+    var oneOffVehiclePlateNumber:String=""
 
 
 }

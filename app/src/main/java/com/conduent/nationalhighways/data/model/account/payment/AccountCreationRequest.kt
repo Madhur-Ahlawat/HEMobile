@@ -37,6 +37,7 @@ class AccountCreationRequest {
     var thresholdAmount: String? = null
     var smsSecurityCd: String? = null
     var address1: String? = null
+    var address2: String? = null
     var addressLine2:String?=null
     var accountType: String? = null
     var securityCode: String? = null

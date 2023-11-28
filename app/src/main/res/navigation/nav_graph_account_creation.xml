@@ -429,7 +429,9 @@
 
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment"
-            app:destination="@id/createAccountSummaryFragment" />
+            app:destination="@id/createAccountSummaryFragment"
+            app:popUpTo="@id/createAccountSummaryFragment"
+            app:popUpToInclusive="true"/>
 
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_vehicleListFragment"

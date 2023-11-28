@@ -26,9 +26,9 @@ import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
-import com.conduent.nationalhighways.utils.FilePath
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.PicUtils
 import com.conduent.nationalhighways.utils.common.RequestPermissionListener
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
@@ -229,7 +229,8 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                 ) + "MB)"
         } else {
             val kilobytes = (fileInMb * 1000).toInt()
-            binding.fileNameTv.text = viewModel.edit_enquiryModel.value?.fileName + " (" + kilobytes + "KB)"
+            binding.fileNameTv.text =
+                viewModel.edit_enquiryModel.value?.fileName + " (" + kilobytes + "KB)"
         }
         binding.chooseFileBt.gone()
         binding.fileCv.visible()
@@ -278,8 +279,11 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result?.data?.data?.let {
-                    val path: String? = FilePath.getPath(requireContext(), it)
+//                    val path: String? = FilePath.getPath(requireContext(), it)
+                    val path: String? = PicUtils.getPath(requireContext(), it)
+
                     path?.let { pat ->
+//                        val pat:String =PicUtils.getPath(requireContext(),Uri.parse(pat1))?:pat1
 
                         if (Utils.checkFileTypeByExtension(pat)) {
                             val file = File(pat)

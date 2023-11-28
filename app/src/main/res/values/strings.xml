@@ -545,6 +545,7 @@
     <string name="first_name">First name</string>
     <string name="case_number">Case number</string>
     <string name="last_name">Last name</string>
+    <string name="str_last_name">Last Name</string>
     <string name="telephone">Telephone no (Optional)</string>
     <string name="case_number_column">Case number : </string>
     <string name="submitted_date_column">Submitted date : </string>
@@ -1030,7 +1031,6 @@
     <string name="vehicle_registration_number_plate_error">Vehicle Registration (number plate) must be 10 characters or fewer</string>
     <string name="str_is_this_your_vehicle_looking_for">Is this the vehicle you’re looking for?</string>
     <string name="str_incorrect_vehicle_registration">INCORRECT VEHICLE REGISTRATION</string>
-    <string name="str_where_is_your_vehicle_registered">Where is your vehicle registered?</string>
     <string name="str_where_is_your_vehicle_is_registered">Where is your vehicle registered?</string>
     <string name="str_in_the_uk">In the UK</string>
     <string name="str_outside_the_uk">Outside the UK</string>
@@ -1038,7 +1038,6 @@
     <string name="str_do_you_want_to_add">Do you want to add another vehicle?</string>
     <string name="str_maximum_vehicle_registered">Maximum number of vehicles have been registered against the account</string>
     <string name="str_you_have_reached_the_maximum_vehicle">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
-    <string name="where_is_your_vehicle_registered">Where is your vehicle registered?</string>
     <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle</string>
     <string name="i_confirm_that_the_vehicle_information_provided_is_correct">I confirm that the vehicle information provided is correct.</string>
     <string name="str_vehicle_registration_number_plate">Vehicle Registration (number plate)</string>
@@ -1074,10 +1073,10 @@
     <string name="str_vehicle_already_exist">Vehicle %s already exists in the system and cannot be added to the account.</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
     <string name="you_have_already_added_this_vehicle_to_this_account">You have already added this vehicle to this account.</string>
-    <string name="vehicle_s_mha_has_already_been_assigned_to_this_account">Vehicle %s MHA has already been assigned to this account</string>
+    <string name="vehicle_s_mha_has_already_been_assigned_to_this_account">Vehicle %s has already been assigned to this account</string>
     <string name="str_add_to_account">ADD TO ACCOUNT</string>
     <string name="str_add_another">ADD ANOTHER VEHICLE</string>
-    <string name="str_vehicle_already_added_system">Vehicle %S MHA already exists in the system</string>
+    <string name="str_vehicle_already_added_system">Vehicle %S already exists in the system</string>
     <string name="str_effective_start_date">Effective start date</string>
 
     <!--First,Last Name Error Message-->
@@ -1390,8 +1389,8 @@
     <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an \naccount to:</string>
     <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for crossings you’ve made since yesterday
         \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for future crossings</string>
-    <string name="str_pay_for_crossing_numberplate_point1">Pay for crossings you’ve made since yesterday</string>
-    <string name="str_pay_for_crossing_numberplate_point2">Pay for future crossings</string>
+    <string name="str_pay_for_crossing_numberplate_point1">pay for crossings you’ve made since yesterday</string>
+    <string name="str_pay_for_crossing_numberplate_point2">pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment amount gets calculated?</string>
     <string name="str_pay_for_crossing_point1">Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
@@ -1415,7 +1414,7 @@
     <string name="for_example_hd542321725_or_1_898008009">For example, HD542321725 or 1–898008009</string>
     <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
        <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
-    <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings planned in the future. Late payments will be used for future crossings - you may receive a fine (Penalty Charge Notice) for any late payment</string>
+    <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings planned in the future.\n\nLate payments will be used for future crossings - you may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>
 
     <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We’ve sent a confirmation email to %s and a confirmation text message to %s.</string>
@@ -1430,7 +1429,7 @@
     <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>
     <string name="incorrect_email_try_again">Incorrect email.  Try again.</string>
     <string name="how_do_you_want_to_receive_your_payment_receipt">How do you want to receive your payment receipt?</string>
-    <string name="we_can_send_you_a_receipt_by_email_and_text_message">We can send you a receipt by email and text\nmessage.</string>
+    <string name="we_can_send_you_a_receipt_by_email_and_text_message">We can send you a receipt by email and text message.</string>
     <string name="email_optional">Email (optional)</string>
     <string name="text_message_optional">Text message (optional)</string>
     <string name="text_we_have_sent_a_reciept_email_to">We\'ve sent a receipt email to\n<b>%s</b></string>
@@ -1439,6 +1438,7 @@
     <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
                     \n\nIf you pay the wrong Dart Charge for your type of vehicle, you could receive a Penalty Charge Notice.]]></string>
     <string name="pay_new_amount">PAY NEW AMOUNT</string>
+    <string name="str_continue_with_selection">Continue with your selection</string>
     <string name="purchase_no_crossings">Purchase No Crossings</string>
     <string name="to_continue_you_must_pay_for_at_least_one_recent_additional_crossing">To continue, you must pay for at least one recent/additional crossing.</string>
     <string name="payment_method_deleted">Payment method deleted</string>
@@ -1482,7 +1482,7 @@
     <string name="str_status_of_complaint">Status of complaint</string>
     <string name="str_date_enquiry_closed">Date enquiry closed</string>
     <string name="str_date_complaint_closed">Date complaint closed</string>
-    <string name="str_enquiry_reference_number">Enquiry reference number</string>
+    <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
     <string name="str_terms_conditions">Terms &amp; Conditions</string>
     <string name="str_otherways_to_pay_your_charge">Other ways to pay your charge</string>
     <string name="str_third_party_software">Third Party Software</string>
@@ -1641,5 +1641,6 @@
     <string name="terms_and_conditions_for_payg">Terms and Conditions for PAYG</string>
     <string name="return_to_landing_page">Return To Landing Page</string>
     <string name="continue_with_your_selection">Continue With Your Selection</string>
+    <string name="return_to_landingpage">Return to landing page</string>
 
 </resources>

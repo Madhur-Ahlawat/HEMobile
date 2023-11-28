@@ -56,6 +56,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesList: MutableList<String> = ArrayList()
+    private var totalCountriesList: ArrayList<CountriesModel> = ArrayList()
     private var loader: LoaderDialog? = null
     private var requiredAddress: Boolean = false
     private var requiredAddress2: Boolean = true
@@ -208,7 +209,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    ErrorUtil.showError(binding.root, resource.errorModel?.message)
                 }
             }
 
@@ -227,6 +228,9 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 NewCreateAccountRequestModel.townCity = binding.townCity.getText().toString()
                 NewCreateAccountRequestModel.country =
                     binding.country.selectedItemDescription.toString()
+
+                NewCreateAccountRequestModel.address_country_code =
+                    getCountryCode(binding.country.selectedItemDescription.toString())
                 NewCreateAccountRequestModel.zipCode = binding.postCode.getText().toString()
                 if (navFlowCall.equals(Constants.PROFILE_MANAGEMENT, true)) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
@@ -258,6 +262,14 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         }
     }
 
+    private fun getCountryCode(country: String): String {
+        val filteredModels = totalCountriesList.filter { it.countryName == country }
+        if (filteredModels.size > 0) {
+            return filteredModels.get(0).countryCode ?: ""
+        }
+        return country
+    }
+
     private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -265,8 +277,10 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         when (response) {
             is Resource.Success -> {
                 countriesList.clear()
-                response.data?.forEach {
-                    it?.countryName?.let { it1 -> countriesList.add(it1) }
+                totalCountriesList.clear()
+                totalCountriesList = response.data as ArrayList<CountriesModel>
+                response.data.forEach {
+                    it.countryName?.let { it1 -> countriesList.add(it1) }
                 }
                 countriesList.sortWith(
                     compareBy(String.CASE_INSENSITIVE_ORDER) { it }
@@ -581,7 +595,18 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
     }
 
     private fun updateStandardUserProfile(data: ProfileDetailModel?) {
+        var country = ""
+        if (NewCreateAccountRequestModel.country.equals(
+                "UK",
+                true
+            ) || NewCreateAccountRequestModel.country.equals("United Kingdom", true)
+        ) {
+            country = "UK"
 
+        } else {
+            country = "NON-UK"
+
+        }
         data?.personalInformation?.run {
             val request = UpdateProfileRequest(
                 firstName = firstName,
@@ -589,18 +614,19 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 addressLine1 = NewCreateAccountRequestModel.addressline1,
                 addressLine2 = NewCreateAccountRequestModel.addressline2,
                 city = NewCreateAccountRequestModel.townCity,
-                state = state,
+                state = "HE",
                 zipCode = NewCreateAccountRequestModel.zipCode,
                 zipCodePlus = zipCodePlus,
-                country = NewCreateAccountRequestModel.country,
+                country = NewCreateAccountRequestModel.address_country_code,
                 emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneNumber ?: "",
+                phoneCell = cellPhone ?: "",
                 phoneDay = phoneDay,
                 phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = ""
+                smsOption = data.accountInformation?.smsOption,
+                phoneEvening = "",
+                phoneCellCountryCode = phoneCellCountryCode,
             )
 
             viewModelProfile.updateUserDetails(request)
@@ -613,24 +639,26 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             val request = UpdateProfileRequest(
                 firstName = personalInformation?.firstName,
                 lastName = personalInformation?.lastName,
-                addressLine1 = personalInformation?.addressLine1,
-                addressLine2 = personalInformation?.addressLine2,
-                city = personalInformation?.city,
-                state = personalInformation?.state,
-                zipCode = personalInformation?.zipcode,
+                addressLine1 = NewCreateAccountRequestModel.addressline1,
+                addressLine2 = NewCreateAccountRequestModel.addressline2,
+                city = NewCreateAccountRequestModel.townCity,
+                state = "HE",
+                zipCode = NewCreateAccountRequestModel.zipCode,
                 zipCodePlus = personalInformation?.zipCodePlus,
-                country = personalInformation?.country,
+                country = NewCreateAccountRequestModel.address_country_code,
                 emailAddress = personalInformation?.emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = personalInformation?.phoneNumber ?: "",
+                phoneCell = personalInformation?.phoneCell ?: "",
                 phoneDay = personalInformation?.phoneDay,
                 phoneFax = "",
                 smsOption = "Y",
                 phoneEvening = "",
                 fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName
-            )
+                businessName = personalInformation?.customerName,
+                phoneCellCountryCode = personalInformation?.phoneCellCountryCode,
+                phoneDayCountryCode = personalInformation?.phoneDayCountryCode,
+                )
 
             viewModelProfile.updateUserDetails(request)
         }

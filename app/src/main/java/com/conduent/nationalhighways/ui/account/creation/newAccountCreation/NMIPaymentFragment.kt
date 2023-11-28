@@ -419,7 +419,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             NewCreateAccountRequestModel.mobileNumber,
             "", "", "", "", "", "", ""
         )
-        val pendingDues = (crossingDetailModelResponse?.unSettledTrips?.toDouble())?.times(
+        val pendingDues = (crossingDetailModelResponse?.unsettledTripChange?.toDouble())?.times(
             (crossingDetailModelResponse?.chargingRate?.toDouble() ?: 0.00)
         )
         val futureTollPayment =
@@ -433,12 +433,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             futureTollCount =Additional crossing selected
             future toll payment =Additional Crossing Selected * Charging Rate
         * */
+        Log.e("TAG", "makeOneOffPaymentApi:plateCountry  "+ crossingDetailModelResponse?.plateCountry)
         val vehicleList = VehicleList(
             crossingDetailModelResponse?.plateNo,
             crossingDetailModelResponse?.vehicleMake,
             crossingDetailModelResponse?.vehicleModel,
             crossingDetailModelResponse?.dvlaclass,
-            "UK",
+            crossingDetailModelResponse?.plateCountry,
             pendingDues.toString(),
             crossingDetailModelResponse?.additionalCrossingCount.toString(),
             futureTollPayment.toString(),
@@ -447,7 +448,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             crossingDetailModelResponse?.customerClass,
             crossingDetailModelResponse?.customerClassRate,
             crossingDetailModelResponse?.accountNo,
-            crossingDetailModelResponse?.unSettledTrips.toString(),
+            crossingDetailModelResponse?.unsettledTripChange.toString(),
             crossingDetailModelResponse?.chargingRate
         )
         val mVehicleList = ArrayList<VehicleList>()
@@ -474,7 +475,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             city = personalInformation?.city,
             country = "UK",
             cvv = "",
-            easyPay = "N",
+            easyPay = "Y",
             expMonth = responseModel?.card?.exp?.substring(0, 2),
             expYear = "20${responseModel?.card?.exp?.substring(2, 4)}",
             firstName = responseModel?.check?.name ?: "",
@@ -538,22 +539,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.smsSecurityCd = data.smsSecurityCode      // sms security code
         model.cardMiddleName = ""
         model.cardZipCode = data.zipCode
-        model.zipCode1 = data.zipCode
         if (!NewCreateAccountRequestModel.prePay) {
             model.planType = "PAYG"
 
         }
-        if (NewCreateAccountRequestModel.country.equals(
-                "UK",
-                true
-            ) || NewCreateAccountRequestModel.country.equals("United Kingdom", true)
-        ) {
-            model.countryType = "UK"
 
-        } else {
-            model.countryType = "NON-UK"
-
-        }
         model.referenceId = data.referenceId
         if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
             model.cellPhone = data.mobileNumber
@@ -564,7 +554,23 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.eveningPhoneCountryCode = data.telephone_countryCode?.let { getRequiredText(it) }
             model.smsReferenceId = ""
         }
-        model.address1 = data.addressline1
+        if (NewCreateAccountRequestModel.prePay) {
+            if (data.address_country_code.isEmpty()) {
+                model.countryType = "UK"
+            } else {
+                model.countryType = data.address_country_code
+            }
+            model.address1 = data.addressline1
+            model.address2 = data.addressline2
+            model.zipCode1 = data.zipCode
+            model.city = data.townCity   // address city
+        } else {
+            model.countryType = ""
+            model.address1 = ""
+            model.address2 = ""
+            model.zipCode1 = ""
+            model.city = ""
+        }
         model.billingAddressLine1 = data.addressline1
         model.emailAddress = data.emailAddress
         model.creditCExpMonth = expMonth
@@ -590,7 +596,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.securityCd = data.emailSecurityCode   // email security code
         model.cardFirstName = data.firstName   // model name
         model.cardCity = data.townCity   // address city
-        model.city = data.townCity   // address city
         model.threeDsVer = threeDsVersion  // 3ds verison
         model.maskedNumber =
             maskedCardNumber// card masked number only we need to send last four digit
@@ -625,14 +630,18 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
         for (obj in data.vehicleList) {
             val item = VehicleItem()
-
+            Log.e("TAG", "callAccountCreationApi: plateCountry " + obj.plateCountry)
             item.vehicleModel = obj.vehicleModel
             item.vehicleMake = obj.vehicleMake
             item.vehicleColor = obj.vehicleColor
             item.vehiclePlate = obj.plateNumber
             item.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass.toString())
             // item.plateTypeDesc = "STANDARD"
-            item.plateCountry = "UK"
+            if (obj.isUK == true) {
+                item.plateCountry = "UK"
+            } else {
+                item.plateCountry = "NON-UK"
+            }
             item.vehicleYear = "2023"
             listVehicle.add(item)
 
