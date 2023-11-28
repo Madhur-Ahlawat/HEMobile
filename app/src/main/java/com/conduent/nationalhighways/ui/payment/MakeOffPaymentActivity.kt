@@ -1,20 +1,14 @@
 package com.conduent.nationalhighways.ui.payment
 
 import android.os.Bundle
-import androidx.navigation.NavArgument
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
-import com.conduent.nationalhighways.databinding.ActivityMakeOffPaymentBinding
-import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.MakeOneOffPaymentSuccessfullyFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -27,8 +21,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
-    private var navHostFragment: NavHostFragment?=null
+class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
+    private var navHostFragment: NavHostFragment? = null
     lateinit var binding: ActivityCreateAccountBinding
 
     @Inject
@@ -57,8 +51,8 @@ class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
     }
 
     private fun init() {
-        NewCreateAccountRequestModel.onOffVehiclePlateNumber=""
-        NewCreateAccountRequestModel.plateNumber=""
+        NewCreateAccountRequestModel.oneOffVehiclePlateNumber = ""
+        NewCreateAccountRequestModel.plateNumber = ""
         binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
 
 
@@ -75,8 +69,11 @@ class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
         navGraph?.setStartDestination(destination)
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAY_FOR_CROSSINGS)
-        if(data!=null && data is CrossingDetailsModelsResponse){
-            bundle.putString(Constants.PLATE_NUMBER, (data as CrossingDetailsModelsResponse).plateNo)
+        if (data != null && data is CrossingDetailsModelsResponse) {
+            bundle.putString(
+                Constants.PLATE_NUMBER,
+                (data as CrossingDetailsModelsResponse).plateNo
+            )
             bundle.putParcelable(Constants.NAV_DATA_KEY, data as CrossingDetailsModelsResponse)
         }
         navController?.setGraph(navGraph!!, bundle)
@@ -114,7 +111,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>() ,LogoutListener{
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
         sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {

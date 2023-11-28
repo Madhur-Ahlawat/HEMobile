@@ -60,8 +60,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             edit_vehicle = arguments?.getBoolean(Constants.EDIT_VEHICLE) ?: false
         }
         isCrossingCall = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS, true)
-        if (NewCreateAccountRequestModel.onOffVehiclePlateNumber.isNotEmpty()) {
-            binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.onOffVehiclePlateNumber.toString())
+        if (NewCreateAccountRequestModel.oneOffVehiclePlateNumber.isNotEmpty()) {
+            binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.oneOffVehiclePlateNumber.toString())
             binding.findVehicle.enable()
         }
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
@@ -217,14 +217,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             R.id.findVehicle -> {
                 emailHeartBeatApi()
                 smsHeartBeatApi()
-
-                NewCreateAccountRequestModel.onOffVehiclePlateNumber = ""
-
-
-                NewCreateAccountRequestModel.onOffVehiclePlateNumber = ""
+                NewCreateAccountRequestModel.oneOffVehiclePlateNumber = ""
                 isClicked = true
-
-
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
@@ -650,19 +644,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         vehicleModel = vehicleItem.vehicleModel
                         plateNo = binding.editNumberPlate.editText.text.toString()
                     }
-//                        var crossingDetailsModelsResponse=CrossingDetailsModelsResponse().apply {
-//                            referenceNumber = data?.referenceNumber!!
-//                            plateNumber = data?.plateNumber
-//                            accountActStatus= resource.data?.get(0)?.accountActStatus!!
-//                            accountBalance= resource.data?.get(0)?.accountBalance!!
-//                            accountNo= resource.data?.get(0)?.accountNo!!
-//                            accountTypeCd=resource.data?.get(0)?.accountStatusCd!!
-//                            expirationDate=resource.data?.get(0)?.expirationDate!!
-//                            plateCountry=resource.data?.get(0)?.plateCountry
-//                            plateNo=resource.data?.get(0)?.plateNo!!
-//                            unusedTrip=resource.data?.get(0)?.unusedTrip!!
-//                            vehicleClass=resource.data?.get(0)?.vehicleClass
-//                        }
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
@@ -703,6 +684,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     if (isVehicleExist) {
                         accountData.isVehicleAlreadyAddedLocal = true
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
                         bundle.putString(Constants.PLATE_NUMBER, plateNumber)
                         bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
 

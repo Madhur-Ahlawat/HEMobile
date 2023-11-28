@@ -172,7 +172,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         )
 
                         val model = CrossingDetailsModelsRequest(
-                            data?.plateNo,
+                            data?.plateNo?.uppercase(),
                             data?.vehicleClass,
                             "UK",
                             data?.vehicleMake,

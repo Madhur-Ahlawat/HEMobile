@@ -13,7 +13,6 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.common.Utils.currentTime
 import com.conduent.nationalhighways.utils.common.Utils.currentTimeWithAMPM
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,18 +87,15 @@ class MakeOneOffPaymentSuccessfullyFragment :
         when (v?.id) {
 
             R.id.createAccount -> {
-                var plateNumber = ""
-                if (NewCreateAccountRequestModel.vehicleList.size > 0) {
-                    plateNumber = NewCreateAccountRequestModel.vehicleList.get(0).plateNumber ?: ""
-                }
+
 
                 NewCreateAccountRequestModel.vehicleList = ArrayList()
-                NewCreateAccountRequestModel.onOffVehiclePlateNumber = plateNumber
+                NewCreateAccountRequestModel.oneOffVehiclePlateNumber = NewCreateAccountRequestModel.plateNumber
 
                 requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
                     putString(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
                     putString(Constants.NAV_FLOW_FROM, Constants.ONE_OFF_PAYMENT_SUCCESS)
-                    putString(Constants.PLATE_NUMBER, plateNumber)
+                    putString(Constants.PLATE_NUMBER, NewCreateAccountRequestModel.plateNumber)
                     putString(Constants.EMAIL, NewCreateAccountRequestModel.emailAddress)
                     putString(Constants.MOBILE_NUMBER, NewCreateAccountRequestModel.mobileNumber)
                     putString(Constants.COUNTRY_TYPE, NewCreateAccountRequestModel.countryCode)

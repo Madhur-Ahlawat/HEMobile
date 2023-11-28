@@ -419,7 +419,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             NewCreateAccountRequestModel.mobileNumber,
             "", "", "", "", "", "", ""
         )
-        val pendingDues = (crossingDetailModelResponse?.unSettledTrips?.toDouble())?.times(
+        val pendingDues = (crossingDetailModelResponse?.unsettledTripChange?.toDouble())?.times(
             (crossingDetailModelResponse?.chargingRate?.toDouble() ?: 0.00)
         )
         val futureTollPayment =
@@ -448,7 +448,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             crossingDetailModelResponse?.customerClass,
             crossingDetailModelResponse?.customerClassRate,
             crossingDetailModelResponse?.accountNo,
-            crossingDetailModelResponse?.unSettledTrips.toString(),
+            crossingDetailModelResponse?.unsettledTripChange.toString(),
             crossingDetailModelResponse?.chargingRate
         )
         val mVehicleList = ArrayList<VehicleList>()

@@ -106,7 +106,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
                 if (isItMobileNumber) {
                     NewCreateAccountRequestModel.mobileNumber?.let {
-                        binding.inputMobileNumber.setText(
+                        binding.inputMobileNumber.editText.setText(
                             it
                         )
                     }
@@ -117,7 +117,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
                 } else {
                     NewCreateAccountRequestModel.telephoneNumber?.let {
-                        binding.inputMobileNumber.setText(
+                        binding.inputMobileNumber.editText.setText(
                             it
                         )
                     }
@@ -162,7 +162,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             else -> {
-                binding.inputMobileNumber.setText(NewCreateAccountRequestModel.mobileNumber ?: "")
+                binding.inputMobileNumber.editText.setText(NewCreateAccountRequestModel.mobileNumber ?: "")
             }
         }
 
@@ -175,10 +175,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (data != null) {
             if (data?.personalInformation?.phoneCell.isNullOrEmpty().not()) {
                 setMobileView()
-                data?.personalInformation?.phoneCell?.let { binding.inputMobileNumber.setText(it) }
+                data?.personalInformation?.phoneCell?.let { binding.inputMobileNumber.editText.setText(it) }
             } else if (data?.personalInformation?.phoneDay.isNullOrEmpty().not()) {
                 setTelephoneView()
-                data?.personalInformation?.phoneDay?.let { binding.inputMobileNumber.setText(it) }
+                data?.personalInformation?.phoneDay?.let { binding.inputMobileNumber.editText.setText(it) }
             }
             data?.personalInformation?.phoneCellCountryCode?.let {
                 binding.inputCountry.setSelectedValue(
@@ -338,6 +338,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
                 if (!NewCreateAccountRequestModel.prePay) {
+                    checkButton()
+                }
+
+                if(binding.inputMobileNumber.editText.text?.isNotEmpty() == true){
                     checkButton()
                 }
 
@@ -730,7 +734,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
         if (selected) {
-            binding.inputMobileNumber.setText("")
+            binding.inputMobileNumber.editText.setText("")
             binding.inputMobileNumber.removeError()
         } else {
             if (fullCountryNameWithCode.size > 0) {

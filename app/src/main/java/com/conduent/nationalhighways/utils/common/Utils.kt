@@ -1272,19 +1272,17 @@ object Utils {
 
 
     fun getFileExtension(filePath: String): String {
-        if (filePath.length >= 3) {
-            return filePath.substring(filePath.length - 3)
-        } else {
-            return filePath
-        }
+        /* if (filePath.length >= 3) {
+             return filePath.substring(filePath.length - 3)
+         } else {
+             return filePath
+         }*/
 
-        /*
-                return if (filePath.contains(".")) {
-                    filePath.substring(filePath.lastIndexOf(".") + 1)
-                } else {
-                    ""
-                }
-        */
+        return if (filePath.contains(".")) {
+            filePath.substring(filePath.lastIndexOf(".") + 1)
+        } else {
+            ""
+        }
     }
 
     fun checkFileTypeByExtension(filePath: String): Boolean {
@@ -1293,7 +1291,7 @@ object Utils {
         return extension.equals("jpg", ignoreCase = true) ||
                 extension.equals("pdf", ignoreCase = true) ||
                 extension.equals("bmp", ignoreCase = true) ||
-                extension.equals("tif", ignoreCase = true)
+                extension.equals("tiff", ignoreCase = true)
     }
 
     fun returnSharedPreference(context: Context): SharedPreferences {

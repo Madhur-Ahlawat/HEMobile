@@ -1,9 +1,11 @@
 package com.conduent.nationalhighways.ui.account.creation.controller
 
+import android.util.Log
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -37,7 +39,7 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
 
         }
 
-
+        Log.e("TAG", "init: onOffVehiclePlateNumber "+NewCreateAccountRequestModel.oneOffVehiclePlateNumber )
         AdobeAnalytics.setScreenTrack(
             "create account",
             "create account",

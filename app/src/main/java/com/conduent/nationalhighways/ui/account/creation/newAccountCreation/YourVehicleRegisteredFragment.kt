@@ -63,8 +63,12 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                     data?.plateCountry = Constants.COUNTRY_TYPE_UK
                     data?.veicleUKnonUK = true
                 }
-                data?.vehicleClass = nonUKVehicleModel?.vehicleClass
-                data?.plateNo = nonUKVehicleModel?.plateNumber ?: ""
+                if(data?.vehicleClass?.isEmpty() == true){
+                    data?.vehicleClass = nonUKVehicleModel?.vehicleClass
+                }
+                if(data?.plateNo?.isEmpty() == true){
+                    data?.plateNo = nonUKVehicleModel?.plateNumber ?: ""
+                }
                 val bundle = Bundle()
                 bundle.putString(Constants.data_type, "dvla")
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
