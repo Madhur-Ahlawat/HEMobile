@@ -38,6 +38,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     private var data: CrossingDetailsModelsResponse? = null
     var requiredNoAdditionalCrossings: Boolean = false
     var viewCreated:Boolean=false
+    var haveRecentCrossings:Boolean=false
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -46,6 +47,9 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        if(arguments?.containsKey(Constants.HAVE_RECENT_CROSSINGS)==true){
+            haveRecentCrossings=arguments?.getBoolean(Constants.HAVE_RECENT_CROSSINGS)?:false
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (arguments?.getParcelable(
                     Constants.NAV_DATA_KEY,
@@ -67,6 +71,11 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         
         navData = data
 
+        if(haveRecentCrossings){
+            binding.backToMainMenu.gone()
+        }else{
+            binding.backToMainMenu.visible()
+        }
         if (data?.unsettledTripChange == 0) {
             binding.recentCrossingHelper.gone()
             binding.recentCrossing.gone()

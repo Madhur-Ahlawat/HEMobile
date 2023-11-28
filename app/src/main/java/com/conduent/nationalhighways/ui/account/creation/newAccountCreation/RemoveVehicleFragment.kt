@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
+import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -76,8 +77,9 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
                     getString(R.string.are_you_sure_you_want_to_remove_vehicle, numberPlate)
             }
         }
+        binding.strEffectiveDateText.text = DateUtils.convertStringDatetoAnotherFormat(vehicleDetails?.vehicleInfo?.effectiveStartDate?:""
+            ,DateUtils.dd_mmm_yyyy_hh_mm_a,DateUtils.dd_mmm_yyyy)
 
-        binding.strEffectiveDateText.text = Utils.getYesterdayDate()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 

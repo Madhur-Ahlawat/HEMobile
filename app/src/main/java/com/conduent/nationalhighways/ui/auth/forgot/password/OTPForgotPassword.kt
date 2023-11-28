@@ -249,11 +249,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 } else {
                     val data = navData as ProfileDetailModel?
                     val bundle = Bundle()
-                    bundle.putString(
-                        Constants.NAV_FLOW_FROM,
-                        Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE
-                    )
+                    if (navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE) {
 
+                    }else {
+                        bundle.putString(
+                            Constants.NAV_FLOW_FROM,
+                            Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE
+                        )
+                    }
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)

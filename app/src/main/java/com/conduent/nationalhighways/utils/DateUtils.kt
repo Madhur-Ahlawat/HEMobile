@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.utils
 
+import android.util.Log
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -10,7 +11,10 @@ import java.util.concurrent.TimeUnit
 
 object DateUtils {
 
+
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy")
+     val dd_mmm_yyyy_hh_mm_a = "dd MMM yyyy hh:mm a"
+     val dd_mmm_yyyy = "dd MMMM yyyy"
 
     fun currentDate(): String? {
         return dateFormat.format(Calendar.getInstance().time)
@@ -151,25 +155,6 @@ object DateUtils {
         return date ?: ""
     }
 
-    fun getTimeForCasesAndEnquiry(date: String?): String {
-        val list = mutableListOf<DateFormat>()
-        val dateFormatter1: DateFormat = SimpleDateFormat("MMM dd,yyyy, hh:mm")
-        val dateFormatter2: DateFormat = SimpleDateFormat("dd MMM yyyy hh:mm aa")
-        list.add(dateFormatter1)
-        list.add(dateFormatter2)
-
-        list.forEach { myDate ->
-            try {
-                val dateObj = myDate.parse(date)
-                val postFormatter = SimpleDateFormat("hh:mm")
-                return postFormatter.format(dateObj)
-            } catch (e: Exception) {
-
-            }
-        }
-        return date ?: ""
-    }
-
     fun convertDateToMonth(date: String): String {
         val dateFormatter: DateFormat = SimpleDateFormat("dd/MM/yyyy")
         return try {
@@ -196,6 +181,20 @@ object DateUtils {
         return try {
             val dateObj = dateFormatter.parse(date)
             val postFormatter = SimpleDateFormat("dd MMM yyyy hh:mm a")
+            postFormatter.format(dateObj)
+        } catch (e: Exception) {
+            date
+        }
+    }
+    fun convertStringDatetoAnotherFormat(date: String,dateFormat1:String,dateFormat2:String): String {
+        Log.e(
+            "TAG",
+            "convertStringDatetoAnotherFormat() called with: date = $date, dateFormat1 = $dateFormat1, dateFormat2 = $dateFormat2"
+        )
+        val dateFormatter: DateFormat = SimpleDateFormat(dateFormat1)
+        return try {
+            val dateObj = dateFormatter.parse(date)
+            val postFormatter = SimpleDateFormat(dateFormat2)
             postFormatter.format(dateObj)
         } catch (e: Exception) {
             date
