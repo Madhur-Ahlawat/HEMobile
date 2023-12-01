@@ -65,9 +65,9 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         }
 
 
-        when(navFlowCall){
+        when (navFlowCall) {
 
-            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
+            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
                 emailHeartBeatApi()
                 smsHeartBeatApi()
                 binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
@@ -80,7 +80,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_name)
                 val data = navData as ProfileDetailModel?
-                if (data?.accountInformation?.accountType.equals(PERSONAL_ACCOUNT,true)) {
+                if (data?.accountInformation?.accountType.equals(PERSONAL_ACCOUNT, true)) {
                     enablePersonalView()
                 }
                 data?.personalInformation?.firstName?.let { binding.inputFirstName.setText(it) }
@@ -121,16 +121,24 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
-                findNavController().navigate(R.id.action_createAccountPersonalInfo_to_resetForgotPassword,bundle)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                findNavController().navigate(
+                    R.id.action_createAccountPersonalInfo_to_resetForgotPassword,
+                    bundle
+                )
             }
+
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
-                }else {
+                } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
+
             else -> {
             }
         }
@@ -141,38 +149,49 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         when (v?.id) {
             binding.btnNext.id -> {
 
-                when(navFlowCall){
+                when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
                         storeData()
                         findNavController().popBackStack()
                     }
+
                     PROFILE_MANAGEMENT -> {
                         val data = navData as ProfileDetailModel?
                         val fName = binding.inputFirstName.getText().toString()
                         val lName = binding.inputLastName.getText().toString()
                         val cName = binding.inputCompanyName.getText().toString()
-                        if(fName.equals(data?.personalInformation?.firstName, true) &&
+                        if (fName.equals(data?.personalInformation?.firstName, true) &&
                             lName.equals(data?.personalInformation?.lastName, true) &&
-                            cName.equals(data?.personalInformation?.customerName, true)){
+                            cName.equals(data?.personalInformation?.customerName, true)
+                        ) {
                             findNavController().popBackStack()
-                        }else{
-                            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                            if (data?.accountInformation?.accountType.equals(PERSONAL_ACCOUNT,true)) {
-                                updateStandardUserProfile(data,fName,lName)
-                            }else{
-                                updateBusinessUserProfile(data,fName,lName,cName)
+                        } else {
+                            loader?.show(
+                                requireActivity().supportFragmentManager,
+                                Constants.LOADER_DIALOG
+                            )
+                            if (data?.accountInformation?.accountType.equals(
+                                    PERSONAL_ACCOUNT,
+                                    true
+                                )
+                            ) {
+                                updateStandardUserProfile(data, fName, lName)
+                            } else {
+                                updateBusinessUserProfile(data, fName, lName, cName)
                             }
                         }
 
 
                     }
+
                     else -> {
                         storeData()
                         val bundle = Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         findNavController().navigate(
-                            R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,bundle
+                            R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,
+                            bundle
                         )
                     }
                 }
@@ -189,7 +208,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             binding.inputCompanyName.getText().toString()
     }
 
-    override fun onRetryClick(apiUrl: String){
+    override fun onRetryClick(apiUrl: String) {
 
     }
 
@@ -256,10 +275,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
                 requiredFirstName = false
-            }
-            else {
+            } else {
                 if (binding.inputFirstName.getText().toString().trim().length <= 50) {
-                    if (binding.inputFirstName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputFirstName.getText().toString().trim().replace(" ", "")
+                            .matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)
+                    ) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
                     } else {
@@ -279,10 +299,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
                 requiredLastName = false
-            }
-            else {
+            } else {
                 if (binding.inputLastName.getText().toString().trim().length <= 50) {
-                    if (binding.inputLastName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputLastName.getText().toString().trim().replace(" ", "")
+                            .matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)
+                    ) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
                     } else {
@@ -306,8 +327,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                     if (binding.inputCompanyName.getText().toString().trim().length > 50) {
                         binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_error_message))
                         false
-                    } else if (hasSpecialCharacters(binding.inputCompanyName.getText().toString(),
-                            splCharCompanyName)) {
+                    } else if (hasSpecialCharacters(
+                            binding.inputCompanyName.getText().toString(),
+                            splCharCompanyName
+                        )
+                    ) {
                         binding.inputCompanyName.setErrorText(getString(R.string.company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens))
                         false
                     } else {
@@ -332,10 +356,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
                 requiredFirstName = false
-            }
-            else {
+            } else {
                 if (binding.inputFirstName.getText().toString().trim().length <= 50) {
-                    if (binding.inputFirstName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputFirstName.getText().toString().trim().replace(" ", "")
+                            .matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)
+                    ) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
                     } else {
@@ -353,10 +378,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
                 requiredLastName = false
-            }
-            else {
+            } else {
                 if (binding.inputLastName.getText().toString().trim().length <= 50) {
-                    if (binding.inputLastName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputLastName.getText().toString().trim().replace(" ", "")
+                            .matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)
+                    ) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
                     } else {
@@ -415,23 +441,24 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
         data?.personalInformation?.run {
             val request = UpdateProfileRequest(
-                firstName = fName,
-                lastName = lName,
+                correspDeliveryFrequency = Constants.MONTHLY, smsOption = "Y",
+                country = country,
                 addressLine1 = addressLine1,
                 addressLine2 = addressLine2,
+                firstName = fName,
+                lastName = lName,
                 city = city,
+                emailAddress = emailAddress,
+                correspDeliveryMode = Constants.POST_MAIL,
+                primaryEmailUniqueID = pemailUniqueCode,
+                mfaEnabled = "N",
+                phoneCell = phoneDay ?: phoneNumber,
+                phoneFax = "",
+                phoneCellCountryCode = phoneDayCountryCode,
+                primaryEmailStatus = this.primaryEmailStatus,
                 state = state,
                 zipCode = zipcode,
                 zipCodePlus = zipCodePlus,
-                country = country,
-                emailAddress = emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneNumber ?: "",
-                phoneDay = phoneDay,
-                phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = ""
             )
 
             viewModel.updateUserDetails(request)

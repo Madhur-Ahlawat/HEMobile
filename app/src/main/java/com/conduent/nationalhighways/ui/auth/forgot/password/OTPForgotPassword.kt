@@ -802,7 +802,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
             }
 
-            PROFILE_MANAGEMENT_2FA_CHANGE, Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+            PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                 loader?.show(
                     requireActivity().supportFragmentManager,
                     Constants.LOADER_DIALOG
