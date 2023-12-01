@@ -45,7 +45,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
     private var loader: LoaderDialog? = null
     private var apiCalled: Boolean = false
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
-
+    private var postcode: String = ""
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
@@ -57,6 +57,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         binding.btnEnterAddressManually.setOnClickListener(this)
         binding.btnUpdateAddressManually.setOnClickListener(this)
         binding.inputPostCode.setMaxLength(10)
+
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
@@ -75,6 +76,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 title?.text = getString(R.string.profile_address)
                 val data = navData as ProfileDetailModel?
                 data?.personalInformation?.zipcode?.let { binding.inputPostCode.setText(it) }
+                postcode = data?.personalInformation?.zipcode?:""
 
                 if (data?.accountInformation?.accountType.equals(
                         Constants.PERSONAL_ACCOUNT,
@@ -196,9 +198,11 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
                 is Resource.DataError -> {
 
-                    if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL &&(response.errorModel.error!=null && response.errorModel.error.equals(
-                            Constants.INVALID_TOKEN))) ||( response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR &&(response.errorModel.error!=null && response.errorModel.error.equals(
-                            Constants.SERVER_ERROR)))
+                    if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && (response.errorModel.error != null && response.errorModel.error.equals(
+                            Constants.INVALID_TOKEN
+                        ))) || (response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR && (response.errorModel.error != null && response.errorModel.error.equals(
+                            Constants.SERVER_ERROR
+                        )))
                     ) {
                         displaySessionExpireDialog(response.errorModel)
                     } else {
@@ -229,6 +233,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             val data = navData as ProfileDetailModel?
             bundle.putParcelable(Constants.NAV_DATA_KEY, data)
         }
+        bundle.putString(Constants.POST_CODE, postcode)
+        bundle.putString(Constants.EDIT_POST_CODE, binding.inputPostCode.editText.text.toString())
         Log.e("TAG", "handleAddressApiResponse:enterAddressManual-> ")
 
         findNavController().navigate(R.id.action_createAccountPostCodeNew_to_ManualAddress, bundle)

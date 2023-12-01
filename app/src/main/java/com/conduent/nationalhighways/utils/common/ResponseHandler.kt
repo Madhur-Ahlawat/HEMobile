@@ -71,7 +71,7 @@ object ResponseHandler {
 
 
     fun <T> failure(e: Exception?): Resource<T?> {
-        Log.e("TAG", "failure: e " + e)
+        Log.e("TAG", "failure: e message " + e?.message)
         if (e is NoConnectivityException) {
             return Resource.DataError(e.message)
         } else if (e is SocketTimeoutException) {

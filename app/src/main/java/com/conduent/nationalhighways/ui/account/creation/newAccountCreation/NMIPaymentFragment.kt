@@ -125,6 +125,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
+        binding.webView.setOnLongClickListener { true }
+        binding.webView.isLongClickable = false
+
 
 
         binding.webView.settings.apply {

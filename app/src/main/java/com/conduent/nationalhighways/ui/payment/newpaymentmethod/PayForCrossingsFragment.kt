@@ -171,11 +171,10 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     private fun additionalCrossingClick() {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-
         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
-
         bundle.putString(Constants.NAV_FLOW_FROM, Constants.PAY_FOR_CROSSINGS)
         bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
+        bundle.putBoolean(Constants.HAVE_RECENT_CROSSINGS, true)
         findNavController().navigate(
             R.id.action_payCrossingsFragment_to_additionalCrossingsFragment,
             bundle

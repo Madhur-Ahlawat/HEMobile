@@ -32,6 +32,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_FROM_POST_CODE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.UK_COUNTRY
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -67,6 +68,8 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
     private var isViewCreated: Boolean = false
     private val viewModelProfile: ProfileViewModel by viewModels()
     private val lrdsViewModel: LrdsEligibilityViewModel by viewModels()
+    private var oldPostCode: String = ""
+    private var editPostCode: String = ""
 
     constructor(parcel: Parcel) : this() {
         requiredAddress = parcel.readByte() != 0.toByte()
@@ -83,7 +86,12 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         FragmentManualAddressBinding.inflate(inflater, container, false)
 
     override fun init() {
-
+        if (arguments?.containsKey(Constants.POST_CODE) == true) {
+            oldPostCode = arguments?.getString(Constants.POST_CODE) ?: ""
+        }
+        if (arguments?.containsKey(Constants.EDIT_POST_CODE) == true) {
+            editPostCode = arguments?.getString(Constants.EDIT_POST_CODE) ?: ""
+        }
         if (NewCreateAccountRequestModel.zipCode.isNotEmpty()) {
             binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
             requiredPostcode = true
@@ -111,33 +119,42 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
+
                 binding.address.setText(NewCreateAccountRequestModel.addressline1)
                 binding.address2.setText(NewCreateAccountRequestModel.addressline2)
                 binding.townCity.setText(NewCreateAccountRequestModel.townCity)
-                binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
                 binding.country.setSelectedValue(NewCreateAccountRequestModel.country)
                 requiredCountry = true
+
+                binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
+
                 checkButton()
                 if (NewCreateAccountRequestModel.personalAccount) {
                     setPersonalView()
                 }
             }
 
-            Constants.PROFILE_MANAGEMENT -> {
+            PROFILE_MANAGEMENT -> {
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
                 (navData as ProfileDetailModel).personalInformation?.let {
-                    binding.address.editText.setText(it.addressLine1)
-                    binding.address2.editText.setText(it.addressLine2)
-                    binding.postCode.editText.setText(it.zipcode)
-                    binding.townCity.editText.setText(it.city)
-                    binding.country.setSelectedValue(it.country!!)
+                    Log.e("TAG", "init: oldPostCode-> " + oldPostCode)
+                    Log.e("TAG", "init: editPostCode-> " + editPostCode)
+                    if (oldPostCode.equals(editPostCode)) {
+                        binding.address.editText.setText(it.addressLine1)
+                        binding.address2.editText.setText(it.addressLine2)
+                        binding.townCity.editText.setText(it.city)
+                        binding.country.setSelectedValue(it.country ?: "")
+                        requiredAddress = true
+                        requiredAddress2 = true
+                        requiredCountry = true
+                        binding.postCode.editText.setText(it.zipcode)
+                    } else {
+                        binding.postCode.editText.setText(editPostCode)
+                    }
                 }
-                requiredAddress = true
-                requiredAddress2 = true
-                requiredCountry = true
+
                 requiredPostcode = true
-                requiredCityTown = true
                 checkButton()
                 if ((navData as ProfileDetailModel).accountInformation?.accountType.equals(
                         Constants.PERSONAL_ACCOUNT,
@@ -232,7 +249,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 NewCreateAccountRequestModel.address_country_code =
                     getCountryCode(binding.country.selectedItemDescription.toString())
                 NewCreateAccountRequestModel.zipCode = binding.postCode.getText().toString()
-                if (navFlowCall.equals(Constants.PROFILE_MANAGEMENT, true)) {
+                if (navFlowCall.equals(PROFILE_MANAGEMENT, true)) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                     val data = navData as ProfileDetailModel?
@@ -270,6 +287,14 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         return country
     }
 
+    private fun getCountryCodeName(country: String): String {
+        val filteredModels = totalCountriesList.filter { it.countryCode == country }
+        if (filteredModels.size > 0) {
+            return filteredModels.get(0).countryName ?: ""
+        }
+        return country
+    }
+
     private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -296,7 +321,19 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                     country.dataSet.clear()
                     country.dataSet.addAll(countriesList)
                 }
-                binding.country.setSelectedValue(UK_COUNTRY)
+                if (navFlowCall.equals(PROFILE_MANAGEMENT)) {
+                    binding.country.setSelectedValue(
+                        getCountryCodeName(
+                            (navData as ProfileDetailModel).personalInformation?.country ?: UK_COUNTRY
+                        )
+                    )
+                } else if (navFlowCall.equals(EDIT_ACCOUNT_TYPE) or navFlowCall.equals(EDIT_SUMMARY)) {
+                    binding.country.setSelectedValue(
+                        NewCreateAccountRequestModel.country
+                    )
+                } else {
+                    binding.country.setSelectedValue(UK_COUNTRY)
+                }
                 requiredCountry = true
 
                 binding.country.clearFocus()
@@ -595,18 +632,6 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
     }
 
     private fun updateStandardUserProfile(data: ProfileDetailModel?) {
-        var country = ""
-        if (NewCreateAccountRequestModel.country.equals(
-                "UK",
-                true
-            ) || NewCreateAccountRequestModel.country.equals("United Kingdom", true)
-        ) {
-            country = "UK"
-
-        } else {
-            country = "NON-UK"
-
-        }
         data?.personalInformation?.run {
             val request = UpdateProfileRequest(
                 firstName = firstName,
@@ -621,12 +646,13 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 emailAddress = emailAddress,
                 primaryEmailStatus = Constants.PENDING_STATUS,
                 primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = cellPhone ?: "",
+                phoneCell = phoneCell ?: "",
                 phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = data.accountInformation?.smsOption,
                 phoneEvening = "",
                 phoneCellCountryCode = phoneCellCountryCode,
+                phoneDayCountryCode = phoneDayCountryCode
             )
 
             viewModelProfile.updateUserDetails(request)
@@ -658,7 +684,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 businessName = personalInformation?.customerName,
                 phoneCellCountryCode = personalInformation?.phoneCellCountryCode,
                 phoneDayCountryCode = personalInformation?.phoneDayCountryCode,
-                )
+            )
 
             viewModelProfile.updateUserDetails(request)
         }

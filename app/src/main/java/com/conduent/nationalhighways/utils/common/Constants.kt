@@ -216,6 +216,7 @@ object Constants {
     const val MESSAGE_MODE = 2
     const val POST_MAIL_MODE = 3
     const val POST_CODE = "post_code"
+    const val EDIT_POST_CODE = "edit_post_code"
     const val DATA = "data"
     const val ALLOWED_CHARACTERS_IN_PASSWORD = "~!@#\$%^&*_-+=`|\\(){}[]:;\"'<>,.?/"
     const val LOWER_CASE_ALPHABETS = "qwertyuiopasdfghjklzxcvbnm"
@@ -367,6 +368,7 @@ object Constants {
     const val OPTSMS = "optSms"
     const val TwoStepVerification = "twoStepVerification"
     const val EDIT_SUMMARY = "editSummary"
+    const val HAVE_RECENT_CROSSINGS = "haveRecentCrossings"
     const val EDIT_MOBILE = "editmobile"
     const val EDIT_EMAIL = "editEmail"
     const val EDIT_CATEGORY_DATA = "editCategoryData"

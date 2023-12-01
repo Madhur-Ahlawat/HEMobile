@@ -6,6 +6,7 @@ import android.os.Parcelable
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -63,6 +64,8 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     @Inject
     lateinit var sessionManager: SessionManager
     override fun init() {
+        viewModel.getCountries()
+
         binding.btnContinue.setOnClickListener(this)
         loader = LoaderDialog()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -99,32 +102,12 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 edtEmail.gone()
             }
         }
-        if (!NewCreateAccountRequestModel.mobileNumber.isNullOrEmpty()) {
-            binding.apply {
-                selectTextMessage.isChecked = true
-                inputCountry.visible()
-                inputCountryHelper.visible()
-                inputMobileNumber.visible()
-                inputMobileNumber.editText.setText(NewCreateAccountRequestModel.mobileNumber)
-            }
-        } else {
-            binding.apply {
-                selectTextMessage.isChecked = false
-                inputCountry.gone()
-                inputCountryHelper.gone()
-                inputMobileNumber.gone()
-            }
-        }
+
         binding.edtEmail.editText.addTextChangedListener {
             isEnable()
             checkButton()
         }
         setMobileView()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getCountries()
     }
 
     override fun initCtrl() {
@@ -202,7 +185,10 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
@@ -253,7 +239,12 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 binding.apply {
                     inputCountry.dataSet.clear()
                     inputCountry.dataSet.addAll(fullCountryNameWithCode)
-                    if (navData != null && navData is CrossingDetailsModelsResponse && !(navData as CrossingDetailsModelsResponse).fullCountryCode.isNullOrEmpty()) {
+
+                    if (NewCreateAccountRequestModel.countryCode?.isNotEmpty() == true) {
+                        inputCountry.setSelectedValue(
+                            NewCreateAccountRequestModel.countryCode ?: ""
+                        )
+                    } else if (navData != null && navData is CrossingDetailsModelsResponse && !(navData as CrossingDetailsModelsResponse).fullCountryCode.isNullOrEmpty()) {
                         if (Utils.isStringOnlyInt(
                                 NewCreateAccountRequestModel.mobileNumber ?: ""
                             )
@@ -279,11 +270,32 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
                 binding.inputCountry.clearFocus()
                 binding.inputCountry.setDropDownItemSelectListener(this)
+
+                if (!NewCreateAccountRequestModel.mobileNumber.isNullOrEmpty()) {
+                    binding.apply {
+                        selectTextMessage.isChecked = true
+                        inputCountry.visible()
+                        inputCountryHelper.visible()
+                        inputMobileNumber.visible()
+                        inputMobileNumber.editText.setText(NewCreateAccountRequestModel.mobileNumber)
+                    }
+                } else {
+                    binding.apply {
+                        selectTextMessage.isChecked = false
+                        inputCountry.gone()
+                        inputCountryHelper.gone()
+                        inputMobileNumber.gone()
+                    }
+                }
+
                 checkButton()
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(Constants.INVALID_TOKEN))|| response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, response.errorMsg)
@@ -364,6 +376,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
+
         override fun beforeTextChanged(
             charSequence: CharSequence?, start: Int, count: Int, after: Int
         ) {
@@ -372,7 +385,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         override fun onTextChanged(
             charSequence: CharSequence?, start: Int, before: Int, count: Int
         ) {
-
+            Log.e("TAG", "onTextChanged: index "+index +" charca "+charSequence.toString() )
             requiredCountryCode =
                 fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
@@ -516,6 +529,9 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
     private fun checkButton() {
         if (binding.selectEmail.isChecked && binding.selectTextMessage.isChecked) {
+            Log.e("TAG", "checkButton:11 " +isEnable())
+            Log.e("TAG", "checkButton:22 " +requiredCountryCode)
+            Log.e("TAG", "checkButton:33 " +requiredMobileNumber)
             if (isEnable() && requiredCountryCode && requiredMobileNumber) {
                 binding.btnContinue.enable()
                 (navData as CrossingDetailsModelsResponse).countryCode =
@@ -543,6 +559,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     }
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
+        Log.e ("TAG", "onAutoCompleteItemClick() called with: item = $item, selected = $selected")
         if (selected) {
             (navData as CrossingDetailsModelsResponse).countryCode =
                 getCountryCodeRequiredText(item)
@@ -554,7 +571,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
             if (item.isEmpty() == true) {
                 requiredCountryCode = false
-                binding.inputCountryHelper.invisible()
             } else {
                 requiredCountryCode = if (fullCountryNameWithCode.size > 0) {
                     fullCountryNameWithCode.any { it == item }
@@ -577,6 +593,12 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 (navData as CrossingDetailsModelsResponse).countryCode = ""
                 (navData as CrossingDetailsModelsResponse).fullCountryCode = ""
             }
+        }
+
+        if(item.isNotEmpty()){
+            binding.inputCountryHelper.visible()
+        }else{
+            binding.inputCountryHelper.invisible()
         }
         checkButton()
     }
