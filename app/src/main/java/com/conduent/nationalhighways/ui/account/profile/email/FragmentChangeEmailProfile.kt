@@ -54,7 +54,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             data = it as ProfileDetailModel
             binding.edtEmail?.setText(data?.personalInformation?.userName?.lowercase(Locale.getDefault()))
         }
-        HomeActivityMain.setTitle(getString(R.string.profile_email_address))
+        HomeActivityMain.setTitle(getString(R.string.profile_email_addres))
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
 
