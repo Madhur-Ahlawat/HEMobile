@@ -82,8 +82,8 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
         viewModel.enquiryDetailsModel.value = serviceRequest
 
-        binding.categoryDataTv.text = viewModel.enquiryDetailsModel.value?.category
-        binding.subcategoryDataTv.text = viewModel.enquiryDetailsModel.value?.subcategory
+        binding.categoryDataTv.text = Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.category)
+        binding.subcategoryDataTv.text = Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.subcategory)
 
         binding.btnNext.setOnClickListener {
             if (requireActivity() is RaiseEnquiryActivity) {
@@ -194,7 +194,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
                 && selectSubArea == viewModel.enquiryDetailsModel.value?.subcategory.toString()
             ) {
                 binding.categoryDataTv.text = Utils.capitalizeString(subCategories[i].category)
-                binding.subcategoryDataTv.text = subCategories[i].value
+                binding.subcategoryDataTv.text = Utils.capitalizeString(subCategories[i].value)
                 break
             }
         }

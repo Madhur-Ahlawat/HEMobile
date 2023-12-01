@@ -8,7 +8,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -21,7 +20,6 @@ import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
@@ -72,7 +70,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             when (navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
-                    binding.btnContinue.setText(getString(R.string.return_to_landing_page))
+                    binding.btnContinue.text = getString(R.string.return_to_landing_page)
                     binding.descTv.text = getString(
                         R.string.crossing_vehicle_exempt_detail_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()
@@ -106,7 +104,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     binding.btnContinue.text = resources.getString(R.string.return_to_landingpage)
                     binding.textMaximumVehicle.text =
                         getString(R.string.str_no_ruc_desc_pay_for_crossing)
-                    binding.textMaximumVehicle.gravity=Gravity.CENTER
+                    binding.textMaximumVehicle.gravity = Gravity.CENTER
                     binding.maximumVehicleAdded.text = getString(
                         R.string.str_vehicle_exempt_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()
@@ -128,14 +126,15 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         }
         if (NewCreateAccountRequestModel.isVehicleAlreadyAdded) {
             binding.textMaximumVehicle.text =
-                getString(R.string.str_vehicle_already_exist_desc,
+                getString(
+                    R.string.str_vehicle_already_exist_desc,
                     NewCreateAccountRequestModel.plateNumber.uppercase()
                 )
             binding.maximumVehicleAdded.text = getString(
                 R.string.str_vehicle_already_added_system,
                 NewCreateAccountRequestModel.plateNumber.uppercase()
             )
-            binding.maximumVehicleAddedNote.visibility = View.GONE
+            binding.maximumVehicleAddedNote.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.VISIBLE
             binding.btnContinue.text = getString(R.string.str_add_another)
             binding.inCorrectVehicleNumber.gone()
@@ -197,7 +196,10 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else if (resource.errorModel?.errorCode != Constants.NO_DATA_FOR_GIVEN_INDEX) {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
@@ -214,13 +216,17 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         when (view?.id) {
             R.id.btnContinue -> {
 
-                when (binding.btnContinue.text) {
-                    getString(R.string.str_add_another) -> findNavController().navigate(
+                when (binding.btnContinue.text.toString().lowercase()) {
+                    requireActivity().resources.getString(R.string.str_add_another).lowercase() -> findNavController().navigate(
                         R.id.action_maximumFragment_to_findYourVehicleFragment,
                         bundle()
                     )
 
-                    getString(R.string.str_continue) ->
+                    requireActivity().resources.getString(R.string.return_to_landing_page).lowercase() -> {
+                        requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
+                    }
+
+                    requireActivity().resources.getString(R.string.str_continue).lowercase() ->
 
                         when (navFlowCall) {
 
@@ -248,7 +254,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         }
 
 
-                    getString(R.string.str_add_to_account) -> {
+                    requireActivity().resources.getString(R.string.str_add_to_account).lowercase() -> {
                         val accountData = NewCreateAccountRequestModel
                         val vehicleList = accountData.vehicleList
 
@@ -270,9 +276,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
             R.id.cancel_btn -> {
 
-                when (binding.cancelBtn.text) {
+                when (binding.cancelBtn.text.toString().lowercase()) {
 
-                    getString(R.string.vehicle_no_longer_exempt) -> findNavController().navigate(
+                    requireActivity().resources.getString(R.string.vehicle_no_longer_exempt).lowercase() -> findNavController().navigate(
                         R.id.action_maximumFragment_to_addVehicleFragment,
                         bundle(true)
                     )
@@ -319,7 +325,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                                                         R.id.action_maximumFragment_vehicleListFragment_rucvehicle,
                                                         bundle()
                                                     )
-                                                }else {
+                                                } else {
                                                     findNavController().navigate(
                                                         R.id.action_maximumFragment_to_findYourVehicleFragment,
                                                         bundle()
@@ -396,7 +402,10 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             )
         )
         if (sendPlateNumber) {
-            bundle.putString(Constants.PLATE_NUMBER, NewCreateAccountRequestModel.plateNumber.uppercase())
+            bundle.putString(
+                Constants.PLATE_NUMBER,
+                NewCreateAccountRequestModel.plateNumber.uppercase()
+            )
         }
         return bundle
     }
@@ -404,13 +413,17 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
     private fun getBundle(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-        bundle.putString(Constants.PLATE_NUMBER, NewCreateAccountRequestModel.plateNumber.uppercase())
+        bundle.putString(
+            Constants.PLATE_NUMBER,
+            NewCreateAccountRequestModel.plateNumber.uppercase()
+        )
 
         return bundle
     }
 
     private fun noVehicleAddedDialog() {
-        displayCustomMessage(getString(R.string.str_no_vehicle),
+        displayCustomMessage(
+            getString(R.string.str_no_vehicle),
             getString(R.string.str_you_must_at_least_one_vehicle),
             getString(R.string.str_add_vehicle),
             getString(R.string.str_cancel),
@@ -426,8 +439,11 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     requireActivity().finish()
                 }
             },
-            cancelButtonColor = requireActivity().resources.getColor(R.color.hyperlink_blue2,null),
-            typeFace = Typeface.createFromAsset(requireActivity().assets, "open_sans_semibold.ttf") // Replace "YourFont.ttf" with your font file
+            cancelButtonColor = requireActivity().resources.getColor(R.color.hyperlink_blue2, null),
+            typeFace = Typeface.createFromAsset(
+                requireActivity().assets,
+                "open_sans_semibold.ttf"
+            ) // Replace "YourFont.ttf" with your font file
 
         )
     }

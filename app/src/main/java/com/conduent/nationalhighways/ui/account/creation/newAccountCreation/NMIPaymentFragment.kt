@@ -50,6 +50,10 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
+import android.webkit.WebSettings
+
+
+
 
 
 @AndroidEntryPoint
@@ -134,6 +138,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             loadWithOverviewMode = true
             useWideViewPort = true
         }
+
+        binding.webView.settings.defaultTextEncodingName = "utf-8"
 
         binding.webView.loadUrl("file:///android_asset/NMIPayments.html")
     }
@@ -530,7 +536,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.tcAccepted = "Y"
         model.mailPreference = "Y"
         model.emailPreference = "Y"
-        model.postCode = NewCreateAccountRequestModel.zipCode
+        model.postCode = NewCreateAccountRequestModel.zipCode.replace(" ","")
         model.addressLine2 = "Small Heath"
         if (NewCreateAccountRequestModel.twoStepVerification) {
             model.mfaFlag = "Y"
@@ -541,7 +547,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         }
         model.smsSecurityCd = data.smsSecurityCode      // sms security code
         model.cardMiddleName = ""
-        model.cardZipCode = data.zipCode
+        model.cardZipCode = data.zipCode.replace(" ","")
         if (!NewCreateAccountRequestModel.prePay) {
             model.planType = "PAYG"
 
@@ -565,7 +571,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
             model.address1 = data.addressline1
             model.address2 = data.addressline2
-            model.zipCode1 = data.zipCode
+            model.zipCode1 = data.zipCode.replace(" ","")
             model.city = data.townCity   // address city
         } else {
             model.countryType = ""
@@ -574,7 +580,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.zipCode1 = ""
             model.city = ""
         }
+        model.addressLine2 = data.addressline2
         model.billingAddressLine1 = data.addressline1
+        model.billingAddressLine2 = data.addressline2
         model.emailAddress = data.emailAddress
         model.creditCExpMonth = expMonth
         model.creditCExpYear = expYear
@@ -775,6 +783,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             "%.2f",
                             topUpAmount.toDouble()
                         )
+                        Log.e("TAG", "onPageFinished: amountData " + amountData)
+
                         view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'block'; document.getElementById('title').innerText = 'Payment Details';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${NewCreateAccountRequestModel.mobileNumber}';})()")
@@ -782,6 +792,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${NewCreateAccountRequestModel.townCity}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${NewCreateAccountRequestModel.country}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressline1}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').innerText = '${amountData}';})()")
+
+
                         view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
 
@@ -789,12 +802,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = '';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('headerTable').style.display = '';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = '';})()")
-                        view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').style.display = '';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('title').innerText  ='Payment Details';})()")
 
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = '';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = '';})()")
-                        view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = '';})()")
 
                     }

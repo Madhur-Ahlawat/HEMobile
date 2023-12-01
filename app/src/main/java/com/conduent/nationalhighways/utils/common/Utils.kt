@@ -938,7 +938,8 @@ object Utils {
     }
 
     fun currentTimeWithAMPM(): String {
-        return SimpleDateFormat("hh:mma", Locale.getDefault()).format(Date()).replace("AM","am").replace("PM","pm")
+        return SimpleDateFormat("hh:mma", Locale.getDefault()).format(Date()).replace("AM", "am")
+            .replace("PM", "pm")
 
     }
 
@@ -1138,7 +1139,6 @@ object Utils {
     }
 
     fun getTimeDifference(startTime: Date, endTime: Date): Triple<Long, Long, Long> {
-        Log.e("TAG", "getTimeDifference() called with: startTime = $startTime, endTime = $endTime")
         return try {
             val differenceInMillis = endTime.time - startTime.time
             val hours = differenceInMillis / (1000 * 60 * 60)
@@ -1148,11 +1148,6 @@ object Utils {
             val millisecondsInMonth =
                 1000L * 60 * 60 * 24 * 30 // Approximation of a month in milliseconds
             val months = differenceInMillis / millisecondsInMonth
-
-            Log.e(
-                "TAG",
-                "getTimeDifference: hours " + hours + " min-> " + minutes + " months-> " + months
-            )
             Triple(hours, minutes, months)
         } catch (e: Exception) {
             Triple(0, 0, 0)
@@ -1305,4 +1300,22 @@ object Utils {
         )
     }
 
+    fun hasSameExtensionTwice(input: String): Boolean {
+        val parts = input.split('.')
+        return parts.size >= 3 && parts[parts.size - 2] == parts[parts.size - 1]
+    }
+
+
+    fun removeLastExtension(input: String, extension: String): String {
+        Log.e("TAG", "removeLastExtension() called with: input = $input, extension = $extension")
+        val lastIndexOfExtension = input.lastIndexOf(extension)
+        return if (lastIndexOfExtension != -1) {
+            input.substring(
+                0,
+                lastIndexOfExtension
+            ) + input.substring(lastIndexOfExtension + extension.length)
+        } else {
+            input // Return the original string if the extension is not found
+        }
+    }
 }

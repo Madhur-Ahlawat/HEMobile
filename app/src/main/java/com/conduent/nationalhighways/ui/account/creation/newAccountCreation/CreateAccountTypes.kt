@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.conduent.nationalhighways.ui.viewcharges.ViewChargesActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
-import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,51 +46,62 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.prePayCard -> {
-                if(navFlowCall.equals(EDIT_ACCOUNT_TYPE) &&  NewCreateAccountRequestModel.prePay){
+                if (navFlowCall.equals(EDIT_SUMMARY) && NewCreateAccountRequestModel.prePay) {
                     findNavController().popBackStack()
-                }else{
+                } else {
                     NewCreateAccountRequestModel.prePay = true
                     handleNavigation()
                 }
             }
+
             R.id.payCard -> {
-                if(navFlowCall.equals(EDIT_ACCOUNT_TYPE) && !NewCreateAccountRequestModel.prePay){
+                if (navFlowCall.equals(EDIT_SUMMARY) && !NewCreateAccountRequestModel.prePay) {
                     findNavController().popBackStack()
-                }else {
+                } else {
                     NewCreateAccountRequestModel.prePay = false
                     handleNavigation()
                 }
             }
+
             R.id.crossingCharges -> {
-                val openURL = Intent(requireContext(),ViewChargesActivity::class.java)
+                val openURL = Intent(requireContext(), ViewChargesActivity::class.java)
                 startActivity(openURL)
             }
         }
     }
 
     private fun handleNavigation() {
-        val bundle=Bundle()
-        when(navFlowCall){
+        val bundle = Bundle()
+        when (navFlowCall) {
 
-            EDIT_SUMMARY -> {findNavController().popBackStack()}
-            EDIT_ACCOUNT_TYPE ->{
-                bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+            EDIT_SUMMARY -> {
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_ACCOUNT_TYPE)
                 findNavController().navigate(
                     R.id.action_createAccountTypes_to_forgotPasswordFragment,
                     bundle
                 )
             }
-            else -> {
-                bundle.putString(Constants.NAV_FLOW_KEY,Constants.ACCOUNT_CREATION_EMAIL_FLOW)
+
+            EDIT_ACCOUNT_TYPE -> {
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 findNavController().navigate(
                     R.id.action_createAccountTypes_to_forgotPasswordFragment,
                     bundle
-                )}
+                )
+            }
+
+            else -> {
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_EMAIL_FLOW)
+                findNavController().navigate(
+                    R.id.action_createAccountTypes_to_forgotPasswordFragment,
+                    bundle
+                )
+            }
 
         }
     }
 
-    override fun onRetryClick(apiUrl: String){
+    override fun onRetryClick(apiUrl: String) {
 
     }
 }

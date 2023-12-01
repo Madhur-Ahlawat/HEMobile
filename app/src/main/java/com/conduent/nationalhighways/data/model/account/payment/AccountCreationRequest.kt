@@ -7,6 +7,7 @@ class AccountCreationRequest {
     var postCode:String?=null
     var zipCode1: String? = null
     var billingAddressLine1: String? = null
+    var billingAddressLine2: String? = null
     var city: String? = null
     var stateType: String? = null
     var smsReferenceId: String? = null

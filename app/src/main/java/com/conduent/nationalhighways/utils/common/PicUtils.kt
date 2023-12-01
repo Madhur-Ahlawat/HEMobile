@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.utils.common
 
+import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
@@ -15,6 +16,20 @@ import java.io.InputStream
 import java.util.Objects
 
 object PicUtils {
+
+    fun getFileNameFromUri(uri: Uri, contentResolver: ContentResolver): String? {
+        var fileName: String? = null
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val displayName = it.getString(it.getColumnIndexOrThrow("_display_name"))
+                if (!displayName.isNullOrEmpty()) {
+                    fileName = displayName
+                }
+            }
+        }
+        return fileName
+    }
 
     fun getPath(context: Context, uri: Uri): String? {
         Log.e("TAG", "getPath() called with: context = $context, uri = $uri")
@@ -37,7 +52,7 @@ object PicUtils {
                 ) {
                     val file: File = File(
                         context.cacheDir,
-                        "temp" + System.currentTimeMillis() + "."+Objects.requireNonNull(
+                        getFileNameFromUri(uri,context.contentResolver) + "."+Objects.requireNonNull(
                             context.contentResolver.getType(
                                 uri
                             )

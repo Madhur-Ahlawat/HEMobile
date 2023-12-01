@@ -181,9 +181,9 @@ object DateUtils {
         return try {
             val dateObj = dateFormatter.parse(date)
             val postFormatter = SimpleDateFormat("dd MMM yyyy hh:mm a")
-            postFormatter.format(dateObj)
+            postFormatter.format(dateObj).replace("AM","am").replace("PM","pm")
         } catch (e: Exception) {
-            date
+            date.replace("AM","am").replace("PM","pm")
         }
     }
     fun convertStringDatetoAnotherFormat(date: String,dateFormat1:String,dateFormat2:String): String {

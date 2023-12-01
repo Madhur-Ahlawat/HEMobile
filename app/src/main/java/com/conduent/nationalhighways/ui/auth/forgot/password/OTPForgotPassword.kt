@@ -259,6 +259,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                     if (navFlowCall == PROFILE_MANAGEMENT || navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE) {
                         findNavController().navigate(
@@ -699,7 +700,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
-
                 if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && (resource.errorModel.error != null && resource.errorModel.error.equals(
                         Constants.INVALID_TOKEN
                     )
