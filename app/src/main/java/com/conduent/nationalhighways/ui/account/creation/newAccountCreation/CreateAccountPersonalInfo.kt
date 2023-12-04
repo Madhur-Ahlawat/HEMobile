@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPersonalInfoNewBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -117,10 +117,17 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")
-                val data = navData as ProfileDetailModel?
+                var data:ProfileDetailModel?=null
+                if (navData is ProfileDetailModel) {
+                     data = navData as ProfileDetailModel?
+
+                }
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
+                bundle.putParcelable(
+                    Constants.NAV_DATA_KEY,
+                    data?.personalInformation
+                )
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                 findNavController().navigate(
                     R.id.action_createAccountPersonalInfo_to_resetForgotPassword,
@@ -171,15 +178,9 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                                 requireActivity().supportFragmentManager,
                                 Constants.LOADER_DIALOG
                             )
-                            if (data?.accountInformation?.accountType.equals(
-                                    PERSONAL_ACCOUNT,
-                                    true
-                                )
-                            ) {
-                                updateStandardUserProfile(data, fName, lName)
-                            } else {
-                                updateBusinessUserProfile(data, fName, lName, cName)
-                            }
+
+                            updateProfileDetails(data, fName, lName, cName)
+
                         }
 
 
@@ -398,71 +399,43 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         checkButtonEnable()
     }
 
-    private fun updateBusinessUserProfile(
+
+    private fun updateProfileDetails(
         data: ProfileDetailModel?,
         fName: String,
         lName: String,
         cName: String
     ) {
-        data?.run {
-            val request = UpdateProfileRequest(
-                firstName = fName,
-                lastName = lName,
-                addressLine1 = personalInformation?.addressLine1,
-                addressLine2 = personalInformation?.addressLine2,
-                city = personalInformation?.city,
-                state = personalInformation?.state,
-                zipCode = personalInformation?.zipcode,
-                zipCodePlus = personalInformation?.zipCodePlus,
-                country = personalInformation?.country,
-                emailAddress = personalInformation?.emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = personalInformation?.phoneNumber ?: "",
-                phoneDay = personalInformation?.phoneDay,
-                phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = "",
-                fein = accountInformation?.fein,
-                businessName = cName
-            )
 
-            viewModel.updateUserDetails(request)
-        }
+        val request = Utils.returnEditProfileModel(
+            cName,
+            data?.accountInformation?.fein,
+            fName,
+            lName,
+            data?.personalInformation?.addressLine1,
+            data?.personalInformation?.addressLine2,
+            data?.personalInformation?.city,
+            data?.personalInformation?.state,
+            data?.personalInformation?.zipcode,
+            data?.personalInformation?.zipCodePlus,
+            data?.personalInformation?.country,
+            data?.personalInformation?.emailAddress,
+            data?.personalInformation?.primaryEmailStatus,
+            data?.personalInformation?.pemailUniqueCode,
+            data?.personalInformation?.phoneCell,
+            data?.personalInformation?.phoneCellCountryCode,
+            data?.personalInformation?.phoneDay,
+            data?.personalInformation?.phoneDayCountryCode,
+            data?.personalInformation?.fax,
+            data?.accountInformation?.smsOption,
+            data?.personalInformation?.eveningPhone,
+            data?.accountInformation?.stmtDelivaryMethod,
+            data?.accountInformation?.correspDeliveryFrequency,
+            Utils.retrunMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
+            accountType = data?.accountInformation?.accountType
+        )
 
-
-    }
-
-    private fun updateStandardUserProfile(
-        data: ProfileDetailModel?,
-        fName: String,
-        lName: String
-    ) {
-
-        data?.personalInformation?.run {
-            val request = UpdateProfileRequest(
-                correspDeliveryFrequency = Constants.MONTHLY, smsOption = "Y",
-                country = country,
-                addressLine1 = addressLine1,
-                addressLine2 = addressLine2,
-                firstName = fName,
-                lastName = lName,
-                city = city,
-                emailAddress = emailAddress,
-                correspDeliveryMode = Constants.POST_MAIL,
-                primaryEmailUniqueID = pemailUniqueCode,
-                mfaEnabled = "N",
-                phoneCell = phoneDay ?: phoneNumber,
-                phoneFax = "",
-                phoneCellCountryCode = phoneDayCountryCode,
-                primaryEmailStatus = this.primaryEmailStatus,
-                state = state,
-                zipCode = zipcode,
-                zipCodePlus = zipCodePlus,
-            )
-
-            viewModel.updateUserDetails(request)
-        }
+        viewModel.updateUserDetails(request)
 
     }
 }

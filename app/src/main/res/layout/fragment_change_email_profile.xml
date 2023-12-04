@@ -52,6 +52,7 @@
                 android:elevation="@dimen/_5dp"
                 app:imeOptions="actionDone"
                 app:inputType="text"
+                android:maxLines="1"
                 android:textSize="@dimen/_16sp"
                 android:maxLength="100"
                 android:fontFamily="@font/open_sans"

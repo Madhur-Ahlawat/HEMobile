@@ -113,7 +113,8 @@
             app:destination="@id/createAccountSummaryFragment" />
         <action
             android:id="@+id/action_maximumFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment" />
+            app:destination="@+id/vehicleListFragment"
+            />
         <action
             android:id="@+id/action_maximumFragment_clear_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"

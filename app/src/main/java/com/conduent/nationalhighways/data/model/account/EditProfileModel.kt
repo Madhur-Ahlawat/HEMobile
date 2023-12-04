@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UpdateProfileRequest(
 
+data class EditProfileModel(
     @SerializedName("businessName") var businessName: String? = null,
     @SerializedName("fein") var fein: String? = null,
     @SerializedName("firstName") var firstName: String? = null,
@@ -32,9 +32,5 @@ data class UpdateProfileRequest(
     @SerializedName("correspDeliveryFrequency") var correspDeliveryFrequency: String? = null,
     @SerializedName("mfaEnabled") var mfaEnabled: String? = null,
 
-
-    @SerializedName("cellPhone") var cellPhone: String? = null,
-    @SerializedName("securityCode") var securityCode: String? = null,
-    @SerializedName("referenceId") var referenceId: String? = null,
-
     ) : Parcelable
+

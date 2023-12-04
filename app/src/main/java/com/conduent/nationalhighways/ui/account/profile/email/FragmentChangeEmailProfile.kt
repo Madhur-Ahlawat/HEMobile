@@ -224,6 +224,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                     Constants.IS_EDIT_EMAIL,
                     arguments?.getBoolean(Constants.IS_EDIT_EMAIL) as Boolean
                 )
+                bundle.putString(Constants.NAV_FLOW_FROM, Constants.AccountType_EMAIL)
                 bundle.putParcelable(
                     "response",
                     SecurityCodeResponseModel(

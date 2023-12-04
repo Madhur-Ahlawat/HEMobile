@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.content.Intent
-import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
@@ -12,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
@@ -31,7 +29,6 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -40,7 +37,8 @@ import javax.inject.Inject
 class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnClickListener {
 
     private var title: TextView? = null
-    private var personalInformation: com.conduent.nationalhighways.data.model.account.PersonalInformation? = null
+    private var personalInformation: com.conduent.nationalhighways.data.model.account.PersonalInformation? =
+        null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -50,9 +48,12 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     @Inject
     lateinit var sessionManager: SessionManager
     override fun init() {
-        binding?.feedbackBt?.movementMethod = LinkMovementMethod.getInstance()
+        binding.feedbackBt?.movementMethod = LinkMovementMethod.getInstance()
 
-        if (arguments?.getParcelable<com.conduent.nationalhighways.data.model.account.PersonalInformation>(Constants.PERSONALDATA) != null) {
+        if (arguments?.getParcelable<com.conduent.nationalhighways.data.model.account.PersonalInformation>(
+                Constants.PERSONALDATA
+            ) != null
+        ) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
         }
 
@@ -81,8 +82,6 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 ) {
                     title?.text = getString(R.string.profile_email_address)
 
-
-
                     binding.title.text = getString(R.string.email_address_change_successful)
                     binding.subTitle.text = Html.fromHtml(
                         getString(
@@ -97,10 +96,20 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     title?.text = getString(R.string.profile_name)
 
                     binding.title.text = getString(R.string.name_change_successful)
+                    var email = personalInformation?.emailAddress
+                    Log.e("TAG", "init: @@##$$ email -> " + email)
+
+                    if (navData is PersonalInformation && (email == null || email.isEmpty() == true)) {
+                        Log.e(
+                            "TAG",
+                            "init: @@##$$ emailAddress -> " + (navData as PersonalInformation).emailAddress
+                        )
+                        email = (navData as PersonalInformation).emailAddress
+                    }
                     binding.subTitle.text = Html.fromHtml(
                         getString(
                             R.string.you_will_receive_a_confirmation_email,
-                            personalInformation?.emailAddress
+                            email
                         ), Html.FROM_HTML_MODE_COMPACT
                     )
                     binding.btnSubmit.text = getString(R.string.str_continue)
@@ -181,9 +190,8 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                         findNavController().popBackStack()
                     }
 
-                    PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT,
-                    PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
-                        if (arguments?.getString(Constants.NAV_FLOW_FROM)
+                    PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
+                        if (arguments?.containsKey(Constants.NAV_FLOW_FROM)==true && arguments?.getString(Constants.NAV_FLOW_FROM)
                                 .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                         ) {
                             Intent(requireActivity(), LandingActivity::class.java).apply {

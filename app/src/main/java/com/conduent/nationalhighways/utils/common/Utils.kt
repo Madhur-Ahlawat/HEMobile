@@ -27,6 +27,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -1317,5 +1318,85 @@ object Utils {
         } else {
             input // Return the original string if the extension is not found
         }
+    }
+
+    fun retrunMfaStatus(mfa:String):String{
+        var mfaEnabled="Y"
+        if(mfa.equals("false")){
+            mfaEnabled="N"
+        }
+        return mfaEnabled
+    }
+
+    fun returnEditProfileModel(businessName: String? = null,
+                               fein: String? = null,
+                               firstName: String? = null,
+                               lastName: String? = null,
+                               addressLine1: String? = null,
+                               addressLine2: String? = null,
+                               city: String? = null,
+                               state: String? = null,
+                               zipCode: String? = null,
+                               zipCodePlus: String? = null,
+                               country: String? = null,
+                               emailAddress: String? = null,
+                               primaryEmailStatus: String? = null,
+                               primaryEmailUniqueID: String? = null,
+                               phoneCell: String? = null,
+                               phoneCellCountryCode: String? = null,
+                               phoneDay: String? = null,
+                               phoneDayCountryCode: String? = null,
+                               phoneFax: String? = null,
+                               smsOption: String? = null,
+                               phoneEvening: String? = null,
+                               correspDeliveryMode: String? = null,
+                               correspDeliveryFrequency: String? = null,
+                               mfaEnabled: String? = null,
+                               accountType:String?=null,
+                               securityCode:String?=null,
+                               referenceId:String?=null):UpdateProfileRequest{
+        var correspDeliveryMode_=correspDeliveryMode
+        var correspDeliveryFrequency_=correspDeliveryFrequency
+        var businessName_=businessName
+
+        if (accountType.equals(
+                Constants.PERSONAL_ACCOUNT,
+                true
+            )
+        ) {
+            businessName_=""
+        }
+        if(correspDeliveryMode==null){
+            correspDeliveryMode_=""
+        }
+        if(correspDeliveryFrequency==null){
+            correspDeliveryFrequency_=""
+        }
+        return UpdateProfileRequest(businessName_,
+            fein,
+            firstName,
+            lastName,
+            addressLine1,
+            addressLine2,
+            city,
+            state,
+            zipCode,
+            zipCodePlus,
+            country,
+            emailAddress,
+            primaryEmailStatus,
+            primaryEmailUniqueID,
+            phoneCell,
+            phoneCellCountryCode,
+            phoneDay,
+            phoneDayCountryCode,
+            phoneFax,
+            smsOption,
+            phoneEvening,
+            correspDeliveryMode_,
+            correspDeliveryFrequency_,
+            mfaEnabled,
+            securityCode = securityCode,
+            referenceId = referenceId)
     }
 }
