@@ -45,7 +45,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
-        Log.e("TAG", "init: vehicleClass !! "+data?.vehicleClass )
+        Log.e("TAG", "init: vehicleClass !! " + data?.vehicleClass)
 
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
@@ -177,8 +177,8 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                             "UK",
                             data?.vehicleMake,
                             data?.vehicleModel,
-                            data?.vehicleColor?:"",
-                            data?.vehicleClass?:"",
+                            data?.vehicleColor ?: "",
+                            data?.vehicleClass ?: "",
                             "yesDVLA"
 
                         )
@@ -207,30 +207,47 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
                     else -> {
 
-                        val oldPlateNumber =
-                            arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
-                        if (oldPlateNumber.isNotEmpty()) {
-                            val index = arguments?.getInt(Constants.VEHICLE_INDEX)
-                            if (index != null) {
-                                vehicleList.removeAt(index)
-                            }
-                        }
-                        nonUKVehicleModel?.let {
+                        if (NewCreateAccountRequestModel.isRucEligible) {
+                            val bundle: Bundle = Bundle()
 
-                            vehicleList.add(it)
-                            val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
-                            if (editCall) {
-                                findNavController().navigate(
-                                    R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment,
-                                    bundle
-                                )
-                            } else {
-                                findNavController().navigate(
-                                    R.id.action_businessVehicleDetailFragment_to_vehicleListFragment,
-                                    bundle
-                                )
-                            }
+                            bundle.putParcelable(
+                                Constants.VEHICLE_DETAIL,
+                                nonUKVehicleModel
+                            )
 
+                            bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+                            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+
+                            findNavController().navigate(
+                                R.id.action_businessVehicleDetailFragment_to_maximumVehicleFragment,
+                                bundle
+                            )
+                        } else {
+                            val oldPlateNumber =
+                                arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
+                            if (oldPlateNumber.isNotEmpty()) {
+                                val index = arguments?.getInt(Constants.VEHICLE_INDEX)
+                                if (index != null) {
+                                    vehicleList.removeAt(index)
+                                }
+                            }
+                            nonUKVehicleModel?.let {
+
+                                vehicleList.add(it)
+                                val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
+                                if (editCall) {
+                                    findNavController().navigate(
+                                        R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment,
+                                        bundle
+                                    )
+                                } else {
+                                    findNavController().navigate(
+                                        R.id.action_businessVehicleDetailFragment_to_vehicleListFragment,
+                                        bundle
+                                    )
+                                }
+
+                            }
                         }
                     }
 

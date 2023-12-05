@@ -196,6 +196,10 @@
         android:label="BusinessVehicleDetail"
         tools:layout="@layout/fragment_business_vehicle_detail">
         <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_maximumVehicleFragment"
+            app:destination="@+id/maximumVehicleFragment" />
+
+        <action
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleIsExemptFromDartChargesFragment"
             app:destination="@+id/vehicleIsExemptFromDartChargesFragment" />
         <action
@@ -754,6 +758,12 @@
         android:label="MaximumVehicleFragment"
         tools:layout="@layout/fragment_maximum_vehicle_number">
         <action
+            android:id="@+id/action_maximumFragment_clear_to_findYourVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true" />
+
+        <action
             android:id="@+id/action_maximumFragment_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
@@ -763,6 +773,8 @@
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/findYourVehicleFragment"/>
+
+
 
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
@@ -779,6 +791,13 @@
         <action
             android:id="@+id/action_maximumFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment" />
+
+        <action
+            android:id="@+id/action_maximumFragment_to_vehicleListFragment_clearto_findvehiclefragment"
+            app:destination="@+id/vehicleListFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/findYourVehicleFragment"/>
+
 
         <action
             android:id="@+id/action_maximumFragment_to_landingFragment"

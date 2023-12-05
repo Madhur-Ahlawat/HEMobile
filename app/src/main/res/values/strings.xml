@@ -1628,7 +1628,7 @@
     <string name="str_alert">Alert</string>
     <string name="str_password_match_current_password">Password must match current password</string>
     <string name="str_did_you_cross_today">Did you cross today?</string>
-    <string name="str_responsible_paying">As a reminder if you are responsible for paying the charge you have until midnight tomorrow to pay</string>
+    <string name="str_responsible_paying">Click here if you are responsible for paying the charge. You have until midnight tomorrow to pay.</string>
     <string name="submit_feedback">Submit</string>
     <string name="enter_your_mobile_number">Enter your mobile number</string>
     <string name="str_push_notifications">Push notifications</string>

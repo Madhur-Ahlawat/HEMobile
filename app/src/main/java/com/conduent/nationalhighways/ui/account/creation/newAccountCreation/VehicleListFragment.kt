@@ -13,18 +13,16 @@ import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
-import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
-import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,26 +47,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
     }
-    private fun sortVehilcesListInDescendingOrder(vehiclesList: MutableList<NewVehicleInfoDetails>): MutableList<NewVehicleInfoDetails> {
-        val transactionListSorted: MutableList<NewVehicleInfoDetails> = mutableListOf()
-        for (vehicle in vehiclesList) {
-            if (transactionListSorted?.isEmpty() == true) {
-                transactionListSorted.add(vehicle!!)
-            } else {
-                if (DateUtils.compareDates(
-                        transactionListSorted.last().effectiveStartDate,
-                        vehicle?.effectiveStartDate
-                    )
-                ) {
-                    transactionListSorted.add(transactionListSorted.size - 1, vehicle!!)
 
-                } else {
-                    transactionListSorted.add(vehicle!!)
-                }
-            }
-        }
-        return transactionListSorted
-    }
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
         binding.btnAddNewVehicle.setOnClickListener(this)
@@ -98,7 +77,10 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     sessionExpiry = true
                     displaySessionExpireDialog(status.errorModel)
                 }
@@ -176,6 +158,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     private fun invalidateList() {
         val accountData = NewCreateAccountRequestModel
         vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
+        Log.e("TAG", "onClick:  vehicleList " + vehicleList)
 
         vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
         val size = vehicleAdapter.itemCount
@@ -319,11 +302,11 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         data.vehicleInfo?.typeId = ""
         data.vehicleInfo?.typeDescription = "REGULAR"
         data.vehicleInfo?.make = obj.vehicleMake
-//        if(obj.vehicleClass.isNullOrEmpty()){
-        data.vehicleInfo?.vehicleClassDesc = "2"
-//        }else{
-//            data.vehicleInfo?.vehicleClassDesc = obj.vehicleClass
-//        }
+        if (obj.vehicleClass.isNullOrEmpty()) {
+            data.vehicleInfo?.vehicleClassDesc = "2"
+        } else {
+            data.vehicleInfo?.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass?:"")
+        }
 
 
         vehicleMgmtViewModel.addVehicleApiNew(data)

@@ -212,4 +212,11 @@ object DateUtils {
         }
     }
 
+    fun convertDateToString(date:Date,dateFormat:String):String{
+
+        val dateFormat = SimpleDateFormat(dateFormat) // Define your desired date format
+       return dateFormat.format(date) // Convert Date to String
+
+    }
+
 }

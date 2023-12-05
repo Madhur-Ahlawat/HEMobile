@@ -23,6 +23,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
 
 @AndroidEntryPoint
 class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View.OnClickListener {
@@ -77,7 +78,8 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
                     getString(R.string.are_you_sure_you_want_to_remove_vehicle, numberPlate)
             }
         }
-        binding.strEffectiveDateText.text = DateUtils.convertStringDatetoAnotherFormat(vehicleDetails?.vehicleInfo?.effectiveStartDate?:""
+
+        binding.strEffectiveDateText.text = DateUtils.convertStringDatetoAnotherFormat(vehicleDetails?.vehicleInfo?.effectiveStartDate?:DateUtils.convertDateToString( Date(),DateUtils.dd_mmm_yyyy_hh_mm_a)
             ,DateUtils.dd_mmm_yyyy_hh_mm_a,DateUtils.dd_mmm_yyyy)
 
         loader = LoaderDialog()
