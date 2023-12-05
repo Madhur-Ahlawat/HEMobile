@@ -825,7 +825,7 @@ object Utils {
             }
 
             else -> {
-                ""
+                "2"
             }
         }
     }

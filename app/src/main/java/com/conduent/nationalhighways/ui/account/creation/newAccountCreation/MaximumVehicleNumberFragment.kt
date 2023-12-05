@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +18,7 @@ import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -38,7 +38,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBinding>(),
-    View.OnClickListener {
+    View.OnClickListener, BackPressListener {
     private var mList: ArrayList<VehicleResponse?> = ArrayList()
     private var totalCount: Int = 0
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
@@ -57,6 +57,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         FragmentMaximumVehicleNumberBinding.inflate(inflater, container, false)
 
     override fun init() {
+        setBackPressListener(this)
         plateNumber = arguments?.getString(Constants.PLATE_NUMBER, "").toString()
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
         binding.descTv.gone()
@@ -219,12 +220,14 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             R.id.btnContinue -> {
 
                 when (binding.btnContinue.text.toString().lowercase()) {
-                    requireActivity().resources.getString(R.string.str_add_another).lowercase() -> findNavController().navigate(
+                    requireActivity().resources.getString(R.string.str_add_another)
+                        .lowercase() -> findNavController().navigate(
                         R.id.action_maximumFragment_to_findYourVehicleFragment,
                         bundle()
                     )
 
-                    requireActivity().resources.getString(R.string.return_to_landing_page).lowercase() -> {
+                    requireActivity().resources.getString(R.string.return_to_landing_page)
+                        .lowercase() -> {
                         requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
                     }
 
@@ -241,19 +244,33 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                                 if (NewCreateAccountRequestModel.vehicleList.size == 0) {
 
                                     if (NewCreateAccountRequestModel.isExempted || navCall) {
-
-                                        findNavController().navigate(
-                                            R.id.action_maximumFragment_to_vehicleHomeListFragment,
-                                            bundle()
-                                        )
+                                        if (sessionManager.getLoggedInUser()) {
+                                            findNavController().navigate(
+                                                R.id.action_maximumFragment_clear_to_vehicleHomeListFragment,
+                                                bundle()
+                                            )
+                                        } else {
+                                            findNavController().navigate(
+                                                R.id.action_maximumFragment_clear_to_findYourVehicleFragment,
+                                                bundle()
+                                            )
+                                        }
                                     } else {
                                         noVehicleAddedDialog()
                                     }
                                 } else {
-                                    findNavController().navigate(
-                                        R.id.action_maximumFragment_to_vehicleListFragment,
-                                        bundle()
-                                    )
+                                    if (sessionManager.getLoggedInUser()) {
+                                        findNavController().navigate(
+                                            R.id.action_maximumFragment_to_vehicleListFragment,
+                                            bundle()
+                                        )
+                                    }else{
+                                        findNavController().navigate(
+                                            R.id.action_maximumFragment_to_vehicleListFragment_clearto_findvehiclefragment,
+                                            bundle()
+                                        )
+
+                                    }
                                 }
                             }
                         }
@@ -262,17 +279,21 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     requireActivity().resources.getString(R.string.str_add_to_account).lowercase() -> {
                         val accountData = NewCreateAccountRequestModel
                         val vehicleList = accountData.vehicleList
+//                        nonUKVehicleModel?.let { vehicleList.add(it) }
 
-                        nonUKVehicleModel?.let {
-
-                            vehicleList.add(it)
+                        if (sessionManager.getLoggedInUser()) {
                             findNavController().navigate(
-                                R.id.action_maximumFragment_to_vehicleListFragment,
+                                R.id.action_maximumFragment_businessVehicleDetailFragment,
+                                bundle()
+                            )
+                        } else {
+                            findNavController().navigate(
+                                R.id.action_maximumFragment_to_businessVehicleDetailFragment,
                                 bundle()
                             )
 
-
                         }
+
                     }
                 }
 
@@ -283,7 +304,8 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
                 when (binding.cancelBtn.text.toString().lowercase()) {
 
-                    requireActivity().resources.getString(R.string.vehicle_no_longer_exempt).lowercase() -> findNavController().navigate(
+                    requireActivity().resources.getString(R.string.vehicle_no_longer_exempt)
+                        .lowercase() -> findNavController().navigate(
                         R.id.action_maximumFragment_to_addVehicleFragment,
                         bundle(true)
                     )
@@ -305,7 +327,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                                             )
                                         } else {
                                             findNavController().navigate(
-                                                R.id.action_maximumFragment_to_vehicleHomeListFragment,
+                                                R.id.action_maximumFragment_clear_to_vehicleHomeListFragment,
                                                 bundle()
                                             )
                                         }
@@ -353,7 +375,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                                             )
                                         } else {
                                             findNavController().navigate(
-                                                R.id.action_maximumFragment_to_vehicleHomeListFragment,
+                                                R.id.action_maximumFragment_clear_to_vehicleHomeListFragment,
                                                 bundle()
                                             )
                                         }
@@ -451,6 +473,10 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             ) // Replace "YourFont.ttf" with your font file
 
         )
+    }
+
+    override fun onBackButtonPressed() {
+
     }
 
 

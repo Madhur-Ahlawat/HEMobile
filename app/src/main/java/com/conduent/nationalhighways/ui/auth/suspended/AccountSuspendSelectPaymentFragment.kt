@@ -109,16 +109,15 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         if (!b) {
             var mText = binding.topBalance.getText().toString().trim()
             if (mText.isNullOrEmpty()) {
-                mText = "0"
+                mText = "0.0"
             }
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
-                .replace(" ", "")
             if (mText.length == 1 && mText.equals(".")) {
-                mText = "0"
+                mText = "0.0"
             }
-            var formatedAmount = formatter.format(mText.toDouble().toInt())
+            var formatedAmount = formatter.format(mText.toDouble())
             if (!formatedAmount.isNullOrEmpty() && formatedAmount.equals(".00")) {
                 formatedAmount = "0.00"
             }
@@ -178,7 +177,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 topBalanceDecimal(false)
                 val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "")
                     .replace("£.", "")
-                    .replace("$", "").replace(",", "").replace(" ", "").toDouble().toInt()
+                    .replace("$", "").replace(",", "").replace(" ", "").toDouble()
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
                 bundle.putInt(Constants.POSITION, position)

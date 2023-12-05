@@ -27,6 +27,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_M
 import com.conduent.nationalhighways.utils.common.Constants.REMOVE_VEHICLE
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,6 +64,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
             Constants.FORGOT_PASSWORD_FLOW -> {
                 binding.subTitle.gone()
+                binding.feedbackBt.invisible()
             }
 
             REMOVE_VEHICLE -> {

@@ -641,7 +641,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
         for (obj in data.vehicleList) {
             val item = VehicleItem()
-            Log.e("TAG", "callAccountCreationApi: plateCountry " + obj.plateCountry)
             item.vehicleModel = obj.vehicleModel
             item.vehicleMake = obj.vehicleMake
             item.vehicleColor = obj.vehicleColor

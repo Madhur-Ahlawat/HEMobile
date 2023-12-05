@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -96,7 +97,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         loader?.dismiss()
                     }
 
-                    if (crossingCount > 0) {
+//                    if (crossingCount >= 0) {
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                         intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
@@ -106,7 +107,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                             Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                         )
                         startActivity(intent)
-                    }
+//                    }
                 } else {
                     startNewActivityByClearingStack(HomeActivityMain::class.java) {
                         putString(Constants.NAV_FLOW_FROM, from)

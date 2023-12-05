@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
                     <ImageView
