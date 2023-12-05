@@ -274,20 +274,19 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         }
 
 
-                    requireActivity().resources.getString(R.string.str_add_to_account)
-                        .lowercase() -> {
+                    requireActivity().resources.getString(R.string.str_add_to_account).lowercase() -> {
                         val accountData = NewCreateAccountRequestModel
                         val vehicleList = accountData.vehicleList
-                        nonUKVehicleModel?.let { vehicleList.add(it) }
+//                        nonUKVehicleModel?.let { vehicleList.add(it) }
 
                         if (sessionManager.getLoggedInUser()) {
                             findNavController().navigate(
-                                R.id.action_maximumFragment_vehicleListFragment_clear_to_vehicleHomeListFragment,
+                                R.id.action_maximumFragment_businessVehicleDetailFragment,
                                 bundle()
                             )
                         } else {
                             findNavController().navigate(
-                                R.id.action_maximumFragment_to_vehicleListFragment_clearto_findvehiclefragment,
+                                R.id.action_maximumFragment_to_businessVehicleDetailFragment,
                                 bundle()
                             )
 

@@ -4,7 +4,6 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -32,7 +31,10 @@ object PicUtils {
     }
 
     fun getPath(context: Context, uri: Uri): String? {
-        Log.e("TAG", "getPath() called with: context = $context, uri = $uri")
+        Log.e(
+            "TAG",
+            "getPath() called with: context = $context, uri = $uri , uri authority = ${uri.authority}"
+        )
 
         // DocumentProvider
         if (DocumentsContract.isDocumentUri(context, uri)) {
@@ -52,17 +54,23 @@ object PicUtils {
                 ) {
                     val file: File = File(
                         context.cacheDir,
-                        getFileNameFromUri(uri,context.contentResolver) + "."+Objects.requireNonNull(
+                        getFileNameFromUri(
+                            uri,
+                            context.contentResolver
+                        ) + "." + Objects.requireNonNull(
                             context.contentResolver.getType(
                                 uri
                             )
                         )?.split("/")?.get(1)
                     )
-                    Log.e("TAG", "getPath: file "+file )
-                    Log.e("TAG", "getPath: file "+Objects.requireNonNull(
-                        context.contentResolver.getType(
-                            uri
-                        )) )
+                    Log.e("TAG", "getPath: file " + file)
+                    Log.e(
+                        "TAG", "getPath: file " + Objects.requireNonNull(
+                            context.contentResolver.getType(
+                                uri
+                            )
+                        )
+                    )
                     try {
                         context.contentResolver.openInputStream(uri).use { inputStream ->
                             FileOutputStream(file).use { output ->
@@ -83,15 +91,18 @@ object PicUtils {
             } else if (isMediaDocument(uri)) {
                 Log.e("TAG", "getPath: 11---")
                 val docId = DocumentsContract.getDocumentId(uri)
-                val split = docId.split(":").toTypedArray()
+                val split = docId.split(":".toRegex()).toTypedArray()
                 val type = split[0]
                 var contentUri: Uri? = null
+                Log.e("TAG", "getPath: type " + type)
                 if ("image" == type) {
                     contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                 } else if ("video" == type) {
                     contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
                 } else if ("audio" == type) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                } else {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                 }
                 val selection = "_id=?"
                 val selectionArgs = arrayOf(
@@ -178,10 +189,12 @@ object PicUtils {
             column
         )
         try {
-            cursor = context.contentResolver.query(
-                uri!!, projection, selection, selectionArgs,
-                null
-            )
+            cursor = uri?.let {
+                context.contentResolver.query(
+                    it, projection, selection, selectionArgs,
+                    null
+                )
+            }
             if (cursor != null && cursor.moveToFirst()) {
                 val column_index = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(column_index)

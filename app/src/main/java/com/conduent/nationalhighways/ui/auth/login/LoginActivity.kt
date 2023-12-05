@@ -89,8 +89,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 personalInformation = status.data?.personalInformation
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
-                Log.e("TAG", "handleLoginResponse: 55-> "+status.data?.accountInformation?.status )
-                Log.e("TAG", "handleLoginResponse: 55-> crossingCount "+crossingCount )
 
 
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
@@ -121,7 +119,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                Log.e("TAG", "handleLoginResponse: 66-> crossingCount " )
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
@@ -344,12 +341,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
          }*/
         when (status) {
             is Resource.Success -> {
-                Log.e("TAG", "handleLoginResponse: 11" )
                 launchIntent(status)
             }
 
             is Resource.DataError -> {
-                Log.e("TAG", "handleLoginResponse: 22" )
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
@@ -459,7 +454,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             getString(R.string.enablelater),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
-                    Log.e("TAG", "handleLoginResponse: 33" )
                     val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
                     intent.putExtra(Constants.TWOFA, twoFAEnable)
                     intent.putExtra(
@@ -478,7 +472,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    Log.e("TAG", "handleLoginResponse: 44-> "+twoFAEnable )
                     if (twoFAEnable) {
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)

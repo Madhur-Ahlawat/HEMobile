@@ -207,22 +207,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
                     else -> {
 
-                        if (NewCreateAccountRequestModel.isRucEligible) {
-                            val bundle: Bundle = Bundle()
 
-                            bundle.putParcelable(
-                                Constants.VEHICLE_DETAIL,
-                                nonUKVehicleModel
-                            )
-
-                            bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
-                            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-
-                            findNavController().navigate(
-                                R.id.action_businessVehicleDetailFragment_to_maximumVehicleFragment,
-                                bundle
-                            )
-                        } else {
                             val oldPlateNumber =
                                 arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
                             if (oldPlateNumber.isNotEmpty()) {
@@ -249,7 +234,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
                             }
                         }
-                    }
+
 
                 }
 

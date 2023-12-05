@@ -136,10 +136,9 @@
             app:popUpTo="@id/vehicleHomeListFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_maximumFragment_vehicleListFragment_clear_to_vehicleHomeListFragment"
-            app:destination="@+id/vehicleListFragment"
-            app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_maximumFragment_businessVehicleDetailFragment"
+            app:destination="@+id/businessVehicleDetailFragment"
+           />
 
     </fragment>
 
@@ -230,7 +229,9 @@
 
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment" />
+            app:destination="@+id/vehicleListFragment"
+            app:popUpTo="@+id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment"

@@ -204,7 +204,9 @@
             app:destination="@+id/vehicleIsExemptFromDartChargesFragment" />
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment" />
+            app:destination="@+id/vehicleListFragment"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment"
             app:destination="@+id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />
@@ -797,6 +799,10 @@
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
             app:popUpTo="@id/findYourVehicleFragment"/>
+        <action
+            android:id="@+id/action_maximumFragment_to_businessVehicleDetailFragment"
+            app:destination="@+id/businessVehicleDetailFragment"
+            />
 
 
         <action

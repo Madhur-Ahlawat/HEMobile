@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
                     <ImageView
@@ -162,18 +162,18 @@
                 app:isEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/bottom_cl" />
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewLayout" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bottom_cl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/btnContinue">
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/btnAddNewPayment"
                     style="@style/secondaryButton"
