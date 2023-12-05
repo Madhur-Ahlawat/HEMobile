@@ -48,7 +48,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     View.OnClickListener {
     private var responseModel: CardResponseModel? = null
 
-    private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
+    private var paymentList: ArrayList<CardListResponseModel> = ArrayList()
     private var position: Int = 0
     private var loader: LoaderDialog? = null
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
@@ -72,10 +72,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initCtrl() {
-        if (arguments?.getParcelable(Constants.DATA, Any::class.java) != null && arguments?.getParcelable(Constants.DATA, Any::class.java) is CardListResponseModel) {
-            paymentList = arguments?.getParcelableArrayList(Constants.DATA)
-        }
 
+        val receivedList = arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA)
+
+
+        if (receivedList!=null) {
+            paymentList =( receivedList as ArrayList<CardListResponseModel>) ?:ArrayList()
+        }
+        
         if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
             paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         }
@@ -99,6 +103,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
             responseModel = arguments?.getParcelable(Constants.DATA)
+            Log.e("TAG", "postMessage: paymentList responseModel "+responseModel )
 
             if (responseModel?.card?.type.equals("visa", true)) {
                 binding.ivCardType.setImageResource(R.drawable.visablue)
@@ -138,7 +143,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         binding.lowBalance.setText(
             "£" + formatter.format(topUpAmount)
         )
+        Log.e("TAG", "postMessage: paymentList "+paymentList?.size )
+        Log.e("TAG", "postMessage: paymentList "+position )
+
         if (paymentList?.isNotEmpty() == true) {
+            Log.e("TAG", "postMessage: paymentList "+paymentList?.get(position).toString() )
+
             binding.ivCardType.setImageResource(
                 Utils.setCardImage(
                     paymentList?.get(position)?.cardType ?: ""

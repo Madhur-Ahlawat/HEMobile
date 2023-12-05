@@ -43,7 +43,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
     private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
     private var data: ProfileDetailModel? = null
-
+private var oldEmail=""
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentChangeEmailProfileBinding.inflate(inflater, container, false)
 
@@ -52,7 +52,8 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navData?.let {
             data = it as ProfileDetailModel
-            binding.edtEmail?.setText(data?.personalInformation?.userName?.lowercase(Locale.getDefault()))
+            binding.edtEmail.setText(data?.personalInformation?.userName?.lowercase(Locale.getDefault()))
+            oldEmail=data?.personalInformation?.userName?.lowercase(Locale.getDefault())?:""
         }
         HomeActivityMain.setTitle(getString(R.string.profile_email_addres))
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
@@ -66,9 +67,14 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
 
             btnNext.setOnClickListener {
                 hideKeyboard()
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                val request = UserNameCheckReq(binding.edtEmail.text.toString().trim())
-                viewModel.userNameAvailabilityCheck(request)
+                if(oldEmail.equals(binding.edtEmail.text.toString().lowercase())){
+                    findNavController().popBackStack()
+                }else{
+                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    val request = UserNameCheckReq(binding.edtEmail.text.toString().trim())
+                    viewModel.userNameAvailabilityCheck(request)
+                }
+
 //                viewModel.emailVerificationApi(
 //                    EmailVerificationRequest(
 //                        selectionType = EMAIL_SELECTION_TYPE,
