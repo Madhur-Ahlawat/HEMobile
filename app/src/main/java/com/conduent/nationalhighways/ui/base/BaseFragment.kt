@@ -84,6 +84,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        checkBackIcon()
         observer()
         initCtrl()
         init()
@@ -128,7 +129,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
-        checkBackIcon()
+
 
     }
 

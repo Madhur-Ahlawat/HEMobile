@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
 import com.conduent.nationalhighways.databinding.FragmentNewCardSuccessScreenBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -114,6 +115,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
 
         } else if (flow == Constants.DELETE_CARD) {
+            HomeActivityMain.dataBinding?.backButton?.gone()
             binding.maximumVehicleAdded.text =
                 getString(
                     R.string.str_payment_method_deleted,
@@ -147,6 +149,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             viewModel.saveCardList()
 
         } else if (flow == Constants.DIRECT_DEBIT) {
+            HomeActivityMain.dataBinding?.backButton?.gone()
             binding.maximumVehicleAdded.text = getString(R.string.str_your_new_direct)
             binding.textMaximumVehicle.text = getString(R.string.str_while_your_new_direct_debit)
             binding.textDefault.visibility = View.GONE

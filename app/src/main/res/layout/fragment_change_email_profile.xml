@@ -35,7 +35,7 @@
                 android:layout_height="@dimen/_22dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/what_is_your_email_address"
-                android:textColor="@color/re_send_color"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -56,6 +56,8 @@
                 android:textSize="@dimen/_16sp"
                 android:maxLength="100"
                 android:fontFamily="@font/open_sans"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/enter_details_txt"/>

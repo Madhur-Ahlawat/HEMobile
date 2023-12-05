@@ -31,6 +31,7 @@ import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -187,6 +188,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun init() {
+        BaseApplication.flowNameAnalytics=Constants.LOGIN
+        BaseApplication.screenNameAnalytics=""
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             intent?.apply {
                 from = getStringExtra(Constants.NAV_FLOW_FROM) ?: ""

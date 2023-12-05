@@ -1643,5 +1643,6 @@
     <string name="return_to_landing_page">Return To Landing Page</string>
     <string name="continue_with_your_selection">Continue With Your Selection</string>
     <string name="return_to_landingpage">Return to landing page</string>
+    <string name="enter_a_top_up_amount">Enter a top-up amount</string>
 
 </resources>

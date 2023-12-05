@@ -214,7 +214,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 } else {
                     binding.paymentMethodInformation.gone()
                     binding.paymentRecycleView.gone()
-
+                    HomeActivityMain.dataBinding?.backButton?.gone()
                     binding.warningIcon.visible()
                     binding.maximumVehicleAdded.visible()
                     binding.textMaximumVehicle.visible()
@@ -324,6 +324,12 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             if (paymentList.orEmpty().size >= 2) {
+                var expMonth = ""
+                if (paymentList?.get(position)?.expMonth?.length!! < 2) {
+                    expMonth = "0" + paymentList?.get(position)?.expMonth
+                } else {
+                    expMonth = paymentList?.get(position)?.expMonth!!
+                }
                 deletePaymentDialog(
                     getString(R.string.str_remove_payment_method),
                     paymentList?.get(position)?.rowId,
@@ -333,7 +339,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             requireActivity(),
                             paymentList?.get(position)?.cardNumber
                         ),
-                        paymentList?.get(position)?.expMonth + "/" + if (paymentList?.get(position)?.expYear!!.length > 2) paymentList?.get(
+
+                    expMonth + "/" + if (paymentList?.get(
+                                position
+                            )?.expYear!!.length > 2
+                        ) paymentList?.get(
                             position
                         )?.expYear!!.substring(
                             2,
