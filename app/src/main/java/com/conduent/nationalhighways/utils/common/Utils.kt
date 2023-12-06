@@ -27,6 +27,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
@@ -47,6 +48,8 @@ import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import com.conduent.nationalhighways.utils.rating.RatingDialog
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.Interceptor
 import java.io.File
 import java.lang.reflect.Field
@@ -1361,18 +1364,18 @@ object Utils {
         mfaEnabled: String? = null,
         accountType: String? = null,
         securityCode: String? = null,
-        referenceId: String? = null
+        referenceId: String? = null,
     ): UpdateProfileRequest {
         var correspDeliveryMode_ = correspDeliveryMode
         var correspDeliveryFrequency_ = correspDeliveryFrequency
-        var businessName_ = businessName
+        var businessName_:String? = null
 
         if (accountType.equals(
-                Constants.PERSONAL_ACCOUNT,
+                Constants.BUSINESS_ACCOUNT,
                 true
             )
         ) {
-            businessName_ = ""
+            businessName_ = businessName?:""
         }
         if (correspDeliveryMode == null) {
             correspDeliveryMode_ = ""
@@ -1382,7 +1385,7 @@ object Utils {
         }
         return UpdateProfileRequest(
             businessName_,
-            fein,
+            null,
             firstName,
             lastName,
             addressLine1,
@@ -1408,5 +1411,25 @@ object Utils {
             securityCode = securityCode,
             referenceId = referenceId
         )
+    }
+
+    fun getCountryName(sessionManager: SessionManager, countryCode: String): String {
+        val countries=sessionManager.fetchStringData(SessionManager.COUNTRIES)
+
+
+        val countriesList = ArrayList<CountriesModel>()
+
+        val pattern = """CountriesModel\(id=(\d+), countryCode=(\w+), countryName=([\w\s]+)\)""".toRegex()
+        pattern.findAll(countries).forEach { matchResult ->
+            val (id, countryCode, countryName) = matchResult.destructured
+            countriesList.add(CountriesModel(id, countryCode, countryName))
+        }
+
+        val filteredList = countriesList.filter { it.countryCode == countryCode }
+        if (filteredList.size > 0) {
+            return filteredList.get(0).countryName?:""
+        } else {
+            return ""
+        }
     }
 }

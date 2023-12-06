@@ -80,7 +80,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_name)
                 val data = navData as ProfileDetailModel?
-                if (data?.accountInformation?.accountType.equals(PERSONAL_ACCOUNT, true)) {
+                if (data?.accountInformation?.accountType.equals(Constants.BUSINESS_ACCOUNT, true)==false) {
                     enablePersonalView()
                 }
                 data?.personalInformation?.firstName?.let { binding.inputFirstName.setText(it) }
@@ -430,9 +430,9 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             data?.accountInformation?.smsOption,
             data?.personalInformation?.eveningPhone,
             data?.accountInformation?.stmtDelivaryMethod,
-            data?.accountInformation?.correspDeliveryFrequency,
+            data?.accountInformation?.stmtDelivaryInterval,
             Utils.retrunMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
-            accountType = data?.accountInformation?.accountType
+            accountType = data?.accountInformation?.accountType,
         )
 
         viewModel.updateUserDetails(request)

@@ -650,7 +650,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             data?.accountInformation?.smsOption,
             data?.personalInformation?.eveningPhone,
             data?.accountInformation?.stmtDelivaryMethod,
-            data?.accountInformation?.correspDeliveryFrequency,
+            data?.accountInformation?.stmtDelivaryInterval,
             Utils.retrunMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
             accountType = data?.accountInformation?.accountType
 

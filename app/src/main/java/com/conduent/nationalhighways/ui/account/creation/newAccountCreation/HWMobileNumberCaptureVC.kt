@@ -712,7 +712,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 NewCreateAccountRequestModel.sms_referenceId = resource.data?.referenceId
-
+                Log.e("TAG", "handleEmailVerification: " )
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
                     bundle
@@ -792,7 +792,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             dataModel?.accountInformation?.smsOption,
             dataModel?.personalInformation?.eveningPhone,
             dataModel?.accountInformation?.stmtDelivaryMethod,
-            dataModel?.accountInformation?.correspDeliveryFrequency,
+            dataModel?.accountInformation?.stmtDelivaryInterval,
             Utils.retrunMfaStatus(dataModel?.accountInformation?.mfaEnabled ?: ""),
             accountType = dataModel?.accountInformation?.accountType
         )
