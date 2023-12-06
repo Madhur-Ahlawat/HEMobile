@@ -106,6 +106,7 @@ object DateUtils {
             } else {
                 false // If start date is after the end date.
             }
+
         } catch (e: ParseException) {
             e.printStackTrace()
         }
