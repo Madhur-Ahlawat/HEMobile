@@ -261,7 +261,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
             data?.accountInformation?.smsOption,
             data?.personalInformation?.eveningPhone,
             data?.accountInformation?.stmtDelivaryMethod,
-            data?.accountInformation?.correspDeliveryFrequency,
+            data?.accountInformation?.stmtDelivaryInterval,
             mfaEnabled = if (binding.twoFactor.isChecked) "Y" else "N",
             accountType = data?.accountInformation?.accountType,
         )

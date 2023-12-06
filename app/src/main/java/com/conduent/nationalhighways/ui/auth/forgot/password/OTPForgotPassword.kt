@@ -122,6 +122,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     override fun initCtrl() {
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
+        Log.e("TAG", "initCtrl: editRequest "+editRequest )
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
 
 
@@ -903,7 +904,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             smsOption,
             dataModel?.eveningPhone,
             accountInformation?.stmtDelivaryMethod,
-            accountInformation?.correspDeliveryFrequency,
+            accountInformation?.stmtDelivaryInterval,
             mfaEnabled,
             accountType = accountInformation?.accountType,
         )
@@ -941,7 +942,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             accountInformation?.smsOption,
             dataModel?.eveningPhone,
             accountInformation?.stmtDelivaryMethod,
-            accountInformation?.correspDeliveryFrequency,
+            accountInformation?.stmtDelivaryInterval,
             Utils.retrunMfaStatus(accountInformation?.mfaEnabled ?: ""),
             accountType = accountInformation?.accountType,
             securityCode = binding.edtOtp.getText().toString().trim(),
@@ -981,7 +982,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             "Y",
             personalInformationModel?.eveningPhone,
             accountInformation?.stmtDelivaryMethod,
-            accountInformation?.correspDeliveryFrequency,
+            accountInformation?.stmtDelivaryInterval,
             Utils.retrunMfaStatus(accountInformation?.mfaEnabled ?: ""),
             accountType = accountInformation?.accountType,
         )

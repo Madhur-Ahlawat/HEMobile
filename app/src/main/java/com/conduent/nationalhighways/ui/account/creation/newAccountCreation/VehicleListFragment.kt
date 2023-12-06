@@ -286,16 +286,16 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             data.plateInfo?.country = obj.plateCountry
         }
         data.plateInfo?.vehicleGroup = " "
-        data.plateInfo?.vehicleComments = "new Vehicle"
+        data.plateInfo?.vehicleComments = ""
         data.plateInfo?.planName = ""
         data.plateInfo?.state = "HE"
         data.plateInfo?.type = "STANDARD"
 
         data.vehicleInfo?.color = obj.vehicleColor
-        data.vehicleInfo?.year = 2021
+        data.vehicleInfo?.year = 2023
         data.vehicleInfo?.effectiveStartDate = ""
         if (obj.vehicleModel.isNullOrEmpty()) {
-            data.vehicleInfo?.model = "MODEL"
+            data.vehicleInfo?.model = ""
         } else {
             data.vehicleInfo?.model = obj.vehicleModel
         }

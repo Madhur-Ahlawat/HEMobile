@@ -603,8 +603,9 @@
         <action
             android:id="@+id/action_AccountChangeType_forgotPassword_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
-            app:popUpTo="@id/fragment_choose_account_type"
-            app:popUpToInclusive="true" />
+app:popUpTo="@id/HWMobileNumberCaptureVC"
+            app:popUpToInclusive="true"
+          />
 
         <action
             android:id="@+id/action_forgotOtpFragment_to_createPasswordFragment"
@@ -666,8 +667,7 @@
         <action
             android:id="@+id/action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
-            app:popUpTo="@id/fragment_choose_account_type"
-            app:popUpToInclusive="true" />
+            />
 
 
         <action
