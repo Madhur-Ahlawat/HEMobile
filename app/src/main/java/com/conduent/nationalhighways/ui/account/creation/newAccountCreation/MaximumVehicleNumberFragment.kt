@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccoun
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
@@ -144,7 +145,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         if (NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal) {
             binding.maximumVehicleAdded.text = getString(
                 R.string.vehicle_s_mha_has_already_been_assigned_to_this_account,
-                plateNumber
+                NewCreateAccountRequestModel.plateNumber.uppercase()
             )
             binding.textMaximumVehicle.text =
                 getString(R.string.you_have_already_added_this_vehicle_to_this_account)
@@ -155,6 +156,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         }
 
         if (NewCreateAccountRequestModel.isMaxVehicleAdded) {
+            HomeActivityMain.dataBinding?.backButton?.gone()
             binding.maximumVehicleAdded.text =
                 getString(R.string.maximum_number_of_vehicles_have_been_registered_against_the_account)
             binding.textMaximumVehicle.text =

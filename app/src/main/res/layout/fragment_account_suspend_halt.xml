@@ -159,21 +159,23 @@
                 android:layout_marginBottom="@dimen/margin_20dp"
                 android:text="@string/str_continue"
                 android:textSize="@dimen/font_14sp"
+                android:layout_marginTop="@dimen/_30dp"
                 app:isEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerViewLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewLayout" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bottom_cl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginBottom="@dimen/margin_10dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/_15dp"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnContinue">
+                app:layout_constraintTop_toBottomOf="@+id/btnContinue"
+                app:layout_constraintStart_toStartOf="parent">
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/btnAddNewPayment"
                     style="@style/secondaryButton"
@@ -183,6 +185,7 @@
                     android:textSize="@dimen/font_14sp"
                     app:isEnabled="true"
                     android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_0dp"
                     tools:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -197,6 +200,7 @@
                     android:textSize="@dimen/font_14sp"
                     app:isEnabled="true"
                     android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_0dp"
                     tools:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"

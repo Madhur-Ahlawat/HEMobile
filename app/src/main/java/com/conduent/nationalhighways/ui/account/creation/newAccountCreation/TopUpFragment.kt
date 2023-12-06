@@ -110,19 +110,32 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             count: Int
         ) {
             if (isTopUp) {
-                topUpBalance =
-                    Utils.validateAmount(
-                        binding.top,
-                        formatter.format(apiTopUpAmountBalance.toDouble()).toDouble(),
-                        true
-                    )
+                if(binding.top.getText().toString().trim().isNullOrEmpty()){
+                    binding.top.setErrorText(getString(R.string.enter_a_top_up_amount))
+                }
+                else{
+                    binding.top.removeError()
+                    topUpBalance =
+                        Utils.validateAmount(
+                            binding.top,
+                            formatter.format(apiTopUpAmountBalance.toDouble()).toDouble(),
+                            true
+                        )
+                }
+
             } else {
-                lowBalance =
-                    Utils.validateAmount(
-                        binding.lowBalance,
-                        formatter.format(apiLowBalanceAmount.toDouble()).toDouble(),
-                        false
-                    )
+                if(binding.lowBalance.getText().toString().trim().isNullOrEmpty()){
+                    binding.lowBalance.setErrorText(getString(R.string.enter_a_top_up_amount))
+                }
+                else{
+                    binding.lowBalance.removeError()
+                    lowBalance =
+                        Utils.validateAmount(
+                            binding.lowBalance,
+                            formatter.format(apiLowBalanceAmount.toDouble()).toDouble(),
+                            false
+                        )
+                }
             }
             checkButton()
         }

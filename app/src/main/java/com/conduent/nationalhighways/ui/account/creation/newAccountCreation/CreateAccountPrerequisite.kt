@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPrerequisiteBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.base.BaseApplication.Companion.setFlowNameAnalytics1
+import com.conduent.nationalhighways.ui.base.BaseApplication.Companion.setScreenNameAnalytics1
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
@@ -25,7 +27,8 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
         FragmentCreateAccountPrerequisiteBinding.inflate(inflater, container, false)
 
     override fun init() {
-      
+        setFlowNameAnalytics1(Constants.CREATE_ACCOUNT)
+        setScreenNameAnalytics1("")
         val content = SpannableString(getString(R.string.sign_in))
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
         binding.txtSignIn.text = content

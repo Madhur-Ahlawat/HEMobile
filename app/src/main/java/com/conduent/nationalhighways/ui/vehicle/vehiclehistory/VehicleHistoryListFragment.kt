@@ -247,7 +247,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                 NewCreateAccountRequestModel.isMaxVehicleAdded = true
                 findNavController().navigate(
                     R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,
-                    bundle()
+                    bundle().apply { putBoolean(Constants.SHOW_BACK_BUTTON,false) }
                 )
             } else {
 
@@ -261,7 +261,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                 NewCreateAccountRequestModel.isMaxVehicleAdded = true
                 findNavController().navigate(
                     R.id.action_vehicleHistoryListFragment_to_maximumVehicleFragment,
-                    bundle()
+                    bundle().apply { putBoolean(Constants.SHOW_BACK_BUTTON,false) }
                 )
             } else {
 

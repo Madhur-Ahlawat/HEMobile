@@ -44,14 +44,27 @@ class BaseApplication : Application() {
     }
 
     companion object {
-
+        var flowNameAnalytics:String?=""
+        var screenNameAnalytics:String?=""
         var CurrentContext: Context? = null
 
 
         var INSTANCE: BaseApplication? = null
         var logoutListener: LogoutListener? = null
         var timer: Timer? = null
+        public fun setFlowNameAnalytics1(flowName:String){
+            flowNameAnalytics=flowName
+        }
+        public fun getFlowNameAnalytics1(): String? {
+            return flowNameAnalytics
+        }
 
+        public fun setScreenNameAnalytics1(screenName:String){
+            screenNameAnalytics=screenName
+        }
+        public fun getScreenNameAnalytics1(): String? {
+            return screenNameAnalytics
+        }
 
         fun getNewToken(api: ApiService, sessionManager: SessionManager, delegate: () -> Unit?) {
             sessionManager.fetchRefreshToken()?.let { refresh ->
