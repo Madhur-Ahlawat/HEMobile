@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:padding="0dp"
-                android:gravity="center_vertical|center"
+                android:gravity="center_vertical|end"
                 android:paddingVertical="0dp"
                 android:textColor="@color/color_00837B"
                 android:textSize="@dimen/font_38sp"
@@ -81,7 +81,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline3"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="£10000.00" />
+                tools:text="£100000.00" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_account_number_heading"

@@ -67,8 +67,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             if (!isViewCreated) {
                 getThresholdAmount()
             }
-        }
-        else{
+        } else {
             binding.minimumAMountTopUp.text = (getString(
                 R.string.str_minimum_amount,
                 this@TopUpFragment.apiTopUpAmountBalance.toDouble().toInt().toString()
@@ -77,8 +76,6 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 R.string.str_minimum_amount,
                 this@TopUpFragment.apiLowBalanceAmount.toDouble().toInt().toString()
             ))
-
-
         }
         isViewCreated = true
         binding.topUpBtn.setOnClickListener(this)
@@ -110,10 +107,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             count: Int
         ) {
             if (isTopUp) {
-                if(binding.top.getText().toString().trim().isNullOrEmpty()){
+                if (binding.top.getText().toString().trim().isNullOrEmpty()) {
                     binding.top.setErrorText(getString(R.string.enter_a_top_up_amount))
-                }
-                else{
+                } else {
                     binding.top.removeError()
                     topUpBalance =
                         Utils.validateAmount(
@@ -124,10 +120,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }
 
             } else {
-                if(binding.lowBalance.getText().toString().trim().isNullOrEmpty()){
+                if (binding.lowBalance.getText().toString().trim().isNullOrEmpty()) {
                     binding.lowBalance.setErrorText(getString(R.string.enter_a_top_up_amount))
-                }
-                else{
+                } else {
                     binding.lowBalance.removeError()
                     lowBalance =
                         Utils.validateAmount(
@@ -188,8 +183,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                     isClick = true
 
                 } else {
-                   emailHeartBeatApi()
-                   smsHeartBeatApi()
+                    emailHeartBeatApi()
+                    smsHeartBeatApi()
 
                     val amount = binding.top.editText.text.toString().trim().replace("$", "£")
                         .replace("£", "")
@@ -214,9 +209,6 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
         }
 
     }
-
-
-
 
 
     private fun topBalanceDecimal(b: Boolean) {
@@ -272,129 +264,115 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 resource.data?.apply {
                     if (statusCode == "0") {
                         binding.apply {
-                            if (thresholdAmountVo?.thresholdAmount?.isNotEmpty() == true) {
-//                                binding.lowBalance.editText.removeTextChangedListener(gtwLowBalance)
-//                                binding.lowBalance.editText.setText(
-//                                    "£" + formatter.format(
-//                                        thresholdAmountVo.thresholdAmount!!.toDouble()
-//                                    )
-//                                )
-//
-//                                binding.lowBalance.editText.addTextChangedListener(gtwLowBalance)
-
-                                this@TopUpFragment.apiLowBalanceAmount = thresholdAmountVo.thresholdAmount.toString()
-                                binding.minimumAmount.text = getString(
-                                    R.string.str_minimum_amount,
-                                    this@TopUpFragment.apiLowBalanceAmount
-                                )
-
-                            }
+                            lowBalance.setText(thresholdAmountVo?.thresholdAmount.toString())
 
                             if (thresholdAmountVo?.customerAmount?.isNotEmpty() == true) {
-//                                binding.top.editText.removeTextChangedListener(gtwTopBalance)
-//                                binding.top.editText.setText(
-//                                    "£" + formatter.format(
-//                                        thresholdAmountVo.customerAmount!!.toDouble()
-//                                    )
-//                                )
-//                                binding.top.editText.addTextChangedListener(gtwTopBalance)
-                                this@TopUpFragment.apiTopUpAmountBalance = thresholdAmountVo.customerAmount.toString()
-
-                                binding.minimumAMountTopUp.text = (getString(
-                                    R.string.str_minimum_amount,
-                                    this@TopUpFragment.apiTopUpAmountBalance
-                                ))
-
+                                top.setText(thresholdAmountVo.customerAmount.toString())
                             }
-
+                            minimumAMountTopUp.text = (getString(
+                                R.string.str_minimum_amount,
+                                this@TopUpFragment.apiTopUpAmountBalance.toDouble().toInt().toString()
+                            ))
+                            minimumAmount.text = (getString(
+                                R.string.str_minimum_amount,
+                                this@TopUpFragment.apiLowBalanceAmount.toDouble().toInt().toString()
+                            ))
                         }
                     }
+                    topBalanceDecimal(false)
+                    lowBalanceDecimal(false)
                 }
             }
 
-            is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
-                    displaySessionExpireDialog(resource.errorModel)
-                } else {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
-                }
-            }
-
-            else -> {
+        is Resource.DataError -> {
+            if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                    Constants.INVALID_TOKEN
+                )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+            ) {
+                displaySessionExpireDialog(resource.errorModel)
+            } else {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
             }
         }
-        checkButton()
-    }
 
-    private fun updateThresholdApiResponse(resource: Resource<AccountTopUpUpdateThresholdResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (resource) {
-            is Resource.Success -> {
-                binding.topUpBtn.isEnabled = true
-
-                if (resource.data?.statusCode == "0") {
-                    val bundle = Bundle()
-
-
-                    val amount = binding.top.editText.text.toString().trim().replace("£", "")
-                    val thresholdAmount =
-                        binding.lowBalance.editText.text.toString().trim().replace("£", "")
-
-
-                    if (navFlow != Constants.THRESHOLD && apiLowBalanceAmount.toInt()
-                            .toString() == thresholdAmount.toInt().toString()
-                            .trim()
-                    ) {
-                        bundle.putString(Constants.THRESHOLD_AMOUNT, "")
-
-                    } else {
-                        bundle.putString(
-                            Constants.THRESHOLD_AMOUNT,
-                            binding.lowBalance.editText.text.toString().trim()
-                        )
-
-                    }
-
-
-                    if (navFlow != Constants.THRESHOLD && apiTopUpAmountBalance == amount) {
-                        bundle.putString(Constants.TOP_UP_AMOUNT, "")
-
-                    } else {
-                        bundle.putString(
-                            Constants.TOP_UP_AMOUNT,
-                            binding.top.editText.text.toString().trim()
-                        )
-
-                    }
-                    bundle.putBoolean(SHOW_BACK_BUTTON, false)
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-
-                    if (isClick) {
-                        findNavController().navigate(
-                            R.id.action_topUpFragment_to_deletePaymentMethodSuccessFragment,
-                            bundle
-                        )
-
-                    }
-                    isClick = false
-
-                }
-            }
-
-            is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
-                    displaySessionExpireDialog(resource.errorModel)
-                } else {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
-                }
-            }
-
-            else -> {
-            }
+        else -> {
         }
     }
+    checkButton()
+}
+
+private fun updateThresholdApiResponse(resource: Resource<AccountTopUpUpdateThresholdResponse?>?) {
+    if (loader?.isVisible == true) {
+        loader?.dismiss()
+    }
+    when (resource) {
+        is Resource.Success -> {
+            binding.topUpBtn.isEnabled = true
+
+            if (resource.data?.statusCode == "0") {
+                val bundle = Bundle()
+
+
+                val amount = binding.top.editText.text.toString().trim().replace("£", "")
+                val thresholdAmount =
+                    binding.lowBalance.editText.text.toString().trim().replace("£", "")
+
+
+                if (navFlow != Constants.THRESHOLD && apiLowBalanceAmount.toInt()
+                        .toString() == thresholdAmount.toInt().toString()
+                        .trim()
+                ) {
+                    bundle.putString(Constants.THRESHOLD_AMOUNT, "")
+
+                } else {
+                    bundle.putString(
+                        Constants.THRESHOLD_AMOUNT,
+                        binding.lowBalance.editText.text.toString().trim()
+                    )
+
+                }
+
+
+                if (navFlow != Constants.THRESHOLD && apiTopUpAmountBalance == amount) {
+                    bundle.putString(Constants.TOP_UP_AMOUNT, "")
+
+                } else {
+                    bundle.putString(
+                        Constants.TOP_UP_AMOUNT,
+                        binding.top.editText.text.toString().trim()
+                    )
+
+                }
+                bundle.putBoolean(SHOW_BACK_BUTTON, false)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+
+                if (isClick) {
+                    findNavController().navigate(
+                        R.id.action_topUpFragment_to_deletePaymentMethodSuccessFragment,
+                        bundle
+                    )
+
+                }
+                isClick = false
+
+            }
+        }
+
+        is Resource.DataError -> {
+            if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                    Constants.INVALID_TOKEN
+                )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+            ) {
+                displaySessionExpireDialog(resource.errorModel)
+            } else {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+            }
+        }
+
+        else -> {
+        }
+    }
+}
 
 
 }

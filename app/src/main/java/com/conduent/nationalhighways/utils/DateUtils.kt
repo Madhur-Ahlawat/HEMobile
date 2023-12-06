@@ -103,8 +103,6 @@ object DateUtils {
         try {
             b = if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
                 true // If start date is before end date.
-            } else if (dfDate.parse(startDate) == dfDate.parse(endDate)) {
-                true // If two dates are equal.
             } else {
                 false // If start date is after the end date.
             }

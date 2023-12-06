@@ -124,6 +124,7 @@ object Utils {
 
     @RequiresApi(VERSION_CODES.O)
     fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
+        val dfDate = SimpleDateFormat("dd MMM yyyy hh:mm a")
 
         var transactionListSorted: MutableList<TransactionData> = mutableListOf()
         for (transaction in transactions) {
@@ -131,17 +132,21 @@ object Utils {
                 transaction.showDateHeader = true
                 transactionListSorted.add(transaction)
             } else {
-                if (DateUtils.compareDates(
-                        transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
-                        transaction.transactionDate + " " + transaction.exitTime
-                    )
+                if (transactionListSorted.last().balance == transaction.balance
                 ) {
-                    transactionListSorted.add(transactionListSorted.get(transactionListSorted.size - 1))
-                    transactionListSorted.add(transactionListSorted.size - 2, transaction)
-
                 } else {
-                    transactionListSorted.add(transaction)
+                    if (DateUtils.compareDates(
+                            transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
+                            transaction.transactionDate + " " + transaction.exitTime
+                        )
+                    ) {
+                        transactionListSorted.add(transactionListSorted.get(transactionListSorted.size - 1))
+                        transactionListSorted.add(transactionListSorted.size - 2, transaction)
+                    } else {
+                        transactionListSorted.add(transaction)
+                    }
                 }
+
             }
 
         }
@@ -1321,59 +1326,62 @@ object Utils {
         }
     }
 
-    fun retrunMfaStatus(mfa:String):String{
-        var mfaEnabled="Y"
-        if(mfa.equals("false")){
-            mfaEnabled="N"
+    fun retrunMfaStatus(mfa: String): String {
+        var mfaEnabled = "Y"
+        if (mfa.equals("false")) {
+            mfaEnabled = "N"
         }
         return mfaEnabled
     }
 
-    fun returnEditProfileModel(businessName: String? = null,
-                               fein: String? = null,
-                               firstName: String? = null,
-                               lastName: String? = null,
-                               addressLine1: String? = null,
-                               addressLine2: String? = null,
-                               city: String? = null,
-                               state: String? = null,
-                               zipCode: String? = null,
-                               zipCodePlus: String? = null,
-                               country: String? = null,
-                               emailAddress: String? = null,
-                               primaryEmailStatus: String? = null,
-                               primaryEmailUniqueID: String? = null,
-                               phoneCell: String? = null,
-                               phoneCellCountryCode: String? = null,
-                               phoneDay: String? = null,
-                               phoneDayCountryCode: String? = null,
-                               phoneFax: String? = null,
-                               smsOption: String? = null,
-                               phoneEvening: String? = null,
-                               correspDeliveryMode: String? = null,
-                               correspDeliveryFrequency: String? = null,
-                               mfaEnabled: String? = null,
-                               accountType:String?=null,
-                               securityCode:String?=null,
-                               referenceId:String?=null):UpdateProfileRequest{
-        var correspDeliveryMode_=correspDeliveryMode
-        var correspDeliveryFrequency_=correspDeliveryFrequency
-        var businessName_=businessName
+    fun returnEditProfileModel(
+        businessName: String? = null,
+        fein: String? = null,
+        firstName: String? = null,
+        lastName: String? = null,
+        addressLine1: String? = null,
+        addressLine2: String? = null,
+        city: String? = null,
+        state: String? = null,
+        zipCode: String? = null,
+        zipCodePlus: String? = null,
+        country: String? = null,
+        emailAddress: String? = null,
+        primaryEmailStatus: String? = null,
+        primaryEmailUniqueID: String? = null,
+        phoneCell: String? = null,
+        phoneCellCountryCode: String? = null,
+        phoneDay: String? = null,
+        phoneDayCountryCode: String? = null,
+        phoneFax: String? = null,
+        smsOption: String? = null,
+        phoneEvening: String? = null,
+        correspDeliveryMode: String? = null,
+        correspDeliveryFrequency: String? = null,
+        mfaEnabled: String? = null,
+        accountType: String? = null,
+        securityCode: String? = null,
+        referenceId: String? = null
+    ): UpdateProfileRequest {
+        var correspDeliveryMode_ = correspDeliveryMode
+        var correspDeliveryFrequency_ = correspDeliveryFrequency
+        var businessName_ = businessName
 
         if (accountType.equals(
                 Constants.PERSONAL_ACCOUNT,
                 true
             )
         ) {
-            businessName_=""
+            businessName_ = ""
         }
-        if(correspDeliveryMode==null){
-            correspDeliveryMode_=""
+        if (correspDeliveryMode == null) {
+            correspDeliveryMode_ = ""
         }
-        if(correspDeliveryFrequency==null){
-            correspDeliveryFrequency_=""
+        if (correspDeliveryFrequency == null) {
+            correspDeliveryFrequency_ = ""
         }
-        return UpdateProfileRequest(businessName_,
+        return UpdateProfileRequest(
+            businessName_,
             fein,
             firstName,
             lastName,
@@ -1398,6 +1406,7 @@ object Utils {
             correspDeliveryFrequency_,
             mfaEnabled,
             securityCode = securityCode,
-            referenceId = referenceId)
+            referenceId = referenceId
+        )
     }
 }
