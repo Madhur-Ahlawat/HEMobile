@@ -109,7 +109,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             }
             else{
                 binding.editNumberPlate.removeError()
-            }$
+            }
         }
         if(isPlateNumberValid && isReferenceNumberValid){
             binding.findVehicle.isEnabled = true
