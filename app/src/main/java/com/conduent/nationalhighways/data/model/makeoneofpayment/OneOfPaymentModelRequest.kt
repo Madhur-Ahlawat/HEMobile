@@ -31,7 +31,12 @@ data class PaymentTypeInfo(
     val state: String?,
     val country: String?,
     val zipcode: String?,
-    val zipCode2: String?
+    val zipCode2: String?,
+    val cardholderAuth:String?=null,
+    val cavv:String?=null,
+    val directoryServerID:String?=null,
+    val eci:String?=null,
+    val threeDsVer:String?=null,
 ):Parcelable
 
 @Parcelize

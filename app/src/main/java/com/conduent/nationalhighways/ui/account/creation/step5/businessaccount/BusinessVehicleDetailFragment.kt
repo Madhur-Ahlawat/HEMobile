@@ -103,10 +103,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                             it.vehicleModel = data?.vehicleModel
                             it.vehicleMake = data?.vehicleMake
                             it.vehicleColor = data?.vehicleColor
+                            it.accountNo=it.accountNumber?:""
                         } else {
                             it.vehicleModel = nonUKVehicleModel?.vehicleModel
                             it.vehicleMake = nonUKVehicleModel?.vehicleMake
                             it.vehicleColor = nonUKVehicleModel?.vehicleColor
+                            it.accountNo=it.accountNumber?:""
                         }
 
                         resource.data.plateNo = data?.plateNo ?: ""

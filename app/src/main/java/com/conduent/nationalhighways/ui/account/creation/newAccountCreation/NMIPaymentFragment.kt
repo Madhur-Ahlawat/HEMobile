@@ -50,10 +50,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
-import android.webkit.WebSettings
-
-
-
 
 
 @AndroidEntryPoint
@@ -426,7 +422,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             "",
             NewCreateAccountRequestModel.emailAddress,
             NewCreateAccountRequestModel.mobileNumber,
-            "", "", "", "", "", "", ""
+            "", "", "", "", "", "", "",
+            cardholderAuth = paymentSuccessResponse.cardHolderAuth,
+            cavv = paymentSuccessResponse.cavv,
+            directoryServerID = paymentSuccessResponse.directoryServerId,
+            eci = paymentSuccessResponse.eci,
+            threeDsVer = paymentSuccessResponse.threeDsVersion
+
         )
         val pendingDues = (crossingDetailModelResponse?.unsettledTripChange?.toDouble())?.times(
             (crossingDetailModelResponse?.chargingRate?.toDouble() ?: 0.00)
@@ -442,7 +444,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             futureTollCount =Additional crossing selected
             future toll payment =Additional Crossing Selected * Charging Rate
         * */
-        Log.e("TAG", "makeOneOffPaymentApi:plateCountry  "+ crossingDetailModelResponse?.plateCountry)
+        Log.e(
+            "TAG",
+            "makeOneOffPaymentApi:plateCountry  " + crossingDetailModelResponse?.plateCountry
+        )
         val vehicleList = VehicleList(
             crossingDetailModelResponse?.plateNo,
             crossingDetailModelResponse?.vehicleMake,
@@ -465,6 +470,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         mVehicleList.add(vehicleList)
         val ftVehicleList = FtVehicleList(mVehicleList)
         val oneOfPayModelReq = OneOfPaymentModelRequest(ftVehicleList, paymentTypeInfo)
+
+        Log.e("TAG", "makeOneOffPaymentApi: oneOfPayModelReq " + oneOfPayModelReq)
         oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
     }
 
@@ -536,7 +543,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.tcAccepted = "Y"
         model.mailPreference = "Y"
         model.emailPreference = "Y"
-        model.postCode = NewCreateAccountRequestModel.zipCode.replace(" ","")
+        model.postCode = NewCreateAccountRequestModel.zipCode.replace(" ", "")
         model.addressLine2 = "Small Heath"
         if (NewCreateAccountRequestModel.twoStepVerification) {
             model.mfaFlag = "Y"
@@ -547,7 +554,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         }
         model.smsSecurityCd = data.smsSecurityCode      // sms security code
         model.cardMiddleName = ""
-        model.cardZipCode = data.zipCode.replace(" ","")
+        model.cardZipCode = data.zipCode.replace(" ", "")
         if (!NewCreateAccountRequestModel.prePay) {
             model.planType = "PAYG"
 
@@ -571,7 +578,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
             model.address1 = data.addressline1
             model.address2 = data.addressline2
-            model.zipCode1 = data.zipCode.replace(" ","")
+            model.zipCode1 = data.zipCode.replace(" ", "")
             model.city = data.townCity   // address city
         } else {
             model.countryType = ""
