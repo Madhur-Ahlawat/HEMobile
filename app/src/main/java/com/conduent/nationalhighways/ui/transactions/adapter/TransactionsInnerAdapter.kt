@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.transactions.adapter;
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -36,6 +37,7 @@ class TransactionsInnerAdapter(
     }
 
     override fun getItemCount(): Int {
+        Log.e("TAG", "getItemCount: transactionItemsList "+transactionItemsList.size )
         return transactionItemsList.size
     }
 

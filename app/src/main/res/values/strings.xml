@@ -644,7 +644,6 @@
     <string name="str_cases_and_enquiries">Cases and Enquiry</string>
     <string name="str_what_you_want_to_do">What you want to do?</string>
     <string name="edit_details">Edit details</string>
-    <string name="change_password">Change password</string>
     <string name="current_password_validation">New password can\'t be same as current password</string>
     <string name="confirm_password_validation">\u25CF Confirm Password \n\u25CF Must begin with a letter
                 \n\u25CF Be at least 8 characters long
@@ -1412,8 +1411,8 @@
     <string name="check_for_previous_crossings">Check Previous Crossing Details</string>
     <string name="paid_for_please_note">After you’ve made a one-off payment, you can check which crossings you’ve paid for. Please note it can take up to one day for your payment to be matched to crossings</string>
     <string name="for_example_hd542321725_or_1_898008009">For example, HD542321725 or 1–898008009</string>
-    <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
-       <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
+    <string name="paid_crossing_point1">If you paid by web or phone this is the \'HD or 1-\' number</string>
+    <string name="paid_crossing_point2">If you\'ve paid through Payzone his is the \'TXN\' number</string>
     <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings\nplanned in the future.\nLate payments will be used for future\ncrossings - you may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>
 

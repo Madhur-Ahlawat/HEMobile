@@ -124,6 +124,7 @@ object Utils {
 
     @RequiresApi(VERSION_CODES.O)
     fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
+
         var transactionListSorted: MutableList<TransactionData> = mutableListOf()
         for (transaction in transactions) {
             if (transactionListSorted.isEmpty() == true) {

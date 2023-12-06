@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.databinding.ItemAllTansactionsBinding
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
-import com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -44,6 +43,10 @@ class TransactionsAdapter(
         var innerAdapter: TransactionsInnerAdapter? = null
         var recentTransactionItem = transactionItemList.get(position)
         Log.e("POSXJ220", transactionItemList.get(position))
+        Log.e(
+            "TAG",
+            " POSXJ220 * * " + transactionItemHashMap.get(recentTransactionItem).orEmpty().size
+        )
         binding?.apply {
             if (context is DashboardFragmentNew) {
                 headerDate.gone()
