@@ -161,7 +161,21 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             when (response) {
                 is Resource.Success -> {
 
-                    var addressList: List<DataAddress?>? = response.data
+                    val dataAddresses = response.data?.toMutableList() ?: ArrayList()
+                    Log.e("TAG", "handleAddressApiResponse:!!@ "+dataAddresses.toString() )
+
+
+                    var addressList: List<DataAddress?>? = dataAddresses.sortedBy{it?.street}.toMutableList()?:ArrayList()
+
+
+//                    var addressList: List<DataAddress?>? = dataAddresses.sortedWith(compareBy(
+//                        { it?.street?.takeWhile { c -> c.isDigit() }?.toIntOrNull() ?: Int.MAX_VALUE }, // Sort by numeric part
+//                        { it?.street?.dropWhile { c -> c.isDigit() } } // Then sort alphabetically
+//                    ))
+
+
+                    Log.e("TAG", "handleAddressApiResponse:!!@addressList "+addressList.toString() )
+
                     when (navFlowCall) {
                         EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
                             addressList?.forEach { it?.isSelected = false }
