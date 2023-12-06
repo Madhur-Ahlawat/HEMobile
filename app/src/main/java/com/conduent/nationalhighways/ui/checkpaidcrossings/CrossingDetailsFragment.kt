@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModel
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
@@ -149,7 +150,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                 filterType = Constants.PAYMENT_FILTER_SPECIFIC,
                 DateUtils.lastPriorDate(-30), DateUtils.currentDate(), ""
             )
-        val request = CheckedCrossingTransactionsRequestModel()
+        val request = CheckedCrossingTransactionsRequestModel(transactionType = "Toll_Transaction")
         viewModel.paymentHistoryDetailsCheckCrossings(request)
     }
 
@@ -184,14 +185,35 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                                 recentTransactionItem.activity!!.length
                             )!!.toLowerCase()
                         )
-                    if (recentTransactionItem.amount?.contains("-") == false) {
+                    if (recentTransactionItem.activity?.lowercase()?.contains("toll") == false) {
                         verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
                         indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
                         topup = "+" + recentTransactionItem.amount
                     } else {
-                        verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
-                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_car_grey))
-                        topup = "-" + recentTransactionItem.amount
+                        if (recentTransactionItem.exitDirection.equals("N")) {
+                            tvTransactionType.text =
+                                tvTransactionType.context.getString(R.string.northbound)
+                        } else {
+                            tvTransactionType.text =
+                                tvTransactionType.context.getString(R.string.southbound)
+                        }
+                        verticalStripTransactionType.background.setTint(
+                            resources.getColor(
+                                R.color.red_status
+                            )
+                        )
+                        if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(
+                                Constants.EXEMPT_PARTNER
+                            )
+                        ) {
+                            topup = recentTransactionItem.amount
+                        } else {
+                            topup = "-" + recentTransactionItem.amount
+                        }
+                        indicatorIconEuro.gone()
+                        Glide.with(indicatorIconTransactionType.context)
+                            .load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_car_grey))
+                            .into(indicatorIconTransactionType)
                     }
                     root.setOnClickListener {
                         HomeActivityMain.checkedCrossing = recentTransactionItem

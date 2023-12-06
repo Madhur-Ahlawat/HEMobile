@@ -532,11 +532,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            val cardType = data.replenishmentInformation?.reBillPayType?.uppercase()
             data.let {
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
+                        if (cardType?.uppercase().equals(Constants.CURRENT, true)) {
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace("CURRENT ending in ","****") ?: ""
+
+                        }
+                        else{
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
+
+                        }
 
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus
@@ -555,7 +563,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
 
-            val cardType = data.replenishmentInformation?.reBillPayType?.uppercase()
             if (cardType.equals("CASH")) {
                 cardLogo.gone()
             } else {

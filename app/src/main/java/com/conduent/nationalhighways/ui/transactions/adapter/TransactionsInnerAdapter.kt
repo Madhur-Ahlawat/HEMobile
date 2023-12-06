@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.databinding.ItemCrossingsBinding
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
 import com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import java.text.SimpleDateFormat
@@ -61,7 +62,7 @@ class TransactionsInnerAdapter(
                 valueTopUpAmount.text = topup
                 valueTopUpAmount.setTextColor(viewAllTransactionsFragment.resources.getColor(R.color.green_status))
             } else {
-                if(HomeActivityMain.crossing?.exitDirection.equals("N")){
+                if(recentTransactionItem.exitDirection.equals("N")){
                     tvTransactionType.text = "Northbound"
                 }
                 else{
@@ -72,7 +73,14 @@ class TransactionsInnerAdapter(
                         R.color.red_status
                     )
                 )
-                topup = "-" + recentTransactionItem.amount
+                if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(
+                        Constants.EXEMPT_PARTNER
+                    )
+                ) {
+                    topup = recentTransactionItem.amount
+                } else {
+                    topup = "-" + recentTransactionItem.amount
+                }
                 valueTopUpAmount.text = topup
                 indicatorIconEuro.gone()
                 Glide.with(indicatorIconTransactionType.context).load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_car_grey)).into(indicatorIconTransactionType)
