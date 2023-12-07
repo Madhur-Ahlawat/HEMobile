@@ -161,26 +161,26 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             when (response) {
                 is Resource.Success -> {
 
-                    val dataAddresses = response.data?.toMutableList() ?: ArrayList()
-                    Log.e("TAG", "handleAddressApiResponse:!!@ "+dataAddresses.toString() )
+                    val dataAddresses: ArrayList<DataAddress?> = ArrayList(response.data?:ArrayList())
+
+                    var addressList: List<DataAddress?> =
+                        (dataAddresses.sortedBy{it?.street})
 
 
-                    var addressList: List<DataAddress?>? = dataAddresses.sortedBy{it?.street}.toMutableList()?:ArrayList()
+                    val dataAddresses1: ArrayList<DataAddress?> = ArrayList(addressList?:ArrayList())
 
+                    dataAddresses1.sortWith(compareBy(
+                        { it?.street?.split(" ")?.get(0)?.toIntOrNull() ?: Int.MAX_VALUE }, // Try to parse as Int, otherwise use Int.MAX_VALUE
+                        { it?.street })
+                    )
+                    addressList = dataAddresses1
 
-//                    var addressList: List<DataAddress?>? = dataAddresses.sortedWith(compareBy(
-//                        { it?.street?.takeWhile { c -> c.isDigit() }?.toIntOrNull() ?: Int.MAX_VALUE }, // Sort by numeric part
-//                        { it?.street?.dropWhile { c -> c.isDigit() } } // Then sort alphabetically
-//                    ))
-
-
-                    Log.e("TAG", "handleAddressApiResponse:!!@addressList "+addressList.toString() )
 
                     when (navFlowCall) {
                         EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
-                            addressList?.forEach { it?.isSelected = false }
+                            addressList.forEach { it?.isSelected = false }
                             if (NewCreateAccountRequestModel.selectedAddressId != -1) {
-                                addressList?.get(NewCreateAccountRequestModel.selectedAddressId)?.isSelected =
+                                addressList.get(NewCreateAccountRequestModel.selectedAddressId)?.isSelected =
                                     true
                             }
                         }
@@ -195,7 +195,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                         binding.inputPostCode.editText.text.toString()
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putParcelableArrayList(Constants.ADDRESS_LIST, addressList as ArrayList)
+                    bundle.putParcelableArrayList(Constants.ADDRESS_LIST, ArrayList(addressList))
                     if (navFlowCall.equals(PROFILE_MANAGEMENT, true) && navData != null) {
                         val data = navData as ProfileDetailModel?
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
