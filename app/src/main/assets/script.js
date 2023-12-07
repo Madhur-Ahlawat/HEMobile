@@ -244,7 +244,7 @@ function buttonClicked() {
     window.appInterface.postMessage("3DStarted");
 }
 
-function checkNumber() {
+function checkNumber(el) {
     var amt =  document.getElementById("amount").value;
     if (amt == "") {
         document.getElementById("errorMessageForAmount").style.display="";
@@ -261,6 +261,8 @@ function checkNumber() {
     } else {
         document.getElementById("errorMessageForAmount").style.display="none";
     }
+
+    el.value = parseFloat(el.value).toFixed(2);
 }
 
 function saveCardClick() {

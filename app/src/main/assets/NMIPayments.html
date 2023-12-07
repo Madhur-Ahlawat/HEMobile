@@ -34,7 +34,7 @@
         </table>
         <table width="95%" class="center" id="amounInput" style="border-bottom: 1.5px solid gray;">
             <tr><td width="0.07%"><label id="currency1" style="display: none;">&#163;</label></td><td width="98%">
-                <input type="number"  name="amount" id="amount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" onblur="checkNumber()" style="display: none; border-bottom: none;"/></td></tr>
+                <input type="number"  name="amount" id="amount" onblur="checkNumber(this)" style="display: none; border-bottom: none;"/></td></tr>
         </table>
         <table width="95%" class="center">
             <tr><td><label id="errorMessageForAmount" style="display: none;"></label></td></tr>
