@@ -103,11 +103,10 @@ object DateUtils {
         try {
             b = if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
                 true // If start date is before end date.
-            } else if (dfDate.parse(startDate) == dfDate.parse(endDate)) {
-                true // If two dates are equal.
             } else {
                 false // If start date is after the end date.
             }
+
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -181,9 +180,9 @@ object DateUtils {
         return try {
             val dateObj = dateFormatter.parse(date)
             val postFormatter = SimpleDateFormat("dd MMM yyyy hh:mm a")
-            postFormatter.format(dateObj)
+            postFormatter.format(dateObj).replace("AM","am").replace("PM","pm")
         } catch (e: Exception) {
-            date
+            date.replace("AM","am").replace("PM","pm")
         }
     }
     fun convertStringDatetoAnotherFormat(date: String,dateFormat1:String,dateFormat2:String): String {
@@ -210,6 +209,13 @@ object DateUtils {
         } catch (e: Exception) {
             date
         }
+    }
+
+    fun convertDateToString(date:Date,dateFormat:String):String{
+
+        val dateFormat = SimpleDateFormat(dateFormat) // Define your desired date format
+       return dateFormat.format(date) // Convert Date to String
+
     }
 
 }

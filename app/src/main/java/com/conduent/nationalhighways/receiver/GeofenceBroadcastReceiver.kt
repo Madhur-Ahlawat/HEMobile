@@ -60,7 +60,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                     )
                 }else{
                     val diff = Utils.getTimeDifference(geofenceEnterTime, Date())
-                    if (diff.second <= 5) {
+                    if (diff.first.toInt() == 0 && diff.second <= 5) {
                         notificationUtils.showNotification(
                             context.resources.getString(R.string.str_did_you_cross_today),
                             context.resources.getString(R.string.str_responsible_paying),
@@ -69,6 +69,12 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                     }
                 }
               sessionManager.saveStringData(SessionManager.GEOFENCE_ENTER_TIME,"")
+            }else{
+                notificationUtils.showNotification(
+                    context.resources.getString(R.string.str_did_you_cross_today),
+                    context.resources.getString(R.string.str_responsible_paying),
+                    Constants.GEO_FENCE_NOTIFICATION
+                )
             }
 
         } else {

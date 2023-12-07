@@ -162,7 +162,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             else -> {
-                binding.inputMobileNumber.editText.setText(NewCreateAccountRequestModel.mobileNumber ?: "")
+                binding.inputMobileNumber.editText.setText(
+                    NewCreateAccountRequestModel.mobileNumber ?: ""
+                )
             }
         }
 
@@ -175,10 +177,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (data != null) {
             if (data?.personalInformation?.phoneCell.isNullOrEmpty().not()) {
                 setMobileView()
-                data?.personalInformation?.phoneCell?.let { binding.inputMobileNumber.editText.setText(it) }
+                data?.personalInformation?.phoneCell?.let {
+                    binding.inputMobileNumber.editText.setText(
+                        it
+                    )
+                }
             } else if (data?.personalInformation?.phoneDay.isNullOrEmpty().not()) {
                 setTelephoneView()
-                data?.personalInformation?.phoneDay?.let { binding.inputMobileNumber.editText.setText(it) }
+                data?.personalInformation?.phoneDay?.let {
+                    binding.inputMobileNumber.editText.setText(
+                        it
+                    )
+                }
             }
             data?.personalInformation?.phoneCellCountryCode?.let {
                 binding.inputCountry.setSelectedValue(
@@ -341,7 +351,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     checkButton()
                 }
 
-                if(binding.inputMobileNumber.editText.text?.isNotEmpty() == true){
+                if (binding.inputMobileNumber.editText.text?.isNotEmpty() == true) {
                     checkButton()
                 }
 
@@ -473,15 +483,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                                         requireActivity().supportFragmentManager,
                                         Constants.LOADER_DIALOG
                                     )
-                                    if (data?.accountInformation?.accountType.equals(
-                                            Constants.PERSONAL_ACCOUNT,
-                                            true
-                                        )
-                                    ) {
-                                        updateStandardUserProfile(data)
-                                    } else {
-                                        updateBusinessUserProfile(data)
-                                    }
+
+                                    updateProfileDetails(data)
+
                                 }
                             }
 
@@ -708,7 +712,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 NewCreateAccountRequestModel.sms_referenceId = resource.data?.referenceId
-
+                Log.e("TAG", "handleEmailVerification: " )
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
                     bundle
@@ -745,56 +749,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             checkButton()
         }
     }
-
-    private fun updateBusinessUserProfile(
-        dataModel: ProfileDetailModel?
-    ) {
-        var phoneCell = dataModel?.personalInformation?.phoneCell
-        var phoneCellCountryCode = dataModel?.personalInformation?.phoneCellCountryCode
-        var phoneDay = dataModel?.personalInformation?.phoneDay
-        var phoneDayCountryCode = dataModel?.personalInformation?.phoneDayCountryCode
-
-        if (!isItMobileNumber) {
-            phoneDay = binding.inputMobileNumber.getText().toString().trim()
-            phoneDayCountryCode =
-                binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
-        } else {
-            phoneCell = binding.inputMobileNumber.getText().toString().trim()
-            phoneCellCountryCode =
-                binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
-        }
-        dataModel?.run {
-            val request = UpdateProfileRequest(
-                firstName = personalInformation?.firstName,
-                lastName = personalInformation?.lastName,
-                addressLine1 = personalInformation?.addressLine1,
-                addressLine2 = personalInformation?.addressLine2,
-                city = personalInformation?.city,
-                state = personalInformation?.state,
-                zipCode = personalInformation?.zipcode,
-                zipCodePlus = personalInformation?.zipCodePlus,
-                country = personalInformation?.country,
-                emailAddress = personalInformation?.emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = phoneCell,
-                phoneDay = phoneDay,
-                phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = "",
-                fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName,
-                phoneCellCountryCode = phoneCellCountryCode,
-                phoneDayCountryCode = phoneDayCountryCode
-            )
-
-            viewModelProfile.updateUserDetails(request)
-        }
-
-
-    }
-
-    private fun updateStandardUserProfile(
+    private fun updateProfileDetails(
         dataModel: ProfileDetailModel?
     ) {
 
@@ -813,31 +768,36 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         }
 
-        dataModel?.personalInformation?.run {
-            val request = UpdateProfileRequest(
-                firstName = firstName,
-                lastName = lastName,
-                addressLine1 = addressLine1,
-                addressLine2 = addressLine2,
-                city = city,
-                state = state,
-                zipCode = zipcode,
-                zipCodePlus = zipCodePlus,
-                country = country,
-                emailAddress = emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneCell,
-                phoneDay = phoneDay,
-                phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = "",
-                phoneCellCountryCode = phoneCellCountryCode,
-                phoneDayCountryCode = phoneDayCountryCode
-            )
 
-            viewModelProfile.updateUserDetails(request)
-        }
+        val request = Utils.returnEditProfileModel(
+            dataModel?.accountInformation?.businessName,
+            data?.accountInformation?.fein,
+            dataModel?.personalInformation?.firstName,
+            dataModel?.personalInformation?.lastName,
+            dataModel?.personalInformation?.addressLine1,
+            dataModel?.personalInformation?.addressLine2,
+            dataModel?.personalInformation?.city,
+            dataModel?.personalInformation?.state,
+            dataModel?.personalInformation?.zipcode,
+            dataModel?.personalInformation?.zipCodePlus,
+            dataModel?.personalInformation?.country,
+            dataModel?.personalInformation?.emailAddress,
+            dataModel?.personalInformation?.primaryEmailStatus,
+            dataModel?.personalInformation?.pemailUniqueCode,
+            phoneCell,
+            phoneCellCountryCode,
+            phoneDay,
+            phoneDayCountryCode,
+            dataModel?.personalInformation?.fax,
+            dataModel?.accountInformation?.smsOption,
+            dataModel?.personalInformation?.eveningPhone,
+            dataModel?.accountInformation?.stmtDelivaryMethod,
+            dataModel?.accountInformation?.stmtDelivaryInterval,
+            Utils.retrunMfaStatus(dataModel?.accountInformation?.mfaEnabled ?: ""),
+            accountType = dataModel?.accountInformation?.accountType
+        )
+
+        viewModelProfile.updateUserDetails(request)
 
     }
 

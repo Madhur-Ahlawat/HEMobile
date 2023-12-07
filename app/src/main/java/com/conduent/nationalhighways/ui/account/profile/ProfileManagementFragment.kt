@@ -9,9 +9,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBinding
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -23,11 +26,13 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_M
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.visible
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,6 +43,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
     private val viewModel: ProfileViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var profileDetailModel: ProfileDetailModel? = null
+    private val countryViewModel: CreateAccountPostCodeViewModel by viewModels()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -68,7 +74,11 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        viewModel.accountDetail()
+        if(sessionManager.fetchStringData(SessionManager.COUNTRIES).isEmpty()){
+            countryViewModel.getCountries()
+        }else{
+            viewModel.accountDetail()
+        }
         val title: TextView? = requireActivity().findViewById(R.id.title_txt)
         title?.text = getString(R.string.profile_management)
     }
@@ -106,11 +116,40 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     override fun observer() {
         observe(viewModel.accountDetail, ::handleAccountDetail)
+        observe(countryViewModel.countriesList, ::getCountriesList)
     }
+
+
+    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
+        viewModel.accountDetail()
+
+        when (response) {
+            is Resource.Success -> {
+               sessionManager.saveStringData(SessionManager.COUNTRIES,response.data.toString())
+            }
+
+            is Resource.DataError -> {
+                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
+                    displaySessionExpireDialog(response.errorModel)
+                } else {
+                    ErrorUtil.showError(binding.root, response.errorMsg)
+                }
+            }
+
+            else -> {
+            }
+
+        }
+    }
+
 
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
         loader?.dismiss()
+
         when (status) {
             is Resource.Success -> {
                 status.data?.run {
@@ -130,14 +169,16 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         if (personalInformation?.addressLine1?.isEmpty() == true && personalInformation?.city?.isEmpty() == true && personalInformation?.zipcode?.isEmpty() == true) {
 
                         } else {
+
+
                             binding.address.text =
-                                personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
+                                personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode+"\n"+ Utils.getCountryName(sessionManager,personalInformation?.country?:"")
                         }
                         binding.emailAddressProfile.text =
                             personalInformation?.userName?.lowercase()
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
-                            binding.txtMobileNumber.text = getString(R.string.mobile_number)
+                            binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
                             personalInformation?.phoneCell?.let {
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneCellCountryCode + " " + it

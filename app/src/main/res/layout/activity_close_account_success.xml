@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toTopOf="@id/gotoStartMenuBt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -109,8 +110,8 @@
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/what_happens_next"
                 style="@style/RegularTextBlack"
-                android:layout_marginHorizontal="@dimen/_27dp"
-                android:layout_marginTop="@dimen/_18dp"
+                android:layout_marginHorizontal="@dimen/margin_30dp"
+                android:layout_marginTop="@dimen/margin_18dp"
                 android:gravity="center"
                 android:text="@string/any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method"
                 android:textAlignment="center"
@@ -121,7 +122,21 @@
                 app:layout_constraintTop_toBottomOf="@id/title_next"
                 tools:visibility="visible" />
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/gotoStartMenuBt"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:layout_marginRight="@dimen/margin_15dp"
+            android:text="@string/str_go_to_start_menu"
+            android:layout_marginBottom="@dimen/margin_30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:radius="@dimen/margin_5dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

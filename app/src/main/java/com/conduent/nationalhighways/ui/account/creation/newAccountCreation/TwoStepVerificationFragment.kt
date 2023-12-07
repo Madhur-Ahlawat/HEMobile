@@ -24,6 +24,7 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -174,9 +175,8 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                             if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
                                 if (binding.twoFactor.isChecked) {
                                     verifyMobileNumber(data)
-
                                 } else {
-                                    updateStandardUserProfile(data)
+                                    updateProfileDetails(data)
 
                                 }
                             } else {
@@ -184,15 +184,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                                     requireActivity().supportFragmentManager,
                                     Constants.LOADER_DIALOG
                                 )
-                                if (data?.accountInformation?.accountType.equals(
-                                        Constants.PERSONAL_ACCOUNT,
-                                        true
-                                    )
-                                ) {
-                                    updateStandardUserProfile(data)
-                                } else {
-                                    updateBusinessUserProfile(data)
-                                }
+                                updateProfileDetails(data)
                             }
                         }
                     }
@@ -242,73 +234,40 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         )
     }
 
-    private fun updateBusinessUserProfile(
-        data: ProfileDetailModel?
-    ) {
-        data?.run {
-            val request = UpdateProfileRequest(
-                firstName = personalInformation?.firstName,
-                lastName = personalInformation?.lastName,
-                addressLine1 = personalInformation?.addressLine1,
-                addressLine2 = personalInformation?.addressLine2,
-                city = personalInformation?.city,
-                state = personalInformation?.state,
-                zipCode = personalInformation?.zipcode,
-                zipCodePlus = personalInformation?.zipCodePlus,
-                country = personalInformation?.country,
-                emailAddress = personalInformation?.emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = personalInformation?.phoneNumber ?: "",
-                phoneDay = personalInformation?.phoneDay,
-                phoneDayCountryCode = personalInformation?.phoneDayCountryCode,
-                phoneCellCountryCode = personalInformation?.phoneCellCountryCode,
-                phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = "",
-                fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName,
-                mfaEnabled = if (binding.twoFactor.isChecked) "Y" else "N"
-            )
-
-
-            viewModel.updateUserDetails(request)
-        }
-
-
-    }
-
-    private fun updateStandardUserProfile(
+    private fun updateProfileDetails(
         data: ProfileDetailModel?
     ) {
 
-        data?.personalInformation?.run {
-            val request = UpdateProfileRequest(
-                firstName = firstName,
-                lastName = lastName,
-                addressLine1 = addressLine1,
-                addressLine2 = addressLine2,
-                city = city,
-                state = state,
-                zipCode = zipcode,
-                zipCodePlus = zipCodePlus,
-                country = country,
-                emailAddress = emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneCell ?: "",
-                phoneDay = phoneDay,
-                phoneDayCountryCode = phoneDayCountryCode,
-                phoneCellCountryCode = phoneCellCountryCode,
-                phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = "",
-                mfaEnabled = if (binding.twoFactor.isChecked) "Y" else "N"
-            )
+        val request = Utils.returnEditProfileModel(
+            data?.accountInformation?.businessName,
+            data?.accountInformation?.fein,
+            data?.personalInformation?.firstName,
+            data?.personalInformation?.lastName,
+            data?.personalInformation?.addressLine1,
+            data?.personalInformation?.addressLine2,
+            data?.personalInformation?.city,
+            data?.personalInformation?.state,
+            data?.personalInformation?.zipcode,
+            data?.personalInformation?.zipCodePlus,
+            data?.personalInformation?.country,
+            data?.personalInformation?.emailAddress,
+            data?.personalInformation?.primaryEmailStatus,
+            data?.personalInformation?.pemailUniqueCode,
+            data?.personalInformation?.phoneCell,
+            data?.personalInformation?.phoneCellCountryCode,
+            data?.personalInformation?.phoneDay,
+            data?.personalInformation?.phoneDayCountryCode,
+            data?.personalInformation?.fax,
+            data?.accountInformation?.smsOption,
+            data?.personalInformation?.eveningPhone,
+            data?.accountInformation?.stmtDelivaryMethod,
+            data?.accountInformation?.stmtDelivaryInterval,
+            mfaEnabled = if (binding.twoFactor.isChecked) "Y" else "N",
+            accountType = data?.accountInformation?.accountType,
+        )
 
-            viewModel.updateUserDetails(request)
-        }
-
+        viewModel.updateUserDetails(request)
     }
+
 
 }

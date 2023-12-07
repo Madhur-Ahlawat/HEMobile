@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -319,9 +320,9 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
 
                 if (phoneNumber.isNotEmpty()) {
-                    if(requiredCountryCode==false){
+                    Log.e("TAG", "contactDetailsErrorMessage: phoneNumber "+phoneNumber )
+                    Log.e("TAG", "contactDetailsErrorMessage: countrycode "+binding.countrycodeEt.getSelectedDescription() )
 
-                    }
                     if (binding.countrycodeEt.getSelectedDescription()
                             .equals(Constants.UNITED_KINGDOM, true)
                     ) {
@@ -347,6 +348,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     }
 
                 }else{
+                    binding.mobileNumberEt.removeError()
                     requiredCountryCode=true
                     requiredMobileNumber=true
                 }
@@ -464,6 +466,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                         viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
                     )
                 }
+
                 checkRequireCountryCode()
 
                 viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(countryCode)
@@ -500,16 +503,17 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             binding.firstnameEt.setText(viewModel.edit_enquiryModel.value?.firstname ?: "")
             binding.lastnameEt.setText(viewModel.edit_enquiryModel.value?.lastname ?: "")
             binding.emailEt.setText(viewModel.edit_enquiryModel.value?.email ?: "")
-            binding.mobileNumberEt.setText(viewModel.edit_enquiryModel.value?.mobileNumber ?: "")
             binding.countrycodeEt.setSelectedValue(
                 viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
+
             )
+            binding.mobileNumberEt.setText(viewModel.edit_enquiryModel.value?.mobileNumber ?: "")
+
         } else {
             if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                 binding.firstnameEt.setText(sm.fetchFirstName() ?: "")
                 binding.lastnameEt.setText(sm.fetchLastName() ?: "")
                 binding.emailEt.setText(sm.fetchAccountEmailId() ?: "")
-                binding.mobileNumberEt.setText(sm.fetchUserMobileNUmber() ?: "")
 
                 val userCountryCode = sm.fetchUserCountryCode()
                 var fullCountryNameToSave = ""
@@ -525,6 +529,8 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     viewModel.edit_enquiryModel.value?.countryCode = userCountryCode
                     viewModel.edit_enquiryModel.value?.fullcountryCode = fullCountryNameToSave
                 }
+                binding.mobileNumberEt.setText(sm.fetchUserMobileNUmber() ?: "")
+
             }
 
         }

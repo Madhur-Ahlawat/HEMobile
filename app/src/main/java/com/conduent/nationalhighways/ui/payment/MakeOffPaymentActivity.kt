@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.ui.payment
 
 import android.os.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -78,6 +80,23 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
         }
         navController?.setGraph(navGraph!!, bundle)
 
+
+        navController?.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener{
+            override fun onDestinationChanged(
+                controller: NavController,
+                destination: NavDestination,
+                arguments: Bundle?
+            ) {
+                if(destination.id==R.id.additionalCrossingsFragment){
+                    binding.toolBarLyt.titleTxt.text = getString(R.string.additional_crossings_txt)
+
+                }else{
+                    binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
+
+                }
+            }
+
+        })
 
     }
 

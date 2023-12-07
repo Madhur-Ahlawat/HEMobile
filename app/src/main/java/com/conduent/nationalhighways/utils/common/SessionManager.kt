@@ -57,6 +57,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val LAST_RATING_TIME="last_rating_time"
 
         val GEOFENCE_ENTER_TIME="geofence_enter_time"
+        val COUNTRIES="COUNTRIES"
     }
 
     /**

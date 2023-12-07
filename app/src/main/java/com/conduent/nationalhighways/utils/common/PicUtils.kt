@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.utils.common
 
+import android.annotation.SuppressLint
+import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
@@ -16,8 +18,25 @@ import java.util.Objects
 
 object PicUtils {
 
+    fun getFileNameFromUri(uri: Uri, contentResolver: ContentResolver): String? {
+        var fileName: String? = null
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val displayName = it.getString(it.getColumnIndexOrThrow("_display_name"))
+                if (!displayName.isNullOrEmpty()) {
+                    fileName = displayName
+                }
+            }
+        }
+        return fileName
+    }
+
     fun getPath(context: Context, uri: Uri): String? {
-        Log.e("TAG", "getPath() called with: context = $context, uri = $uri")
+        Log.e(
+            "TAG",
+            "getPath() called with: context = $context, uri = $uri , uri authority = ${uri.authority}"
+        )
 
         // DocumentProvider
         if (DocumentsContract.isDocumentUri(context, uri)) {
@@ -37,17 +56,23 @@ object PicUtils {
                 ) {
                     val file: File = File(
                         context.cacheDir,
-                        "temp" + System.currentTimeMillis() + "."+Objects.requireNonNull(
+                        getFileNameFromUri(
+                            uri,
+                            context.contentResolver
+                        ) + "." + Objects.requireNonNull(
                             context.contentResolver.getType(
                                 uri
                             )
                         )?.split("/")?.get(1)
                     )
-                    Log.e("TAG", "getPath: file "+file )
-                    Log.e("TAG", "getPath: file "+Objects.requireNonNull(
-                        context.contentResolver.getType(
-                            uri
-                        )) )
+                    Log.e("TAG", "getPath: file " + file)
+                    Log.e(
+                        "TAG", "getPath: file " + Objects.requireNonNull(
+                            context.contentResolver.getType(
+                                uri
+                            )
+                        )
+                    )
                     try {
                         context.contentResolver.openInputStream(uri).use { inputStream ->
                             FileOutputStream(file).use { output ->
@@ -68,15 +93,19 @@ object PicUtils {
             } else if (isMediaDocument(uri)) {
                 Log.e("TAG", "getPath: 11---")
                 val docId = DocumentsContract.getDocumentId(uri)
-                val split = docId.split(":").toTypedArray()
+                val split = docId.split(":".toRegex()).toTypedArray()
                 val type = split[0]
                 var contentUri: Uri? = null
+                Log.e("TAG", "getPath: type " + type)
                 if ("image" == type) {
                     contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                 } else if ("video" == type) {
                     contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
                 } else if ("audio" == type) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                } else if ("document".equals(type)) {
+                  return  copyFileToInternal(context,uri)
+//                    contentUri = MediaStore.Files.getContentUri("external", split[1].toLong());
                 }
                 val selection = "_id=?"
                 val selectionArgs = arrayOf(
@@ -92,6 +121,37 @@ object PicUtils {
 
             return getRealPathFromURI(context, uri)
 //            return getDataColumn(context, uri, null, null)
+        }
+        return null
+    }
+
+    @SuppressLint("Range")
+    private fun copyFileToInternal(context: Context, fileUri: Uri): String? {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val cursor: Cursor? = context.contentResolver.query(
+                fileUri,
+                arrayOf<String>(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
+                null,
+                null
+            )
+            cursor?.moveToFirst()
+            val displayName = cursor?.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+            val size = cursor?.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
+            val file: File = File((context.getFilesDir()).toString() + "/" + displayName)
+            try {
+                val fileOutputStream = FileOutputStream(file)
+                val inputStream: InputStream = context.contentResolver.openInputStream(fileUri)!!
+                val buffers = ByteArray(1024)
+                var read: Int
+                while (inputStream.read(buffers).also { read = it } != -1) {
+                    fileOutputStream.write(buffers, 0, read)
+                }
+                inputStream.close()
+                fileOutputStream.close()
+                return file.path
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
         return null
     }
@@ -163,10 +223,12 @@ object PicUtils {
             column
         )
         try {
-            cursor = context.contentResolver.query(
-                uri!!, projection, selection, selectionArgs,
-                null
-            )
+            cursor = uri?.let {
+                context.contentResolver.query(
+                    it, projection, selection, selectionArgs,
+                    null
+                )
+            }
             if (cursor != null && cursor.moveToFirst()) {
                 val column_index = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(column_index)

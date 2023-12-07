@@ -317,6 +317,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                                 additionalCrossingCount = it.additionalCrossingCount
                                 vehicleType =
                                     data?.vehicleType
+                                accountNo=it.accountNumber?:""
                             })
 
                         if (navFlowCall == Constants.PAY_FOR_CROSSINGS) {

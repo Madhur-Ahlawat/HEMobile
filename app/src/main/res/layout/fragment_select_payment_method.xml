@@ -103,7 +103,7 @@
                     android:layout_marginStart="@dimen/margin_18dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:src="@drawable/debitcreditcard"
+                    android:src="@drawable/ic_direct_debit"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView

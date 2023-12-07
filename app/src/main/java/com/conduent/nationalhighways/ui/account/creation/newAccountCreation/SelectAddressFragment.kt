@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentSelectAddressBinding
@@ -32,6 +31,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -150,7 +150,20 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         }
         when (response) {
             is Resource.Success -> {
-                mainList = response.data?.toMutableList() ?: ArrayList()
+//                mainList = response.data?.toMutableList() ?: ArrayList()
+               val dataAddresses = response.data?.toMutableList() ?: ArrayList()
+                Log.e("TAG", "handleAddressApiResponse:!!@ "+dataAddresses.toString() )
+
+                mainList = dataAddresses.sortedWith(compareBy { address ->
+                    val street = address?.street ?: ""
+                    if (street.all { it.isDigit() }) {
+                        street.toInt()
+                    } else {
+                        Int.MAX_VALUE
+                    }
+                })?.toMutableList()?:ArrayList()
+
+                Log.e("TAG", "handleAddressApiResponse: "+mainList.toString() )
                 selectAddressAdapter?.updateList(mainList)
                 binding.txtAddressCount.text = "${mainList.size} Addresses Found"
 
@@ -194,15 +207,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                     val data = navData as ProfileDetailModel?
-                    if (data?.accountInformation?.accountType.equals(
-                            Constants.PERSONAL_ACCOUNT,
-                            true
-                        )
-                    ) {
-                        updateStandardUserProfile(data)
-                    } else {
-                        updateBusinessUserProfile(data)
-                    }
+                    updateProfileDetails(data)
                 } else {
                     if (NewCreateAccountRequestModel.personalAccount) {
                         loader?.show(
@@ -364,67 +369,41 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
     }
 
-    private fun updateStandardUserProfile(data: ProfileDetailModel?) {
+    private fun updateProfileDetails(data: ProfileDetailModel?) {
 
-        data?.personalInformation?.run {
-            val request = UpdateProfileRequest(
-                firstName = firstName,
-                lastName = lastName,
-                addressLine1 = NewCreateAccountRequestModel.addressline1,
-                addressLine2 = NewCreateAccountRequestModel.addressline2,
-                city = NewCreateAccountRequestModel.townCity,
-                state = "HE",
-                zipCode = NewCreateAccountRequestModel.zipCode,
-                zipCodePlus = zipCodePlus,
-                country = NewCreateAccountRequestModel.address_country_code,
-                emailAddress = emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneNumber ?: "",
-                phoneDay = phoneDay,
-                phoneFax = "",
-                smsOption = data.accountInformation?.smsOption,
-                phoneEvening = "",
-                phoneCellCountryCode = phoneCellCountryCode,
-                phoneDayCountryCode = phoneDayCountryCode
-            )
+        val request = Utils.returnEditProfileModel(
+            data?.accountInformation?.businessName ?: "",
+            data?.accountInformation?.fein,
+            data?.personalInformation?.firstName,
+            data?.personalInformation?.lastName,
+            NewCreateAccountRequestModel.addressline1,
+            NewCreateAccountRequestModel.addressline2,
+            NewCreateAccountRequestModel.townCity,
+            "HE",
+            NewCreateAccountRequestModel.zipCode,
+            data?.personalInformation?.zipCodePlus,
+            NewCreateAccountRequestModel.address_country_code,
+            data?.personalInformation?.emailAddress,
+            data?.personalInformation?.primaryEmailStatus,
+            data?.personalInformation?.pemailUniqueCode,
+            data?.personalInformation?.phoneCell,
+            data?.personalInformation?.phoneCellCountryCode,
+            data?.personalInformation?.phoneDay,
+            data?.personalInformation?.phoneDayCountryCode,
+            data?.personalInformation?.fax,
+            data?.accountInformation?.smsOption,
+            data?.personalInformation?.eveningPhone,
+            data?.accountInformation?.stmtDelivaryMethod,
+            data?.accountInformation?.stmtDelivaryInterval,
+            Utils.retrunMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
+            accountType = data?.accountInformation?.accountType
 
-            viewModelProfile.updateUserDetails(request)
-        }
+        )
 
-    }
-
-    private fun updateBusinessUserProfile(data: ProfileDetailModel?) {
-        data?.run {
-            val request = UpdateProfileRequest(
-                firstName = personalInformation?.firstName,
-                lastName = personalInformation?.lastName,
-                addressLine1 = NewCreateAccountRequestModel.addressline1,
-                addressLine2 = NewCreateAccountRequestModel.addressline2,
-                city = NewCreateAccountRequestModel.townCity,
-                state = personalInformation?.state,
-                zipCode = NewCreateAccountRequestModel.zipCode,
-                zipCodePlus = personalInformation?.zipCodePlus,
-                country = NewCreateAccountRequestModel.address_country_code,
-                emailAddress = personalInformation?.emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = personalInformation?.phoneNumber ?: "",
-                phoneDay = personalInformation?.phoneDay,
-                phoneFax = "",
-                smsOption = data.accountInformation?.smsOption,
-                phoneEvening = "",
-                fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName,
-                phoneDayCountryCode = personalInformation?.phoneDayCountryCode,
-                phoneCellCountryCode = personalInformation?.phoneCellCountryCode
-            )
-
-            viewModelProfile.updateUserDetails(request)
-        }
-
+        viewModelProfile.updateUserDetails(request)
 
     }
+
 
 }
 

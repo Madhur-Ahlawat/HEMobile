@@ -269,7 +269,7 @@
     <string name="crossing_history">Crossing history</string>
     <string name="str_crossing_history">Crossing History</string>
     <string name="str_activity_log">Activity log</string>
-    <string name="str_close_account">Close account</string>
+    <string name="str_close_account">Close Account</string>
     <string name="str_close">Close</string>
     <string name="str_vehicle_list">Vehicle list</string>
     <string name="str_full_name">Full name</string>
@@ -593,7 +593,6 @@
     <string name="str_sub_category">Sub-category</string>
     <string name="str_select_category">Category : </string>
     <string name="str_select_sub_category">Sub-category : </string>
-    <string name="str_please_provide_additional_information_txt">please provide additional information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
     <string name="str_description">Descritption</string>
     <string name="str_you_have_chars_remain">You have %1$s characters remaining</string>
     <string name="str_upload_file_optional">Upload file (Optional)</string>
@@ -645,7 +644,6 @@
     <string name="str_cases_and_enquiries">Cases and Enquiry</string>
     <string name="str_what_you_want_to_do">What you want to do?</string>
     <string name="edit_details">Edit details</string>
-    <string name="change_password">Change password</string>
     <string name="current_password_validation">New password can\'t be same as current password</string>
     <string name="confirm_password_validation">\u25CF Confirm Password \n\u25CF Must begin with a letter
                 \n\u25CF Be at least 8 characters long
@@ -750,7 +748,7 @@
     <string name="company_reg_no">Company registration number</string>
     <string name="company_name">Company name</string>
     <string name="str_account_holder_profile">Account holder profile</string>
-    <string name="str_additional_details">Additional details (optional)</string>
+    <string name="str_additional_details">Future details (optional)</string>
     <string name="str_profile_updated_successfully">Profile updated successfully</string>
     <string name="str_this_is_only_for_uk_registered_vehicles">This is ony applicable for UK registered phone number</string>
     <string name="str_you_have_opted_to_receive_text_msgs">You have opted to receive text messages. They will be send to the mobile phone number</string>
@@ -1069,7 +1067,7 @@
     <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from\nDart Charge payment.</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
     <string name="str_no_ruc_desc_pay_for_crossing">Motorcycles, mopeds and quad bikes do not need to pay for a crossing.</string>
-    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\n Telephone: 0300 300 0120 \n Every day: 8am to 8pm</string>
+    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="str_vehicle_already_exist">Vehicle %s already exists in the system and cannot be added to the account.</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
     <string name="you_have_already_added_this_vehicle_to_this_account">You have already added this vehicle to this account.</string>
@@ -1403,18 +1401,18 @@
     <string name="str_additional_crossing_point2">A return trip is 2 crossings.</string>
     <string name="str_additional_crossing_point3">These payments are valid up to 12 months or till they are used.</string>
 
-    <string name="additional_crossings">+ ADDITIONAL CROSSINGS</string>
-    <string name="additional_crossings_txt">Additional Crossings</string>
-    <string name="number_of_additional_crossings">Number of additional crossings</string>
+    <string name="additional_crossings">+ FUTURE CROSSINGS</string>
+    <string name="additional_crossings_txt">Future Crossings</string>
+    <string name="number_of_additional_crossings">Number of future crossings</string>
     <string name="how_many_payments_do_you_need_to_pay_for">How many payments do you need to pay for?</string>
     <string name="confirm_your_password">Confirm your password</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="transactions">Transactions</string>
-    <string name="check_for_previous_crossings">Check Previous Crossing Details</string>
+    <string name="check_for_previous_crossings">Check for Previous Crossings</string>
     <string name="paid_for_please_note">After you’ve made a one-off payment, you can check which crossings you’ve paid for. Please note it can take up to one day for your payment to be matched to crossings</string>
     <string name="for_example_hd542321725_or_1_898008009">For example, HD542321725 or 1–898008009</string>
-    <string name="paid_by_web_or_phone"><![CDATA[<font color="#000000" >\u25CF</font> If you paid by web or phone this is the \'HD or 1-\' number
-       <br><font color="#000000" >\u25CF</font>If you\'ve paid through Payzone his is the \'TXN\' number]]></string>
+    <string name="paid_crossing_point1">If you paid by web or phone this is the \'HD or 1-\' number</string>
+    <string name="paid_crossing_point2">If you\'ve paid through Payzone his is the \'TXN\' number</string>
     <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings\nplanned in the future.\nLate payments will be used for future\ncrossings - you may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>
 
@@ -1434,14 +1432,14 @@
     <string name="email_optional">Email (optional)</string>
     <string name="text_message_optional">Text message (optional)</string>
     <string name="text_we_have_sent_a_reciept_email_to">We\'ve sent a receipt email to\n<b>%s</b></string>
-    <string name="credit_for_additional_crossings">Credit for Additional Crossings</string>
+    <string name="credit_for_additional_crossings">Credit for Future Crossings</string>
     <string name="your_type_of_vehicle_does_not_match_what_we_have_on_record">Your type of vehicle does not match what we have on record.</string>
     <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
                     \n\nIf you pay the wrong Dart Charge for your type of vehicle, you could receive a Penalty Charge Notice.]]></string>
     <string name="pay_new_amount">PAY NEW AMOUNT</string>
     <string name="str_continue_with_selection">Continue with your selection</string>
     <string name="purchase_no_crossings">Purchase No Crossings</string>
-    <string name="to_continue_you_must_pay_for_at_least_one_recent_additional_crossing">To continue, you must pay for at least one recent/additional crossing.</string>
+    <string name="to_continue_you_must_pay_for_at_least_one_recent_additional_crossing">To continue, you must pay for at least one recent/future crossing.</string>
     <string name="payment_method_deleted">Payment method deleted</string>
 
 
@@ -1593,14 +1591,14 @@
     <string name="enquiry_status">Enquiry Status</string>
     <string name="str_no_priority_notifications">There are no priority notifications to view</string>
     <string name="str_no_standard_notifications">There are no standard notifications to view</string>
-    <string name="str_number_additional_crossings_btw_1_to_50">Number of additional crossings must be between 1 and 50 inclusive</string>
+    <string name="str_number_additional_crossings_btw_1_to_50">Number of future crossings must be between 1 and 50 inclusive</string>
     <string name="vehicle_type_A">Motorcycle, moped or quad bike</string>
     <string name="vehicle_type_B">Car, van or minibus less than 8 seats</string>
     <string name="vehicle_type_C">Bus, coach or other goods vehicle with 2 axles</string>
     <string name="vehicle_type_D">Vehicle with more than 2 axles</string>
     <string name="str_payment_amount_for_recent_crossings">Payment Amount for recent crossings</string>
-    <string name="str_payment_amount_for_additional_crossings">Payment Amount for additional crossings</string>
-    <string name="str_total_amount">Total amount</string>
+    <string name="str_payment_amount_for_additional_crossings">Payment Amount for future crossings</string>
+    <string name="str_total_amount">Total Amount</string>
     <string name="str_total_payment_amount">Total Payment Amount</string>
 
     <string name="default_notification_channel_id" translatable="false">dartcharge_default_channel</string>
@@ -1620,6 +1618,7 @@
     <string name="top_up_success">Top Up Success</string>
     <string name="email_address_must_be_8_characters_or_more">Email address must be 8 characters or more</string>
     <string name="profile_email_address">Profile Email Address</string>
+    <string name="profile_email_addres">Profile email address</string>
     <string name="crossing_details">Crossing Details</string>
     <string name="profile_password">Profile Password</string>
     <string name="mobile_app">Mobile App</string>
@@ -1628,7 +1627,7 @@
     <string name="str_alert">Alert</string>
     <string name="str_password_match_current_password">Password must match current password</string>
     <string name="str_did_you_cross_today">Did you cross today?</string>
-    <string name="str_responsible_paying">As a reminder if you are responsible for paying the charge you have until midnight tomorrow to pay</string>
+    <string name="str_responsible_paying">Click here if you are responsible for paying the charge. You have until midnight tomorrow to pay.</string>
     <string name="submit_feedback">Submit</string>
     <string name="enter_your_mobile_number">Enter your mobile number</string>
     <string name="str_push_notifications">Push notifications</string>
@@ -1643,5 +1642,9 @@
     <string name="return_to_landing_page">Return To Landing Page</string>
     <string name="continue_with_your_selection">Continue With Your Selection</string>
     <string name="return_to_landingpage">Return to landing page</string>
+    <string name="enter_a_top_up_amount">Enter a top-up amount</string>
+    <string name="southbound">Southbound</string>
+    <string name="number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hypens_and_spaces">Number plate must only include letters a to z, numbers 0 to 9 and special characters such as hypens and spaces</string>
+    <string name="payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9">Payment reference number must only include letters a to z and numbers 0 to 9</string>
 
 </resources>

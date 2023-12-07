@@ -27,6 +27,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.CountriesModel
+import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -46,6 +48,8 @@ import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import com.conduent.nationalhighways.utils.rating.RatingDialog
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.Interceptor
 import java.io.File
 import java.lang.reflect.Field
@@ -123,23 +127,29 @@ object Utils {
 
     @RequiresApi(VERSION_CODES.O)
     fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
+        val dfDate = SimpleDateFormat("dd MMM yyyy hh:mm a")
+
         var transactionListSorted: MutableList<TransactionData> = mutableListOf()
         for (transaction in transactions) {
             if (transactionListSorted.isEmpty() == true) {
                 transaction.showDateHeader = true
                 transactionListSorted.add(transaction)
             } else {
-                if (DateUtils.compareDates(
-                        transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
-                        transaction.transactionDate + " " + transaction.exitTime
-                    )
+                if (transactionListSorted.last().balance == transaction.balance
                 ) {
-                    transactionListSorted.add(transactionListSorted.get(transactionListSorted.size - 1))
-                    transactionListSorted.add(transactionListSorted.size - 2, transaction)
-
                 } else {
-                    transactionListSorted.add(transaction)
+                    if (DateUtils.compareDates(
+                            transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
+                            transaction.transactionDate + " " + transaction.exitTime
+                        )
+                    ) {
+                        transactionListSorted.add(transactionListSorted.get(transactionListSorted.size - 1))
+                        transactionListSorted.add(transactionListSorted.size - 2, transaction)
+                    } else {
+                        transactionListSorted.add(transaction)
+                    }
                 }
+
             }
 
         }
@@ -824,7 +834,7 @@ object Utils {
             }
 
             else -> {
-                ""
+                "2"
             }
         }
     }
@@ -938,7 +948,8 @@ object Utils {
     }
 
     fun currentTimeWithAMPM(): String {
-        return SimpleDateFormat("hh:mma", Locale.getDefault()).format(Date()).replace("AM","am").replace("PM","pm")
+        return SimpleDateFormat("hh:mma", Locale.getDefault()).format(Date()).replace("AM", "am")
+            .replace("PM", "pm")
 
     }
 
@@ -1138,7 +1149,6 @@ object Utils {
     }
 
     fun getTimeDifference(startTime: Date, endTime: Date): Triple<Long, Long, Long> {
-        Log.e("TAG", "getTimeDifference() called with: startTime = $startTime, endTime = $endTime")
         return try {
             val differenceInMillis = endTime.time - startTime.time
             val hours = differenceInMillis / (1000 * 60 * 60)
@@ -1148,11 +1158,6 @@ object Utils {
             val millisecondsInMonth =
                 1000L * 60 * 60 * 24 * 30 // Approximation of a month in milliseconds
             val months = differenceInMillis / millisecondsInMonth
-
-            Log.e(
-                "TAG",
-                "getTimeDifference: hours " + hours + " min-> " + minutes + " months-> " + months
-            )
             Triple(hours, minutes, months)
         } catch (e: Exception) {
             Triple(0, 0, 0)
@@ -1305,4 +1310,126 @@ object Utils {
         )
     }
 
+    fun hasSameExtensionTwice(input: String): Boolean {
+        val parts = input.split('.')
+        return parts.size >= 3 && parts[parts.size - 2] == parts[parts.size - 1]
+    }
+
+
+    fun removeLastExtension(input: String, extension: String): String {
+        Log.e("TAG", "removeLastExtension() called with: input = $input, extension = $extension")
+        val lastIndexOfExtension = input.lastIndexOf(extension)
+        return if (lastIndexOfExtension != -1) {
+            input.substring(
+                0,
+                lastIndexOfExtension
+            ) + input.substring(lastIndexOfExtension + extension.length)
+        } else {
+            input // Return the original string if the extension is not found
+        }
+    }
+
+    fun retrunMfaStatus(mfa: String): String {
+        var mfaEnabled = "Y"
+        if (mfa.equals("false")) {
+            mfaEnabled = "N"
+        }
+        return mfaEnabled
+    }
+
+    fun returnEditProfileModel(
+        businessName: String? = null,
+        fein: String? = null,
+        firstName: String? = null,
+        lastName: String? = null,
+        addressLine1: String? = null,
+        addressLine2: String? = null,
+        city: String? = null,
+        state: String? = null,
+        zipCode: String? = null,
+        zipCodePlus: String? = null,
+        country: String? = null,
+        emailAddress: String? = null,
+        primaryEmailStatus: String? = null,
+        primaryEmailUniqueID: String? = null,
+        phoneCell: String? = null,
+        phoneCellCountryCode: String? = null,
+        phoneDay: String? = null,
+        phoneDayCountryCode: String? = null,
+        phoneFax: String? = null,
+        smsOption: String? = null,
+        phoneEvening: String? = null,
+        correspDeliveryMode: String? = null,
+        correspDeliveryFrequency: String? = null,
+        mfaEnabled: String? = null,
+        accountType: String? = null,
+        securityCode: String? = null,
+        referenceId: String? = null,
+    ): UpdateProfileRequest {
+        var correspDeliveryMode_ = correspDeliveryMode
+        var correspDeliveryFrequency_ = correspDeliveryFrequency
+        var businessName_:String? = null
+
+        if (accountType.equals(
+                Constants.BUSINESS_ACCOUNT,
+                true
+            )
+        ) {
+            businessName_ = businessName?:""
+        }
+        if (correspDeliveryMode == null) {
+            correspDeliveryMode_ = ""
+        }
+        if (correspDeliveryFrequency == null) {
+            correspDeliveryFrequency_ = ""
+        }
+        return UpdateProfileRequest(
+            businessName_,
+            null,
+            firstName,
+            lastName,
+            addressLine1,
+            addressLine2,
+            city,
+            state,
+            zipCode,
+            zipCodePlus,
+            country,
+            emailAddress,
+            primaryEmailStatus,
+            primaryEmailUniqueID,
+            phoneCell,
+            phoneCellCountryCode,
+            phoneDay,
+            phoneDayCountryCode,
+            phoneFax,
+            smsOption,
+            phoneEvening,
+            correspDeliveryMode_,
+            correspDeliveryFrequency_,
+            mfaEnabled,
+            securityCode = securityCode,
+            referenceId = referenceId
+        )
+    }
+
+    fun getCountryName(sessionManager: SessionManager, countryCode: String): String {
+        val countries=sessionManager.fetchStringData(SessionManager.COUNTRIES)
+
+
+        val countriesList = ArrayList<CountriesModel>()
+
+        val pattern = """CountriesModel\(id=(\d+), countryCode=(\w+), countryName=([\w\s]+)\)""".toRegex()
+        pattern.findAll(countries).forEach { matchResult ->
+            val (id, countryCode, countryName) = matchResult.destructured
+            countriesList.add(CountriesModel(id, countryCode, countryName))
+        }
+
+        val filteredList = countriesList.filter { it.countryCode == countryCode }
+        if (filteredList.size > 0) {
+            return filteredList.get(0).countryName?:""
+        } else {
+            return ""
+        }
+    }
 }

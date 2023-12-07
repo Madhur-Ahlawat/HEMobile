@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_account_creation"
-    app:startDestination="@id/nmiPaymentFragment">
+    app:startDestination="@id/createAccountPrerequisite">
 
 
     <!-- Step 5 -->
@@ -196,11 +196,17 @@
         android:label="BusinessVehicleDetail"
         tools:layout="@layout/fragment_business_vehicle_detail">
         <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_maximumVehicleFragment"
+            app:destination="@+id/maximumVehicleFragment" />
+
+        <action
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleIsExemptFromDartChargesFragment"
             app:destination="@+id/vehicleIsExemptFromDartChargesFragment" />
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment" />
+            app:destination="@+id/vehicleListFragment"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment"
             app:destination="@+id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />
@@ -597,8 +603,9 @@
         <action
             android:id="@+id/action_AccountChangeType_forgotPassword_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
-            app:popUpTo="@id/fragment_choose_account_type"
-            app:popUpToInclusive="true" />
+app:popUpTo="@id/HWMobileNumberCaptureVC"
+            app:popUpToInclusive="true"
+          />
 
         <action
             android:id="@+id/action_forgotOtpFragment_to_createPasswordFragment"
@@ -660,8 +667,7 @@
         <action
             android:id="@+id/action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
-            app:popUpTo="@id/fragment_choose_account_type"
-            app:popUpToInclusive="true" />
+            />
 
 
         <action
@@ -754,6 +760,12 @@
         android:label="MaximumVehicleFragment"
         tools:layout="@layout/fragment_maximum_vehicle_number">
         <action
+            android:id="@+id/action_maximumFragment_clear_to_findYourVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true" />
+
+        <action
             android:id="@+id/action_maximumFragment_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
@@ -763,6 +775,8 @@
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/findYourVehicleFragment"/>
+
+
 
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
@@ -779,6 +793,17 @@
         <action
             android:id="@+id/action_maximumFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment" />
+
+        <action
+            android:id="@+id/action_maximumFragment_to_vehicleListFragment_clearto_findvehiclefragment"
+            app:destination="@+id/vehicleListFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/findYourVehicleFragment"/>
+        <action
+            android:id="@+id/action_maximumFragment_to_businessVehicleDetailFragment"
+            app:destination="@+id/businessVehicleDetailFragment"
+            />
+
 
         <action
             android:id="@+id/action_maximumFragment_to_landingFragment"

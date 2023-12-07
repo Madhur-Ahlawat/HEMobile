@@ -52,7 +52,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
         }
 
         binding.accountNumber.text = oneOfPaymentResponse?.referenceNumber
-        binding.vechicleRegistration.text = NewCreateAccountRequestModel.plateNumber
+        binding.vechicleRegistration.text = NewCreateAccountRequestModel.plateNumber.uppercase()
         binding.amountPaid.text = amount
         binding.timeDate.text =
             currentTimeWithAMPM() + " " + getString(R.string.str_on) + " " + Utils.currentDate()

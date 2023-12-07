@@ -88,12 +88,12 @@
                 style="@style/PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_93dp"
+                android:layout_marginTop="@dimen/margin_30dp"
                 android:text="@string/str_continue"
                 app:isEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/inputCompanyName" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

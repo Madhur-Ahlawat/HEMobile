@@ -43,7 +43,9 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
             data = it as CrossingDetailsModelsResponse
         }
         HomeActivityMain.setTitle(getString(R.string.crossing_details))
-        (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        }
     }
 
     override fun onResume() {

@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
@@ -193,7 +194,16 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
             when (resource) {
                 is Resource.Success -> {
-                    viewModel.edit_enquiryModel.value?.fileName = resource.data?.fileName ?: ""
+//                    viewModel.edit_enquiryModel.value?.fileName = resource.data?.fileName ?: ""
+
+                    val hasTwoExtensions = Utils.hasSameExtensionTwice(file?.name ?: "")
+                    var fileName = file?.name
+                    val extension = Utils.getFileExtension(file?.name ?: "")
+                    if (hasTwoExtensions) {
+                        fileName = Utils.removeLastExtension(fileName?:"", extension).dropLast(1)
+                    }
+                    viewModel.edit_enquiryModel.value?.fileName =
+                        fileName ?: (resource.data?.fileName ?: "")
                     viewModel.edit_enquiryModel.value?.file = file ?: File("")
 
                     hideChooseFileBt()

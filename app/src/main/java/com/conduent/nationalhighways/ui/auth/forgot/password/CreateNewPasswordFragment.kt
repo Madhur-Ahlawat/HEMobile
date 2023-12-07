@@ -139,7 +139,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         passwordVisibile = true
                     }
                 }
-                var text = binding.edtConformPassword.editText.getText().toString()
+                var text = binding.edtConformPassword.editText.text.toString()
                 isEnable(text)
             }
 
@@ -170,7 +170,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         confirmPasswordVisibile = true
                     }
                 }
-                var text = binding.edtConformPassword.editText.getText().toString()
+                var text = binding.edtConformPassword.editText.text.toString()
                 isEnable1(text)
             }
 
@@ -234,9 +234,12 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
-                }else {
+                } else {
                     Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
                     /* AdobeAnalytics.setActionTrack1(
@@ -297,9 +300,12 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
-                }else {
+                } else {
                     /*AdobeAnalytics.setActionTrack1(
                     "submit",
                     "login:forgot password:choose options:otp:new password set",
@@ -326,26 +332,26 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         if (binding.edtConformPassword.getText().toString().length == 0) {
             isConfirmPasswordValid = false
             binding.edtConformPassword.removeError()
-        } else if (binding.edtNewPassword.getText()
+        } else if (binding.edtConformPassword.getText().toString()
+                .isNotEmpty() && binding.edtNewPassword.getText()
                 .toString() != binding.edtConformPassword.getText().toString()
         ) {
             isConfirmPasswordValid = false
             binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
 
-        }
-        else {
-            isConfirmPasswordValid = true
-            isNewPasswordValid = true
+        } else {
+//            isConfirmPasswordValid = true
+//            isNewPasswordValid = true
             binding.edtConformPassword.removeError()
-            binding.edtNewPassword.removeError()
-
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = true
-            )
+//            binding.edtNewPassword.removeError()
+            binding.edtNewPassword.editText.setText(binding.edtNewPassword.editText.text.toString())
+//            binding.model = ResetPasswordModel(
+//                code = data?.code,
+//                referenceId = data?.referenceId,
+//                newPassword = binding.edtNewPassword.getText().toString(),
+//                confirmPassword = binding.edtConformPassword.getText().toString(),
+//                enable = true
+//            )
         }
         binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
@@ -357,7 +363,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
         if (binding.edtNewPassword.getText().toString().isEmpty()) {
             isNewPasswordValid = false
-            binding.edtNewPassword.setErrorText(getString(R.string.str_enter_your_password))
+            binding.edtNewPassword.removeError()
         } else if (hasSpecialCharacters(
                 binding.edtNewPassword.editText.text.toString(),
                 splCharsPassword
@@ -385,7 +391,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             commaSeperatedString =
                 Utils.makeCommaSeperatedStringForPassword(
                     Utils.removeAllCharacters(
-                        Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars!!
+                        Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars
                     )
                 )
             if (filterTextForSpecialChars.isNotEmpty()) {
@@ -414,26 +420,34 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
             binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
 
-        } else if (binding.edtNewPassword.getText().toString()
+        } else if (binding.edtConformPassword.getText().toString()
+                .isNotEmpty() && binding.edtNewPassword.getText().toString()
             != binding.edtConformPassword.getText().toString()
         ) {
             isNewPasswordValid = false
             binding.edtNewPassword.removeError()
             binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
         } else {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = true
-            )
-
             isNewPasswordValid = true
-            isConfirmPasswordValid = true
-            binding.edtConformPassword.removeError()
+
             binding.edtNewPassword.removeError()
 
+            if (binding.edtConformPassword.getText().toString().isEmpty()) {
+                isConfirmPasswordValid = false
+                binding.edtConformPassword.removeError()
+            } else {
+
+                binding.model = ResetPasswordModel(
+                    code = data?.code,
+                    referenceId = data?.referenceId,
+                    newPassword = binding.edtNewPassword.getText().toString(),
+                    confirmPassword = binding.edtConformPassword.getText().toString(),
+                    enable = true
+                )
+
+                isConfirmPasswordValid = true
+                binding.edtConformPassword.removeError()
+            }
         }
 
         if (hasLowerCase(text)) {

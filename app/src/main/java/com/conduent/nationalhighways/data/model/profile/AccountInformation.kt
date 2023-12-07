@@ -50,7 +50,8 @@ data class AccountInformation(
     var fein: String?,  // company reg no.
     val accSubType: String?,
     var mfaEnabled: String?,
-    val ncId: String?=""
+    val ncId: String?="",
+    val correspDeliveryFrequency: String?="",
 ) : Parcelable
 
 

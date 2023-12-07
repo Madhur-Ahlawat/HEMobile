@@ -235,12 +235,13 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             bundle
                         )
                     } else {
-                        if(edit_vehicle){
+                        if (edit_vehicle) {
                             val numberPlate =
-                                binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
+                                binding.editNumberPlate.editText.text.toString().trim()
+                                    .replace(" ", "")
                                     .replace("-", "")
                             checkVehicle(numberPlate)
-                        }else{
+                        } else {
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_vehicleListFragment,
                                 bundle
@@ -684,7 +685,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     if (isVehicleExist) {
                         accountData.isVehicleAlreadyAddedLocal = true
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                         bundle.putString(Constants.PLATE_NUMBER, plateNumber)
                         bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
 
@@ -716,7 +717,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
-        Log.e("TAG", "apiResponseDVRM: 11->")
+        Log.e("TAG", "apiResponseDVRM: 11->" + isClicked)
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -757,7 +758,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             NewCreateAccountRequestModel.isExempted = true
                             bundle.putParcelable(Constants.VEHICLE_DETAIL, apiData[0])
                             bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
-                            bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
@@ -766,6 +767,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         }
 
                         if (apiData[0]?.isRUCEligible?.equals("Y", true) == true) {
+                            NewCreateAccountRequestModel.isRucEligible = false
                             if (apiData.isNotEmpty()) {
                                 bundle.putParcelable(
                                     Constants.VEHICLE_DETAIL,
@@ -800,6 +802,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 )
                             }
                             bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
+//                            findNavController().navigate(
+//                                R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
+//                                bundle
+//                            )
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
@@ -829,9 +835,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 isVehicleExist = true
                             }
                         }
-                        val
-
-                                bundle = Bundle()
+                        val bundle = Bundle()
                         bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
 
                         if (navData == null) {
@@ -842,6 +846,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             Constants.NAV_DATA_KEY,
                             navData as CrossingDetailsModelsResponse
                         )
+                        Log.e("TAG", "apiResponseDVRM: isVehicleExist " + isVehicleExist)
                         if (isVehicleExist) {
                             accountData.isVehicleAlreadyAddedLocal = true
                             bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)

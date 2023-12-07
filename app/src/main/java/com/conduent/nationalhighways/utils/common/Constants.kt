@@ -95,6 +95,8 @@ object Constants {
     const val Mobile_App = "Mobile App"
     const val NEW_CARD = "newcard"
     const val IS_EDIT_EMAIL = "isEditEmail"
+    const val MONTHLY = "MONTHLY"
+    const val ACTIVE = "ACTIVE"
     const val MAKE_DEFAULT = "make_default"
     const val FROM_ALL_TRANSACTIONS_TO_DETAILS = "FROM_ALL_TRANSACTIONS_TO_DETAILS"
     const val PERSONALDATA = "personaldata"

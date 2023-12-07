@@ -43,6 +43,7 @@ data class CrossingDetailsModelsResponse(
     var vehicleClassBalanceTransfer: String?="",
     var unsettledTripChange:Int=0,
     var fullCountryCode:String?="",
+    var accountNumber:String?="",
 
     ) : Parcelable
 

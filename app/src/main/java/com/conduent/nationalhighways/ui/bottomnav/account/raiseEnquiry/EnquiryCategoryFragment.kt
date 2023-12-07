@@ -64,6 +64,11 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         binding.categoryDropdown.dropDownItemSelectListener = this
         binding.subcategoryDropdown.dropDownItemSelectListener = this
         binding.btnNext.setOnClickListener {
+            Log.e("TAGTAG", "init: editRequest "+editRequest )
+            Log.e("TAGTAG", "init: previousCategory "+previousCategory )
+            Log.e("TAGTAG", "init: previousCategory!! "+viewModel.edit_enquiryModel.value?.category?.value )
+            Log.e("TAGTAG", "init: previousSubCategory "+previousSubCategory )
+            Log.e("TAGTAG", "init: previousSubCategory!! "+viewModel.edit_enquiryModel.value?.subCategory?.value )
             if (editRequest == Constants.EDIT_SUMMARY && previousCategory == viewModel.edit_enquiryModel.value?.category?.value && previousSubCategory == viewModel.edit_enquiryModel.value?.subCategory?.value) {
                 findNavController().navigate(
                     R.id.action_enquiryCategoryFragment_to_enquirySummaryFragment, getBundleData()
@@ -231,7 +236,6 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
                         binding.apply {
                             subcategoryDropdown.dataSet.clear()
                         }
-                        viewModel.edit_enquiryModel.value?.subCategory = CaseCategoriesModel("", "")
                     }
 
 

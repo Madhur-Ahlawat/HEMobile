@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
+import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPersonalInfoNewBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -65,9 +65,9 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         }
 
 
-        when(navFlowCall){
+        when (navFlowCall) {
 
-            EDIT_ACCOUNT_TYPE,EDIT_SUMMARY -> {
+            EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
                 emailHeartBeatApi()
                 smsHeartBeatApi()
                 binding.inputFirstName.setText(NewCreateAccountRequestModel.firstName)
@@ -80,7 +80,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_name)
                 val data = navData as ProfileDetailModel?
-                if (data?.accountInformation?.accountType.equals(PERSONAL_ACCOUNT,true)) {
+                if (data?.accountInformation?.accountType.equals(Constants.BUSINESS_ACCOUNT, true)==false) {
                     enablePersonalView()
                 }
                 data?.personalInformation?.firstName?.let { binding.inputFirstName.setText(it) }
@@ -117,20 +117,35 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")
-                val data = navData as ProfileDetailModel?
+                var data:ProfileDetailModel?=null
+                if (navData is ProfileDetailModel) {
+                     data = navData as ProfileDetailModel?
+
+                }
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
-                findNavController().navigate(R.id.action_createAccountPersonalInfo_to_resetForgotPassword,bundle)
+                bundle.putParcelable(
+                    Constants.NAV_DATA_KEY,
+                    data?.personalInformation
+                )
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                findNavController().navigate(
+                    R.id.action_createAccountPersonalInfo_to_resetForgotPassword,
+                    bundle
+                )
             }
+
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(resource.errorModel)
-                }else {
+                } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
+
             else -> {
             }
         }
@@ -141,38 +156,43 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         when (v?.id) {
             binding.btnNext.id -> {
 
-                when(navFlowCall){
+                when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
                         storeData()
                         findNavController().popBackStack()
                     }
+
                     PROFILE_MANAGEMENT -> {
                         val data = navData as ProfileDetailModel?
                         val fName = binding.inputFirstName.getText().toString()
                         val lName = binding.inputLastName.getText().toString()
                         val cName = binding.inputCompanyName.getText().toString()
-                        if(fName.equals(data?.personalInformation?.firstName, true) &&
+                        if (fName.equals(data?.personalInformation?.firstName, true) &&
                             lName.equals(data?.personalInformation?.lastName, true) &&
-                            cName.equals(data?.personalInformation?.customerName, true)){
+                            cName.equals(data?.personalInformation?.customerName, true)
+                        ) {
                             findNavController().popBackStack()
-                        }else{
-                            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                            if (data?.accountInformation?.accountType.equals(PERSONAL_ACCOUNT,true)) {
-                                updateStandardUserProfile(data,fName,lName)
-                            }else{
-                                updateBusinessUserProfile(data,fName,lName,cName)
-                            }
+                        } else {
+                            loader?.show(
+                                requireActivity().supportFragmentManager,
+                                Constants.LOADER_DIALOG
+                            )
+
+                            updateProfileDetails(data, fName, lName, cName)
+
                         }
 
 
                     }
+
                     else -> {
                         storeData()
                         val bundle = Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         findNavController().navigate(
-                            R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,bundle
+                            R.id.action_createAccountPersonalInfo_to_createAccountPostCodeNew,
+                            bundle
                         )
                     }
                 }
@@ -189,7 +209,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             binding.inputCompanyName.getText().toString()
     }
 
-    override fun onRetryClick(apiUrl: String){
+    override fun onRetryClick(apiUrl: String) {
 
     }
 
@@ -256,10 +276,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
                 requiredFirstName = false
-            }
-            else {
+            } else {
                 if (binding.inputFirstName.getText().toString().trim().length <= 50) {
-                    if (binding.inputFirstName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputFirstName.getText().toString().trim().replace(" ", "")
+                            .matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)
+                    ) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
                     } else {
@@ -279,10 +300,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
                 requiredLastName = false
-            }
-            else {
+            } else {
                 if (binding.inputLastName.getText().toString().trim().length <= 50) {
-                    if (binding.inputLastName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputLastName.getText().toString().trim().replace(" ", "")
+                            .matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)
+                    ) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
                     } else {
@@ -306,8 +328,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
                     if (binding.inputCompanyName.getText().toString().trim().length > 50) {
                         binding.inputCompanyName.setErrorText(getString(R.string.str_company_name_error_message))
                         false
-                    } else if (hasSpecialCharacters(binding.inputCompanyName.getText().toString(),
-                            splCharCompanyName)) {
+                    } else if (hasSpecialCharacters(
+                            binding.inputCompanyName.getText().toString(),
+                            splCharCompanyName
+                        )
+                    ) {
                         binding.inputCompanyName.setErrorText(getString(R.string.company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens))
                         false
                     } else {
@@ -332,10 +357,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             if (binding.inputFirstName.getText().toString().trim().isEmpty()) {
                 binding.inputFirstName.removeError()
                 requiredFirstName = false
-            }
-            else {
+            } else {
                 if (binding.inputFirstName.getText().toString().trim().length <= 50) {
-                    if (binding.inputFirstName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputFirstName.getText().toString().trim().replace(" ", "")
+                            .matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)
+                    ) {
                         binding.inputFirstName.removeError()
                         requiredFirstName = true
                     } else {
@@ -353,10 +379,11 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             if (binding.inputLastName.getText().toString().trim().isEmpty()) {
                 binding.inputLastName.removeError()
                 requiredLastName = false
-            }
-            else {
+            } else {
                 if (binding.inputLastName.getText().toString().trim().length <= 50) {
-                    if (binding.inputLastName.getText().toString().trim().replace(" ","").matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)) {
+                    if (binding.inputLastName.getText().toString().trim().replace(" ", "")
+                            .matches(Utils.ACCOUNT_NAME_FIRSTNAME_LASTNAME)
+                    ) {
                         binding.inputLastName.removeError()
                         requiredLastName = true
                     } else {
@@ -372,70 +399,43 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
         checkButtonEnable()
     }
 
-    private fun updateBusinessUserProfile(
+
+    private fun updateProfileDetails(
         data: ProfileDetailModel?,
         fName: String,
         lName: String,
         cName: String
     ) {
-        data?.run {
-            val request = UpdateProfileRequest(
-                firstName = fName,
-                lastName = lName,
-                addressLine1 = personalInformation?.addressLine1,
-                addressLine2 = personalInformation?.addressLine2,
-                city = personalInformation?.city,
-                state = personalInformation?.state,
-                zipCode = personalInformation?.zipcode,
-                zipCodePlus = personalInformation?.zipCodePlus,
-                country = personalInformation?.country,
-                emailAddress = personalInformation?.emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = personalInformation?.phoneNumber ?: "",
-                phoneDay = personalInformation?.phoneDay,
-                phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = "",
-                fein = accountInformation?.fein,
-                businessName = cName
-            )
 
-            viewModel.updateUserDetails(request)
-        }
+        val request = Utils.returnEditProfileModel(
+            cName,
+            data?.accountInformation?.fein,
+            fName,
+            lName,
+            data?.personalInformation?.addressLine1,
+            data?.personalInformation?.addressLine2,
+            data?.personalInformation?.city,
+            data?.personalInformation?.state,
+            data?.personalInformation?.zipcode,
+            data?.personalInformation?.zipCodePlus,
+            data?.personalInformation?.country,
+            data?.personalInformation?.emailAddress,
+            data?.personalInformation?.primaryEmailStatus,
+            data?.personalInformation?.pemailUniqueCode,
+            data?.personalInformation?.phoneCell,
+            data?.personalInformation?.phoneCellCountryCode,
+            data?.personalInformation?.phoneDay,
+            data?.personalInformation?.phoneDayCountryCode,
+            data?.personalInformation?.fax,
+            data?.accountInformation?.smsOption,
+            data?.personalInformation?.eveningPhone,
+            data?.accountInformation?.stmtDelivaryMethod,
+            data?.accountInformation?.stmtDelivaryInterval,
+            Utils.retrunMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
+            accountType = data?.accountInformation?.accountType,
+        )
 
-
-    }
-
-    private fun updateStandardUserProfile(
-        data: ProfileDetailModel?,
-        fName: String,
-        lName: String
-    ) {
-
-        data?.personalInformation?.run {
-            val request = UpdateProfileRequest(
-                firstName = fName,
-                lastName = lName,
-                addressLine1 = addressLine1,
-                addressLine2 = addressLine2,
-                city = city,
-                state = state,
-                zipCode = zipcode,
-                zipCodePlus = zipCodePlus,
-                country = country,
-                emailAddress = emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneNumber ?: "",
-                phoneDay = phoneDay,
-                phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = ""
-            )
-
-            viewModel.updateUserDetails(request)
-        }
+        viewModel.updateUserDetails(request)
 
     }
 }

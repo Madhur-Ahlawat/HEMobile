@@ -164,7 +164,7 @@ class SetPreferenceFragment : BaseFragment<FragmentSelectCommunicationPreference
                     smsOption = smsFlag,
                     phoneEvening = mAccountResp?.personalInformation?.eveningPhone,
                     correspDeliveryMode = communicationPref,
-                    correspDeliveryFrequency = "MONTHLY"
+                    correspDeliveryFrequency = mAccountResp?.accountInformation?.correspDeliveryFrequency
                 )
                 communicationPrefsViewModel.updateAccountSettingsPrefs(mAccountModelReq)
             } else {

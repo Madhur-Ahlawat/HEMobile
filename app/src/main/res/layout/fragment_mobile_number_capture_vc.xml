@@ -79,10 +79,10 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/str_continue"
-            android:layout_marginBottom="@dimen/_29dp"
+            android:layout_marginTop="@dimen/margin_30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtBottom"
             app:radius="@dimen/margin_5dp" />
 
 

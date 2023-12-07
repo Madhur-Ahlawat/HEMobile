@@ -7,10 +7,12 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCloseAccountSuccessBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
@@ -47,7 +49,7 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
             accountSubType = intent.getStringExtra(Constants.ACCOUNT_SUBTYPE).toString()
         }
 
-        if (accountSubType.equals(Constants.PAYG)) {
+        if (accountSubType.equals(Constants.PAYG)||accountSubType.equals(Constants.EXEMPT_PARTNER)) {
             binding.titleNext.gone()
             binding.whatHappensNext.gone()
         } else {
@@ -55,6 +57,9 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
             binding.whatHappensNext.visible()
         }
 
+        binding.gotoStartMenuBt.setOnClickListener {
+            startNormalActivityWithFinish(LandingActivity::class.java)
+        }
         binding.message2.text = Html.fromHtml(
             resources.getString(
                 R.string.we_will_send_an_email_to_when_the_account_has_been_closed,

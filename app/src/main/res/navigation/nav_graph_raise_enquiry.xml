@@ -57,7 +57,7 @@
     <fragment
         android:id="@+id/otherwaystopayFragment"
         android:name="com.conduent.nationalhighways.ui.landing.OtherWaysToPayFragment"
-        android:label="EnquiryStatusDetailsFragment"
+        android:label="OtherWaysToPayFragment"
         tools:layout="@layout/fragment_other_ways_to_pay">
         <action
             android:id="@+id/action_otherwaystopayFragment_to_casesEnquiryDetailsFragment"

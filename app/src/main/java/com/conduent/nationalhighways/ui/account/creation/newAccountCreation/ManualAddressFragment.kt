@@ -17,7 +17,6 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.CountriesModel
-import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentManualAddressBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -253,15 +252,9 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
                     val data = navData as ProfileDetailModel?
-                    if (data?.accountInformation?.accountType.equals(
-                            Constants.PERSONAL_ACCOUNT,
-                            true
-                        )
-                    ) {
-                        updateStandardUserProfile(data)
-                    } else {
-                        updateBusinessUserProfile(data)
-                    }
+
+                    updateProfileDetails(data)
+
                 } else {
                     if (NewCreateAccountRequestModel.personalAccount) {
                         loader?.show(
@@ -324,7 +317,8 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 if (navFlowCall.equals(PROFILE_MANAGEMENT)) {
                     binding.country.setSelectedValue(
                         getCountryCodeName(
-                            (navData as ProfileDetailModel).personalInformation?.country ?: UK_COUNTRY
+                            (navData as ProfileDetailModel).personalInformation?.country
+                                ?: UK_COUNTRY
                         )
                     )
                 } else if (navFlowCall.equals(EDIT_ACCOUNT_TYPE) or navFlowCall.equals(EDIT_SUMMARY)) {
@@ -631,66 +625,40 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         return bundle
     }
 
-    private fun updateStandardUserProfile(data: ProfileDetailModel?) {
-        data?.personalInformation?.run {
-            val request = UpdateProfileRequest(
-                firstName = firstName,
-                lastName = lastName,
-                addressLine1 = NewCreateAccountRequestModel.addressline1,
-                addressLine2 = NewCreateAccountRequestModel.addressline2,
-                city = NewCreateAccountRequestModel.townCity,
-                state = "HE",
-                zipCode = NewCreateAccountRequestModel.zipCode,
-                zipCodePlus = zipCodePlus,
-                country = NewCreateAccountRequestModel.address_country_code,
-                emailAddress = emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneCell ?: "",
-                phoneDay = phoneDay,
-                phoneFax = "",
-                smsOption = data.accountInformation?.smsOption,
-                phoneEvening = "",
-                phoneCellCountryCode = phoneCellCountryCode,
-                phoneDayCountryCode = phoneDayCountryCode
-            )
+    private fun updateProfileDetails(data: ProfileDetailModel?) {
 
-            viewModelProfile.updateUserDetails(request)
-        }
+        val request = Utils.returnEditProfileModel(
+            data?.accountInformation?.businessName ?: "",
+            data?.accountInformation?.fein,
+            data?.personalInformation?.firstName,
+            data?.personalInformation?.lastName,
+            NewCreateAccountRequestModel.addressline1,
+            NewCreateAccountRequestModel.addressline2,
+            NewCreateAccountRequestModel.townCity,
+            "HE",
+            NewCreateAccountRequestModel.zipCode,
+            data?.personalInformation?.zipCodePlus,
+            NewCreateAccountRequestModel.address_country_code,
+            data?.personalInformation?.emailAddress,
+            data?.personalInformation?.primaryEmailStatus,
+            data?.personalInformation?.pemailUniqueCode,
+            data?.personalInformation?.phoneCell,
+            data?.personalInformation?.phoneCellCountryCode,
+            data?.personalInformation?.phoneDay,
+            data?.personalInformation?.phoneDayCountryCode,
+            data?.personalInformation?.fax,
+            data?.accountInformation?.smsOption,
+            data?.personalInformation?.eveningPhone,
+            data?.accountInformation?.stmtDelivaryMethod,
+            data?.accountInformation?.stmtDelivaryInterval,
+            Utils.retrunMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
+            accountType = data?.accountInformation?.accountType
 
-    }
-
-    private fun updateBusinessUserProfile(data: ProfileDetailModel?) {
-        data?.run {
-            val request = UpdateProfileRequest(
-                firstName = personalInformation?.firstName,
-                lastName = personalInformation?.lastName,
-                addressLine1 = NewCreateAccountRequestModel.addressline1,
-                addressLine2 = NewCreateAccountRequestModel.addressline2,
-                city = NewCreateAccountRequestModel.townCity,
-                state = "HE",
-                zipCode = NewCreateAccountRequestModel.zipCode,
-                zipCodePlus = personalInformation?.zipCodePlus,
-                country = NewCreateAccountRequestModel.address_country_code,
-                emailAddress = personalInformation?.emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = personalInformation?.phoneCell ?: "",
-                phoneDay = personalInformation?.phoneDay,
-                phoneFax = "",
-                smsOption = "Y",
-                phoneEvening = "",
-                fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName,
-                phoneCellCountryCode = personalInformation?.phoneCellCountryCode,
-                phoneDayCountryCode = personalInformation?.phoneDayCountryCode,
-            )
-
-            viewModelProfile.updateUserDetails(request)
-        }
-
+        )
+        viewModelProfile.updateUserDetails(request)
 
     }
+
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeByte(if (requiredAddress) 1 else 0)

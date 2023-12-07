@@ -178,10 +178,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 if ((amt < 10) && (amt > 10000)) {
                     if (amt < 10) {
                         document.getElementById("errorMessageForAmount").style.display="";
-                        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be 00A310 or more";
+                        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be \u00A310 or more";
                     } else  if (amt > 10000) {
                         document.getElementById("errorMessageForAmount").style.display="";
-                        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be 00A310,000 or less";
+                        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be \u00A310,000 or less";
                     } else {
                         document.getElementById("errorMessageForAmount").style.display="none";
                     }
@@ -254,14 +254,13 @@ function checkNumber(el) {
         //Top-up amount must be £10,000 or less
         //Top-up amount must be £@ or more
         document.getElementById("errorMessageForAmount").style.display="";
-        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be £10 or more";
+        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be \u00A310 or more";
     } else  if (amt > 10000) {
         document.getElementById("errorMessageForAmount").style.display="";
-        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be £10,000 or less";
+        document.getElementById("errorMessageForAmount").innerText = "Top-up amount must be \u00A310,000 or less";
     } else {
         document.getElementById("errorMessageForAmount").style.display="none";
     }
-
     el.value = parseFloat(el.value).toFixed(2);
 }
 
