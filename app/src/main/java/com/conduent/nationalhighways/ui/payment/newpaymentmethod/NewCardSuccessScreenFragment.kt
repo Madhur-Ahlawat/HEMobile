@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
@@ -143,7 +144,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.textDefault.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.GONE
             binding.feedbackBt.visible()
-
+            HomeActivityMain.dataBinding?.backButton?.gone()
 
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             viewModel.saveCardList()
@@ -166,10 +167,12 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.cardView.visibility = View.INVISIBLE
             binding.btnContinue.text = getString(R.string.str_try_again)
 
-
+            HomeActivityMain.dataBinding?.backButton?.gone()
             binding.cancelBtn.visibility = View.VISIBLE
             binding.feedbackBt.gone()
         } else if (flow == Constants.CREDIT_NOT_SET_UP) {
+            HomeActivityMain.dataBinding?.backButton?.gone()
+            Glide.with(requireContext()).load(resources.getDrawable(R.drawable.error_blue)).into(binding.warningIcon)
             binding.maximumVehicleAdded.text =
                 getString(R.string.str_your_credit_card_was_not_setup)
             binding.textMaximumVehicle.text = getString(R.string.str_you_can_try)

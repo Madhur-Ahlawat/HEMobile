@@ -214,7 +214,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 } else {
                     binding.paymentMethodInformation.gone()
                     binding.paymentRecycleView.gone()
-                    HomeActivityMain.dataBinding?.backButton?.gone()
                     binding.warningIcon.visible()
                     binding.maximumVehicleAdded.visible()
                     binding.textMaximumVehicle.visible()

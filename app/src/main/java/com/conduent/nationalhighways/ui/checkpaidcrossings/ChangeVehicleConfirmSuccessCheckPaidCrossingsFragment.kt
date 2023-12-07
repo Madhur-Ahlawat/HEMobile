@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.databinding.FragmentConfirmNewVehicleDetail
 import com.conduent.nationalhighways.databinding.FragmentPaymentSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
@@ -50,13 +51,13 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
         /*  val i = Intent(Intent.ACTION_VIEW)
           i.data = Uri.parse(url)
           startActivity(i)*/
-
+        HomeActivityMain.dataBinding?.backButton?.gone()
 
     }
 
     private fun setData() {
         binding?.apply {
-            vehicleRegisration.text = data?.plateNo
+            vehicleRegisration.text = data?.plateNo?.toUpperCase()
             creditRemaining.text =
                 data?.unusedTrip.toString()
             creditWillExpireOn.text =

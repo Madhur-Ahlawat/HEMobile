@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import com.conduent.nationalhighways.databinding.ItemRecentTansactionsCheckedCro
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
@@ -111,14 +113,23 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     override fun observer() {
         observe(viewModel.paymentHistoryLiveDataCheckedCrossing, ::handlePaymentResponse)
     }
-
+    private fun navigateLandingActivity() {
+        startActivity(
+            Intent(requireActivity(), LandingActivity::class.java)
+        )
+        requireActivity().finish()
+    }
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.btnNext -> {
+                navigateLandingActivity()
+            }
             R.id.transfer_btn -> {
                 val bundle = Bundle().apply {
                     putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     putParcelable(Constants.NAV_DATA_KEY, data)
                 }
+                HomeActivityMain.setTitle(getString(R.string.transfer_remaining_credit))
                 findNavController().navigate(
                     R.id.action_crossing_details_to_find_vehicles,
                     bundle

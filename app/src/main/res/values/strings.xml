@@ -1355,7 +1355,6 @@
     <string name="str_you_are_removing_all_the_registered_payment_now">You are removing all the payment methods registered on the account</string>
     <string name="str_your_balance_will_no_longer_available">Your balance will no longer be topped up automatically.\nIf you do not have enough credit to pay for crossings, your account will be suspended and you will have to pay standard Dart Charge rates for crossings separately.\n\nIf you do not pay the Road User Charge on time, you may get a fine (Penalty Charge Notice).</string>
     <string name="str_you_must_pay">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
-    <string name="str_you_have_no_payment_methods_on_file">You have no payment methods on file</string>
     <string name="str_you_must_pay_crossing">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
     <string name="str_your_new_direct">Your new Direct Debit will take up to 4 days to get setup</string>
     <string name="str_while_your_new_direct_debit">While your new Direct Debit gets set up, we’ll still use your current default payment method.</string>
@@ -1508,7 +1507,6 @@
     <string name="credit_expiry_date">Credit expiry date</string>
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
-    <string name="vehicle_changed">Vehicle changed</string>
     <string name="error_check_paid_crossings">Your crossing data could not be retrieved. Check if your entries are correct or try again later.</string>
     <string name="vehcile_type_mismatch"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a\ndifferent charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm]]></string>
     <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from\nDart Charge payment</string>
@@ -1646,5 +1644,6 @@
     <string name="southbound">Southbound</string>
     <string name="number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hypens_and_spaces">Number plate must only include letters a to z, numbers 0 to 9 and special characters such as hypens and spaces</string>
     <string name="payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9">Payment reference number must only include letters a to z and numbers 0 to 9</string>
+    <string name="credit_transferred">Credit Transferred</string>
 
 </resources>

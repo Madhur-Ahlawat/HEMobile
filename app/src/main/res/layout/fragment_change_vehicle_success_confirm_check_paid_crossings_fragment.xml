@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_14_67dp"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="@string/vehicle_changed"
+                    android:text="@string/credit_transferred"
                     android:textColor="@color/black"
                     android:gravity="center"
                     android:textSize="@dimen/font_18sp" />
@@ -132,7 +132,7 @@
                         <TextView
                             android:id="@+id/txtCreditWillExpireOn"
                             style="@style/MediumTextBlack"
-                            android:text="@string/credit_will_expire_on"
+                            android:text="@string/expiry_date"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -161,7 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/btnFeedback"
-                android:text="@string/str_ok"
+                android:text="@string/back_to_main_menu"
                 app:radius="5dp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHButton

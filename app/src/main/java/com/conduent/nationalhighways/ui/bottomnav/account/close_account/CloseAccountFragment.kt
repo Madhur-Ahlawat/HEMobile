@@ -46,11 +46,7 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
     }
 
     override fun initCtrl() {
-        if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.PAYG)) {
-            binding.message1.gone()
-        } else {
-            binding.message1.visible()
-        }
+        binding.message1.visible()
         binding.btnCloseAccount.setOnClickListener {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
             val newCaseReq = CreateNewCaseReq(
@@ -64,7 +60,8 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
                 Constants.ACCOUNT_CLOSURE,
                 null,
                 "ENU",
-                HomeActivityMain.accountDetailsData?.personalInformation?.phoneCellCountryCode?:"",
+                HomeActivityMain.accountDetailsData?.personalInformation?.phoneCellCountryCode
+                    ?: "",
 
                 )
             contactDartChargeViewModel.createNewCase(newCaseReq)
