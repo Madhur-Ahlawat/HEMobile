@@ -16,7 +16,7 @@
             android:src="@drawable/error_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/box_viewAll"/>            app:tint="@color/new_btn_color" />
+            app:layout_constraintTop_toBottomOf="@id/box_viewAll"/>
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/tvNoTransactions"

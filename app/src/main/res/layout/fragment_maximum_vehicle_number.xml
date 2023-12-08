@@ -75,7 +75,7 @@
                         android:text="@string/str_you_have_reached_the_maximum_vehicle"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/maximumVehicleAddedNote"

@@ -188,6 +188,12 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
             when (navFlowCall) {
                 Constants.TRANSFER_CROSSINGS -> {
+                    updateView(
+                        data?.plateNo.toString(), data?.vehicleMake ?: "",
+                        data?.vehicleColor ?: "", data?.vehicleClass ?: "",
+                        data?.vehicleModel ?: "", data?.veicleUKnonUK ?: false, 7
+                    )
+
                     binding.vehiclePlateNumber.text = data?.plateNo.toString().uppercase()
                 }
 
@@ -286,6 +292,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 data?.vehicleClass =
                     Utils.getManuallyAddedVehicleClass(requireActivity(), (data?.vehicleType ?: ""))
                 binding.typeVehicle.setSelectedValue(data?.vehicleType ?: "")
+                vehicleClassSelected=binding.typeVehicle.getSelectedValue()?:""
                 typeOfVehicleChecked = true
             }
 
@@ -369,7 +376,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         isUK: Boolean = false,
         type: Int
     ) {
-        Log.e("TAG", "updateView: type -> " + type)
+        Log.e(
+            "TAG",
+            "updateView() called with: plateNumber = $plateNumber, vehicleMake = $vehicleMake, vehicleColor = $vehicleColor, vehicleClass = $vehicleClass, vehicleModel = $vehicleModel, isUK = $isUK, type = $type"
+        )
         if (edit_summary == true && navFlowCall.equals(Constants.PAY_FOR_CROSSINGS)) {
 
         } else {
@@ -383,6 +393,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     vehicleClass
                 )
             )
+
+            vehicleClassSelected=binding.typeVehicle.getSelectedValue()?:""
             binding.modelInputLayout.setText(vehicleModel)
 
             if (isUK) {
@@ -612,7 +624,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     private fun checkButton() {
         if (NewCreateAccountRequestModel.isExempted) {
-
             binding.typeVehicle.setSelectedValue(vehicleClassSelected)
             if (typeOfVehicleChecked && binding.checkBoxTerms.isChecked
             ) {
@@ -765,9 +776,18 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                                 binding.modelInputLayout.getText().toString()
                             dataModel.vehicleColor =
                                 binding.colorInputLayout.getText().toString()
+                            if(binding.radioButtonYes.isChecked){
+                                dataModel.plateCountry="UK"
+                            }else{
+                                dataModel.plateCountry="NON-UK"
+                            }
+                            dataModel.isExempted=nonUKVehicleModel?.isExempted
+                            dataModel.isRUCEligible=nonUKVehicleModel?.isRUCEligible
                             if(arguments?.containsKey(Constants.IS_DBLA_AVAILABLE)==true){
                                 dataModel.isDblaAvailable=arguments?.getBoolean(Constants.IS_DBLA_AVAILABLE)
                             }
+                            Log.e("TAG", "onClick: nonUKVehicleModel "+nonUKVehicleModel.toString() )
+                            Log.e("TAG", "onClick: vehicleClassSelected "+vehicleClassSelected )
                             if (vehicleClassSelected.isNotEmpty()) {
                                 dataModel.vehicleClass =
                                     Utils.getManuallyAddedVehicleClass(
@@ -861,9 +881,14 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                             bundle
                         )
 
+                    }else if(!data?.vehicleClassBalanceTransfer.equals(data?.vehicleClass)){
+                        findNavController().navigate(
+                            R.id.action_addVehicleDetailsFragment_to_vehicleDoesNotMatchCurrentVehicleFragment,
+                            bundle
+                        )
                     } else {
                         findNavController().navigate(
-                            R.id.action_addVehicleDetailsFragment_to_yourVehicleFragment,
+                            R.id.action_addVehicleDetailsFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment,
                             bundle
                         )
                     }
@@ -877,39 +902,84 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun checkRUC(newVehicleInfoDetails: NewVehicleInfoDetails,from:Int) {
-        Log.e("TAG", "checkRUC: from "+from )
+        Log.e("TAG", "checkRUC: from "+from +" vehicleClass "+newVehicleInfoDetails.vehicleClass )
         val bundle: Bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         if (newVehicleInfoDetails.vehicleClass.equals("A", true)) {
-            NewCreateAccountRequestModel.isRucEligible = true
 
-            bundle.putParcelable(
-                Constants.VEHICLE_DETAIL,
-                newVehicleInfoDetails
-            )
-            findNavController().navigate(
-                R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,
-                bundle
-            )
+            when(navFlowCall){
+                Constants.PAY_FOR_CROSSINGS->{
+                    NewCreateAccountRequestModel.isRucEligible = true
+
+                    bundle.putParcelable(
+                        Constants.VEHICLE_DETAIL,
+                        newVehicleInfoDetails
+                    )
+                    findNavController().navigate(
+                        R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,
+                        bundle
+                    )
+                }
+                Constants.TRANSFER_CROSSINGS->{
+                    NewCreateAccountRequestModel.isRucEligible = true
+
+                    bundle.putParcelable(
+                        Constants.VEHICLE_DETAIL,
+                        newVehicleInfoDetails
+                    )
+                    findNavController().navigate(
+                        R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,
+                        bundle
+                    )
+                }
+                else ->{
+                    if(
+                        nonUKVehicleModel?.vehicleModel?.equals(binding.modelInputLayout.editText.text.toString()) == true &&
+                        nonUKVehicleModel?.vehicleMake?.equals(binding.makeInputLayout.editText.text.toString()) == true &&
+                        nonUKVehicleModel?.vehicleColor?.equals(binding.colorInputLayout.editText.text.toString()) == true &&
+                        nonUKVehicleModel?.plateNumber?.equals(binding.vehicleRegTv.editText.text.toString()) == true &&
+                        nonUKVehicleModel?.vehicleClass?.equals(Utils.getManuallyAddedVehicleClass(requireActivity(),vehicleClassSelected))==true
+                    ){
+                        vehicleList?.add(newVehicleInfoDetails)
+
+                        val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
+                        if (editCall) {
+                            findNavController().navigate(
+                                R.id.action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment,
+                                bundle
+                            )
+                        } else {
+                            findNavController().navigate(
+                                R.id.action_addVehicleDetailsFragment_to_vehicleListFragment,
+                                bundle
+                            )
+                        }
+
+                        NewCreateAccountRequestModel.vehicleList=vehicleList?:ArrayList()
+                    }else{
+                        NewCreateAccountRequestModel.isRucEligible = true
+
+                        bundle.putParcelable(
+                            Constants.VEHICLE_DETAIL,
+                            newVehicleInfoDetails
+                        )
+                        findNavController().navigate(
+                            R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,
+                            bundle
+                        )
+
+                    }
+
+
+                }
+            }
 
         } else {
             vehicleList?.add(newVehicleInfoDetails)
             when (navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    val model = CrossingDetailsModelsRequest(
-                        newVehicleInfoDetails.plateNumber.toString().uppercase(),
-                        newVehicleInfoDetails.vehicleClass,
-                        data?.plateCountry,
-                        newVehicleInfoDetails.vehicleMake,
-                        newVehicleInfoDetails.vehicleModel,
-                        newVehicleInfoDetails.vehicleColor ?: "",
-                        newVehicleInfoDetails.vehicleClass ?: "",
-                        data_type
-                    )
-
-                    viewModel.getCrossingDetails(model)
+                getCrossingDetailsApi(newVehicleInfoDetails)
                 }
 
                 Constants.TRANSFER_CROSSINGS -> {
@@ -948,6 +1018,22 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 }
             }
         }
+    }
+
+    private fun getCrossingDetailsApi(newVehicleInfoDetails: NewVehicleInfoDetails) {
+        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        val model = CrossingDetailsModelsRequest(
+            newVehicleInfoDetails.plateNumber.toString().uppercase(),
+            newVehicleInfoDetails.vehicleClass,
+            data?.plateCountry,
+            newVehicleInfoDetails.vehicleMake,
+            newVehicleInfoDetails.vehicleModel,
+            newVehicleInfoDetails.vehicleColor ?: "",
+            newVehicleInfoDetails.vehicleClass ?: "",
+            data_type
+        )
+
+        viewModel.getCrossingDetails(model)
     }
 
 

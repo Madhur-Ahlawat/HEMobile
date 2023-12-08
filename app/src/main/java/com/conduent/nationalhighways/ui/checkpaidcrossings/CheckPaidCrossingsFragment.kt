@@ -55,15 +55,15 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 //        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.editReferenceNumber.setText("1-97969061")
-        binding.editNumberPlate.setText("VBNM")
+//        binding.editReferenceNumber.setText("1-98661192")
+//        binding.editNumberPlate.setText("EDCSQ15")
         binding.editNumberPlate.editText.addTextChangedListener {
             isEnable()
         }
         binding.editReferenceNumber.editText.addTextChangedListener {
             isEnable()
         }
-        isEnable()
+//        isEnable()
     }
 
     override fun initCtrl() {
@@ -166,14 +166,14 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                         putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         var crossingDetailsModelsResponse = CrossingDetailsModelsResponse().apply {
                             referenceNumber = binding.editReferenceNumber.getText().toString()
-                            accountActStatus = dataObj?.get(0)?.accountActStatus!!
-                            accountBalance = dataObj?.get(0)?.accountBalance!!
-                            accountNo = dataObj?.get(0)?.accountNo!!
-                            accountTypeCd = dataObj?.get(0)?.accountStatusCd!!
-                            expirationDate = dataObj?.get(0)?.expirationDate!!
+                            accountActStatus = dataObj?.get(0)?.accountActStatus?:""
+                            accountBalance = dataObj?.get(0)?.accountBalance?:""
+                            accountNo = dataObj?.get(0)?.accountNo?:""
+                            accountTypeCd = dataObj?.get(0)?.accountStatusCd?:""
+                            expirationDate = dataObj?.get(0)?.expirationDate?:""
                             plateCountry = dataObj?.get(0)?.plateCountry
-                            plateNumberToTransfer = dataObj?.get(0)?.plateNo!!
-                            unusedTrip = dataObj?.get(0)?.unusedTrip!!
+                            plateNumberToTransfer = dataObj?.get(0)?.plateNo?:""
+                            unusedTrip = dataObj?.get(0)?.unusedTrip?:""
                             vehicleClassBalanceTransfer = dataObj?.get(0)?.vehicleClass
                         }
                         putParcelable(Constants.NAV_DATA_KEY, crossingDetailsModelsResponse)

@@ -291,17 +291,25 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         data.plateInfo?.state = "HE"
         data.plateInfo?.type = "STANDARD"
 
-        data.vehicleInfo?.color = obj.vehicleColor
         data.vehicleInfo?.year = 2023
         data.vehicleInfo?.effectiveStartDate = ""
         if (obj.vehicleModel.isNullOrEmpty()) {
-            data.vehicleInfo?.model = ""
+            data.vehicleInfo?.model = "Not Provided"
         } else {
             data.vehicleInfo?.model = obj.vehicleModel
         }
+        if (obj.vehicleMake.isNullOrEmpty()) {
+            data.vehicleInfo?.make = "Not Provided"
+        } else {
+            data.vehicleInfo?.make = obj.vehicleMake
+        }
+        if (obj.vehicleColor.isNullOrEmpty()) {
+            data.vehicleInfo?.color = "Not Provided"
+        } else {
+            data.vehicleInfo?.color = obj.vehicleColor
+        }
         data.vehicleInfo?.typeId = ""
         data.vehicleInfo?.typeDescription = "REGULAR"
-        data.vehicleInfo?.make = obj.vehicleMake
         if (obj.vehicleClass.isNullOrEmpty()) {
             data.vehicleInfo?.vehicleClassDesc = "2"
         } else {

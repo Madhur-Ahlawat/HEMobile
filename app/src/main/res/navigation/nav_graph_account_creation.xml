@@ -237,6 +237,9 @@
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_deletePaymentMethodFragment"
             app:destination="@+id/deletePaymentMethodFragment" />
+        <action
+            android:id="@+id/action_businessVehicleDetailFragment_to_vehicleDoesNotMatchCurrentVehicleFragment"
+            app:destination="@+id/vehicleDoesNotMatchCurrentVehicleFragment" />
 
     </fragment>
 
@@ -808,6 +811,11 @@ app:popUpTo="@id/HWMobileNumberCaptureVC"
         <action
             android:id="@+id/action_maximumFragment_to_landingFragment"
             app:destination="@+id/landingFragment" />
+        <action
+            android:id="@+id/action_maximumFragment_to_crossing_details"
+            app:destination="@+id/crossing_details"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
 
     </fragment>
     <fragment

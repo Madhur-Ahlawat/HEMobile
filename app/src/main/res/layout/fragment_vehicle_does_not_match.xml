@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/btnFeedback"
-            android:text="BUY CROSSINGS FOR THIS VEHICLE"
+            android:text="@string/str_buy_crossings_for_vehicle"
             app:radius="5dp" />
 
         <com.conduent.nationalhighways.utils.widgets.NHButton

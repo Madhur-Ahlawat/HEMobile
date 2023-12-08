@@ -25,8 +25,6 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
     View.OnClickListener {
     private var additionalCrossings: Int? = 0
     private var additionalCrossingsCharge: Double? = 0.0
-    private var totalAmountOfUnsettledTrips: Double? = 0.0
-    private var crossingsList: MutableList<String>? = mutableListOf()
     var crossingDetailModel: CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -75,13 +73,12 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             binding.btnOk.text = resources.getString(R.string.pay_new_amount)
             binding.btnFeedback.setText(getString(R.string.continue_with_your_selection))
         } else {
-            binding.descTv.text = resources.getString(R.string.our_records_show_the_numberplate,
-                crossingDetailModel?.plateNo, crossingDetailModel?.dvlaclass?.let { Utils.getVehicleType(
+            binding.descTv.text = resources.getString(R.string.vehcile_type_mismatch,
+                crossingDetailModel?.plateNo, crossingDetailModel?.vehicleClass?.let { Utils.getVehicleType(
                     requireActivity(),
                     it
                 ) },
-                crossingDetailModel?.customerClass?.let { Utils.getVehicleType(requireActivity(), it) },
-                crossingDetailModel?.customerClassRate)
+                crossingDetailModel?.vehicleClassBalanceTransfer?.let { Utils.getVehicleType(requireActivity(), it) })
             binding.btnOk.text = resources.getString(R.string.str_buy_crossings_for_vehicle)
 
         }
@@ -91,14 +88,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
     }
 
     private fun setData() {
-        binding.apply {
-            val charge = crossingDetailModel?.chargingRate?.toDouble()
-            val unSettledTrips = crossingDetailModel?.unSettledTrips
-            crossingsList = emptyList<String>().toMutableList()
-            if (unSettledTrips != null && charge != null) {
-                totalAmountOfUnsettledTrips = charge * unSettledTrips
-            }
-        }
+
     }
 
     private fun setClickListeners() {

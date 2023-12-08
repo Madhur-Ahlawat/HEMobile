@@ -370,7 +370,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                     paymentSuccessResponse.eci
                                 )
                             } else if (flow == Constants.ADD_PAYMENT_METHOD) {
-                                if (responseModel?.checkCheckBox == true) {
+                                if (responseModel?.checkCheckBox == true||paymentListSize==0) {
                                     saveNewCard(responseModel, paymentSuccessResponse, "Y")
                                 } else {
                                     saveNewCard(responseModel, paymentSuccessResponse, "N")
