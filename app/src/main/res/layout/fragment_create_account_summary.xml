@@ -612,7 +612,6 @@
                         android:text="Yes"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtTwoStepVerification" />
-
                     <ImageView
                         android:id="@+id/editTwoStepVerification"
                         android:layout_width="wrap_content"
@@ -661,7 +660,6 @@
                         android:text="Yes"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtBiometrics" />
-
                     <ImageView
                         android:id="@+id/editBiometrics"
                         android:layout_width="wrap_content"
@@ -695,36 +693,16 @@
                 android:layout_marginTop="@dimen/margin_10dp"
                 android:nestedScrollingEnabled="false" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_30dp">
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/checkBoxTerms"
+                style="@style/CheckBoxStyle"
+                android:textColorLink="@color/black"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:checked="false"
+                android:gravity="center|left"
+                android:text="@string/i_accept_the_terms_conditions" />
 
-                <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/checkBoxTerms"
-                    style="@style/CheckBoxStyle"
-                    android:layout_width="wrap_content"
-                    android:autoLink="web"
-                    android:checked="false"
-
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/linkText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    tools:text="sdsdsdsdsd"
-                    android:textColor="@color/black"
-                    android:textColorLink="@color/black"
-                    android:textSize="@dimen/_16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/checkBoxTerms"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/btnNext"

@@ -1,10 +1,13 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Html
 import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -40,7 +43,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener {
-    private var dataModel: NewCreateAccountRequestModel?=null
+    private var url: String? = ""
+    private var dataModel: NewCreateAccountRequestModel? = null
     private lateinit var title: TextView
 
 
@@ -53,16 +57,6 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         FragmentCreateAccountSummaryBinding.inflate(inflater, container, false)
 
     override fun init() {
-       var url = if (NewCreateAccountRequestModel.prePay) {
-                "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
-
-            } else {
-                "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
-
-            }
-        var str="<a href=\"$url\"></a>I accept the <u>terms &amp; conditions</u>"
-        binding.linkText.setText(Html.fromHtml(str))
-        binding.linkText?.setMovementMethod(LinkMovementMethod.getInstance())
         binding.btnNext.setOnClickListener(this)
         binding.editFullName.setOnClickListener(this)
         binding.editAddress.setOnClickListener(this)
@@ -136,9 +130,9 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val vehicleList = dataModel?.vehicleList as ArrayList<NewVehicleInfoDetails>
-        Log.e("TAG", "init: "+vehicleList.size )
-        for (i in 0 until vehicleList.size){
-            Log.e("TAG", "init: isDblaAvailable "+vehicleList[i].isDblaAvailable )
+        Log.e("TAG", "init: " + vehicleList.size)
+        for (i in 0 until vehicleList.size) {
+            Log.e("TAG", "init: isDblaAvailable " + vehicleList[i].isDblaAvailable)
         }
         vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this, false)
         binding.recyclerView.adapter = vehicleAdapter
@@ -155,29 +149,10 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         } else {
             binding.txtMobileNumber.text = getString(R.string.telephone_number)
         }
-//        binding.checkBoxTerms.makeLinks(Pair("terms & conditions", View.OnClickListener {
-//            var url: String = ""
-//            url = if (NewCreateAccountRequestModel.prePay) {
-//                "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
-//
-//            } else {
-//                "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
-//
-//            }
-//            val bundle = Bundle()
-//            title.text=getString(R.string.str_terms_condition)
-//
-//            bundle.putString(Constants.TERMSCONDITIONURL, url)
-//            findNavController().navigate(
-//                R.id.action_accountSummaryFragment_to_termsConditionFragment,
-//                bundle
-//            )
-//            /*  val i = Intent(Intent.ACTION_VIEW)
-//              i.data = Uri.parse(url)
-//              startActivity(i)*/
-//
-//
-//        }))
+
+        binding.checkBoxTerms.makeLinks(Pair("terms & conditions", View.OnClickListener {
+            findNavController().navigate(R.id.action_createAccountSummaryFragment_to_generalTermsAndConditions)
+        }))
 
     }
 
@@ -254,7 +229,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
             R.id.editEmailAddress -> {
                 val bundle = Bundle()
-                bundle.putBoolean(Constants.IS_EDIT_EMAIL,true)
+                bundle.putBoolean(Constants.IS_EDIT_EMAIL, true)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_emailAddressFragment,
                     enableEditMode()
@@ -268,7 +243,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_mobileNumberFragment,
-                   bundle
+                    bundle
                 )
             }
 
@@ -302,7 +277,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 //                bundle.putParcelable(NAV_DATA_KEY, dataModel!!. as Parcelable)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                 findNavController().navigate(
-                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment,bundle
+                    R.id.action_accountSummaryFragment_to_createAccountTypesFragment, bundle
                 )
             }
 
@@ -367,8 +342,8 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     }
 
     override fun onResume() {
-        if (requireActivity() is CreateAccountActivity){
-            title.text=getString(R.string.str_create_an_account)
+        if (requireActivity() is CreateAccountActivity) {
+            title.text = getString(R.string.str_create_an_account)
 
         }
         super.onResume()

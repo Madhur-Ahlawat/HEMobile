@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.data.model.pushnotification.PushNotificatio
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentGeneralTermsAndConditionsBinding
 import com.conduent.nationalhighways.databinding.FragmentTermsAndConditionsBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -59,7 +60,17 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
             .build()
         binding.webView.webViewClient = LocalContentWebViewClient(mAssetLoader)
 //        webView.loadUrl("https://appassets.androidplatform.net/assets/termsandconditions.html")
-        binding.webView.loadUrl("file:///android_res/raw/termsandconditionspage.html")
+        if (NewCreateAccountRequestModel.prePay) {
+            binding.webView.loadUrl("file:///android_res/raw/termsandconditionspage.html")
+
+//            "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
+
+        } else {
+            binding.webView.loadUrl("file:///android_res/raw/paygtermsandcondition.html")
+
+//            "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
+
+        }
 
         AdobeAnalytics.setScreenTrack(
             "home",
