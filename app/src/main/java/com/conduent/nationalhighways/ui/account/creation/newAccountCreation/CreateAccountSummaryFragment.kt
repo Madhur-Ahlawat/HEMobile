@@ -151,6 +151,11 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         }
 
         binding.checkBoxTerms.makeLinks(Pair("terms & conditions", View.OnClickListener {
+            if (NewCreateAccountRequestModel.prePay) {
+                title.text=getString(R.string.str_terms_condition)
+            } else {
+                title.text=getString(R.string.str_payg_terms_conditions)
+            }
             findNavController().navigate(R.id.action_createAccountSummaryFragment_to_generalTermsAndConditions)
         }))
 
