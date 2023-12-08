@@ -3,6 +3,8 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +53,16 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         FragmentCreateAccountSummaryBinding.inflate(inflater, container, false)
 
     override fun init() {
+       var url = if (NewCreateAccountRequestModel.prePay) {
+                "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
+
+            } else {
+                "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
+
+            }
+        var str="<a href=\"$url\"></a>I accept the <u>terms &amp; conditions</u>"
+        binding.linkText.setText(Html.fromHtml(str))
+        binding.linkText?.setMovementMethod(LinkMovementMethod.getInstance())
         binding.btnNext.setOnClickListener(this)
         binding.editFullName.setOnClickListener(this)
         binding.editAddress.setOnClickListener(this)
@@ -143,30 +155,29 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         } else {
             binding.txtMobileNumber.text = getString(R.string.telephone_number)
         }
-
-        binding.checkBoxTerms.makeLinks(Pair("terms & conditions", View.OnClickListener {
-            var url: String = ""
-            url = if (NewCreateAccountRequestModel.prePay) {
-                "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
-
-            } else {
-                "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
-
-            }
-            val bundle = Bundle()
-            title.text=getString(R.string.str_terms_condition)
-
-            bundle.putString(Constants.TERMSCONDITIONURL, url)
-            findNavController().navigate(
-                R.id.action_accountSummaryFragment_to_termsConditionFragment,
-                bundle
-            )
-            /*  val i = Intent(Intent.ACTION_VIEW)
-              i.data = Uri.parse(url)
-              startActivity(i)*/
-
-
-        }))
+//        binding.checkBoxTerms.makeLinks(Pair("terms & conditions", View.OnClickListener {
+//            var url: String = ""
+//            url = if (NewCreateAccountRequestModel.prePay) {
+//                "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
+//
+//            } else {
+//                "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
+//
+//            }
+//            val bundle = Bundle()
+//            title.text=getString(R.string.str_terms_condition)
+//
+//            bundle.putString(Constants.TERMSCONDITIONURL, url)
+//            findNavController().navigate(
+//                R.id.action_accountSummaryFragment_to_termsConditionFragment,
+//                bundle
+//            )
+//            /*  val i = Intent(Intent.ACTION_VIEW)
+//              i.data = Uri.parse(url)
+//              startActivity(i)*/
+//
+//
+//        }))
 
     }
 
