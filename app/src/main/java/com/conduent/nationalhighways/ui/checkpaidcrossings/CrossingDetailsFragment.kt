@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,16 +20,18 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.FragmentCrossingDetailsBinding
 import com.conduent.nationalhighways.databinding.ItemRecentTansactionsCheckedCrossingsBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
@@ -48,9 +49,11 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
     private val countPerPage = 10
+    var apiState = Constants.UNAVAILABLE
     private var startIndex = 1
     private var noOfPages = 1
     private val viewModel: DashboardViewModel by viewModels()
+    private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private val recentTransactionAdapter: GenericRecyclerViewAdapter<CheckedCrossingRecentTransactionsResponseModelItem> by lazy { createPaymentsHistoryListAdapter() }
 
     override fun getFragmentBinding(
@@ -112,17 +115,38 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun observer() {
         observe(viewModel.paymentHistoryLiveDataCheckedCrossing, ::handlePaymentResponse)
+//        observe(webServiceViewModel.webServiceLiveData, ::handleMaintenanceNotification)
     }
-    private fun navigateLandingActivity() {
-        startActivity(
-            Intent(requireActivity(), LandingActivity::class.java)
-        )
-        requireActivity().finish()
-    }
+//    private fun navigateCreateAccountActivity() {
+//        BaseApplication.flowNameAnalytics=Constants.CREATE_ACCOUNT
+//        when (apiState) {
+//            Constants.LIVE -> {
+//                AdobeAnalytics.setActionTrack(
+//                    "create account",
+//                    "home",
+//                    "home",
+//                    "english",
+//                    "home",
+//                    "splash",
+//                    sessionManager.getLoggedInUser()
+//                )
+//                requireActivity().startNormalActivity(CreateAccountActivity::class.java)
+//            }
+//
+//            else -> {
+//                findNavController().navigate(
+//                    R.id.action_landingFragment_to_serviceUnavailableFragment,
+//                    getBundleData(apiState, apiEndTime)
+//                )
+//
+//            }
+//        }
+//    }
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnNext -> {
-                navigateLandingActivity()
+                requireActivity().startNormalActivity(CreateAccountActivity::class.java)
+
             }
             R.id.transfer_btn -> {
                 val bundle = Bundle().apply {
