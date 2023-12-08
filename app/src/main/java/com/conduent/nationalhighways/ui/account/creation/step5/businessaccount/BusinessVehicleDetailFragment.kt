@@ -198,7 +198,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                                 R.id.action_businessVehicleDetailFragment_to_vehicleIsExemptFromDartChargesFragment,
                                 bundle
                             )
-                        } else {
+                        } else if(!data?.vehicleClassBalanceTransfer.equals(data?.vehicleClass)){
+                            findNavController().navigate(
+                                R.id.action_businessVehicleDetailFragment_to_vehicleDoesNotMatchCurrentVehicleFragment,
+                                bundle
+                            )
+                        }else {
                             findNavController().navigate(
                                 R.id.action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,
                                 bundle
@@ -248,16 +253,11 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(
                         Constants.NAV_DATA_KEY,
-                        CrossingDetailsModelsResponse().apply {
-                            plateNo = data?.plateNo ?: ""
-                            expirationDate = data?.expirationDate ?: ""
-                            unusedTrip = data?.unusedTrip ?: ""
-                            vehicleClass = data?.vehicleClass
-                        })
+                      data)
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                     findNavController().navigate(
-                        R.id.action_businessVehicleDetailFragment_to_addNewVehicleDetailsFragment,
+                        R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
                         bundle
                     )
 

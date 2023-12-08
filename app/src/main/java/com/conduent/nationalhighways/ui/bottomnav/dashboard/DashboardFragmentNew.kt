@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav.dashboard//package com.condue
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -396,6 +397,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     it.accountStatus?.let {
                         boxCardType.visible()
                         cardNumber.text = data.accountInformation?.paymentTypeInfo
+                        cardNumber.setTypeface(null, Typeface.NORMAL)
 
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus
@@ -428,7 +430,15 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         binding.apply {
             tvAvailableBalanceHeading.visible()
             tvAvailableBalance.visible()
-            tvAvailableBalance.text = getString(R.string.str_zero_euro)
+
+            tvAvailableBalance.apply {
+                visible()
+                text = data.replenishmentInformation?.currentBalance?.run {
+                    get(0) + "" + drop(1)
+                }
+            }
+
+
 
             tvAccountStatusHeading.visible()
             cardIndicatorAccountStatus.visible()
@@ -448,6 +458,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
+            cardNumber.setTypeface(null, Typeface.BOLD)
             data.let {
                 it.accountInformation?.let {
                     it.accountStatus?.let {
@@ -466,13 +477,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
 
-            val cardType = data.replenishmentInformation?.reBillPayType?.uppercase()
-            if (cardType.equals("CASH")) {
-                cardLogo.gone()
-            } else {
-                cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(cardType ?: ""))
-            }
+            cardLogo.gone()
             boxViewAll.visible()
             getPaymentHistoryList(startIndex)
             rvRecenrTransactions.visible()
@@ -538,14 +543,14 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     it.accountStatus?.let {
                         boxCardType.visible()
                         if (cardType?.uppercase().equals(Constants.CURRENT, true)) {
-                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace("CURRENT ending in ","****") ?: ""
-
-                        }
-                        else{
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
+                                "CURRENT ending in ",
+                                "****"
+                            ) ?: ""
+                        } else {
                             cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
-
                         }
-
+                        cardNumber.setTypeface(null, Typeface.NORMAL)
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus
                         )

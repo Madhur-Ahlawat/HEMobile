@@ -77,7 +77,7 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS)) {
                     findNavController().navigate(
-                        R.id.action_findYourVehicleFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment,
+                        R.id.action_yourVehicleFragment_to_addVehicleFragment,
                         bundle
                     )
                 } else {

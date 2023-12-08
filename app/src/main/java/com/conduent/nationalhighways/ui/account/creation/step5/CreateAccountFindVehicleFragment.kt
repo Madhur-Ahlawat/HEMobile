@@ -649,10 +649,20 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                     Log.e("TAG", "apiResponseDVRM1: 22")
-                    findNavController().navigate(
-                        R.id.action_findVehicleFragment_to_businessVehicleDetailFragment,
-                        bundle
-                    )
+
+                    if(vehicleItem.isExempted.lowercase().equals("y")){
+                        NewCreateAccountRequestModel.isExempted = true
+                        findNavController().navigate(
+                            R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                            bundle
+                        )
+
+                    }else{
+                        findNavController().navigate(
+                            R.id.action_findVehicleFragment_to_businessVehicleDetailFragment,
+                            bundle
+                        )
+                    }
                 }
 
             }
@@ -708,7 +718,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             bundle
                         )
                     }
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+
                 }
             }
 
@@ -723,6 +733,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
         val accountData = NewCreateAccountRequestModel
         val vehicleList = accountData.vehicleList
+        Log.e("TAG", "apiResponseDVRM:kkm "+vehicleList.toString() )
+        Log.e("TAG", "apiResponseDVRM: bnjn "+resource.data?.get(0).toString() )
         if (isClicked) {
             when (resource) {
                 is Resource.Success -> {

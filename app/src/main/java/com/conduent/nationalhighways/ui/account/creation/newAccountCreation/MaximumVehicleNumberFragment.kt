@@ -84,6 +84,19 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                     binding.cancelBtn.text = getString(R.string.vehicle_no_longer_exempt)
                 }
 
+                Constants.TRANSFER_CROSSINGS -> {
+                    binding.descTv.visible()
+                    binding.textMaximumVehicle.gone()
+                    binding.descTv.text = getString(
+                        R.string.our_records_show_that_number_plate_is_exempt_from_dart_charge_payment,
+                        NewCreateAccountRequestModel.plateNumber.uppercase()
+                    )
+                    binding.cancelBtn.visibility = View.VISIBLE
+                    binding.btnContinue.text = getString(R.string.transfer_to_another_vehicle)
+                    binding.inCorrectVehicleNumber.gone()
+
+                }
+
                 else -> {
                     binding.textMaximumVehicle.text = getString(
                         R.string.str_vehicle_exempt_detail_message,
@@ -231,6 +244,10 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
                     }
 
+                    resources.getString(R.string.transfer_to_another_vehicle).lowercase() -> {
+                        findNavController().popBackStack()
+                    }
+
                     requireActivity().resources.getString(R.string.str_continue).lowercase() ->
 
                         when (navFlowCall) {
@@ -264,7 +281,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                                             R.id.action_maximumFragment_to_vehicleListFragment,
                                             bundle()
                                         )
-                                    }else{
+                                    } else {
                                         findNavController().navigate(
                                             R.id.action_maximumFragment_to_vehicleListFragment_clearto_findvehiclefragment,
                                             bundle()
@@ -276,7 +293,8 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         }
 
 
-                    requireActivity().resources.getString(R.string.str_add_to_account).lowercase() -> {
+                    requireActivity().resources.getString(R.string.str_add_to_account)
+                        .lowercase() -> {
                         val accountData = NewCreateAccountRequestModel
                         val vehicleList = accountData.vehicleList
 //                        nonUKVehicleModel?.let { vehicleList.add(it) }
@@ -315,6 +333,21 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
 
                             Constants.PAY_FOR_CROSSINGS -> {
                                 findNavController().popBackStack()
+                            }
+
+                            Constants.TRANSFER_CROSSINGS -> {
+                                val bundle = Bundle()
+                                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                                if (navData is CrossingDetailsModelsResponse) {
+                                    bundle.putParcelable(
+                                        Constants.NAV_DATA_KEY,
+                                        navData as CrossingDetailsModelsResponse
+                                    )
+                                }
+                                findNavController().navigate(
+                                    R.id.action_maximumFragment_to_crossing_details,
+                                    bundle
+                                )
                             }
 
                             else -> {

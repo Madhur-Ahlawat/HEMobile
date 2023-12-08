@@ -70,31 +70,52 @@
                 tools:text="28 Jan 2020" />
 
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_vrn"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tv_vrn_cl"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_22dp"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center_vertical"
-                android:text="Vehicle Registration (number plate)"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_crossing_date_value" />
+                app:layout_constraintTop_toBottomOf="@id/tv_crossing_date_value">
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tv_vrn_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center_vertical"
-                android:textColor="@color/label_color"
-                android:textSize="@dimen/_14sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_vrn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_vrn"
-                tools:text="2165322131" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_vrn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="@dimen/margin_5dp"
+                    android:text="@string/vehicle_reg_number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="tv_vrn_value" />
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_vrn_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/label_color"
+                    android:textSize="@dimen/_14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/barrier"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2165322131" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -108,7 +129,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_vrn" />
+                app:layout_constraintTop_toBottomOf="@id/tv_vrn_cl" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_time_value"

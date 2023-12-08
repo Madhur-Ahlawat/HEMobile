@@ -152,6 +152,29 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         }
     }
 
+
+    fun sortData(addressAPIlist: List<DataAddress?>?): List<DataAddress>? {
+
+        val sortedList = addressAPIlist?.sortedWith(Comparator { str1, str2 ->
+
+            val street1=str1?.street?:""
+            val street2=str2?.street?:""
+            val regex = Regex("[^0-9]") // Regex to extract numeric part
+            val numPart1 = regex.replace(street1?:"", "").toIntOrNull() ?: Int.MAX_VALUE
+            val numPart2 = regex.replace(street2?:"", "").toIntOrNull() ?: Int.MAX_VALUE
+
+            if (numPart1 != numPart2) {
+                numPart1.compareTo(numPart2)
+            } else {
+                street1.compareTo(street2)
+            }
+        })
+        return sortedList as List<DataAddress>?
+
+    }
+
+
+
     private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
         if (apiCalled) {
             apiCalled = false
@@ -161,9 +184,9 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             when (response) {
                 is Resource.Success -> {
 
-                    val dataAddresses: ArrayList<DataAddress?> = ArrayList(response.data?:ArrayList())
-
-                    var addressList: List<DataAddress?> =
+//                    val dataAddresses: ArrayList<DataAddress?> = ArrayList(response.data?:ArrayList())
+val addressList =sortData(response.data)
+                  /*  var addressList: List<DataAddress?> =
                         (dataAddresses.sortedBy{it?.street})
 
 
@@ -173,14 +196,14 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                         { it?.street?.split(" ")?.get(0)?.toIntOrNull() ?: Int.MAX_VALUE }, // Try to parse as Int, otherwise use Int.MAX_VALUE
                         { it?.street })
                     )
-                    addressList = dataAddresses1
+                    addressList = dataAddresses1*/
 
 
                     when (navFlowCall) {
                         EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
-                            addressList.forEach { it?.isSelected = false }
+                            addressList?.forEach { it?.isSelected = false }
                             if (NewCreateAccountRequestModel.selectedAddressId != -1) {
-                                addressList.get(NewCreateAccountRequestModel.selectedAddressId)?.isSelected =
+                                addressList?.get(NewCreateAccountRequestModel.selectedAddressId)?.isSelected =
                                     true
                             }
                         }

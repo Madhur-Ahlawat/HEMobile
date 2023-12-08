@@ -94,7 +94,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         navControllerListener()
         if (screenType == LRDS_SCREEN) {
             binding.titleTxt.text = resources.getString(R.string.txt_my_account)
-            binding.btnBack.visible()
+            binding.btnBack.gone()
         } else if (screenType == LOGOUT_SCREEN || screenType == SESSION_TIME_OUT) {
             binding.titleTxt.text = resources.getString(R.string.str_signed_out)
             binding.btnBack.gone()
@@ -182,7 +182,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         bundle.putString(Constants.EMAIL,email)
         bundle.putString(Constants.MOBILE_NUMBER,mobileNumber)
         bundle.putString(Constants.COUNTRY_TYPE,countryCode)
-
+        Log.e("TAG", "loadFragment:screenType "+screenType )
         oldGraph.apply {
             when (screenType) {
                 START_NOW_SCREEN -> setStartDestination(R.id.landingFragment)

@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.conduent.nationalhighways.R
@@ -31,19 +32,24 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
         FragmentServiceUnavailableBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+    }
+
+    override fun initCtrl() {
+
         if (arguments?.containsKey(Constants.SERVICE_TYPE) == true) {
             serviceType = arguments?.getString(Constants.SERVICE_TYPE, "").toString()
         }
+
         if (arguments?.containsKey(Constants.END_TIME) == true) {
             endTime = arguments?.getString(Constants.END_TIME, "").toString()
         }
         showToolBar(true)
 
         setBackPressListener(this)
-    }
 
-    override fun initCtrl() {
         binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
+        Log.e("TAG", "loadFragment:screenType "+serviceType )
 
         when (serviceType) {
             Constants.MAINTENANCE -> {
