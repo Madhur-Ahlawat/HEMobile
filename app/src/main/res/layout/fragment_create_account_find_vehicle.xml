@@ -157,6 +157,17 @@
             android:text="@string/str_continue"
             app:layout_goneMarginTop="@dimen/margin_30dp"/>
 
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/cancel_bt"
+            style="@style/secondaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:layout_marginBottom="@dimen/_23dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:text="@string/cancel"
+            app:radius="5dp" />
 
     </LinearLayout>
 

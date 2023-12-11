@@ -121,6 +121,13 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             NewCreateAccountRequestModel.countryCode = countryCode
             requireActivity().startNormalActivity(CreateAccountActivity::class.java)
         }
+
+        if(navFlowFrom==Constants.CHECK_FOR_PAID_CROSSINGS){
+            requireActivity().startNormalActivity(CreateAccountActivity::class.java)
+        }
+        if(navFlowFrom==Constants.CHECK_FOR_PAID_CROSSINGS_ONEOFF){
+            requireActivity().startNormalActivity(MakeOffPaymentActivity::class.java)
+        }
     }
 
     override fun onResume() {
@@ -379,7 +386,14 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             }
 
             is Resource.DataError -> {
+              /*  if(resource.errorModel?.error!="invalid_token"){
+                    apiState = Constants.UNAVAILABLE
+                }else{
+                    apiState = Constants.LIVE
+                }*/
+
                 apiState = Constants.UNAVAILABLE
+
 //                findNavController().navigate(
 //                    R.id.action_landingFragment_to_serviceUnavailableFragment,
 //                    getBundleData(Constants.UNAVAILABLE)

@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.checkpaidcrossings
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.conduent.nationalhighways.databinding.FragmentPaymentSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
@@ -23,6 +25,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 
 class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<FragmentChangeVehicleSuccessConfirmCheckPaidCrossingsFragmentBinding>(),
@@ -41,6 +44,8 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
         FragmentChangeVehicleSuccessConfirmCheckPaidCrossingsFragmentBinding.inflate(inflater, container, false)
 
     override fun init() {
+        binding.btnFeedback.movementMethod = LinkMovementMethod.getInstance()
+
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
@@ -96,7 +101,7 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
         when (v?.id) {
 
             R.id.btnOk -> {
-                   findNavController().popBackStack(R.id.landingFragment,false)
+                requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
             }
             R.id.btnFeedback -> {
                 val bundle = Bundle()

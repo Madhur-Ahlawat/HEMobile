@@ -249,6 +249,8 @@ object Constants {
     const val RESOLVE_PENALTY = "RESOLVE PENALTY"
     const val ONE_OFF_PAYMENT = "ONE OFF PAYMENT"
     const val ONE_OFF_PAYMENT_SUCCESS = "ONE OFF PAYMENT SUCCESS"
+    const val CHECK_FOR_PAID_CROSSINGS = "CHECK_FOR_PAID_CROSSINGS"
+    const val CHECK_FOR_PAID_CROSSINGS_ONEOFF = "CHECK_FOR_PAID_CROSSINGS_ONEOFF"
     const val PAYMENT_RESPONSE = "payment_resp"
     const val PAYMENT_DATA = "payment_data"
     const val PAYMENT_METHOD_SIZE = "payment_method_size"

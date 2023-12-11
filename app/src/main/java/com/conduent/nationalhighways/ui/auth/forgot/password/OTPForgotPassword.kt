@@ -92,7 +92,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var phoneDay: String = ""
     private var phoneDayCountryCode: String = ""
     private val dashboardViewmodel: DashboardViewModel by activityViewModels()
-
+    private var accountStatus: String = ""
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -122,7 +122,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     override fun initCtrl() {
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
-        Log.e("TAG", "initCtrl: editRequest "+editRequest )
+        Log.e("TAG", "initCtrl: editRequest " + editRequest)
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
 
 
@@ -1006,18 +1006,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-
-                    val intent = Intent(requireActivity(), AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                    intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
-                    intent.putExtra(Constants.CROSSINGCOUNT, "")
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                    intent.putExtra(
-                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                    )
-                    startActivity(intent)
-                } else {
                     crossingHistoryApi()
+                } else {
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                        putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                    }
+
                 }
 
 
@@ -1104,31 +1099,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun navigateWithCrossing(count: Int) {
-
-
-        if (count > 0) {
-
-
-            val intent = Intent(requireActivity(), AuthActivity::class.java)
-            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-            intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
-            intent.putExtra(Constants.PERSONALDATA, personalInformation)
-            intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
-
-
-            intent.putExtra(
-                Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-            )
-            startActivity(intent)
-
-        } else {
-            requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-            }
-        }
-
-
+        val intent = Intent(requireActivity(), AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+        intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
+        intent.putExtra(Constants.PERSONALDATA, personalInformation)
+        intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+        intent.putExtra(
+            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+        )
+        startActivity(intent)
     }
 
 

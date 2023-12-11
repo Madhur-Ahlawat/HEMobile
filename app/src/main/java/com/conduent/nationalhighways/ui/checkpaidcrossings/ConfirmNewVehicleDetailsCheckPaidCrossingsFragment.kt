@@ -62,7 +62,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
 
     private fun setData() {
         binding?.apply {
-            vehicleRegisration.text = data?.plateNo
+            vehicleRegisration.text = data?.plateNo?.uppercase()
             creditRemaining.text =
                 data?.unusedTrip
             creditAdditionalCrossings.text = convertDateForTransferCrossingsScreen(data?.expirationDate)
@@ -80,6 +80,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         binding?.apply {
             btnContinue.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
             btnCancel.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
+            editVehicleRegistrationNumber.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
 
         }
     }
@@ -135,7 +136,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                 bundle.putDouble(Constants.DATA, data?.totalAmount?:0.0)
                 bundle.putString(NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(NAV_DATA_KEY, data)
-                if(data?.vehicleClass?.equals("A",true) == true){
+                if(data?.vehicleClass?.lowercase().equals("a",true) == true){
                     findNavController().navigate(
                         R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_vehicleIsExemptFromDartChargesFragment,
                         bundle
@@ -150,7 +151,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                 else{
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     isClicked = true
-                    checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = data?.accountNo, plateCountry = data?.plateCountry, plateNumber = data?.plateNumberToTransfer, transferInfo = TransferInfo(tripCount = data?.unusedTrip, plateNumber = data?.plateNo,plateState = "HE", plateCountry = data?.plateCountry, vehicleClass = data?.vehicleClassBalanceTransfer, vehicleMake = data?.vehicleMake, vehicleModel = data?.vehicleModel, vehicleYear = "2023")))
+                    checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = data?.accountNo, plateCountry = data?.plateCountry, plateNumber = data?.plateNumberToTransfer, transferInfo = TransferInfo(tripCount = data?.unusedTrip, plateNumber = data?.plateNo?.uppercase(),plateState = "HE", plateCountry = data?.plateCountry, vehicleClass = data?.vehicleClassBalanceTransfer, vehicleMake = data?.vehicleMake, vehicleModel = data?.vehicleModel, vehicleYear = "2023")))
                 }
 
             }
@@ -165,13 +166,21 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
 //                )
             }
 
+            R.id.editVehicleRegistrationNumber->{
+                val bundle = Bundle()
+                bundle.putString(NAV_FLOW_KEY, navFlowCall)
+                bundle.putParcelable(NAV_DATA_KEY, data)
+                bundle.putString(Constants.PLATE_NUMBER,data?.plateNo?:"")
+                findNavController().navigate(R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_findYourVehicleFragment,bundle)
+            }
+
         }
     }
 
     private fun enableEditMode(): Bundle {
         val bundle = Bundle()
         bundle.putString(NAV_FLOW_KEY, navFlowCall)
-        bundle.putString(PLATE_NUMBER, data?.plateNo?.trim())
+        bundle.putString(PLATE_NUMBER, data?.plateNo?.uppercase()?.trim())
         bundle.putParcelable(NAV_DATA_KEY, data)
         return bundle
     }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
@@ -48,6 +50,7 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
@@ -166,7 +169,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun onResume() {
         super.onResume()
         (requireActivity() as HomeActivityMain).showHideToolbar(false)
-
+        dashboardViewModel.getLRDSResponse()
     }
 
 
@@ -192,9 +195,27 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         observe(dashboardViewModel.logout, ::handleLogout)
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
         observe(dashboardViewModel.alertLivData, ::handleAlertResponse)
+        observe(dashboardViewModel.lrdsVal, ::handleLrdsResposne)
         dashboardViewModel.accountType.observe(this@DashboardFragmentNew, Observer { it ->
             handleAccountType(it)
         })
+    }
+
+    private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
+        Log.e("TAG", "handleLrdsResposne: " )
+        when (resource) {
+            is Resource.Success -> {
+                Log.e("TAG", "handleLrdsResposne: statusCode "+resource.data?.srStatus )
+                if (resource.data?.srStatus?.uppercase().equals( "OPEN")) {
+                    requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
+                        putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
+                    }
+                }
+            }
+            else ->{
+
+            }
+        }
     }
 
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {

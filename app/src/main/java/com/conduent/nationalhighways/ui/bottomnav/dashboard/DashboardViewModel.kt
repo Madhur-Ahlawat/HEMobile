@@ -11,6 +11,7 @@ import androidx.paging.cachedIn
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ThresholdAmountApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
@@ -46,9 +47,6 @@ class DashboardViewModel @Inject constructor(
     val errorManager: ErrorManager
 ) : ViewModel() {
 
-    val transactionsList = Pager(PagingConfig(100)) {
-        TransactionsPagingSource(repository)
-    }.flow.cachedIn(viewModelScope)
     private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
     val accountType: LiveData<AccountResponse> get() = _accountType
     private val _accountType = MutableLiveData<AccountResponse>()
@@ -69,6 +67,9 @@ class DashboardViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _accountDetailsVal = MutableLiveData<Resource<AccountResponse?>?>()
     val accountOverviewVal: MutableLiveData<Resource<AccountResponse?>?> get() = _accountDetailsVal
+
+    private val _lrdsVal = MutableLiveData<Resource<LRDSResponse?>?>()
+    val lrdsVal: MutableLiveData<Resource<LRDSResponse?>?> get() = _lrdsVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _thresholdAmountVal = MutableLiveData<Resource<ThresholdAmountApiResponse?>?>()
@@ -96,14 +97,14 @@ class DashboardViewModel @Inject constructor(
 
     var personalInformationData: MutableLiveData<PersonalInformation> = MutableLiveData()
     var accountInformationData: MutableLiveData<AccountInformation> = MutableLiveData()
-var accountSubType:MutableLiveData<String> = MutableLiveData()
-var directDebitCardListSize:MutableLiveData<Int> = MutableLiveData()
-var paymentListSize:MutableLiveData<Int> = MutableLiveData()
+    var accountSubType: MutableLiveData<String> = MutableLiveData()
+    var directDebitCardListSize: MutableLiveData<Int> = MutableLiveData()
+    var paymentListSize: MutableLiveData<Int> = MutableLiveData()
 
     init {
-        accountSubType.value=""
-        directDebitCardListSize.value=0
-        paymentListSize.value=0
+        accountSubType.value = ""
+        directDebitCardListSize.value = 0
+        paymentListSize.value = 0
         personalInformationData.value = PersonalInformation(
             "", "", "", "", "",
             "", "", "", "", "", "", "",
@@ -210,6 +211,17 @@ var paymentListSize:MutableLiveData<Int> = MutableLiveData()
                 )
             } catch (e: Exception) {
                 _accountDetailsVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+    fun getLRDSResponse() {
+        viewModelScope.launch {
+            try {
+                _lrdsVal.postValue(
+                    ResponseHandler.success(repository.getLrdsStatusApi(), errorManager)
+                )
+            } catch (e: Exception) {
+                _lrdsVal.postValue(ResponseHandler.failure(e))
             }
         }
     }

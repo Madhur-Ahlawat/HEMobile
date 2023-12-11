@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
-import android.content.Intent
 import android.text.Html
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
@@ -17,7 +16,6 @@ import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
@@ -28,6 +26,7 @@ import com.conduent.nationalhighways.utils.common.Constants.REMOVE_VEHICLE
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +48,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     @Inject
     lateinit var sessionManager: SessionManager
     override fun init() {
-        binding.feedbackBt?.movementMethod = LinkMovementMethod.getInstance()
+        binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
 
         if (arguments?.getParcelable<com.conduent.nationalhighways.data.model.account.PersonalInformation>(
                 Constants.PERSONALDATA
@@ -193,16 +192,8 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     }
 
                     PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
-                        if (arguments?.containsKey(Constants.NAV_FLOW_FROM)==true && arguments?.getString(Constants.NAV_FLOW_FROM)
-                                .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
-                        ) {
-                            Intent(requireActivity(), LandingActivity::class.java).apply {
-                                putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
-                                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                startActivity(this)
-                            }
-                            requireActivity().finish()
+                        if (navFlowFrom.equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)) {
+                            requireActivity().startNewActivityByClearingStack(LoginActivity::class.java)
                         } else {
                             findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
                         }

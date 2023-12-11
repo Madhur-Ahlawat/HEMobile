@@ -291,6 +291,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             if(data?.vehicleClass?.isEmpty()==true && data?.vehicleType?.isNotEmpty() == true){
                 data?.vehicleClass =
                     Utils.getManuallyAddedVehicleClass(requireActivity(), (data?.vehicleType ?: ""))
+                Log.e("TAG", "updateView: -->vehicleType "+(data?.vehicleType) )
+
                 binding.typeVehicle.setSelectedValue(data?.vehicleType ?: "")
                 vehicleClassSelected=binding.typeVehicle.getSelectedValue()?:""
                 typeOfVehicleChecked = true
@@ -386,7 +388,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             binding.vehiclePlateNumber.text = plateNumber
             binding.makeInputLayout.setText(vehicleMake)
             binding.colorInputLayout.setText(vehicleColor)
-
+            Log.e("TAG", "updateView: --> "+vehicleClass )
             binding.typeVehicle.setSelectedValue(
                 Utils.getVehicleType(
                     requireActivity(),
@@ -624,6 +626,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     private fun checkButton() {
         if (NewCreateAccountRequestModel.isExempted) {
+            Log.e("TAG", "updateView: -->vehicleClassSelected "+vehicleClassSelected )
+
             binding.typeVehicle.setSelectedValue(vehicleClassSelected)
             if (typeOfVehicleChecked && binding.checkBoxTerms.isChecked
             ) {
@@ -749,7 +753,35 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
                     checkRUC(dataModel,1)
                     return
-                } else {
+                } else if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
+                    val bundle = Bundle()
+                    data?.vehicleClass=Utils.getManuallyAddedVehicleClass(requireActivity(),vehicleClassSelected)
+                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    arguments?.getInt(Constants.VEHICLE_INDEX)
+                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                    Log.e("TAG", "onClick: vehicleClassBalanceTransfer -> "+data?.vehicleClassBalanceTransfer )
+                    Log.e("TAG", "onClick: vehicleClass -> "+data?.vehicleClass )
+                    if(!data?.vehicleClassBalanceTransfer.equals(Utils.getManuallyAddedVehicleClass(requireActivity(),vehicleClassSelected))){
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                        findNavController().navigate(
+                            R.id.action_addVehicleDetailsFragment_to_vehicleDoesNotMatchCurrentVehicleFragment,
+                            bundle
+                        )
+                    }else if (data?.vehicleType?.lowercase().equals("a")) {
+                        findNavController().navigate(
+                            R.id.action_addNewVehicleDetailsFragment_to_vehicleIsExemptFromDartChargesFragment,
+                            bundle
+                        )
+
+                    } else {
+                        findNavController().navigate(
+                            R.id.action_addVehicleDetailsFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment,
+                            bundle
+                        )
+                    }
+
+                }else {
                     nonUKVehicleModel?.let {
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -848,53 +880,30 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
 
                     } else {
-                        newVehicleInfoDetails.vehicleMake =
-                            binding.makeInputLayout.getText().toString()
-                        newVehicleInfoDetails.vehicleModel =
-                            binding.modelInputLayout.getText().toString()
-                        newVehicleInfoDetails.vehicleColor =
-                            binding.colorInputLayout.getText().toString()
-                        newVehicleInfoDetails.vehicleClass =
-                            Utils.getManuallyAddedVehicleClass(
-                                requireActivity(),
-                                vehicleClassSelected
-                            )
-                        newVehicleInfoDetails.plateNumber =
-                            binding.vehiclePlateNumber.text.toString().uppercase()
-                        newVehicleInfoDetails.isDblaAvailable = false
-                        newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
-                        checkRUC(newVehicleInfoDetails,4)
 
+                        if(navFlowCall!=Constants.TRANSFER_CROSSINGS) {
+                            newVehicleInfoDetails.vehicleMake =
+                                binding.makeInputLayout.getText().toString()
+                            newVehicleInfoDetails.vehicleModel =
+                                binding.modelInputLayout.getText().toString()
+                            newVehicleInfoDetails.vehicleColor =
+                                binding.colorInputLayout.getText().toString()
+                            newVehicleInfoDetails.vehicleClass =
+                                Utils.getManuallyAddedVehicleClass(
+                                    requireActivity(),
+                                    vehicleClassSelected
+                                )
+                            newVehicleInfoDetails.plateNumber =
+                                binding.vehiclePlateNumber.text.toString().uppercase()
+                            newVehicleInfoDetails.isDblaAvailable = false
+                            newVehicleInfoDetails.isUK = binding.radioButtonYes.isChecked
+                            checkRUC(newVehicleInfoDetails, 4)
 
+                        }
                     }
 
-
-                } else if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
-                    val bundle = Bundle()
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    arguments?.getInt(Constants.VEHICLE_INDEX)
-                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    if (data?.vehicleType?.lowercase().equals("a")) {
-                        findNavController().navigate(
-                            R.id.action_addNewVehicleDetailsFragment_to_vehicleIsExemptFromDartChargesFragment,
-                            bundle
-                        )
-
-                    }else if(!data?.vehicleClassBalanceTransfer.equals(data?.vehicleClass)){
-                        findNavController().navigate(
-                            R.id.action_addVehicleDetailsFragment_to_vehicleDoesNotMatchCurrentVehicleFragment,
-                            bundle
-                        )
-                    } else {
-                        findNavController().navigate(
-                            R.id.action_addVehicleDetailsFragment_to_ConfirmNewVehicleDetailsCheckPaidCrossingsFragment,
-                            bundle
-                        )
-                    }
 
                 }
-
 
             }
 
@@ -905,7 +914,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         Log.e("TAG", "checkRUC: from "+from +" vehicleClass "+newVehicleInfoDetails.vehicleClass )
         val bundle: Bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-        if (newVehicleInfoDetails.vehicleClass.equals("A", true)) {
+        if (newVehicleInfoDetails.vehicleClass?.uppercase().equals("A", true)) {
 
             when(navFlowCall){
                 Constants.PAY_FOR_CROSSINGS->{
@@ -927,6 +936,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         Constants.VEHICLE_DETAIL,
                         newVehicleInfoDetails
                     )
+                    Log.e("TAG", "checkRUC: ------11 " )
                     findNavController().navigate(
                         R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,
                         bundle

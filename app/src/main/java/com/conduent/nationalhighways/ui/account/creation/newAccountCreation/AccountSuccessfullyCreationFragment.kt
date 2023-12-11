@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ class AccountSuccessfullyCreationFragment :
             binding.accountNumber.text=createAccountResponseModel?.accountNumber
             binding.paymentReferenceNumber.text=createAccountResponseModel?.referenceNumber
         }
+        binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
 
         binding.emailConformationTxt.text = getString(
             R.string.we_sent_confirmation_email,

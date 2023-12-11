@@ -439,9 +439,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 }
 
                 if (status.data?.accountInformation?.accSubType.equals("LRDS")) {
-                    startNewActivityByClearingStack(LandingActivity::class.java) {
-                        putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
-                    }
+//                    startNewActivityByClearingStack(LandingActivity::class.java) {
+//                        putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
+//                    }
 
                 }
             }

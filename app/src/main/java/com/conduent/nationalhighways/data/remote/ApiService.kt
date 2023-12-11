@@ -557,5 +557,9 @@ interface ApiService {
         @Body request: EnquiryStatusRequest
     ): Response<EnquiryListResponseModel?>?
 
+    @GET(LRDS_VERIFICATION_SR)
+    suspend fun getLrdsStatus(
+    ): Response<LRDSResponse?>?
+
 
 }

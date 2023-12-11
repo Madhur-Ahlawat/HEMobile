@@ -384,13 +384,18 @@
             app:destination="@+id/vehicleIsExemptFromDartChargesFragment" />
         <action
             android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_vehicleDoesNotMatchCurrentVehicleFragment"
-            app:destination="@+id/VehicleDoesNotMatchCurrentVehicleFragment" />
+            app:destination="@+id/vehicleDoesNotMatchCurrentVehicleFragment" />
         <action
             android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
             app:destination="@id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment" />
         <action
             android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_addNewVehicleDetailsFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
+        <action
+            android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
 
     </fragment>
     <fragment
@@ -398,9 +403,6 @@
         android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.VehicleDoesNotMatchCurrentVehicleFragment"
         android:label="VehicleDoesNotMatchCurrentVehicleFragment"
         tools:layout="@layout/fragment_vehicle_does_not_match">
-        <action
-            android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment"
-            app:destination="@id/changeVehicleConfirmSuccessCheckPaidCrossingsFragment" />
         <action
             android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_addNewVehicleDetailsFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
@@ -410,6 +412,14 @@
         <action
             android:id="@+id/action_vehicleDoesNotMatchCurrentVehicleFragment_to_additionalCrossingsFragment"
             app:destination="@id/additionalCrossingsFragment" />
+        <action
+            android:id="@+id/action_vehicleDoesNotMatchCurrentVehicleFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_vehicleDoesNotMatchCurrentVehicleFragment_to_crossing_details"
+            app:destination="@+id/crossing_details"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
 
     </fragment>
     <fragment

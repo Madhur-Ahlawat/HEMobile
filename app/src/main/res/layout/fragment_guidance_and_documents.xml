@@ -15,6 +15,7 @@
             android:textSize="@dimen/_14sp"
             android:textColor="@color/black"
             android:fontFamily="@font/open_sans"
+            android:visibility="gone"
             android:layout_height="wrap_content"/>
         <RelativeLayout
             android:id="@+id/layout_about_this_service"
@@ -175,8 +176,11 @@
         </RelativeLayout>
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnFeedbackToImproveService"
-            android:text="FEEDBACK TO IMPROVE SERVICE"
+            android:text="@string/feed_back_to_improve_service"
             style="@style/secondaryButton"
+            android:textColorLink="@color/new_btn_color"
+            android:textColor="@color/new_btn_color"
+            app:borderColor="@color/new_btn_color"
             android:layout_marginTop="@dimen/_43dp"
             android:layout_marginHorizontal="@dimen/_26dp"
             android:layout_marginEnd="@dimen/_35dp"

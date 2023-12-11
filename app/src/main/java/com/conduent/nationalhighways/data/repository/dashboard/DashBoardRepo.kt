@@ -24,6 +24,7 @@ class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
         apiService.getVehicleCrossingHistoryData(requestParam)
 
     suspend fun getAccountDetailsApiCall() = apiService.getAccountDetailsData()
+    suspend fun getLrdsStatusApi() = apiService.getLrdsStatus()
     suspend fun getThresholdAmountApiCAll() = apiService.getThresholdValue()
 
 }

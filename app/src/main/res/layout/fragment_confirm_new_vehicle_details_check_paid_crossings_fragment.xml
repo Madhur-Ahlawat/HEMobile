@@ -11,8 +11,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_25dp"
-            android:layout_marginEnd="@dimen/_24dp">
+            android:layout_marginStart="@dimen/margin_15dp"
+            android:layout_marginEnd="@dimen/margin_15dp">
 
             <LinearLayout
                 android:id="@+id/llCheckvehicleDetails"
@@ -21,7 +21,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginHorizontal="@dimen/_2dp"
                 android:layout_marginStart="@dimen/_24dp"
-                android:layout_marginTop="@dimen/_24dp"
+                android:layout_marginTop="@dimen/margin_5dp"
                 android:layout_marginEnd="@dimen/_24dp"
                 android:layout_marginBottom="@dimen/_24dp"
                 android:gravity="start|top"

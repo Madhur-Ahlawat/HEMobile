@@ -4,20 +4,21 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_25dp"
-            android:layout_marginEnd="@dimen/_24dp">
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_15dp"
+            android:paddingRight="@dimen/margin_15dp"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/margin_30dp">
 
             <LinearLayout
                 android:layout_above="@id/btnOk"
                 android:id="@+id/llCheckvehicleDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_marginHorizontal="@dimen/_2dp"
-                android:layout_marginStart="@dimen/_24dp"
-                android:layout_marginEnd="@dimen/_24dp"
+                android:layout_marginTop="@dimen/margin_30dp"
                 android:layout_marginBottom="@dimen/_24dp"
-                android:gravity="start|top"
                 android:orientation="vertical">
 
                 <ImageView
@@ -167,12 +168,13 @@
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/btnFeedback"
                 style="@style/secondaryButton"
-                android:layout_marginTop="@dimen/_16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/_53dp"
-                android:text="@string/str_feedback_to_improve_the_service"
+                android:textColor="@color/new_btn_color"
+                app:borderColor="@color/new_btn_color"
+                android:textColorLink="@color/new_btn_color"
+                android:text="@string/feed_back_to_improve_service"
                 app:radius="5dp" />
         </RelativeLayout>
 

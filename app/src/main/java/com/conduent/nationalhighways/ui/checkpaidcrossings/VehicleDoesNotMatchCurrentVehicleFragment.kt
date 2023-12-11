@@ -13,12 +13,18 @@ import com.conduent.nationalhighways.databinding.FragmentVehicleDoesNotMatchBind
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.CHECK_FOR_PAID_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
+import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PAY_FOR_CROSSINGS
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class VehicleDoesNotMatchCurrentVehicleFragment :
     BaseFragment<FragmentVehicleDoesNotMatchBinding>(),
     VehicleListAdapter.VehicleListCallBack,
@@ -26,6 +32,10 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
     private var additionalCrossings: Int? = 0
     private var additionalCrossingsCharge: Double? = 0.0
     var crossingDetailModel: CrossingDetailsModelsResponse? = null
+
+    @Inject
+    lateinit var sessionmanager: SessionManager
+    var token: String = ""
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -68,23 +78,39 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             binding.descTv.text = resources.getString(
                 R.string.our_records_show_the_numberplate, crossingDetailModel?.plateNo,
                 selectedVehicleType, correctVehicleType,
-               (String.format("%.2f", chargingRate?.toDouble()))
+                (String.format("%.2f", chargingRate?.toDouble()))
             )
             binding.btnOk.text = resources.getString(R.string.pay_new_amount)
-            binding.btnFeedback.setText(getString(R.string.continue_with_your_selection))
+            binding.btnFeedback.text = getString(R.string.continue_with_your_selection)
         } else {
             binding.descTv.text = resources.getString(R.string.vehcile_type_mismatch,
-                crossingDetailModel?.plateNo, crossingDetailModel?.vehicleClass?.let { Utils.getVehicleType(
-                    requireActivity(),
-                    it
-                ) },
-                crossingDetailModel?.vehicleClassBalanceTransfer?.let { Utils.getVehicleType(requireActivity(), it) })
+                crossingDetailModel?.plateNo, crossingDetailModel?.vehicleClass?.let {
+                    Utils.getVehicleType(
+                        requireActivity(),
+                        it
+                    )
+                },
+                crossingDetailModel?.vehicleClassBalanceTransfer?.let {
+                    Utils.getVehicleType(
+                        requireActivity(),
+                        it
+                    )
+                })
             binding.btnOk.text = resources.getString(R.string.str_buy_crossings_for_vehicle)
 
         }
         setData()
         setClickListeners()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (token.isEmpty()) {
+            token = sessionmanager.fetchAuthToken() ?: ""
+        } else {
+            sessionmanager.saveAuthToken(token)
+        }
     }
 
     private fun setData() {
@@ -127,14 +153,28 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
                         )
                     }
                 } else {
+
+//                    requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
+//                        putString(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
+//                        putString(Constants.NAV_FLOW_FROM, Constants.CHECK_FOR_PAID_CROSSINGS_ONEOFF)
+//                        putString(Constants.PLATE_NUMBER, (navData as CrossingDetailsModelsResponse).plateNo)
+//                    }
+
+
                     bundle.putDouble(
                         Constants.DATA,
                         (navData as CrossingDetailsModelsResponse).totalAmount
                     )
                     bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
-                    bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
+                    bundle.putString(NAV_FLOW_FROM, CHECK_FOR_PAID_CROSSINGS)
+                    bundle.putString(
+                        PLATE_NUMBER,
+                        (navData as CrossingDetailsModelsResponse).plateNo
+                    )
+
+                    sessionmanager.saveAuthToken("")
                     findNavController().navigate(
-                        R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
+                        R.id.action_vehicleDoesNotMatchCurrentVehicleFragment_to_findYourVehicleFragment,
                         bundle
                     )
                 }
@@ -158,14 +198,10 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
                         )
                     }
                 } else {
-                    bundle.putDouble(
-                        Constants.DATA,
-                        (navData as CrossingDetailsModelsResponse).totalAmount
-                    )
-                    bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
+                    bundle.putString(NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(NAV_DATA_KEY, navData as CrossingDetailsModelsResponse)
                     findNavController().navigate(
-                        R.id.action_crossingCheckAnswersFragment_to_nmiPaymentFragment,
+                        R.id.action_vehicleDoesNotMatchCurrentVehicleFragment_to_crossing_details,
                         bundle
                     )
                 }

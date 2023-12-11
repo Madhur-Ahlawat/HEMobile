@@ -121,9 +121,12 @@
         style="@style/secondaryButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/new_btn_color"
+        app:borderColor="@color/new_btn_color"
+        android:textColorLink="@color/new_btn_color"
         android:layout_marginHorizontal="@dimen/_34_5dp"
         android:layout_marginBottom="@dimen/_45dp"
-        android:text="@string/str_feedback_to_improve_the_service"
+        android:text="@string/feed_back_to_improve_service"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

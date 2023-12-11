@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class DataAddress(
 
     @SerializedName("organisation") var organisation: String? = "",
-    @SerializedName("poperty") var poperty: String? = "",
+    @SerializedName("property") var property: String? = "",
     @SerializedName("street") var street: String? = "",
     @SerializedName("locality") var locality: String? = "0",
     @SerializedName("town") var town: String? = "",

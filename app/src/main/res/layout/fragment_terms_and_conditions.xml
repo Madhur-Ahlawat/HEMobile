@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_17dp"
             android:fontFamily="@font/open_sans"
+            android:visibility="gone"
             android:text="@string/dartford_crossing_is_a_free_flow_crossing"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sp" />

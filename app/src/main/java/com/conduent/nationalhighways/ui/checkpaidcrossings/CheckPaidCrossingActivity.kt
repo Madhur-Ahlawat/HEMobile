@@ -1,6 +1,9 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Bundle
+import android.util.Log
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -46,7 +49,6 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
     }
 
     private fun init() {
-        binding.toolBarLyt.titleTxt.text = getString(R.string.check_for_previous_crossings)
         binding.toolBarLyt.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
 
@@ -61,6 +63,26 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.TRANSFER_CROSSINGS)
         navController.setGraph(navGraph, bundle)
+
+        navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener{
+            override fun onDestinationChanged(
+                controller: NavController,
+                destination: NavDestination,
+                arguments: Bundle?
+            ) {
+                if(destination.id==R.id.findYourVehicleFragment){
+                    if(sessionManager.fetchAuthToken()?.isNotEmpty() == true){
+                        binding.toolBarLyt.titleTxt.text = getString(R.string.transfer_remaining_credit)
+                    }else{
+                        binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
+                    }
+                }else if(destination.id==R.id.crossingCheck || destination.id==R.id.crossing_details){
+                    binding.toolBarLyt.titleTxt.text = getString(R.string.check_for_previous_crossings)
+
+                }
+            }
+
+        })
 
     }
 

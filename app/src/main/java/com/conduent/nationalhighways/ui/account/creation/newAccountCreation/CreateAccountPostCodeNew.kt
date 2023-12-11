@@ -76,7 +76,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 title?.text = getString(R.string.profile_address)
                 val data = navData as ProfileDetailModel?
                 data?.personalInformation?.zipcode?.let { binding.inputPostCode.setText(it) }
-                postcode = data?.personalInformation?.zipcode?:""
+                postcode = data?.personalInformation?.zipcode ?: ""
 
                 if (data?.accountInformation?.accountType.equals(
                         Constants.PERSONAL_ACCOUNT,
@@ -154,15 +154,14 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
 
     fun sortData(addressAPIlist: List<DataAddress?>?): List<DataAddress>? {
-
-        val sortedList = addressAPIlist?.sortedWith(Comparator { str1, str2 ->
-
-            val street1=str1?.street?:""
-            val street2=str2?.street?:""
-            val regex = Regex("[^0-9]") // Regex to extract numeric part
-            val numPart1 = regex.replace(street1?:"", "").toIntOrNull() ?: Int.MAX_VALUE
-            val numPart2 = regex.replace(street2?:"", "").toIntOrNull() ?: Int.MAX_VALUE
-
+        val sortedList = addressAPIlist?.sortedWith(Comparator { address1, address2 ->
+            val street1 =
+                (address1?.property ?: "") + (address1?.locality ?: "") + (address1?.street ?: "")
+            val street2 =
+                (address2?.property ?: "") + (address2?.locality ?: "") + (address2?.street ?: "")
+            val regex = Regex("^[0-9]*") // Regex to extract numeric part
+            val numPart1 = regex.find(street1)?.value?.toIntOrNull() ?: Int.MAX_VALUE
+            val numPart2 = regex.find(street2)?.value?.toIntOrNull() ?: Int.MAX_VALUE
             if (numPart1 != numPart2) {
                 numPart1.compareTo(numPart2)
             } else {
@@ -170,9 +169,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             }
         })
         return sortedList as List<DataAddress>?
-
     }
-
 
 
     private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
@@ -185,23 +182,23 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 is Resource.Success -> {
 
 //                    val dataAddresses: ArrayList<DataAddress?> = ArrayList(response.data?:ArrayList())
-val addressList =sortData(response.data)
-                  /*  var addressList: List<DataAddress?> =
-                        (dataAddresses.sortedBy{it?.street})
+                    val addressList = sortData(response.data)
+                    /*  var addressList: List<DataAddress?> =
+                          (dataAddresses.sortedBy{it?.street})
 
 
-                    val dataAddresses1: ArrayList<DataAddress?> = ArrayList(addressList?:ArrayList())
+                      val dataAddresses1: ArrayList<DataAddress?> = ArrayList(addressList?:ArrayList())
 
-                    dataAddresses1.sortWith(compareBy(
-                        { it?.street?.split(" ")?.get(0)?.toIntOrNull() ?: Int.MAX_VALUE }, // Try to parse as Int, otherwise use Int.MAX_VALUE
-                        { it?.street })
-                    )
-                    addressList = dataAddresses1*/
+                      dataAddresses1.sortWith(compareBy(
+                          { it?.street?.split(" ")?.get(0)?.toIntOrNull() ?: Int.MAX_VALUE }, // Try to parse as Int, otherwise use Int.MAX_VALUE
+                          { it?.street })
+                      )
+                      addressList = dataAddresses1*/
 
 
                     when (navFlowCall) {
                         EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
-                            addressList?.forEach { it?.isSelected = false }
+                            addressList?.forEach { it.isSelected = false }
                             if (NewCreateAccountRequestModel.selectedAddressId != -1) {
                                 addressList?.get(NewCreateAccountRequestModel.selectedAddressId)?.isSelected =
                                     true

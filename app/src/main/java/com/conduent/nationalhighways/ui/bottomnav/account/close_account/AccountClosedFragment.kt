@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.close_account
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -34,6 +35,8 @@ class AccountClosedFragment : BaseFragment<FragmentAccountClosedBinding>() {
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        binding.btnContinue.movementMethod = LinkMovementMethod.getInstance()
+
     }
 
     override fun initCtrl() {

@@ -59,6 +59,8 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
                 binding.decs2Tv.gone()
                 binding.decs3Tv.gone()
                 binding.decs4Tv.gone()
+                binding.btnGoToWebsite.gone()
+
             }
             Constants.UNAVAILABLE -> {
                 binding.decs1Tv.text =
@@ -68,6 +70,7 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
                 binding.decs2Tv.visible()
                 binding.decs3Tv.visible()
                 binding.decs4Tv.visible()
+                binding.btnGoToWebsite.gone()
             }
             Constants.LRDS_SCREEN -> {
                 binding.titleTv.text = resources.getString(R.string.str_local_resident_discount_scheme)
@@ -76,8 +79,9 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
                 binding.decs2Tv.gone()
                 binding.decs3Tv.gone()
                 binding.decs4Tv.gone()
-                binding.btnNext.visible()
-                binding.btnNext.text = resources.getString(R.string.str_go_to_website)
+                binding.btnNext.gone()
+                binding.btnGoToWebsite.visible()
+                binding.btnGoToWebsite.text = resources.getString(R.string.str_go_to_website)
             }
         }
 

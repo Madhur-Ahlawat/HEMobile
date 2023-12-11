@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.FragmentCrossingDetailsBinding
 import com.conduent.nationalhighways.databinding.ItemRecentTansactionsCheckedCrossingsBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
@@ -31,6 +32,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
@@ -70,7 +72,11 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         data.let {
             val crossings = it?.unusedTrip?.toInt()
             binding.fullName.text = it?.referenceNumber
-            binding.address.text = crossings.toString()+ " crossings"
+            if(crossings==1){
+                binding.address.text = resources.getString(R.string.str_crossing_data,crossings.toString())
+            }else{
+                binding.address.text =  resources.getString(R.string.str_crossings_data,crossings.toString())
+            }
             binding.emailAddress.text = it?.expirationDate?.let { it1 ->
                 DateUtils.convertDateFormatToDateFormat(
                     it1
@@ -114,9 +120,10 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         observe(viewModel.paymentHistoryLiveDataCheckedCrossing, ::handlePaymentResponse)
     }
     private fun navigateLandingActivity() {
-        startActivity(
-            Intent(requireActivity(), LandingActivity::class.java)
-        )
+        requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
+            putString(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
+            putString(Constants.NAV_FLOW_FROM, Constants.CHECK_FOR_PAID_CROSSINGS)
+        }
         requireActivity().finish()
     }
     override fun onClick(v: View?) {
@@ -137,7 +144,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
             }
 
             R.id.cancel_btn -> {
-                findNavController().popBackStack()
+                requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
             }
             R.id.nextBtn -> {
                 findNavController().navigate(

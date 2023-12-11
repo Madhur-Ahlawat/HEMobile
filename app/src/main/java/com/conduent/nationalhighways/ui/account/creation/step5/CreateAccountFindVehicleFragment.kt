@@ -34,6 +34,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.splCharsVehicleRegistration
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,6 +65,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.oneOffVehiclePlateNumber.toString())
             binding.findVehicle.enable()
         }
+
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
             arguments?.getString(Constants.PLATE_NUMBER, "").toString()
                 .let { plateNumber = it.replace("null", "") }
@@ -101,6 +103,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = false
         NewCreateAccountRequestModel.isMaxVehicleAdded = false
         NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
+        binding.cancelBt.gone()
 
         when (navFlowCall) {
 
@@ -116,6 +119,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 NewCreateAccountRequestModel.vehicleList.clear()
                 binding.enterDetailsTxt.text =
                     getString(R.string.what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to)
+                binding.cancelBt.visible()
             }
         }
 
@@ -125,6 +129,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 //        binding.editNumberPlate.setMaxLength(10)
         binding.editNumberPlate.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.findVehicle.setOnClickListener(this)
+        binding.cancelBt.setOnClickListener(this)
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
@@ -214,6 +219,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.cancel_bt->{
+                findNavController().popBackStack()
+            }
             R.id.findVehicle -> {
                 emailHeartBeatApi()
                 smsHeartBeatApi()
@@ -683,16 +691,17 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             isVehicleExist = true
                         }
                     }
-                    bundle.putParcelable(
-                        Constants.NAV_DATA_KEY,
-                        data?.apply {
-                            plateNo =
-                                binding.editNumberPlate.editText.text.toString().trim()
-                                    .replace(" ", "")
-                                    .replace("-", "")
-                        }
-                    )
                     if (isVehicleExist) {
+                        bundle.putParcelable(
+                            Constants.NAV_DATA_KEY,
+                            data?.apply {
+                                plateNo =
+                                    binding.editNumberPlate.editText.text.toString().trim()
+                                        .replace(" ", "")
+                                        .replace("-", "")
+                            }
+                        )
+
                         accountData.isVehicleAlreadyAddedLocal = true
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
@@ -704,6 +713,21 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             bundle
                         )
                     } else {
+                        bundle.putParcelable(
+                            Constants.NAV_DATA_KEY,
+                            data?.apply {
+                                plateNo =
+                                    binding.editNumberPlate.editText.text.toString().trim()
+                                        .replace(" ", "")
+                                        .replace("-", "")
+
+                                vehicleColor=""
+                                vehicleMake=""
+                                vehicleClass=""
+                                vehicleModel=""
+                            }
+                        )
+
                         NewCreateAccountRequestModel.plateNumberIsNotInDVLA = true
                         bundle.putString(
                             Constants.OLD_PLATE_NUMBER,
@@ -733,8 +757,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
         val accountData = NewCreateAccountRequestModel
         val vehicleList = accountData.vehicleList
-        Log.e("TAG", "apiResponseDVRM:kkm "+vehicleList.toString() )
-        Log.e("TAG", "apiResponseDVRM: bnjn "+resource.data?.get(0).toString() )
         if (isClicked) {
             when (resource) {
                 is Resource.Success -> {
