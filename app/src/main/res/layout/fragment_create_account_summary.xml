@@ -65,12 +65,13 @@
                     <TextView
                         android:id="@+id/fullName"
                         style="@style/RegularTextBlack"
+                        android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="left|center"
-                        android:layout_width="0dp"
                         app:layout_constraintEnd_toStartOf="@+id/editFullName"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtFullName" />
+
                     <ImageView
                         android:id="@+id/editFullName"
                         android:layout_width="wrap_content"
@@ -119,6 +120,7 @@
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtCompanyFullName" />
+
                     <ImageView
                         android:id="@+id/editCompanyName"
                         android:layout_width="wrap_content"
@@ -167,6 +169,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/editAddress"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtAddress" />
+
                     <ImageView
                         android:id="@+id/editAddress"
                         android:layout_width="wrap_content"
@@ -195,8 +198,8 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/emailAddressSummary"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
@@ -488,8 +491,8 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/emailProfileManagement"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
@@ -504,12 +507,13 @@
                     <TextView
                         android:id="@+id/emailAddressProfile"
                         style="@style/RegularTextBlack"
+                        android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="left|center"
-                        android:layout_width="0dp"
                         app:layout_constraintEnd_toStartOf="@+id/editEmailAddressProfile"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtEmailAddressProfile" />
+
                     <ImageView
                         android:id="@+id/editEmailAddressProfile"
                         android:layout_width="wrap_content"
@@ -692,6 +696,8 @@
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkBoxTerms"
                 style="@style/CheckBoxStyle"
+                android:textColorLink="@color/black"
+                android:textColor="@color/black"
                 android:layout_marginTop="@dimen/margin_30dp"
                 android:checked="false"
                 android:gravity="center|left"

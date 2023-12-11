@@ -53,13 +53,20 @@
             app:popUpTo="@+id/crossingCheckAnswersFragment"/>
 
     </fragment>
-
+    <fragment
+        android:id="@+id/generalTermsAndConditionsFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.GeneralTermsAndConditionsFragment"
+        android:label="EnquiryStatusFragment"
+        tools:layout="@layout/fragment_general_terms_and_conditions">
+    </fragment>
     <fragment
         android:id="@+id/createAccountSummaryFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountSummaryFragment"
         android:label="AccountSummaryFragment"
         tools:layout="@layout/fragment_create_account_summary">
-
+        <action
+            android:id="@+id/action_createAccountSummaryFragment_to_generalTermsAndConditions"
+            app:destination="@id/generalTermsAndConditionsFragment" />
         <action
             android:id="@+id/action_accountSummaryFragment_to_addNewVehicleDetailsFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
