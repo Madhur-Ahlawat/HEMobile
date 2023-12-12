@@ -162,6 +162,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             val regex = Regex("^[0-9]*") // Regex to extract numeric part
             val numPart1 = regex.find(street1)?.value?.toIntOrNull() ?: Int.MAX_VALUE
             val numPart2 = regex.find(street2)?.value?.toIntOrNull() ?: Int.MAX_VALUE
+
+            Log.e("TAG", "sortData: street1 "+street1+" -street2- "+street2 )
             if (numPart1 != numPart2) {
                 numPart1.compareTo(numPart2)
             } else {

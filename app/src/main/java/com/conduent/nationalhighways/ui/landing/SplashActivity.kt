@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
@@ -44,6 +45,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding?.root)
         mIsRooted = checkIfRootConditionAndDisplayMessage()
 
+        sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,Utils.areNotificationsEnabled(this))
 
         if (!mIsRooted){
             if (!Utils.areNotificationsEnabled(this)) {
@@ -100,12 +102,14 @@ class SplashActivity : AppCompatActivity() {
 
     private fun redirectNextScreenWithHandler() {
         Handler(Looper.getMainLooper()).postDelayed({
-            navigateNextScreen()
+            navigateLandingActivity()
         }, Constants.SPLASH_TIME_OUT)
     }
 
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            Log.e("TAG", "notification permission: "+it )
+            sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,it)
             redirectNextScreenWithHandler()
         }
 

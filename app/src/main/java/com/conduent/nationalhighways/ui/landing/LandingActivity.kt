@@ -1,19 +1,32 @@
 package com.conduent.nationalhighways.ui.landing
 
+import android.Manifest
+import android.app.Dialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.ActivityLandingBinding
+import com.conduent.nationalhighways.databinding.LocationPermissionDialogBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -31,6 +44,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import org.bouncycastle.util.Pack
 import javax.inject.Inject
 
 
@@ -39,12 +53,13 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
 
     @Inject
     lateinit var sessionManager: SessionManager
-//    private var loader: LoaderDialog? = null
-    private var navFlowFrom:String=""
-    private var plateNumber:String=""
-    private var email:String=""
-    private var mobileNumber:String=""
-    private var countryCode:String=""
+
+    //    private var loader: LoaderDialog? = null
+    private var navFlowFrom: String = ""
+    private var plateNumber: String = ""
+    private var email: String = ""
+    private var mobileNumber: String = ""
+    private var countryCode: String = ""
 
     private lateinit var navController: NavController
     private var screenType: String = ""
@@ -74,20 +89,20 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
         Logg.logging("landingActivy", "test called $screenType")
 
-        if(intent?.hasExtra(Constants.NAV_FLOW_FROM)==true){
-            navFlowFrom =intent.getStringExtra(Constants.NAV_FLOW_FROM)?:""
+        if (intent?.hasExtra(Constants.NAV_FLOW_FROM) == true) {
+            navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
-        if(intent?.hasExtra(Constants.PLATE_NUMBER)==true){
-            plateNumber =intent.getStringExtra(Constants.PLATE_NUMBER)?:""
+        if (intent?.hasExtra(Constants.PLATE_NUMBER) == true) {
+            plateNumber = intent.getStringExtra(Constants.PLATE_NUMBER) ?: ""
         }
-        if(intent?.hasExtra(Constants.EMAIL)==true){
-            email =intent.getStringExtra(Constants.EMAIL)?:""
+        if (intent?.hasExtra(Constants.EMAIL) == true) {
+            email = intent.getStringExtra(Constants.EMAIL) ?: ""
         }
-        if(intent?.hasExtra(Constants.MOBILE_NUMBER)==true){
-            mobileNumber =intent.getStringExtra(Constants.MOBILE_NUMBER)?:""
+        if (intent?.hasExtra(Constants.MOBILE_NUMBER) == true) {
+            mobileNumber = intent.getStringExtra(Constants.MOBILE_NUMBER) ?: ""
         }
-        if(intent?.hasExtra(Constants.COUNTRY_TYPE)==true){
-            countryCode =intent.getStringExtra(Constants.COUNTRY_TYPE)?:""
+        if (intent?.hasExtra(Constants.COUNTRY_TYPE) == true) {
+            countryCode = intent.getStringExtra(Constants.COUNTRY_TYPE) ?: ""
         }
         loadFragment(screenType)
 
@@ -98,7 +113,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         } else if (screenType == LOGOUT_SCREEN || screenType == SESSION_TIME_OUT) {
             binding.titleTxt.text = resources.getString(R.string.str_signed_out)
             binding.btnBack.gone()
-        } else if (screenType == SERVER_ERROR || screenType== FAILED_RETRY_SCREEN ) {
+        } else if (screenType == SERVER_ERROR || screenType == FAILED_RETRY_SCREEN) {
             binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
             binding.btnBack.gone()
         } else {
@@ -115,7 +130,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     private fun backClickListener() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (binding.btnBack.visibility== View.VISIBLE) {
+                if (binding.btnBack.visibility == View.VISIBLE) {
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
                     // Implement your custom back navigation logic
@@ -147,6 +162,8 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
         initCtrl()
+        sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,Utils.areNotificationsEnabled(this))
+
     }
 
     override fun onPause() {
@@ -173,16 +190,16 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 NavArgument.Builder().setDefaultValue(intent.extras).build()
             )
 
-        if (this.screenType == LRDS_SCREEN|| this.screenType==SERVER_ERROR ) {
+        if (this.screenType == LRDS_SCREEN || this.screenType == SERVER_ERROR) {
             bundle.putString(Constants.SERVICE_TYPE, this.screenType)
             bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
         }
-        bundle.putString(Constants.NAV_FLOW_FROM,navFlowFrom)
-        bundle.putString(Constants.PLATE_NUMBER,plateNumber)
-        bundle.putString(Constants.EMAIL,email)
-        bundle.putString(Constants.MOBILE_NUMBER,mobileNumber)
-        bundle.putString(Constants.COUNTRY_TYPE,countryCode)
-        Log.e("TAG", "loadFragment:screenType "+screenType )
+        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+        bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+        bundle.putString(Constants.EMAIL, email)
+        bundle.putString(Constants.MOBILE_NUMBER, mobileNumber)
+        bundle.putString(Constants.COUNTRY_TYPE, countryCode)
+        Log.e("TAG", "loadFragment:screenType " + screenType)
         oldGraph.apply {
             when (screenType) {
                 START_NOW_SCREEN -> setStartDestination(R.id.landingFragment)
@@ -190,10 +207,11 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 LOGOUT_SCREEN -> setStartDestination(R.id.logoutFragment)
                 SESSION_TIME_OUT -> setStartDestination(R.id.sessionTimeOutFragment)
                 FAILED_RETRY_SCREEN -> {
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                     setStartDestination(R.id.failedRetryFragment)
                 }
-                LRDS_SCREEN , SERVER_ERROR-> {
+
+                LRDS_SCREEN, SERVER_ERROR -> {
                     setStartDestination(R.id.serviceUnavailableFragment)
                 }
             }
@@ -201,6 +219,92 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         navController.setGraph(oldGraph, bundle)
 
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.e(
+            "TAG",
+            "onRequestPermissionsResult() called with: requestCode = $requestCode, permissions = $permissions, grantResults = $grantResults"
+        )
+
+
+        if (requestCode == 1001) {
+            if(ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ) ==PackageManager.PERMISSION_GRANTED||ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )==PackageManager.PERMISSION_GRANTED||ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )==PackageManager.PERMISSION_GRANTED){
+                sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION,true)
+            }
+
+            requestLocationPermission()
+        }
+    }
+
+
+    private fun requestLocationPermission() {
+       if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) == PackageManager.PERMISSION_DENIED
+        ) {
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+               displayLocationAlwaysAllowPopup()
+           }
+        }
+    }
+
+
+    fun displayLocationAlwaysAllowPopup(
+    ) {
+
+        val dialog = Dialog(this)
+        dialog.setCancelable(false)
+
+
+        val binding: LocationPermissionDialogBinding =
+            LocationPermissionDialogBinding.inflate(LayoutInflater.from(this))
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(true)
+
+
+
+        dialog.setContentView(binding.root)
+
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        ) //Controlling width and height.
+
+        binding.cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        binding.okBtn.setOnClickListener {
+            openAppSettings()}
+        dialog.show()
+
+
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        val uri = Uri.fromParts("package", getPackageName(), null)
+        intent.data = uri
+        startActivity(intent)
+    }
+
 }
 
 

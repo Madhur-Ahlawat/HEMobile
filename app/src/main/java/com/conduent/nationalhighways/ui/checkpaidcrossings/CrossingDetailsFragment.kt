@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccoun
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.DateUtils

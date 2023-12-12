@@ -69,6 +69,13 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
+
+        if(sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)==true
+            && sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)==true){
+            binding.notificationTv.text=resources.getString(R.string.str_disable_notifications)
+        }else{
+            binding.notificationTv.text=resources.getString(R.string.str_enable_notifications)
+        }
         BaseApplication.screenNameAnalytics=""
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
             plateNumber = arguments?.getString(Constants.PLATE_NUMBER) ?: ""

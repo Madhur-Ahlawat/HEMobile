@@ -15,6 +15,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.utils.common.Constants
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -62,7 +63,9 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
 
     private fun sendNotification(messageBody: String) {
         val requestCode = 0
-        val intent = Intent(this, LandingActivity::class.java)
+        val intent :Intent= Intent(this, LandingActivity::class.java)
+        intent.putExtra(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
+        intent.putExtra(Constants.NAV_FLOW_FROM, Constants.CHECK_FOR_PAID_CROSSINGS_ONEOFF)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this,

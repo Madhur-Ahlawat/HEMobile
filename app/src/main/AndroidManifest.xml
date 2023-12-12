@@ -24,7 +24,8 @@
         android:resizeableActivity="false"
         android:roundIcon="@mipmap/appicon_round"
         android:theme="@style/Theme.HEMobile"
-        android:usesCleartextTraffic="false">
+        android:usesCleartextTraffic="false"
+        >
         <activity
             android:name=".ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity"
             android:exported="false"

@@ -48,7 +48,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var time = (1 * 1000).toLong()
-    private var isCrossingCall = false
+    private var isPayForCrossingFlow = false
     private var isClicked: Boolean = false
     private var edit_vehicle: Boolean = false
 
@@ -60,7 +60,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if (arguments?.containsKey(Constants.EDIT_VEHICLE) == true) {
             edit_vehicle = arguments?.getBoolean(Constants.EDIT_VEHICLE) ?: false
         }
-        isCrossingCall = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS, true)
+        isPayForCrossingFlow = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS, true)
         if (NewCreateAccountRequestModel.oneOffVehiclePlateNumber.isNotEmpty()) {
             binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.oneOffVehiclePlateNumber.toString())
             binding.findVehicle.enable()
@@ -234,16 +234,25 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     Constants.PLATE_NUMBER,
                     binding.editNumberPlate.editText.text.toString()
                 )
+
+//                if(navFlowCall==Constants.TRANSFER_CROSSINGS){
+//                    checkVehicle(   binding.editNumberPlate.editText.text.toString().trim()
+//                        .replace(" ", "")
+//                        .replace("-", ""))
+//                    return
+//                }
+                Log.e("TAG", "onClick: isCrossingCall "+isPayForCrossingFlow.not() )
                 if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.editText.text
-                        .toString().trim() && isCrossingCall.not()
+                        .toString().trim() && isPayForCrossingFlow.not()
                 ) {
+                    Log.e("TAG", "onClick: isCrossingCall --? " )
                     if (edit_summary) {
                         findNavController().navigate(
                             R.id.action_findVehicleFragment_to_accountSummaryFragment,
                             bundle
                         )
                     } else {
-                        if (edit_vehicle) {
+                        if (edit_vehicle || navFlowCall==Constants.TRANSFER_CROSSINGS) {
                             val numberPlate =
                                 binding.editNumberPlate.editText.text.toString().trim()
                                     .replace(" ", "")
@@ -277,6 +286,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         isVehicleExist = true
                     }
                 }
+                Log.e("TAG", "onClick: isCrossingCall isVehicleExist "+isVehicleExist )
+
                 if (isVehicleExist) {
                     NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = true
                     val bundleData = Bundle()
@@ -290,6 +301,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 } else {
                     val vehicleList = NewCreateAccountRequestModel.vehicleList
                     val size = addedVehicleList.size + vehicleList.size
+                    Log.e("TAG", "onClick: isCrossingCall navFlowCall "+navFlowCall )
 
                     if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
                         val accountType =
@@ -339,7 +351,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun checkVehicle(numberPlate: String) {
-        if (isCrossingCall) {
+        if (isPayForCrossingFlow) {
             if (edit_summary) {
                 if (oldPlateNumber.uppercase().equals(
                         binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
@@ -686,6 +698,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     val numberPlate =
                         binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                             .replace("-", "")
+                    Log.e("TAG", "apiResponsePlateInfo: isVehicleExist "+isVehicleExist )
                     for (obj in vehicleList) {
                         if (obj.plateNumber.equals(numberPlate, true)) {
                             isVehicleExist = true
@@ -725,6 +738,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 vehicleMake=""
                                 vehicleClass=""
                                 vehicleModel=""
+                                vehicleType=""
                             }
                         )
 
@@ -769,7 +783,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             binding.editNumberPlate.editText.text.toString()
                         )
 
-                        if (vehicleList.contains(apiData[0]) && isCrossingCall.not()) {
+                        if (vehicleList.contains(apiData[0]) && isPayForCrossingFlow.not()) {
                             accountData.isVehicleAlreadyAddedLocal = true
                             val bundleData = Bundle()
                             bundleData.putString(Constants.NAV_FLOW_KEY, navFlowCall)

@@ -42,6 +42,16 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/signin_bt"
+                style="@style/PrimaryButton"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:gravity="center"
+                android:visibility="visible"
+                android:text="@string/str_continue_login" />
+
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/deleteTitle"
                 android:layout_width="match_parent"

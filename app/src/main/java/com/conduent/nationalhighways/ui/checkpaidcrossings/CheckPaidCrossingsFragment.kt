@@ -55,15 +55,15 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 //        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        binding.editReferenceNumber.setText("1-99352459")
-        binding.editNumberPlate.setText("ERR")
+//        binding.editReferenceNumber.setText("1-99352459")
+//        binding.editNumberPlate.setText("ERR")
         binding.editNumberPlate.editText.addTextChangedListener {
             isEnable()
         }
         binding.editReferenceNumber.editText.addTextChangedListener {
             isEnable()
         }
-        isEnable()
+//        isEnable()
     }
 
     override fun initCtrl() {

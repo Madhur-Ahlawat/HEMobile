@@ -202,13 +202,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                     paymentMethodAdapter.updateList(paymentList)
 
-                    if (paymentList.orEmpty().size < 2) {
-                        binding.addNewPaymentMethod.visibility = View.VISIBLE
-
-                    } else {
-                        binding.addNewPaymentMethod.visibility = View.GONE
-
-                    }
 
 
                 } else {
@@ -242,44 +235,66 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         when (v?.id) {
 
             R.id.addNewPaymentMethod -> {
-                val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
-                bundle.putDouble(Constants.DATA, 0.0)
-                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
-                if (accountInformation?.accSubType.equals(Constants.PAYG)) {
 
-                    if (directDebitPaymentList.orEmpty().size == 1) {
-                        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, true)
-                    } else {
-                        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
-                    }
+                if(paymentList.orEmpty().size==2){
 
-                    findNavController().navigate(
-                        R.id.action_paymentMethodFragment_to_nmiPaymentFragment,
-                        bundle
-                    )
+                    displayCustomMessage(
+                        resources.getString(R.string.str_max_payment_methods),
+                        resources.getString(R.string.str_max_payment_methods_desc),
+                        resources.getString(R.string.str_continue),
+                        resources.getString(R.string.str_continue),
+                        object : DialogPositiveBtnListener {
+                            override fun positiveBtnClick(dialog: DialogInterface) {
+                                dialog.dismiss()
+                            }
+                        },
+                        object : DialogNegativeBtnListener {
+                            override fun negativeBtnClick(dialog: DialogInterface) {
+                                dialog.dismiss()
+                            }
+                        }
+                    ,cancelVisibility=View.GONE)
 
-                } else {
-                    bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                }else{
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
+                    bundle.putDouble(Constants.DATA, 0.0)
+                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
+                    if (accountInformation?.accSubType.equals(Constants.PAYG)) {
 
-                    if (directDebitPaymentList.orEmpty().size == 1) {
-                        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, true)
+                        if (directDebitPaymentList.orEmpty().size == 1) {
+                            bundle.putBoolean(Constants.IS_DIRECT_DEBIT, true)
+                        } else {
+                            bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
+                        }
+
                         findNavController().navigate(
                             R.id.action_paymentMethodFragment_to_nmiPaymentFragment,
                             bundle
                         )
+
                     } else {
-                        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
-                        findNavController().navigate(
-                            R.id.action_paymentMethodFragment_to_selectPaymentMethodFragment,
-                            bundle
-                        )
+                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+
+                        if (directDebitPaymentList.orEmpty().size == 1) {
+                            bundle.putBoolean(Constants.IS_DIRECT_DEBIT, true)
+                            findNavController().navigate(
+                                R.id.action_paymentMethodFragment_to_nmiPaymentFragment,
+                                bundle
+                            )
+                        } else {
+                            bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
+                            findNavController().navigate(
+                                R.id.action_paymentMethodFragment_to_selectPaymentMethodFragment,
+                                bundle
+                            )
+                        }
+
+
                     }
 
 
                 }
-
-
             }
 
             R.id.cardViewTopYourBalance -> {

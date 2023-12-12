@@ -1646,5 +1646,13 @@
     <string name="credit_transferred">Credit Transferred</string>
     <string name="str_crossing_data">%1$s crossing</string>
     <string name="str_crossings_data">%1$s crossings</string>
+    <string name="str_allow_location_title">Allow "DartCharge" to also use your location even when you are not using the app?</string>
+    <string name="str_allow_location_desc">Change to Always Allow to ensure that we send the notification to you, without you having to remember to open the app.</string>
+    <string name="str_keep_only_while_using">Keep Only While using</string>
+    <string name="str_change_to_always_allow">Change to Always Allow</string>
+    <string name="str_enable_notifications">Click here to enable notifications when you cross</string>
+    <string name="str_disable_notifications">Click here to disable notifications when you cross</string>
+    <string name="str_max_payment_methods">Max Payment Methods</string>
+    <string name="str_max_payment_methods_desc">To add a new payment method you will need to delete one of the two already setup.</string>
 
 </resources>

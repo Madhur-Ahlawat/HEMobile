@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.utils.common
 
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.util.Log
 import android.util.TypedValue
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
@@ -32,25 +33,37 @@ object DashboardUtils {
             tvTitle.changeTextColor(R.color.FFF7BF)
         }
     }
-    fun setAccountStatusNew(status: String, tvTitle: AppCompatTextView, viewGroup: MaterialCardView) {
-        if (status.equals("OPEN", true) || status.equals("ACTIVE", true)) {
+    fun setAccountStatusNew(status: String, tvTitle: AppCompatTextView, viewGroup: MaterialCardView,type:Int) {
+        if (status.uppercase().equals("OPEN", true) || status.uppercase().equals("ACTIVE", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.open)
-            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.green_status));
-        } else if (status.equals("SUSPENDED", true)) {
+            viewGroup.run{
+                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.green_status))
+            }
+        } else if (status.uppercase().equals("SUSPENDED", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.suspended)
-            viewGroup.background.setTint(viewGroup.context.resources.getColor(R.color.color_C93E28));
-        } else if (status.equals("DORMANT", true)) {
+            viewGroup.run{
+                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_C93E28))
+            }
+        } else if (status.uppercase().equals("DORMANT", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.dormant)
-            viewGroup.background.setTint(viewGroup.context.resources.getColor(R.color.color_942514));
-        } else if (status.equals("CLOSED", true)) {
+            viewGroup.run{
+                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514))
+            }
+        } else if (status.uppercase().equals("CLOSED", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.closed)
-            viewGroup.background.setTint(viewGroup.context.resources.getColor(R.color.color_383f43));
-        } else if (status.equals("CLOSE PEND", true)) {
+            viewGroup.run{
+                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_383f43))
+            }
+        } else if (status.uppercase().equals("CLOSE PEND", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.close_Pending)
-            viewGroup.background.setTint(viewGroup.context.resources.getColor(R.color.color_144e81));
+            viewGroup.run{
+                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_144e81))
+            }
         } else {
             tvTitle.text = status
-            viewGroup.setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.FFF7BF));
+            viewGroup.run{
+                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.FFF7BF))
+            }
         }
     }
 

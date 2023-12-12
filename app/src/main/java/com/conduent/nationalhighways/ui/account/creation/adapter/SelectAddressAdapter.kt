@@ -30,13 +30,17 @@ class SelectAddressAdapter(private val context: Context?,
     )
 
     override fun onBindViewHolder(holder: SelectAddressViewHolder, position: Int) {
-        val strBuilder = java.lang.StringBuilder()
-            .append(list[position]?.street)
-            .append(", ")
-            .append(list[position]?.town)
-            .append(", ")
-            .append(list[position]?.postcode)
-        holder.binding.address.text = strBuilder
+        val model =list[position]
+        var addressSring = ""
+        if(model?.property.orEmpty().length>0){
+            addressSring=model?.property+", "
+        }
+        if(model?.locality.orEmpty().length>0) {
+            addressSring = addressSring + model?.locality + ", "
+        }
+        addressSring = addressSring +model?.street+", "+model?.town+", "+model?.postcode
+
+        holder.binding.address.text = addressSring
 
         holder.binding.radioButton.isChecked = list[position]?.isSelected==true
 

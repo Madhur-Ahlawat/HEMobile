@@ -421,7 +421,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         cardNumber.setTypeface(null, Typeface.NORMAL)
 
                         DashboardUtils.setAccountStatusNew(
-                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus
+                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus,2
                         )
                     }
                     it.type?.let {
@@ -484,7 +484,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         DashboardUtils.setAccountStatusNew(
-                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus
+                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus,3
                         )
                     }
 
@@ -573,7 +573,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         }
                         cardNumber.setTypeface(null, Typeface.NORMAL)
                         DashboardUtils.setAccountStatusNew(
-                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus
+                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus,1
                         )
                     }
                     it.accountFinancialstatus?.let {

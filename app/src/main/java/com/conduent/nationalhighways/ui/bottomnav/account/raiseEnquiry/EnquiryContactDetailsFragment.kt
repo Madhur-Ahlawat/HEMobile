@@ -511,8 +511,8 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
         } else {
             if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
-                binding.firstnameEt.setText(sm.fetchFirstName() ?: "")
-                binding.lastnameEt.setText(sm.fetchLastName() ?: "")
+                binding.firstnameEt.setText(Utils.capitalizeString(sm.fetchFirstName()) ?: "")
+                binding.lastnameEt.setText(Utils.capitalizeString(sm.fetchLastName()) ?: "")
                 binding.emailEt.setText(sm.fetchAccountEmailId() ?: "")
 
                 val userCountryCode = sm.fetchUserCountryCode()

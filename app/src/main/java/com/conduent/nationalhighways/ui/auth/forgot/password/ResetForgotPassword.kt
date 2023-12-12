@@ -58,12 +58,15 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
         }
 
         binding.btnSubmit.setOnClickListener(this)
+        binding.signinBt.setOnClickListener(this)
         title = requireActivity().findViewById(R.id.title_txt)
         when (navFlowCall) {
 
             Constants.FORGOT_PASSWORD_FLOW -> {
                 binding.subTitle.gone()
-                binding.feedbackBt.invisible()
+                binding.feedbackBt.gone()
+                binding.btnSubmit.gone()
+                binding.signinBt.visible()
             }
 
             REMOVE_VEHICLE -> {
@@ -183,6 +186,10 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.signin_bt ->{
+                requireActivity().startNormalActivity(LoginActivity::class.java)
+                requireActivity().finish()
+            }
             R.id.btn_submit -> {
 
                 when (navFlowCall) {

@@ -103,7 +103,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             DashboardUtils.setAccountStatusNew(
                 sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
-                binding.cardIndicatorAccountStatus
+                binding.cardIndicatorAccountStatus,4
             )
             if (sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
                 leftIcon6.alpha = 0.5f

@@ -289,6 +289,7 @@
                                 android:layout_height="@dimen/_5dp" />
 
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
+                                android:id="@+id/notification_tv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/click_here_to_receive_notifications_when_you_cross"

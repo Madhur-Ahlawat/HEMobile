@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.auth.controller
 import android.os.Bundle
 import android.widget.Toast
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountInformation
@@ -18,6 +19,8 @@ import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -106,7 +109,6 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
         val bundle = Bundle()
         if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
             binding.toolBarLyt.titleTxt.text = getString(R.string.forgot_password)
-
             graph.setStartDestination(R.id.forgotPasswordFragment)
             bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
 
@@ -134,14 +136,28 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
             binding.toolBarLyt.titleTxt.text = getString(R.string.top_up)
             bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-
-
-
             graph.setStartDestination(R.id.accountSuspendedPaymentFragment)
         }
 
         navController = navHostFragment.navController
         navController.setGraph(graph, bundle)
+
+        navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener{
+            override fun onDestinationChanged(
+                controller: NavController,
+                destination: NavDestination,
+                arguments: Bundle?
+            ) {
+                if(destination.id==R.id.resetFragment){
+                    if (navFlow == Constants.FORGOT_PASSWORD_FLOW){
+                        binding.toolBarLyt.materialToolbar.gone()
+                    }else{
+                        binding.toolBarLyt.materialToolbar.visible()
+                    }
+                }
+            }
+
+        })
 
     }
 

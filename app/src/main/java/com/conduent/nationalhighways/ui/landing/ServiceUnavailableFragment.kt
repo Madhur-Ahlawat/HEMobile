@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.landing
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.conduent.nationalhighways.R
@@ -50,6 +51,7 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
 
         binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
         Log.e("TAG", "loadFragment:screenType "+serviceType )
+        binding.decs1Tv.gravity=Gravity.CENTER_HORIZONTAL
 
         when (serviceType) {
             Constants.MAINTENANCE -> {
@@ -70,15 +72,18 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
                 binding.decs2Tv.visible()
                 binding.decs3Tv.visible()
                 binding.decs4Tv.visible()
+                binding.decs5Tv.visible()
                 binding.btnGoToWebsite.gone()
             }
             Constants.LRDS_SCREEN -> {
                 binding.titleTv.text = resources.getString(R.string.str_local_resident_discount_scheme)
                 binding.decs1Tv.text =
                     resources.getString(R.string.str_manage_local_resident_discount_scheme)
+                binding.decs1Tv.gravity=Gravity.LEFT
                 binding.decs2Tv.gone()
                 binding.decs3Tv.gone()
                 binding.decs4Tv.gone()
+                binding.decs5Tv.gone()
                 binding.btnNext.gone()
                 binding.btnGoToWebsite.visible()
                 binding.btnGoToWebsite.text = resources.getString(R.string.str_go_to_website)
