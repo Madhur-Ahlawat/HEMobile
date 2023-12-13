@@ -40,7 +40,6 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.common.SessionManager.Companion.LAST_LOGIN_EMAIL
 import com.conduent.nationalhighways.utils.extn.*
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,14 +97,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     }
                 } else {
                     crossingHistoryApi()
-
-
-                    if (sessionManager.fetchStringData(LAST_LOGIN_EMAIL) != binding.edtEmail.getText().toString()
+                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
                             .trim()
                     ) {
                         if (loader?.isVisible == true) {
                             loader?.dismiss()
                         }
+                        sessionManager?.saveTouchIdEnabled(false)
                         displayBiometricDialog(getString(R.string.str_enable_face_ID))
 
 
@@ -464,6 +462,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
+            sessionManager?.saveTouchIdEnabled(false)
             displayBiometricDialog(getString(R.string.str_enable_face_ID))
 
 
