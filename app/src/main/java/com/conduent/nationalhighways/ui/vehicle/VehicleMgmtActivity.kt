@@ -136,7 +136,7 @@ class VehicleMgmtActivity : BaseActivity<ActivityVehicleMgmtBinding>(), LogoutLi
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-        sessionManager.clearAll()
+//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager,api)
     }
 

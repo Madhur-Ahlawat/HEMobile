@@ -132,6 +132,10 @@ class BaseApplication : Application() {
 
 
         private fun saveToken(sessionManager: SessionManager, response: Response<LoginResponse?>?) {
+            Log.e(
+                "TAG",
+                "saveToken() called with: sessionManager = $sessionManager, response = $response"
+            )
             sessionManager.run {
                 saveAuthToken(response?.body()?.accessToken ?: "")
                 saveRefreshToken(response?.body()?.refreshToken ?: "")

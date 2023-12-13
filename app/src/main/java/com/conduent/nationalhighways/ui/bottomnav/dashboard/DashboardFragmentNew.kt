@@ -206,7 +206,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         when (resource) {
             is Resource.Success -> {
                 Log.e("TAG", "handleLrdsResposne: statusCode "+resource.data?.srStatus )
-                if (resource.data?.srStatus?.uppercase().equals( "OPEN")) {
+                if (resource.data?.statusCode==null) {
                     requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
                         putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
                     }
@@ -613,7 +613,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             ""
         )
         val request = AccountPaymentHistoryRequest(
-            index, Constants.ALL_TRANSACTION, countPerPage
+            index, Constants.ALL_TRANSACTION, countPerPage, DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
+            DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }

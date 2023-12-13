@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.text.Html
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -31,17 +34,14 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpVie
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.text.DecimalFormat
 import java.util.Locale
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>(),
@@ -61,6 +61,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     private var topUpAmount = 0.0
     private var paymentListSize: Int = 0
+    private var lowBalance: Boolean = true
 
 
     override fun getFragmentBinding(
@@ -76,10 +77,10 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         val receivedList = arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA)
 
 
-        if (receivedList!=null) {
-            paymentList =( receivedList as ArrayList<CardListResponseModel>) ?:ArrayList()
+        if (receivedList != null) {
+            paymentList = (receivedList as ArrayList<CardListResponseModel>)
         }
-        
+
         if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
             paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         }
@@ -103,7 +104,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
             responseModel = arguments?.getParcelable(Constants.DATA)
-            Log.e("TAG", "postMessage: paymentList responseModel "+responseModel )
+            Log.e("TAG", "postMessage: paymentList responseModel " + responseModel)
 
             if (responseModel?.card?.type.equals("visa", true)) {
                 binding.ivCardType.setImageResource(R.drawable.visablue)
@@ -133,30 +134,43 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             HomeActivityMain.setTitle(resources.getString(R.string.str_top_up))
         }
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
+        binding.lowBalance.editText.addTextChangedListener(GenericTextWatcher())
+        binding.lowBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
+        binding.lowBalance.editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                topBalanceDecimal(false)
+                true // Return true to consume the action
+            } else {
+                false // Return false if you want the event to propagate further
+            }
+        }
 
         binding.btnPay.setOnClickListener(this)
         binding.btnCancel.setOnClickListener(this)
         binding.lowBalance.setText(
             "£" + formatter.format(topUpAmount)
         )
-        Log.e("TAG", "postMessage: paymentList "+paymentList?.size )
-        Log.e("TAG", "postMessage: paymentList "+position )
+        Log.e("TAG", "postMessage: paymentList " + paymentList.size)
+        Log.e("TAG", "postMessage: paymentList " + position)
 
-        if (paymentList?.isNotEmpty() == true) {
-            Log.e("TAG", "postMessage: paymentList "+paymentList?.get(position).toString() )
+        if (paymentList.isNotEmpty() == true) {
+            Log.e("TAG", "postMessage: paymentList " + paymentList.get(position).toString())
 
             binding.ivCardType.setImageResource(
                 Utils.setCardImage(
-                    paymentList?.get(position)?.cardType ?: ""
+                    paymentList.get(position)?.cardType ?: ""
                 )
             )
 
             val htmlText = Html.fromHtml(
-                paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(position)?.cardNumber,
+                paymentList.get(position).cardType + "<br>" + Utils.maskCardNumber(
+                    paymentList.get(position).cardNumber
+                ),
                 Html.FROM_HTML_MODE_COMPACT
             )
 
@@ -176,6 +190,61 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         }
     }
+
+    private fun topBalanceDecimal(b: Boolean) {
+        if (!b) {
+            var mText = binding.lowBalance.getText().toString().trim().replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
+                .replace(" ", "")
+            if (mText.isEmpty()) {
+                mText = "£0.0"
+            }
+
+            mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
+                .replace(" ", "")
+            if (mText.length == 1 && mText.equals(".")) {
+                mText = "0.0"
+            }
+            var formatedAmount = formatter.format(mText.toDouble())
+            if (!formatedAmount.isNullOrEmpty() && formatedAmount.equals(".00")) {
+                formatedAmount = "0.00"
+            }
+            binding.lowBalance.setText("£" + formatedAmount)
+            // Assuming editText is your EditText view
+            binding.lowBalance.setSelection(binding.lowBalance.editText.text?.length?:0)
+
+        }
+
+    }
+
+    inner class GenericTextWatcher : TextWatcher {
+
+        override fun beforeTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            before: Int,
+            count: Int
+        ) {
+            lowBalance = Utils.validateAmount(binding.lowBalance, 10.00, true)
+            checkButton()
+        }
+
+        override fun afterTextChanged(editable: Editable?) {
+
+        }
+    }
+
+    private fun checkButton() {
+        binding.btnPay.isEnabled = lowBalance
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -220,12 +289,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             primaryCard = "Y"
 
         }
-       /* if (responseModel?.checkCheckBox == true) {
-            easyPay = "Y"
-        } else {
-//            easyPay = "N"
-            easyPay = "Y"
-        }*/
+        /* if (responseModel?.checkCheckBox == true) {
+             easyPay = "Y"
+         } else {
+ //            easyPay = "N"
+             easyPay = "Y"
+         }*/
 
         cardModel = PaymentWithNewCardModel(
             addressLine1 = personalInformation?.addressLine1.toString(),
@@ -273,12 +342,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             cardType = "",
             cardNumber = "",
             cvv = "",
-            rowId = paymentList?.get(position)?.rowId,
+            rowId = paymentList.get(position)?.rowId,
             saveCard = "",
             useAddressCheck = "N",
-            firstName = paymentList?.get(position)?.firstName,
-            middleName = paymentList?.get(position)?.middleName,
-            lastName = paymentList?.get(position)?.lastName,
+            firstName = paymentList.get(position)?.firstName,
+            middleName = paymentList.get(position)?.middleName,
+            lastName = paymentList.get(position)?.lastName,
             paymentType = "",
             primaryCard = "",
             maskedCardNumber = "",

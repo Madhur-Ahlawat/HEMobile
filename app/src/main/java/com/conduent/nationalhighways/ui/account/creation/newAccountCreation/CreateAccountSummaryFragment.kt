@@ -114,7 +114,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         }
 
 
-        if (dataModel!!.personalAccount) {
+        if (dataModel?.personalAccount?:false) {
             binding.accountSubType.visible()
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
@@ -156,7 +156,13 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             } else {
                 title.text=getString(R.string.str_payg_terms_conditions)
             }
-            findNavController().navigate(R.id.action_createAccountSummaryFragment_to_generalTermsAndConditions)
+
+            if(NewCreateAccountRequestModel.prePay){
+                findNavController().navigate(R.id.action_createAccountSummaryFragment_to_generalTermsAndConditions)
+            }else{
+                findNavController().navigate(R.id.action_createAccountSummaryFragment_to_paygtermsandconditions)
+            }
+
         }))
 
     }

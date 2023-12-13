@@ -317,6 +317,8 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
             viewModel.edit_enquiryModel.value?.file = viewModel.enquiryModel.value?.file ?: File("")
             viewModel.edit_enquiryModel.value?.fileName =
                 viewModel.enquiryModel.value?.fileName ?: ""
+            viewModel.edit_enquiryModel.value?.apiFileName =
+                viewModel.enquiryModel.value?.apiFileName ?: ""
 
 
         }

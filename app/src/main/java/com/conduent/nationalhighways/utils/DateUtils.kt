@@ -15,13 +15,24 @@ object DateUtils {
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy")
      val dd_mmm_yyyy_hh_mm_a = "dd MMM yyyy hh:mm a"
      val dd_mmm_yyyy = "dd MMMM yyyy"
+     val dd_mm_yyyy = "MM/dd/yyyy"
+    val dd_mmm_yyyy_="dd-MMMM-yyyy"
+    val mmmm_dd_yyyy="MMMM dd, yyyy"
 
     fun currentDate(): String? {
         return dateFormat.format(Calendar.getInstance().time)
     }
 
-    fun currentDateAs(): String? {
-        return SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(Calendar.getInstance().time)
+    fun currentDateAs(dateFormat: String): String? {
+        return SimpleDateFormat(dateFormat, Locale.US).format(Calendar.getInstance().time)
+    }
+
+    fun getLast90DaysDate(dateFormat: String): String {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, -90) // Subtract 90 days
+
+        val dateFormat = SimpleDateFormat(dateFormat,Locale.US) // Define the date format
+        return dateFormat.format(calendar.time) // Format the date and return as a string
     }
 
     fun lastPriorDate(day: Int): String? {

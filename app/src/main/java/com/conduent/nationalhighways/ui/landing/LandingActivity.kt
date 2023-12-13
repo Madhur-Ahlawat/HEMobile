@@ -226,12 +226,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.e(
-            "TAG",
-            "onRequestPermissionsResult() called with: requestCode = $requestCode, permissions = $permissions, grantResults = $grantResults"
-        )
-
-
         if (requestCode == 1001) {
             if(ContextCompat.checkSelfPermission(
                     this,

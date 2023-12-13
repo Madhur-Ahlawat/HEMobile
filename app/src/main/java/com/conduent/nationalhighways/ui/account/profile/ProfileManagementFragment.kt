@@ -157,7 +157,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                     else {
                         profileDetailModel = status.data
 //                        profileDetailModel?.personalInformation?.phoneCell = ""
-                        (personalInformation?.firstName + " " + personalInformation?.lastName).also {
+                        (Utils.capitalizeString(personalInformation?.firstName) + " " + Utils.capitalizeString(personalInformation?.lastName)).also {
                             binding.fullName.text = it
                         }
 

@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
@@ -41,6 +42,7 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.Utility
@@ -270,16 +272,40 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
             observe(createAccountViewModel.confirmEmailApiVal, ::handleConfirmEmailResponse)
             observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
-
+            observe(dashboardViewModel.lrdsVal, ::handleLrdsResposne)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
-
-
         }
+
 
         isViewCreated = true
 
     }
+
+    private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
+        Log.e("TAG", "handleLrdsResposne: ")
+        when (resource) {
+
+            is Resource.Success -> {
+                Log.e("TAG", "handleLrdsResposne: statusCode " + resource.data?.srStatus)
+                if (resource.data?.statusCode == null) {
+                    requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
+                        putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
+                    }
+                } else {
+                    dashboardViewModel.getAccountDetailsData()
+                }
+            }
+
+            is Resource.DataError ->{
+                dashboardViewModel.getAccountDetailsData()
+            }
+            else -> {
+
+            }
+        }
+    }
+
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
         if (loader?.isVisible == true) {
@@ -337,42 +363,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
     }
 
-    private fun updateCommunicationSettingsPrefs(resource: Resource<CommunicationPrefsResp?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (resource) {
-            is Resource.Success -> {
-                resource.let { res ->
-                    if (res.data?.statusCode == "0") {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                        findNavController().navigate(
-                            R.id.action_otpForgotFragment_to_resetForgotPassword,
-                            bundle
-                        )
-                    } else {
-                        showError(binding.root, resource.errorMsg)
-                    }
-                }
-            }
-
-            is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
-                        Constants.INVALID_TOKEN
-                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
-                ) {
-                    displaySessionExpireDialog(resource.errorModel)
-                } else {
-                    showError(binding.root, resource.errorMsg)
-                }
-            }
-
-            else -> {
-            }
-        }
-    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -607,13 +597,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 if (navFlowCall == TWOFA) {
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    dashboardViewModel.getAccountDetailsData()
+                    dashboardViewModel.getLRDSResponse()
                 } else {
                     response?.code = binding.edtOtp.getText().toString()
                     bundle.putParcelable("data", response)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
 
-                    Logg.logging("NewPassword", "response $response")
                     AdobeAnalytics.setActionTrack(
                         "verify",
                         "login:forgot password:choose options:otp",

@@ -38,6 +38,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
     private lateinit var navFlow: String// create account , forgot password
+    private var lrds_account: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -51,6 +52,11 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
 
     override fun initCtrl() {
+
+        if (arguments?.containsKey(Constants.LRDS_ACCOUNT)==true) {
+            lrds_account = arguments?.getBoolean(Constants.LRDS_ACCOUNT,false) ?: false
+        }
+
         model = RequestOTPModel(optionType = "", optionValue = "")
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         loader = LoaderDialog()
@@ -189,6 +195,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putBoolean(Constants.LRDS_ACCOUNT, lrds_account)
 
                 AdobeAnalytics.setActionTrack2(
                     "continue",

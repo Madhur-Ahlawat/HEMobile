@@ -60,6 +60,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val GEOFENCE_ENTER_TIME="geofence_enter_time"
         val COUNTRIES="COUNTRIES"
         val LOCATION_PERMISSION="LOCATION_PERMISSION"
+        val LAST_LOGIN_EMAIL="LAST_LOGIN_EMAIL"
         val NOTIFICATION_PERMISSION="NOTIFICATION_PERMISSION"
     }
 
@@ -213,12 +214,16 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
     fun clearAll() {
         val last_rating_time=fetchStringData(LAST_RATING_TIME)
+        val LOCATION_PERMISSION=fetchBooleanData(LOCATION_PERMISSION)
+        val email=fetchAccountEmailId()
         prefs.edit().clear().apply()
         HomeActivityMain.accountDetailsData = null
         HomeActivityMain.crossing = null
         HomeActivityMain.dateRangeModel = null
         HomeActivityMain.paymentHistoryListData = mutableListOf()
         saveStringData(LAST_RATING_TIME,last_rating_time)
+        saveBooleanData(Companion.LOCATION_PERMISSION, LOCATION_PERMISSION)
+        saveStringData(Companion.LAST_LOGIN_EMAIL, email?:"")
     }
 
     fun setSessionTime(code: Long?) {

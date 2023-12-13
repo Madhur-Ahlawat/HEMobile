@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.transactions
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -20,6 +21,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
@@ -61,12 +63,12 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
             tvPaymentDateValue.text = crossing?.transactionDate
             tvPaymentTimeValue.text = crossing?.exitTime
             tvPaymentReferenceValue.text = crossing?.transactionNumber
-            tvTypeOfPaymentValue.text = crossing?.activity
-            tvPaymentMethodValue.text = crossing?.rebillPaymentType?.substring(
+            tvTypeOfPaymentValue.text =  Utils.capitalizeString(crossing?.activity)
+            tvPaymentMethodValue.text =  Utils.capitalizeString(crossing?.rebillPaymentType?.substring(
                 0,
                 crossing?.rebillPaymentType?.indexOf("-")?:0
-            )
-            tvChannelValue.text = crossing?.paymentSource
+            ))
+            tvChannelValue.text =  Utils.capitalizeString(crossing?.paymentSource)
             tvFourDigitsOfTheCardValue.text = crossing?.rebillPaymentType?.substring(
                 (crossing?.rebillPaymentType?.indexOf("-")?:0) + 1,
                 crossing?.rebillPaymentType?.length!!
@@ -99,7 +101,9 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    findNavController().navigate(R.id.emailRecieptSuccessFragment)
+                    val bundle=Bundle()
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                    findNavController().navigate(R.id.emailRecieptSuccessFragment,bundle)
                 }
             }
 

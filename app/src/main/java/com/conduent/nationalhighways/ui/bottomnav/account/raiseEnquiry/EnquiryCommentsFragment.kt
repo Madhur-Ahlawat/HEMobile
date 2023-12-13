@@ -92,6 +92,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
         binding.fileDeleteIv.setOnClickListener {
             file = null
+            viewModel.edit_enquiryModel.value?.apiFileName = ""
             viewModel.edit_enquiryModel.value?.fileName = ""
             viewModel.edit_enquiryModel.value?.file = File("")
 
@@ -194,7 +195,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
 
             when (resource) {
                 is Resource.Success -> {
-//                    viewModel.edit_enquiryModel.value?.fileName = resource.data?.fileName ?: ""
+                    viewModel.edit_enquiryModel.value?.apiFileName = resource.data?.fileName ?: ""
 
                     val hasTwoExtensions = Utils.hasSameExtensionTwice(file?.name ?: "")
                     var fileName = file?.name
@@ -202,8 +203,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                     if (hasTwoExtensions) {
                         fileName = Utils.removeLastExtension(fileName?:"", extension).dropLast(1)
                     }
-                    viewModel.edit_enquiryModel.value?.fileName =
-                        fileName ?: (resource.data?.fileName ?: "")
+                    viewModel.edit_enquiryModel.value?.fileName = fileName ?: (resource.data?.fileName ?: "")
                     viewModel.edit_enquiryModel.value?.file = file ?: File("")
 
                     hideChooseFileBt()
@@ -390,6 +390,8 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                 viewModel.enquiryModel.value?.file ?: File("")
             viewModel.edit_enquiryModel.value?.fileName =
                 viewModel.enquiryModel.value?.fileName ?: ""
+            viewModel.edit_enquiryModel.value?.apiFileName =
+                viewModel.enquiryModel.value?.apiFileName ?: ""
         }
     }
 
