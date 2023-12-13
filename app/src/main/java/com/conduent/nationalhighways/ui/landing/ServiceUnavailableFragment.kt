@@ -90,6 +90,13 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
             }
         }
 
+        binding.btnGoToWebsite.setOnClickListener {
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://web-highwaystest.services.conduent.com/sign-in")
+            )
+            startActivity(browserIntent)
+        }
         binding.btnNext.setOnClickListener {
             if (serviceType == Constants.UNAVAILABLE || serviceType == Constants.MAINTENANCE) {
                 requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)

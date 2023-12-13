@@ -94,7 +94,7 @@ class StartNowBaseActivity : BaseActivity<ActivityStartNowBaseBinding>(), Logout
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-        sessionManager.clearAll()
+//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager,api)
     }
 

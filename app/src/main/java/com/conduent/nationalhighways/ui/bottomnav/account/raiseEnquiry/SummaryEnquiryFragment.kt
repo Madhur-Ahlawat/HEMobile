@@ -70,8 +70,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 seletedArea = subcategorySplit?.get(1).toString()
             }
             val arrayList: ArrayList<String> = ArrayList()
-            if (viewModel.enquiryModel.value?.fileName != null && viewModel.enquiryModel.value?.fileName?.isNotEmpty() == true) {
-                arrayList.add(viewModel.enquiryModel.value?.fileName ?: "")
+            if (viewModel.enquiryModel.value?.apiFileName != null && viewModel.enquiryModel.value?.apiFileName?.isNotEmpty() == true) {
+                arrayList.add(viewModel.enquiryModel.value?.apiFileName ?: "")
             }
 
             val enquiryRequestModel = EnquiryRequest(
@@ -129,6 +129,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         viewModel.enquiryModel.value?.comments = viewModel.edit_enquiryModel.value?.comments ?: ""
         viewModel.enquiryModel.value?.file = viewModel.edit_enquiryModel.value?.file ?: File("")
         viewModel.enquiryModel.value?.fileName = viewModel.edit_enquiryModel.value?.fileName ?: ""
+        viewModel.enquiryModel.value?.apiFileName = viewModel.edit_enquiryModel.value?.apiFileName ?: ""
     }
 
 

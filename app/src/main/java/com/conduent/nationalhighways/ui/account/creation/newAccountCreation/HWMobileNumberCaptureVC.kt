@@ -262,7 +262,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     private fun setMobileView() {
         isItMobileNumber = true
-        if (requireActivity() is CreateAccountActivity) {
+        if (requireActivity() is CreateAccountActivity||navFlowCall==Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
         } else {
             title?.text = getString(R.string.profile_mobile_number)
         }

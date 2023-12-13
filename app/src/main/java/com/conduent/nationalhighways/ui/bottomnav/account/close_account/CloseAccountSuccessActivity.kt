@@ -85,7 +85,7 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-        sessionManager.clearAll()
+//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager,api)
     }
 

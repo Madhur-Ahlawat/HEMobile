@@ -68,6 +68,9 @@
             android:id="@+id/action_createAccountSummaryFragment_to_generalTermsAndConditions"
             app:destination="@id/generalTermsAndConditionsFragment" />
         <action
+            android:id="@+id/action_createAccountSummaryFragment_to_paygtermsandconditions"
+            app:destination="@id/paygtermsandconditions" />
+        <action
             android:id="@+id/action_accountSummaryFragment_to_addNewVehicleDetailsFragment"
             app:destination="@id/addNewVehicleDetailsFragment" />
 
@@ -115,6 +118,14 @@
             android:id="@+id/action_accountSummaryFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/paygtermsandconditions"
+        android:name="com.conduent.nationalhighways.ui.landing.PayGTermsAndConditionsFragment"
+        android:label="EnquiryStatusFragment"
+        tools:layout="@layout/fragment_payg_terms_and_conditions">
+    </fragment>
+
 
     <!-- BUSINESS ACCOUNT -->
 

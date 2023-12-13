@@ -19,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
@@ -39,6 +40,7 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.SessionManager.Companion.LAST_LOGIN_EMAIL
 import com.conduent.nationalhighways.utils.extn.*
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -77,10 +79,62 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             observe(viewModel.login, ::handleLoginResponse)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
+            observe(dashboardViewModel.lrdsVal, ::handleLrdsResposne)
+
         }
 
 
     }
+
+    private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
+        Log.e("TAG", "handleLrdsResposne: ")
+        when (resource) {
+
+            is Resource.Success -> {
+                Log.e("TAG", "handleLrdsResposne: statusCode " + resource.data?.srStatus)
+                if (resource.data?.statusCode == null) {
+                    startNewActivityByClearingStack(LandingActivity::class.java) {
+                        putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
+                    }
+                } else {
+                    crossingHistoryApi()
+
+
+                    if (sessionManager.fetchStringData(LAST_LOGIN_EMAIL) != binding.edtEmail.getText().toString()
+                            .trim()
+                    ) {
+                        if (loader?.isVisible == true) {
+                            loader?.dismiss()
+                        }
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+
+                    } else {
+                        if (twoFAEnable) {
+                            if (loader?.isVisible == true) {
+                                loader?.dismiss()
+                            }
+                            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                            startActivity(intent)
+                        } else {
+                            dashboardViewModel.getAccountDetailsData()
+
+                        }
+                    }
+
+                    sessionManager.saveUserName(binding.edtEmail.text.toString())
+
+
+                }
+            }
+
+            else -> {
+
+            }
+        }
+    }
+
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
 
@@ -98,15 +152,15 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     }
 
 //                    if (crossingCount >= 0) {
-                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                        intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
-                        intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                        intent.putExtra(
-                            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                        )
-                        startActivity(intent)
+                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                    )
+                    startActivity(intent)
 //                    }
                 } else {
                     startNewActivityByClearingStack(HomeActivityMain::class.java) {
@@ -189,8 +243,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun init() {
-        BaseApplication.flowNameAnalytics=Constants.LOGIN
-        BaseApplication.screenNameAnalytics=""
+        BaseApplication.flowNameAnalytics = Constants.LOGIN
+        BaseApplication.screenNameAnalytics = ""
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             intent?.apply {
                 from = getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
@@ -266,7 +320,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                                     Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
                                 )
                             )
-                       if (!Patterns.EMAIL_ADDRESS.matcher(
+                        if (!Patterns.EMAIL_ADDRESS.matcher(
                                 binding.edtEmail.getText().toString()
                             ).matches()
                         ) {
@@ -401,38 +455,21 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
 //            saveUserName(binding.edtEmail.getText().toString())
-            if (response.data?.require2FA == "true") {
-                twoFAEnable = true
-            }
+            twoFAEnable = response.data?.require2FA == "true"
+
 
         }
-        crossingHistoryApi()
 
-
-        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
-                .trim()
-        ) {
+        if (twoFAEnable) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-
+            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+            startActivity(intent)
         } else {
-            if (twoFAEnable) {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
-                val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                startActivity(intent)
-            } else {
-                dashboardViewModel.getAccountDetailsData()
-
-            }
+            dashboardViewModel.getLRDSResponse()
         }
-
-        sessionManager.saveUserName(binding.edtEmail.text.toString())
 
 
 

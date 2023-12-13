@@ -39,6 +39,7 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var crossingCount: String = ""
     private var navFlowFrom: String = ""
+    private var lrds_account: Boolean = false
 
 
     @Inject
@@ -50,7 +51,9 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
         setContentView(binding.root)
         if (intent.getStringExtra(Constants.NAV_FLOW_KEY) != null) {
             navFlow = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
-
+        }
+        if (intent.getStringExtra(Constants.LRDS_ACCOUNT) != null) {
+            lrds_account = intent.getBooleanExtra(Constants.LRDS_ACCOUNT,false) ?: false
         }
         if(intent.hasExtra(Constants.NAV_FLOW_FROM)){
             navFlowFrom=intent.getStringExtra(Constants.NAV_FLOW_FROM)?:""
@@ -115,6 +118,7 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
         } else if (navFlow == Constants.TWOFA) {
             bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
             bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            bundle.putBoolean(Constants.LRDS_ACCOUNT, lrds_account)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
             bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_sign_in_validation)
@@ -200,7 +204,7 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-        sessionManager.clearAll()
+//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager,api)
     }
 

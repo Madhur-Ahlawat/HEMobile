@@ -2,14 +2,11 @@ package com.conduent.nationalhighways.ui.landing
 
 import android.Manifest
 import android.content.DialogInterface
-import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentRegisterReminderBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
@@ -45,27 +42,29 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
 
     override fun initCtrl() {
-
-        Log.e(
-            "TAG", "initCtrl: ACCESS_BACKGROUND_LOCATION -> " +
-                    "" + ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            )
-        )
-
-        binding.switchNotification.isChecked=sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)
-        binding.switchGeoLocation.isChecked = sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
+        if(Utils.areNotificationsEnabled(requireContext())==false){
+            binding.switchNotification.isChecked =false
+            sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,false)
+        }else{
+            binding.switchNotification.isChecked =
+                (  sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION) )
+        }
+        binding.switchGeoLocation.isChecked =
+            sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
 
         binding.switchGeoLocation.setOnClickListener {
-
-
             if (binding.switchGeoLocation.isChecked) {
                 requestLocationPermission()
             }
         }
 
         binding.switchNotification.setOnClickListener {
+            if (Utils.areNotificationsEnabled(requireContext())) {
+                sessionManager.saveBooleanData(
+                    SessionManager.NOTIFICATION_PERMISSION,
+                    binding.switchNotification.isChecked
+                )
+            }
             if (!Utils.areNotificationsEnabled(requireContext())) {
                 displayCustomMessage(
                     resources.getString(R.string.str_notification_title),
@@ -97,12 +96,11 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 requireActivity(),
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
                 ),
                 LOCATION_PERMISSION_REQUEST_CODE
             )
-        }else{
+        } else {
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(
@@ -118,8 +116,6 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
     override fun observer() {
 
     }
-
-
 
 
 }

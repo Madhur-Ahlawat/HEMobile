@@ -354,6 +354,7 @@
 
     <string name="str_your_crossing">Your crossing</string>
     <string name="str_crossing_date">Crossing date</string>
+    <string name="str_crossing_date_cap">Crossing Date</string>
     <string name="str_crossing_time">Crossing time</string>
     <string name="str_direction">Direction</string>
     <string name="str_status">Status</string>
@@ -733,7 +734,7 @@
     <string name="alternative_number">Alternative number</string>
     <string name="vehicle_not_recognized">The vehicle registration number is not recognised. You have to self declare the details below</string>
     <string name="reg_no">Registration number -</string>
-    <string name="appearance">Appearance</string>
+    <string name="appearance">Appearance</string> 1-99462371
     <string name="vehicle_class">Vehicle class</string>
     <string name="two_plus_axles">2+ Axle vehicles</string>
     <string name="group_name_field">The group name field can be used to help you distinguish different vehicles associated with your account</string>
@@ -1384,8 +1385,6 @@
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
     <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an \naccount to:</string>
-    <string name="pay_for_crossings_you_ve_made_since_yesterday_pay_for_future_crossings"><font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for crossings you’ve made since yesterday
-        \n<font color="#000000">\u25CF</font>&#160;&#160;&#160;Pay for future crossings</string>
     <string name="str_pay_for_crossing_numberplate_point1">pay for crossings you’ve made since yesterday</string>
     <string name="str_pay_for_crossing_numberplate_point2">pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
@@ -1411,7 +1410,7 @@
     <string name="for_example_hd542321725_or_1_898008009">For example, HD542321725 or 1–898008009</string>
     <string name="paid_crossing_point1">If you paid by web or phone this is the \'HD or 1-\' number</string>
     <string name="paid_crossing_point2">If you\'ve paid through Payzone his is the \'TXN\' number</string>
-    <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings\nplanned in the future.\nLate payments will be used for future\ncrossings - you may receive a fine (Penalty Charge Notice) for any late payment.</string>
+    <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings\nplanned in the future.\n\nLate payments will be used for future\ncrossings - you may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>
 
     <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We’ve sent a confirmation email to %s and a confirmation text message to %s.</string>
@@ -1615,7 +1614,6 @@
     <string name="top_up_success">Top Up Success</string>
     <string name="email_address_must_be_8_characters_or_more">Email address must be 8 characters or more</string>
     <string name="profile_email_address">Profile Email Address</string>
-    <string name="profile_email_addres">Profile email address</string>
     <string name="crossing_details">Crossing Details</string>
     <string name="profile_password">Profile Password</string>
     <string name="mobile_app">Mobile App</string>
@@ -1646,13 +1644,18 @@
     <string name="credit_transferred">Credit Transferred</string>
     <string name="str_crossing_data">%1$s crossing</string>
     <string name="str_crossings_data">%1$s crossings</string>
-    <string name="str_allow_location_title">Allow "DartCharge" to also use your location even when you are not using the app?</string>
+    <string name="str_allow_location_title">Allow &quot;DartCharge&quot; to also use your location even when you are not using the app?</string>
     <string name="str_allow_location_desc">Change to Always Allow to ensure that we send the notification to you, without you having to remember to open the app.</string>
     <string name="str_keep_only_while_using">Keep Only While using</string>
     <string name="str_change_to_always_allow">Change to Always Allow</string>
-    <string name="str_enable_notifications">Click here to enable notifications when you cross</string>
+
+
     <string name="str_disable_notifications">Click here to disable notifications when you cross</string>
+    <string name="str_enable_notifications">Click here to enable notifications when you cross</string>
+
     <string name="str_max_payment_methods">Max Payment Methods</string>
     <string name="str_max_payment_methods_desc">To add a new payment method you will need to delete one of the two already setup.</string>
+    <string name="str_signout_your_account">Sign Out Your Account</string>
+    <string name="str_signout_your_account_desc">Signing out of your account will disable your Biometrics. you will need to re-enter these next time you log in.</string>
 
 </resources>

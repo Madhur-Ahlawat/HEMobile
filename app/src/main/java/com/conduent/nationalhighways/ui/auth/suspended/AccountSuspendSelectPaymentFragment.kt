@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -80,6 +82,17 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.btnAddNewPayment.setOnClickListener(this)
         binding.topBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
+        // Assuming editText is your EditText view
+        binding.topBalance.editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                topBalanceDecimal(false)
+                true // Return true to consume the action
+            } else {
+                false // Return false if you want the event to propagate further
+            }
+        }
+
+
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
@@ -107,10 +120,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     private fun topBalanceDecimal(b: Boolean) {
         if (!b) {
-            var mText = binding.topBalance.getText().toString().trim()
-            if (mText.isNullOrEmpty()) {
-                mText = "0.0"
+            var mText = binding.topBalance.getText().toString().trim().replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
+                .replace(" ", "")
+            if (mText.isEmpty()) {
+                mText = "£0.0"
             }
+            Log.e("TAG", "topBalanceDecimal: mText "+mText )
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
@@ -122,6 +137,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 formatedAmount = "0.00"
             }
             binding.topBalance.setText("£" + formatedAmount)
+            // Assuming editText is your EditText view
+            binding.topBalance.setSelection(binding.topBalance.editText.text?.length?:0)
+
         }
 
     }

@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:text="@string/str_crossing_date"
+                android:text="@string/str_crossing_date_cap"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintStart_toStartOf="parent"

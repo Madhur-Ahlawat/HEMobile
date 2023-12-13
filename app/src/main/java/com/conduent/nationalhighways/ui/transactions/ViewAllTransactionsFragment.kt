@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.pay
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapter
+import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.Utils.sortTransactionsDateWiseDescending
 import com.conduent.nationalhighways.utils.extn.gone
@@ -166,7 +167,9 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         val request = AccountPaymentHistoryRequest(
             index,
             Constants.ALL_TRANSACTION,
-            100
+            100,
+            enddate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
+            startdate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }
