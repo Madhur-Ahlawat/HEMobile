@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.app.PendingIntent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -9,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,13 +19,13 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
-import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentMobileNumberCaptureVcBinding
+import com.conduent.nationalhighways.receiver.SmsBroadcastReceiver
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
@@ -47,6 +50,11 @@ import com.conduent.nationalhighways.utils.common.Utils.getCountryCodeRequiredTe
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
+import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.android.gms.tasks.Task
+import com.google.firebase.crashlytics.internal.Logger.TAG
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,6 +64,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     View.OnClickListener, OnRetryClickListener,
     NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
 
+    private var retrievedPhoneNumber: String?=null
     private var requiredCountryCode = false
     private var requiredMobileNumber = false
     private var loader: LoaderDialog? = null
@@ -78,6 +87,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
     override fun init() {
+//        val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+//        registerReceiver(requireContext(),smsVerificationReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED)
         title = requireActivity().findViewById(R.id.title_txt)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -169,9 +180,34 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         isViewCreated = true
-
+        requestHint()
     }
-
+    private fun requestHint() {
+        val request: GetPhoneNumberHintIntentRequest = GetPhoneNumberHintIntentRequest.builder().build()
+        val phoneNumberHintIntentResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+                try {
+                    retrievedPhoneNumber = Identity.getSignInClient(requireActivity()).getPhoneNumberFromIntent(result.data)
+                    binding.inputMobileNumber.setText(retrievedPhoneNumber.toString())
+                } catch(e: Exception) {
+                    Log.e(TAG, "Phone Number Hint failed")
+                }
+            }
+        Identity.getSignInClient(requireActivity())
+            .getPhoneNumberHintIntent(request)
+            .addOnSuccessListener { result: PendingIntent ->
+                try {
+                    phoneNumberHintIntentResultLauncher.launch(
+                        IntentSenderRequest.Builder(result).build()
+                    )
+                } catch (e: Exception) {
+                    Log.e(TAG, "Launching the PendingIntent failed")
+                }
+            }
+            .addOnFailureListener {
+                Log.e(TAG, "Phone Number Hint failed")
+            }
+    }
     private fun setData() {
         data = navData as ProfileDetailModel?
         if (data != null) {
@@ -637,7 +673,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun hitApi() {
-
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
             Constants.SMS,
@@ -734,7 +769,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
         }
     }
-
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
         if (selected) {

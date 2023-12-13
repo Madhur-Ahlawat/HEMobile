@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
+import android.app.Activity
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -8,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -30,6 +33,7 @@ import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryA
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
+import com.conduent.nationalhighways.receiver.SmsBroadcastReceiver
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
@@ -39,6 +43,9 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
+import com.conduent.nationalhighways.utils.Utility
+import com.conduent.nationalhighways.utils.Utility.REQ_USER_CONSENT
+import com.conduent.nationalhighways.utils.Utility.startSmsUserConsent
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
@@ -58,6 +65,7 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -93,6 +101,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var phoneDayCountryCode: String = ""
     private val dashboardViewmodel: DashboardViewModel by activityViewModels()
     private var accountStatus: String = ""
+    private var smsBroadcastReceiver: SmsBroadcastReceiver?=null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -120,7 +129,31 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     }
 
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQ_USER_CONSENT -> {
+                if ((resultCode == Activity.RESULT_OK) && (data != null)) {
+                    //That gives all message to us. We need to get the code from inside with regex
+                    val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
+                    val code = message?.let { Utility.fetchVerificationCode(it) }
+                    binding.edtOtp.setText(code.toString())
+                }
+            }
+        }
+    }
+    override fun onStart() {
+        super.onStart()
+        registerToSmsBroadcastReceiver()
+    }
+    override fun onStop() {
+        super.onStop()
+        requireActivity().unregisterReceiver(smsBroadcastReceiver)
+    }
     override fun initCtrl() {
+        startSmsUserConsent(requireActivity())
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         Log.e("TAG", "initCtrl: editRequest " + editRequest)
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
@@ -170,7 +203,28 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
         }
     }
+    fun registerToSmsBroadcastReceiver() {
+        smsBroadcastReceiver = SmsBroadcastReceiver().also {
+            it.smsBroadcastReceiverListener = object : SmsBroadcastReceiver.SmsBroadcastReceiverListener {
+                override fun onSuccess(intent: Intent?) {
+                    intent?.let { intent -> startActivityForResult(intent,
+                        REQ_USER_CONSENT
+                    ) }
+                }
 
+                override fun onFailure() {
+                }
+            }
+        }
+
+        val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+        ContextCompat.registerReceiver(
+            requireActivity(),
+            smsBroadcastReceiver,
+            intentFilter,
+            ContextCompat.RECEIVER_EXPORTED
+        )
+    }
     private fun setInputParamsData() {
         val profileNavdata = navData as ProfileDetailModel?
 

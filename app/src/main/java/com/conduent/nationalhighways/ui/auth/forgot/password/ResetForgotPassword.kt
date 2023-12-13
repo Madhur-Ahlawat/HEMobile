@@ -122,6 +122,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
             }
 
             PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
+                binding.signinBt.gone()
                 title?.text = getString(R.string.profile_address)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.address_change_successful)
@@ -149,6 +150,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     binding.title.text = getString(R.string.phone_number_change_successful)
                     HomeActivityMain.setTitle(getString(R.string.profile_phone_number))
                 } else {
+                    HomeActivityMain.dataBinding?.backButton?.gone()
                     binding.title.text = getString(R.string.mobile_change_successful)
                     HomeActivityMain.setTitle(getString(R.string.profile_mobile_number))
                 }

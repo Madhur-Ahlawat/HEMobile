@@ -172,7 +172,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
 
                             binding.address.text =
-                                personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode+"\n"+ Utils.getCountryName(sessionManager,personalInformation?.country?:"")
+                                personalInformation?.addressLine1 + "\n" + personalInformation?.addressLine2 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode+"\n"+ Utils.getCountryName(sessionManager,personalInformation?.country?:"")
                         }
                         binding.emailAddressProfile.text =
                             personalInformation?.userName?.lowercase()
