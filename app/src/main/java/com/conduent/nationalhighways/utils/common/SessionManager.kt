@@ -340,12 +340,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         prefs.edit().apply {
             putBoolean(TOUCH_ID_ENABLED, privateKey)
         }.apply()
-        if(!privateKey){
-            saveTouchIdEnabledUserID("")
-        }
-        else{
-            saveTouchIdEnabledUserID(fetchAccountEmailId()!!)
-        }
     }
     fun saveTouchIdEnabledUserID(userID: String) {
         prefs.edit().apply {

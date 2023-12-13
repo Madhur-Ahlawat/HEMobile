@@ -344,9 +344,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
          }*/
         when (status) {
             is Resource.Success -> {
-                if(!sessionManager.fetchTouchIdUserID()!!.equals(binding.edtEmail.getText())){
-                    sessionManager.saveTouchIdEnabled(false)
-                }
                 launchIntent(status)
             }
 
@@ -412,10 +409,14 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         crossingHistoryApi()
 
 
-        if (!sessionManager.fetchTouchIdEnabled()) {
+        if (sessionManager?.fetchTouchIdEnabled()==false || (sessionManager.fetchTouchIdUserID() != binding.edtEmail.getText().toString()
+                .trim()
+                    )) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
+            sessionManager?.saveTouchIdEnabled(false)
+            sessionManager?.saveTouchIdEnabledUserID("")
             displayBiometricDialog(getString(R.string.str_enable_face_ID))
 
 
@@ -434,8 +435,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
 
         sessionManager.saveUserName(binding.edtEmail.text.toString())
-
-
+        sessionManager?.saveTouchIdEnabledUserID(binding?.edtEmail?.getText().toString())
 
         AdobeAnalytics.setLoginActionTrackError(
             "login",

@@ -95,6 +95,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     )
                     sessionManager.clearAll()
                     binding.btnSubmit.text = getString(R.string.sign_in)
+                    binding.signinBt.gone()
                 } else {
 
                     title?.text = getString(R.string.profile_name)
@@ -163,6 +164,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     ), Html.FROM_HTML_MODE_COMPACT
                 )
                 binding.btnSubmit.text = getString(R.string.str_continue)
+                binding.signinBt.gone()
             }
 
             PROFILE_MANAGEMENT_2FA_CHANGE -> {
