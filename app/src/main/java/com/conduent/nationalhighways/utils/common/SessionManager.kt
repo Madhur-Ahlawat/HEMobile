@@ -49,6 +49,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
         val BIOMETRICTOKEN: String = "ACSInrixTrafficApp"
         val TOUCH_ID_ENABLED: String = "touch_ID"
+        val TOUCH_ID_USER_ID: String = "TOUCH_ID_USER_ID"
         val PRIVATE_KEY: String = ""
         val PUBLIC_KEY: String = ""
         val CATEGORIES_DATA="categories_data"
@@ -339,8 +340,21 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         prefs.edit().apply {
             putBoolean(TOUCH_ID_ENABLED, privateKey)
         }.apply()
+        if(!privateKey){
+            saveTouchIdEnabledUserID("")
+        }
+        else{
+            saveTouchIdEnabledUserID(fetchAccountEmailId()!!)
+        }
     }
-
+    fun saveTouchIdEnabledUserID(userID: String) {
+        prefs.edit().apply {
+            putString(TOUCH_ID_USER_ID, userID)
+        }.apply()
+    }
+    fun fetchTouchIdUserID(): String? {
+        return prefs.getString(TOUCH_ID_USER_ID, "")
+    }
     fun fetchTouchIdEnabled(): Boolean {
         return prefs.getBoolean(TOUCH_ID_ENABLED, false)
     }

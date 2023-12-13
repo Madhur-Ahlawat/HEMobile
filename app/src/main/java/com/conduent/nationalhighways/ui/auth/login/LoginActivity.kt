@@ -344,6 +344,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
          }*/
         when (status) {
             is Resource.Success -> {
+                if(!sessionManager.fetchTouchIdUserID()!!.equals(binding.edtEmail.getText())){
+                    sessionManager.saveTouchIdEnabled(false)
+                }
                 launchIntent(status)
             }
 
@@ -409,9 +412,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         crossingHistoryApi()
 
 
-        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
-                .trim()
-        ) {
+        if (!sessionManager.fetchTouchIdEnabled()) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
