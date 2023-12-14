@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
@@ -48,8 +49,6 @@ import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import com.conduent.nationalhighways.utils.rating.RatingDialog
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import okhttp3.Interceptor
 import java.io.File
 import java.lang.reflect.Field
@@ -1162,6 +1161,23 @@ object Utils {
         } catch (e: Exception) {
             Triple(0, 0, 0)
         }
+
+    }
+
+    fun hasFaceId(context: Context):Boolean{
+        val hasFaceBiometric = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            context.packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)
+        } else {
+            false
+        }
+
+       return hasFaceBiometric
+
+    }
+    fun hasTouchId(context: Context): Boolean {
+
+
+        return context.packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
 
     }
 

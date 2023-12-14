@@ -55,6 +55,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
+    private var hasFaceBiometric=false
+    private var hasTouchBiometric=false
+    private var biometricIsNotEnabled=false
+
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -87,13 +91,27 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
         twoFA = intent.getBooleanExtra(Constants.TWOFA, false)
 
+        hasFaceBiometric = Utils.hasFaceId(this)
 
+        hasTouchBiometric = Utils.hasTouchId(this)
+
+        if (hasTouchBiometric&&hasFaceBiometric){
+            binding.switchFingerprintLogin.text=getString(R.string.usefingerprinttologin)
+
+        }else if (hasFaceBiometric){
+            binding.switchFingerprintLogin.text=getString(R.string.usefaceidtologin)
+
+
+        }else{
+            binding.switchFingerprintLogin.text=getString(R.string.usetouchidtologin)
+
+        }
         binding.apply {
             toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
         }
-        binding.toolBarLyt.titleTxt.text = getString(R.string.biometric)
+        binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
 
         intent?.apply {
             mValue = getIntExtra(
@@ -117,9 +135,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         binding.switchFingerprintLogin.isChecked = sessionManager.fetchTouchIdEnabled()
 
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
-            binding.btnSave.isEnabled = true
 
             if (isChecked) {
+                binding.btnSave.isEnabled = true
+
                 val biometricManager = BiometricManager.from(this)
                 when (biometricManager.canAuthenticate()) {
                     BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
@@ -132,6 +151,8 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     }
 
                     BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                        biometricIsNotEnabled=true
+
                         displayAccountSettingsDialog()
 
 
@@ -150,6 +171,8 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
                     }
                 }
+            }else{
+                binding.btnSave.isEnabled = !biometricIsNotEnabled
             }
         }
 
@@ -210,6 +233,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                         ).show()
                     }
                     binding.switchFingerprintLogin.isChecked = false
+                    binding.btnSave.isEnabled=false
 
                 }
 
@@ -218,7 +242,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                 ) {
                     super.onAuthenticationSucceeded(result)
                     binding.switchFingerprintLogin.isChecked = true
-                    // btnSave.enable()
                 }
 
 
