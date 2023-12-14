@@ -49,6 +49,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener {
 
+    private var isBioetricChanged: Boolean?=false
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -131,6 +132,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private fun setView() {
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             from = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+        }
+        if (intent.hasExtra(Constants.IS_BIOMETRIC_CHANGED)) {
+            isBioetricChanged = intent.getBooleanExtra(Constants.IS_BIOMETRIC_CHANGED,false)
         }
 
         navController = (supportFragmentManager.findFragmentById(
@@ -254,6 +258,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 }
             }
         )
+        if(isBioetricChanged!!){
+    //TODO navigate to biometric success screen
+        }
     }
 
     private fun changeBottomIconColors(pos: Int) {

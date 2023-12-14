@@ -447,11 +447,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                 intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
                 startActivity(intent)
             } else {
-                loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
+//                loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
 
                 startNewActivityByClearingStack(HomeActivityMain::class.java) {
                     putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
-                    putBoolean(Constants.IS_BIOMETRIC_CHANGED,true)
                     putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 }
 //                dashboardViewModel.getAccountDetailsData()
@@ -459,7 +458,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
         } else {
-            finish()
+            startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
+                putBoolean(Constants.IS_BIOMETRIC_CHANGED,true)
+                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            }
         }
     }
 
