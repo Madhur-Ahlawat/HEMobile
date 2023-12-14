@@ -3,6 +3,8 @@ package com.conduent.nationalhighways.ui.auth.login
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -68,6 +70,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var from: String = ""
     private var crossingCount: Int = 0
+    private var hasFaceBiometric=false
+    private var hasTouchBiometric=false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -104,7 +108,16 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                             loader?.dismiss()
                         }
                         sessionManager?.saveTouchIdEnabled(false)
-                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+                        if (hasTouchBiometric&&hasFaceBiometric){
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+
+                        }else if (hasFaceBiometric){
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+                        }else{
+                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+                        }
 
 
                     } else {
@@ -235,6 +248,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     override fun initViewBinding() {
         binding = FragmentLoginChangesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        hasFaceBiometric = Utils.hasFaceId(this)
+
+        hasTouchBiometric = Utils.hasTouchId(this)
+
+
+
         init()
         initCtrl()
     }
@@ -376,11 +396,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun displayFingerPrintPopup(): Boolean {
-        if (sessionManager.fetchTouchIdEnabled()) {
-
-            return true
-        }
-        return false
+        return sessionManager.fetchTouchIdEnabled()
     }
 
     private fun fingerPrintLogin() {
@@ -463,7 +479,18 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 loader?.dismiss()
             }
             sessionManager?.saveTouchIdEnabled(false)
-            displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+
+            if (hasTouchBiometric&&hasFaceBiometric){
+                displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+
+            }else if (hasFaceBiometric){
+                displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+            }else{
+                displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+            }
 
 
         } else {
