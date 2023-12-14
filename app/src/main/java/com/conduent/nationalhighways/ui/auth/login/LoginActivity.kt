@@ -108,7 +108,16 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                             loader?.dismiss()
                         }
                         sessionManager?.saveTouchIdEnabled(false)
-                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+                        if (hasTouchBiometric&&hasFaceBiometric){
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+
+                        }else if (hasFaceBiometric){
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+                        }else{
+                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+                        }
 
 
                     } else {
