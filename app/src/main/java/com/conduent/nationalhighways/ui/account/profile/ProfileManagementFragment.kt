@@ -157,7 +157,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                     else {
                         profileDetailModel = status.data
 //                        profileDetailModel?.personalInformation?.phoneCell = ""
-                        (personalInformation?.firstName + " " + personalInformation?.lastName).also {
+                        (Utils.capitalizeString(personalInformation?.firstName) + " " + Utils.capitalizeString(personalInformation?.lastName)).also {
                             binding.fullName.text = it
                         }
 
@@ -172,7 +172,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
 
                             binding.address.text =
-                                personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode+"\n"+ Utils.getCountryName(sessionManager,personalInformation?.country?:"")
+                                personalInformation?.addressLine1 + "\n" + personalInformation?.addressLine2 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode+"\n"+ Utils.getCountryName(sessionManager,personalInformation?.country?:"")
                         }
                         binding.emailAddressProfile.text =
                             personalInformation?.userName?.lowercase()

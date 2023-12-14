@@ -48,7 +48,7 @@ class ManualTopUpSuccessfulFragment : BaseFragment<FragmentManualTopUpSuccessful
         model = arguments?.getParcelable(Constants.DATA)
         binding.tvReceiptNo.text = model?.transactionId
         binding.tvEmail.text = model?.emailMessage
-        binding.tvDate.text = DateUtils.currentDateAs()
+        binding.tvDate.text = DateUtils.currentDateAs(DateUtils.mmmm_dd_yyyy)
         sessionManager.fetchAccountEmailId()?.let {
             binding.tvEmail.text = it
         }

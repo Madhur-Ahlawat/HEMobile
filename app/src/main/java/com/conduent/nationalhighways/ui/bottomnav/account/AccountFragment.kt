@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.ui.bottomnav.account
 
 import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +18,8 @@ import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BackPressListener
@@ -239,10 +243,27 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 //            }
 
             R.id.sign_out -> {
-//                LogoutDialog.newInstance(
-//                    this
-//                ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
-                logOutViewModel.logout()
+
+                displayCustomMessage(resources.getString(R.string.str_signout_your_account),
+                    resources.getString(R.string.str_signout_your_account_desc),
+                    resources.getString(R.string.str_continue),
+                    resources.getString(R.string.str_cancel),
+                    object : DialogPositiveBtnListener {
+                        override fun positiveBtnClick(dialog: DialogInterface) {
+                            logOutViewModel.logout()
+                        }
+                    },
+                    object : DialogNegativeBtnListener {
+                        override fun negativeBtnClick(dialog: DialogInterface) {
+                        }
+                    },
+                    View.VISIBLE,
+                    cancelButtonColor = requireActivity().resources.getColor(R.color.hyperlink_blue2, null),
+                    typeFace = Typeface.createFromAsset(
+                        requireActivity().assets,
+                        "open_sans_semibold.ttf"
+                    )
+                )
 
             }
 

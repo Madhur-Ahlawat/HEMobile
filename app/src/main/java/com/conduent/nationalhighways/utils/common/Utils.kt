@@ -38,6 +38,7 @@ import com.conduent.nationalhighways.databinding.DialogRetryBinding
 import com.conduent.nationalhighways.databinding.DialogSessionexpiryBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.DateUtils
@@ -190,7 +191,7 @@ object Utils {
             mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
         Log.e("TOPUP", mText + "\n\n")
-        if (mText.isNotEmpty()) {
+        if (mText.isNotEmpty() ) {
             if (mText.length == 1 && mText.equals(".")) {
                 mText = "0"
             }
@@ -198,12 +199,24 @@ object Utils {
 
                 if (mText.toDouble() < minimumAmount) {
                     if (isTopUp) {
-                        nhTextInputCell.setErrorText(
-                            nhTextInputCell.context.getString(
-                                R.string.str_top_up_amount_must_be_more,
-                                minimumAmount.toString()
+
+                        if(minimumAmount ==10.00){
+                            nhTextInputCell.setErrorText(
+                                nhTextInputCell.context.getString(
+                                    R.string.str_top_up_amount_must_be_more,
+                                    minimumAmount.toInt().toString()
+                                )
                             )
-                        )
+
+                        }else{
+                            nhTextInputCell.setErrorText(
+                                nhTextInputCell.context.getString(
+                                    R.string.str_top_up_amount_must_be_more,
+                                    minimumAmount.toString()
+                                )
+                            )
+
+                        }
                     } else {
                         nhTextInputCell.setErrorText(
                             nhTextInputCell.context.getString(
@@ -507,7 +520,7 @@ object Utils {
         sessionManager: SessionManager,
         apiService: ApiService
     ) {
-        if (sessionManager.getLoggedInUser()) {
+        if (context is HomeActivityMain) {
             displayCustomMessage(
                 context,
                 context,
@@ -516,7 +529,7 @@ object Utils {
                 context.getString(R.string.str_stay_signed_in),
                 context.getString(R.string.str_sign_out),
                 listener,
-                sessionManager, apiService
+                sessionManager, apiService,true
             )
 
         } else {
@@ -528,14 +541,14 @@ object Utils {
                 context.getString(R.string.str_stay_on_the_app),
                 context.getString(R.string.str_delete_my_answers),
                 listener,
-                sessionManager, apiService
+                sessionManager, apiService,false
             )
 
         }
     }
 
     private fun countDownTimer(
-        activity: Activity, sessionManager: SessionManager, message: TextView
+        activity: Activity, sessionManager: SessionManager, message: TextView,loggedInUser:Boolean
     ): CountDownTimer {
 
         val countDownTimer = object : CountDownTimer(120000, 1000) {
@@ -545,10 +558,19 @@ object Utils {
                 val min = millisUntilFinished / 60000 % 60
                 val sec = millisUntilFinished / 1000 % 60
 
-                message.text = activity.resources.getString(
-                    R.string.str_for_your_security_account_holder,
-                    f.format(min) + ":" + f.format(sec)
-                )
+                if(loggedInUser){
+                    message.text = activity.resources.getString(
+                        R.string.str_for_your_security_account_holder,
+                        f.format(min) + ":" + f.format(sec)
+                    )
+
+                }else{
+                    message.text = activity.resources.getString(
+                        R.string.str_for_your_security_non_account_holder,
+                        f.format(min) + ":" + f.format(sec)
+                    )
+
+                }
 
 
             }
@@ -577,9 +599,13 @@ object Utils {
         negativeBtnTxt: String,
         listener: LogoutListener? = null,
         sessionManager: SessionManager,
-        apiService: ApiService
+        apiService: ApiService,
+        loggedInUser:Boolean=false
     ) {
-
+        Log.e(
+            "TAG",
+            "displayCustomMessage() called with: activity = $activity, context = $context, fTitle = $fTitle, message = $message, positiveBtnTxt = $positiveBtnTxt, negativeBtnTxt = $negativeBtnTxt, listener = $listener, sessionManager = $sessionManager, apiService = $apiService"
+        )
         val dialog = Dialog(context)
         dialog.setCancelable(false)
 
@@ -597,7 +623,7 @@ object Utils {
             WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT
         ) //Controlling width and height.
 
-        val countDownTimer = countDownTimer(activity, sessionManager, binding.message)
+        val countDownTimer = countDownTimer(activity, sessionManager, binding.message,loggedInUser)
         binding.title.text = fTitle
         binding.message.text = message
         binding.cancelBtn.text = negativeBtnTxt
@@ -605,7 +631,7 @@ object Utils {
         binding.cancelBtn.setOnClickListener {
 //            nListener?.negativeBtnClick(dialog)
             countDownTimer.cancel()
-            if (sessionManager.getLoggedInUser()) {
+            if (activity is HomeActivityMain) {
                 sessionManager.clearAll()
                 redirectToSignoutPage(activity)
             } else {
@@ -628,62 +654,6 @@ object Utils {
 
 
     }
-
-    fun displayRetryDialog(
-        activity: Activity,
-        listener: OnRetryClickListener? = null,
-        api_URL: String
-    ) {
-
-        val dialog = Dialog(activity)
-        dialog.setCancelable(false)
-        val binding: DialogRetryBinding = DialogRetryBinding.inflate(LayoutInflater.from(activity))
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setContentView(binding.root)
-
-        dialog.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
-        ) //Controlling width and height.
-
-
-        binding.retryBtn.setOnClickListener {
-            listener?.onRetryClick(api_URL)
-            dialog.cancel()
-        }
-        dialog.show()
-
-
-    }
-
-    fun displayRetryDialog(
-        activity: Context,
-        chain: Interceptor.Chain? = null
-    ) {
-
-        val dialog = Dialog(activity)
-        dialog.setCancelable(false)
-        val binding: DialogRetryBinding = DialogRetryBinding.inflate(LayoutInflater.from(activity))
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.setContentView(binding.root)
-
-        dialog.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT
-        ) //Controlling width and height.
-
-
-        binding.retryBtn.setOnClickListener {
-//            chain.proceed(chain.request())
-            dialog.cancel()
-        }
-        dialog.show()
-
-
-    }
-
     fun removeGivenStringCharactersFromString(characterString: String, input: String): String {
         characterString.forEach {
             input.replace(it.toString(), "")

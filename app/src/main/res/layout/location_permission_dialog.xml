@@ -25,6 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:paddingLeft="@dimen/margin_10dp"
+                android:paddingRight="@dimen/margin_10dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:text="@string/str_allow_location_title"

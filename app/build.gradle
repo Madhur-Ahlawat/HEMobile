@@ -274,9 +274,13 @@ android {
         implementation 'org.bouncycastle:bcpkix-jdk15to18:1.68'
         implementation 'org.bouncycastle:bcprov-jdk15to18:1.68'
 
-
         implementation 'androidx.activity:activity-ktx:1.8.1'
         implementation 'com.github.bumptech.glide:glide:4.16.0'
+
+        //SMS retriever API
+        implementation 'com.google.android.gms:play-services-auth:20.7.0'
+        implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
+        //https://stackoverflow.com/questions/51365778/how-to-generate-11-char-hash-key-for-sms-retriever-with-google-app-signing
     }
 
     hilt {

@@ -406,6 +406,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
         when (status) {
             is Resource.Success -> {
+                Log.e("TAG", "handleAccountDetailsResponse: " )
                 dashboardViewModel.personalInformationData.value = status.data?.personalInformation
                 dashboardViewModel.accountInformationData.value = status.data?.accountInformation
                 personalInformation = status.data?.personalInformation
@@ -485,7 +486,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-        sessionManager.clearAll()
+//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager, api)
     }
 

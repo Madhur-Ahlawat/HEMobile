@@ -95,6 +95,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     )
                     sessionManager.clearAll()
                     binding.btnSubmit.text = getString(R.string.sign_in)
+                    binding.signinBt.gone()
                 } else {
 
                     title?.text = getString(R.string.profile_name)
@@ -117,11 +118,13 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                         ), Html.FROM_HTML_MODE_COMPACT
                     )
                     binding.btnSubmit.text = getString(R.string.str_continue)
+                    binding.signinBt.gone()
                 }
 
             }
 
             PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
+                binding.signinBt.gone()
                 title?.text = getString(R.string.profile_address)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.address_change_successful)
@@ -139,6 +142,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.title.text = getString(R.string.communication_change_successful)
                 binding.subTitle.gone()
                 binding.btnSubmit.text = getString(R.string.str_continue)
+                binding.signinBt.gone()
             }
 
             PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
@@ -149,6 +153,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     binding.title.text = getString(R.string.phone_number_change_successful)
                     HomeActivityMain.setTitle(getString(R.string.profile_phone_number))
                 } else {
+                    HomeActivityMain.dataBinding?.backButton?.gone()
                     binding.title.text = getString(R.string.mobile_change_successful)
                     HomeActivityMain.setTitle(getString(R.string.profile_mobile_number))
                 }
@@ -159,9 +164,11 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     ), Html.FROM_HTML_MODE_COMPACT
                 )
                 binding.btnSubmit.text = getString(R.string.str_continue)
+                binding.signinBt.gone()
             }
 
             PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                binding.signinBt.gone()
                 title?.text = getString(R.string.profile_2fa)
                 val data = navData as PersonalInformation?
                 binding.title.text = getString(R.string.two_factor_change_successful)

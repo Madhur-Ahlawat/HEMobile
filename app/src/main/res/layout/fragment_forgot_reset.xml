@@ -48,7 +48,7 @@
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/margin_30dp"
                 android:gravity="center"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:text="@string/str_continue_login" />
 
 

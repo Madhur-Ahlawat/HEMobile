@@ -245,7 +245,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.editText.text
                         .toString().trim() && isPayForCrossingFlow.not()
                 ) {
-                    Log.e("TAG", "onClick: isCrossingCall --? " )
                     if (edit_summary) {
                         findNavController().navigate(
                             R.id.action_findVehicleFragment_to_accountSummaryFragment,
@@ -282,11 +281,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 val addedVehicleList = NewCreateAccountRequestModel.addedVehicleList
                 var isVehicleExist = false
                 for (obj in addedVehicleList) {
-                    if (obj?.plateInfo?.number.equals(numberPlate, true)) {
+                    if (obj?.plateInfo?.number?.replace(" ","")?.lowercase()?.trim().equals(numberPlate.replace(" ","").lowercase().trim(), true)) {
                         isVehicleExist = true
                     }
                 }
-                Log.e("TAG", "onClick: isCrossingCall isVehicleExist "+isVehicleExist )
 
                 if (isVehicleExist) {
                     NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal = true
