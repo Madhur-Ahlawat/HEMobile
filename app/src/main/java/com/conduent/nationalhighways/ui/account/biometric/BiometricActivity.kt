@@ -52,11 +52,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private var twoFA: Boolean = false
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private val toggleDelay:Long=200
+    private val toggleDelay: Long = 200
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
-    private var isScreenLaunchedBefore:Boolean=false
+    private var isScreenLaunchedBefore: Boolean = false
+    private var isAuthenticaed:Boolean=false
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -120,12 +121,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             binding.biometricCancel.gone()
         }
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
-
+            binding.btnSave.isEnabled = true
             if (isChecked) {
-                checkBiometricStatus()
-            }
-            else{
-                binding.btnSave.isEnabled = true
+
+            } else {
                 sessionManager.saveTouchIdEnabled(false)
             }
         }
@@ -134,7 +133,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
     override fun onResume() {
         super.onResume()
-        if (binding.switchFingerprintLogin.isChecked && isScreenLaunchedBefore) {
+        if (binding.switchFingerprintLogin.isChecked && !isScreenLaunchedBefore) {
             isScreenLaunchedBefore = true
             val biometricManager = BiometricManager.from(this)
             when (biometricManager.canAuthenticate()) {
@@ -200,7 +199,8 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
         }
     }
-    private fun checkBiometricStatus(){
+
+    private fun checkBiometricStatus() {
         val biometricManager = BiometricManager.from(this)
         when (biometricManager.canAuthenticate()) {
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
@@ -228,9 +228,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             BiometricManager.BIOMETRIC_SUCCESS -> {
-                if (sessionManager.fetchTouchIdEnabled()) {
-                    binding.biometricCancel.gone()
-                }
                 displayFingerPrintPopup()
             }
 
@@ -264,6 +261,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
         }
     }
+
     private fun displayAccountSettingsDialog() {
         displayCustomMessage(getString(R.string.enable_biometric),
             getString(R.string.biometric_has_not_been_setup),
@@ -319,21 +317,15 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                         ).show()
                     }
                     binding.switchFingerprintLogin.isChecked = false
-
+                    isAuthenticaed=false
                 }
 
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    binding.switchFingerprintLogin.isChecked = true
-                    sessionManager?.saveTouchIdEnabled(true)
-                    if(sessionManager?.fetchTouchIdEnabled()!!){
-                        binding.biometricCancel.gone()
-                        binding.btnSave.isEnabled=true
-                    }
-
-                    // btnSave.enable()
+                    isAuthenticaed=true
+                    binding.biometricCancel.gone()
                 }
 
 
@@ -359,8 +351,74 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             R.id.btn_save -> {
-                saveBiometric()
+                if(binding.switchFingerprintLogin.isChecked && isAuthenticaed){
+                    sessionManager?.saveTouchIdEnabled(true)
+                }
+                else if (binding.switchFingerprintLogin.isChecked==false){
+                    sessionManager?.saveTouchIdEnabled(false)
+                    isAuthenticaed=false
+                }
+                else{
+                    val biometricManager = BiometricManager.from(this)
+                    when (biometricManager.canAuthenticate()) {
+                        BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                            Toast.makeText(this, "No Hardware found", Toast.LENGTH_SHORT).show()
+                            binding.switchFingerprintLogin.postDelayed(object : Runnable {
+                                override fun run() {
+                                    binding.switchFingerprintLogin.isChecked = false
+                                }
+                            }, toggleDelay)
+                        }
 
+                        BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                            Toast.makeText(this, "No Hardware unavailable", Toast.LENGTH_SHORT).show()
+                            binding.switchFingerprintLogin.postDelayed(object : Runnable {
+                                override fun run() {
+                                    binding.switchFingerprintLogin.isChecked = false
+                                }
+                            }, toggleDelay)
+                        }
+
+                        BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                            displayAccountSettingsDialog()
+                        }
+
+                        BiometricManager.BIOMETRIC_SUCCESS -> {
+                            displayFingerPrintPopup()
+                        }
+
+                        BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
+                            Toast.makeText(this, "Biometric security update required!", Toast.LENGTH_SHORT)
+                                .show()
+
+                            binding.switchFingerprintLogin.postDelayed(object : Runnable {
+                                override fun run() {
+                                    binding.switchFingerprintLogin.isChecked = false
+                                }
+                            }, toggleDelay)
+                        }
+
+                        BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
+                            Toast.makeText(this, "Biometric unsupported!", Toast.LENGTH_SHORT).show()
+                            binding.switchFingerprintLogin.postDelayed(object : Runnable {
+                                override fun run() {
+                                    binding.switchFingerprintLogin.isChecked = false
+                                }
+                            }, toggleDelay)
+                        }
+
+                        BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
+                            Toast.makeText(this, "Biometric status unknown!", Toast.LENGTH_SHORT).show()
+                            binding.switchFingerprintLogin.postDelayed(object : Runnable {
+                                override fun run() {
+                                    binding.switchFingerprintLogin.isChecked = false
+                                }
+                            }, toggleDelay)
+                        }
+                    }
+
+                }
+                saveBiometric()
             }
 
             R.id.biometric_cancel -> {
@@ -379,8 +437,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
         }
         checkTwoFA()
-
-
     }
 
     private fun checkTwoFA() {
@@ -393,7 +449,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             } else {
                 loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
 
-                dashboardViewModel.getAccountDetailsData()
+                startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
+                    putBoolean(Constants.IS_BIOMETRIC_CHANGED,true)
+                    putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                }
+//                dashboardViewModel.getAccountDetailsData()
 
             }
 
@@ -549,7 +610,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
 //        sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {
