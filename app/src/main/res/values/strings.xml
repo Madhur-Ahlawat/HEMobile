@@ -908,7 +908,11 @@
     <string name="biometriclogin">Biometric Login</string>
     <string name="biometrics">Biometrics</string>
     <string name="biometric">Biometric</string>
-    <string name="usefingerprinttologin">Use fingerprint or face to login</string>
+    <string name="usefingerprinttologin">Use Touch ID or Face ID to login</string>
+    <string name="usetouchidtologin">Use Touch ID to login</string>
+    <string name="usefaceidtologin">Use Face ID to login</string>
+
+
     <string name="pleaseenablebiometric">Please enable Biometric login in Settings.</string>
     <string name="free">Free</string>
 
@@ -1208,8 +1212,10 @@
     <string name="str_radio_sms"><Data><![CDATA[<b>Mobile</b> %s<br><i>Message and data rates may apply</i></b>]]></Data></string>
     <string name="str_radio_email"><Data><![CDATA[<b>Email</b> %s]]></Data></string>
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
-    <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
-    <string name="str_enable_face_ID">Enable Biometric</string>
+    <string name="str_enable_face_ID_fingerprint">Enable Face ID or Touch ID</string>
+    <string name="str_enable_face_ID">Enable Face ID</string>
+    <string name="str_enable_touch_ID">Enable Touch ID</string>
+
     <string name="str_for_your_security_we_have_locked">For your security we have locked your account.Try again after 30 minutes.</string>
     <string name="vehicle_management">Vehicle Management</string>
     <string name="vehicle_list">Vehicle List</string>

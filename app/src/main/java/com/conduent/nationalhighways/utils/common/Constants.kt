@@ -359,6 +359,7 @@ object Constants {
     const val ADDRESS_LIST = "ADDRESS_LIST"
     const val SAVED_CARDS = "SAVED_CARDS"
     const val NAV_FLOW_FROM = "navFlowFrom"
+    const val IS_BIOMETRIC_CHANGED = "IS_BIOMETRIC_CHANGED"
     const val FIRST_TYM_REDIRECTS = "FIRST_TYM_REDIRECTS"
     const val NAV_DATA_KEY = "navDataKey"
     const val FROM_SUMMARY_PAGE = "fromSummaryPage"

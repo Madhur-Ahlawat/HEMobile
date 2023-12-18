@@ -3,6 +3,8 @@ package com.conduent.nationalhighways.ui.auth.login
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -40,7 +42,6 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.common.SessionManager.Companion.LAST_LOGIN_EMAIL
 import com.conduent.nationalhighways.utils.extn.*
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,6 +70,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var from: String = ""
     private var crossingCount: Int = 0
+    private var hasFaceBiometric=false
+    private var hasTouchBiometric=false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -98,15 +101,23 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     }
                 } else {
                     crossingHistoryApi()
-
-
-                    if (sessionManager.fetchStringData(LAST_LOGIN_EMAIL) != binding.edtEmail.getText().toString()
+                    if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
                             .trim()
                     ) {
                         if (loader?.isVisible == true) {
                             loader?.dismiss()
                         }
-                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+                        sessionManager?.saveTouchIdEnabled(false)
+                        if (hasTouchBiometric&&hasFaceBiometric){
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+
+                        }else if (hasFaceBiometric){
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+                        }else{
+                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+                        }
 
 
                     } else {
@@ -152,15 +163,15 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     }
 
 //                    if (crossingCount >= 0) {
-                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                    intent.putExtra(
-                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                    )
-                    startActivity(intent)
+                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                        intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+                        intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
+                        intent.putExtra(
+                            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                        )
+                        startActivity(intent)
 //                    }
                 } else {
                     startNewActivityByClearingStack(HomeActivityMain::class.java) {
@@ -237,14 +248,21 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     override fun initViewBinding() {
         binding = FragmentLoginChangesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        hasFaceBiometric = Utils.hasFaceId(this)
+
+        hasTouchBiometric = Utils.hasTouchId(this)
+
+
+
         init()
         initCtrl()
     }
 
 
     private fun init() {
-        BaseApplication.flowNameAnalytics = Constants.LOGIN
-        BaseApplication.screenNameAnalytics = ""
+        BaseApplication.flowNameAnalytics=Constants.LOGIN
+        BaseApplication.screenNameAnalytics=""
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             intent?.apply {
                 from = getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
@@ -320,7 +338,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                                     Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
                                 )
                             )
-                        if (!Patterns.EMAIL_ADDRESS.matcher(
+                       if (!Patterns.EMAIL_ADDRESS.matcher(
                                 binding.edtEmail.getText().toString()
                             ).matches()
                         ) {
@@ -378,11 +396,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun displayFingerPrintPopup(): Boolean {
-        if (sessionManager.fetchTouchIdEnabled()) {
-
-            return true
-        }
-        return false
+        return sessionManager.fetchTouchIdEnabled()
     }
 
     private fun fingerPrintLogin() {
@@ -456,20 +470,43 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             setLoggedInUser(true)
 //            saveUserName(binding.edtEmail.getText().toString())
             twoFAEnable = response.data?.require2FA == "true"
-
-
         }
 
-        if (twoFAEnable) {
+        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                .trim()
+        ) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-            startActivity(intent)
+            sessionManager?.saveTouchIdEnabled(false)
+
+
+            if (hasTouchBiometric&&hasFaceBiometric){
+                displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+
+            }else if (hasFaceBiometric){
+                displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+            }else{
+                displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+            }
+
+
         } else {
-            dashboardViewModel.getLRDSResponse()
+            if (twoFAEnable) {
+                if (loader?.isVisible == true) {
+                    loader?.dismiss()
+                }
+                val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                startActivity(intent)
+            } else {
+                dashboardViewModel.getLRDSResponse()
+            }
         }
+
+        sessionManager.saveUserName(binding.edtEmail.text.toString())
 
 
 
