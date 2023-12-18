@@ -107,7 +107,10 @@
         tools:layout="@layout/fragment_maximum_vehicle_number">
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
-            app:destination="@+id/findYourVehicleFragment" />
+            app:destination="@+id/findYourVehicleFragment"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
+
         <action
             android:id="@+id/action_maximumFragment_to_createAccountSummaryFragment"
             app:destination="@id/createAccountSummaryFragment" />

@@ -1656,6 +1656,10 @@
     <string name="str_max_payment_methods">Max Payment Methods</string>
     <string name="str_max_payment_methods_desc">To add a new payment method you will need to delete one of the two already setup.</string>
     <string name="str_signout_your_account">Sign Out Your Account</string>
+    <string name="str_number_of_crossings">Number of Crossings</string>
+    <string name="str_auto_pay">Auto-Pay</string>
     <string name="str_signout_your_account_desc">Signing out of your account will disable your Biometrics. you will need to re-enter these next time you log in.</string>
+    <string name="str_youtube"><u>National Highways YouTube</u></string>
+    <string name="str_faq"><u>DartCharge FAQs</u></string>
 
 </resources>

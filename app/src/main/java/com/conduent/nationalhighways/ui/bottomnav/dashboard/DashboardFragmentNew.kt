@@ -576,9 +576,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus,1
                         )
                     }
-                    it.accountFinancialstatus?.let {
-                        valueAutopay.text = it
-                    }
+//                    it.accountFinancialstatus?.let {
+//                        valueAutopay.text = it
+//                    }
+
+                    valueAutopay.text = resources.getString(R.string.str_auto_pay)
                     it.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)

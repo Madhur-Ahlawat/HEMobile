@@ -74,7 +74,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
-        setNotificationDescText()
 
         BaseApplication.screenNameAnalytics=""
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
@@ -138,10 +137,10 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     private fun setNotificationDescText() {
-        val disableNotificatiosText = "Click here to <disable> notifications when you cross"
-        val enableNotificatiosText = "Click here to <enable> notifications when you cross"
-        var highlightText = "<enable>"
-        var spannableString :SpannableString?= null
+//        val disableNotificatiosText = "Click here to <disable> notifications when you cross"
+//        val enableNotificatiosText = "Click here to <enable> notifications when you cross"
+//        var highlightText = "enable"
+//        var spannableString :SpannableString?= null
 
         if(Utils.areNotificationsEnabled(requireContext())==false){
             sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,false)
@@ -149,28 +148,37 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
         if(sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)==true
             && sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)==true){
-            highlightText="<disable>"
-            val startIndex = disableNotificatiosText.indexOf(highlightText)
-            val endIndex = startIndex + highlightText.length
-            spannableString =SpannableString(disableNotificatiosText)
-            spannableString.setSpan(ForegroundColorSpan(resources.getColor(R.color.blue_color,null)), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//            highlightText="disable"
+//            val startIndex = disableNotificatiosText.indexOf(highlightText)
+//            val endIndex = startIndex + highlightText.length
+//            spannableString =SpannableString(disableNotificatiosText)
+//            spannableString.setSpan(ForegroundColorSpan(resources.getColor(R.color.blue_color,null)), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            binding.notificationTv.text=resources.getString(R.string.str_disable_notifications)
 
         }else{
-            highlightText="<enable>"
-            val startIndex = enableNotificatiosText.indexOf(highlightText)
-            val endIndex = startIndex + highlightText.length
-            spannableString =SpannableString(enableNotificatiosText)
-            spannableString.setSpan(ForegroundColorSpan(resources.getColor(R.color.blue_color,null)), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+//            highlightText="<enable>"
+//            val startIndex = enableNotificatiosText.indexOf(highlightText)
+//            val endIndex = startIndex + highlightText.length
+//            spannableString =SpannableString(enableNotificatiosText)
+//            spannableString.setSpan(ForegroundColorSpan(resources.getColor(R.color.blue_color,null)), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            binding.notificationTv.text=resources.getString(R.string.str_enable_notifications)
 
         }
 
-        binding.notificationTv.text=spannableString
     }
 
     override fun onResume() {
         super.onResume()
         sessionManager.setLoggedInUser(false)
 
+
+        if(Utils.areNotificationsEnabled(requireContext())==false){
+            sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
+        }
+        if(Utils.checkLocationpermission(requireContext())==false){
+            sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
+        }
+        setNotificationDescText()
 
 //        if (!isChecked) {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
