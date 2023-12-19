@@ -172,13 +172,18 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
+                Log.e("TAG", "handleAccountResponse() called with: response = $response")
+                Log.e("TAG", "handleAccountResponse() called with: response = ${response.errorModel?.message}")
                 if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
                         Constants.INVALID_TOKEN
                     )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
                 ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
-                    redirectToTryAgainPaymentScreen()
+                    if(response.errorModel?.message.equals("Response is null")){
+                    }else{
+                        redirectToTryAgainPaymentScreen()
+                    }
                 }
             }
 

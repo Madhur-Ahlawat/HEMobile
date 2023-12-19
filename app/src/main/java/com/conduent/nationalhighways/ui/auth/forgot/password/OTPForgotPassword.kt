@@ -1054,9 +1054,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 personalInformation = status.data?.personalInformation
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
+                accountStatus = status.data?.accountInformation?.status?:""
 
-
-                if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                if (accountStatus.equals(Constants.SUSPENDED, true)) {
                     crossingHistoryApi()
                 } else {
                     if (!(sessionManager.hasAskedForBiometric() && sessionManager?.fetchTouchIdEnabled()!!)) {
@@ -1165,9 +1165,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    if (it.transactionList != null) {
-                        navigateWithCrossing(it.transactionList.count ?: 0)
-
+                    if (accountStatus.equals(Constants.SUSPENDED, true)) {
+                        navigateWithCrossing(it.transactionList?.count ?: 0)
                     } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                             putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
@@ -1186,9 +1185,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
-                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                        putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                    if (accountStatus.equals(Constants.SUSPENDED, true)) {
+                        navigateWithCrossing( 0)
+                    } else {
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                        }
+
                     }
                 }
             }

@@ -157,11 +157,14 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         super.onResume()
         when (navFlowCall) {
             Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                oldPushOption = sessionManager.fetchNotificationOption() ?: false
+                if(Utils.areNotificationsEnabled(requireContext())==false){
+                    oldPushOption =  false
+                }else{
+                    oldPushOption = sessionManager.fetchNotificationOption() ?: false
+                }
                 binding.switchNotification.isChecked =
-                    sessionManager.fetchNotificationOption() ?: false
+                    oldPushOption
             }
-
         }
     }
 
