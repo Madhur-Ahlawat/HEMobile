@@ -3,8 +3,6 @@ package com.conduent.nationalhighways.ui.auth.login
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -63,7 +61,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private lateinit var loginModel: LoginModel
     private var emailCheck: Boolean = false
     private var passwordCheck: Boolean = false
-    private var twoFAEnable: Boolean = false
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
@@ -91,6 +88,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
         Log.e("TAG", "handleLrdsResposne: ")
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (resource) {
 
             is Resource.Success -> {
@@ -104,36 +104,19 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
                             .trim()
                     ) {
-                        if (loader?.isVisible == true) {
-                            loader?.dismiss()
-                        }
                         sessionManager?.saveTouchIdEnabled(false)
-                        if (hasTouchBiometric&&hasFaceBiometric){
-                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
-
-                        }else if (hasFaceBiometric){
-                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-                        }else{
-                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
-
-                        }
-
-
-                    } else {
-                        if (twoFAEnable) {
-                            if (loader?.isVisible == true) {
-                                loader?.dismiss()
-                            }
-                            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                            startActivity(intent)
-                        } else {
-                            dashboardViewModel.getAccountDetailsData()
-
-                        }
+                        sessionManager?.saveHasAskedForBiometric(false)
                     }
 
+                    if (sessionManager.getTwoFAEnabled()) {
+
+                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                        intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
+                        startActivity(intent)
+                    } else {
+                        dashboardViewModel.getAccountDetailsData()
+                    }
                     sessionManager.saveUserName(binding.edtEmail.text.toString())
 
 
@@ -145,10 +128,44 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
         }
     }
+    private fun displayBiometricDialog(title: String) {
+        displayCustomMessage(title,
+            getString(R.string.doyouwantenablebiometric),
+            getString(R.string.enablenow),
+            getString(R.string.enablelater),
+            object : DialogPositiveBtnListener {
+                override fun positiveBtnClick(dialog: DialogInterface) {
+                    val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
+                    intent.putExtra(Constants.TWOFA, sessionManager?.getTwoFAEnabled())
+                    intent.putExtra(
+                        Constants.FROM_LOGIN_TO_BIOMETRIC,
+                        Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
+                    )
+                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
+
+                    startActivity(intent)
+
+
+                    //dialog.dismiss()
+
+
+                }
+            },
+            object : DialogNegativeBtnListener {
+                override fun negativeBtnClick(dialog: DialogInterface) {
+                    startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                        putString(Constants.NAV_FLOW_FROM, from)
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                    }
+                }
+            })
+    }
 
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
-
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
 
         when (status) {
             is Resource.Success -> {
@@ -158,25 +175,32 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                    if (loader?.isVisible == true) {
-                        loader?.dismiss()
-                    }
+
 
 //                    if (crossingCount >= 0) {
-                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                        intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
-                        intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                        intent.putExtra(
-                            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                        )
-                        startActivity(intent)
+                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                    )
+                    startActivity(intent)
 //                    }
                 } else {
-                    startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                        putString(Constants.NAV_FLOW_FROM, from)
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                    if (!(sessionManager.hasAskedForBiometric() && sessionManager?.fetchTouchIdEnabled()!!)) {
+                        sessionManager.saveHasAskedForBiometric(true)
+                        if (hasTouchBiometric && hasFaceBiometric) {
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+
+                        } else if (hasFaceBiometric) {
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+                        } else {
+                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+                        }
                     }
 
                 }
@@ -222,9 +246,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
             }
 
             else -> {
@@ -248,13 +269,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     override fun initViewBinding() {
         binding = FragmentLoginChangesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        hasFaceBiometric = Utils.hasFaceId(this)
-
-        hasTouchBiometric = Utils.hasTouchId(this)
-
-
-
         init()
         initCtrl()
     }
@@ -370,7 +384,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     fun initCtrl() {
-
+        hasFaceBiometric = Utils.hasFaceId(this)
+        hasTouchBiometric = Utils.hasTouchId(this)
         binding.apply {
             tvForgotPassword.setOnClickListener(this@LoginActivity)
             edtEmail.editText.addTextChangedListener { removeError() }
@@ -407,18 +422,15 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun handleLoginResponse(status: Resource<LoginResponse?>?) {
-        /* if (loader?.isVisible == true) {
-             loader?.dismiss()
-         }*/
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
         when (status) {
             is Resource.Success -> {
                 launchIntent(status)
             }
 
             is Resource.DataError -> {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
                 if (status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
@@ -459,9 +471,17 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun launchIntent(response: Resource.Success<LoginResponse?>) {
+        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                .trim()
+        ) {
 
+            sessionManager?.saveTouchIdEnabled(false)
+            sessionManager?.saveHasAskedForBiometric(false)
+        }
+        sessionManager.saveUserName(binding.edtEmail.text.toString())
         sessionManager.run {
             saveAuthToken(response.data?.accessToken ?: "")
+            saveTwoFAEnabled(response.data?.require2FA == "true")
             saveRefreshToken(response.data?.refreshToken ?: "")
             setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
             isSecondaryUser(response.data?.isSecondary ?: false)
@@ -469,44 +489,15 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             saveAccountType(response.data?.accountType ?: "")
             setLoggedInUser(true)
 //            saveUserName(binding.edtEmail.getText().toString())
-            twoFAEnable = response.data?.require2FA == "true"
         }
 
-        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
-                .trim()
-        ) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
-            sessionManager?.saveTouchIdEnabled(false)
-
-
-            if (hasTouchBiometric&&hasFaceBiometric){
-                displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
-
-            }else if (hasFaceBiometric){
-                displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-            }else{
-                displayBiometricDialog(getString(R.string.str_enable_touch_ID))
-
-            }
-
-
+        if (sessionManager.getTwoFAEnabled()) {
+            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+            startActivity(intent)
         } else {
-            if (twoFAEnable) {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
-                val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                startActivity(intent)
-            } else {
-                dashboardViewModel.getLRDSResponse()
-            }
+            dashboardViewModel.getLRDSResponse()
         }
-
-        sessionManager.saveUserName(binding.edtEmail.text.toString())
 
 
 
@@ -524,43 +515,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
-    private fun displayBiometricDialog(title: String) {
-        displayCustomMessage(title,
-            getString(R.string.doyouwantenablebiometric),
-            getString(R.string.enablenow),
-            getString(R.string.enablelater),
-            object : DialogPositiveBtnListener {
-                override fun positiveBtnClick(dialog: DialogInterface) {
-                    val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
-                    intent.putExtra(Constants.TWOFA, twoFAEnable)
-                    intent.putExtra(
-                        Constants.FROM_LOGIN_TO_BIOMETRIC,
-                        Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
-                    )
-                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
-
-                    startActivity(intent)
-
-
-                    //dialog.dismiss()
-
-
-                }
-            },
-            object : DialogNegativeBtnListener {
-                override fun negativeBtnClick(dialog: DialogInterface) {
-                    if (twoFAEnable) {
-                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                        startActivity(intent)
-                    } else {
-                        dashboardViewModel.getAccountDetailsData()
-
-                    }
-                }
-            })
-    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -671,9 +625,17 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun onBiometricSuccessful() {
-        val intent = Intent(this, HomeActivityMain::class.java)
-        intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
-        startActivity(intent)
+        if (sessionManager.getTwoFAEnabled()) {
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+            intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
+            startActivity(intent)
+        } else {
+            dashboardViewModel.getAccountDetailsData()
+        }
     }
 
 

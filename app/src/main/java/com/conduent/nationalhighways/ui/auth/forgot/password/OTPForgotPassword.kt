@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
@@ -34,7 +35,10 @@ import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryA
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.receiver.SmsBroadcastReceiver
+import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
@@ -104,6 +108,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private val dashboardViewmodel: DashboardViewModel by activityViewModels()
     private var accountStatus: String = ""
     private var smsBroadcastReceiver: SmsBroadcastReceiver?=null
+    var hasFaceBiometric = false
+    var hasTouchBiometric = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -112,6 +118,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         FragmentForgotOtpchangesBinding.inflate(inflater, container, false)
 
     override fun init() {
+        hasFaceBiometric = Utils.hasFaceId(requireContext())
+        hasTouchBiometric = Utils.hasTouchId(requireContext())
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
@@ -1051,9 +1059,24 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
                     crossingHistoryApi()
                 } else {
-                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                        putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                    if (!(sessionManager.hasAskedForBiometric() && sessionManager?.fetchTouchIdEnabled()!!)) {
+                        sessionManager.saveHasAskedForBiometric(true)
+                        if (hasTouchBiometric && hasFaceBiometric) {
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+
+                        } else if (hasFaceBiometric) {
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
+
+                        } else {
+                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+                        }
+                    }
+                    else{
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                        }
                     }
 
                 }
@@ -1088,6 +1111,40 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
 
     }
+
+    private fun displayBiometricDialog(title: String) {
+        displayCustomMessage(title,
+            getString(R.string.doyouwantenablebiometric),
+            getString(R.string.enablenow),
+            getString(R.string.enablelater),
+            object : DialogPositiveBtnListener {
+                override fun positiveBtnClick(dialog: DialogInterface) {
+                    val intent = Intent(requireActivity(), BiometricActivity::class.java)
+                    intent.putExtra(Constants.TWOFA, sessionManager?.getTwoFAEnabled())
+                    intent.putExtra(
+                        Constants.FROM_LOGIN_TO_BIOMETRIC,
+                        Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
+                    )
+                    intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+
+                    startActivity(intent)
+
+
+                    //dialog.dismiss()
+
+
+                }
+            },
+            object : DialogNegativeBtnListener {
+                override fun negativeBtnClick(dialog: DialogInterface) {
+                    requireActivity()?.startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                        putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                    }
+                }
+            })
+    }
+
 
     private fun crossingHistoryApi() {
         val request = CrossingHistoryRequest(

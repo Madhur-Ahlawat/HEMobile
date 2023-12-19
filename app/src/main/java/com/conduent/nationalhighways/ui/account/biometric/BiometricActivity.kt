@@ -366,7 +366,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             R.id.biometric_cancel -> {
-                checkTwoFA()
+//                checkTwoFA()
 
             }
         }
@@ -380,33 +380,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             sessionManager.saveTouchIdEnabled(false)
 
         }
-        checkTwoFA()
-    }
-
-    private fun checkTwoFA() {
-        if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
-            if (twoFA) {
-                val intent = Intent(this, AuthActivity::class.java)
-                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
-                startActivity(intent)
-            } else {
-//                loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
-
-                startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                    putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
-                    putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                }
-//                dashboardViewModel.getAccountDetailsData()
-
-            }
-
-        } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
-                putBoolean(Constants.IS_BIOMETRIC_CHANGED,true)
-                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-            }
+        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+            putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
+            putBoolean(Constants.IS_BIOMETRIC_CHANGED,true)
+            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         }
     }
 
