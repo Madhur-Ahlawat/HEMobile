@@ -28,13 +28,13 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showTo
 import com.conduent.nationalhighways.utils.GeofenceUtils
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>() {
 
-    private val LOCATION_PERMISSION_REQUEST_CODE = 1001
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -75,6 +75,9 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     override fun initCtrl() {
 
+        binding.gotoStartMenuBt.setOnClickListener {
+            requireActivity().startNormalActivityWithFinish(LandingActivity::class.java)
+        }
 
         binding.switchGeoLocation.setOnClickListener {
             if (binding.switchGeoLocation.isChecked) {
@@ -195,12 +198,11 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
     }
 
     private fun openAppSettings() {
-
-        val intent = Intent()
-        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        val uri = Uri.fromParts("package", requireActivity().getPackageName(), null)
-        intent.data = uri
-        startActivity(intent)
+        val appSettingsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val packageName = requireActivity().getPackageName() // Replace with your app's package name
+        val appSettingsUri = Uri.fromParts("package", packageName, null)
+        appSettingsIntent.data = appSettingsUri
+        startActivity(appSettingsIntent)
     }
 
     override fun observer() {

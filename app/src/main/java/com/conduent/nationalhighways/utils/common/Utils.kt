@@ -58,6 +58,7 @@ import java.lang.reflect.Field
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -129,33 +130,23 @@ object Utils {
 
     @RequiresApi(VERSION_CODES.O)
     fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
-        val dfDate = SimpleDateFormat("dd MMM yyyy hh:mm a")
 
-        var transactionListSorted: MutableList<TransactionData> = mutableListOf()
-        for (transaction in transactions) {
-            if (transactionListSorted.isEmpty() == true) {
-                transaction.showDateHeader = true
-                transactionListSorted.add(transaction)
-            } else {
-                if (transactionListSorted.last().balance == transaction.balance
-                ) {
-                } else {
-                    if (DateUtils.compareDates(
-                            transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
-                            transaction.transactionDate + " " + transaction.exitTime
-                        )
-                    ) {
-                        transactionListSorted.add(transactionListSorted.get(transactionListSorted.size - 1))
-                        transactionListSorted.add(transactionListSorted.size - 2, transaction)
-                    } else {
-                        transactionListSorted.add(transaction)
-                    }
-                }
-
+        transactions.sortWith(Comparator { o1, o2 ->
+            val dateFormat = SimpleDateFormat("dd MMM yyyy",Locale.ENGLISH)
+            var date1: Date? = null
+            var date2: Date? = null
+            try {
+                date1 = dateFormat.parse(o1.transactionDate)
+                date2 = dateFormat.parse(o2.transactionDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
             }
-
-        }
-        return transactionListSorted
+            if (date1 != null && date2 != null) {
+                return@Comparator date2.compareTo(date1)
+            }
+            return@Comparator 0
+        })
+        return transactions
     }
 
     @RequiresApi(VERSION_CODES.O)
