@@ -8,6 +8,8 @@ object Constants {
     const val generalTermsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
     const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions - General"
     const val paygTermsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions - PAYG"
+    const val TWOFA_ENABLED: String = "TWOFA_ENABLED"
+    const val HAS_ASKED_FOR_BIOMETRIC: String = "HAS_ASKED_FOR_BIOMETRIC"
     const val privacyPolicyPageName: String = "Android Dart Charge: Privacy Policy"
     const val otherWaysToPayPageName: String = "Android Dart Charge: Other ways to pay your charge"
     const val doYouHaveDartAccountPageName: String = "Android Dart Charge Non-Account Holder: Have a Dart Charge account?"

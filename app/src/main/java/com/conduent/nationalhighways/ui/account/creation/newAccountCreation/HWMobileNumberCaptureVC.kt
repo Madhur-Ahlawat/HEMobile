@@ -185,8 +185,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         val phoneNumberHintIntentResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
                 try {
-                    var matchedCountry=""
-                    var matchedCountryCode=""
+                    var matchedCountry:String?=null
+                    var matchedCountryCode:String?=null
                     retrievedPhoneNumber = Identity.getSignInClient(requireActivity()).getPhoneNumberFromIntent(result.data).replace(" ","").replace("-","")
                     countryCodesList.forEachIndexed { index, s ->
                         if(retrievedPhoneNumber.toString().contains(s)){
@@ -209,11 +209,17 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 //                            }
 //                        }
                     }
+                    if(matchedCountry.isNullOrEmpty()){
+                        binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                        binding.inputMobileNumber.setErrorText(getString(R.string.unfortunately_at_this_time_we_do_not_support_your_mobile_number))
+                    }
+                    else{
+                        binding.inputMobileNumber.setText(retrievedPhoneNumber.toString().replace(matchedCountryCode!!,""))
+                        binding.inputCountry.setSelectedValue(
+                            matchedCountry!!
+                        )
+                    }
 
-                    binding.inputMobileNumber.setText(retrievedPhoneNumber.toString().replace(matchedCountryCode,""))
-                    binding.inputCountry.setSelectedValue(
-                        matchedCountry
-                    )
                 } catch(e: Exception) {
                     Log.e(TAG, "Phone Number Hint failed")
                 }
