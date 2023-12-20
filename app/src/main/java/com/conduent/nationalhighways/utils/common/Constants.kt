@@ -428,7 +428,7 @@ object Constants {
     const val SERVER_ERROR = "server_error"
     const val API_STATE = "API_STATE"
     const val READ_STORAGE_REQUEST_CODE: Int = 1001
-    const val TIME_OUT_SEC = 30L
+    const val TIME_OUT_SEC = 60L
 
 
     //Notification Types

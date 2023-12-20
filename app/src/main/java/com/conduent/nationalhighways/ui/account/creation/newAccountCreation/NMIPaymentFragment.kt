@@ -180,7 +180,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
-                    if(response.errorModel?.message.equals("Response is null")){
+                    if(response.errorModel?.message.equals("Something went wrong. Try again later")){
                     }else{
                         redirectToTryAgainPaymentScreen()
                     }
