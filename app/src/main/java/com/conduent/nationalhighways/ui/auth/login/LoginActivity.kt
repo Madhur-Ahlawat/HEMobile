@@ -165,6 +165,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
+        Log.e("TAG", "handleAccountDetails() called with: status = $status")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -177,9 +178,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-
-
-//                    if (crossingCount >= 0) {
                     val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                     intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
@@ -189,9 +187,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                     )
                     startActivity(intent)
-//                    }
                 } else {
-                    if (!(sessionManager.hasAskedForBiometric() && sessionManager?.fetchTouchIdEnabled()!!)) {
+                    if (!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) {
                         sessionManager.saveHasAskedForBiometric(true)
                         if (hasTouchBiometric && hasFaceBiometric) {
                             displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
@@ -203,6 +200,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                             displayBiometricDialog(getString(R.string.str_enable_touch_ID))
 
                         }
+                    }else{
+                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, from)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                        }
+
                     }
 
                 }
