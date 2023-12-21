@@ -66,16 +66,6 @@ interface ApiService {
         @Field("client_secret") client_secret: String = CLIENT_SECRET,
         @Field("refresh_token") refresh_token: String
     ): Response<LoginResponse?>?
-    
-    @FormUrlEncoded
-    @POST(LOGIN)
-    fun refreshToken2(
-        @Field("client_id") clientId: String = CLIENT_ID,
-        @Field("agencyID") agencyID: String = AGENCY_ID,
-        @Field("grant_type") grant_type: String = REFRESH_TOKEN,
-        @Field("client_secret") client_secret: String = CLIENT_SECRET,
-        @Field("refresh_token") refresh_token: String
-    ): Call<LoginResponse>
 
     @FormUrlEncoded
     @POST(LOGIN)

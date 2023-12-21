@@ -26,6 +26,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentLoginChangesBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
@@ -69,7 +70,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var crossingCount: Int = 0
     private var hasFaceBiometric=false
     private var hasTouchBiometric=false
-
+    @Inject
+    lateinit var api: ApiService
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -625,6 +627,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun onBiometricSuccessful() {
+        BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
+    }
+
+    private fun hitAPIs(): () -> Unit? {
         if (sessionManager.getTwoFAEnabled()) {
             if (loader?.isVisible == true) {
                 loader?.dismiss()
@@ -636,6 +642,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         } else {
             dashboardViewModel.getAccountDetailsData()
         }
+        return {}
     }
 
 

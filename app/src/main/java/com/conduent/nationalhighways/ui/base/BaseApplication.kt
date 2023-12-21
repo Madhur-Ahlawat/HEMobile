@@ -88,6 +88,12 @@ class BaseApplication : Application() {
 
                 if (responseOK) {
                     saveToken(sessionManager, response)
+                    if(response?.body()?.mfaEnabled!=null && response?.body()?.mfaEnabled == "true"){
+                        sessionManager?.saveTwoFAEnabled(true)
+                    }
+                    else{
+                        sessionManager?.saveTwoFAEnabled(false)
+                    }
                     delegate.invoke()
                 }
             }
