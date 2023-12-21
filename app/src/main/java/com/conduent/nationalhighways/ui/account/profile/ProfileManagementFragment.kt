@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBin
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
@@ -54,6 +55,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         FragmentCreateAccountSummaryBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if (arguments?.containsKey(NAV_FLOW_KEY) == true) {
+            navFlowFrom = arguments?.getString(NAV_FLOW_KEY,"").toString()
+        }
         binding.accountCard.gone()
         binding.accountSubType.gone()
         binding.emailCard.gone()
@@ -142,6 +146,13 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
 
         }
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            var bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
+            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+            findNavController()?.navigate(R.id.action_profileManagementFragment_to_resetFragment,bundle)
+        }
     }
 
 
@@ -218,6 +229,13 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
             else -> {
             }
+        }
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            var bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
+            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+            findNavController()?.navigate(R.id.action_profileManagementFragment_to_resetFragment,bundle)
         }
     }
 

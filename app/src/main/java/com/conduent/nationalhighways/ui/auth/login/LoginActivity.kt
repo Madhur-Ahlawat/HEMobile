@@ -117,7 +117,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     } else {
                         dashboardViewModel.getAccountDetailsData()
                     }
-                    sessionManager.saveUserName(binding.edtEmail.text.toString())
+                    sessionManager.saveUserName(binding.edtEmail.getText().toString())
 
 
                 }
@@ -478,7 +478,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             sessionManager?.saveTouchIdEnabled(false)
             sessionManager?.saveHasAskedForBiometric(false)
         }
-        sessionManager.saveUserName(binding.edtEmail.text.toString())
+        sessionManager.saveUserName(binding.edtEmail.getText().toString())
         sessionManager.run {
             saveAuthToken(response.data?.accessToken ?: "")
             saveTwoFAEnabled(response.data?.require2FA == "true")

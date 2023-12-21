@@ -72,6 +72,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     private fun initUI() {
+        if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
+            navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY,"").toString()
+        }
         title = requireActivity().findViewById(R.id.title_txt)
         binding.run {
             if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.EXEMPT_ACCOUNT)) {
@@ -124,7 +127,13 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 )
 
         }
-
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            var bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
+            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+            findNavController()?.navigate(R.id.action_accountFragment_to_profileManagementFragment,bundle)
+        }
     }
 
     private fun setPaymentsVisibility() {

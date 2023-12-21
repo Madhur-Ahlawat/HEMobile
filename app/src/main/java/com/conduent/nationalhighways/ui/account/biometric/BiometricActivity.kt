@@ -124,10 +124,20 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             binding.biometricCancel.gone()
         }
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
-            binding.btnSave.isEnabled = true
             if (isChecked) {
-
+                if(!sessionManager?.fetchTouchIdEnabled()!!){
+                    binding.btnSave.isEnabled = true
+                }
+                else{
+                    binding.btnSave.isEnabled = false
+                }
             } else {
+                if(sessionManager?.fetchTouchIdEnabled()!!){
+                    binding.btnSave.isEnabled = true
+                }
+                else{
+                    binding.btnSave.isEnabled = false
+                }
                 sessionManager.saveTouchIdEnabled(false)
             }
         }
@@ -312,9 +322,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             R.id.btn_save -> {
                 if (binding.switchFingerprintLogin.isChecked && isAuthenticaed) {
                     sessionManager.saveTouchIdEnabled(true)
+                    saveBiometric()
                 } else if (!binding.switchFingerprintLogin.isChecked) {
                     sessionManager.saveTouchIdEnabled(false)
                     isAuthenticaed = false
+                    saveBiometric()
                 } else {
                     val biometricManager = BiometricManager.from(this)
                     when (biometricManager.canAuthenticate()) {
@@ -362,7 +374,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     }
 
                 }
-                saveBiometric()
             }
 
             R.id.biometric_cancel -> {
@@ -374,16 +385,14 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
 
     private fun saveBiometric() {
-        if (binding.switchFingerprintLogin.isChecked) {
-            sessionManager.saveTouchIdEnabled(true)
-        } else {
-            sessionManager.saveTouchIdEnabled(false)
-
-        }
         startNewActivityByClearingStack(HomeActivityMain::class.java) {
             putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
             putBoolean(Constants.IS_BIOMETRIC_CHANGED,true)
             putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            putString(
+                Constants.NAV_FLOW_FROM,
+                Constants.BIOMETRIC_CHANGE
+            )
         }
     }
 

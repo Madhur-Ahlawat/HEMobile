@@ -11,8 +11,14 @@
         android:label="Account Summary"
         tools:layout="@layout/fragment_dashboard_new">
         <action
+            android:id="@+id/action_dashBoardFragment_to_accountManagementFragment"
+            app:destination="@id/accountFragment" />
+        <action
             android:id="@+id/action_dashBoardFragment_to_notificationsFrament"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
         <action
             android:id="@+id/action_dashBoardFragment_to_vehicleListFragment2"
             app:destination="@id/vehicleListFragment2" />
@@ -421,6 +427,10 @@
         <action
             android:id="@+id/action_profileManagementFragment_to_change_email_profile"
             app:destination="@id/fragmentChangeEmailProfile" />
+        <action
+            android:id="@+id/action_profileManagementFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
+
         <action
             android:id="@+id/action_profileManagementFragment_to_changePassword"
             app:destination="@id/changePasswordProfile" />

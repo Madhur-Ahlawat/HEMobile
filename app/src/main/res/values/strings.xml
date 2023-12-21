@@ -1668,5 +1668,6 @@
     <string name="str_youtube"><u>National Highways YouTube</u></string>
     <string name="str_faq"><u>DartCharge FAQs</u></string>
     <string name="unfortunately_at_this_time_we_do_not_support_your_mobile_number">Unfortunately at this time we do not support your mobile number\'s country code.  If you do not have an alternative mobile number, please go back and change your selection to not receive communications by text message, and not opting in to two-step verification.</string>
+    <string name="biometric_changed_successfully">Biometrics change successful</string>
 
 </resources>

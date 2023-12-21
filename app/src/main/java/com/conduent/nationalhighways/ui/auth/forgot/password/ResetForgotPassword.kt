@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.BIOMETRIC_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED
@@ -77,6 +78,21 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 val data = navData as VehicleResponse?
                 binding.vehiclePlateNumber.text = data?.plateInfo?.number.toString()
                 binding.btnSubmit.text = getString(R.string.str_continue)
+            }
+            BIOMETRIC_CHANGE -> {
+                binding.title.text = getString(R.string.biometric_changed_successfully)
+                binding.subTitle.visible()
+                binding.subTitle.text = Html.fromHtml(
+                    getString(
+                        R.string.you_will_receive_a_confirmation_email,
+                        personalInformation?.emailAddress
+                    ), Html.FROM_HTML_MODE_COMPACT
+                )
+                binding.deleteTitle.gone()
+                binding.cardViewPlateNumber.gone()
+                binding.btnSubmit.text = getString(R.string.str_continue)
+//                HomeActivityMain.dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
+                HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
             }
 
             PROFILE_MANAGEMENT -> {
@@ -203,6 +219,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
                     REMOVE_VEHICLE -> {
                         findNavController().popBackStack()
+                    }
+                    BIOMETRIC_CHANGE -> {
+                        findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
                     }
 
                     PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
