@@ -480,8 +480,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 .trim()
         ) {
 
-            sessionManager?.saveTouchIdEnabled(false)
-            sessionManager?.saveHasAskedForBiometric(false)
+            sessionManager.saveTouchIdEnabled(false)
+            sessionManager.saveHasAskedForBiometric(false)
         }
         sessionManager.saveUserName(binding.edtEmail.getText().toString())
         sessionManager.run {
@@ -634,17 +634,17 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun hitAPIs(): () -> Unit? {
-        if (sessionManager.getTwoFAEnabled()) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
-            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-            intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
-            startActivity(intent)
-        } else {
+//        if (sessionManager.getTwoFAEnabled()) {
+//            if (loader?.isVisible == true) {
+//                loader?.dismiss()
+//            }
+//            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+//            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+//            intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
+//            startActivity(intent)
+//        } else {
             dashboardViewModel.getAccountDetailsData()
-        }
+//        }
         return {}
     }
 
