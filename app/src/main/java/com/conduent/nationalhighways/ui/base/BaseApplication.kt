@@ -73,7 +73,7 @@ class BaseApplication : Application() {
                 var response: Response<LoginResponse?>? = null
 
                 saveDateinSession(sessionManager)
-                while (!responseOK && tryCount < 3) {
+
                     try {
                         response = runBlocking {
                             api.refreshToken(refresh_token = refresh)
@@ -81,14 +81,10 @@ class BaseApplication : Application() {
                         responseOK = response?.isSuccessful == true
                     } catch (e: Exception) {
                         responseOK = false
-                    } finally {
-                        tryCount++
                     }
-                }
-
                 if (responseOK) {
                     saveToken(sessionManager, response)
-                    if(response?.body()?.mfaEnabled!=null && response?.body()?.mfaEnabled == "true"){
+                    if(response?.body()?.mfaEnabled!=null && response?.body()?.mfaEnabled?.toLowerCase() == "true"){
                         sessionManager?.saveTwoFAEnabled(true)
                     }
                     else{
@@ -137,7 +133,7 @@ class BaseApplication : Application() {
           }*/
 
 
-        private fun saveToken(sessionManager: SessionManager, response: Response<LoginResponse?>?) {
+        fun saveToken(sessionManager: SessionManager, response: Response<LoginResponse?>?) {
             Log.e(
                 "TAG",
                 "saveToken() called with: sessionManager = $sessionManager, response = $response"

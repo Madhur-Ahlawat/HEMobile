@@ -45,6 +45,8 @@ import com.conduent.nationalhighways.utils.extn.*
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 
@@ -202,6 +204,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         } else {
                             displayBiometricDialog(getString(R.string.str_enable_touch_ID))
 
+                        }
+                    }
+                    else{
+                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, from)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                         }
                     }
 
@@ -402,8 +410,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         if (displayFingerPrintPopup()) {
             fingerPrintLogin()
         }
-
-
+        binding.edtEmail.setText("madhur.ahslawat@conduent.com")
+        binding.edtPwd.setText("Welcome2")
+        binding.btnLogin.isEnabled=true
     }
 
     private fun removeError() {
@@ -627,7 +636,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun onBiometricSuccessful() {
-        BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
+        getNewToken(api = api, sessionManager)
     }
 
     private fun hitAPIs(): () -> Unit? {
@@ -644,7 +653,34 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
         return {}
     }
+    fun getNewToken(api: ApiService, sessionManager: SessionManager) {
+        sessionManager.fetchRefreshToken()?.let { refresh ->
+            var responseOK = false
+            var tryCount = 0
+            var response: Response<LoginResponse?>? = null
 
+            BaseApplication.saveDateinSession(sessionManager)
+
+            try {
+                response = runBlocking {
+                    api.refreshToken(refresh_token = refresh)
+                }
+                responseOK = response?.isSuccessful == true
+            } catch (e: Exception) {
+                responseOK = false
+            }
+            if (responseOK) {
+                BaseApplication.saveToken(sessionManager, response)
+                if(response?.body()?.mfaEnabled!=null && response?.body()?.mfaEnabled?.toLowerCase() == "true"){
+                    sessionManager?.saveTwoFAEnabled(true)
+                }
+                else{
+                    sessionManager?.saveTwoFAEnabled(false)
+                }
+                hitAPIs()
+            }
+        }
+    }
 
 }
 
