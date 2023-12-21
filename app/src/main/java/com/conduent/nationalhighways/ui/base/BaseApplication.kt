@@ -84,8 +84,8 @@ class BaseApplication : Application() {
                     }
                 if (responseOK) {
                     saveToken(sessionManager, response)
-                    if(response?.body()?.mfaEnabled!=null && response?.body()?.mfaEnabled?.toLowerCase() == "true"){
-                        sessionManager?.saveTwoFAEnabled(true)
+                    if(response?.body()?.mfaEnabled!=null && response.body()?.mfaEnabled?.lowercase() == "true"){
+                        sessionManager.saveTwoFAEnabled(true)
                     }
                     else{
                         sessionManager.saveTwoFAEnabled(false)
