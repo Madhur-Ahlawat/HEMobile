@@ -209,12 +209,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         }
 
                     }
-                    else{
-                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                            putString(Constants.NAV_FLOW_FROM, from)
-                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                        }
-                    }
 
                 }
 
