@@ -1060,7 +1060,7 @@
     <string name="add_another_vehicle">Add Another Vehicle</string>
     <string name="for_example_cu57abc">For example, CU57ABC</string>
     <string name="the_vehicle_has_already_been_added">The vehicle has already been added.</string>
-    <string name="are_you_sure_you_want_to_remove_vehicle">Are you sure you want to remove vehicle\n%s?</string>
+    <string name="are_you_sure_you_want_to_remove_vehicle">Are you sure you want to remove vehicle %s?</string>
     <string name="it_is_required_that_you_have_two_vehicles_before_you_are_able_to_delete_one_of_them">It is required that you have two vehicles before you are able to delete one of them.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

@@ -88,14 +88,21 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
 
             R.id.tryPaymentAgain -> {
                 if (navFlowCall == Constants.PAYMENT_TOP_UP || navFlowCall == Constants.SUSPENDED) {
-                    val bundle = Bundle()
-                    bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
-                    bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
-                    findNavController().navigate(
-                        R.id.action_tryPaymentAgainFragment_to_accountSuspendedPaymentFragment,
-                        bundle
-                    )
+
+                    if(paymentListSize==0){
+                        findNavController().popBackStack()
+                    }else{
+                        val bundle = Bundle()
+                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+                        findNavController().navigate(
+                            R.id.action_tryPaymentAgainFragment_to_accountSuspendedPaymentFragment,
+                            bundle
+                        )
+                    }
+
+
                 } else if (navFlowCall == Constants.ADD_PAYMENT_METHOD) {
                     accountInformation = dashboardViewModel.accountInformationData.value
                     if (accountInformation?.accSubType.equals(Constants.PAYG)) {

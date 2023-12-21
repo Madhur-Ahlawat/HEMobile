@@ -71,6 +71,11 @@
             android:id="@+id/action_removeVehicleFragment_to_findVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
         <action
+            android:id="@+id/action_removeVehicleFragment_to_vehicleHomeListFragment"
+            app:destination="@id/vehicleHomeListFragment"
+            app:popUpTo="@id/vehicleHomeListFragment"
+            app:popUpToInclusive="true"/>
+        <action
             android:id="@+id/action_removeVehicleFragment_to_resetForgotPassword"
             app:destination="@id/resetFragment"
             app:popUpTo="@id/removeVehicleFragment"

@@ -135,7 +135,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 //            LogoutDialog.newInstance(
 //                this
 //            ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
-            dashboardViewModel.logout()
+//            dashboardViewModel.logout()
+            logOutOfAccount()
         }
         binding.tvAvailableBalance.setOnClickListener {
             findNavController().navigate(R.id.action_dashBoardFragment_to_notificationsFrament)
@@ -600,7 +601,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun logOutOfAccount() {
-        sessionManager.clearAll()
+//        sessionManager.clearAll()
         Intent(requireActivity(), LandingActivity::class.java).apply {
             putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

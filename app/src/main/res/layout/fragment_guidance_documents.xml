@@ -368,6 +368,7 @@
                         android:fontFamily="@font/open_sans"
                         android:textSize="@dimen/_14sp"
                         android:layout_width="@dimen/margin_0dp"
+                        android:paddingLeft="20dp"
                         android:textColor="@color/blue_color"
                         android:text="@string/str_youtube"
                         app:layout_constraintLeft_toRightOf="@id/youtube_icon_iv"

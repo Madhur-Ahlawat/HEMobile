@@ -125,14 +125,14 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                if(!sessionManager?.fetchTouchIdEnabled()!!){
+                if(!sessionManager.fetchTouchIdEnabled()){
                     binding.btnSave.isEnabled = true
                 }
                 else{
                     binding.btnSave.isEnabled = false
                 }
             } else {
-                if(sessionManager?.fetchTouchIdEnabled()!!){
+                if(sessionManager.fetchTouchIdEnabled()){
                     binding.btnSave.isEnabled = true
                 }
                 else{

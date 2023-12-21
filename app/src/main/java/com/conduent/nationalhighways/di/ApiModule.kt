@@ -94,6 +94,7 @@ object ApiModule {
                 Constants.TIME_OUT_SEC, TimeUnit.SECONDS
             )
             .writeTimeout(
+
                 Constants.TIME_OUT_SEC, TimeUnit.SECONDS
             )
         return builder.build()
