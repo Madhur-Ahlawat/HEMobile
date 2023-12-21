@@ -124,18 +124,6 @@ class SplashActivity : AppCompatActivity() {
         AdobeAnalytics.setLifeCycleCallAdobe(false)
     }
 
-    private fun navigateNextScreen() {
-        return sessionManager.fetchAuthToken()?.let {
-            if (Calendar.getInstance().timeInMillis - sessionManager.getSessionTime() < LogoutUtil.LOGOUT_TIME) {
-                navigateAuthActivity()
-            } else {
-                navigateLandingActivity()
-            }
-        } ?: run {
-            navigateLandingActivity()
-        }
-    }
-
 
 
     private fun navigateAuthActivity() {
@@ -146,7 +134,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateLandingActivity() {
-        sessionManager.saveAuthToken(null)
+//        sessionManager.saveAuthToken(null)
         startActivity(
             Intent(this, LandingActivity::class.java)
         )
