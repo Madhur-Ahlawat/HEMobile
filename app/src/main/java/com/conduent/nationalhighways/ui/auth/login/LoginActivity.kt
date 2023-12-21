@@ -407,9 +407,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         if (displayFingerPrintPopup()) {
             fingerPrintLogin()
         }
-        binding.edtEmail.setText("madhur.ahslawat@conduent.com")
-        binding.edtPwd.setText("Welcome2")
-        binding.btnLogin.isEnabled=true
+//        binding.edtEmail.setText("madhur.ahslawat@conduent.com")
+//        binding.edtPwd.setText("Welcome2")
+//        binding.btnLogin.isEnabled=true
     }
 
     private fun removeError() {
