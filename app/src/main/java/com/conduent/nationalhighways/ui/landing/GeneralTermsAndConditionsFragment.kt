@@ -60,17 +60,11 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
             .build()
         binding.webView.webViewClient = LocalContentWebViewClient(mAssetLoader)
 //        webView.loadUrl("https://appassets.androidplatform.net/assets/termsandconditions.html")
-        if (NewCreateAccountRequestModel.prePay) {
+//        if (NewCreateAccountRequestModel.prePay) {
             binding.webView.loadUrl("file:///android_res/raw/termsandconditionspage.html")
-
-//            "https://pay-dartford-crossing-charge.service.gov.uk/dart-charge-terms-conditions"
-
-        } else {
-            binding.webView.loadUrl("file:///android_res/raw/paygtermsandcondition.html")
-
-//            "https://pay-dartford-crossing-charge.service.gov.uk/payg-terms-condtions"
-
-        }
+//        } else {
+//            binding.webView.loadUrl("file:///android_res/raw/paygtermsandcondition.html")
+//        }
 
         AdobeAnalytics.setScreenTrack(
             "home",

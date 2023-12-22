@@ -831,6 +831,12 @@
             app:popUpTo="@id/accountSuspendedPaymentFragment"
             app:popUpToInclusive="true"/>
         <action
+            android:id="@+id/action_tryPaymentAgainFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment"
+            app:popUpTo="@id/nmiPaymentFragment"
+            app:popUpToInclusive="true"/>
+
+        <action
             android:id="@+id/action_tryPaymentAgainFragment_to_paymentMethodFragment"
             app:destination="@id/paymentMethodFragment"
             app:popUpTo="@id/paymentMethodFragment"

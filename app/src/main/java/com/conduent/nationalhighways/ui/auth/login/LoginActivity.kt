@@ -108,8 +108,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
                             .trim()
                     ) {
-                        sessionManager?.saveTouchIdEnabled(false)
-                        sessionManager?.saveHasAskedForBiometric(false)
+                        sessionManager.saveTouchIdEnabled(false)
+                        sessionManager.saveHasAskedForBiometric(false)
                     }
 
                     if (sessionManager.getTwoFAEnabled()) {
@@ -177,7 +177,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 personalInformation = status.data?.personalInformation
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
-
 
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
                     val intent = Intent(this@LoginActivity, AuthActivity::class.java)
