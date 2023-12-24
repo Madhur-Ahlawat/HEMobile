@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.transactions
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
@@ -188,16 +189,16 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
                 paymentHistoryDatesList.add(it.transactionDate!!)
 
             } else {
-                if (!dfDate.parse(tempDate).equals(dfDate.parse(it.transactionDate))) {
-                    paymentHistoryDatesList.add(it.transactionDate!!)
+                if ((dfDate.parse(tempDate.toString())?.equals(dfDate.parse(it.transactionDate.toString())))==false) {
+                    paymentHistoryDatesList.add(it.transactionDate?:"")
                     tempDate = it.transactionDate
                 }
             }
             var transactionsListTemp =
                 paymentHistoryHashMap.get(it.transactionDate) ?: mutableListOf()
             transactionsListTemp.add(it)
-            paymentHistoryHashMap.remove(it.transactionDate!!)
-            paymentHistoryHashMap.put(it.transactionDate, transactionsListTemp)
+            paymentHistoryHashMap.remove(it.transactionDate?:"")
+            paymentHistoryHashMap.put(it.transactionDate?:"", transactionsListTemp)
         }
     }
 

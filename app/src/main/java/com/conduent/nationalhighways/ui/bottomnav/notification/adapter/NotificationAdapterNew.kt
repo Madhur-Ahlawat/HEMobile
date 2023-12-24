@@ -38,7 +38,7 @@ class NotificationAdapterNew(
 
 
         binding.message.text = Html.fromHtml(item?.message, Html.FROM_HTML_MODE_LEGACY)
-        binding.notificationDate.text = item?.createTs
+        binding.notificationDate.text = item?.createTs?.replace("AM","am")?.replace("PM","pm")
         if (item!!.isSeeMore) {
             binding.message.minLines = 1
             binding.message.maxLines = 20

@@ -52,17 +52,15 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private var twoFA: Boolean = false
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var loader: LoaderDialog? = null
+    private val toggleDelay: Long = 200
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
     private var hasFaceBiometric = false
     private var hasTouchBiometric = false
     private var biometricIsNotEnabled = false
-    private val toggleDelay: Long = 200
     private var isScreenLaunchedBefore: Boolean = false
-    private var isAuthenticaed: Boolean = false
-
-
+    private var isAuthenticaed:Boolean=false
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -94,21 +92,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
         twoFA = intent.getBooleanExtra(Constants.TWOFA, false)
 
-        hasFaceBiometric = Utils.hasFaceId(this)
 
-        hasTouchBiometric = Utils.hasTouchId(this)
-
-        if (hasTouchBiometric && hasFaceBiometric) {
-            binding.switchFingerprintLogin.text = getString(R.string.usefingerprinttologin)
-
-        } else if (hasFaceBiometric) {
-            binding.switchFingerprintLogin.text = getString(R.string.usefaceidtologin)
-
-
-        } else {
-            binding.switchFingerprintLogin.text = getString(R.string.usetouchidtologin)
-
-        }
         binding.apply {
             toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
@@ -141,12 +125,19 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                binding.btnSave.isEnabled = true
-
-                checkBiometricStatus()
+                if(!sessionManager.fetchTouchIdEnabled()){
+                    binding.btnSave.isEnabled = true
+                }
+                else{
+                    binding.btnSave.isEnabled = false
+                }
             } else {
-                binding.btnSave.isEnabled =!biometricIsNotEnabled
-
+                if(sessionManager.fetchTouchIdEnabled()){
+                    binding.btnSave.isEnabled = true
+                }
+                else{
+                    binding.btnSave.isEnabled = false
+                }
                 sessionManager.saveTouchIdEnabled(false)
             }
         }
@@ -212,7 +203,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                biometricIsNotEnabled=true
                 displayAccountSettingsDialog()
 
 
@@ -332,9 +322,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             R.id.btn_save -> {
                 if (binding.switchFingerprintLogin.isChecked && isAuthenticaed) {
                     sessionManager.saveTouchIdEnabled(true)
+                    saveBiometric()
                 } else if (!binding.switchFingerprintLogin.isChecked) {
                     sessionManager.saveTouchIdEnabled(false)
                     isAuthenticaed = false
+                    saveBiometric()
                 } else {
                     val biometricManager = BiometricManager.from(this)
                     when (biometricManager.canAuthenticate()) {
@@ -382,11 +374,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     }
 
                 }
-                saveBiometric()
             }
 
             R.id.biometric_cancel -> {
-                checkTwoFA()
+//                checkTwoFA()
 
             }
         }
@@ -394,36 +385,14 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
 
     private fun saveBiometric() {
-        if (binding.switchFingerprintLogin.isChecked) {
-            sessionManager.saveTouchIdEnabled(true)
-        } else {
-            sessionManager.saveTouchIdEnabled(false)
-
-        }
-        checkTwoFA()
-    }
-
-    private fun checkTwoFA() {
-        if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
-            if (twoFA) {
-                val intent = Intent(this, AuthActivity::class.java)
-                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
-                startActivity(intent)
-            } else {
-                loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
-
-                startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                    putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
-                    putBoolean(Constants.IS_BIOMETRIC_CHANGED, true)
-                    putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                }
-//                dashboardViewModel.getAccountDetailsData()
-
-            }
-
-        } else {
-            finish()
+        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+            putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
+            putBoolean(Constants.IS_BIOMETRIC_CHANGED,true)
+            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            putString(
+                Constants.NAV_FLOW_FROM,
+                Constants.BIOMETRIC_CHANGE
+            )
         }
     }
 

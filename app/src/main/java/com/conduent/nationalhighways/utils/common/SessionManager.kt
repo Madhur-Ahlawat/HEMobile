@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.utils.common
 
 import android.content.SharedPreferences
-import android.util.Log
 import com.google.gson.Gson
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
@@ -344,14 +343,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
             putBoolean(TOUCH_ID_ENABLED, privateKey)
         }.apply()
     }
-    fun saveTouchIdEnabledUserID(userID: String) {
-        prefs.edit().apply {
-            putString(TOUCH_ID_USER_ID, userID)
-        }.apply()
-    }
-    fun fetchTouchIdUserID(): String? {
-        return prefs.getString(TOUCH_ID_USER_ID, "")
-    }
     fun fetchTouchIdEnabled(): Boolean {
         return prefs.getBoolean(TOUCH_ID_ENABLED, false)
     }
@@ -421,6 +412,26 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
     fun fetchIntData(key: String): Int {
         return prefs.getInt(key,0)?:0
+    }
+
+    fun saveTwoFAEnabled(b: Boolean) {
+        prefs.edit().apply {
+            putBoolean(Constants.TWOFA_ENABLED, b)
+        }.apply()
+    }
+    fun saveHasAskedForBiometric(b: Boolean) {
+        prefs.edit().apply {
+            putBoolean(Constants.HAS_ASKED_FOR_BIOMETRIC, b)
+        }.apply()
+    }
+
+    fun getTwoFAEnabled() : Boolean {
+        return prefs.getBoolean(Constants.TWOFA_ENABLED,false)
+
+    }
+
+    fun hasAskedForBiometric(): Boolean {
+        return prefs.getBoolean(Constants.HAS_ASKED_FOR_BIOMETRIC,false)
     }
 
 }

@@ -33,6 +33,8 @@ class TimeoutRetryInterceptor(
             response = chain.proceed(chain.request())
 
         } catch (e: Exception) {
+            Log.e("TAG", "intercept: request exception message -> " +e.message)
+            Log.e("TAG", "intercept: request exception -> " +e)
             if (e.message.equals("timeout")) {
                 BaseApplication.CurrentContext?.let { it1 -> Utils.showProgressBar(it1, false) }
                 dispatchTimeout = {
@@ -42,7 +44,7 @@ class TimeoutRetryInterceptor(
             }
         }
 
-        return response ?: throw IOException("Response is null")
+        return response ?: throw IOException("Something went wrong. Try again later")
     }
 
     fun retryCall(request: Request, retryListener: RetryCallback, retryCount: Int) {

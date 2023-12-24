@@ -71,10 +71,13 @@ object ResponseHandler {
 
 
     fun <T> failure(e: Exception?): Resource<T?> {
+        Log.e("TAG", "failure: e message-> " + e)
         Log.e("TAG", "failure: e message " + e?.message)
         if (e is NoConnectivityException) {
+            Log.e("TAG", "failure: e 11" )
             return Resource.DataError(e.message)
         } else if (e is SocketTimeoutException) {
+            Log.e("TAG", "failure: e 22" )
             return Resource.DataError(
                 Constants.VPN_ERROR,
                 ErrorResponseModel(
@@ -87,8 +90,18 @@ object ResponseHandler {
                 )
             )
         } else if (e is InterruptedIOException) {
+            Log.e("TAG", "failure: e 33" )
             return Resource.DataError(Constants.VPN_ERROR)
         }
-        return Resource.DataError(e?.message)
+        Log.e("TAG", "failure: e 44" )
+        return Resource.DataError(e?.message,
+            ErrorResponseModel(
+                e?.message,
+                "",
+                e?.message,
+                0,
+                0,
+                ""
+            ))
     }
 }

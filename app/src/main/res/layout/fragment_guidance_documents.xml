@@ -7,348 +7,470 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:padding="@dimen/margin_20dp"
-        tools:context=".ui.bottomnav.account.raiseEnquiry.GuidanceDocumentsFragment">
+        android:scrollbars="none">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_20dp"
+            android:paddingRight="@dimen/margin_20dp"
+            android:paddingBottom="@dimen/margin_20dp"
+            tools:context=".ui.bottomnav.account.raiseEnquiry.GuidanceDocumentsFragment">
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/desc_tv"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_14sp"
-            android:fontFamily="@font/open_sans"
-            android:text="@string/str_pay_dart_ford_crossing_free_flow_crossing"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/about_service_cv"
-            style="@style/cardView_style"
-            android:layout_marginLeft="@dimen/margin_2dp"
-            android:layout_marginTop="@dimen/margin_20dp"
-            android:layout_marginRight="@dimen/margin_2dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/desc_tv">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/about_service_cv"
+                style="@style/cardView_style"
+                android:layout_marginLeft="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_marginRight="@dimen/margin_2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/about_service_cl"
-                android:layout_width="match_parent"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/about_service_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_20dp">
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/about_service_tv"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="@dimen/_14sp"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:textColor="@color/black"
+                        android:gravity="start"
+                        android:text="@string/str_about_this_service"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/about_service_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/about_service_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="left"
+                        app:constraint_referenced_ids="about_service_iv" />
+
+                    <ImageView
+                        android:id="@+id/about_service_iv"
+                        android:layout_width="@dimen/margin_30dp"
+                        android:layout_height="@dimen/margin_0dp"
+                        android:paddingLeft="@dimen/margin_21dp"
+                        android:src="@drawable/icon_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/about_service_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/contact_dart_charge_cv"
+                style="@style/cardView_style"
+                android:layout_marginLeft="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/about_service_cv">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/contact_dart_charge_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_20dp">
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/contact_dart_charge_tv"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="@dimen/_14sp"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:textColor="@color/black"
+                        android:text="@string/str_contact_dart_charge"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/contact_dart_charge_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/contact_dart_charge_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="left"
+                        app:constraint_referenced_ids="contact_dart_charge_iv" />
+
+                    <ImageView
+                        android:id="@+id/contact_dart_charge_iv"
+                        android:layout_width="@dimen/margin_30dp"
+                        android:layout_height="@dimen/margin_0dp"
+                        android:paddingLeft="@dimen/margin_21dp"
+
+                        android:src="@drawable/icon_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/contact_dart_charge_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/understanding_dartcharges_cv"
+                style="@style/cardView_style"
+                android:layout_marginLeft="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contact_dart_charge_cv">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/understanding_dartcharges_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_20dp">
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/understanding_dartcharges_tv"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="@dimen/_14sp"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:textColor="@color/black"
+                        android:text="@string/str_understanding_charges_fines"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/understanding_dartcharges_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/understanding_dartcharges_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="left"
+                        app:constraint_referenced_ids="understanding_dartcharges_iv" />
+
+                    <ImageView
+                        android:id="@+id/understanding_dartcharges_iv"
+                        android:layout_width="@dimen/margin_30dp"
+                        android:layout_height="@dimen/margin_0dp"
+                        android:paddingLeft="@dimen/margin_21dp"
+
+                        android:src="@drawable/icon_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/understanding_dartcharges_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/terms_conditions_cv"
+                style="@style/cardView_style"
+                android:layout_marginLeft="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/understanding_dartcharges_cv">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/terms_conditions_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_20dp">
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/terms_conditions_tv"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="@dimen/_14sp"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:textColor="@color/black"
+                        android:text="@string/str_terms_conditions"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/terms_conditions_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/terms_conditions_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="left"
+                        app:constraint_referenced_ids="terms_conditions_iv" />
+
+                    <ImageView
+                        android:id="@+id/terms_conditions_iv"
+                        android:layout_width="@dimen/margin_30dp"
+                        android:layout_height="@dimen/margin_0dp"
+                        android:paddingLeft="@dimen/margin_21dp"
+
+                        android:src="@drawable/icon_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/terms_conditions_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/otherways_topay_cv"
+                style="@style/cardView_style"
+                android:layout_marginLeft="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/terms_conditions_cv">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/otherways_topay_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_20dp">
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/otherways_topay_tv"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="@dimen/_14sp"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:textColor="@color/black"
+                        android:text="@string/str_otherways_to_pay_your_charge"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/otherways_topay_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/otherways_topay_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="left"
+                        app:constraint_referenced_ids="otherways_topay_iv" />
+
+                    <ImageView
+                        android:id="@+id/otherways_topay_iv"
+                        android:layout_width="@dimen/margin_30dp"
+                        android:layout_height="@dimen/margin_0dp"
+                        android:paddingLeft="@dimen/margin_21dp"
+
+                        android:src="@drawable/icon_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/otherways_topay_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/third_party_software_cv"
+                style="@style/cardView_style"
+                android:layout_marginLeft="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/otherways_topay_cv">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/third_party_software_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_20dp">
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/third_party_software_tv"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="@dimen/_14sp"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:textColor="@color/black"
+                        android:text="@string/str_third_party_software"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/third_party_software_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/third_party_software_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="left"
+                        app:constraint_referenced_ids="third_party_software_iv" />
+
+                    <ImageView
+                        android:id="@+id/third_party_software_iv"
+                        android:layout_width="@dimen/margin_30dp"
+                        android:layout_height="@dimen/margin_0dp"
+                        android:paddingLeft="@dimen/margin_21dp"
+                        android:src="@drawable/icon_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/third_party_software_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/youtube_cv"
+                style="@style/cardView_style"
+                android:layout_marginLeft="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/third_party_software_cv">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/youtube_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_3dp"
+                    android:paddingBottom="@dimen/margin_3dp"
+                    >
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/youtube_icon_iv"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:src="@drawable/ic_youtube"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/youtube_tv"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="@dimen/_14sp"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:paddingLeft="20dp"
+                        android:textColor="@color/blue_color"
+                        android:text="@string/str_youtube"
+                        app:layout_constraintLeft_toRightOf="@id/youtube_icon_iv"
+                        app:layout_constraintRight_toLeftOf="@id/youtube_barrier"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/youtube_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="left"
+                        app:constraint_referenced_ids="youtube_iv" />
+
+                    <ImageView
+                        android:id="@+id/youtube_iv"
+                        android:layout_width="@dimen/margin_30dp"
+                        android:layout_height="@dimen/margin_0dp"
+                        android:paddingLeft="@dimen/margin_21dp"
+                        android:src="@drawable/icon_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/youtube_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/faq_cv"
+                style="@style/cardView_style"
+                android:layout_marginLeft="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_2dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/youtube_cv">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/faq_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_8dp"
+                    android:paddingBottom="@dimen/margin_8dp"
+                    >
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/faq_tv"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="@dimen/_14sp"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:textColor="@color/blue_color"
+                        android:drawableStart="@drawable/ic_national_highways"
+                        android:text="@string/str_faq"
+                        android:gravity="center"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/faq_barrier"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/faq_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="left"
+                        app:constraint_referenced_ids="faq_iv" />
+
+                    <ImageView
+                        android:id="@+id/faq_iv"
+                        android:layout_width="@dimen/margin_30dp"
+                        android:layout_height="@dimen/margin_0dp"
+                        android:paddingLeft="@dimen/margin_21dp"
+                        android:src="@drawable/icon_arrow_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/faq_barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/feedback_to_improve_mb"
+                style="@style/secondaryButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/margin_20dp">
+                android:layout_marginTop="@dimen/margin_40dp"
+                android:textColorLink="@color/dark_blue_color"
+                android:text="@string/feed_back_to_improve_service"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/faq_cv"
+                app:radius="@dimen/margin_5dp" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/about_service_tv"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textSize="@dimen/_14sp"
-                    android:layout_width="@dimen/margin_0dp"
-                    android:textColor="@color/black"
-                    android:gravity="start"
-                    android:text="@string/str_about_this_service"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/about_service_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/about_service_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="left"
-                    app:constraint_referenced_ids="about_service_iv" />
-
-                <ImageView
-                    android:id="@+id/about_service_iv"
-                    android:layout_width="@dimen/margin_30dp"
-                    android:layout_height="@dimen/margin_0dp"
-                    android:paddingLeft="@dimen/margin_21dp"
-                    android:src="@drawable/icon_arrow_right"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/about_service_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/contact_dart_charge_cv"
-            style="@style/cardView_style"
-            android:layout_marginLeft="@dimen/margin_2dp"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:layout_marginRight="@dimen/margin_2dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/about_service_cv">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/contact_dart_charge_cl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_20dp">
-
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/contact_dart_charge_tv"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textSize="@dimen/_14sp"
-                    android:layout_width="@dimen/margin_0dp"
-                    android:textColor="@color/black"
-                    android:text="@string/str_contact_dart_charge"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/contact_dart_charge_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/contact_dart_charge_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="left"
-                    app:constraint_referenced_ids="contact_dart_charge_iv" />
-
-                <ImageView
-                    android:id="@+id/contact_dart_charge_iv"
-                    android:layout_width="@dimen/margin_30dp"
-                    android:layout_height="@dimen/margin_0dp"
-                    android:paddingLeft="@dimen/margin_21dp"
-
-                    android:src="@drawable/icon_arrow_right"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/contact_dart_charge_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/understanding_dartcharges_cv"
-            style="@style/cardView_style"
-            android:layout_marginLeft="@dimen/margin_2dp"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:layout_marginRight="@dimen/margin_2dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact_dart_charge_cv">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/understanding_dartcharges_cl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_20dp">
-
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/understanding_dartcharges_tv"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textSize="@dimen/_14sp"
-                    android:layout_width="@dimen/margin_0dp"
-                    android:textColor="@color/black"
-                    android:text="@string/str_understanding_charges_fines"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/understanding_dartcharges_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/understanding_dartcharges_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="left"
-                    app:constraint_referenced_ids="understanding_dartcharges_iv" />
-
-                <ImageView
-                    android:id="@+id/understanding_dartcharges_iv"
-                    android:layout_width="@dimen/margin_30dp"
-                    android:layout_height="@dimen/margin_0dp"
-                    android:paddingLeft="@dimen/margin_21dp"
-
-                    android:src="@drawable/icon_arrow_right"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/understanding_dartcharges_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/terms_conditions_cv"
-            style="@style/cardView_style"
-            android:layout_marginLeft="@dimen/margin_2dp"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:layout_marginRight="@dimen/margin_2dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/understanding_dartcharges_cv">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/terms_conditions_cl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_20dp">
-
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/terms_conditions_tv"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textSize="@dimen/_14sp"
-                    android:layout_width="@dimen/margin_0dp"
-                    android:textColor="@color/black"
-                    android:text="@string/str_terms_conditions"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/terms_conditions_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/terms_conditions_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="left"
-                    app:constraint_referenced_ids="terms_conditions_iv" />
-
-                <ImageView
-                    android:id="@+id/terms_conditions_iv"
-                    android:layout_width="@dimen/margin_30dp"
-                    android:layout_height="@dimen/margin_0dp"
-                    android:paddingLeft="@dimen/margin_21dp"
-
-                    android:src="@drawable/icon_arrow_right"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/terms_conditions_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/otherways_topay_cv"
-            style="@style/cardView_style"
-            android:layout_marginLeft="@dimen/margin_2dp"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:layout_marginRight="@dimen/margin_2dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/terms_conditions_cv">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/otherways_topay_cl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_20dp">
-
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/otherways_topay_tv"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textSize="@dimen/_14sp"
-                    android:layout_width="@dimen/margin_0dp"
-                    android:textColor="@color/black"
-                    android:text="@string/str_otherways_to_pay_your_charge"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/otherways_topay_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/otherways_topay_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="left"
-                    app:constraint_referenced_ids="otherways_topay_iv" />
-
-                <ImageView
-                    android:id="@+id/otherways_topay_iv"
-                    android:layout_width="@dimen/margin_30dp"
-                    android:layout_height="@dimen/margin_0dp"
-                    android:paddingLeft="@dimen/margin_21dp"
-
-                    android:src="@drawable/icon_arrow_right"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/otherways_topay_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/third_party_software_cv"
-            style="@style/cardView_style"
-            android:layout_marginLeft="@dimen/margin_2dp"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:layout_marginRight="@dimen/margin_2dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/otherways_topay_cv">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/third_party_software_cl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_20dp">
-
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/third_party_software_tv"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textSize="@dimen/_14sp"
-                    android:layout_width="@dimen/margin_0dp"
-                    android:textColor="@color/black"
-                    android:text="@string/str_third_party_software"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/third_party_software_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <androidx.constraintlayout.widget.Barrier
-                    android:id="@+id/third_party_software_barrier"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="left"
-                    app:constraint_referenced_ids="third_party_software_iv" />
-
-                <ImageView
-                    android:id="@+id/third_party_software_iv"
-                    android:layout_width="@dimen/margin_30dp"
-                    android:layout_height="@dimen/margin_0dp"
-                    android:paddingLeft="@dimen/margin_21dp"
-                    android:src="@drawable/icon_arrow_right"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/third_party_software_barrier"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <com.conduent.nationalhighways.utils.widgets.NHButton
-            android:id="@+id/feedback_to_improve_mb"
-            style="@style/secondaryButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_40dp"
-            android:textColorLink="@color/dark_blue_color"
-            android:text="@string/feed_back_to_improve_service"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/third_party_software_cv"
-            app:radius="@dimen/margin_5dp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

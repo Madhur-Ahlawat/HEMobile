@@ -10,12 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBinding
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
@@ -32,7 +33,6 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.visible
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -55,6 +55,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         FragmentCreateAccountSummaryBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if (arguments?.containsKey(NAV_FLOW_KEY) == true) {
+            navFlowFrom = arguments?.getString(NAV_FLOW_KEY,"").toString()
+        }
         binding.accountCard.gone()
         binding.accountSubType.gone()
         binding.emailCard.gone()
@@ -74,9 +77,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        if(sessionManager.fetchStringData(SessionManager.COUNTRIES).isEmpty()){
+        if (sessionManager.fetchStringData(SessionManager.COUNTRIES).isEmpty()) {
             countryViewModel.getCountries()
-        }else{
+        } else {
             viewModel.accountDetail()
         }
         val title: TextView? = requireActivity().findViewById(R.id.title_txt)
@@ -125,7 +128,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
         when (response) {
             is Resource.Success -> {
-               sessionManager.saveStringData(SessionManager.COUNTRIES,response.data.toString())
+                sessionManager.saveStringData(SessionManager.COUNTRIES, response.data.toString())
             }
 
             is Resource.DataError -> {
@@ -143,8 +146,14 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
 
         }
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            var bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
+            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+            findNavController()?.navigate(R.id.action_profileManagementFragment_to_resetFragment,bundle)
+        }
     }
-
 
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
@@ -157,7 +166,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                     else {
                         profileDetailModel = status.data
 //                        profileDetailModel?.personalInformation?.phoneCell = ""
-                        (Utils.capitalizeString(personalInformation?.firstName) + " " + Utils.capitalizeString(personalInformation?.lastName)).also {
+                        (Utils.capitalizeString(personalInformation?.firstName) + " " + Utils.capitalizeString(
+                            personalInformation?.lastName
+                        )).also {
                             binding.fullName.text = it
                         }
 
@@ -166,14 +177,8 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         } else {
                             binding.twoStepVerification.text = getString(R.string.no)
                         }
-                        if (personalInformation?.addressLine1?.isEmpty() == true && personalInformation?.city?.isEmpty() == true && personalInformation?.zipcode?.isEmpty() == true) {
 
-                        } else {
-
-
-                            binding.address.text =
-                                personalInformation?.addressLine1 + "\n" + personalInformation?.addressLine2 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode+"\n"+ Utils.getCountryName(sessionManager,personalInformation?.country?:"")
-                        }
+                      setAddressToView(personalInformation)
                         binding.emailAddressProfile.text =
                             personalInformation?.userName?.lowercase()
 
@@ -224,6 +229,56 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
             else -> {
             }
+        }
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            var bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
+            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+            findNavController()?.navigate(R.id.action_profileManagementFragment_to_resetFragment,bundle)
+        }
+    }
+
+    private fun setAddressToView(personalInformation: PersonalInformation?) {
+        var address = ""
+        if (personalInformation?.addressLine1?.isNotEmpty() == true) {
+            address = address + personalInformation.addressLine1
+        }
+        if (personalInformation?.addressLine2?.isNotEmpty() == true) {
+            if (address.isNotEmpty() == true) {
+                address = address + "\n"
+            }
+            address = address + personalInformation.addressLine2
+        }
+        if (personalInformation?.city?.isNotEmpty() == true) {
+            if (address.isNotEmpty() == true) {
+                address = address + "\n"
+            }
+            address = address + personalInformation.city
+        }
+        if (personalInformation?.zipcode?.isNotEmpty() == true) {
+            if (address.isNotEmpty() == true) {
+                address = address + "\n"
+            }
+            address = address + personalInformation.zipcode
+        }
+        if (Utils.getCountryName(
+                sessionManager,
+                personalInformation?.country ?: ""
+            ).isNotEmpty()
+        ) {
+            if (address.isNotEmpty() == true) {
+                address = address + "\n"
+            }
+            address = address + Utils.getCountryName(
+                sessionManager,
+                personalInformation?.country ?: ""
+            )
+        }
+        if (personalInformation?.addressLine1?.isEmpty() == true && personalInformation?.city?.isEmpty() == true && personalInformation?.zipcode?.isEmpty() == true) {
+
+        } else {
+            binding.address.text = address
         }
     }
 

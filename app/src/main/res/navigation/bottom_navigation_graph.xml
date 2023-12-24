@@ -11,8 +11,14 @@
         android:label="Account Summary"
         tools:layout="@layout/fragment_dashboard_new">
         <action
+            android:id="@+id/action_dashBoardFragment_to_accountManagementFragment"
+            app:destination="@id/accountFragment" />
+        <action
             android:id="@+id/action_dashBoardFragment_to_notificationsFrament"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
         <action
             android:id="@+id/action_dashBoardFragment_to_vehicleListFragment2"
             app:destination="@id/vehicleListFragment2" />
@@ -65,6 +71,11 @@
             android:id="@+id/action_removeVehicleFragment_to_findVehicleFragment"
             app:destination="@id/findYourVehicleFragment" />
         <action
+            android:id="@+id/action_removeVehicleFragment_to_vehicleHomeListFragment"
+            app:destination="@id/vehicleHomeListFragment"
+            app:popUpTo="@id/vehicleHomeListFragment"
+            app:popUpToInclusive="true"/>
+        <action
             android:id="@+id/action_removeVehicleFragment_to_resetForgotPassword"
             app:destination="@id/resetFragment"
             app:popUpTo="@id/removeVehicleFragment"
@@ -107,7 +118,10 @@
         tools:layout="@layout/fragment_maximum_vehicle_number">
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
-            app:destination="@+id/findYourVehicleFragment" />
+            app:destination="@+id/findYourVehicleFragment"
+            app:popUpTo="@id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
+
         <action
             android:id="@+id/action_maximumFragment_to_createAccountSummaryFragment"
             app:destination="@id/createAccountSummaryFragment" />
@@ -418,6 +432,10 @@
         <action
             android:id="@+id/action_profileManagementFragment_to_change_email_profile"
             app:destination="@id/fragmentChangeEmailProfile" />
+        <action
+            android:id="@+id/action_profileManagementFragment_to_resetFragment"
+            app:destination="@id/resetFragment" />
+
         <action
             android:id="@+id/action_profileManagementFragment_to_changePassword"
             app:destination="@id/changePasswordProfile" />
@@ -812,6 +830,12 @@
             app:destination="@id/accountSuspendedPaymentFragment"
             app:popUpTo="@id/accountSuspendedPaymentFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_tryPaymentAgainFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment"
+            app:popUpTo="@id/nmiPaymentFragment"
+            app:popUpToInclusive="true"/>
+
         <action
             android:id="@+id/action_tryPaymentAgainFragment_to_paymentMethodFragment"
             app:destination="@id/paymentMethodFragment"

@@ -29,7 +29,7 @@ object DateUtils {
 
     fun getLast90DaysDate(dateFormat: String): String {
         val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, -90) // Subtract 90 days
+        calendar.add(Calendar.DAY_OF_YEAR, -31) // Subtract 90 days
 
         val dateFormat = SimpleDateFormat(dateFormat,Locale.US) // Define the date format
         return dateFormat.format(calendar.time) // Format the date and return as a string

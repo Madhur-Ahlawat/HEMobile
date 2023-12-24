@@ -69,7 +69,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
-    private var personalInformation: PersonalInformation? = null
     private var accountResponse: AccountResponse? = null
     private var loader: LoaderDialog? = null
     private val countPerPage = 100
@@ -82,54 +81,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     @Inject
     lateinit var api: ApiService
     private val dashboardViewModel: DashboardViewModel by activityViewModels()
-
-    fun createPaymentsHistoryListAdapter() =
-        GenericRecyclerViewAdapter(getViewLayout = { R.layout.item_recent_tansactions },
-            areItemsSame = ::areRecentTransactionsSame,
-            areItemContentsEqual = ::areRecentTransactionsSame,
-            onBind = { recentTransactionItem, viewDataBinding, _ ->
-                with(viewDataBinding as ItemRecentTansactionsBinding) {
-                    viewDataBinding.apply {
-                        valueCurrentBalance.text = recentTransactionItem.balance
-                        tvTransactionType.text = recentTransactionItem.activity?.substring(0, 1)!!
-                            .uppercase(Locale.getDefault()).plus(
-                                recentTransactionItem.activity.substring(
-                                    1, recentTransactionItem.activity.length
-                                ).lowercase(Locale.getDefault())
-                            )
-                        if (recentTransactionItem.amount?.contains("-") == false) {
-                            verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
-                            indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
-                            topup = "+" + recentTransactionItem.amount
-                            valueTopUpAmount.text = topup
-                            valueTopUpAmount.setTextColor(resources.getColor(R.color.green_status))
-                        } else {
-                            verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.red_status))
-                            indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_car_grey))
-                            topup = "-" + recentTransactionItem.amount
-                            valueTopUpAmount.text = topup
-                            valueTopUpAmount.setTextColor(resources.getColor(R.color.red_status))
-                        }
-                        root.setOnClickListener {
-                            crossing = recentTransactionItem
-                            val bundle = Bundle()
-                            if (crossing?.activity?.lowercase(Locale.getDefault()).equals("toll")) {
-                                findNavController().navigate(
-                                    R.id.action_dashBoardFragment_to_tollDetails, bundle
-                                )
-                            } else {
-                                findNavController().navigate(
-                                    R.id.action_dashBoardFragment_to_topUpDetails, bundle
-                                )
-                            }
-                        }
-                    }
-                }
-            })
-
-    private fun areRecentTransactionsSame(item1: TransactionData, item2: TransactionData): Boolean {
-        return ((item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber) && (item1.transactionNumber == item2.transactionNumber))
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -174,6 +125,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
 
     override fun initCtrl() {
+        if(arguments?.containsKey(Constants.NAV_FLOW_KEY)==true){
+            navFlowFrom=arguments?.getString(Constants.NAV_FLOW_KEY)?:""
+        }
         binding.labelViewAll.setOnClickListener {
             (requireActivity() as HomeActivityMain).viewAllTransactions()
         }
@@ -181,7 +135,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 //            LogoutDialog.newInstance(
 //                this
 //            ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
-            dashboardViewModel.logout()
+//            dashboardViewModel.logout()
+            logOutOfAccount()
         }
         binding.tvAvailableBalance.setOnClickListener {
             findNavController().navigate(R.id.action_dashBoardFragment_to_notificationsFrament)
@@ -243,8 +198,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleAccountType(accountResponse: AccountResponse) {
-        personalInformation = accountResponse.personalInformation
-
+        HomeActivityMain.accountDetailsData?.personalInformation = accountResponse.personalInformation
+        HomeActivityMain.accountDetailsData=accountResponse
         accountResponse.apply {
             if (accountInformation?.accountType.equals(
                     "BUSINESS",
@@ -261,6 +216,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             } else if (accountInformation?.accSubType.equals(Constants.EXEMPT_PARTNER)) {
                 showExemptPartnerUI(this)
             }
+        }
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            var bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
+            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+            findNavController()?.navigate(R.id.action_dashBoardFragment_to_accountManagementFragment,bundle)
         }
     }
 
@@ -395,7 +357,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun showPayGUI(data: AccountResponse) {
-        personalInformation = data.personalInformation
+        HomeActivityMain.accountDetailsData = data
 
         binding.apply {
             tvAvailableBalanceHeading.gone()
@@ -446,7 +408,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun showExemptPartnerUI(data: AccountResponse) {
-        personalInformation = data.personalInformation
+        HomeActivityMain.accountDetailsData = data
 
         binding.apply {
             tvAvailableBalanceHeading.visible()
@@ -548,8 +510,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                 }
 
-
-                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
 
                 findNavController().navigate(
                     R.id.action_dashBoardFragment_to_accountSuspendedPaymentFragment, bundle
@@ -576,9 +537,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus,1
                         )
                     }
-                    it.accountFinancialstatus?.let {
-                        valueAutopay.text = it
-                    }
+//                    it.accountFinancialstatus?.let {
+//                        valueAutopay.text = it
+//                    }
+
+                    valueAutopay.text = resources.getString(R.string.str_auto_pay)
                     it.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
@@ -638,7 +601,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun logOutOfAccount() {
-        sessionManager.clearAll()
+//        sessionManager.clearAll()
         Intent(requireActivity(), LandingActivity::class.java).apply {
             putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

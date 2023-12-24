@@ -25,7 +25,6 @@ import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationR
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentMobileNumberCaptureVcBinding
-import com.conduent.nationalhighways.receiver.SmsBroadcastReceiver
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
@@ -52,8 +51,6 @@ import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.phone.SmsRetriever
-import com.google.android.gms.tasks.Task
 import com.google.firebase.crashlytics.internal.Logger.TAG
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,6 +61,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     View.OnClickListener, OnRetryClickListener,
     NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
 
+    private val countryCodesList: MutableList<String> = mutableListOf()
     private var retrievedPhoneNumber: String?=null
     private var requiredCountryCode = false
     private var requiredMobileNumber = false
@@ -187,8 +185,41 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         val phoneNumberHintIntentResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
                 try {
-                    retrievedPhoneNumber = Identity.getSignInClient(requireActivity()).getPhoneNumberFromIntent(result.data)
-                    binding.inputMobileNumber.setText(retrievedPhoneNumber.toString())
+                    var matchedCountry:String?=null
+                    var matchedCountryCode:String?=null
+                    retrievedPhoneNumber = Identity.getSignInClient(requireActivity()).getPhoneNumberFromIntent(result.data).replace(" ","").replace("-","")
+                    countryCodesList.forEachIndexed { index, s ->
+                        if(retrievedPhoneNumber.toString().contains(s)){
+                            fullCountryNameWithCode.forEachIndexed { index, s2 ->
+                                if(s2.contains(s)){
+                                    matchedCountry=s2
+                                    matchedCountryCode=s
+                                }
+                            }
+                        }
+//                        else{
+//                            if (binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").startsWith("+")) {
+//                                if (binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").length === 13) {
+//                                    val str_getMOBILE: String = binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").substring(3)
+//                                    binding.inputMobileNumber.setText(str_getMOBILE)
+//                                } else if (binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").length === 14) {
+//                                    val str_getMOBILE: String = binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").substring(4)
+//                                    binding.inputMobileNumber.setText(str_getMOBILE)
+//                                }
+//                            }
+//                        }
+                    }
+                    if(matchedCountry.isNullOrEmpty()){
+                        binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                        binding.inputMobileNumber.setErrorText(getString(R.string.unfortunately_at_this_time_we_do_not_support_your_mobile_number))
+                    }
+                    else{
+                        binding.inputMobileNumber.setText(retrievedPhoneNumber.toString().replace(matchedCountryCode!!,""))
+                        binding.inputCountry.setSelectedValue(
+                            matchedCountry!!
+                        )
+                    }
+
                 } catch(e: Exception) {
                     Log.e(TAG, "Phone Number Hint failed")
                 }
@@ -351,6 +382,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 binding.apply {
                     inputCountry.dataSet.clear()
                     inputCountry.dataSet.addAll(fullCountryNameWithCode)
+                    seperateCountryCodeListFromNameList(fullCountryNameWithCode)
                 }
 
 
@@ -411,6 +443,13 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             else -> {
             }
 
+        }
+    }
+
+    private fun seperateCountryCodeListFromNameList(fullCountryNameWithCode: MutableList<String>) {
+        countryCodesList.clear()
+        fullCountryNameWithCode.forEachIndexed { index, s ->
+            countryCodesList.add(s.substring(s.indexOf("(")+1,s.indexOf(")")))
         }
     }
 

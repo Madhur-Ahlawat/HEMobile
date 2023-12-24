@@ -28,7 +28,7 @@
                 android:padding="0dp"
                 android:textColor="@color/black"
                 app:inputType="number"
-                app:labelText="Number of crossings" />
+                app:labelText="@string/str_number_of_crossings" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/inputTotalAmount_helper"

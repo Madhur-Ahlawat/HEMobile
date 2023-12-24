@@ -1,5 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import androidx.fragment.app.Fragment
@@ -22,12 +24,24 @@ class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>
         FragmentGuidanceDocumentsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding?.feedbackToImproveMb?.setMovementMethod(LinkMovementMethod.getInstance())
+        binding.feedbackToImproveMb.setMovementMethod(LinkMovementMethod.getInstance())
 
         binding.contactDartChargeCv.setOnClickListener {
             findNavController().navigate(R.id.action_guidanceDocumentsFragment_to_contactDartChargeFragment)
         }
-        binding.feedbackToImproveMb.setOnClickListener {
+        binding.youtubeCl.setOnClickListener {
+            val url = "https://www.youtube.com/c/nationalhighways?cbrd=1" // Replace with the desired URL
+
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+
+        }
+        binding.faqCl.setOnClickListener {
+            val url = "https://nationalhighways.co.uk/help-centre/dart-charge-help-page/" // Replace with the desired URL
+
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+
         }
 
         binding.aboutServiceCv.setOnClickListener {

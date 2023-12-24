@@ -125,6 +125,8 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         if (value == Constants.REMOVE_VEHICLE) {
             val bundle = Bundle()
             bundle.putInt(Constants.VEHICLE_INDEX, position)
+            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
             findNavController().navigate(
                 R.id.action_vehicleListFragment_to_removeVehicleFragment,
                 bundle

@@ -49,7 +49,6 @@ import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleR
 import com.conduent.nationalhighways.utils.common.Constants.AGENCY_ID
 import com.conduent.nationalhighways.utils.common.Constants.PHONE_COUNTRY_CODE
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -70,24 +69,15 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST(LOGIN)
-    fun refreshToken2(
-        @Field("grant_type") grant_type: String = REFRESH_TOKEN,
-        @Field("client_id") clientId: String = CLIENT_ID,
-        @Field("client_secret") client_secret: String = CLIENT_SECRET,
-        @Field("refresh_token") refresh_token: String
-    ): Call<LoginResponse>
-
-        @FormUrlEncoded
-        @POST(LOGIN)
-        suspend fun login(
-            @Field("client_id") clientId: String? = CLIENT_ID,
-            @Field("grant_type") grant_type: String? = GRANT_TYPE,
-            @Field("agencyID") agencyID: String? = AGENCY_ID,
-            @Field("client_secret") client_secret: String? = CLIENT_SECRET,
-            @Field("value") value: String?,
-            @Field("password") password: String?,
-            @Field("validatePasswordCompliance") validatePasswordCompliance: String?
-        ): Response<LoginResponse?>?
+    suspend fun login(
+        @Field("client_id") clientId: String? = CLIENT_ID,
+        @Field("grant_type") grant_type: String? = GRANT_TYPE,
+        @Field("agencyID") agencyID: String? = AGENCY_ID,
+        @Field("client_secret") client_secret: String? = CLIENT_SECRET,
+        @Field("value") value: String?,
+        @Field("password") password: String?,
+        @Field("validatePasswordCompliance") validatePasswordCompliance: String?
+    ): Response<LoginResponse?>?
 
     @DELETE(LOGOUT)
     suspend fun logout(): Response<AuthResponseModel?>
@@ -266,6 +256,7 @@ interface ApiService {
         @Path("vehicleNumber") vehicleNumber: String?,
         @Query("agencyId") agencyId: Int?
     ): Response<GetPlateInfoResponseModel?>?
+
     @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getNewAccountFindVehicle(
         @Path("vehicleNumber") vehicleNumber: String?,
@@ -324,6 +315,7 @@ interface ApiService {
     suspend fun getPaymentHistoryData(
         @Body request: AccountPaymentHistoryRequest?
     ): Response<AccountPaymentHistoryResponse?>?
+
     @POST(PAYMENT_HISTORY_TRANSACTION_LIST_CHECK_CROSSINGS)
     suspend fun getTransactionsListCheckCrossings(
         @Body request: CheckedCrossingTransactionsRequestModel?
@@ -333,7 +325,10 @@ interface ApiService {
     suspend fun getAccountDetailsData(): Response<AccountResponse?>?
 
     @POST(Heart_Beat)
-    suspend fun getHeartBeat(@Query("agencyId") agencyId: String? = AGENCY_ID,@Query("referenceId")referenceId:String):Response<EmptyApiResponse?>?
+    suspend fun getHeartBeat(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("referenceId") referenceId: String
+    ): Response<EmptyApiResponse?>?
 
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValue(): Response<ThresholdAmountApiResponse?>?

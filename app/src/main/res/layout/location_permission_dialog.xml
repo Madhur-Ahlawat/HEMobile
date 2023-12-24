@@ -65,13 +65,15 @@
                     android:layout_width="match_parent"
                     android:id="@+id/firstView"
                     android:layout_height="1dp"
-                    android:background="#8F8F8F" />
+                    android:background="#8F8F8F"
+                    android:alpha="0.3"/>
 
                 <LinearLayout
                     android:id="@+id/rebooking_back_button_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:layout_marginBottom="5dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -84,6 +86,14 @@
                         android:textAlignment="center"
                         android:textColor="@color/hyperlink_blue2"
                         android:textSize="17sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#8F8F8F"
+                        android:alpha="0.3"/>
+
+
 
                     <TextView
                         android:id="@+id/ok_btn"

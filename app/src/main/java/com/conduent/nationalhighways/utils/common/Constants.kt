@@ -8,7 +8,10 @@ object Constants {
     const val generalTermsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
     const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions - General"
     const val paygTermsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions - PAYG"
+    const val TWOFA_ENABLED: String = "TWOFA_ENABLED"
+    const val HAS_ASKED_FOR_BIOMETRIC: String = "HAS_ASKED_FOR_BIOMETRIC"
     const val privacyPolicyPageName: String = "Android Dart Charge: Privacy Policy"
+    const val BIOMETRIC_CHANGE: String = "BIOMETRIC_CHANGE"
     const val otherWaysToPayPageName: String = "Android Dart Charge: Other ways to pay your charge"
     const val doYouHaveDartAccountPageName: String = "Android Dart Charge Non-Account Holder: Have a Dart Charge account?"
 //    const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
@@ -428,7 +431,7 @@ object Constants {
     const val SERVER_ERROR = "server_error"
     const val API_STATE = "API_STATE"
     const val READ_STORAGE_REQUEST_CODE: Int = 1001
-    const val TIME_OUT_SEC = 30L
+    const val TIME_OUT_SEC = 60L
 
 
     //Notification Types
