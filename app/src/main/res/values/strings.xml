@@ -1637,7 +1637,7 @@
     <string name="str_enjoying_dart_charge_desc">Tap a star to rate it on the Play Store.</string>
     <string name="market_prefix" translatable="false">market://details?id=</string>
     <string name="error_no_google_play">Error! Couldn\'t find Google Play on this device.</string>
-    <string name="dart_charge_general_terms_and_conditions">Dart Charge General Terms and Conditions</string>
+    <string name="dart_charge_general_terms_and_conditions">Dart Charge General Terms and\nConditions</string>
     <string name="dart_charge_privacy_policy">Dart Charge Privacy Policy</string>
     <string name="terms_and_conditions_for_payg">Terms and Conditions for PAYG</string>
     <string name="return_to_landing_page">Return To Landing Page</string>
