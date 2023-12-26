@@ -29,7 +29,6 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
-import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsResp
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
@@ -927,7 +926,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         dataModel: com.conduent.nationalhighways.data.model.profile.PersonalInformation?,
         accountInformation: com.conduent.nationalhighways.data.model.profile.AccountInformation?
     ) {
-        var mfaEnabled = Utils.retrunMfaStatus(accountInformation?.mfaEnabled ?: "")
+        var mfaEnabled = Utils.returnMfaStatus(accountInformation?.mfaEnabled ?: "")
         var smsOption = accountInformation?.smsOption
         if (navFlowCall == PROFILE_MANAGEMENT_2FA_CHANGE) {
             mfaEnabled = "Y"
@@ -994,7 +993,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             dataModel?.eveningPhone,
             accountInformation?.stmtDelivaryMethod,
             accountInformation?.stmtDelivaryInterval,
-            Utils.retrunMfaStatus(accountInformation?.mfaEnabled ?: ""),
+            Utils.returnMfaStatus(accountInformation?.mfaEnabled ?: ""),
             accountType = accountInformation?.accountType,
             securityCode = binding.edtOtp.getText().toString().trim(),
             referenceId = arguments?.getString(Constants.REFERENCE_ID),
@@ -1034,7 +1033,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             personalInformationModel?.eveningPhone,
             accountInformation?.stmtDelivaryMethod,
             accountInformation?.stmtDelivaryInterval,
-            Utils.retrunMfaStatus(accountInformation?.mfaEnabled ?: ""),
+            Utils.returnMfaStatus(accountInformation?.mfaEnabled ?: ""),
             accountType = accountInformation?.accountType,
         )
 

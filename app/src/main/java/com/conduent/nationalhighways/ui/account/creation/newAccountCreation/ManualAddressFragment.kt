@@ -119,8 +119,8 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
 
-                binding.address.setText(NewCreateAccountRequestModel.addressline1)
-                binding.address2.setText(NewCreateAccountRequestModel.addressline2)
+                binding.address.setText(NewCreateAccountRequestModel.addressLine1)
+                binding.address2.setText(NewCreateAccountRequestModel.addressLine2)
                 binding.townCity.setText(NewCreateAccountRequestModel.townCity)
                 binding.country.setSelectedValue(NewCreateAccountRequestModel.country)
                 requiredCountry = true
@@ -239,8 +239,8 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
             R.id.btnFindAddress -> {
 
-                NewCreateAccountRequestModel.addressline1 = binding.address.getText().toString()
-                NewCreateAccountRequestModel.addressline2 = binding.address2.getText().toString()
+                NewCreateAccountRequestModel.addressLine1 = binding.address.getText().toString()
+                NewCreateAccountRequestModel.addressLine2 = binding.address2.getText().toString()
                 NewCreateAccountRequestModel.townCity = binding.townCity.getText().toString()
                 NewCreateAccountRequestModel.country =
                     binding.country.selectedItemDescription.toString()
@@ -358,7 +358,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         } else {
             lrdsEligibilityCheck.country = NewCreateAccountRequestModel.country
         }
-        lrdsEligibilityCheck.addressline1 = NewCreateAccountRequestModel.addressline1
+        lrdsEligibilityCheck.addressline1 = NewCreateAccountRequestModel.addressLine1
         lrdsEligibilityCheck.firstName = NewCreateAccountRequestModel.firstName
         lrdsEligibilityCheck.lastName = NewCreateAccountRequestModel.lastName
         lrdsEligibilityCheck.zipcode1 = NewCreateAccountRequestModel.zipCode
@@ -632,8 +632,8 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             data?.accountInformation?.fein,
             data?.personalInformation?.firstName,
             data?.personalInformation?.lastName,
-            NewCreateAccountRequestModel.addressline1,
-            NewCreateAccountRequestModel.addressline2,
+            NewCreateAccountRequestModel.addressLine1,
+            NewCreateAccountRequestModel.addressLine2,
             NewCreateAccountRequestModel.townCity,
             "HE",
             NewCreateAccountRequestModel.zipCode,
@@ -651,7 +651,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             data?.personalInformation?.eveningPhone,
             data?.accountInformation?.stmtDelivaryMethod,
             data?.accountInformation?.stmtDelivaryInterval,
-            Utils.retrunMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
+            Utils.returnMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
             accountType = data?.accountInformation?.accountType
 
         )

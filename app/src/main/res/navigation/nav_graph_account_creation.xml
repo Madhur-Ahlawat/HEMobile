@@ -52,6 +52,10 @@
             app:popUpToInclusive="true"
             app:popUpTo="@+id/crossingCheckAnswersFragment"/>
 
+        <action
+            android:id="@+id/action_findVehicleFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment"
+            app:destination="@+id/confirmNewVehicleDetailsCheckPaidCrossingsFragment"/>
+
     </fragment>
     <fragment
         android:id="@+id/generalTermsAndConditionsFragment"
@@ -711,6 +715,11 @@ app:popUpTo="@id/HWMobileNumberCaptureVC"
             android:id="@+id/action_HWMobileNumberCaptureVC_to_accountSummaryFragment"
             app:destination="@+id/createAccountSummaryFragment" />
 
+        <action
+            android:id="@+id/action_HWMobileNumberCaptureVC_to_smsNotSupportFragment"
+            app:destination="@+id/smsNotSupportFragment" />
+
+
     </fragment>
 
     <fragment
@@ -1003,6 +1012,16 @@ app:popUpTo="@id/HWMobileNumberCaptureVC"
             app:popUpTo="@id/landingFragment"
             app:popUpToInclusive="true" />
 
+
+    </fragment>
+    <fragment
+        android:id="@+id/smsNotSupportFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.SmsNotSupportFragment"
+        android:label="Sms Not Support Fragment"
+        tools:layout="@layout/fragment_sms_not_support">
+        <action
+            android:id="@+id/action_smsNotSupportFragment_to_createVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment" />
     </fragment>
 
 

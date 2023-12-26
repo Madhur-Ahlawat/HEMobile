@@ -84,7 +84,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             binding.btnFeedback.text = getString(R.string.continue_with_your_selection)
         } else {
             binding.descTv.text = resources.getString(R.string.vehcile_type_mismatch,
-                crossingDetailModel?.plateNo, crossingDetailModel?.vehicleClass?.let {
+                crossingDetailModel?.plateNo.toString().uppercase(), crossingDetailModel?.vehicleClass?.let {
                     Utils.getVehicleType(
                         requireActivity(),
                         it

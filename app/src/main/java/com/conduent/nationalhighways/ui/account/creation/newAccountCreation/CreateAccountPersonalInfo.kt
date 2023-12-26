@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPersonalInfoNewBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -25,7 +24,6 @@ import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
-import com.conduent.nationalhighways.utils.common.Constants.PERSONAL_ACCOUNT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -431,7 +429,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             data?.personalInformation?.eveningPhone,
             data?.accountInformation?.stmtDelivaryMethod,
             data?.accountInformation?.stmtDelivaryInterval,
-            Utils.retrunMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
+            Utils.returnMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
             accountType = data?.accountInformation?.accountType,
         )
 

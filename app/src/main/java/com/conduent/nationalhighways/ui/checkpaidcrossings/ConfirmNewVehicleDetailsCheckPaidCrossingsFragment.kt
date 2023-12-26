@@ -1,9 +1,11 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -58,9 +60,11 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
     private fun initLoader() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
     }
 
     private fun setData() {
+        Log.d("date",data?.expirationDate.toString())
         binding?.apply {
             vehicleRegisration.text = data?.plateNo?.uppercase()
             creditRemaining.text =
@@ -102,7 +106,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         if (isClicked) {
             when (status) {
                 is Resource.Success -> {
-                    var bundle=Bundle()
+                    val bundle=Bundle()
                     bundle.putString(NAV_FLOW_KEY,navFlowCall)
                     bundle.putParcelable(NAV_DATA_KEY,data)
                     findNavController().clearBackStack(R.id.landingFragment)
@@ -113,7 +117,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                 }
                 is Resource.DataError -> {
                     if(status.errorModel?.status==500){
-                        var bundle = Bundle()
+                        val bundle = Bundle()
                         bundle.putParcelable(Constants.NAV_DATA_KEY,data)
                         requireActivity().openActivityWithData(MakeOffPaymentActivity::class.java,bundle)
                         requireActivity().finish()
@@ -136,7 +140,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                 bundle.putDouble(Constants.DATA, data?.totalAmount?:0.0)
                 bundle.putString(NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(NAV_DATA_KEY, data)
-                if(data?.vehicleClass?.lowercase().equals("a",true) == true){
+                if(data?.vehicleClass?.lowercase().equals("a",true)){
                     findNavController().navigate(
                         R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_vehicleIsExemptFromDartChargesFragment,
                         bundle
@@ -170,7 +174,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                 val bundle = Bundle()
                 bundle.putString(NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(NAV_DATA_KEY, data)
-                bundle.putString(Constants.PLATE_NUMBER,data?.plateNo?:"")
+                bundle.putString(PLATE_NUMBER,data?.plateNo?:"")
                 findNavController().navigate(R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_findYourVehicleFragment,bundle)
             }
 

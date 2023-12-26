@@ -1,9 +1,6 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Bundle
-import android.util.Log
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -64,25 +61,19 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.TRANSFER_CROSSINGS)
         navController.setGraph(navGraph, bundle)
 
-        navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener{
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-                if(destination.id==R.id.findYourVehicleFragment){
-                    if(sessionManager.fetchAuthToken()?.isNotEmpty() == true){
-                        binding.toolBarLyt.titleTxt.text = getString(R.string.transfer_remaining_credit)
-                    }else{
-                        binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
-                    }
-                }else if(destination.id==R.id.crossingCheck || destination.id==R.id.crossing_details){
-                    binding.toolBarLyt.titleTxt.text = getString(R.string.check_for_previous_crossings)
-
+        navController.addOnDestinationChangedListener { _, destination1, _ ->
+            if (destination1.id == R.id.findYourVehicleFragment) {
+                if (sessionManager.fetchAuthToken()?.isNotEmpty() == true) {
+                    binding.toolBarLyt.titleTxt.text =
+                        getString(R.string.check_for_previous_crossings)
+                } else {
+                    binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
                 }
-            }
+            } else if (destination1.id == R.id.crossingCheck || destination1.id == R.id.crossing_details) {
+                binding.toolBarLyt.titleTxt.text = getString(R.string.check_for_previous_crossings)
 
-        })
+            }
+        }
 
     }
 
@@ -94,6 +85,7 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
             navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->

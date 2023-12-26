@@ -125,13 +125,6 @@ class BaseApplication : Application() {
             }
         }
 
-        /*  fun resetSession() {
-              userSessionStart()
-          }
-          fun registerSessionListener(listener: LogoutListener) {
-              logoutListener = listener
-          }*/
-
 
         fun saveToken(sessionManager: SessionManager, response: Response<LoginResponse?>?) {
             Log.e(

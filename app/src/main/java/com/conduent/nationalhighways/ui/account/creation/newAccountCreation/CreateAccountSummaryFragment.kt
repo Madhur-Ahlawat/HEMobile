@@ -1,19 +1,12 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Parcelable
-import android.text.Html
-import android.text.method.LinkMovementMethod
-import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
@@ -23,17 +16,13 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBin
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_MOBILE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
-import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
 import com.conduent.nationalhighways.utils.extn.visible
@@ -93,7 +82,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         }
 
         binding.address.text =
-            dataModel!!.addressline1 + "\n" + dataModel!!.townCity + "\n" + dataModel!!.zipCode
+            dataModel!!.addressLine1 + "\n" + dataModel!!.townCity + "\n" + dataModel!!.zipCode
         binding.emailAddress.text = dataModel!!.emailAddress
         if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
             if (dataModel!!.mobileNumber?.isEmpty() != false) {

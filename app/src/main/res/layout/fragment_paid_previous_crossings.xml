@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:text="@string/paid_for_please_note"
             android:textColor="@color/black"
-            android:textSize="16sp"
-            android:fontFamily="@font/open_sans_semibold" />
+            android:textSize="14sp"
+            android:fontFamily="@font/open_sans" />
 
 
         <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
@@ -37,6 +37,8 @@
             app:labelText="@string/payment_reference_number"
             style="@style/input_text"
             app:inputType="text"
+            app:maxLength="12"
+            android:maxLength="12"
             app:imeOptions="actionDone" />
 
         <androidx.appcompat.widget.AppCompatTextView

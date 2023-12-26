@@ -207,8 +207,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         NewCreateAccountRequestModel.firstName = ""
         NewCreateAccountRequestModel.lastName = ""
         NewCreateAccountRequestModel.companyName = ""
-        NewCreateAccountRequestModel.addressline1 = ""
-        NewCreateAccountRequestModel.addressline2 = ""
+        NewCreateAccountRequestModel.addressLine1 = ""
+        NewCreateAccountRequestModel.addressLine2 = ""
         NewCreateAccountRequestModel.townCity = ""
         NewCreateAccountRequestModel.state = ""
         NewCreateAccountRequestModel.country = ""
@@ -227,6 +227,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         NewCreateAccountRequestModel.emailSecurityCode = ""
         NewCreateAccountRequestModel.smsSecurityCode = ""
         NewCreateAccountRequestModel.password = ""
+        NewCreateAccountRequestModel.isCountryNotSupportForSms=false
     }
 
     override fun onClick(v: View?) {
@@ -551,7 +552,12 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.postCode = NewCreateAccountRequestModel.zipCode.replace(" ", "")
         model.addressLine2 = "Small Heath"
         if (NewCreateAccountRequestModel.twoStepVerification) {
-            model.mfaFlag = "Y"
+            if (!NewCreateAccountRequestModel.isCountryNotSupportForSms){
+                model.mfaFlag = "Y"
+
+            }else{
+                model.mfaFlag = "N"
+            }
 
         } else {
             model.mfaFlag = "N"
@@ -581,8 +587,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             } else {
                 model.countryType = data.address_country_code
             }
-            model.address1 = data.addressline1
-            model.address2 = data.addressline2
+            model.address1 = data.addressLine1
+            model.address2 = data.addressLine2
             model.zipCode1 = data.zipCode.replace(" ", "")
             model.city = data.townCity   // address city
         } else {
@@ -592,9 +598,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.zipCode1 = ""
             model.city = ""
         }
-        model.addressLine2 = data.addressline2
-        model.billingAddressLine1 = data.addressline1
-        model.billingAddressLine2 = data.addressline2
+        model.addressLine2 = data.addressLine2
+        model.billingAddressLine1 = data.addressLine1
+        model.billingAddressLine2 = data.addressLine2
         model.emailAddress = data.emailAddress
         model.creditCExpMonth = expMonth
         model.creditCExpYear = expYear
@@ -802,7 +808,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${NewCreateAccountRequestModel.townCity}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${NewCreateAccountRequestModel.country}';})()")
-                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressline1}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressLine1}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('amountLabel').innerText = '${amountData}';})()")
 
 
@@ -859,7 +865,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${NewCreateAccountRequestModel.zipCode}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${NewCreateAccountRequestModel.townCity}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${NewCreateAccountRequestModel.country}';})()")
-                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressline1}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${NewCreateAccountRequestModel.addressLine1}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = 'none';})()")
 

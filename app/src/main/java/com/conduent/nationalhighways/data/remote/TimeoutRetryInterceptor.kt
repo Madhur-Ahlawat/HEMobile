@@ -34,7 +34,7 @@ class TimeoutRetryInterceptor(
 
         } catch (e: Exception) {
             Log.e("TAG", "intercept: request exception message -> " +e.message)
-            Log.e("TAG", "intercept: request exception -> " +e)
+            Log.e("TAG", "intercept: request exception -> $e")
             if (e.message.equals("timeout")) {
                 BaseApplication.CurrentContext?.let { it1 -> Utils.showProgressBar(it1, false) }
                 dispatchTimeout = {

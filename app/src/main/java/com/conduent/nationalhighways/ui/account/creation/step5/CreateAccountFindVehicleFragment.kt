@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -351,10 +352,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private fun checkVehicle(numberPlate: String) {
         if (isPayForCrossingFlow) {
             if (edit_summary) {
-                if (oldPlateNumber.uppercase().equals(
-                        binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
-                            .replace("-", "").uppercase()
-                    )
+                if (oldPlateNumber.uppercase() == binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
+                    .replace("-", "").uppercase()
                 ) {
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAY_FOR_CROSSINGS)
@@ -378,6 +377,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     getOneoffApi()
                 }
             } else {
+
                 loader?.show(
                     requireActivity().supportFragmentManager,
                     Constants.LOADER_DIALOG
@@ -385,13 +385,28 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 getOneoffApi()
             }
         } else {
-            loader?.show(
-                requireActivity().supportFragmentManager,
-                Constants.LOADER_DIALOG
-            )
+
             if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS, true)) {
-                viewModel.getVehiclePlateData(numberPlate.uppercase(), Constants.AGENCY_ID.toInt())
+                if (oldPlateNumber==binding.editNumberPlate.editText.text.toString().trim()){
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    bundle.putParcelable(
+                        Constants.NAV_DATA_KEY,
+                        data
+                    )
+
+                    findNavController().navigate(R.id.action_findVehicleFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,bundle)
+                }else{
+                    loader?.show(
+                        requireActivity().supportFragmentManager,
+                        Constants.LOADER_DIALOG
+                    )
+                    viewModel.getVehiclePlateData(numberPlate.uppercase(), Constants.AGENCY_ID.toInt())
+
+                }
+
             } else {
+
                 checkForDuplicateVehicle(numberPlate)
             }
         }
@@ -468,10 +483,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                             arguments?.getInt(Constants.VEHICLE_INDEX)
                                 ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                            if (!binding.editNumberPlate.getText().toString().trim()
+                            if (binding.editNumberPlate.getText().toString().trim()
                                     .replace(" ", "")
-                                    .replace("-", "")
-                                    .equals(NewCreateAccountRequestModel.plateNumber)
+                                    .replace("-", "") != NewCreateAccountRequestModel.plateNumber
                             ) {
                                 NewCreateAccountRequestModel.referenceId = ""
                                 NewCreateAccountRequestModel.emailAddress = ""
@@ -486,8 +500,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 NewCreateAccountRequestModel.firstName = ""
                                 NewCreateAccountRequestModel.lastName = ""
                                 NewCreateAccountRequestModel.companyName = ""
-                                NewCreateAccountRequestModel.addressline1 = ""
-                                NewCreateAccountRequestModel.addressline2 = ""
+                                NewCreateAccountRequestModel.addressLine1 = ""
+                                NewCreateAccountRequestModel.addressLine2 = ""
                                 NewCreateAccountRequestModel.townCity = ""
                                 NewCreateAccountRequestModel.state = ""
                                 NewCreateAccountRequestModel.country = ""
@@ -591,8 +605,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             NewCreateAccountRequestModel.firstName = ""
                             NewCreateAccountRequestModel.lastName = ""
                             NewCreateAccountRequestModel.companyName = ""
-                            NewCreateAccountRequestModel.addressline1 = ""
-                            NewCreateAccountRequestModel.addressline2 = ""
+                            NewCreateAccountRequestModel.addressLine1 = ""
+                            NewCreateAccountRequestModel.addressLine2 = ""
                             NewCreateAccountRequestModel.townCity = ""
                             NewCreateAccountRequestModel.state = ""
                             NewCreateAccountRequestModel.country = ""
@@ -763,7 +777,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
-        Log.e("TAG", "apiResponseDVRM: 11->" + isClicked)
+        Log.e("TAG", "apiResponseDVRM: 11->$isClicked")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
