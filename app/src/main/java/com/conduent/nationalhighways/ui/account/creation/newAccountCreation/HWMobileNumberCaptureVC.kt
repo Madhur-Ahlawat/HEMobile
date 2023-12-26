@@ -572,7 +572,19 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
 
                     else -> {
-                        val res: Int = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
+                        var res=0
+                        for (i in 0 until Utils.smsSupportCountryList().size){
+                            for (j in 0 until  fullCountryNameWithCode.size){
+                                res = if (Utils.smsSupportCountryList()[i].trim() != fullCountryNameWithCode[j].trim()){
+                                    R.id.action_HWMobileNumberCaptureVC_to_smsNotSupportFragment
+                                }else{
+                                    R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
+                                }
+
+                            }
+                        }
+
+
                         handleNavFlow(mobileNumber, countryCode, bundle, res)
                     }
                 }
@@ -866,7 +878,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             dataModel?.personalInformation?.eveningPhone,
             dataModel?.accountInformation?.stmtDelivaryMethod,
             dataModel?.accountInformation?.stmtDelivaryInterval,
-            Utils.retrunMfaStatus(dataModel?.accountInformation?.mfaEnabled ?: ""),
+            Utils.returnMfaStatus(dataModel?.accountInformation?.mfaEnabled ?: ""),
             accountType = dataModel?.accountInformation?.accountType
         )
 

@@ -1,13 +1,8 @@
 package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.text.Html
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -204,8 +199,8 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         NewCreateAccountRequestModel.firstName = ""
         NewCreateAccountRequestModel.lastName = ""
         NewCreateAccountRequestModel.companyName = ""
-        NewCreateAccountRequestModel.addressline1 = ""
-        NewCreateAccountRequestModel.addressline2 = ""
+        NewCreateAccountRequestModel.addressLine1 = ""
+        NewCreateAccountRequestModel.addressLine2 = ""
         NewCreateAccountRequestModel.townCity = ""
         NewCreateAccountRequestModel.state = ""
         NewCreateAccountRequestModel.country = ""

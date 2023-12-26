@@ -164,7 +164,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                     val dataObj = status.data
                     val bundle = Bundle().apply {
                         putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        var crossingDetailsModelsResponse = CrossingDetailsModelsResponse().apply {
+                        val crossingDetailsModelsResponse = CrossingDetailsModelsResponse().apply {
                             referenceNumber = binding.editReferenceNumber.getText().toString()
                             accountActStatus = dataObj?.get(0)?.accountActStatus?:""
                             accountBalance = dataObj?.get(0)?.accountBalance?:""

@@ -242,7 +242,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         } else {
             lrdsEligibilityCheck.country = NewCreateAccountRequestModel.country
         }
-        lrdsEligibilityCheck.addressline1 = NewCreateAccountRequestModel.addressline1
+        lrdsEligibilityCheck.addressline1 = NewCreateAccountRequestModel.addressLine1
         lrdsEligibilityCheck.firstName = NewCreateAccountRequestModel.firstName
         lrdsEligibilityCheck.lastName = NewCreateAccountRequestModel.lastName
         lrdsEligibilityCheck.zipcode1 = NewCreateAccountRequestModel.zipCode
@@ -277,7 +277,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
 
         NewCreateAccountRequestModel.selectedAddressId = position
-        NewCreateAccountRequestModel.addressline1 = mainList[position]?.street.toString()
+        NewCreateAccountRequestModel.addressLine1 = mainList[position]?.street.toString()
         NewCreateAccountRequestModel.townCity = mainList[position]?.town.toString()
         NewCreateAccountRequestModel.country =
             mainList[position]?.country.toString()
@@ -376,8 +376,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
             data?.accountInformation?.fein,
             data?.personalInformation?.firstName,
             data?.personalInformation?.lastName,
-            NewCreateAccountRequestModel.addressline1,
-            NewCreateAccountRequestModel.addressline2,
+            NewCreateAccountRequestModel.addressLine1,
+            NewCreateAccountRequestModel.addressLine2,
             NewCreateAccountRequestModel.townCity,
             "HE",
             NewCreateAccountRequestModel.zipCode,
@@ -395,7 +395,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
             data?.personalInformation?.eveningPhone,
             data?.accountInformation?.stmtDelivaryMethod,
             data?.accountInformation?.stmtDelivaryInterval,
-            Utils.retrunMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
+            Utils.returnMfaStatus(data?.accountInformation?.mfaEnabled ?: ""),
             accountType = data?.accountInformation?.accountType
 
         )

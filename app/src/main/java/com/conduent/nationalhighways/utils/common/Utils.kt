@@ -36,13 +36,11 @@ import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
-import com.conduent.nationalhighways.databinding.DialogRetryBinding
 import com.conduent.nationalhighways.databinding.DialogSessionexpiryBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.extn.changeBackgroundColor
 import com.conduent.nationalhighways.utils.extn.changeTextColor
@@ -52,7 +50,6 @@ import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import com.conduent.nationalhighways.utils.rating.RatingDialog
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
-import okhttp3.Interceptor
 import java.io.File
 import java.lang.reflect.Field
 import java.text.DateFormat
@@ -124,8 +121,52 @@ object Utils {
     }
 
     fun capitalizeString(str: String?): String? {
-        return if (str == null || str.length == 0) str else str.substring(0, 1)
+        return if (str.isNullOrEmpty()) str else str.substring(0, 1)
             .uppercase(Locale.getDefault()) + str.substring(1).lowercase(Locale.getDefault())
+    }
+
+    fun smsSupportCountryList():ArrayList<String>{
+        val supportCountryList=ArrayList<String>()
+
+        supportCountryList.add(	"Austria - (+43)")
+        supportCountryList.add(	"Bosnia and Herzegovina - (+387)")
+        supportCountryList.add(	"Bulgaria - (+359)")
+        supportCountryList.add(	"Croatia - (+385)")
+        supportCountryList.add(	"Cyprus - (+357)")
+        supportCountryList.add(	"Czech Republic - (+420)")
+        supportCountryList.add(	"Denmark - (+45)")
+        supportCountryList.add(	"Estonia - (+372)")
+        supportCountryList.add(	"Finland - (+358)")
+        supportCountryList.add(	"France - (+33)")
+        supportCountryList.add(	"Germany - (+49)")
+        supportCountryList.add(	"Gibraltar - (+350)")
+        supportCountryList.add(	"Greece - (+30)")
+        supportCountryList.add(	"Ireland - (+353)")
+        supportCountryList.add(	"Italy - (+39)")
+        supportCountryList.add(	"Latvia -  (+371)")
+        supportCountryList.add(	"Lithuania -  (+370)")
+        supportCountryList.add(	"Luxembourg -  (+352)")
+        supportCountryList.add("Macedonia, The Former Yuogoslav - (+389)")
+        supportCountryList.add(	"Malta -  (+356)")
+        supportCountryList.add(	"Moldova (Republic of) -  (+373)")
+        supportCountryList.add(	"Netherlands -  (+31)")
+        supportCountryList.add(	"Norway -  (+47)")
+        supportCountryList.add(	"Poland - (+48)")
+        supportCountryList.add(	"Portugal -  (+351)")
+        supportCountryList.add(	"Slovakia -  (+421)")
+        supportCountryList.add(	"Slovenia -  (+386)")
+        supportCountryList.add(	"Spain -  (+34)")
+        supportCountryList.add(	"Sweden -  (+46)")
+        supportCountryList.add("Switzerland -  (+41)")
+        supportCountryList.add(	"Ukraine -  (+380)")
+        supportCountryList.add(	"United Kingdom -  (+44)")
+
+        return supportCountryList
+
+
+
+
+
     }
 
     @RequiresApi(VERSION_CODES.O)
@@ -314,7 +355,7 @@ object Utils {
     fun convertDateForTransferCrossingsScreen(inputDate: String?): String {
         val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a")
         val date: Date = inputFormat.parse(inputDate)
-        val outputFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat = SimpleDateFormat("dd MMMM yyyy")
         return outputFormat.format(date)
     }
 
@@ -1308,9 +1349,9 @@ object Utils {
         }
     }
 
-    fun retrunMfaStatus(mfa: String): String {
+    fun returnMfaStatus(mfa: String): String {
         var mfaEnabled = "Y"
-        if (mfa.equals("false")) {
+        if (mfa == "false") {
             mfaEnabled = "N"
         }
         return mfaEnabled
@@ -1413,22 +1454,17 @@ object Utils {
     }
 
     fun checkLocationpermission(context:Context):Boolean{
-        if ((ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            ) == PackageManager.PERMISSION_DENIED) &&
-            (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_DENIED) &&
-            (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_DENIED)
-        ) {
-           return false
-        }
-
-        return  true
+        return !((ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        ) == PackageManager.PERMISSION_DENIED) &&
+                (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_DENIED) &&
+                (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_DENIED))
     }
 }

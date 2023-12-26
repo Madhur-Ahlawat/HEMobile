@@ -18,8 +18,8 @@ object NewCreateAccountRequestModel{
     var firstName:String=""
     var lastName:String=""
     var companyName:String=""
-    var addressline1:String=""
-    var addressline2:String=""
+    var addressLine1:String=""
+    var addressLine2:String=""
     var townCity:String=""
     var state:String=""
     var country:String=""
@@ -45,6 +45,7 @@ object NewCreateAccountRequestModel{
 
     var sms_referenceId: String? = ""
     var oneOffVehiclePlateNumber:String=""
+    var isCountryNotSupportForSms=false
 
 
 }
