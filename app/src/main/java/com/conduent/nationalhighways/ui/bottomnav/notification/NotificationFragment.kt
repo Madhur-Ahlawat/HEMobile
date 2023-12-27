@@ -134,8 +134,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) {
                 val position = viewHolder.adapterPosition
                 val item: AlertMessage = selectedNotificationsList.get(position)
-                viewModel.deleteAlertItem(item.cscLookUpKey ?: "")
-            }
+                viewModel.readAlertItem(item.cscLookUpKey ?: "")            }
         }
         val itemTouchhelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchhelper.attachToRecyclerView(binding.notificationsRecyclerview)
@@ -245,6 +244,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     override fun observer() {
         observe(viewModel.alertLivData, ::handleAlertResponse)
         observe(viewModel.dismissAlertLiveData, ::handleDismissAlertResponse)
+        observe(viewModel.readAlertAlertLiveData, ::handleReadAlertResponse)
         lifecycleScope.launch {
             viewModel.notificationCheckUncheckStateFlow.collect {
                 it?.let {
@@ -365,6 +365,34 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     }
 
     private fun handleDismissAlertResponse(resource: Resource<String?>?) {
+        if (numberOfAlertsTOBeCleared > 0) {
+            numberOfAlertsTOBeCleared--
+        }
+        if (numberOfAlertsTOBeCleared == 0) {
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            binding.btnClearNotification.isEnabled = true
+            binding.btnClearNotification.isFocusable = true
+        }
+        when (resource) {
+            is Resource.Success -> {
+                unSelectAllNotifications()
+                viewModel.getAlertsApi(Constants.LANGUAGE)
+
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+                binding.notificationsRecyclerview.gone()
+            }
+
+            else -> {
+                // do nothing
+            }
+        }
+    }
+    private fun handleReadAlertResponse(resource: Resource<String?>?) {
         if (numberOfAlertsTOBeCleared > 0) {
             numberOfAlertsTOBeCleared--
         }
