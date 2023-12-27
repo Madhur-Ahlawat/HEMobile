@@ -572,19 +572,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
 
                     else -> {
-                        var res=0
-                        for (i in 0 until Utils.smsSupportCountryList().size){
-                            for (j in 0 until  fullCountryNameWithCode.size){
-                                res = if (Utils.smsSupportCountryList()[i].trim() != fullCountryNameWithCode[j].trim()){
-                                    R.id.action_HWMobileNumberCaptureVC_to_smsNotSupportFragment
-                                }else{
-                                    R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
-                                }
-
-                            }
-                        }
-
-
+                        val res: Int = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
                         handleNavFlow(mobileNumber, countryCode, bundle, res)
                     }
                 }
