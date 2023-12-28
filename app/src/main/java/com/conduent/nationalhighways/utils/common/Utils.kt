@@ -1083,7 +1083,7 @@ object Utils {
             R.drawable.maestro
         } else if (cardType.uppercase().equals(Constants.MASTERCARD, true)) {
             R.drawable.mastercard
-        } else if (cardType.uppercase().equals(Constants.CURRENT, true)) {
+        } else if (cardType.uppercase().equals(Constants.CURRENT, true) || cardType.uppercase().equals(Constants.SAVINGS, true)) {
             R.drawable.directdebit
         } else {
             R.color.white

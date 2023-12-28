@@ -322,11 +322,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             R.id.btn_save -> {
                 if (binding.switchFingerprintLogin.isChecked && isAuthenticaed) {
                     sessionManager.saveTouchIdEnabled(true)
-                    saveBiometric()
+                    goToHomeActivity()
                 } else if (!binding.switchFingerprintLogin.isChecked) {
                     sessionManager.saveTouchIdEnabled(false)
                     isAuthenticaed = false
-                    saveBiometric()
+                    goToHomeActivity()
                 } else {
                     val biometricManager = BiometricManager.from(this)
                     when (biometricManager.canAuthenticate()) {
@@ -377,18 +377,21 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             R.id.biometric_cancel -> {
-//                checkTwoFA()
+
+                goToHomeActivity()
 
             }
         }
     }
 
 
-    private fun saveBiometric() {
+    private fun goToHomeActivity() {
         startNewActivityByClearingStack(HomeActivityMain::class.java) {
-            putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
-            putBoolean(Constants.IS_BIOMETRIC_CHANGED,true)
-            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
+                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+            } else {
+                putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
+            }
             putString(
                 Constants.NAV_FLOW_FROM,
                 Constants.BIOMETRIC_CHANGE

@@ -146,13 +146,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
 
         }
-        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
-            var bundle = Bundle()
-            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
-            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
-            findNavController()?.navigate(R.id.action_profileManagementFragment_to_resetFragment,bundle)
-        }
+
     }
 
 
@@ -233,7 +227,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
             HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
             var bundle = Bundle()
-            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
+            bundle.putString(NAV_FLOW_KEY,navFlowFrom)
             bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
             findNavController()?.navigate(R.id.action_profileManagementFragment_to_resetFragment,bundle)
         }

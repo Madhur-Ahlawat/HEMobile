@@ -217,7 +217,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showExemptPartnerUI(this)
             }
         }
-        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE && sessionManager?.fetchTouchIdEnabled()!!){
             HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
             var bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)

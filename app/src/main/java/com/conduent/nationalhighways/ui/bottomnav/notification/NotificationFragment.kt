@@ -1,9 +1,9 @@
 package com.conduent.nationalhighways.ui.bottomnav.notification
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
@@ -32,15 +33,18 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.widgets.SwipeToDeleteCallback
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), FilterDialogListener,
     View.OnClickListener, NotificationItemClick, BackPressListener {
 
+    private var selectedNotificationsList: MutableList<AlertMessage> = mutableListOf()
     private var mAdapter: NotificationAdapterNew? = null
     private var isPrioritySelected: Boolean = true
     private var isStandardSelected: Boolean = false
@@ -76,6 +80,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             )
         )
         initAdapter(priority_notifications)
+        enableSwipeToDeleteAndUndo(priority_notifications)
 //        viewModel.getAlertsApi(Constants.LANGUAGE)
     }
 
@@ -99,6 +104,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             )
         )
         initAdapter(standard_notifications)
+        enableSwipeToDeleteAndUndo(standard_notifications)
 //        viewModel.getAlertsApi(Constants.LANGUAGE)
     }
 
@@ -122,6 +128,17 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 //        }
 
     }
+    private fun enableSwipeToDeleteAndUndo(notifications: MutableList<AlertMessage>) {
+        selectedNotificationsList = notifications
+        val swipeToDeleteCallback: SwipeToDeleteCallback = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) {
+                val position = viewHolder.adapterPosition
+                val item: AlertMessage = selectedNotificationsList.get(position)
+                viewModel.readAlertItem(item.cscLookUpKey ?: "")            }
+        }
+        val itemTouchhelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchhelper.attachToRecyclerView(binding.notificationsRecyclerview)
+    }
 
     private fun initAdapter(notifications: MutableList<AlertMessage>) {
         mLayoutManager = LinearLayoutManager(context)
@@ -134,7 +151,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             )
         binding.notificationsRecyclerview.adapter = mAdapter
         checkData()
-
     }
 
     private fun setClickListeners() {
@@ -228,6 +244,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     override fun observer() {
         observe(viewModel.alertLivData, ::handleAlertResponse)
         observe(viewModel.dismissAlertLiveData, ::handleDismissAlertResponse)
+        observe(viewModel.readAlertAlertLiveData, ::handleReadAlertResponse)
         lifecycleScope.launch {
             viewModel.notificationCheckUncheckStateFlow.collect {
                 it?.let {
@@ -348,6 +365,34 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     }
 
     private fun handleDismissAlertResponse(resource: Resource<String?>?) {
+        if (numberOfAlertsTOBeCleared > 0) {
+            numberOfAlertsTOBeCleared--
+        }
+        if (numberOfAlertsTOBeCleared == 0) {
+            if (loader?.isVisible == true) {
+                loader?.dismiss()
+            }
+            binding.btnClearNotification.isEnabled = true
+            binding.btnClearNotification.isFocusable = true
+        }
+        when (resource) {
+            is Resource.Success -> {
+                unSelectAllNotifications()
+                viewModel.getAlertsApi(Constants.LANGUAGE)
+
+            }
+
+            is Resource.DataError -> {
+                ErrorUtil.showError(binding.root, resource.errorMsg)
+                binding.notificationsRecyclerview.gone()
+            }
+
+            else -> {
+                // do nothing
+            }
+        }
+    }
+    private fun handleReadAlertResponse(resource: Resource<String?>?) {
         if (numberOfAlertsTOBeCleared > 0) {
             numberOfAlertsTOBeCleared--
         }
