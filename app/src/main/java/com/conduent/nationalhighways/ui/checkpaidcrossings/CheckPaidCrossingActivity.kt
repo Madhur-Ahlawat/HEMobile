@@ -65,7 +65,7 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
             if (destination1.id == R.id.findYourVehicleFragment) {
                 if (sessionManager.fetchAuthToken()?.isNotEmpty() == true) {
                     binding.toolBarLyt.titleTxt.text =
-                        getString(R.string.check_for_previous_crossings)
+                        getString(R.string.transfer_remaining_credit)
                 } else {
                     binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
                 }

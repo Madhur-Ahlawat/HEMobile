@@ -722,7 +722,9 @@
     <string name="how_many_vehicle">How many <b>vehicles</b> do you plan to have on your account?</string>
     <string name="no_of_vehicle">Number of vehicle</string>
     <string name="how_many_crossing">How many <b>crossings</b> will each vehicle make on average on each month?</string>
-    <string name="crossings">Crossings</string>
+    <string name="crossing">crossing</string>
+    <string name="crossings">crossings</string>
+
     <string name="top_up_recommendation">Top-up recommendations</string>
     <string name="top_up_calculate">calculate top up</string>
     <string name="top_up_calculate_recommend">We recommend that you have a minimum top-up amount of £10,000 and a minimum balance threshold of £5,000.\nPlease note that you can change these amounts by manually entering the amounts you require.</string>
@@ -908,8 +910,9 @@
     <string name="doyouwantenablebiometric">You can enable now, or later from Settings on your device</string>
     <string name="biometriclogin">Biometric Login</string>
     <string name="biometrics">Biometrics</string>
+    <string name="profile_biometrics">Profile Biometrics</string>
     <string name="biometric">Biometric</string>
-    <string name="usefingerprinttologin">Use Touch ID or Face ID to login</string>
+    <string name="usefingerprinttologin">Use Face ID or Touch ID to login</string>
     <string name="usetouchidtologin">Use Touch ID to login</string>
     <string name="usefaceidtologin">Use Face ID to login</string>
 
@@ -1513,9 +1516,9 @@
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
     <string name="error_check_paid_crossings">Your crossing data could not be retrieved. Check if your entries are correct or try again later.</string>
-    <string name="vehcile_type_mismatch"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm]]></string>
+    <string name="vehcile_type_mismatch"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm]]></string>
     <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from\nDart Charge payment</string>
-    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm</string>
+    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
     <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
     <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
@@ -1651,7 +1654,7 @@
     <string name="credit_transferred">Credit Transferred</string>
     <string name="str_crossing_data">%1$s crossing</string>
     <string name="str_crossings_data">%1$s crossings</string>
-    <string name="str_allow_location_title">Allow &quot;DartCharge&quot; to also use your location even when you are not using the app?</string>
+    <string name="str_allow_location_title">Allow "\"DartCharge\"" to also use your location even when you are not using the app?</string>
     <string name="str_allow_location_desc">Change to Always Allow to ensure that we send the notification to you, without you having to remember to open the app.</string>
     <string name="str_keep_only_while_using">Keep Only While using</string>
     <string name="str_change_to_always_allow">Change to Always Allow</string>

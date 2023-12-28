@@ -98,7 +98,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
         }
-        binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
 
         intent?.apply {
             mValue = getIntExtra(
@@ -110,8 +109,17 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         if (mValue == Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE) {
             binding.toolBarLyt.backButton.gone()
             binding.biometricCancel.visible()
+            binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
+
+
+        }else if(mValue==Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE){
+            binding.toolBarLyt.backButton.visible()
+            binding.biometricCancel.gone()
+            binding.toolBarLyt.titleTxt.text = getString(R.string.profile_biometrics)
 
         } else {
+            binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
+
             binding.toolBarLyt.backButton.visible()
             binding.biometricCancel.gone()
 
@@ -125,19 +133,9 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                if(!sessionManager.fetchTouchIdEnabled()){
-                    binding.btnSave.isEnabled = true
-                }
-                else{
-                    binding.btnSave.isEnabled = false
-                }
+                binding.btnSave.isEnabled = !sessionManager.fetchTouchIdEnabled()
             } else {
-                if(sessionManager.fetchTouchIdEnabled()){
-                    binding.btnSave.isEnabled = true
-                }
-                else{
-                    binding.btnSave.isEnabled = false
-                }
+                binding.btnSave.isEnabled = sessionManager.fetchTouchIdEnabled()
                 sessionManager.saveTouchIdEnabled(false)
             }
         }
