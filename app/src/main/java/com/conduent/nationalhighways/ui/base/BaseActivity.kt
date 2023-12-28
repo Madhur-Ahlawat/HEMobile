@@ -58,19 +58,19 @@ abstract class BaseActivity<T> : AppCompatActivity() {
 
     }
 
-//     override fun onWindowFocusChanged(hasFocus: Boolean) {
-//         super.onWindowFocusChanged(hasFocus)
-//         if (hasFocus) {
-//             // allow screenshots when activity is focused
-//             window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-//         } else {
-//             // hide information (blank view) on app switcher
-//             window.setFlags(
-//                 WindowManager.LayoutParams.FLAG_SECURE,
-//                 WindowManager.LayoutParams.FLAG_SECURE
-//             )
-//         }
-//     }
+     override fun onWindowFocusChanged(hasFocus: Boolean) {
+         super.onWindowFocusChanged(hasFocus)
+         if (hasFocus) {
+             // allow screenshots when activity is focused
+             window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+         } else {
+             // hide information (blank view) on app switcher
+             window.setFlags(
+                 WindowManager.LayoutParams.FLAG_SECURE,
+                 WindowManager.LayoutParams.FLAG_SECURE
+             )
+         }
+     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
