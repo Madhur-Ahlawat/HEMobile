@@ -62,7 +62,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
 
     private val countryCodesList: MutableList<String> = mutableListOf()
-    private var retrievedPhoneNumber: String?=null
+    private var retrievedPhoneNumber: String? = null
     private var requiredCountryCode = false
     private var requiredMobileNumber = false
     private var loader: LoaderDialog? = null
@@ -180,20 +180,23 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         isViewCreated = true
         requestHint()
     }
+
     private fun requestHint() {
-        val request: GetPhoneNumberHintIntentRequest = GetPhoneNumberHintIntentRequest.builder().build()
+        val request: GetPhoneNumberHintIntentRequest =
+            GetPhoneNumberHintIntentRequest.builder().build()
         val phoneNumberHintIntentResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
                 try {
-                    var matchedCountry:String?=null
-                    var matchedCountryCode:String?=null
-                    retrievedPhoneNumber = Identity.getSignInClient(requireActivity()).getPhoneNumberFromIntent(result.data).replace(" ","").replace("-","")
+                    var matchedCountry: String? = null
+                    var matchedCountryCode: String? = null
+                    retrievedPhoneNumber = Identity.getSignInClient(requireActivity())
+                        .getPhoneNumberFromIntent(result.data).replace(" ", "").replace("-", "")
                     countryCodesList.forEachIndexed { index, s ->
-                        if(retrievedPhoneNumber.toString().contains(s)){
+                        if (retrievedPhoneNumber.toString().contains(s)) {
                             fullCountryNameWithCode.forEachIndexed { index, s2 ->
-                                if(s2.contains(s)){
-                                    matchedCountry=s2
-                                    matchedCountryCode=s
+                                if (s2.contains(s)) {
+                                    matchedCountry = s2
+                                    matchedCountryCode = s
                                 }
                             }
                         }
@@ -209,18 +212,19 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 //                            }
 //                        }
                     }
-                    if(matchedCountry.isNullOrEmpty()){
+                    if (matchedCountry.isNullOrEmpty()) {
                         binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
                         binding.inputMobileNumber.setErrorText(getString(R.string.unfortunately_at_this_time_we_do_not_support_your_mobile_number))
-                    }
-                    else{
-                        binding.inputMobileNumber.setText(retrievedPhoneNumber.toString().replace(matchedCountryCode!!,""))
+                    } else {
+                        binding.inputMobileNumber.setText(
+                            retrievedPhoneNumber.toString().replace(matchedCountryCode!!, "")
+                        )
                         binding.inputCountry.setSelectedValue(
                             matchedCountry!!
                         )
                     }
 
-                } catch(e: Exception) {
+                } catch (e: Exception) {
                     Log.e(TAG, "Phone Number Hint failed")
                 }
             }
@@ -239,6 +243,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 Log.e(TAG, "Phone Number Hint failed")
             }
     }
+
     private fun setData() {
         data = navData as ProfileDetailModel?
         if (data != null) {
@@ -293,7 +298,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     private fun setMobileView() {
         isItMobileNumber = true
-        if (requireActivity() is CreateAccountActivity||navFlowCall==Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
+        if (requireActivity() is CreateAccountActivity || navFlowCall == Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
         } else {
             title?.text = getString(R.string.profile_mobile_number)
         }
@@ -449,7 +454,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private fun seperateCountryCodeListFromNameList(fullCountryNameWithCode: MutableList<String>) {
         countryCodesList.clear()
         fullCountryNameWithCode.forEachIndexed { index, s ->
-            countryCodesList.add(s.substring(s.indexOf("(")+1,s.indexOf(")")))
+            countryCodesList.add(s.substring(s.indexOf("(") + 1, s.indexOf(")")))
         }
     }
 
@@ -572,7 +577,21 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
 
                     else -> {
-                        val res: Int = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
+                        var res = 0
+
+                        for (i in 0 until Utils.smsSupportCountryList().size) {
+                            for (j in 0 until fullCountryNameWithCode.size) {
+                                res =
+                                    if (Utils.smsSupportCountryList()[i].trim() != fullCountryNameWithCode[j].trim()) {
+                                        R.id.action_HWMobileNumberCaptureVC_to_smsNotSupportFragment
+                                    } else {
+                                        R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
+                                    }
+
+                            }
+                        }
+
+
                         handleNavFlow(mobileNumber, countryCode, bundle, res)
                     }
                 }
@@ -786,7 +805,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 NewCreateAccountRequestModel.sms_referenceId = resource.data?.referenceId
-                Log.e("TAG", "handleEmailVerification: " )
+                Log.e("TAG", "handleEmailVerification: ")
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
                     bundle
@@ -822,6 +841,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             checkButton()
         }
     }
+
     private fun updateProfileDetails(
         dataModel: ProfileDetailModel?
     ) {

@@ -649,7 +649,14 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.replenishmentAmount = String.format("%.2f", topUpAmount.toDouble()) // top up amount
         model.directoryServerID = directoryServerId // 3ds serverId
         if (NewCreateAccountRequestModel.communicationTextMessage) {
-            model.smsOption = "Y"
+            if (!NewCreateAccountRequestModel.isCountryNotSupportForSms){
+                model.smsOption = "N"
+
+            }else{
+                model.smsOption = "Y"
+
+            }
+
 
         } else {
             model.smsOption = "N"
