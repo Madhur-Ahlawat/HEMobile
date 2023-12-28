@@ -173,15 +173,18 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
             is Resource.DataError -> {
                 Log.e("TAG", "handleAccountResponse() called with: response = $response")
-                Log.e("TAG", "handleAccountResponse() called with: response = ${response.errorModel?.message}")
+                Log.e(
+                    "TAG",
+                    "handleAccountResponse() called with: response = ${response.errorModel?.message}"
+                )
                 if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
                         Constants.INVALID_TOKEN
                     )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
                 ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {
-                    if(response.errorModel?.message.equals("Something went wrong. Try again later")){
-                    }else{
+                    if (response.errorModel?.message.equals("Something went wrong. Try again later")) {
+                    } else {
                         redirectToTryAgainPaymentScreen()
                     }
                 }
@@ -227,7 +230,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         NewCreateAccountRequestModel.emailSecurityCode = ""
         NewCreateAccountRequestModel.smsSecurityCode = ""
         NewCreateAccountRequestModel.password = ""
-        NewCreateAccountRequestModel.isCountryNotSupportForSms=false
+        NewCreateAccountRequestModel.isCountryNotSupportForSms = false
     }
 
     override fun onClick(v: View?) {
@@ -376,7 +379,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                     paymentSuccessResponse.eci
                                 )
                             } else if (flow == Constants.ADD_PAYMENT_METHOD) {
-                                if (responseModel?.checkCheckBox == true||paymentListSize==0) {
+                                if (responseModel?.checkCheckBox == true || paymentListSize == 0) {
                                     saveNewCard(responseModel, paymentSuccessResponse, "Y")
                                 } else {
                                     saveNewCard(responseModel, paymentSuccessResponse, "N")
@@ -552,12 +555,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.postCode = NewCreateAccountRequestModel.zipCode.replace(" ", "")
         model.addressLine2 = "Small Heath"
         if (NewCreateAccountRequestModel.twoStepVerification) {
-            if (!NewCreateAccountRequestModel.isCountryNotSupportForSms){
-                model.mfaFlag = "Y"
 
-            }else{
-                model.mfaFlag = "N"
-            }
+            model.mfaFlag = "Y"
+
 
         } else {
             model.mfaFlag = "N"
