@@ -1,11 +1,11 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -63,12 +63,21 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setData() {
         Log.d("date",data?.expirationDate.toString())
-        binding?.apply {
+        binding.apply {
             vehicleRegisration.text = data?.plateNo?.uppercase()
-            creditRemaining.text =
-                data?.unusedTrip
+
+            if (data?.unusedTrip?.toInt()==1){
+                creditRemaining.text =
+                    data?.unusedTrip+getString(R.string.crossing)
+
+            }else{
+                creditRemaining.text =
+                    data?.unusedTrip+getString(R.string.crossings)
+            }
+
             creditAdditionalCrossings.text = convertDateForTransferCrossingsScreen(data?.expirationDate)
 
 //            val charge = data?.chargingRate?.toDouble()
@@ -81,7 +90,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
     }
 
     private fun setClickListeners() {
-        binding?.apply {
+        binding.apply {
             btnContinue.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
             btnCancel.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
             editVehicleRegistrationNumber.setOnClickListener(this@ConfirmNewVehicleDetailsCheckPaidCrossingsFragment)
@@ -89,7 +98,6 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         }
     }
 
-    fun getRequiredText(text: String) = text.substringAfter(' ')
 
     override fun initCtrl() {
     }
@@ -118,7 +126,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                 is Resource.DataError -> {
                     if(status.errorModel?.status==500){
                         val bundle = Bundle()
-                        bundle.putParcelable(Constants.NAV_DATA_KEY,data)
+                        bundle.putParcelable(NAV_DATA_KEY,data)
                         requireActivity().openActivityWithData(MakeOffPaymentActivity::class.java,bundle)
                         requireActivity().finish()
                     }
@@ -205,7 +213,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
             val bundle = Bundle()
 
             if (isDblaAvailable == true) {
-                bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                bundle.putString(PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountFindVehicleFragment,

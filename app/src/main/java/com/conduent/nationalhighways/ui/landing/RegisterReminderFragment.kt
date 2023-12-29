@@ -53,7 +53,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     override fun onResume() {
         super.onResume()
-        if (Utils.areNotificationsEnabled(requireContext()) == false) {
+        if (!Utils.areNotificationsEnabled(requireContext())) {
             binding.switchNotification.isChecked = false
             sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
         } else {
@@ -61,7 +61,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 (sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION))
         }
 
-        if(Utils.checkLocationpermission(requireContext())==false){
+        if(!Utils.checkLocationpermission(requireContext())){
             binding.switchGeoLocation.isChecked = false
             sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
         }else{
@@ -117,7 +117,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     }
 
-    val locationPermissionRequest = registerForActivityResult(
+    private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         when {
@@ -137,7 +137,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             }
         }
 
-        if (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION) == true) {
+        if (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)) {
             requestBackgroundLocationPermission()
 
         }
@@ -165,7 +165,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         }
     }
 
-    fun displayLocationAlwaysAllowPopup(
+    private fun displayLocationAlwaysAllowPopup(
     ) {
 
         val dialog = Dialog(requireContext())
@@ -199,7 +199,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     private fun openAppSettings() {
         val appSettingsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        val packageName = requireActivity().getPackageName() // Replace with your app's package name
+        val packageName = requireActivity().packageName // Replace with your app's package name
         val appSettingsUri = Uri.fromParts("package", packageName, null)
         appSettingsIntent.data = appSettingsUri
         startActivity(appSettingsIntent)

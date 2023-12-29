@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.base
 
-import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -15,7 +14,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.ErrorResponseModel
@@ -24,7 +22,6 @@ import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -58,19 +55,19 @@ abstract class BaseActivity<T> : AppCompatActivity() {
 
     }
 
-//     override fun onWindowFocusChanged(hasFocus: Boolean) {
-//         super.onWindowFocusChanged(hasFocus)
-//         if (hasFocus) {
-//             // allow screenshots when activity is focused
-//             window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-//         } else {
-//             // hide information (blank view) on app switcher
-//             window.setFlags(
-//                 WindowManager.LayoutParams.FLAG_SECURE,
-//                 WindowManager.LayoutParams.FLAG_SECURE
-//             )
-//         }
-//     }
+    /* override fun onWindowFocusChanged(hasFocus: Boolean) {
+         super.onWindowFocusChanged(hasFocus)
+         if (hasFocus) {
+             // allow screenshots when activity is focused
+             window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+         } else {
+             // hide information (blank view) on app switcher
+             window.setFlags(
+                 WindowManager.LayoutParams.FLAG_SECURE,
+                 WindowManager.LayoutParams.FLAG_SECURE
+             )
+         }
+     }*/
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

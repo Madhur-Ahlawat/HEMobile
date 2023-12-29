@@ -82,9 +82,18 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     }
 
     private fun initCtrl() {
-        binding.toolBarLyt.titleTxt.text = getString(R.string.str_profile_biometrics)
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+        }
+        if(navFlowFrom.equals(Constants.TWOFA)){
+            binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
+            binding.toolBarLyt.backButton.gone()
+            binding.biometricCancel.visible()
+        }
+        else{
+            binding.toolBarLyt.titleTxt.text = getString(R.string.str_profile_biometrics)
+            binding.toolBarLyt.backButton.visible()
+            binding.biometricCancel.gone()
         }
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -97,16 +106,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
-        }
-
-        if (sessionManager?.getTwoFAEnabled()==true) {
-            binding.toolBarLyt.backButton.gone()
-            binding.biometricCancel.visible()
-
-        } else {
-            binding.toolBarLyt.backButton.visible()
-            binding.biometricCancel.gone()
-
         }
 
         initBiometric(this)
@@ -177,12 +176,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     binding.btnSave.isEnabled = false
                 }
             } else {
-                if (sessionManager.fetchTouchIdEnabled()) {
+                if(sessionManager.fetchTouchIdEnabled()){
                     binding.btnSave.isEnabled = true
-                } else {
+                }
+                else{
                     binding.btnSave.isEnabled = false
                 }
-                sessionManager.saveTouchIdEnabled(false)
             }
         }
 
