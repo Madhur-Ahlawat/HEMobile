@@ -65,7 +65,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
             Constants.FORGOT_PASSWORD_FLOW -> {
                 binding.subTitle.gone()
-                binding.feedbackBt.gone()
+                binding.feedbackBt.invisible()
                 binding.btnSubmit.gone()
                 binding.signinBt.visible()
             }
@@ -103,7 +103,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                         .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                 ) {
                     title?.text = getString(R.string.profile_email_address)
-
+                    binding.feedbackBt.invisible()
                     binding.title.text = getString(R.string.email_address_change_successful)
                     binding.subTitle.text = Html.fromHtml(
                         getString(

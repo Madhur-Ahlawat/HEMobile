@@ -71,11 +71,11 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
 
             if (data?.unusedTrip?.toInt()==1){
                 creditRemaining.text =
-                    data?.unusedTrip+getString(R.string.crossing)
+                    data?.unusedTrip?.trim()+" "+getString(R.string.crossing)
 
             }else{
                 creditRemaining.text =
-                    data?.unusedTrip+getString(R.string.crossings)
+                    data?.unusedTrip?.trim()+" "+getString(R.string.crossings)
             }
 
             creditAdditionalCrossings.text = convertDateForTransferCrossingsScreen(data?.expirationDate)

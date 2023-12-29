@@ -134,9 +134,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/feedback_bt"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:radius="@dimen/margin_5dp" />
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/feedback_bt"
+            style="@style/secondaryButton"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/new_btn_color"
+            app:borderColor="@color/new_btn_color"
+            android:textColorLink="@color/new_btn_color"
+            android:layout_marginBottom="@dimen/margin_50dp"
+            android:text="@string/feed_back_to_improve_service"
             app:radius="@dimen/margin_5dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
