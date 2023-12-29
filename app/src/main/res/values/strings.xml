@@ -432,6 +432,8 @@
 
     <string name="str_remove_vehicle">Remove vehicle</string>
     <string name="str_select_vehicle_to_remove">Select vehicles you want to remove</string>
+    <string name="enablenow_lower_case">Enable Now</string>
+    <string name="enablelater_lower_case">Enable Later</string>
 
     <string name="start_again">Start again</string>
     <string name="your_session_has_expired">Your session has expired</string>
