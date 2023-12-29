@@ -133,5 +133,6 @@
     <color name="green_status">#80BA27</color>
     <color name="doItLaterColour">#AC352F</color>
     <color name="red_status">#CA2A1F</color>
+    <color name="grey_cccccc">#CCCCCC</color>
 
 </resources>

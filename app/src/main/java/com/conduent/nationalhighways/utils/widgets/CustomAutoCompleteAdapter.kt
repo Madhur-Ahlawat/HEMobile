@@ -40,13 +40,11 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                     suggestions.addAll(originalItems)
                 } else {
                     val filterPattern = constraint.toString().lowercase().trim()
-
                     for (item in originalItems) {
                         if (item.lowercase().contains(filterPattern)) {
                             suggestions.add(item)
                         }
                     }
-                    suggestions= suggestions.filter { it.lowercase().startsWith(filterPattern) }.toMutableList()
                 }
 
 

@@ -1438,7 +1438,8 @@
     <string name="we_can_send_you_a_receipt_by_email_and_text_message">We can send you a receipt by email and text message.</string>
     <string name="email_optional">Email (optional)</string>
     <string name="text_message_optional">Text message (optional)</string>
-    <string name="text_we_have_sent_a_reciept_email_to">We\'ve sent a receipt email to\n<b>%s</b></string>
+    <string name="text_we_have_sent_a_reciept_email_to_text">We\'ve sent a receipt email to</string>
+
     <string name="credit_for_additional_crossings">Credit for Future Crossings</string>
     <string name="your_type_of_vehicle_does_not_match_what_we_have_on_record">Your type of vehicle does not match what we have on record.</string>
     <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.

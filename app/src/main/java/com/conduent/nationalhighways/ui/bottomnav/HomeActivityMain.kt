@@ -218,6 +218,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             }
             navController.navigate(R.id.dashBoardFragment, bundle)
             getDashBoardAllData()
+            changeBottomIconColors(this@HomeActivityMain,0)
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment) {

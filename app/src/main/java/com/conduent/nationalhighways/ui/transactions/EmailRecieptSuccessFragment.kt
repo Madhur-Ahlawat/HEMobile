@@ -43,10 +43,8 @@ class EmailRecieptSuccessFragment : BaseFragment<FragmentEmailRecieptSuccessBind
     }
 
     override fun initCtrl() {
-        binding.message.text = resources.getString(
-            R.string.text_we_have_sent_a_reciept_email_to,
-            HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
-        )
+        binding.emailTv.text = HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
+
         binding.btnContinue.setOnClickListener {
             findNavController().popBackStack(R.id.crossingHistoryFragment, false)
         }
