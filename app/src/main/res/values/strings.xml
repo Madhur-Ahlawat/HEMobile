@@ -941,7 +941,9 @@
     <string name="str_message_data_rates">Message and data rates may apply.</string>
     <string name="enable_biometric">Enable Biometrics</string>
     <string name="enablenow">ENABLE NOW</string>
+    <string name="enablenow_lower_case">Enable Now</string>
     <string name="enablelater">ENABLE LATER</string>
+    <string name="enablelater_lower_case">Enable Later</string>
     <string name="biometric_has_not_been_setup">Biometrics has not been set up on this device.  Please go to your phone\u0027s settings menu to set up Biometrics.</string>
     <string name="goto_settings">Go to settings</string>
     <string name="str_three_address_found">0 Addresses Found</string>
@@ -1438,7 +1440,7 @@
     <string name="text_we_have_sent_a_reciept_email_to">We\'ve sent a receipt email to\n<b>%s</b></string>
     <string name="credit_for_additional_crossings">Credit for Future Crossings</string>
     <string name="your_type_of_vehicle_does_not_match_what_we_have_on_record">Your type of vehicle does not match what we have on record.</string>
-    <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
+    <string name="our_records_show_the_numberplate"><![CDATA[Our records show that %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
                     \n\nIf you pay the wrong Dart Charge for your type of vehicle, you could receive a Penalty Charge Notice.]]></string>
     <string name="pay_new_amount">PAY NEW AMOUNT</string>
     <string name="str_continue_with_selection">Continue with your selection</string>
@@ -1513,7 +1515,7 @@
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
     <string name="error_check_paid_crossings">Your crossing data could not be retrieved. Check if your entries are correct or try again later.</string>
-    <string name="vehcile_type_mismatch"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm]]></string>
+    <string name="vehcile_type_mismatch"><![CDATA[Our records show that %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm]]></string>
     <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from\nDart Charge payment</string>
     <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm</string>
     <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
@@ -1658,6 +1660,7 @@
 
 
     <string name="str_disable_notifications">Click here to disable notifications when you cross</string>
+    <string name="str_profile_biometrics">Profile Biometrics</string>
     <string name="str_enable_notifications">Click here to enable notifications when you cross</string>
 
     <string name="str_max_payment_methods">Max Payment Methods</string>

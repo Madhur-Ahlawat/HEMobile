@@ -135,8 +135,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private fun displayBiometricDialog(title: String) {
         displayCustomMessage(title,
             getString(R.string.doyouwantenablebiometric),
-            getString(R.string.enablenow),
-            getString(R.string.enablelater),
+            getString(R.string.enablenow_lower_case),
+            getString(R.string.enablelater_lower_case),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
