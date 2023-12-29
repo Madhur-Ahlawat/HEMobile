@@ -724,7 +724,6 @@
     <string name="how_many_crossing">How many <b>crossings</b> will each vehicle make on average on each month?</string>
     <string name="crossing">crossing</string>
     <string name="crossings">crossings</string>
-
     <string name="top_up_recommendation">Top-up recommendations</string>
     <string name="top_up_calculate">calculate top up</string>
     <string name="top_up_calculate_recommend">We recommend that you have a minimum top-up amount of £10,000 and a minimum balance threshold of £5,000.\nPlease note that you can change these amounts by manually entering the amounts you require.</string>
@@ -1517,7 +1516,7 @@
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
     <string name="error_check_paid_crossings">Your crossing data could not be retrieved. Check if your entries are correct or try again later.</string>
-    <string name="vehcile_type_mismatch"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm]]></string>
+    <string name="vehcile_type_mismatch"><![CDATA[Our records show that %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm]]></string>
     <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from\nDart Charge payment</string>
     <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
@@ -1662,6 +1661,7 @@
 
 
     <string name="str_disable_notifications">Click here to disable notifications when you cross</string>
+    <string name="str_profile_biometrics">Profile Biometrics</string>
     <string name="str_enable_notifications">Click here to enable notifications when you cross</string>
 
     <string name="str_max_payment_methods">Max Payment Methods</string>

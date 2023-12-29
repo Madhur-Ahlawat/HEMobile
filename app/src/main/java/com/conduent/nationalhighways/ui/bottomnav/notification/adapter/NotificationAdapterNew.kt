@@ -5,8 +5,10 @@ import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.databinding.ItemNotificationsBinding
 import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment
@@ -110,6 +112,19 @@ class NotificationAdapterNew(
             this@NotificationAdapterNew.notifyItemChanged(clickedItem)
         }
         binding?.message?.movementMethod = LinkMovementMethod.getInstance()
+        if(item.isViewed!=null && item.isViewed?.equals("Y")!!){
+            holder.itemView.isFocusable=false
+            holder.itemView.isEnabled=false
+            binding.notificationDate.setTextColor(context.resources.getColor(R.color.hint_color))
+            binding.message.setTextColor(context.resources.getColor(R.color.hint_color))
+        }
+        else{
+            holder.itemView.isFocusable=true
+            holder.itemView.isEnabled=true
+            binding.notificationDate.setTextColor(context.resources.getColor(R.color.black))
+            binding.message.setTextColor(context.resources.getColor(R.color.black))
+
+        }
     }
 
     override fun getItemCount(): Int {

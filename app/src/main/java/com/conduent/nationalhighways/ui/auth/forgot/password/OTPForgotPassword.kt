@@ -1114,17 +1114,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun displayBiometricDialog(title: String) {
         displayCustomMessage(title,
             getString(R.string.doyouwantenablebiometric),
-            getString(R.string.enablenow),
-            getString(R.string.enablelater),
+            getString(R.string.enablenow_lower_case),
+            getString(R.string.enablelater_lower_case),
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(requireActivity(), BiometricActivity::class.java)
                     intent.putExtra(Constants.TWOFA, sessionManager?.getTwoFAEnabled())
-                    intent.putExtra(
-                        Constants.FROM_LOGIN_TO_BIOMETRIC,
-                        Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
-                    )
-                    intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+                    intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
 
                     startActivity(intent)
 
