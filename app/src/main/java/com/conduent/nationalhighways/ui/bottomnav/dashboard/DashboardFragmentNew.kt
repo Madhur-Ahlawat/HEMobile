@@ -217,13 +217,16 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showExemptPartnerUI(this)
             }
         }
-        if(navFlowFrom == Constants.BIOMETRIC_CHANGE && sessionManager?.fetchTouchIdEnabled()!!){
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE && sessionManager.fetchTouchIdEnabled()){
             var bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
             bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
-            findNavController()?.navigate(R.id.action_dashBoardFragment_to_accountManagementFragment,bundle)
+            findNavController().navigate(R.id.action_dashBoardFragment_to_accountManagementFragment,bundle)
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+        }else{
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 0)
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
