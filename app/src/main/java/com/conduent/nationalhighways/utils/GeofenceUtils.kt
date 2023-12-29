@@ -55,7 +55,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId("geofenceDartCharge")
                 setCircularRegion(
-                    17.454310, 78.565912,
+                    12.988620, 77.502560,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
