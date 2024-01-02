@@ -70,10 +70,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var from: String = ""
     private var crossingCount: Int = 0
-    private var hasFaceBiometric=false
-    private var hasTouchBiometric=false
+    private var hasFaceBiometric = false
+    private var hasTouchBiometric = false
+
     @Inject
     lateinit var api: ApiService
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -91,14 +93,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
-        Log.e("TAG", "handleLrdsResposne: ")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
         when (resource) {
 
             is Resource.Success -> {
-                Log.e("TAG", "handleLrdsResposne: statusCode " + resource.data?.srStatus)
                 if (resource.data?.statusCode == null) {
                     startNewActivityByClearingStack(LandingActivity::class.java) {
                         putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
@@ -132,6 +132,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
         }
     }
+
     private fun displayBiometricDialog(title: String) {
         displayCustomMessage(title,
             getString(R.string.doyouwantenablebiometric),
@@ -201,7 +202,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                             displayBiometricDialog(getString(R.string.str_enable_touch_ID))
 
                         }
-                    }else{
+                    } else {
                         startNewActivityByClearingStack(HomeActivityMain::class.java) {
                             putString(Constants.NAV_FLOW_FROM, from)
                             putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
@@ -279,10 +280,24 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         initCtrl()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.e("TAG", "onResume: -------> ")
+        if (displayFingerPrintPopup()) {
+            fingerPrintLogin()
+        }
+    }
+
+
+//    override fun initOnResume() {
+//        Log.e("TAG", "onResume: displayFingerPrintPopup "+displayFingerPrintPopup() )
+
+//    }
+
 
     private fun init() {
-        BaseApplication.flowNameAnalytics=Constants.LOGIN
-        BaseApplication.screenNameAnalytics=""
+        BaseApplication.flowNameAnalytics = Constants.LOGIN
+        BaseApplication.screenNameAnalytics = ""
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             intent?.apply {
                 from = getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
@@ -358,7 +373,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                                     Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
                                 )
                             )
-                       if (!Patterns.EMAIL_ADDRESS.matcher(
+                        if (!Patterns.EMAIL_ADDRESS.matcher(
                                 binding.edtEmail.getText().toString()
                             ).matches()
                         ) {
@@ -403,9 +418,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
         }
 
-        if (displayFingerPrintPopup()) {
-            fingerPrintLogin()
-        }
 //        binding.edtEmail.setText("madhur.ahslawat@conduent.com")
 //        binding.edtPwd.setText("Welcome2")
 //        binding.btnLogin.isEnabled=true
@@ -423,6 +435,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     private fun fingerPrintLogin() {
         Handler(Looper.getMainLooper()).post {
+            Log.e("TAG", "fingerPrintLogin: ")
             biometricPrompt.authenticate(promptInfo)
         }
     }
@@ -645,10 +658,11 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 //            intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
 //            startActivity(intent)
 //        } else {
-            dashboardViewModel.getAccountDetailsData()
+        dashboardViewModel.getAccountDetailsData()
 //        }
         return {}
     }
+
     fun getNewToken(api: ApiService, sessionManager: SessionManager) {
         sessionManager.fetchRefreshToken()?.let { refresh ->
             var responseOK = false
@@ -667,10 +681,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
             if (responseOK) {
                 BaseApplication.saveToken(sessionManager, response)
-                if(response?.body()?.mfaEnabled!=null && response?.body()?.mfaEnabled?.toLowerCase() == "true"){
+                if (response?.body()?.mfaEnabled != null && response?.body()?.mfaEnabled?.toLowerCase() == "true") {
                     sessionManager?.saveTwoFAEnabled(true)
-                }
-                else{
+                } else {
                     sessionManager?.saveTwoFAEnabled(false)
                 }
                 hitAPIs()

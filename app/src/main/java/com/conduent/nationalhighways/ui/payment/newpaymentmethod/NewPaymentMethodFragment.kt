@@ -253,7 +253,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                                 dialog.dismiss()
                             }
                         }
-                    ,cancelVisibility=View.GONE)
+                    ,cancelVisibility=View.GONE, lineView = true)
 
                 }else{
                     val bundle = Bundle()

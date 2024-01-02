@@ -899,8 +899,18 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
 
                         if (navData == null) {
+                            Log.e("TAG", "apiResponseDVRM: --->** ")
                             navData =
-                                CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString())
+                                CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString(),
+                                    vehicleMake = "", vehicleClass = "", vehicleColor = "", vehicleModel = "", vehicleType = "")
+                        }else{
+                            if(navData is CrossingDetailsModelsResponse){
+                                (navData as CrossingDetailsModelsResponse).vehicleMake=""
+                                (navData as CrossingDetailsModelsResponse).vehicleClass=""
+                                (navData as CrossingDetailsModelsResponse).vehicleColor=""
+                                (navData as CrossingDetailsModelsResponse).vehicleModel=""
+                                (navData as CrossingDetailsModelsResponse).vehicleType=""
+                            }
                         }
                         bundle.putParcelable(
                             Constants.NAV_DATA_KEY,

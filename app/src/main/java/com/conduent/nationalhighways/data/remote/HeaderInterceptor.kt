@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.data.remote
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils.getVersionName
 import okhttp3.Interceptor
@@ -27,8 +28,15 @@ class HeaderInterceptor @Inject constructor(
 
         sessionManager.let {
             it.fetchAuthToken()?.let { accessToken ->
-                if (!(chain.request().url.encodedPath.contains("account/codeType/listofvalues")||chain.request().url.encodedPath.contains("account/countries")||chain.request().url.encodedPath.contains("account/vehicle/getPlateInfo")||
-                    chain.request().url.encodedPath.contains("system/status"))) {
+                if (!(chain.request().url.encodedPath.contains("account/codeType/listofvalues") || chain.request().url.encodedPath.contains(
+                        "account/countries"
+                    ) || chain.request().url.encodedPath.contains("account/vehicle/getPlateInfo") ||
+                            chain.request().url.encodedPath.contains("system/status") ||
+                            chain.request().url.encodedPath.contains("tbm/api/oneOffPayment") ||
+                            chain.request().url.encodedPath.contains("bosuser/api/accountCreation")
+                        )
+                ) {
+                    Log.e("TAG", "intercept: accessToken "+accessToken )
                     requestBuilder.addHeader("Authorization", "Bearer $accessToken")
                 }
                 requestBuilder.addHeader(
@@ -40,7 +48,6 @@ class HeaderInterceptor @Inject constructor(
 
         return chain.proceed(requestBuilder.build())
     }
-
 
 
 }

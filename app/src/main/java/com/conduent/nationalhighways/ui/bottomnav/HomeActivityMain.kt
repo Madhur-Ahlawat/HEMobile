@@ -79,6 +79,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         fun setTitle(title: String) {
             dataBinding?.titleTxt?.text = title
         }
+        fun removeBottomBar(){
+            dataBinding?.bottomNavigationView?.gone()
+        }
         fun changeBottomIconColors(context: Context,pos: Int) {
             Log.e("TAG", "changeBottomIconColors: pos " + pos)
             if (pos == 0) {

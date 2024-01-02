@@ -88,6 +88,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         navController = findNavController(this, R.id.nav_host_fragment_container)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
         Logg.logging("landingActivy", "test called $screenType")
+        Log.e("TAG", "initCtrl:fetchTouchIdEnabled "+sessionManager.fetchTouchIdEnabled() )
 
         if (intent?.hasExtra(Constants.NAV_FLOW_FROM) == true) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""

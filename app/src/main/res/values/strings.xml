@@ -1651,7 +1651,6 @@
     <string name="return_to_landingpage">Return to landing page</string>
     <string name="enter_a_top_up_amount">Enter a top-up amount</string>
     <string name="southbound">Southbound</string>
-    <string name="number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hypens_and_spaces">Number plate must only include letters a to z, numbers 0 to 9 and special characters such as hypens and spaces</string>
     <string name="payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9">Payment reference number must only include letters a to z and numbers 0 to 9</string>
     <string name="credit_transferred">Credit Transferred</string>
     <string name="str_crossing_data">%1$s crossing</string>

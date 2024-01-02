@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.removeBottomBar
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.BIOMETRIC_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
@@ -96,6 +97,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 if (arguments?.getString(Constants.NAV_FLOW_FROM)
                         .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                 ) {
+                    removeBottomBar()
                     title?.text = getString(R.string.profile_email_address)
                     binding.feedbackBt.invisible()
                     binding.title.text = getString(R.string.email_address_change_successful)

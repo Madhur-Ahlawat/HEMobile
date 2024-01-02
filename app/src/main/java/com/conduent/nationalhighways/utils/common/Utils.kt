@@ -1161,7 +1161,13 @@ object Utils {
             val millisecondsInMonth =
                 1000L * 60 * 60 * 24 * 30 // Approximation of a month in milliseconds
             val months = differenceInMillis / millisecondsInMonth
-            Triple(hours, minutes, months)
+
+            val millisecondsInDay = 1000L * 60 * 60 * 24
+            val days = differenceInMillis / millisecondsInDay
+
+
+//            Triple(hours, minutes, months)
+            Triple(hours, minutes, days)
         } catch (e: Exception) {
             Triple(0, 0, 0)
         }
