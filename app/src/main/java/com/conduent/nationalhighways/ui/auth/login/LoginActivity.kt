@@ -145,7 +145,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                     )
-                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
+                    intent.putExtra(Constants.NAV_FLOW_FROM, Constants.LOGIN)
 
                     startActivity(intent)
 

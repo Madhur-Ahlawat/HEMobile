@@ -48,6 +48,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener {
 
+    private var goToSuccessPage: Boolean=false
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -182,6 +184,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             from = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
 
+        if (intent.hasExtra(Constants.GO_TO_SUCCESS_PAGE)) {
+            goToSuccessPage = intent.getBooleanExtra(Constants.GO_TO_SUCCESS_PAGE,false)
+        }
+
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
@@ -210,6 +216,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         } else {
             var bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, from)
+            bundle.putBoolean(Constants.GO_TO_SUCCESS_PAGE,goToSuccessPage)
             dataBinding?.idToolBarLyt?.gone()
             if (!this::navController.isInitialized) {
                 navController = (supportFragmentManager.findFragmentById(

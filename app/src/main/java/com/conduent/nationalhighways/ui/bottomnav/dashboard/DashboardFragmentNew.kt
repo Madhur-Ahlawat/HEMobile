@@ -62,6 +62,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener,
     View.OnClickListener, BackPressListener {
+    private var goToSuccessPage: Boolean = false
     private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
         hashMapOf()
@@ -127,6 +128,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun initCtrl() {
         if(arguments?.containsKey(Constants.NAV_FLOW_KEY)==true){
             navFlowFrom=arguments?.getString(Constants.NAV_FLOW_KEY)?:""
+        }
+
+        if(arguments?.containsKey(Constants.GO_TO_SUCCESS_PAGE)==true){
+            goToSuccessPage= arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE,false)!!
         }
         binding.labelViewAll.setOnClickListener {
             (requireActivity() as HomeActivityMain).viewAllTransactions()
@@ -217,7 +222,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showExemptPartnerUI(this)
             }
         }
-        if(navFlowFrom == Constants.BIOMETRIC_CHANGE && sessionManager.fetchTouchIdEnabled()){
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage){
             var bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
             bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
@@ -530,6 +535,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         if (cardType?.uppercase().equals(Constants.CURRENT, true)) {
                             cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
                                 "CURRENT ending in ",
+                                "****"
+                            ) ?: ""
+                        } else if(cardType?.uppercase().equals(Constants.SAVINGS, true)){
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
+                                "SAVINGS ending in ",
                                 "****"
                             ) ?: ""
                         } else {
