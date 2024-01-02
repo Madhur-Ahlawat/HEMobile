@@ -362,6 +362,10 @@
         <action
             android:id="@+id/action_crossingRecieptFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_crossingRecieptFragment_to_smsNotSupportFragment"
+            app:destination="@id/smsNotSupportFragment"
+            />
     </fragment>
     <fragment
         android:id="@+id/crossingCheckAnswersFragment"
@@ -1022,6 +1026,9 @@ app:popUpTo="@id/HWMobileNumberCaptureVC"
         <action
             android:id="@+id/action_smsNotSupportFragment_to_createVehicleFragment"
             app:destination="@+id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_smsNotSupportFragment_to_crossingCheckAnswersFragment"
+            app:destination="@id/crossingCheckAnswersFragment" />
     </fragment>
 
 

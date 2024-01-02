@@ -477,7 +477,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         val ftVehicleList = FtVehicleList(mVehicleList)
         val oneOfPayModelReq = OneOfPaymentModelRequest(ftVehicleList, paymentTypeInfo)
 
-        Log.e("TAG", "makeOneOffPaymentApi: oneOfPayModelReq " + oneOfPayModelReq)
+        Log.e("TAG", "makeOneOffPaymentApi: oneOfPayModelReq $oneOfPayModelReq")
         oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
     }
 
@@ -551,6 +551,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.emailPreference = "Y"
         model.postCode = NewCreateAccountRequestModel.zipCode.replace(" ", "")
         model.addressLine2 = "Small Heath"
+
         if (NewCreateAccountRequestModel.twoStepVerification) {
             if (!NewCreateAccountRequestModel.isCountryNotSupportForSms){
                 model.mfaFlag = "Y"

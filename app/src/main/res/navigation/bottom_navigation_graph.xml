@@ -967,6 +967,16 @@
 
 
     </fragment>
+    <fragment
+        android:id="@+id/smsNotSupportFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.SmsNotSupportFragment"
+        android:label="Sms Not Support Fragment"
+        tools:layout="@layout/fragment_sms_not_support">
+        <action
+            android:id="@+id/action_smsNotSupportFragment_to_createVehicleFragment"
+            app:destination="@+id/findYourVehicleFragment" />
+
+    </fragment>
 
 
 </navigation>
