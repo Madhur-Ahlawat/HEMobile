@@ -512,13 +512,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     bundle.putString(
                         Constants.CURRENTBALANCE, data.replenishmentInformation?.currentBalance
                     )
-
                 } else {
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
-
                 }
 
+                bundle.putString(Constants.NAV_FLOW_FROM, Constants.DASHBOARD)
                 bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, HomeActivityMain.accountDetailsData?.accountInformation)
 
                 findNavController().navigate(
                     R.id.action_dashBoardFragment_to_accountSuspendedPaymentFragment, bundle

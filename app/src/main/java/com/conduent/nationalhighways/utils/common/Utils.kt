@@ -945,8 +945,8 @@ object Utils {
 
     }
 
-    fun currentTime(): String {
-        return SimpleDateFormat("hh:mm", Locale.getDefault()).format(Date())
+    fun currentDateWithTimeTime(): String {
+        return SimpleDateFormat("dd MMM yyyy hh:mma", Locale.getDefault()).format(Date())
 
     }
 
@@ -1196,15 +1196,14 @@ object Utils {
         if (sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME).isEmpty()) {
             showRatingDialog(activity, sessionManager)
         } else {
-            val lastTokenTime = Utils.convertStringToDate(
+            val lastTokenTime = convertStringToDate(
                 sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME),
                 Constants.dd_mm_yyyy_hh_mm_ss
             )
             if (lastTokenTime != null) {
-                val diff = Utils.getTimeDifference(lastTokenTime, Date())
-                if (diff.third >= 4) {
+                val diff = getTimeDifference(lastTokenTime, Date())
+                if (diff.third >= 1) {
                     showRatingDialog(activity, sessionManager)
-
                 }
             }
         }

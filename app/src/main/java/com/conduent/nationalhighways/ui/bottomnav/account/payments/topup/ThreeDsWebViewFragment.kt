@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.payments.topup
 
+import android.accounts.Account
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
@@ -30,6 +32,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
     private var topUpAmount:Double = 0.0
     private var currentBalance: String = ""
     private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
     private var paymentListSize: Int = 0
     private var flow: String = ""
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
@@ -80,13 +83,12 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                             if (paymentSuccessResponse.cardHolderAuth.equals("verified", true)) {
                                 Log.e("TAG", "postMessage: paymentList "+paymentList.toString() )
                                 val bundle = Bundle()
-                                //bundle.putParcelable(Constants.DATA, responseModel)
                                 bundle.putParcelable(Constants.NEW_CARD, paymentSuccessResponse)
                                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
-
                                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount)
                                 bundle.putInt(Constants.POSITION, position)
                                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                                 bundle.putString(Constants.NAV_FLOW_KEY, flow)
                                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
@@ -127,7 +129,11 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
+        }
 
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
         flow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0

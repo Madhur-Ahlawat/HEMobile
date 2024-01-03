@@ -58,6 +58,11 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
                 arguments?.getParcelable(Constants.PERSONALDATA)
 
         }
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
+
+        }
 
     }
 
@@ -104,6 +109,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                         bundle.putString(Constants.CURRENTBALANCE, currentbalance)
                         bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize ?: 0)
 
@@ -115,6 +121,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                         bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
                         findNavController().navigate(
                             R.id.action_tryPaymentAgainFragment_to_accountSuspendedPaymentFragment,
@@ -137,6 +144,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
                             bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
                             bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
                             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                             findNavController().navigate(
                                 R.id.action_tryPaymentAgainFragment_to_selectPaymentMethodFragment,
                                 bundle

@@ -1430,7 +1430,7 @@
     <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\n\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
     <string name="str_payment_successfully">Payment Successful</string>
     <string name="str_amount_paid">Amount Paid</string>
-    <string name="str_time_date">Time and  Date</string>
+    <string name="str_time_date">Time and Date</string>
 
 
     <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>

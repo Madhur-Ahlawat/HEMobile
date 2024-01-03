@@ -749,6 +749,11 @@
             app:destination="@id/paymentMethodFragment"
             app:popUpTo="@id/accountFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/accountSuspendReOpenFragment_to_dashboardFragment"
+            app:destination="@id/dashBoardFragment"
+            app:popUpTo="@id/dashBoardFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
