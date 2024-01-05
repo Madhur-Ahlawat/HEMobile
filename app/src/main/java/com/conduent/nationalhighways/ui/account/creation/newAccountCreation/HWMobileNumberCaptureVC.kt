@@ -356,6 +356,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         when (response) {
             is Resource.Success -> {
                 countriesCodeList.clear()
+                fullCountryNameWithCode.clear()
                 for (i in 0..(countriesModel?.size?.minus(1) ?: 0)) {
                     for (j in 0..(response.data?.size?.minus(1) ?: 0)) {
                         if (countriesModel?.get(i)?.id == response.data?.get(j)?.id) {
@@ -484,149 +485,154 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 } else {
                     countryCode == oldTelephoneCountryCode && mobileNumber == oldTelephoneNumber
                 }
+                val smsSupportCountryList = Utils.smsSupportCountryList().map { it.trim()
+                    .replace(" ","")
+                    .replace("-","").lowercase() }
+                val isSupportedCountry = smsSupportCountryList.contains(countryCode.trim()
+                    .replace(" ","").replace("-","").lowercase())
+                if (isSupportedCountry) {
+                    when (navFlowCall) {
+                        EDIT_MOBILE -> {
+                            if (noChanges) {
+                                findNavController().navigate(
+                                    R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,
+                                    bundle
+                                )
+                            } else {
+                                val res: Int =
+                                    R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
+                                handleNavFlow(mobileNumber, countryCode, bundle, res)
+                            }
+                        }
 
-                for (i in 0 until Utils.smsSupportCountryList().size) {
-                    for (j in 0 until fullCountryNameWithCode.size) {
-                        if (Utils.smsSupportCountryList()[i].trim() != fullCountryNameWithCode[j].trim()) {
-                            findNavController().navigate(
-                                R.id.action_HWMobileNumberCaptureVC_to_smsNotSupportFragment,
-                                bundle
-                            )
-                        }else{
-                            when (navFlowCall) {
-                                EDIT_MOBILE -> {
-                                    if (noChanges) {
-                                        findNavController().navigate(
-                                            R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,
-                                            bundle
-                                        )
-                                    } else {
-                                        val res: Int =
-                                            R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
-                                        handleNavFlow(mobileNumber, countryCode, bundle, res)
-                                    }
-                                }
-
-                                EDIT_SUMMARY -> {
+                        EDIT_SUMMARY -> {
 
 
-                                    /* if (noChanges) {
-                                         findNavController().navigate(
-                                             R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,
-                                             bundle
-                                         )
-                                     } else {*/
-                                    val res: Int =
-                                        R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
-                                    handleNavFlow(mobileNumber, countryCode, bundle, res)
-                                    //}
-                                }
+                            /* if (noChanges) {
+                                 findNavController().navigate(
+                                     R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment,
+                                     bundle
+                                 )
+                             } else {*/
+                            val res: Int =
+                                R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
+                            handleNavFlow(mobileNumber, countryCode, bundle, res)
+                            //}
+                        }
 
-                                EDIT_ACCOUNT_TYPE -> {
-                                    if (noChanges) {
-                                        findNavController().navigate(
-                                            R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
-                                            bundle
-                                        )
-                                    } else {
-                                        assignNumbers(mobileNumber, countryCode)
+                        EDIT_ACCOUNT_TYPE -> {
+                            if (noChanges) {
+                                findNavController().navigate(
+                                    R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
+                                    bundle
+                                )
+                            } else {
+                                assignNumbers(mobileNumber, countryCode)
 
-                                        if (isItMobileNumber) {
-                                            hitApi()
-                                        } else {
-                                            findNavController().navigate(
-                                                R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
-                                                bundle
-                                            )
-                                        }
-                                    }
-                                }
-
-                                PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
-
-                                    data = navData as ProfileDetailModel?
-                                    if (data != null) {
-                                        if (isItMobileNumber) {
-                                            val phone = data?.personalInformation?.phoneCell
-                                            if (phone.isNullOrEmpty().not() && phone.equals(
-                                                    binding.inputMobileNumber.getText().toString().trim(), true
-                                                )
-                                            ) {
-                                                findNavController().popBackStack()
-                                            } else {
-                                                hitApi()
-                                            }
-                                        } else {
-                                            val landline = data?.personalInformation?.phoneDay
-                                            if (landline.isNullOrEmpty().not() && landline.equals(
-                                                    binding.inputMobileNumber.getText().toString().trim(), true
-                                                )
-                                            ) {
-                                                findNavController().popBackStack()
-                                            } else {
-
-                                                loader?.show(
-                                                    requireActivity().supportFragmentManager,
-                                                    Constants.LOADER_DIALOG
-                                                )
-
-                                                updateProfileDetails(data)
-
-                                            }
-                                        }
-
-                                    }
-
-                                }
-
-                                PROFILE_MANAGEMENT, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
-                                    data = navData as ProfileDetailModel?
-                                    if (data != null) {
-                                        if (isItMobileNumber) {
-                                            val phone = data?.personalInformation?.phoneCell
-                                            if (phone.isNullOrEmpty().not() && phone.equals(
-                                                    binding.inputMobileNumber.getText().toString().trim(), true
-                                                )
-                                            ) {
-                                                findNavController().popBackStack()
-                                            } else {
-                                                hitApi()
-                                            }
-                                        } else {
-                                            val landline = data?.personalInformation?.phoneDay
-                                            if (landline.isNullOrEmpty().not() && landline.equals(
-                                                    binding.inputMobileNumber.getText().toString().trim(), true
-                                                )
-                                            ) {
-                                                findNavController().popBackStack()
-                                            } else {
-
-                                                loader?.show(
-                                                    requireActivity().supportFragmentManager,
-                                                    Constants.LOADER_DIALOG
-                                                )
-
-                                                updateProfileDetails(data)
-
-                                            }
-                                        }
-
-                                    }
-                                }
-
-                                PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                                if (isItMobileNumber) {
                                     hitApi()
+                                } else {
+                                    findNavController().navigate(
+                                        R.id.action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment,
+                                        bundle
+                                    )
+                                }
+                            }
+                        }
+
+                        PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+
+                            data = navData as ProfileDetailModel?
+                            if (data != null) {
+                                if (isItMobileNumber) {
+                                    val phone = data?.personalInformation?.phoneCell
+                                    if (phone.isNullOrEmpty().not() && phone.equals(
+                                            binding.inputMobileNumber.getText().toString().trim(),
+                                            true
+                                        )
+                                    ) {
+                                        findNavController().popBackStack()
+                                    } else {
+                                        hitApi()
+                                    }
+                                } else {
+                                    val landline = data?.personalInformation?.phoneDay
+                                    if (landline.isNullOrEmpty().not() && landline.equals(
+                                            binding.inputMobileNumber.getText().toString().trim(),
+                                            true
+                                        )
+                                    ) {
+                                        findNavController().popBackStack()
+                                    } else {
+
+                                        loader?.show(
+                                            requireActivity().supportFragmentManager,
+                                            Constants.LOADER_DIALOG
+                                        )
+
+                                        updateProfileDetails(data)
+
+                                    }
                                 }
 
-                                else -> {
-                                    val res1 = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
-                                    handleNavFlow(mobileNumber, countryCode, bundle, res1)
-                                }
                             }
 
                         }
+
+                        PROFILE_MANAGEMENT, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                            data = navData as ProfileDetailModel?
+                            if (data != null) {
+                                if (isItMobileNumber) {
+                                    val phone = data?.personalInformation?.phoneCell
+                                    if (phone.isNullOrEmpty().not() && phone.equals(
+                                            binding.inputMobileNumber.getText().toString().trim(),
+                                            true
+                                        )
+                                    ) {
+                                        findNavController().popBackStack()
+                                    } else {
+                                        hitApi()
+                                    }
+                                } else {
+                                    val landline = data?.personalInformation?.phoneDay
+                                    if (landline.isNullOrEmpty().not() && landline.equals(
+                                            binding.inputMobileNumber.getText().toString().trim(),
+                                            true
+                                        )
+                                    ) {
+                                        findNavController().popBackStack()
+                                    } else {
+
+                                        loader?.show(
+                                            requireActivity().supportFragmentManager,
+                                            Constants.LOADER_DIALOG
+                                        )
+
+                                        updateProfileDetails(data)
+
+                                    }
+                                }
+
+                            }
+                        }
+
+                        PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                            hitApi()
+                        }
+
+                        else -> {
+                            val res1 = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
+                            handleNavFlow(mobileNumber, countryCode, bundle, res1)
+                        }
                     }
+
+                } else {
+                    findNavController().navigate(
+                        R.id.action_HWMobileNumberCaptureVC_to_smsNotSupportFragment,
+                        bundle
+                    )
                 }
+
             }
         }
     }
