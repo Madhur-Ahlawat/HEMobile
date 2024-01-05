@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
@@ -29,12 +28,10 @@ import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResp
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
-import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dateRangeModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -52,7 +49,6 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
-import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -387,7 +383,20 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        cardNumber.text = data.accountInformation?.paymentTypeInfo
+                        val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
+                        if (cardType?.uppercase()?.contains(Constants.CURRENT, true)==true) {
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
+                                "CURRENT ending in ",
+                                "****"
+                            ) ?: ""
+                        } else if(cardType?.uppercase()?.contains(Constants.SAVINGS, true)==true){
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
+                                "SAVINGS ending in ",
+                                "****"
+                            ) ?: ""
+                        } else {
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
+                        }
                         cardNumber.setTypeface(null, Typeface.NORMAL)
 
                         DashboardUtils.setAccountStatusNew(
@@ -409,7 +418,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 cardLogo.gone()
             } else {
                 cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(cardType ?: ""))
+                cardLogo.setImageResource(Utils.setCardImage(data.accountInformation?.paymentTypeInfo ?: ""))
             }
         }
         getPaymentHistoryList(startIndex)
@@ -527,17 +536,17 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-            val cardType = data.replenishmentInformation?.reBillPayType?.uppercase()
+            val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
             data.let {
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        if (cardType?.uppercase().equals(Constants.CURRENT, true)) {
+                        if (cardType?.uppercase()?.contains(Constants.CURRENT, true)==true) {
                             cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
                                 "CURRENT ending in ",
                                 "****"
                             ) ?: ""
-                        } else if(cardType?.uppercase().equals(Constants.SAVINGS, true)){
+                        } else if(cardType?.uppercase()?.contains(Constants.SAVINGS, true)==true){
                             cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
                                 "SAVINGS ending in ",
                                 "****"
@@ -570,7 +579,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             } else {
                 viewCard.visible()
                 cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(cardType ?: ""))
+                cardLogo.setImageResource(Utils.setCardImage(data.accountInformation?.paymentTypeInfo ?: ""))
             }
             getPaymentHistoryList(startIndex)
         }

@@ -125,46 +125,43 @@ object Utils {
             .uppercase(Locale.getDefault()) + str.substring(1).lowercase(Locale.getDefault())
     }
 
-    fun smsSupportCountryList():ArrayList<String>{
-        val supportCountryList=ArrayList<String>()
+    fun smsSupportCountryList(): ArrayList<String> {
+        val supportCountryList = ArrayList<String>()
 
-        supportCountryList.add(	"Austria - (+43)")
-        supportCountryList.add(	"Bosnia and Herzegovina - (+387)")
-        supportCountryList.add(	"Bulgaria - (+359)")
-        supportCountryList.add(	"Croatia - (+385)")
-        supportCountryList.add(	"Cyprus - (+357)")
-        supportCountryList.add(	"Czech Republic - (+420)")
-        supportCountryList.add(	"Denmark - (+45)")
-        supportCountryList.add(	"Estonia - (+372)")
-        supportCountryList.add(	"Finland - (+358)")
-        supportCountryList.add(	"France - (+33)")
-        supportCountryList.add(	"Germany - (+49)")
-        supportCountryList.add(	"Gibraltar - (+350)")
-        supportCountryList.add(	"Greece - (+30)")
-        supportCountryList.add(	"Ireland - (+353)")
-        supportCountryList.add(	"Italy - (+39)")
-        supportCountryList.add(	"Latvia -  (+371)")
-        supportCountryList.add(	"Lithuania -  (+370)")
-        supportCountryList.add(	"Luxembourg -  (+352)")
+        supportCountryList.add("Austria - (+43)")
+        supportCountryList.add("Bosnia and Herzegovina - (+387)")
+        supportCountryList.add("Bulgaria - (+359)")
+        supportCountryList.add("Croatia - (+385)")
+        supportCountryList.add("Cyprus - (+357)")
+        supportCountryList.add("Czech Republic - (+420)")
+        supportCountryList.add("Denmark - (+45)")
+        supportCountryList.add("Estonia - (+372)")
+        supportCountryList.add("Finland - (+358)")
+        supportCountryList.add("France - (+33)")
+        supportCountryList.add("Germany - (+49)")
+        supportCountryList.add("Gibraltar - (+350)")
+        supportCountryList.add("Greece - (+30)")
+        supportCountryList.add("Ireland - (+353)")
+        supportCountryList.add("Italy - (+39)")
+        supportCountryList.add("Latvia -  (+371)")
+        supportCountryList.add("Lithuania -  (+370)")
+        supportCountryList.add("Luxembourg -  (+352)")
         supportCountryList.add("Macedonia, The Former Yuogoslav - (+389)")
-        supportCountryList.add(	"Malta -  (+356)")
-        supportCountryList.add(	"Moldova (Republic of) -  (+373)")
-        supportCountryList.add(	"Netherlands -  (+31)")
-        supportCountryList.add(	"Norway -  (+47)")
-        supportCountryList.add(	"Poland - (+48)")
-        supportCountryList.add(	"Portugal -  (+351)")
-        supportCountryList.add(	"Slovakia -  (+421)")
-        supportCountryList.add(	"Slovenia -  (+386)")
-        supportCountryList.add(	"Spain -  (+34)")
-        supportCountryList.add(	"Sweden -  (+46)")
+        supportCountryList.add("Malta -  (+356)")
+        supportCountryList.add("Moldova (Republic of) -  (+373)")
+        supportCountryList.add("Netherlands -  (+31)")
+        supportCountryList.add("Norway -  (+47)")
+        supportCountryList.add("Poland - (+48)")
+        supportCountryList.add("Portugal -  (+351)")
+        supportCountryList.add("Slovakia -  (+421)")
+        supportCountryList.add("Slovenia -  (+386)")
+        supportCountryList.add("Spain -  (+34)")
+        supportCountryList.add("Sweden -  (+46)")
         supportCountryList.add("Switzerland -  (+41)")
-        supportCountryList.add(	"Ukraine -  (+380)")
-        supportCountryList.add(	"United Kingdom -  (+44)")
+        supportCountryList.add("Ukraine -  (+380)")
+        supportCountryList.add("United Kingdom -  (+44)")
 
         return supportCountryList
-
-
-
 
 
     }
@@ -173,7 +170,7 @@ object Utils {
     fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
 
         transactions.sortWith(Comparator { o1, o2 ->
-            val dateFormat = SimpleDateFormat("dd MMM yyyy",Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             var date1: Date? = null
             var date2: Date? = null
             try {
@@ -225,7 +222,7 @@ object Utils {
             mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
         Log.e("TOPUP", mText + "\n\n")
-        if (mText.isNotEmpty() ) {
+        if (mText.isNotEmpty()) {
             if (mText.length == 1 && mText.equals(".")) {
                 mText = "0"
             }
@@ -234,7 +231,7 @@ object Utils {
                 if (mText.toDouble() < minimumAmount) {
                     if (isTopUp) {
 
-                        if(minimumAmount ==10.00){
+                        if (minimumAmount == 10.00) {
                             nhTextInputCell.setErrorText(
                                 nhTextInputCell.context.getString(
                                     R.string.str_top_up_amount_must_be_more,
@@ -242,7 +239,7 @@ object Utils {
                                 )
                             )
 
-                        }else{
+                        } else {
                             nhTextInputCell.setErrorText(
                                 nhTextInputCell.context.getString(
                                     R.string.str_top_up_amount_must_be_more,
@@ -563,7 +560,7 @@ object Utils {
                 context.getString(R.string.str_stay_signed_in),
                 context.getString(R.string.str_sign_out),
                 listener,
-                sessionManager, apiService,true
+                sessionManager, apiService, true
             )
 
         } else {
@@ -575,14 +572,14 @@ object Utils {
                 context.getString(R.string.str_stay_on_the_app),
                 context.getString(R.string.str_delete_my_answers),
                 listener,
-                sessionManager, apiService,false
+                sessionManager, apiService, false
             )
 
         }
     }
 
     private fun countDownTimer(
-        activity: Activity, sessionManager: SessionManager, message: TextView,loggedInUser:Boolean
+        activity: Activity, sessionManager: SessionManager, message: TextView, loggedInUser: Boolean
     ): CountDownTimer {
 
         val countDownTimer = object : CountDownTimer(120000, 1000) {
@@ -592,13 +589,13 @@ object Utils {
                 val min = millisUntilFinished / 60000 % 60
                 val sec = millisUntilFinished / 1000 % 60
 
-                if(loggedInUser){
+                if (loggedInUser) {
                     message.text = activity.resources.getString(
                         R.string.str_for_your_security_account_holder,
                         f.format(min) + ":" + f.format(sec)
                     )
 
-                }else{
+                } else {
                     message.text = activity.resources.getString(
                         R.string.str_for_your_security_non_account_holder,
                         f.format(min) + ":" + f.format(sec)
@@ -634,7 +631,7 @@ object Utils {
         listener: LogoutListener? = null,
         sessionManager: SessionManager,
         apiService: ApiService,
-        loggedInUser:Boolean=false
+        loggedInUser: Boolean = false
     ) {
         Log.e(
             "TAG",
@@ -657,7 +654,7 @@ object Utils {
             WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT
         ) //Controlling width and height.
 
-        val countDownTimer = countDownTimer(activity, sessionManager, binding.message,loggedInUser)
+        val countDownTimer = countDownTimer(activity, sessionManager, binding.message, loggedInUser)
         binding.title.text = fTitle
         binding.message.text = message
         binding.cancelBtn.text = negativeBtnTxt
@@ -688,6 +685,7 @@ object Utils {
 
 
     }
+
     fun removeGivenStringCharactersFromString(characterString: String, input: String): String {
         characterString.forEach {
             input.replace(it.toString(), "")
@@ -1076,400 +1074,411 @@ object Utils {
     }
 
 
-    fun setCardImage(cardType: String): Int {
-        return if (cardType.uppercase().equals(Constants.VISA, true)) {
-            R.drawable.visablue
-        } else if (cardType.uppercase().equals(Constants.MAESTRO, true)) {
-            R.drawable.maestro
-        } else if (cardType.uppercase().equals(Constants.MASTERCARD, true)) {
-            R.drawable.mastercard
-        } else if (cardType.uppercase().equals(Constants.CURRENT, true) || cardType.uppercase().equals(Constants.SAVINGS, true)) {
-            R.drawable.directdebit
+    fun setCardImage(paymentTypeInfo: String): Int {
+        if (paymentTypeInfo.contains("CURRENT")) {
+            return R.drawable.directdebit
+        } else if (paymentTypeInfo.contains("SAVINGS")) {
+            return R.drawable.directdebit
+        } else if (paymentTypeInfo.contains("MASTERCARD")) {
+            return R.drawable.mastercard
+        } else if (paymentTypeInfo.contains(Constants.MAESTRO)) {
+            return R.drawable.maestro
+        } else if (paymentTypeInfo.contains("VISA")) {
+            return R.drawable.visablue
         } else {
-            R.color.white
+            return R.color.white
         }
     }
+        fun redirectToNotificationPermissionSettings(context: Context) {
+            val intent = Intent().apply {
+                when {
+                    Build.VERSION.SDK_INT >= VERSION_CODES.O -> {
+                        // For Android 8.0 (API level 26) and above
+                        action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                        putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                    }
 
-    fun redirectToNotificationPermissionSettings(context: Context) {
-        val intent = Intent().apply {
-            when {
-                Build.VERSION.SDK_INT >= VERSION_CODES.O -> {
-                    // For Android 8.0 (API level 26) and above
-                    action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
-                    putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                }
-
-                else -> {
-                    // For Android 4.4 and below
-                    action = "android.settings.APP_NOTIFICATION_SETTINGS"
-                    putExtra("app_package", context.packageName)
-                    putExtra("app_uid", context.applicationInfo.uid)
-                }
-            }
-        }
-        context.startActivity(intent)
-
-    }
-
-    fun isRooted(context: Context): Boolean {
-        return CommonUtils.isRooted() || isRooted2() || isEmulator(context)
-    }
-
-    private fun isEmulator(context: Context): Boolean {
-        val androidId: String = Settings.Secure.getString(context.contentResolver, "android_id")
-        return "sdk" == Build.PRODUCT || "google_sdk" == Build.PRODUCT || androidId == null
-    }
-
-    private fun isRooted2(): Boolean {
-        return findBinary("su")
-    }
-
-    private fun findBinary(binaryName: String): Boolean {
-        var found = false
-        if (!found) {
-            val places = arrayOf(
-                "/sbin/", "/system/bin/", "/system/xbin/",
-                "/data/local/xbin/", "/data/local/bin/",
-                "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/"
-            )
-            for (where in places) {
-                if (File(where + binaryName).exists()) {
-                    found = true
-                    break
+                    else -> {
+                        // For Android 4.4 and below
+                        action = "android.settings.APP_NOTIFICATION_SETTINGS"
+                        putExtra("app_package", context.packageName)
+                        putExtra("app_uid", context.applicationInfo.uid)
+                    }
                 }
             }
+            context.startActivity(intent)
+
         }
-        return found
-    }
 
-    fun convertStringToDate(dateString: String, dateFormat: String): Date? {
-        val dateFormat = SimpleDateFormat(dateFormat, Locale.getDefault())
-        return try {
-            dateFormat.parse(dateString)
-        } catch (e: Exception) {
-            Date()
+        fun isRooted(context: Context): Boolean {
+            return CommonUtils.isRooted() || isRooted2() || isEmulator(context)
         }
-    }
 
-    fun getTimeDifference(startTime: Date, endTime: Date): Triple<Long, Long, Long> {
-        return try {
-            val differenceInMillis = endTime.time - startTime.time
-            val hours = differenceInMillis / (1000 * 60 * 60)
-            val minutes = differenceInMillis % (1000 * 60 * 60) / (1000 * 60)
-            val seconds = differenceInMillis % (1000 * 60) / 1000
+        private fun isEmulator(context: Context): Boolean {
+            val androidId: String = Settings.Secure.getString(context.contentResolver, "android_id")
+            return "sdk" == Build.PRODUCT || "google_sdk" == Build.PRODUCT || androidId == null
+        }
 
-            val millisecondsInMonth =
-                1000L * 60 * 60 * 24 * 30 // Approximation of a month in milliseconds
-            val months = differenceInMillis / millisecondsInMonth
+        private fun isRooted2(): Boolean {
+            return findBinary("su")
+        }
 
-            val millisecondsInDay = 1000L * 60 * 60 * 24
-            val days = differenceInMillis / millisecondsInDay
+        private fun findBinary(binaryName: String): Boolean {
+            var found = false
+            if (!found) {
+                val places = arrayOf(
+                    "/sbin/", "/system/bin/", "/system/xbin/",
+                    "/data/local/xbin/", "/data/local/bin/",
+                    "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/"
+                )
+                for (where in places) {
+                    if (File(where + binaryName).exists()) {
+                        found = true
+                        break
+                    }
+                }
+            }
+            return found
+        }
+
+        fun convertStringToDate(dateString: String, dateFormat: String): Date? {
+            val dateFormat = SimpleDateFormat(dateFormat, Locale.getDefault())
+            return try {
+                dateFormat.parse(dateString)
+            } catch (e: Exception) {
+                Date()
+            }
+        }
+
+        fun getTimeDifference(startTime: Date, endTime: Date): Triple<Long, Long, Long> {
+            return try {
+                val differenceInMillis = endTime.time - startTime.time
+                val hours = differenceInMillis / (1000 * 60 * 60)
+                val minutes = differenceInMillis % (1000 * 60 * 60) / (1000 * 60)
+                val seconds = differenceInMillis % (1000 * 60) / 1000
+
+                val millisecondsInMonth =
+                    1000L * 60 * 60 * 24 * 30 // Approximation of a month in milliseconds
+                val months = differenceInMillis / millisecondsInMonth
+
+                val millisecondsInDay = 1000L * 60 * 60 * 24
+                val days = differenceInMillis / millisecondsInDay
 
 
 //            Triple(hours, minutes, months)
-            Triple(hours, minutes, days)
-        } catch (e: Exception) {
-            Triple(0, 0, 0)
+                Triple(hours, minutes, days)
+            } catch (e: Exception) {
+                Triple(0, 0, 0)
+            }
+
         }
 
-    }
+        fun hasFaceId(context: Context): Boolean {
+            val hasFaceBiometric = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                context.packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)
+            } else {
+                false
+            }
 
-    fun hasFaceId(context: Context):Boolean{
-        val hasFaceBiometric = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            context.packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)
-        } else {
-            false
+            return hasFaceBiometric
+
         }
 
-       return hasFaceBiometric
-
-    }
-    fun hasTouchId(context: Context): Boolean {
+        fun hasTouchId(context: Context): Boolean {
 
 
-        return context.packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
+            return context.packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
 
-    }
+        }
 
 
-    fun validationsToShowRatingDialog(activity: Activity, sessionManager: SessionManager) {
-        if (sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME).isEmpty()) {
-            showRatingDialog(activity, sessionManager)
-        } else {
-            val lastTokenTime = convertStringToDate(
-                sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME),
-                Constants.dd_mm_yyyy_hh_mm_ss
-            )
-            if (lastTokenTime != null) {
-                val diff = getTimeDifference(lastTokenTime, Date())
-                if (diff.third >= 1) {
-                    showRatingDialog(activity, sessionManager)
+        fun validationsToShowRatingDialog(activity: Activity, sessionManager: SessionManager) {
+            if (sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME).isEmpty()) {
+                showRatingDialog(activity, sessionManager)
+            } else {
+                val lastTokenTime = convertStringToDate(
+                    sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME),
+                    Constants.dd_mm_yyyy_hh_mm_ss
+                )
+                if (lastTokenTime != null) {
+                    val diff = getTimeDifference(lastTokenTime, Date())
+                    if (diff.third >= 1) {
+                        showRatingDialog(activity, sessionManager)
+                    }
                 }
             }
+
+
         }
 
+        fun showRatingDialog(activity: Activity, sessionManager: SessionManager) {
+            val dateFormat = SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
+            val dateString = dateFormat.format(Date())
+            sessionManager.saveStringData(SessionManager.LAST_RATING_TIME, dateString)
 
-    }
-
-    fun showRatingDialog(activity: Activity, sessionManager: SessionManager) {
-        val dateFormat = SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
-        val dateString = dateFormat.format(Date())
-        sessionManager.saveStringData(SessionManager.LAST_RATING_TIME, dateString)
-
-        val ratingDialog = RatingDialog.Builder(activity)
-            .icon(R.mipmap.appicon)
+            val ratingDialog = RatingDialog.Builder(activity)
+                .icon(R.mipmap.appicon)
 //            .session(3)
 //            .threshold(3)
-            .ratingBarColor(R.color.blue_color)
-            .playstoreUrl("https://play.google.com/store/apps/details?id=com.doctormoney")
-            .onThresholdCleared { dialog, rating, thresholdCleared ->
-                Log.e(
-                    "TAG",
-                    "onThresholdCleared: $rating $thresholdCleared"
-                )
-            }
-            .onThresholdFailed { dialog, rating, thresholdCleared ->
-                Log.e(
-                    "TAG",
-                    "onThresholdFailed: $rating $thresholdCleared"
-                )
-            }
-            .onRatingChanged { rating, thresholdCleared ->
-                Log.e(
-                    "TAG",
-                    "onRatingChanged: $rating $thresholdCleared"
-                )
-            }
-            .onRatingBarFormSubmit { feedback -> Log.e("TAG", "onRatingBarFormSubmit: $feedback") }
-            .build()
-        ratingDialog.window?.setBackgroundDrawableResource(android.R.color.white) // Change to your desired color
-
-        ratingDialog.show()
-
-
-    }
-
-    fun vibrate(activity: Activity) {
-        val vibrator: Vibrator =
-            activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
-            // Create a VibrationEffect object for the default vibration strength
-            val vibrationEffect =
-                VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
-            // Vibrate the device with the created VibrationEffect
-            vibrator.vibrate(vibrationEffect)
-        } else {
-            // For older versions of Android, vibrate without VibrationEffect
-            vibrator.vibrate(200)
-        }
-    }
-
-    fun showProgressBar(context: Context, isProgressVisibile: Boolean) {
-        try {
-            if (isProgressVisibile) {
-                if (this::progressBar.isInitialized) {
-                    progressBar.dismiss()
+                .ratingBarColor(R.color.blue_color)
+                .playstoreUrl("https://play.google.com/store/apps/details?id=com.doctormoney")
+                .onThresholdCleared { dialog, rating, thresholdCleared ->
+                    Log.e(
+                        "TAG",
+                        "onThresholdCleared: $rating $thresholdCleared"
+                    )
                 }
-            }
-            if (isProgressVisibile) {
-                progressBar = Dialog(context)
-                progressBar.setContentView(R.layout.dialog_loader)
-                progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                progressBar.window?.setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-                progressBar.setCancelable(false)
-                progressBar.show()
+                .onThresholdFailed { dialog, rating, thresholdCleared ->
+                    Log.e(
+                        "TAG",
+                        "onThresholdFailed: $rating $thresholdCleared"
+                    )
+                }
+                .onRatingChanged { rating, thresholdCleared ->
+                    Log.e(
+                        "TAG",
+                        "onRatingChanged: $rating $thresholdCleared"
+                    )
+                }
+                .onRatingBarFormSubmit { feedback ->
+                    Log.e(
+                        "TAG",
+                        "onRatingBarFormSubmit: $feedback"
+                    )
+                }
+                .build()
+            ratingDialog.window?.setBackgroundDrawableResource(android.R.color.white) // Change to your desired color
+
+            ratingDialog.show()
+
+
+        }
+
+        fun vibrate(activity: Activity) {
+            val vibrator: Vibrator =
+                activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+            if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
+                // Create a VibrationEffect object for the default vibration strength
+                val vibrationEffect =
+                    VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
+                // Vibrate the device with the created VibrationEffect
+                vibrator.vibrate(vibrationEffect)
             } else {
-                if (this::progressBar.isInitialized) {
-                    progressBar.dismiss()
-                }
+                // For older versions of Android, vibrate without VibrationEffect
+                vibrator.vibrate(200)
             }
-        } catch (e: Exception) {
-
         }
-    }
 
+        fun showProgressBar(context: Context, isProgressVisibile: Boolean) {
+            try {
+                if (isProgressVisibile) {
+                    if (this::progressBar.isInitialized) {
+                        progressBar.dismiss()
+                    }
+                }
+                if (isProgressVisibile) {
+                    progressBar = Dialog(context)
+                    progressBar.setContentView(R.layout.dialog_loader)
+                    progressBar.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    progressBar.window?.setLayout(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
+                    progressBar.setCancelable(false)
+                    progressBar.show()
+                } else {
+                    if (this::progressBar.isInitialized) {
+                        progressBar.dismiss()
+                    }
+                }
+            } catch (e: Exception) {
 
-    fun onBackPressed(context: Context) {
-        val intent = Intent()
-        intent.action = Intent.ACTION_MAIN
-        intent.addCategory(Intent.CATEGORY_HOME)
-        context.startActivity(intent)
-    }
-
-
-    fun getFileExtension(filePath: String): String {
-        /* if (filePath.length >= 3) {
-             return filePath.substring(filePath.length - 3)
-         } else {
-             return filePath
-         }*/
-
-        return if (filePath.contains(".")) {
-            filePath.substring(filePath.lastIndexOf(".") + 1)
-        } else {
-            ""
+            }
         }
-    }
-
-    fun checkFileTypeByExtension(filePath: String): Boolean {
-        val extension = getFileExtension(filePath)
-        Log.e("TAG", "checkFileTypeByExtension: extension " + extension)
-        return extension.equals("jpg", ignoreCase = true) ||
-                extension.equals("pdf", ignoreCase = true) ||
-                extension.equals("bmp", ignoreCase = true) ||
-                extension.equals("tiff", ignoreCase = true)
-    }
-
-    fun returnSharedPreference(context: Context): SharedPreferences {
-        val masterAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-        return EncryptedSharedPreferences.create(
-            "HE_MOBILE",
-            masterAlias,
-            context,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-    }
-
-    fun hasSameExtensionTwice(input: String): Boolean {
-        val parts = input.split('.')
-        return parts.size >= 3 && parts[parts.size - 2] == parts[parts.size - 1]
-    }
 
 
-    fun removeLastExtension(input: String, extension: String): String {
-        Log.e("TAG", "removeLastExtension() called with: input = $input, extension = $extension")
-        val lastIndexOfExtension = input.lastIndexOf(extension)
-        return if (lastIndexOfExtension != -1) {
-            input.substring(
-                0,
-                lastIndexOfExtension
-            ) + input.substring(lastIndexOfExtension + extension.length)
-        } else {
-            input // Return the original string if the extension is not found
+        fun onBackPressed(context: Context) {
+            val intent = Intent()
+            intent.action = Intent.ACTION_MAIN
+            intent.addCategory(Intent.CATEGORY_HOME)
+            context.startActivity(intent)
         }
-    }
 
-    fun returnMfaStatus(mfa: String): String {
-        var mfaEnabled = "Y"
-        if (mfa == "false") {
-            mfaEnabled = "N"
+
+        fun getFileExtension(filePath: String): String {
+            /* if (filePath.length >= 3) {
+                 return filePath.substring(filePath.length - 3)
+             } else {
+                 return filePath
+             }*/
+
+            return if (filePath.contains(".")) {
+                filePath.substring(filePath.lastIndexOf(".") + 1)
+            } else {
+                ""
+            }
         }
-        return mfaEnabled
-    }
 
-    fun returnEditProfileModel(
-        businessName: String? = null,
-        fein: String? = null,
-        firstName: String? = null,
-        lastName: String? = null,
-        addressLine1: String? = null,
-        addressLine2: String? = null,
-        city: String? = null,
-        state: String? = null,
-        zipCode: String? = null,
-        zipCodePlus: String? = null,
-        country: String? = null,
-        emailAddress: String? = null,
-        primaryEmailStatus: String? = null,
-        primaryEmailUniqueID: String? = null,
-        phoneCell: String? = null,
-        phoneCellCountryCode: String? = null,
-        phoneDay: String? = null,
-        phoneDayCountryCode: String? = null,
-        phoneFax: String? = null,
-        smsOption: String? = null,
-        phoneEvening: String? = null,
-        correspDeliveryMode: String? = null,
-        correspDeliveryFrequency: String? = null,
-        mfaEnabled: String? = null,
-        accountType: String? = null,
-        securityCode: String? = null,
-        referenceId: String? = null,
-    ): UpdateProfileRequest {
-        var correspDeliveryMode_ = correspDeliveryMode
-        var correspDeliveryFrequency_ = correspDeliveryFrequency
-        var businessName_:String? = null
+        fun checkFileTypeByExtension(filePath: String): Boolean {
+            val extension = getFileExtension(filePath)
+            Log.e("TAG", "checkFileTypeByExtension: extension " + extension)
+            return extension.equals("jpg", ignoreCase = true) ||
+                    extension.equals("pdf", ignoreCase = true) ||
+                    extension.equals("bmp", ignoreCase = true) ||
+                    extension.equals("tiff", ignoreCase = true)
+        }
 
-        if (accountType.equals(
-                Constants.BUSINESS_ACCOUNT,
-                true
+        fun returnSharedPreference(context: Context): SharedPreferences {
+            val masterAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+            return EncryptedSharedPreferences.create(
+                "HE_MOBILE",
+                masterAlias,
+                context,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             )
-        ) {
-            businessName_ = businessName?:""
         }
-        if (correspDeliveryMode == null) {
-            correspDeliveryMode_ = ""
+
+        fun hasSameExtensionTwice(input: String): Boolean {
+            val parts = input.split('.')
+            return parts.size >= 3 && parts[parts.size - 2] == parts[parts.size - 1]
         }
-        if (correspDeliveryFrequency == null) {
-            correspDeliveryFrequency_ = ""
+
+
+        fun removeLastExtension(input: String, extension: String): String {
+            Log.e(
+                "TAG",
+                "removeLastExtension() called with: input = $input, extension = $extension"
+            )
+            val lastIndexOfExtension = input.lastIndexOf(extension)
+            return if (lastIndexOfExtension != -1) {
+                input.substring(
+                    0,
+                    lastIndexOfExtension
+                ) + input.substring(lastIndexOfExtension + extension.length)
+            } else {
+                input // Return the original string if the extension is not found
+            }
         }
-        return UpdateProfileRequest(
-            businessName_,
-            null,
-            firstName,
-            lastName,
-            addressLine1,
-            addressLine2,
-            city,
-            state,
-            zipCode,
-            zipCodePlus,
-            country,
-            emailAddress,
-            primaryEmailStatus,
-            primaryEmailUniqueID,
-            phoneCell,
-            phoneCellCountryCode,
-            phoneDay,
-            phoneDayCountryCode,
-            phoneFax,
-            smsOption,
-            phoneEvening,
-            correspDeliveryMode_,
-            correspDeliveryFrequency_,
-            mfaEnabled,
-            securityCode = securityCode,
-            referenceId = referenceId
-        )
+
+        fun returnMfaStatus(mfa: String): String {
+            var mfaEnabled = "Y"
+            if (mfa == "false") {
+                mfaEnabled = "N"
+            }
+            return mfaEnabled
+        }
+
+        fun returnEditProfileModel(
+            businessName: String? = null,
+            fein: String? = null,
+            firstName: String? = null,
+            lastName: String? = null,
+            addressLine1: String? = null,
+            addressLine2: String? = null,
+            city: String? = null,
+            state: String? = null,
+            zipCode: String? = null,
+            zipCodePlus: String? = null,
+            country: String? = null,
+            emailAddress: String? = null,
+            primaryEmailStatus: String? = null,
+            primaryEmailUniqueID: String? = null,
+            phoneCell: String? = null,
+            phoneCellCountryCode: String? = null,
+            phoneDay: String? = null,
+            phoneDayCountryCode: String? = null,
+            phoneFax: String? = null,
+            smsOption: String? = null,
+            phoneEvening: String? = null,
+            correspDeliveryMode: String? = null,
+            correspDeliveryFrequency: String? = null,
+            mfaEnabled: String? = null,
+            accountType: String? = null,
+            securityCode: String? = null,
+            referenceId: String? = null,
+        ): UpdateProfileRequest {
+            var correspDeliveryMode_ = correspDeliveryMode
+            var correspDeliveryFrequency_ = correspDeliveryFrequency
+            var businessName_: String? = null
+
+            if (accountType.equals(
+                    Constants.BUSINESS_ACCOUNT,
+                    true
+                )
+            ) {
+                businessName_ = businessName ?: ""
+            }
+            if (correspDeliveryMode == null) {
+                correspDeliveryMode_ = ""
+            }
+            if (correspDeliveryFrequency == null) {
+                correspDeliveryFrequency_ = ""
+            }
+            return UpdateProfileRequest(
+                businessName_,
+                null,
+                firstName,
+                lastName,
+                addressLine1,
+                addressLine2,
+                city,
+                state,
+                zipCode,
+                zipCodePlus,
+                country,
+                emailAddress,
+                primaryEmailStatus,
+                primaryEmailUniqueID,
+                phoneCell,
+                phoneCellCountryCode,
+                phoneDay,
+                phoneDayCountryCode,
+                phoneFax,
+                smsOption,
+                phoneEvening,
+                correspDeliveryMode_,
+                correspDeliveryFrequency_,
+                mfaEnabled,
+                securityCode = securityCode,
+                referenceId = referenceId
+            )
+        }
+
+        fun getCountryName(sessionManager: SessionManager, countryCode: String): String {
+            val countries = sessionManager.fetchStringData(SessionManager.COUNTRIES)
+
+
+            val countriesList = ArrayList<CountriesModel>()
+
+            val pattern =
+                """CountriesModel\(id=(\d+), countryCode=(\w+), countryName=([\w\s]+)\)""".toRegex()
+            pattern.findAll(countries).forEach { matchResult ->
+                val (id, countryCode, countryName) = matchResult.destructured
+                countriesList.add(CountriesModel(id, countryCode, countryName))
+            }
+
+            val filteredList = countriesList.filter { it.countryCode == countryCode }
+            if (filteredList.size > 0) {
+                return filteredList.get(0).countryName ?: ""
+            } else {
+                return ""
+            }
+        }
+
+        fun checkLocationpermission(context: Context): Boolean {
+            return !((ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) == PackageManager.PERMISSION_DENIED) &&
+                    (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_DENIED) &&
+                    (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_DENIED))
+        }
     }
-
-    fun getCountryName(sessionManager: SessionManager, countryCode: String): String {
-        val countries=sessionManager.fetchStringData(SessionManager.COUNTRIES)
-
-
-        val countriesList = ArrayList<CountriesModel>()
-
-        val pattern = """CountriesModel\(id=(\d+), countryCode=(\w+), countryName=([\w\s]+)\)""".toRegex()
-        pattern.findAll(countries).forEach { matchResult ->
-            val (id, countryCode, countryName) = matchResult.destructured
-            countriesList.add(CountriesModel(id, countryCode, countryName))
-        }
-
-        val filteredList = countriesList.filter { it.countryCode == countryCode }
-        if (filteredList.size > 0) {
-            return filteredList.get(0).countryName?:""
-        } else {
-            return ""
-        }
-    }
-
-    fun checkLocationpermission(context:Context):Boolean{
-        return !((ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-        ) == PackageManager.PERMISSION_DENIED) &&
-                (ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_DENIED) &&
-                (ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_DENIED))
-    }
-}
