@@ -8,6 +8,7 @@ import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
+import com.conduent.nationalhighways.utils.common.Constants
 
 class NHAutoCompleteTextview @JvmOverloads constructor(
     context: Context,
@@ -69,8 +70,11 @@ class NHAutoCompleteTextview @JvmOverloads constructor(
                         selectedItemDescription = ""
                     }
                 } else {
-                    setText("")
-                    selectedItemDescription = ""
+                    if(text.toString() != Constants.UNITED_KINGDOM){
+                        setText("")
+                        selectedItemDescription = ""
+                    }
+
                 }
 
             } else {

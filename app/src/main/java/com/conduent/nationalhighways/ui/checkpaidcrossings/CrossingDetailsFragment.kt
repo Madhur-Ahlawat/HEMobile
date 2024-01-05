@@ -82,11 +82,11 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                 binding.address.text =  resources.getString(R.string.str_crossings_data,crossings.toString())
             }
             binding.emailAddress.text = it?.expirationDate?.let { it1 ->
-                DateUtils.convertDateFormatToDateFormat(
-                    it1
+                DateUtils.convertStringDatetoAnotherFormat(
+                    it1,DateUtils.mm_dd_yyyy_hh_mm_ss_a,DateUtils.dd_mmm_yyyy
                 )
             }
-            binding?.valueVehicleRegistrationNumber?.text=it?.plateNumberToTransfer
+            binding.valueVehicleRegistrationNumber.text=it?.plateNumberToTransfer
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH)
             val date = LocalDateTime.parse(it?.expirationDate, formatter)

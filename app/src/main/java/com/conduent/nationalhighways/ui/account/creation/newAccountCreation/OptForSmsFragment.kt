@@ -553,6 +553,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 phoneDay = phoneDay,
                 phoneFax = "",
                 smsOption = smsOption,
+                mfaEnabled = Utils.returnMfaStatus(accountInformationModel?.mfaEnabled?:""),
                 phoneEvening = "",
                 phoneCellCountryCode = phoneCellCountryCode,
                 phoneDayCountryCode = phoneDayCountryCode

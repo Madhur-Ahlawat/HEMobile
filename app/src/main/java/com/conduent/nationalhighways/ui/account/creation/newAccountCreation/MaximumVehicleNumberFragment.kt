@@ -99,7 +99,10 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 }
 
                 else -> {
-                    binding.textMaximumVehicle.text = getString(
+                    binding.textMaximumVehicle.gone()
+                    binding.descTv.visible()
+                    binding.descTv
+                        .text = getString(
                         R.string.str_vehicle_exempt_detail_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
@@ -141,7 +144,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             }
         }
         if (NewCreateAccountRequestModel.isVehicleAlreadyAdded) {
-            binding.textMaximumVehicle.text =
+            binding.descTv.text =
                 getString(
                     R.string.str_vehicle_already_exist_desc,
                     NewCreateAccountRequestModel.plateNumber.uppercase()
@@ -153,7 +156,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             binding.maximumVehicleAddedNote.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.VISIBLE
             binding.btnContinue.text = getString(R.string.str_add_another)
+            binding.descTv.visible()
             binding.inCorrectVehicleNumber.gone()
+            binding.textMaximumVehicle.gone()
         }
 
         if (NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal) {

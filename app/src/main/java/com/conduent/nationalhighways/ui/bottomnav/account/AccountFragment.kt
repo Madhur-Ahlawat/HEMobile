@@ -159,6 +159,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onResume() {
         title?.text = getString(R.string.txt_my_account)
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).refreshTokenApi()
+        }
 
         super.onResume()
     }

@@ -1073,11 +1073,11 @@
     <string name="str_model_error_message">Vehicle model must only include letters a to z, numbers 0 to 9, and special characters such as hyphens</string>
     <string name="str_colour_error_message">Vehicle colour must only include letters a to z, and the special character forward slash</string>
     <string name="str_vehicle_exempt_message">Vehicle %s is not charged\nNo Dart Charge payment is due</string>
-    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and cannot be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
+    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and cannot be added to the account.\n\nContact the Dart Charge contact center for help.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from\nDart Charge payment.</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
     <string name="str_no_ruc_desc_pay_for_crossing">Motorcycles, mopeds and quad bikes do not need to pay for a crossing.</string>
-    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="str_vehicle_already_exist">Vehicle %s already exists in the system and cannot be added to the account.</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
     <string name="you_have_already_added_this_vehicle_to_this_account">You have already added this vehicle to this account.</string>
@@ -1174,7 +1174,6 @@
     <string name="str_name_on_card">Name on card</string>
     <string name="str_card_number">Card Number</string>
     <string name="str_accept_card_types">Accepted credit and debit card types</string>
-    <string name="str_expiry_date">Expiry Date</string>
     <string name="card_security_code">Card Security Code</string>
     <string name="last_three_digit">Last 3 or 4 digits on back of card</string>
     <string name="proceed_with_payment">PROCEED WITH PAYMENT</string>
@@ -1518,9 +1517,9 @@
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
     <string name="error_check_paid_crossings">Your crossing data could not be retrieved. Check if your entries are correct or try again later.</string>
-    <string name="vehcile_type_mismatch"><![CDATA[Our records show that %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 0120\nEvery day: 8am to 8pm]]></string>
+    <string name="vehcile_type_mismatch"><![CDATA[Our records show that %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 0120\nEvery day: 8am to 8pm]]></string>
     <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from\nDart Charge payment</string>
-    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
     <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
     <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
@@ -1575,9 +1574,8 @@
     <string name="one_off__payment">One off\npayment</string>
     <string name="b_more_details"><b>More details</b>\nFor more details on Types of Vehicles and charge amounts visit <a href="https://www.gov.uk/pay-dartford-crossing-charge/charges-fines">understanding charges, discounts and penalties</a>.</string>
     <string name="b_if_you_re_disabled"><b>If you’re disabled</b>\nYou do not need to pay the charge if you get free UK vehicle tax because of a disability.\n\nYour vehicle will be checked automatically when you cross - you do not need to do anything.\n\nFind out how to <a href="https://www.gov.uk/get-vehicle-tax-exemption-disability">get free vehicle tax if you’re a driver with a disability</a>.</string>
-    <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council</a>.\n\nYou can either\n\n<ul><li>pay £20 a year to use the Dartford Crossing as many times as you want</li>\n<li>pay £10 for 50 crossings, plus 20p for each additional crossing</li></ul>\n\nApply for a local resident discount online or by post.</string>
-
-    <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a> or call the Dart Charge contact centre.</string>
+    <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you live in the council boundaries of Dartford or Thurrock. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council</a>.\n\nYou can pay an annual fee of either:\n\n<ul><li>£20 a year to use the Dartford Crossing as many times as you want</li>\n<li>£10 a year for 50 crossings</li></ul>\n\nIf you’re on the £10 plan and you run out of crossings you can either pay:\n\n<ul><li>£5 for 25 additional crossings</li>\n<li>£10 to upgrade to the £20 plan and get unlimited crossings</li></ul>\n\nThe total amount you pay in a year will not be more than £20.\n\nIf you do not pay the annual fee, the local resident discount will be removed from your account. You’ll have to pay the one-off charge. You’ll need to reapply for the discount.</string>
+    <string name="fines_you_can_get"><b>Fines (Penalty Charge Notices)</b>\nYou can get a £70 fine if you do not pay the Dart Charge.\n\nYou must pay the fine within 28 days of receiving a Penalty Charge Notice (PCN).\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n<li>increased to £105 if you do not pay it</li></ul>\n\nThis is in addition to paying the original crossing charge.\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a> or call the Dart Charge contact centre.</string>
     <string name="contact_dart_charge">Contact Dart Charge</string>
     <string name="do_you_have_dart_charge_account">Do you have Dart Charge Account?</string>
     <string name="sub_category">Sub-category</string>

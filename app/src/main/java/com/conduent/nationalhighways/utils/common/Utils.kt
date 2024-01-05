@@ -352,7 +352,7 @@ object Utils {
     fun convertDateForTransferCrossingsScreen(inputDate: String?): String {
         val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a")
         val date: Date = inputFormat.parse(inputDate)
-        val outputFormat = SimpleDateFormat("dd MMMM yyyy")
+        val outputFormat = SimpleDateFormat("dd MMM yyyy")
         return outputFormat.format(date)
     }
 
@@ -944,7 +944,8 @@ object Utils {
     }
 
     fun currentDateWithTimeTime(): String {
-        return SimpleDateFormat("dd MMM yyyy hh:mma", Locale.getDefault()).format(Date())
+        return SimpleDateFormat("hh:mma 'on' dd MMM yyyy", Locale.getDefault()).format(Date()).replace("AM", "am")
+            .replace("PM", "pm")
 
     }
 
