@@ -191,6 +191,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
         binding.okBtn.setOnClickListener {
             openAppSettings()
+            dialog.dismiss()
         }
         dialog.show()
 

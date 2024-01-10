@@ -5,12 +5,15 @@ import android.net.Uri
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentServiceUnavailableBinding
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.setToolBarTitle
 import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
+import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.extn.gone
@@ -46,7 +49,7 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
             endTime = arguments?.getString(Constants.END_TIME, "").toString()
         }
         showToolBar(true)
-
+        setToolBarTitle(resources.getString(R.string.str_service_is_unavailable))
         setBackPressListener(this)
 
         binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
@@ -55,12 +58,16 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
 
         when (serviceType) {
             Constants.MAINTENANCE -> {
-                binding.decs1Tv.text = resources.getString(R.string.str_able_to_use_service, endTime)
+                LandingActivity.setBackIcon(View.GONE)
+                val convertedEndDate =DateUtils.convertStringDatetoAnotherFormat(endTime,DateUtils.yyyy_mm_dd_hh_mm_ss_s,DateUtils.dd_mmm_yyyy_hh_mm_a_)
+                binding.decs1Tv.text = resources.getString(R.string.str_able_to_use_service, convertedEndDate)
+                binding.titleTv.text = resources.getString(R.string.str_sorry_service_unavailable)
                 binding.btnNext.visible()
                 binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
                 binding.decs2Tv.gone()
                 binding.decs3Tv.gone()
                 binding.decs4Tv.gone()
+                binding.decs5Tv.gone()
                 binding.btnGoToWebsite.gone()
 
             }

@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -239,16 +240,20 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                     }
                     root.setOnClickListener {
                         HomeActivityMain.checkedCrossing = recentTransactionItem
-                        HomeActivityMain.crossing=null
+                        HomeActivityMain.crossing=TransactionData(amount=recentTransactionItem.amount, transactionDate = recentTransactionItem.txDate,
+                            exitTime = recentTransactionItem.exitTime, plateNumber = recentTransactionItem.plateNumber, exitDirection = recentTransactionItem.exitDirection,
+                            tranSettleStatus = "")
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                         bundle.putParcelable(Constants.NAV_DATA_KEY,data)
-                        if (HomeActivityMain.checkedCrossing?.activity?.toLowerCase().equals("toll")) {
+                        Log.e("TAG", "createPaymentsHistoryListAdapter: activity "+ HomeActivityMain.checkedCrossing?.activity)
+                        if (HomeActivityMain.checkedCrossing?.activity?.lowercase().equals("toll")) {
                             findNavController().navigate(
                                 R.id.action_crossing_details_to_tollDetails,
                                 bundle
                             )
                         } else {
+//                            HomeActivityMain.crossing=recentTransactionItem.
                             findNavController().navigate(
                                 R.id.action_crossing_details_to_topUpDetails,
                                 bundle

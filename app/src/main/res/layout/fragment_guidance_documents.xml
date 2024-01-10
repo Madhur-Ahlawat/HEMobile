@@ -464,6 +464,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_40dp"
+                android:visibility="invisible"
                 android:textColorLink="@color/dark_blue_color"
                 android:text="@string/feed_back_to_improve_service"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -69,7 +69,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var accountResponse: AccountResponse? = null
     private var loader: LoaderDialog? = null
     private val countPerPage = 100
-    private var startIndex = 0
+    private var startIndex = 1
     private var noOfPages = 1
 
     @Inject
@@ -598,8 +598,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             ""
         )
         val request = AccountPaymentHistoryRequest(
-            index, Constants.ALL_TRANSACTION, countPerPage, DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
-            DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
+            index, Constants.ALL_TRANSACTION, countPerPage,
+            endDate= DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
+            startDate= DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }

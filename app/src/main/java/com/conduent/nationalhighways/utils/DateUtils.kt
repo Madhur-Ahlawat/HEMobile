@@ -14,11 +14,13 @@ object DateUtils {
 
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy")
      val dd_mmm_yyyy_hh_mm_a = "dd MMM yyyy hh:mm a"
+     val dd_mmm_yyyy_hh_mm_a_ = "dd MMM yyyy hh:mma"
      val dd_mmm_yyyy = "dd MMM yyyy"
      val dd_mm_yyyy = "MM/dd/yyyy"
     val dd_mmm_yyyy_="dd-MMMM-yyyy"
     val mmmm_dd_yyyy="MMMM dd, yyyy"
     val mm_dd_yyyy_hh_mm_ss_a="MM/dd/yyyy hh:mm:ss a"
+    val yyyy_mm_dd_hh_mm_ss_s="yyyy-MM-dd hh:mm:ss.s"
 
     fun currentDate(): String? {
         return dateFormat.format(Calendar.getInstance().time)
