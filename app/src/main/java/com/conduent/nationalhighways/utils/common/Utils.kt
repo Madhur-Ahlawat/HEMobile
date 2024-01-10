@@ -25,6 +25,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -1073,8 +1074,75 @@ object Utils {
 
     }
 
+     fun checkLocationPermissionState(context:Context) {
 
-    fun setCardImage(paymentTypeInfo: String): Int {
+         var fineLocation =
+             ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
+         var coarseLocation =
+             ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
+
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+
+             var backgroundLocationPermissionApproved: Boolean = ActivityCompat.checkSelfPermission(context,
+                 Manifest.permission.ACCESS_BACKGROUND_LOCATION) > -1
+
+             var isAppLocationPermissionGranted =
+                 (backgroundLocationPermissionApproved) &&
+                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+
+             var preciseLocationAllowed = (fineLocation == PackageManager.PERMISSION_GRANTED)
+                     && (coarseLocation == PackageManager.PERMISSION_GRANTED);
+
+             if (preciseLocationAllowed) {
+                 Log.e("PERMISSION", "Precise location is enabled in Android 12");
+             } else {
+                 Log.e("PERMISSION", "Precise location is disabled in Android 12");
+             }
+
+             if (isAppLocationPermissionGranted) {
+                 Log.e("PERMISSION", "Location is allowed all the time");
+             } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
+                 Log.e("PERMISSION", "Location is allowed while using the app");
+             } else {
+                 Log.e("PERMISSION", "Location is not allowed.");
+             }
+
+         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+             var bgLocation = ContextCompat.checkSelfPermission(
+                 context,
+                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
+             );
+
+             var isAppLocationPermissionGranted =
+                 (bgLocation == PackageManager.PERMISSION_GRANTED) &&
+                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+
+             if (isAppLocationPermissionGranted) {
+                 Log.e("PERMISSION", "Location is allowed all the time");
+             } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
+                 Log.e("PERMISSION", "Location is allowed while using the app");
+             } else {
+                 Log.e("PERMISSION", "Location is not allowed.");
+             }
+
+         } else {
+
+             var isAppLocationPermissionGranted =
+                 (fineLocation == PackageManager.PERMISSION_GRANTED) &&
+                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+
+             if (isAppLocationPermissionGranted) {
+                 Log.e("PERMISSION", "Location permission is granted");
+             } else {
+                 Log.e("PERMISSION", "Location permission is not granted");
+             }
+         }
+     }
+
+
+
+            fun setCardImage(paymentTypeInfo: String): Int {
         if (paymentTypeInfo.contains("CURRENT")) {
             return R.drawable.directdebit
         } else if (paymentTypeInfo.contains("SAVINGS")) {
