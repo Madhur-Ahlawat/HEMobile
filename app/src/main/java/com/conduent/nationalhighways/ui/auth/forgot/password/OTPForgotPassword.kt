@@ -1122,14 +1122,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(requireActivity(), BiometricActivity::class.java)
-                    intent.putExtra(Constants.TWOFA, sessionManager?.getTwoFAEnabled())
+                    intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
 
                     startActivity(intent)
 
 
                     //dialog.dismiss()
-
 
                 }
             },

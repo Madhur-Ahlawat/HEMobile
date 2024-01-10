@@ -79,6 +79,9 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         fun setToolBarTitle(title: String) {
             binding.titleTxt.text = title
         }
+        fun setBackIcon(status: Int) {
+            binding.btnBack.visibility=status
+        }
 
     }
 
@@ -110,16 +113,16 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         navControllerListener()
         if (screenType == LRDS_SCREEN) {
             binding.titleTxt.text = resources.getString(R.string.txt_my_account)
-            binding.btnBack.gone()
+            setBackIcon(View.GONE)
         } else if (screenType == LOGOUT_SCREEN || screenType == SESSION_TIME_OUT) {
             binding.titleTxt.text = resources.getString(R.string.str_signed_out)
-            binding.btnBack.gone()
+            setBackIcon(View.GONE)
         } else if (screenType == SERVER_ERROR || screenType == FAILED_RETRY_SCREEN) {
             binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
-            binding.btnBack.gone()
+            setBackIcon(View.GONE)
         } else {
             binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
-            binding.btnBack.visible()
+            setBackIcon(View.VISIBLE)
         }
         binding.btnBack.setOnClickListener {
             onBackPressed()

@@ -216,8 +216,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     else{
                         binding.inputMobileNumber.setText(retrievedPhoneNumber.toString().replace(matchedCountryCode!!,""))
                         binding.inputCountry.setSelectedValue(
-                            matchedCountry!!
+                            matchedCountry?:Constants.UNITED_KINGDOM
                         )
+                    }
+
+                    if(binding.inputCountry.selectedItemDescription ==Constants.UNITED_KINGDOM){
+                        requiredCountryCode = true
                     }
 
                 } catch(e: Exception) {
@@ -414,6 +418,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 requiredCountryCode =
                     fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
+
+                if(binding.inputCountry.selectedItemDescription ==Constants.UNITED_KINGDOM){
+                    requiredCountryCode = true
+                }
+
 
                 if (!NewCreateAccountRequestModel.prePay) {
                     checkButton()
@@ -817,7 +826,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             if (fullCountryNameWithCode.size > 0) {
                 requiredCountryCode = fullCountryNameWithCode.any { it == item }
             } else {
-                requiredCountryCode = false
+                if(item==Constants.UNITED_KINGDOM){
+                    requiredCountryCode = true
+                }else{
+                    requiredCountryCode = false
+                }
             }
             checkButton()
         }

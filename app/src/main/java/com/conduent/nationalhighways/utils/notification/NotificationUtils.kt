@@ -48,7 +48,7 @@ class NotificationUtils(val context: Context) {
                 setContentText(message)
                 setSmallIcon(R.drawable.ic_app_icon)
                 setContentIntent(pendingIntent)
-                setColor(context.resources.getColor(R.color.black, null))
+                setColor(context.resources.getColor(R.color.splash_background, null))
                 setAutoCancel(true)
             }
         } else {

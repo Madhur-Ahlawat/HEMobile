@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.os.Build
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
@@ -28,6 +29,7 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
         FragmentEnquirySuccessBinding.inflate(inflater, container, false)
 
     override fun init() {
+        binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
         enquiryModel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(
                 Constants.EnquiryResponseModel,

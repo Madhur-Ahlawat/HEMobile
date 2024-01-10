@@ -65,7 +65,6 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                             filteredList.filter { it != Constants.UK_COUNTRY }
                             filteredList.toMutableList().add(0, Constants.UK_COUNTRY)
                         }
-                        Log.e("TAG", "publishResults: filteredList -> "+filteredList.get(0) )
                         addAll(filteredList)
 
                     }

@@ -63,6 +63,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private var loader: LoaderDialog? = null
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     var from: String = ""
+    var refreshTokenApiCalled: Boolean = false
 
     private var currentFragment: BaseFragment<*>? = null // Keep a reference to the current fragment
 
@@ -415,12 +416,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
+        refreshTokenApiCalled=false
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
         when (status) {
             is Resource.Success -> {
-                Log.e("TAG", "handleAccountDetailsResponse: ")
                 dashboardViewModel.personalInformationData.value = status.data?.personalInformation
                 dashboardViewModel.accountInformationData.value = status.data?.accountInformation
                 personalInformation = status.data?.personalInformation
@@ -480,7 +481,14 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun onResume() {
         super.onResume()
-        BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
+        refreshTokenApi()
+    }
+
+    fun refreshTokenApi() {
+        if(refreshTokenApiCalled==false) {
+            BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
+        }
+        refreshTokenApiCalled=true
     }
 
     override fun onStart() {

@@ -78,7 +78,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
-        if(navFlowFrom.equals(Constants.TWOFA)){
+        if(navFlowFrom.equals(Constants.TWOFA) || navFlowFrom.equals(Constants.LOGIN)|| navFlowFrom.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
             binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
             binding.toolBarLyt.backButton.gone()
             binding.biometricCancel.visible()

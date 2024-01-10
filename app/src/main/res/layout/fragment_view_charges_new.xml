@@ -93,7 +93,7 @@
                 android:textColorLink="@color/btn_color"
                 android:textSize="@dimen/_14sp"
                 app:layout_constraintTop_toBottomOf="@id/text"
-                app:layout_goneMarginTop="@dimen/_23dp" />
+                app:layout_goneMarginTop=   "@dimen/_23dp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/text_if_you_have_disabled"

@@ -15,6 +15,8 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -50,7 +52,7 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        binding?.apply {
+        binding.apply {
             crossingAmount.text = crossing?.amount
             tvCrossingDateValue.text = crossing?.transactionDate
             tvTimeValue.text = crossing?.exitTime
@@ -61,7 +63,14 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
             else{
                 tvLocationValue.text = "Southbound"
             }
-            tvPaymentStatusValue.text = Utils.capitalizeString(crossing?.tranSettleStatus)
+            if(crossing?.tranSettleStatus?.isEmpty() == true){
+                binding.tvPaymentStatusValue.gone()
+                binding.tvPaymentStatus.gone()
+            }else{
+                binding.tvPaymentStatusValue.visible()
+                binding.tvPaymentStatus.visible()
+                tvPaymentStatusValue.text = Utils.capitalizeString(crossing?.tranSettleStatus)
+            }
         }
         HomeActivityMain.setTitle(resources.getString(R.string.crossing_details))
     }

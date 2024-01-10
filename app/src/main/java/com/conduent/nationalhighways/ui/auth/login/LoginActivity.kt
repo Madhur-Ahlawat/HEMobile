@@ -116,6 +116,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+                        intent.putExtra(Constants.NAV_FLOW_FROM,from)
                         intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
                         startActivity(intent)
                     } else {
@@ -141,12 +142,16 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
-                    intent.putExtra(Constants.TWOFA, sessionManager?.getTwoFAEnabled())
+                    intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                     )
-                    intent.putExtra(Constants.NAV_FLOW_FROM, Constants.LOGIN)
+                    if(from.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
+                        intent.putExtra(Constants.NAV_FLOW_FROM, Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)
+                    }else{
+                        intent.putExtra(Constants.NAV_FLOW_FROM, Constants.LOGIN)
+                    }
 
                     startActivity(intent)
 
@@ -514,6 +519,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         if (sessionManager.getTwoFAEnabled()) {
             val intent = Intent(this@LoginActivity, AuthActivity::class.java)
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
+            intent.putExtra(Constants.NAV_FLOW_FROM, from)
+
             startActivity(intent)
         } else {
             dashboardViewModel.getLRDSResponse()

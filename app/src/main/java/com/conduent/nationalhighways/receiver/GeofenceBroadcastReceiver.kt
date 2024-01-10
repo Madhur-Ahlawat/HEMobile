@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.conduent.nationalhighways.R
@@ -41,6 +42,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             val dateFormat = SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
             val dateString = dateFormat.format(Date())
             sessionManager.saveStringData(SessionManager.GEOFENCE_ENTER_TIME, dateString)
+            Toast.makeText(context,"Location entered",Toast.LENGTH_SHORT).show()
         }
 
         // Test that the reported transition was of interest.
@@ -58,6 +60,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                         context.resources.getString(R.string.str_responsible_paying),
                         Constants.GEO_FENCE_NOTIFICATION
                     )
+                    Toast.makeText(context,"Location exit",Toast.LENGTH_SHORT).show()
                 }else{
                     val diff = Utils.getTimeDifference(geofenceEnterTime, Date())
                     if (diff.first.toInt() == 0 && diff.second <= 5) {
@@ -66,6 +69,10 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                             context.resources.getString(R.string.str_responsible_paying),
                             Constants.GEO_FENCE_NOTIFICATION
                         )
+                        Toast.makeText(context,"Location exit",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(context,"Location time limited more than 5 minutes",Toast.LENGTH_SHORT).show()
+
                     }
                 }
               sessionManager.saveStringData(SessionManager.GEOFENCE_ENTER_TIME,"")
@@ -75,6 +82,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                     context.resources.getString(R.string.str_responsible_paying),
                     Constants.GEO_FENCE_NOTIFICATION
                 )
+                Toast.makeText(context,"Location exit",Toast.LENGTH_SHORT).show()
             }
 
         } else {
