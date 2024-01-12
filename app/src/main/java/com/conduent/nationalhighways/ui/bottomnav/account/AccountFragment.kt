@@ -330,6 +330,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     private fun logOutOfAccount() {
         sessionManager.clearAll()
+        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD,false)
         Utils.redirectToSignoutPage(requireActivity())
 
 //        Intent(requireActivity(), LoginActivity::class.java).apply {

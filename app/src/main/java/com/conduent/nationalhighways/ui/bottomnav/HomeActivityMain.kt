@@ -143,6 +143,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding = ActivityHomeMainBinding.inflate(layoutInflater)
         setContentView(dataBinding?.root)
         setView()
+        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD,false)
     }
 
 
@@ -481,6 +482,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun onResume() {
         super.onResume()
+        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
         refreshTokenApi()
     }
 

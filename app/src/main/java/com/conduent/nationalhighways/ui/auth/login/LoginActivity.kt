@@ -288,7 +288,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     override fun onResume() {
         super.onResume()
         Log.e("TAG", "onResume: -------> ")
-        if (displayFingerPrintPopup()) {
+        if (displayFingerPrintPopup() && sessionManager.fetchBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD)) {
             fingerPrintLogin()
         }
     }
@@ -301,6 +301,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun init() {
+        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
         BaseApplication.flowNameAnalytics = Constants.LOGIN
         BaseApplication.screenNameAnalytics = ""
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
@@ -422,17 +423,11 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             backButton.setOnClickListener(this@LoginActivity)
 
         }
-
-//        binding.edtEmail.setText("madhur.ahslawat@conduent.com")
-//        binding.edtPwd.setText("Welcome2")
-//        binding.btnLogin.isEnabled=true
     }
 
     private fun removeError() {
         binding.edtEmail.removeError()
-
     }
-
 
     private fun displayFingerPrintPopup(): Boolean {
         return sessionManager.fetchTouchIdEnabled()
@@ -506,6 +501,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         sessionManager.saveUserName(binding.edtEmail.getText().toString())
         sessionManager.run {
             saveAuthToken(response.data?.accessToken ?: "")
+            saveBooleanData(SessionManager.SendAuthTokenStatus,true)
             saveTwoFAEnabled(response.data?.require2FA == "true")
             saveRefreshToken(response.data?.refreshToken ?: "")
             setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
@@ -546,6 +542,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_login -> {
+                sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
 
                 hideKeyboard()
                 loginModel = LoginModel(
@@ -688,10 +685,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
             if (responseOK) {
                 BaseApplication.saveToken(sessionManager, response)
-                if (response?.body()?.mfaEnabled != null && response?.body()?.mfaEnabled?.toLowerCase() == "true") {
-                    sessionManager?.saveTwoFAEnabled(true)
+                if (response?.body()?.mfaEnabled != null && response.body()?.mfaEnabled?.lowercase() == "true") {
+                    sessionManager.saveTwoFAEnabled(true)
                 } else {
-                    sessionManager?.saveTwoFAEnabled(false)
+                    sessionManager.saveTwoFAEnabled(false)
                 }
                 hitAPIs()
             }

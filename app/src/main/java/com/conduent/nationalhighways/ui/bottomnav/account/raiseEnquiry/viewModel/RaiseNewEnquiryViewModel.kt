@@ -43,8 +43,8 @@ class RaiseNewEnquiryViewModel @Inject constructor(
     var enquiry_status_number = MutableLiveData<String>()
     var enquiry_last_name = MutableLiveData<String>()
 
-    val retryEvent = MutableLiveData<Unit>()
-    val noOfApiTries = MutableLiveData<Int>()
+    val apiState = MutableLiveData<String>()
+    val apiEndTime = MutableLiveData<String>()
 
     init {
         enquiryModel.value = EnquiryModel()
@@ -52,9 +52,7 @@ class RaiseNewEnquiryViewModel @Inject constructor(
         enquiryDetailsModel.value=ServiceRequest()
         enquiry_status_number.value=""
         enquiry_last_name.value=""
+        apiState.value=""
+        apiEndTime.value=""
     }
-
-
-
-
 }

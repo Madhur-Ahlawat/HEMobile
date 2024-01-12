@@ -172,6 +172,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                             accountTypeCd = dataObj?.get(0)?.accountStatusCd?:""
                             expirationDate = dataObj?.get(0)?.expirationDate?:""
                             plateCountry = dataObj?.get(0)?.plateCountry
+                            plateCountryToTransfer = dataObj?.get(0)?.plateCountry
                             plateNumberToTransfer = dataObj?.get(0)?.plateNo?:""
                             unusedTrip = dataObj?.get(0)?.unusedTrip?:""
                             vehicleClassBalanceTransfer = dataObj?.get(0)?.vehicleClass

@@ -36,8 +36,10 @@ class HeaderInterceptor @Inject constructor(
                             chain.request().url.encodedPath.contains("bosuser/api/accountCreation")
                         )
                 ) {
-                    Log.e("TAG", "intercept: accessToken "+accessToken )
-                    requestBuilder.addHeader("Authorization", "Bearer $accessToken")
+                    Log.e("TAG", "intercept: accessToken "+accessToken +" *encodedPath* "+chain.request().url.encodedPath+" *SendAuthTokenStatus* "+sessionManager.fetchBooleanData(SessionManager.SendAuthTokenStatus) )
+                    if(sessionManager.fetchBooleanData(SessionManager.SendAuthTokenStatus)){
+                        requestBuilder.addHeader("Authorization", "Bearer $accessToken")
+                    }
                 }
                 requestBuilder.addHeader(
                     "User-Agent",

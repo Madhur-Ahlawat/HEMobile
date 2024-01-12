@@ -1,20 +1,15 @@
 package com.conduent.nationalhighways.ui.payment
 
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.OnBackPressedCallback
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountFindVehicleFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.payment.newpaymentmethod.MakeOneOffPaymentSuccessfullyFragment
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -36,7 +31,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
     @Inject
     lateinit var api: ApiService
     private var data: CrossingDetailsModelsResponse? = null
-private var lastDestination:Int=0
+    private var lastDestination: Int = 0
     override fun initViewBinding() {
         binding = ActivityCreateAccountBinding.inflate(layoutInflater)
         data = intent?.getParcelableExtra(Constants.NAV_DATA_KEY)
@@ -80,21 +75,22 @@ private var lastDestination:Int=0
             )
             bundle.putParcelable(Constants.NAV_DATA_KEY, data as CrossingDetailsModelsResponse)
         }
-        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,true)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, true)
         navController?.setGraph(navGraph!!, bundle)
 
 
-        navController?.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener{
+        navController?.addOnDestinationChangedListener(object :
+            NavController.OnDestinationChangedListener {
             override fun onDestinationChanged(
                 controller: NavController,
                 destination: NavDestination,
                 arguments: Bundle?
             ) {
-                lastDestination=destination.id
-                if(destination.id==R.id.additionalCrossingsFragment){
+                lastDestination = destination.id
+                if (destination.id == R.id.additionalCrossingsFragment) {
                     binding.toolBarLyt.titleTxt.text = getString(R.string.additional_crossings_txt)
 
-                }else{
+                } else {
                     binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
 
                 }
@@ -106,29 +102,28 @@ private var lastDestination:Int=0
 
     override fun observeViewModel() {}
 
-/*
-    override fun onBackPressed() {
-        super.onBackPressed()
+    /*
+        override fun onBackPressed() {
+            super.onBackPressed()
 
-        navHostFragment?.let { navFragment ->
-            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
-                Log.e("TAG", "onBackPressed: fragment "+fragment )
-                if (fragment is MakeOneOffPaymentSuccessfullyFragment) {
-                    Log.e("TAG", "onBackPressed: 11 " )
-                } else if(fragment is CreateAccountFindVehicleFragment){
-                    Log.e("TAG", "onBackPressed: 1122 " )
-                    onBackPressedDispatcher.onBackPressed()
-                }else {
-                    Log.e("TAG", "onBackPressed: 112233 " )
-                    navHostFragment?.findNavController()?.popBackStack()
+            navHostFragment?.let { navFragment ->
+                navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                    Log.e("TAG", "onBackPressed: fragment "+fragment )
+                    if (fragment is MakeOneOffPaymentSuccessfullyFragment) {
+                        Log.e("TAG", "onBackPressed: 11 " )
+                    } else if(fragment is CreateAccountFindVehicleFragment){
+                        Log.e("TAG", "onBackPressed: 1122 " )
+                        onBackPressedDispatcher.onBackPressed()
+                    }else {
+                        Log.e("TAG", "onBackPressed: 112233 " )
+                        navHostFragment?.findNavController()?.popBackStack()
+                    }
+
                 }
-
             }
+
         }
-
-    }
-*/
-
+    */
 
 
     override fun onUserInteraction() {
