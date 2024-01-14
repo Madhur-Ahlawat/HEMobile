@@ -648,7 +648,7 @@
                     <TextView
                         android:id="@+id/txtBiometrics"
                         style="@style/MediumTextBlack"
-                        android:text="@string/biometric"
+                        android:text="@string/biometrics"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

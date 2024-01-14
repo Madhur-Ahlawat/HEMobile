@@ -48,6 +48,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener {
 
+    private var goToSuccessPage: Boolean=false
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -61,6 +63,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private var loader: LoaderDialog? = null
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     var from: String = ""
+    var refreshTokenApiCalled: Boolean = false
 
     private var currentFragment: BaseFragment<*>? = null // Keep a reference to the current fragment
 
@@ -76,6 +79,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         fun setTitle(title: String) {
             dataBinding?.titleTxt?.text = title
+        }
+        fun removeBottomBar(){
+            dataBinding?.bottomNavigationView?.gone()
         }
         fun changeBottomIconColors(context: Context,pos: Int) {
             Log.e("TAG", "changeBottomIconColors: pos " + pos)
@@ -137,6 +143,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding = ActivityHomeMainBinding.inflate(layoutInflater)
         setContentView(dataBinding?.root)
         setView()
+        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD,false)
     }
 
 
@@ -182,6 +189,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             from = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
 
+        if (intent.hasExtra(Constants.GO_TO_SUCCESS_PAGE)) {
+            goToSuccessPage = intent.getBooleanExtra(Constants.GO_TO_SUCCESS_PAGE,false)
+        }
+
         navController = (supportFragmentManager.findFragmentById(
             R.id.fragmentContainerView
         ) as NavHostFragment).navController
@@ -210,6 +221,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         } else {
             var bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, from)
+            bundle.putBoolean(Constants.GO_TO_SUCCESS_PAGE,goToSuccessPage)
             dataBinding?.idToolBarLyt?.gone()
             if (!this::navController.isInitialized) {
                 navController = (supportFragmentManager.findFragmentById(
@@ -218,6 +230,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             }
             navController.navigate(R.id.dashBoardFragment, bundle)
             getDashBoardAllData()
+            changeBottomIconColors(this@HomeActivityMain,0)
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment) {
@@ -404,12 +417,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
+        refreshTokenApiCalled=false
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
         when (status) {
             is Resource.Success -> {
-                Log.e("TAG", "handleAccountDetailsResponse: ")
                 dashboardViewModel.personalInformationData.value = status.data?.personalInformation
                 dashboardViewModel.accountInformationData.value = status.data?.accountInformation
                 personalInformation = status.data?.personalInformation
@@ -469,7 +482,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun onResume() {
         super.onResume()
-        BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
+        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
+        refreshTokenApi()
+    }
+
+    fun refreshTokenApi() {
+        if(refreshTokenApiCalled==false) {
+            BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
+        }
+        refreshTokenApiCalled=true
     }
 
     override fun onStart() {

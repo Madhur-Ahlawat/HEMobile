@@ -54,8 +54,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
         binding.accountNumber.text = oneOfPaymentResponse?.referenceNumber
         binding.vechicleRegistration.text = NewCreateAccountRequestModel.plateNumber.uppercase()
         binding.amountPaid.text = amount
-        binding.timeDate.text =
-            currentTimeWithAMPM() + " " + getString(R.string.str_on) + " " + Utils.currentDate()
+        binding.timeDate.text = Utils.currentDateWithTimeTime()
         if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty() == true && NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true) {
             binding.emailConformationTxt.text = getString(
                 R.string.str_we_have_sent_confirmation_email,

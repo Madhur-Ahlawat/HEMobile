@@ -52,7 +52,7 @@ class NotificationViewModel @Inject constructor(
             try {
                 readAlertMutData.postValue(
                     ResponseHandler.success(
-                        repo.deleteAlertItem(cssLookUpKey),
+                        repo.readAlertItem(cssLookUpKey),
                         errorManager
                     )
                 )

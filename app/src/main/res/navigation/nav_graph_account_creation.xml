@@ -848,6 +848,20 @@ app:popUpTo="@id/HWMobileNumberCaptureVC"
             app:destination="@+id/businessVehicleDetailFragment"
             />
 
+        <action
+            android:id="@+id/action_maximumVehicleFragment_to_accountSummaryFragment"
+            app:destination="@+id/createAccountSummaryFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/createAccountSummaryFragment"
+            />
+
+        <action
+            android:id="@+id/action_maximumVehicleFragment_to_vehicleListFragment"
+            app:destination="@+id/vehicleListFragment"
+            app:popUpTo="@+id/findYourVehicleFragment"
+            app:popUpToInclusive="true"/>
+
+
 
         <action
             android:id="@+id/action_maximumFragment_to_landingFragment"

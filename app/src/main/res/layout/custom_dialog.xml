@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:background="@android:color/transparent"
         android:orientation="vertical"
         app:layout_constraintHeight_max="wrap">
@@ -65,8 +66,9 @@
                 <View
                     android:layout_width="match_parent"
                     android:id="@+id/firstView"
-                    android:layout_height="1dp"
-                    android:background="#8F8F8F" />
+                    android:layout_height="0.8dp"
+                    android:background="#000000"
+                    android:alpha="0.3"/>
 
                 <LinearLayout
                     android:id="@+id/rebooking_back_button_ll"
@@ -89,12 +91,13 @@
                         android:textSize="17sp" />
 
                     <View
-                        android:layout_width="1dp"
+                        android:layout_width="0.8dp"
                         android:id="@+id/secondView"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
-                        android:background="#8F8F8F" />
+                        android:background="#000000"
+                        android:alpha="0.3" />
 
                     <TextView
                         android:id="@+id/ok_btn"

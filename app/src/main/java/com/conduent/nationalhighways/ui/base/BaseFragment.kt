@@ -228,7 +228,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         nListener: DialogNegativeBtnListener?,
         cancelVisibility: Int = View.VISIBLE,
         cancelButtonColor:Int=0,
-        typeFace:Typeface?=null
+        typeFace:Typeface?=null,
+        lineView:Boolean?=false
     ) {
 
         val dialog = Dialog(requireActivity(), R.style.CustomDialogTheme1)
@@ -256,7 +257,12 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         cancel.text = negativeBtnTxt
         ok.text = positiveBtnTxt
         cancel.visibility = cancelVisibility
-        firstView.visibility = cancelVisibility
+
+        if(lineView==true){
+            firstView.visibility = View.VISIBLE
+        }else{
+            firstView.visibility = cancelVisibility
+        }
         secondView.visibility = cancelVisibility
         cancel.setOnClickListener {
             nListener?.negativeBtnClick(dialog)

@@ -253,7 +253,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                                 dialog.dismiss()
                             }
                         }
-                    ,cancelVisibility=View.GONE)
+                    ,cancelVisibility=View.GONE, lineView = true)
 
                 }else{
                     val bundle = Bundle()
@@ -301,8 +301,13 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 title.text = getString(R.string.top_up)
 
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+                if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                    bundle.putString(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+                }else{
+                    bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+                }
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
                 findNavController().navigate(
                     R.id.action_paymentMethodFragment_to_accountSuspendedPaymentFragment,

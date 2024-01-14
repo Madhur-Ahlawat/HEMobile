@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
@@ -52,6 +53,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var position: Int = 0
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
     private var currentBalance: String = ""
     private val formatter = DecimalFormat("#,###.00")
     private var paymentListSize: Int = 0
@@ -96,8 +98,13 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
-
         }
+
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
+        }
+
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
     }
@@ -120,12 +127,14 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     private fun topBalanceDecimal(b: Boolean) {
         if (!b) {
-            var mText = binding.topBalance.getText().toString().trim().replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
-                .replace(" ", "")
+            var mText =
+                binding.topBalance.getText().toString().trim().replace("$", "").replace("£", "")
+                    .replace("£.", "").replace(",", "")
+                    .replace(" ", "")
             if (mText.isEmpty()) {
                 mText = "£0.0"
             }
-            Log.e("TAG", "topBalanceDecimal: mText "+mText )
+            Log.e("TAG", "topBalanceDecimal: mText " + mText)
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
@@ -138,7 +147,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
             binding.topBalance.setText("£" + formatedAmount)
             // Assuming editText is your EditText view
-            binding.topBalance.setSelection(binding.topBalance.editText.text?.length?:0)
+            binding.topBalance.setSelection(binding.topBalance.editText.text?.length ?: 0)
 
         }
 
@@ -197,19 +206,15 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     .replace("£.", "")
                     .replace("$", "").replace(",", "").replace(" ", "").toDouble()
                 val bundle = Bundle()
-                bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
+                bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount)
                 bundle.putInt(Constants.POSITION, position)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putParcelableArrayList(Constants.DATA, paymentList as ArrayList)
-//                findNavController().navigate(
-//                    R.id.action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment,
-//                    bundle
-//                )
                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
-
                 findNavController().navigate(
                     R.id.action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment,
                     bundle
@@ -237,6 +242,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
         bundle.putString(Constants.CURRENTBALANCE, currentBalance)
         bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
 
@@ -304,7 +310,10 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                        Constants.INVALID_TOKEN
+                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)

@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -98,7 +99,10 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 }
 
                 else -> {
-                    binding.textMaximumVehicle.text = getString(
+                    binding.textMaximumVehicle.gone()
+                    binding.descTv.visible()
+                    binding.descTv
+                        .text = getString(
                         R.string.str_vehicle_exempt_detail_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
@@ -140,7 +144,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             }
         }
         if (NewCreateAccountRequestModel.isVehicleAlreadyAdded) {
-            binding.textMaximumVehicle.text =
+            binding.descTv.text =
                 getString(
                     R.string.str_vehicle_already_exist_desc,
                     NewCreateAccountRequestModel.plateNumber.uppercase()
@@ -152,7 +156,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             binding.maximumVehicleAddedNote.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.VISIBLE
             binding.btnContinue.text = getString(R.string.str_add_another)
+            binding.descTv.visible()
             binding.inCorrectVehicleNumber.gone()
+            binding.textMaximumVehicle.gone()
         }
 
         if (NewCreateAccountRequestModel.isVehicleAlreadyAddedLocal) {
@@ -297,19 +303,28 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         .lowercase() -> {
                         val accountData = NewCreateAccountRequestModel
                         val vehicleList = accountData.vehicleList
-//                        nonUKVehicleModel?.let { vehicleList.add(it) }
-
-                        if (sessionManager.getLoggedInUser()) {
-                            findNavController().navigate(
-                                R.id.action_maximumFragment_businessVehicleDetailFragment,
-                                bundle()
-                            )
-                        } else {
+                        Log.e("TAG", "onClick: "+nonUKVehicleModel?.isDblaAvailable )
+                        if(nonUKVehicleModel?.isDblaAvailable==true){
                             findNavController().navigate(
                                 R.id.action_maximumFragment_to_businessVehicleDetailFragment,
                                 bundle()
                             )
-
+                        }else{
+                            nonUKVehicleModel?.let {
+                                vehicleList.add(it)
+                                val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
+                                if (editCall) {
+                                    findNavController().navigate(
+                                        R.id.action_maximumVehicleFragment_to_accountSummaryFragment,
+                                        bundle()
+                                    )
+                                } else {
+                                    findNavController().navigate(
+                                        R.id.action_maximumVehicleFragment_to_vehicleListFragment,
+                                        bundle()
+                                    )
+                                }
+                            }
                         }
 
                     }

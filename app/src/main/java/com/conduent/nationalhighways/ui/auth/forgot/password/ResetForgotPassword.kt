@@ -16,6 +16,7 @@ import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.removeBottomBar
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.BIOMETRIC_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
@@ -65,7 +66,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
             Constants.FORGOT_PASSWORD_FLOW -> {
                 binding.subTitle.gone()
-                binding.feedbackBt.gone()
+                binding.feedbackBt.invisible()
                 binding.btnSubmit.gone()
                 binding.signinBt.visible()
             }
@@ -80,18 +81,14 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
             BIOMETRIC_CHANGE -> {
-                binding.title.text = getString(R.string.biometric_changed_successfully)
-                binding.subTitle.visible()
-                binding.subTitle.text = Html.fromHtml(
-                    getString(
-                        R.string.you_will_receive_a_confirmation_email,
-                        personalInformation?.emailAddress
-                    ), Html.FROM_HTML_MODE_COMPACT
-                )
-                binding.deleteTitle.gone()
+                HomeActivityMain.dataBinding?.backButton?.gone()
+                binding.feedbackBt.invisible()
                 binding.cardViewPlateNumber.gone()
+                binding.deleteTitle.gone()
+                HomeActivityMain.setTitle(resources.getString(R.string.str_profile_biometrics))
+                binding.title.text = getString(R.string.biometric_changed_successfully)
+                binding.subTitle.gone()
                 binding.btnSubmit.text = getString(R.string.str_continue)
-//                HomeActivityMain.dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
                 HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
             }
 
@@ -100,8 +97,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 if (arguments?.getString(Constants.NAV_FLOW_FROM)
                         .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                 ) {
+                    removeBottomBar()
                     title?.text = getString(R.string.profile_email_address)
-
+                    binding.feedbackBt.invisible()
                     binding.title.text = getString(R.string.email_address_change_successful)
                     binding.subTitle.text = Html.fromHtml(
                         getString(

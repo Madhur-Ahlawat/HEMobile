@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,11 +83,11 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                 binding.address.text =  resources.getString(R.string.str_crossings_data,crossings.toString())
             }
             binding.emailAddress.text = it?.expirationDate?.let { it1 ->
-                DateUtils.convertDateFormatToDateFormat(
-                    it1
+                DateUtils.convertStringDatetoAnotherFormat(
+                    it1,DateUtils.mm_dd_yyyy_hh_mm_ss_a,DateUtils.dd_mmm_yyyy
                 )
             }
-            binding?.valueVehicleRegistrationNumber?.text=it?.plateNumberToTransfer
+            binding.valueVehicleRegistrationNumber.text=it?.plateNumberToTransfer
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH)
             val date = LocalDateTime.parse(it?.expirationDate, formatter)
@@ -239,16 +240,20 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                     }
                     root.setOnClickListener {
                         HomeActivityMain.checkedCrossing = recentTransactionItem
-                        HomeActivityMain.crossing=null
+                        HomeActivityMain.crossing=TransactionData(amount=recentTransactionItem.amount, transactionDate = recentTransactionItem.txDate,
+                            exitTime = recentTransactionItem.exitTime, plateNumber = recentTransactionItem.plateNumber, exitDirection = recentTransactionItem.exitDirection,
+                            tranSettleStatus = "")
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                         bundle.putParcelable(Constants.NAV_DATA_KEY,data)
-                        if (HomeActivityMain.checkedCrossing?.activity?.toLowerCase().equals("toll")) {
+                        Log.e("TAG", "createPaymentsHistoryListAdapter: activity "+ HomeActivityMain.checkedCrossing?.activity)
+                        if (HomeActivityMain.checkedCrossing?.activity?.lowercase().equals("toll")) {
                             findNavController().navigate(
                                 R.id.action_crossing_details_to_tollDetails,
                                 bundle
                             )
                         } else {
+//                            HomeActivityMain.crossing=recentTransactionItem.
                             findNavController().navigate(
                                 R.id.action_crossing_details_to_topUpDetails,
                                 bundle

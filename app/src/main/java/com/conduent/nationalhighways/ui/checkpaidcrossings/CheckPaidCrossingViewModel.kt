@@ -74,6 +74,7 @@ class CheckPaidCrossingViewModel @Inject constructor(
                         Logg.logging("CheckpaidCrossi","serverToken $serverToken")
 
                         sessionManager.saveAuthToken(serverToken ?: "")
+                        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
                         _loginWithRefAndPlateNumber.postValue(Resource.Success(response.body()))
                     } else {
                         _loginWithRefAndPlateNumber.postValue(

@@ -8,7 +8,9 @@ import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityRaiseEnquiryBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
+import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
@@ -27,15 +29,23 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
     @Inject
     lateinit var api: ApiService
 
-    private lateinit var binding: ActivityRaiseEnquiryBinding
     lateinit var navController: NavController
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
-
     lateinit var listener: NavController.OnDestinationChangedListener
     override fun observeViewModel() {
 
     }
 
+    companion object{
+        private lateinit var binding: ActivityRaiseEnquiryBinding
+
+        fun setToolBarTitle(title: String) {
+            binding.toolBarLyt.titleTxt.text = title
+        }
+        fun setBackIcon(status: Int) {
+            binding.toolBarLyt.backButton.visibility=status
+        }
+    }
 
     override fun initViewBinding() {
         binding = ActivityRaiseEnquiryBinding.inflate(layoutInflater)
@@ -45,7 +55,8 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
     }
 
     private fun init() {
-
+        viewModel.apiState.value=intent.getStringExtra(Constants.API_STATE)?:""
+        viewModel.apiEndTime.value=intent.getStringExtra(Constants.API_END_TIME)?:""
         binding.toolBarLyt.titleTxt.text = getString(R.string.str_raise_new_enquiry)
         binding.toolBarLyt.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -111,6 +122,9 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                     R.id.casesEnquiryDetailsFragment -> {
                         binding.toolBarLyt.titleTxt.text = getString(R.string.enquiry_status)
                     }
+                    R.id.serviceUnavailableFragment -> {
+                        binding.toolBarLyt.titleTxt.text = getString(R.string.str_service_is_unavailable)
+                    }
 
                     else -> {
                         binding.toolBarLyt.titleTxt.text = getString(R.string.str_raise_new_enquiry)
@@ -119,8 +133,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                 }
 
                 when (destination.id) {
-
-                    R.id.enquirySuccessFragment -> {
+                    R.id.enquirySuccessFragment or R.id.serviceUnavailableFragment -> {
                         binding.toolBarLyt.backButton.gone()
                     }
 

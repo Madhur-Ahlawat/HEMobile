@@ -4,10 +4,11 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View.OnFocusChangeListener
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
+import com.conduent.nationalhighways.utils.common.Constants
 
 class NHAutoCompleteTextview @JvmOverloads constructor(
     context: Context,
@@ -25,7 +26,8 @@ class NHAutoCompleteTextview @JvmOverloads constructor(
         // Initialize your custom AutoCompleteTextView here
         // You can set attributes or behavior programmatically
         threshold = 1
-
+        isSingleLine = true
+        imeOptions = EditorInfo.IME_ACTION_DONE
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 charSequence: CharSequence?,
@@ -55,21 +57,24 @@ class NHAutoCompleteTextview @JvmOverloads constructor(
         })
 
         this.setOnClickListener {
-          if (dataSet.size > 0) {
+            if (dataSet.size > 0) {
                 showDropDown()
             }
         }
         this.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if(dataSet.size>0){
+                if (dataSet.size > 0) {
                     if (dataSet.any { it == text.toString() }) {
                     } else {
                         setText("")
                         selectedItemDescription = ""
                     }
-                }else{
-                    setText("")
-                    selectedItemDescription = ""
+                } else {
+                    if(text.toString() != Constants.UNITED_KINGDOM){
+                        setText("")
+                        selectedItemDescription = ""
+                    }
+
                 }
 
             } else {

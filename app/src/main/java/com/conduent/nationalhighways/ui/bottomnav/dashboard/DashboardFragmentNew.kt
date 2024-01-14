@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
@@ -29,12 +28,10 @@ import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResp
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
-import com.conduent.nationalhighways.databinding.ItemRecentTansactionsBinding
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dateRangeModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -52,7 +49,6 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
-import com.conduent.nationalhighways.utils.widgets.GenericRecyclerViewAdapter
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -62,6 +58,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogOutListener,
     View.OnClickListener, BackPressListener {
+    private var goToSuccessPage: Boolean = false
     private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
         hashMapOf()
@@ -72,7 +69,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var accountResponse: AccountResponse? = null
     private var loader: LoaderDialog? = null
     private val countPerPage = 100
-    private var startIndex = 0
+    private var startIndex = 1
     private var noOfPages = 1
 
     @Inject
@@ -127,6 +124,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun initCtrl() {
         if(arguments?.containsKey(Constants.NAV_FLOW_KEY)==true){
             navFlowFrom=arguments?.getString(Constants.NAV_FLOW_KEY)?:""
+        }
+
+        if(arguments?.containsKey(Constants.GO_TO_SUCCESS_PAGE)==true){
+            goToSuccessPage= arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE,false)!!
         }
         binding.labelViewAll.setOnClickListener {
             (requireActivity() as HomeActivityMain).viewAllTransactions()
@@ -217,13 +218,16 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showExemptPartnerUI(this)
             }
         }
-        if(navFlowFrom == Constants.BIOMETRIC_CHANGE && sessionManager?.fetchTouchIdEnabled()!!){
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage){
             var bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
             bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
-            findNavController()?.navigate(R.id.action_dashBoardFragment_to_accountManagementFragment,bundle)
+            findNavController().navigate(R.id.action_dashBoardFragment_to_accountManagementFragment,bundle)
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+        }else{
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 0)
         }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -379,7 +383,20 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        cardNumber.text = data.accountInformation?.paymentTypeInfo
+                        val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
+                        if (cardType?.uppercase()?.contains(Constants.CURRENT, true)==true) {
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
+                                "CURRENT ending in ",
+                                "****"
+                            ) ?: ""
+                        } else if(cardType?.uppercase()?.contains(Constants.SAVINGS, true)==true){
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
+                                "SAVINGS ending in ",
+                                "****"
+                            ) ?: ""
+                        } else {
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
+                        }
                         cardNumber.setTypeface(null, Typeface.NORMAL)
 
                         DashboardUtils.setAccountStatusNew(
@@ -401,7 +418,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 cardLogo.gone()
             } else {
                 cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(cardType ?: ""))
+                cardLogo.setImageResource(Utils.setCardImage(data.accountInformation?.paymentTypeInfo ?: ""))
             }
         }
         getPaymentHistoryList(startIndex)
@@ -504,13 +521,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     bundle.putString(
                         Constants.CURRENTBALANCE, data.replenishmentInformation?.currentBalance
                     )
-
                 } else {
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
-
                 }
 
+                bundle.putString(Constants.NAV_FLOW_FROM, Constants.DASHBOARD)
                 bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, HomeActivityMain.accountDetailsData?.accountInformation)
 
                 findNavController().navigate(
                     R.id.action_dashBoardFragment_to_accountSuspendedPaymentFragment, bundle
@@ -519,14 +536,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-            val cardType = data.replenishmentInformation?.reBillPayType?.uppercase()
+            val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
             data.let {
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        if (cardType?.uppercase().equals(Constants.CURRENT, true)) {
+                        if (cardType?.uppercase()?.contains(Constants.CURRENT, true)==true) {
                             cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
                                 "CURRENT ending in ",
+                                "****"
+                            ) ?: ""
+                        } else if(cardType?.uppercase()?.contains(Constants.SAVINGS, true)==true){
+                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
+                                "SAVINGS ending in ",
                                 "****"
                             ) ?: ""
                         } else {
@@ -557,7 +579,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             } else {
                 viewCard.visible()
                 cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(cardType ?: ""))
+                cardLogo.setImageResource(Utils.setCardImage(data.accountInformation?.paymentTypeInfo ?: ""))
             }
             getPaymentHistoryList(startIndex)
         }
@@ -576,8 +598,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             ""
         )
         val request = AccountPaymentHistoryRequest(
-            index, Constants.ALL_TRANSACTION, countPerPage, DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
-            DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
+            index, Constants.ALL_TRANSACTION, countPerPage,
+            endDate= DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
+            startDate= DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }
@@ -602,6 +625,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun logOutOfAccount() {
 //        sessionManager.clearAll()
+        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
+        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD,true)
         Intent(requireActivity(), LandingActivity::class.java).apply {
             putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

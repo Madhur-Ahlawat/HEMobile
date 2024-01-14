@@ -432,6 +432,8 @@
 
     <string name="str_remove_vehicle">Remove vehicle</string>
     <string name="str_select_vehicle_to_remove">Select vehicles you want to remove</string>
+    <string name="enablenow_lower_case">Enable Now</string>
+    <string name="enablelater_lower_case">Enable Later</string>
 
     <string name="start_again">Start again</string>
     <string name="your_session_has_expired">Your session has expired</string>
@@ -724,7 +726,6 @@
     <string name="how_many_crossing">How many <b>crossings</b> will each vehicle make on average on each month?</string>
     <string name="crossing">crossing</string>
     <string name="crossings">crossings</string>
-
     <string name="top_up_recommendation">Top-up recommendations</string>
     <string name="top_up_calculate">calculate top up</string>
     <string name="top_up_calculate_recommend">We recommend that you have a minimum top-up amount of £10,000 and a minimum balance threshold of £5,000.\nPlease note that you can change these amounts by manually entering the amounts you require.</string>
@@ -852,6 +853,7 @@
     <string name="failed_problem_with_service">Problem with the service</string>
     <string name="str_country"><b>Country</b></string>
     <string name="failed_retry_title">Sorry, there is a problem with the service.</string>
+    <string name="str_sorry_service_unavailable">Sorry, the service is unavailable</string>
     <string name="failed_retry_desc">Your requested action may not have completed successfully.</string>
     <string name="failed_retry_desc2">If you need help with your account or want to make a payment, you can call us on :</string>
     <string name="failed_retry_desc3">0300 300 0120 (from abroad +44 300 300 0120)</string>
@@ -1072,11 +1074,11 @@
     <string name="str_model_error_message">Vehicle model must only include letters a to z, numbers 0 to 9, and special characters such as hyphens</string>
     <string name="str_colour_error_message">Vehicle colour must only include letters a to z, and the special character forward slash</string>
     <string name="str_vehicle_exempt_message">Vehicle %s is not charged\nNo Dart Charge payment is due</string>
-    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and cannot be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
+    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and cannot be added to the account.\n\nContact the Dart Charge contact center for help.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from\nDart Charge payment.</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
     <string name="str_no_ruc_desc_pay_for_crossing">Motorcycles, mopeds and quad bikes do not need to pay for a crossing.</string>
-    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="str_vehicle_already_exist">Vehicle %s already exists in the system and cannot be added to the account.</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
     <string name="you_have_already_added_this_vehicle_to_this_account">You have already added this vehicle to this account.</string>
@@ -1173,7 +1175,6 @@
     <string name="str_name_on_card">Name on card</string>
     <string name="str_card_number">Card Number</string>
     <string name="str_accept_card_types">Accepted credit and debit card types</string>
-    <string name="str_expiry_date">Expiry Date</string>
     <string name="card_security_code">Card Security Code</string>
     <string name="last_three_digit">Last 3 or 4 digits on back of card</string>
     <string name="proceed_with_payment">PROCEED WITH PAYMENT</string>
@@ -1429,7 +1430,7 @@
     <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\n\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
     <string name="str_payment_successfully">Payment Successful</string>
     <string name="str_amount_paid">Amount Paid</string>
-    <string name="str_time_date">Time and  Date</string>
+    <string name="str_time_date">Time and Date</string>
 
 
     <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>
@@ -1438,10 +1439,11 @@
     <string name="we_can_send_you_a_receipt_by_email_and_text_message">We can send you a receipt by email and text message.</string>
     <string name="email_optional">Email (optional)</string>
     <string name="text_message_optional">Text message (optional)</string>
-    <string name="text_we_have_sent_a_reciept_email_to">We\'ve sent a receipt email to\n<b>%s</b></string>
+    <string name="text_we_have_sent_a_reciept_email_to_text">We\'ve sent a receipt email to</string>
+
     <string name="credit_for_additional_crossings">Credit for Future Crossings</string>
     <string name="your_type_of_vehicle_does_not_match_what_we_have_on_record">Your type of vehicle does not match what we have on record.</string>
-    <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
+    <string name="our_records_show_the_numberplate"><![CDATA[Our records show that %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
                     \n\nIf you pay the wrong Dart Charge for your type of vehicle, you could receive a Penalty Charge Notice.]]></string>
     <string name="pay_new_amount">PAY NEW AMOUNT</string>
     <string name="str_continue_with_selection">Continue with your selection</string>
@@ -1516,9 +1518,9 @@
     <string name="previous_crossings_paid_for">Previous crossings paid for</string>
     <string name="credit_will_expire_on">Credit will expire on</string>
     <string name="error_check_paid_crossings">Your crossing data could not be retrieved. Check if your entries are correct or try again later.</string>
-    <string name="vehcile_type_mismatch"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm]]></string>
+    <string name="vehcile_type_mismatch"><![CDATA[Our records show that %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm]]></string>
     <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from\nDart Charge payment</string>
-    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTelephone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
     <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
     <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
     <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
@@ -1553,7 +1555,7 @@
     <string name="str_contact_every_day">Every day: 8am to 8pm</string>
     <string name="str_contact_telephone">Telephone: 0300 300 0120</string>
     <string name="str_contact_textphone">Textphone: 18001 0300 300 0120</string>
-    <string name="str_able_to_use_service">You will be able to use the service from\n%1$s</string>
+    <string name="str_able_to_use_service">You will be able to use the service from\n%1$s.</string>
     <string name="str_go_to_website">Go to website</string>
     <string name="str_maskcardnumber">\u2022\u2022\u2022\u2022\u2022\u2022%1$s</string>
     <string name="str_starmaskcardnumber">****%1$s</string>
@@ -1573,9 +1575,8 @@
     <string name="one_off__payment">One off\npayment</string>
     <string name="b_more_details"><b>More details</b>\nFor more details on Types of Vehicles and charge amounts visit <a href="https://www.gov.uk/pay-dartford-crossing-charge/charges-fines">understanding charges, discounts and penalties</a>.</string>
     <string name="b_if_you_re_disabled"><b>If you’re disabled</b>\nYou do not need to pay the charge if you get free UK vehicle tax because of a disability.\n\nYour vehicle will be checked automatically when you cross - you do not need to do anything.\n\nFind out how to <a href="https://www.gov.uk/get-vehicle-tax-exemption-disability">get free vehicle tax if you’re a driver with a disability</a>.</string>
-    <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council</a>.\n\nYou can either\n\n<ul><li>pay £20 a year to use the Dartford Crossing as many times as you want</li>\n<li>pay £10 for 50 crossings, plus 20p for each additional crossing</li></ul>\n\nApply for a local resident discount online or by post.</string>
-
-    <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a> or call the Dart Charge contact centre.</string>
+    <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you live in the council boundaries of Dartford or Thurrock. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council</a>.\n\nYou can pay an annual fee of either:\n\n<ul><li>£20 a year to use the Dartford Crossing as many times as you want</li>\n<li>£10 a year for 50 crossings</li></ul>\n\nIf you’re on the £10 plan and you run out of crossings you can either pay:\n\n<ul><li>£5 for 25 additional crossings</li>\n<li>£10 to upgrade to the £20 plan and get unlimited crossings</li></ul>\n\nThe total amount you pay in a year will not be more than £20.\n\nIf you do not pay the annual fee, the local resident discount will be removed from your account. You’ll have to pay the one-off charge. You’ll need to reapply for the discount.</string>
+    <string name="fines_you_can_get"><b>Fines (Penalty Charge Notices)</b>\nYou can get a £70 fine if you do not pay the Dart Charge.\n\nYou must pay the fine within 28 days of receiving a Penalty Charge Notice (PCN).\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n<li>increased to £105 if you do not pay it</li></ul>\n\nThis is in addition to paying the original crossing charge.\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a> or call the Dart Charge contact centre.</string>
     <string name="contact_dart_charge">Contact Dart Charge</string>
     <string name="do_you_have_dart_charge_account">Do you have Dart Charge Account?</string>
     <string name="sub_category">Sub-category</string>
@@ -1649,7 +1650,6 @@
     <string name="return_to_landingpage">Return to landing page</string>
     <string name="enter_a_top_up_amount">Enter a top-up amount</string>
     <string name="southbound">Southbound</string>
-    <string name="number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hypens_and_spaces">Number plate must only include letters a to z, numbers 0 to 9 and special characters such as hypens and spaces</string>
     <string name="payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9">Payment reference number must only include letters a to z and numbers 0 to 9</string>
     <string name="credit_transferred">Credit Transferred</string>
     <string name="str_crossing_data">%1$s crossing</string>
@@ -1661,6 +1661,7 @@
 
 
     <string name="str_disable_notifications">Click here to disable notifications when you cross</string>
+    <string name="str_profile_biometrics">Profile Biometrics</string>
     <string name="str_enable_notifications">Click here to enable notifications when you cross</string>
 
     <string name="str_max_payment_methods">Max Payment Methods</string>
@@ -1674,6 +1675,7 @@
     <string name="unfortunately_at_this_time_we_do_not_support_your_mobile_number">Unfortunately at this time we do not support your mobile number\'s country code.  If you do not have an alternative mobile number, please go back and change your selection to not receive communications by text message, and not opting in to two-step verification.</string>
     <string name="biometric_changed_successfully">Biometrics change successful</string>
     <string name="change_country_code">Change Country Code</string>
+    <string name="str_service_is_unavailable">Service is unavailable</string>
     <string name="sms_not_support_text">%s country is not supporting for sms.You can not enable 2fa</string>
 
 </resources>

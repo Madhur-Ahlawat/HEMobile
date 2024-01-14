@@ -24,12 +24,16 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
+import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils.convertDateForTransferCrossingsScreen
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.openActivityWithData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 @AndroidEntryPoint
 class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<FragmentConfirmNewVehicleDetailsCheckPaidCrossingsFragmentBinding>(),
     VehicleListAdapter.VehicleListCallBack,
@@ -40,6 +44,8 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
     private var additionalCrossingsCharge: Double? = 0.0
     private val checkPaidCrossingViewModel: CheckPaidCrossingViewModel by viewModels()
     private var data: CrossingDetailsModelsResponse? = null
+    @Inject
+    lateinit var sm:SessionManager
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -71,11 +77,11 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
 
             if (data?.unusedTrip?.toInt()==1){
                 creditRemaining.text =
-                    data?.unusedTrip+getString(R.string.crossing)
+                    data?.unusedTrip?.trim()+" "+getString(R.string.crossing)
 
             }else{
                 creditRemaining.text =
-                    data?.unusedTrip+getString(R.string.crossings)
+                    data?.unusedTrip?.trim()+" "+getString(R.string.crossings)
             }
 
             creditAdditionalCrossings.text = convertDateForTransferCrossingsScreen(data?.expirationDate)
@@ -124,11 +130,17 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                     )
                 }
                 is Resource.DataError -> {
-                    if(status.errorModel?.status==500){
-                        val bundle = Bundle()
-                        bundle.putParcelable(NAV_DATA_KEY,data)
-                        requireActivity().openActivityWithData(MakeOffPaymentActivity::class.java,bundle)
-                        requireActivity().finish()
+                    if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
+                            Constants.INVALID_TOKEN
+                        )) || (status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR && status.errorModel.error.equals(
+                            Constants.SERVER_ERROR
+                        ))
+                    ) {
+                        Log.e("TAG", "balanceTransfer: 11", )
+                        displaySessionExpireDialog(status.errorModel)
+                    } else {
+                        Log.e("TAG", "balanceTransfer: 2211", )
+                        ErrorUtil.showError(binding.root, status.errorModel?.message)
                     }
                 }
                 else -> {
@@ -136,7 +148,6 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
             }
             isClicked = false
         }
-
     }
 
     override fun onClick(v: View?) {
@@ -163,7 +174,12 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                 else{
                     loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
                     isClicked = true
-                    checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = data?.accountNo, plateCountry = data?.plateCountry, plateNumber = data?.plateNumberToTransfer, transferInfo = TransferInfo(tripCount = data?.unusedTrip, plateNumber = data?.plateNo?.uppercase(),plateState = "HE", plateCountry = data?.plateCountry, vehicleClass = data?.vehicleClassBalanceTransfer, vehicleMake = data?.vehicleMake, vehicleModel = data?.vehicleModel, vehicleYear = "2023")))
+                    checkPaidCrossingViewModel.balanceTransfer(BalanceTransferRequest(accountNumber = data?.accountNo,
+                        plateCountry = data?.plateCountryToTransfer,
+                        plateNumber = data?.plateNumberToTransfer,
+                        transferInfo = TransferInfo(tripCount = data?.unusedTrip, plateNumber = data?.plateNo?.uppercase()
+                            ,plateState = "HE", plateCountry = data?.plateCountry, vehicleClass = data?.vehicleClassBalanceTransfer
+                            , vehicleMake = data?.vehicleMake, vehicleModel = data?.vehicleModel, vehicleYear = "2023")))
                 }
 
             }

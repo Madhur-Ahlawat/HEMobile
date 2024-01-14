@@ -14,6 +14,12 @@ body {
 .larger-label {
     font-size: 16px;
 }
+a:link {
+  color: blue;
+  background-color: transparent;
+      font-size: 14px;
+  text-decoration: none;
+}
 
 b {
     font-family: 'file:///android_assets/OpenSans-Bold';

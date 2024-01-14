@@ -105,7 +105,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
         } else {
             if (!Regex(plateNumberREgex).matches(binding.editNumberPlate.getText().toString())) {
                 isPlateNumberValid=false
-                binding.editNumberPlate.setErrorText(getString(R.string.number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hypens_and_spaces))
+                binding.editNumberPlate.setErrorText(getString(R.string.str_vehicle_registration))
             }
             else{
                 binding.editNumberPlate.removeError()
@@ -172,6 +172,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                             accountTypeCd = dataObj?.get(0)?.accountStatusCd?:""
                             expirationDate = dataObj?.get(0)?.expirationDate?:""
                             plateCountry = dataObj?.get(0)?.plateCountry
+                            plateCountryToTransfer = dataObj?.get(0)?.plateCountry
                             plateNumberToTransfer = dataObj?.get(0)?.plateNo?:""
                             unusedTrip = dataObj?.get(0)?.unusedTrip?:""
                             vehicleClassBalanceTransfer = dataObj?.get(0)?.vehicleClass

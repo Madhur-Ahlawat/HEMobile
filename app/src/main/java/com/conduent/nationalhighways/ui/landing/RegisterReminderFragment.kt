@@ -48,7 +48,6 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
     override fun init() {
         showToolBar(true)
         setToolBarTitle(resources.getString(R.string.str_register_to_receive_notifications))
-        GeofenceUtils.startGeofence(this.requireContext())
     }
 
     override fun onResume() {
@@ -67,7 +66,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         }else{
             binding.switchGeoLocation.isChecked =
                 sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
-
+            GeofenceUtils.startGeofence(this.requireContext())
         }
 
 
@@ -138,8 +137,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         }
 
         if (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)) {
+            GeofenceUtils.startGeofence(this.requireContext())
             requestBackgroundLocationPermission()
-
         }
     }
 
@@ -191,6 +190,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
         binding.okBtn.setOnClickListener {
             openAppSettings()
+            dialog.dismiss()
         }
         dialog.show()
 

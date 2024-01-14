@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.vehicle.newVehicleManagement
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class AddVehicleResultFragment : BaseFragment<VehicleSuccessFragmentBinding>(),
 
 
     private fun invalidateList() {
+        binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
         val accountData = NewCreateAccountRequestModel
         vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
         val tempSuccessList: ArrayList<NewVehicleInfoDetails> = arrayListOf()
@@ -77,6 +79,7 @@ class AddVehicleResultFragment : BaseFragment<VehicleSuccessFragmentBinding>(),
                     getString(R.string.vehicles_added_to_your_account)
             } else {
                 binding.vehicleAddedNote.text = getString(R.string.vehicle_added)
+
             }
         }
         if (tempFailedList.isEmpty()) {
