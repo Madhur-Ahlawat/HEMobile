@@ -562,15 +562,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.postCode = NewCreateAccountRequestModel.zipCode.replace(" ", "")
         model.addressLine2 = "Small Heath"
 
-        if (NewCreateAccountRequestModel.twoStepVerification) {
 
-            model.mfaFlag = "Y"
-
-
-        } else {
-            model.mfaFlag = "N"
-
-        }
         model.smsSecurityCd = data.smsSecurityCode      // sms security code
         model.cardMiddleName = ""
         model.cardZipCode = data.zipCode.replace(" ", "")
@@ -584,6 +576,23 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.cellPhone = data.mobileNumber
             model.cellPhoneCountryCode = data.countryCode?.let { getRequiredText(it) }
             model.smsReferenceId = data.sms_referenceId
+
+            NewCreateAccountRequestModel.isCountryNotSupportForSms = Utils.smsSupportCountryList().map {
+                it.trim()
+                    .replace(" ", "")
+                    .replace("-", "").lowercase()
+            }.contains(model.cellPhoneCountryCode.toString().trim()
+                .replace(" ", "").replace("-", "").lowercase()
+            )
+
+            if(!NewCreateAccountRequestModel.prePay){
+                if(!NewCreateAccountRequestModel.notSupportedCountrySaveDetails){
+                    model.cellPhone = ""
+                    model.cellPhoneCountryCode = ""
+                    model.smsReferenceId = ""
+
+                }
+            }
         } else {
             model.eveningPhone = data.telephoneNumber
             model.eveningPhoneCountryCode = data.telephone_countryCode?.let { getRequiredText(it) }
@@ -634,8 +643,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.cardFirstName = data.firstName   // model name
         model.cardCity = data.townCity   // address city
         model.threeDsVer = threeDsVersion  // 3ds verison
-        model.maskedNumber =
-            maskedCardNumber// card masked number only we need to send last four digit
+        model.maskedNumber = maskedCardNumber// card masked number only we need to send last four digit
         model.creditCardNumber = cardToken// card number should be token number
         model.cavv = cavv // 3ds cavv
         model.password = data.password  //model password
@@ -656,20 +664,19 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.eci = eci // 3ds eci
         model.replenishmentAmount = String.format("%.2f", topUpAmount.toDouble()) // top up amount
         model.directoryServerID = directoryServerId // 3ds serverId
-        if (NewCreateAccountRequestModel.communicationTextMessage) {
+        if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
             if (!NewCreateAccountRequestModel.isCountryNotSupportForSms){
                 model.smsOption = "N"
-
+                model.mfaFlag = "N"
             }else{
                 model.smsOption = "Y"
-
+                model.mfaFlag = "Y"
             }
-
-
         } else {
             model.smsOption = "N"
-
+            model.mfaFlag = "N"
         }
+
         val listVehicle: ArrayList<VehicleItem> = ArrayList()
 
         for (obj in data.vehicleList) {

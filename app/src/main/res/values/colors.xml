@@ -134,5 +134,6 @@
     <color name="doItLaterColour">#AC352F</color>
     <color name="red_status">#CA2A1F</color>
     <color name="grey_cccccc">#CCCCCC</color>
+    <color name="red_error_color">#DC0814</color>
 
 </resources>

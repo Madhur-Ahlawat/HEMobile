@@ -1677,5 +1677,11 @@
     <string name="change_country_code">Change Country Code</string>
     <string name="str_service_is_unavailable">Service is unavailable</string>
     <string name="sms_not_support_text">%s country is not supporting for sms.You can not enable 2fa</string>
+    <string name="str_send_security_code_by_text_message">We’ll use this to send you a security code by text message.</string>
+    <string name="str_phone_number_starts_countrycode">Your phone number starts with the country code %1$s. At this time you will be unable to use the following services.</string>
+    <string name="str_receving_communications">Receiving communications about your account by text message</string>
+    <string name="str_two_step_verification">Two-step verification</string>
+    <string name="str_may_change_mobile_number">You may change your mobile phone number or continue with your account creation</string>
+    <string name="str_save_mobile_number">Save this mobile number to my account contact details</string>
 
 </resources>

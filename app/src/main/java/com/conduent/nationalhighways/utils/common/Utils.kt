@@ -159,7 +159,7 @@ object Utils {
         supportCountryList.add("Spain -  (+34)")
         supportCountryList.add("Sweden -  (+46)")
         supportCountryList.add("Switzerland -  (+41)")
-        supportCountryList.add("Ukraine -  (+380)")
+//        supportCountryList.add("Ukraine -  (+380)")
         supportCountryList.add("United Kingdom -  (+44)")
 
         return supportCountryList

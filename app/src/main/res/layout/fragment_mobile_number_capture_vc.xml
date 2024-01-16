@@ -1,89 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/margin_20dp"
-        android:paddingTop="@dimen/margin_18dp"
-        android:paddingEnd="@dimen/margin_20dp">
+        android:scrollbars="none">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/margin_20dp"
+            android:paddingTop="@dimen/margin_18dp"
+            android:paddingEnd="@dimen/margin_20dp">
 
-        <TextView
-            android:id="@+id/txtTitleTop"
-            style="@style/MediumText"
-            android:layout_width="0dp"
-            android:text="What is your mobile number?"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/inputCountry_helper"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_3dp"
-            android:layout_marginTop="@dimen/_20dp"
-            android:text="@string/country_code"
-            android:textColor="@color/label_color"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/inputCountry"
-            app:layout_constraintTop_toBottomOf="@id/txtTitleTop" />
-        <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
-            android:id="@+id/inputCountry"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/country_code"
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_16sp"
-            app:inputType="number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputCountry_helper" />
+            <TextView
+                android:id="@+id/txtTitleTop"
+                style="@style/MediumText"
+                android:layout_width="0dp"
+                android:text="What is your mobile number?"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-            android:id="@+id/inputMobileNumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_26dp"
-            android:maxLength="15"
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_16sp"
-            app:imeOptions="actionNext"
-            app:inputType="phone"
-            app:labelText="@string/mobile_number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputCountry"
-            app:maxLength="15" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/inputCountry_helper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_3dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:text="@string/country_code"
+                android:textColor="@color/label_color"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/inputCountry"
+                app:layout_constraintTop_toBottomOf="@id/txtTitleTop" />
 
-        <TextView
-            android:id="@+id/txtBottom"
-            style="@style/RegularTextBlack"
-            android:layout_width="0dp"
-            android:layout_marginTop="@dimen/margin_18dp"
-            android:text="We’ll use this to send you a security code by text message."
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputMobileNumber" />
+            <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
+                android:id="@+id/inputCountry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/country_code"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_16sp"
+                app:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputCountry_helper" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHButton
-            android:id="@+id/btnNext"
-            style="@style/PrimaryButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_30dp"
-            android:enabled="false"
-            android:text="@string/str_continue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtBottom"
-            app:radius="@dimen/margin_5dp" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                android:id="@+id/inputMobileNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_26dp"
+                android:maxLength="15"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_16sp"
+                app:imeOptions="actionNext"
+                app:inputType="phone"
+                app:labelText="@string/mobile_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputCountry"
+                app:maxLength="15" />
+
+            <TextView
+                android:id="@+id/txtBottom"
+                style="@style/RegularTextBlack"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/margin_18dp"
+                android:text="@string/str_send_security_code_by_text_message"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputMobileNumber" />
+
+            <LinearLayout
+                android:id="@+id/incompatible_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtBottom">
+
+                <TextView
+                    android:id="@+id/incompatible_tv"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/margin_18dp"
+                    android:text="@string/str_phone_number_starts_countrycode"
+                    android:textColor="@color/red_error_color"
+                    android:textSize="@dimen/font_16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/incompatible_point1_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:src="@drawable/circle_red_5dp" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        style="@style/RegularTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:text="@string/str_receving_communications"
+                        android:textColor="@color/red_error_color"
+                        android:textSize="@dimen/font_16sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/incompatible_point2_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:src="@drawable/circle_red_5dp" />
+
+
+                    <TextView
+                        style="@style/RegularTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:text="@string/str_two_step_verification"
+                        android:textColor="@color/red_error_color"
+                        android:textSize="@dimen/font_16sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/incompatible_point3_tv"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginTop="@dimen/margin_18dp"
+                    android:text="@string/str_may_change_mobile_number"
+                    android:textColor="@color/red_error_color"
+                    android:textSize="@dimen/font_16sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/payasugo_cb"
+                    style="@style/CheckBoxStyle"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="top"
+                    android:text="@string/str_save_mobile_number" />
+
+
+            </LinearLayout>
+
+
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/btnNext"
+                style="@style/PrimaryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:enabled="false"
+                android:text="@string/str_continue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/incompatible_ll"
+                app:radius="@dimen/margin_5dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

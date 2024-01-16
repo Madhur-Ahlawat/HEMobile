@@ -46,6 +46,7 @@ object NewCreateAccountRequestModel{
     var sms_referenceId: String? = ""
     var oneOffVehiclePlateNumber:String=""
     var isCountryNotSupportForSms=false
+    var notSupportedCountrySaveDetails=true
 
 
 }

@@ -227,6 +227,8 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     }
                 }
 
+                checkSupportedCountry(binding.inputCountry.selectedItemDescription)
+
                 requiredCountryCode =
                     fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
@@ -450,13 +452,30 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     NewCreateAccountRequestModel.emailAddress = ""
                 }
                 if (binding.selectTextMessage.isChecked) {
-                    (navData as CrossingDetailsModelsResponse).recieptMode =
-                        binding.inputMobileNumber.getText().toString().trim()
-                    NewCreateAccountRequestModel.mobileNumber =
-                        binding.inputMobileNumber.editText.text.toString().trim()
+
+                    val smsSupportCountryList = Utils.smsSupportCountryList().map {
+                        it.trim()
+                            .replace(" ", "")
+                            .replace("-", "").lowercase()
+                    }
+                    val isSupportedCountry = smsSupportCountryList.contains(
+                        binding.inputCountry.selectedItemDescription
+                            .replace(" ", "").replace("-", "").lowercase()
+                    )
+
+                    if(isSupportedCountry){
+                        (navData as CrossingDetailsModelsResponse).recieptMode =
+                            binding.inputMobileNumber.getText().toString().trim()
+                        NewCreateAccountRequestModel.mobileNumber =
+                            binding.inputMobileNumber.editText.text.toString().trim()
+                    }else{
+                        (navData as CrossingDetailsModelsResponse).recieptMode = ""
+                        NewCreateAccountRequestModel.mobileNumber = ""
+                    }
+
+
                 } else {
-                    NewCreateAccountRequestModel.mobileNumber =
-                        ""
+                    NewCreateAccountRequestModel.mobileNumber = ""
                 }
                 bundle.putParcelable(
                     Constants.NAV_DATA_KEY,
@@ -473,19 +492,8 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                         bundle
                     )
                 } else {
-                    var res=0
-                    for (i in 0 until Utils.smsSupportCountryList().size){
-                        for (j in 0 until  fullCountryNameWithCode.size){
-                            res = if (Utils.smsSupportCountryList()[i].trim() != fullCountryNameWithCode[j].trim()){
-                                R.id.action_crossingRecieptFragment_to_smsNotSupportFragment
-                            }else{
-                                R.id.action_crossingRecieptFragment_to_crossingCheckAnswersFragment
-                            }
-
-                        }
-                    }
                     findNavController().navigate(
-                        res,
+                        R.id.action_crossingRecieptFragment_to_crossingCheckAnswersFragment,
                         bundle
                     )
                 }
@@ -720,8 +728,33 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         }else{
             binding.inputCountryHelper.invisible()
         }
+        checkSupportedCountry(item)
         checkButton()
     }
+
+    private fun checkSupportedCountry(item:String) {
+        if(requiredCountryCode){
+            binding.incompatibleTv.text =
+                resources.getString(R.string.str_phone_number_starts_countrycode, item)
+
+            val smsSupportCountryList = Utils.smsSupportCountryList().map {
+                it.trim()
+                    .replace(" ", "")
+                    .replace("-", "").lowercase()
+            }
+            val isSupportedCountry = smsSupportCountryList.contains(
+                item.trim()
+                    .replace(" ", "").replace("-", "").lowercase()
+            )
+            if(isSupportedCountry){
+                binding.incompatibleLl.gone()
+            }else{
+                binding.incompatibleLl.visible()
+            }
+        }
+
+    }
+
     private val countryCodesList: MutableList<String> = mutableListOf()
 
     private fun seperateCountryCodeListFromNameList(fullCountryNameWithCode: MutableList<String>) {

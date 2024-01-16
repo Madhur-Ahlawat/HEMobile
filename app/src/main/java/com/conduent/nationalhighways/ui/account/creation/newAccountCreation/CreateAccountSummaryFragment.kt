@@ -101,7 +101,11 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                     dataModel!!.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel!!.telephoneNumber
             }
         }
-
+        if(NewCreateAccountRequestModel.notSupportedCountrySaveDetails){
+            binding.phoneCard.visible()
+        }else{
+            binding.phoneCard.gone()
+        }
 
         if (dataModel?.personalAccount?:false) {
             binding.accountSubType.visible()
