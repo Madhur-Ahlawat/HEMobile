@@ -54,6 +54,8 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.crashlytics.internal.Logger.TAG
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
+import io.michaelrocks.libphonenumber.android.Phonenumber.PhoneNumber
 
 
 @AndroidEntryPoint
@@ -188,12 +190,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     var matchedCountry:String?=null
                     var matchedCountryCode:String?=null
                     retrievedPhoneNumber = Identity.getSignInClient(requireActivity()).getPhoneNumberFromIntent(result.data).replace(" ","").replace("-","")
+                    var phoneNumberUtil=PhoneNumberUtil.createInstance(requireContext())
+                    val phoneNumberParsed: PhoneNumber = phoneNumberUtil.parse(retrievedPhoneNumber, "")
+                    var phoneNumberString = phoneNumberUtil.format(phoneNumberParsed, PhoneNumberUtil.PhoneNumberFormat.E164)
+                    val phoneNumberParsedFinal: PhoneNumber = phoneNumberUtil.parse(phoneNumberString, "")
+                    val mCountryCode = phoneNumberParsed.countryCode.toString()
+                    val phoneNumberStringFinal = phoneNumberParsed.nationalNumber
                     countryCodesList.forEachIndexed { index, s ->
-                        if(retrievedPhoneNumber.toString().contains(s)){
+                        if(phoneNumberString.contains(s)){
                             fullCountryNameWithCode.forEachIndexed { index, s2 ->
                                 if(s2.contains(s)){
-                                    matchedCountry=s2
-                                    matchedCountryCode=s
+                                    matchedCountry = s2
+                                    matchedCountryCode = mCountryCode
                                 }
                             }
                         }
@@ -211,10 +219,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
                     if(matchedCountry.isNullOrEmpty()){
                         binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                        binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
                         binding.inputMobileNumber.setErrorText(getString(R.string.unfortunately_at_this_time_we_do_not_support_your_mobile_number))
                     }
                     else{
-                        binding.inputMobileNumber.setText(retrievedPhoneNumber.toString().replace(matchedCountryCode!!,""))
+                        binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
                         binding.inputCountry.setSelectedValue(
                             matchedCountry?:Constants.UNITED_KINGDOM
                         )
