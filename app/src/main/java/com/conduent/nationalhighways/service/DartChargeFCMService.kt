@@ -77,7 +77,7 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
         val channelId = getString(R.string.default_notification_channel_id)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.notification_test)
+            .setSmallIcon(R.mipmap.ic_launcher_squircle)
             .setContentTitle(getString(R.string.fcm_message))
             .setContentText(messageBody)
             .setAutoCancel(true)
