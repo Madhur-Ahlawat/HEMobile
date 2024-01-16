@@ -53,6 +53,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private val toggleDelay: Long = 200
+
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null

@@ -54,7 +54,7 @@ android {
     signingConfigs {
         conduentdev {
 
-            storeFile file("C:\\Users\\52409756\\StudioProjects\\HE-MAPP-Android\\app\\keystore.jks")
+            storeFile file("C:\\Users\\Madhur Ahlawat\\StudioProjects\\HE-MAPP-Android\\app\\keystore.jks")
             storePassword "Conduent@123"
             keyAlias "conduent"
             keyPassword "Conduent@123"
@@ -297,4 +297,5 @@ dependencies {
     implementation 'androidx.paging:paging-common-ktx:3.2.1'
     implementation 'androidx.paging:paging-runtime-ktx:3.2.1'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'io.michaelrocks:libphonenumber-android:8.13.28'
 }

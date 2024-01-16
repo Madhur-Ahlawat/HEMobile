@@ -56,6 +56,8 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.crashlytics.internal.Logger.TAG
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
+import io.michaelrocks.libphonenumber.android.Phonenumber.PhoneNumber
 
 @AndroidEntryPoint
 class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBinding>(),
@@ -836,9 +838,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 NewCreateAccountRequestModel.sms_referenceId = resource.data?.referenceId
-                Log.e("TAG", "handleEmailVerification: ")
-
-
+                Log.e("TAG", "handleEmailVerification: " )
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
                     bundle

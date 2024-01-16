@@ -1,0 +1,3 @@
+com.google.firebase.messaging.ktx.BuildConfig
+com.google.firebase.messaging.ktx.FirebaseMessagingKtxRegistrar
+com.google.firebase.messaging.ktx.MessagingKt
