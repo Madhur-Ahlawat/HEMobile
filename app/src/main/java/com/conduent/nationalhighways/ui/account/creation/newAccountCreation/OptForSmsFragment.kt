@@ -324,7 +324,20 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                                 if (personalInformationModel?.phoneCell?.isEmpty() == true) {
                                     verifyMobileNumber()
                                 } else {
-                                    updateSmsOption()
+                                    val smsSupportCountryList = Utils.smsSupportCountryList().map {
+                                        it.trim()
+                                            .replace(" ", "")
+                                            .replace("-", "").lowercase()
+                                    }
+                                    val isSupportedCountry = smsSupportCountryList.contains(
+                                        personalInformationModel?.phoneCellCountryCode.toString().trim()
+                                            .replace(" ", "").replace("-", "").lowercase()
+                                    )
+                                    if(isSupportedCountry){
+                                        updateSmsOption()
+                                    }else{
+                                        verifyMobileNumber()
+                                    }
                                 }
                             }
                         }

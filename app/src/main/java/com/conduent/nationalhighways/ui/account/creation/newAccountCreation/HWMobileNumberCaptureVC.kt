@@ -187,69 +187,106 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         val request: GetPhoneNumberHintIntentRequest =
             GetPhoneNumberHintIntentRequest.builder().build()
         val phoneNumberHintIntentResultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult())
+            { result
+                ->
                 try {
                     var matchedCountry: String? = null
                     var matchedCountryCode: String? = null
-                    retrievedPhoneNumber = Identity.getSignInClient(requireActivity())
-                        .getPhoneNumberFromIntent(result.data).replace(" ", "").replace("-", "")
-                    countryCodesList.forEachIndexed { _, s ->
-                        if (retrievedPhoneNumber.toString().contains(s)) {
-                            fullCountryNameWithCode.forEachIndexed { _, s2 ->
-                                if (s2.contains(s)) {
+                    retrievedPhoneNumber =
+                        Identity.getSignInClient(requireActivity()).getPhoneNumberFromIntent(
+                            result.data
+                        ).replace(" ", "").replace("-", "")
+                    var phoneNumberUtil = PhoneNumberUtil.createInstance(requireContext())
+                    val phoneNumberParsed: PhoneNumber =
+                        phoneNumberUtil.parse(retrievedPhoneNumber, "")
+                    var phoneNumberString = phoneNumberUtil.format(
+                        phoneNumberParsed,
+                        PhoneNumberUtil.PhoneNumberFormat.E164
+                    )
+                    val phoneNumberParsedFinal: PhoneNumber =
+                        phoneNumberUtil.parse(phoneNumberString, "")
+                    val mCountryCode = phoneNumberParsed.countryCode
+                        .toString()
+                    val phoneNumberStringFinal = phoneNumberParsedFinal.nationalNumber
+                    countryCodesList.forEachIndexed { index, s ->
+                        if (mCountryCode.contains
+                                (
+                                s.replace
+                                    (
+                                    "+",
+                                    ""
+                                )
+                            )
+                        ) {
+                            fullCountryNameWithCode.forEachIndexed { index, s2 ->
+                                var cc = "(" + s + ")"
+                                if (s2.contains
+                                        (cc)
+                                ) {
                                     matchedCountry = s2
-                                    matchedCountryCode = s
+                                    matchedCountryCode =
+                                        "+"
+                                    +mCountryCode
                                 }
                             }
                         }
-//                        else{
-//                            if (binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").startsWith("+")) {
-//                                if (binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").length === 13) {
-//                                    val str_getMOBILE: String = binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").substring(3)
-//                                    binding.inputMobileNumber.setText(str_getMOBILE)
-//                                } else if (binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").length === 14) {
-//                                    val str_getMOBILE: String = binding.inputMobileNumber.getText().toString().replace(" ","").replace("-","").substring(4)
-//                                    binding.inputMobileNumber.setText(str_getMOBILE)
-//                                }
-//                            }
-//                        }
                     }
                     if (matchedCountry.isNullOrEmpty()) {
                         binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
-                        checkIncompatibleCountry(binding.inputCountry.selectedItemDescription.toString())
-                        binding.inputMobileNumber.setErrorText(getString(R.string.unfortunately_at_this_time_we_do_not_support_your_mobile_number))
-                    } else {
-                        binding.inputMobileNumber.setText(
-                            retrievedPhoneNumber.toString().replace(matchedCountryCode!!, "")
+                        binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
+                        binding.inputMobileNumber.setErrorText(
+                            getString(
+                                R.string.unfortunately_at_this_time_we_do_not_support_your_mobile_number
+                            )
                         )
+                    } else {
+                        binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
                         binding.inputCountry.setSelectedValue(
                             matchedCountry ?: Constants.UNITED_KINGDOM
                         )
-                        checkIncompatibleCountry(binding.inputCountry.selectedItemDescription.toString())
                     }
 
                     if (binding.inputCountry.selectedItemDescription == Constants.UNITED_KINGDOM) {
                         requiredCountryCode = true
                     }
-
+                    checkIncompatibleCountry(binding.inputCountry.selectedItemDescription)
                 } catch (e: Exception) {
-                    Log.e(TAG, "Phone Number Hint failed")
+                    Log.e(
+                        TAG,
+                        "Phone Number Hint failed"
+                    )
+                }
+                if (NewCreateAccountRequestModel.prePay) {
+                    binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+                } else if (data != null && data?.accountInformation?.accSubType.equals
+                        (Constants.PAYG)
+                        .not()
+                ) {
+                    binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+                } else {
+                    binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
                 }
             }
         Identity.getSignInClient(requireActivity())
-            .getPhoneNumberHintIntent(request)
-            .addOnSuccessListener { result: PendingIntent ->
-                try {
-                    phoneNumberHintIntentResultLauncher.launch(
-                        IntentSenderRequest.Builder(result).build()
-                    )
-                } catch (e: Exception) {
-                    Log.e(TAG, "Launching the PendingIntent failed")
-                }
+            .getPhoneNumberHintIntent(request).addOnSuccessListener{ result: PendingIntent
+            ->
+            try {
+                phoneNumberHintIntentResultLauncher.launch(
+                    IntentSenderRequest.Builder(result).build()
+                )
+            } catch (e: Exception) {
+                Log.e(
+                    TAG,
+                    "Launching the PendingIntent failed"
+                )
             }
-            .addOnFailureListener {
-                Log.e(TAG, "Phone Number Hint failed")
-            }
+        }.addOnFailureListener{
+            Log.e(
+                TAG,
+                "Phone Number Hint failed"
+            )
+        }
     }
 
     private fun setData() {
@@ -838,7 +875,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 NewCreateAccountRequestModel.sms_referenceId = resource.data?.referenceId
-                Log.e("TAG", "handleEmailVerification: " )
+                Log.e("TAG", "handleEmailVerification: ")
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
                     bundle
