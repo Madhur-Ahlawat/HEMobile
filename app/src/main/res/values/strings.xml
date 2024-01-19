@@ -1588,7 +1588,7 @@
     <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="str_other_ways_to_pay_1"><ul>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></ul></string>
-    <string name="str_other_ways_to_pay_2">pay or setup an account</string>
+    <string name="str_other_ways_to_pay_2">pay or set up an account through <a href="https://www.gov.uk/pay-dartford-crossing-charge/">the Dart Charge website</a></string>
     <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge.</string>
     <string name="str_or_you_can">Or you can:</string>
     <string name="about_this_service">About This Service</string>
@@ -1692,4 +1692,7 @@
     <string name="str_provide_payment_card_details">You have to provide your payment card details</string>
     <string name="text_we_have_sent_a_reciept_email_to_text">We\'ve sent a receipt email to</string>
     <string name="str_provide_payment_card_details_desc">Payment could not be taken for your crossing and your account has been suspended.\n\nTo continue using your account you have to provide your payment card details.\n\nIf you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
+    <string name="dartcharge_v1_0">DartCharge v1.0</string>
+    <string name="str_copyright">©2024 Conduent, Inc. All Rights Reserved</string>
+    <string name="str_credential_note">This will be the same as the credentials you use to login on the website</string>
 </resources>

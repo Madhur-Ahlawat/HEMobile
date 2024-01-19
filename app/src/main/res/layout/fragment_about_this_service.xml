@@ -125,7 +125,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_50dp">
+            android:layout_marginTop="@dimen/margin_60dp">
 
             <ImageView
                 android:layout_width="@dimen/_54dp"
@@ -150,12 +150,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_38dp"
+            android:layout_marginTop="@dimen/_55dp"
             android:fontFamily="@font/open_sans_semibold"
             android:gravity="left"
             android:text="@string/learn_more_about_dartford_crossing_amp_dart_charge"
             android:textColor="@color/blue_color"
             android:textColorLink="@color/blue_color"
+            android:textSize="@dimen/font_14sp" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/txt_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_60dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="left"
+            android:text="@string/dartcharge_v1_0"
+            android:textColor="@color/gray_707070"
+            android:textSize="@dimen/font_14sp" />
+
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
+            android:id="@+id/txt_copyright"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_18dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="left"
+            android:text="@string/str_copyright"
+            android:textColor="@color/gray_707070"
             android:textSize="@dimen/font_14sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
