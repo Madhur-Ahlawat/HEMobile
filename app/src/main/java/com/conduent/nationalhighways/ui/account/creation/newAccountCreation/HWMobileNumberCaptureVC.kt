@@ -13,10 +13,12 @@ import android.widget.TextView
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
@@ -31,6 +33,7 @@ import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmai
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
@@ -40,8 +43,10 @@ import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_MOBILE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
+import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
+import com.conduent.nationalhighways.utils.common.Constants.UNITED_KINGDOM
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
@@ -63,7 +68,10 @@ import io.michaelrocks.libphonenumber.android.Phonenumber.PhoneNumber
 class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBinding>(),
     View.OnClickListener, OnRetryClickListener,
     NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
-
+    val dashboardViewmodel: DashboardViewModel by activityViewModels()
+    var personalInformationModel: com.conduent.nationalhighways.data.model.account.PersonalInformation? =
+        null
+    var accountInformationModel: AccountInformation? = null
     private val countryCodesList: MutableList<String> = mutableListOf()
     private var retrievedPhoneNumber: String? = null
     private var requiredCountryCode = false
@@ -109,6 +117,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         binding.btnNext.setOnClickListener(this)
         when (navFlowCall) {
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY, EDIT_MOBILE -> {
+                binding.incompatiblePoint3Tv.text =
+                    resources.getString(R.string.str_may_change_mobile_number)
                 if (!isViewCreated) {
                     oldMobileNumber = NewCreateAccountRequestModel.mobileNumber ?: ""
                     oldMobileCountryCode = NewCreateAccountRequestModel.countryCode ?: ""
@@ -139,35 +149,48 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         )
                     }
                 }
-                checkIncompatibleCountry(binding.inputCountry.selectedItemDescription.toString())
+                checkIncompatibleCountry(binding.inputCountry.selectedItemDescription.toString(), 1)
 
                 requiredCountryCode = binding.inputCountry.text?.isNotEmpty() == true
                 checkButton()
             }
 
             PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                binding.incompatiblePoint3Tv.text =
+                    resources.getString(R.string.str_may_change_mobile_number_two_step)
+                personalInformationModel = dashboardViewmodel.personalInformationData.value
+                accountInformationModel = dashboardViewmodel.accountInformationData.value
                 if (requireActivity() !is CreateAccountActivity) {
                     title?.text = getString(R.string.communication_preferences)
                 }
                 setMobileView()
+                setMobileData()
             }
 
-            Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
+            PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                binding.incompatiblePoint3Tv.text =
+                    resources.getString(R.string.str_may_change_mobile_number_two_step)
+                personalInformationModel = dashboardViewmodel.personalInformationData.value
+                accountInformationModel = dashboardViewmodel.accountInformationData.value
                 if (requireActivity() !is CreateAccountActivity) {
                     title?.text = getString(R.string.str_profile_two_factor_verification)
                 }
+                setMobileData()
+
             }
 
             PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+                binding.incompatiblePoint3Tv.text =
+                    resources.getString(R.string.str_may_change_mobile_number_two_step)
+
+                personalInformationModel = dashboardViewmodel.personalInformationData.value
+                accountInformationModel = dashboardViewmodel.accountInformationData.value
                 data = navData as ProfileDetailModel?
 
                 if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
-
                     setTelephoneView()
                 } else {
-
                     setMobileView()
-
                 }
                 setData()
             }
@@ -225,15 +248,13 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                                         (cc)
                                 ) {
                                     matchedCountry = s2
-                                    matchedCountryCode =
-                                        "+"
-                                    +mCountryCode
+                                    matchedCountryCode = "+" + mCountryCode
                                 }
                             }
                         }
                     }
                     if (matchedCountry.isNullOrEmpty()) {
-                        binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                        binding.inputCountry.setSelectedValue(UNITED_KINGDOM)
                         binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
                         binding.inputMobileNumber.setErrorText(
                             getString(
@@ -243,14 +264,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     } else {
                         binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
                         binding.inputCountry.setSelectedValue(
-                            matchedCountry ?: Constants.UNITED_KINGDOM
+                            matchedCountry ?: UNITED_KINGDOM
                         )
                     }
 
-                    if (binding.inputCountry.selectedItemDescription == Constants.UNITED_KINGDOM) {
+                    if (binding.inputCountry.selectedItemDescription == UNITED_KINGDOM) {
                         requiredCountryCode = true
                     }
-                    checkIncompatibleCountry(binding.inputCountry.selectedItemDescription)
+                    checkIncompatibleCountry(binding.inputCountry.selectedItemDescription, 2)
                 } catch (e: Exception) {
                     Log.e(
                         TAG,
@@ -269,24 +290,24 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
             }
         Identity.getSignInClient(requireActivity())
-            .getPhoneNumberHintIntent(request).addOnSuccessListener{ result: PendingIntent
-            ->
-            try {
-                phoneNumberHintIntentResultLauncher.launch(
-                    IntentSenderRequest.Builder(result).build()
-                )
-            } catch (e: Exception) {
+            .getPhoneNumberHintIntent(request).addOnSuccessListener { result: PendingIntent
+                ->
+                try {
+                    phoneNumberHintIntentResultLauncher.launch(
+                        IntentSenderRequest.Builder(result).build()
+                    )
+                } catch (e: Exception) {
+                    Log.e(
+                        TAG,
+                        "Launching the PendingIntent failed"
+                    )
+                }
+            }.addOnFailureListener {
                 Log.e(
                     TAG,
-                    "Launching the PendingIntent failed"
+                    "Phone Number Hint failed"
                 )
             }
-        }.addOnFailureListener{
-            Log.e(
-                TAG,
-                "Phone Number Hint failed"
-            )
-        }
     }
 
     private fun setData() {
@@ -307,12 +328,41 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     )
                 }
             }
-            data?.personalInformation?.phoneCellCountryCode?.let {
-                binding.inputCountry.setSelectedValue(
-                    it
-                )
+            binding.inputCountry.setSelectedValue(
+                data?.personalInformation?.phoneCellCountryCode ?: UNITED_KINGDOM
+            )
+
+            checkIncompatibleCountry(
+                binding.inputCountry.selectedItemDescription.toString(),
+                3,
+                false
+            )
+            requiredCountryCode = true
+            checkButton()
+        }
+    }
+
+    private fun setMobileData() {
+        data = navData as ProfileDetailModel?
+        if (data != null) {
+            if (data?.personalInformation?.phoneCell.isNullOrEmpty().not()) {
+                setMobileView()
+                data?.personalInformation?.phoneCell?.let {
+                    binding.inputMobileNumber.editText.setText(
+                        it
+                    )
+                }
             }
-            checkIncompatibleCountry(binding.inputCountry.selectedItemDescription.toString())
+
+            binding.inputCountry.setSelectedValue(
+                data?.personalInformation?.phoneCellCountryCode ?: UNITED_KINGDOM
+            )
+
+            checkIncompatibleCountry(
+                binding.inputCountry.selectedItemDescription.toString(),
+                3,
+                false
+            )
             requiredCountryCode = true
             checkButton()
         }
@@ -424,9 +474,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 fullCountryNameWithCode.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
 
 
-                if (fullCountryNameWithCode.contains(Constants.UNITED_KINGDOM)) {
-                    fullCountryNameWithCode.remove(Constants.UNITED_KINGDOM)
-                    fullCountryNameWithCode.add(0, Constants.UNITED_KINGDOM)
+                if (fullCountryNameWithCode.contains(UNITED_KINGDOM)) {
+                    fullCountryNameWithCode.remove(UNITED_KINGDOM)
+                    fullCountryNameWithCode.add(0, UNITED_KINGDOM)
                 }
 
                 binding.apply {
@@ -436,25 +486,26 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
 
 
-                if (navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE) {
+                if (navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE || navFlowCall == PROFILE_MANAGEMENT_COMMUNICATION_CHANGED || navFlowCall == PROFILE_MANAGEMENT_2FA_CHANGE) {
                     var userCountryCode = data?.personalInformation?.phoneDayCountryCode
 
                     if (data?.personalInformation?.phoneCell.isNullOrEmpty().not()) {
                         userCountryCode = data?.personalInformation?.phoneCellCountryCode
                     }
-
-
-
-                    fullCountryNameWithCode.forEachIndexed { _, fullCountryName ->
-                        val countryCode = getCountryCode(fullCountryName)
-                        if (countryCode == userCountryCode) {
-                            binding.inputCountry.setSelectedValue(fullCountryName)
-                            return@forEachIndexed
+                    if (userCountryCode.isNullOrEmpty() == true) {
+                        binding.inputCountry.setSelectedValue(UNITED_KINGDOM)
+                    } else {
+                        fullCountryNameWithCode.forEachIndexed { _, fullCountryName ->
+                            val countryCode = getCountryCode(fullCountryName)
+                            if (countryCode == userCountryCode) {
+                                binding.inputCountry.setSelectedValue(fullCountryName)
+                                return@forEachIndexed
+                            }
                         }
                     }
                 } else {
                     if (NewCreateAccountRequestModel.countryCode?.isEmpty() == true) {
-                        binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
+                        binding.inputCountry.setSelectedValue(UNITED_KINGDOM)
                     } else {
                         binding.inputCountry.setSelectedValue(
                             NewCreateAccountRequestModel.countryCode ?: ""
@@ -462,12 +513,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
                 }
 
-                checkIncompatibleCountry(binding.inputCountry.selectedItemDescription.toString())
+                if (navFlowCall != PROFILE_MANAGEMENT_MOBILE_CHANGE) {
+                    checkIncompatibleCountry(
+                        binding.inputCountry.selectedItemDescription.toString(),
+                        4
+                    )
+                }
+
 
                 requiredCountryCode =
                     fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
-                if (binding.inputCountry.selectedItemDescription == Constants.UNITED_KINGDOM) {
+                if (binding.inputCountry.selectedItemDescription == UNITED_KINGDOM) {
                     requiredCountryCode = true
                 }
 
@@ -528,6 +585,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     override fun onClick(v: View?) {
         hideKeyboard()
+
         when (v?.id) {
             binding.btnNext.id -> {
                 val mobileNumber = binding.inputMobileNumber.getText().toString().trim()
@@ -544,17 +602,23 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 if (NewCreateAccountRequestModel.isCountryNotSupportForSms == false) {
                     NewCreateAccountRequestModel.notSupportedCountrySaveDetails = true
                 } else {
-                    if (NewCreateAccountRequestModel.prePay) {
-                        NewCreateAccountRequestModel.notSupportedCountrySaveDetails = true
+                    if (binding.payasugoCb.visibility == View.VISIBLE) {
+                        NewCreateAccountRequestModel.notSupportedCountrySaveDetails =
+                            binding.payasugoCb.isChecked
                     } else {
-                        if (binding.payasugoCb.isChecked) {
-                            NewCreateAccountRequestModel.notSupportedCountrySaveDetails = false
-                        } else {
-                            NewCreateAccountRequestModel.notSupportedCountrySaveDetails = false
-                        }
+                        NewCreateAccountRequestModel.notSupportedCountrySaveDetails = true
                     }
                 }
 
+                var payasugoAccount = false
+                var payasugoChecked = false
+
+                if (binding.payasugoCb.visibility == View.VISIBLE && binding.incompatibleLl.visibility== View.VISIBLE) {
+                    payasugoAccount=true
+                    payasugoChecked = binding.payasugoCb.isChecked
+                }
+                Log.e(TAG, "onClick: payasugoAccount "+payasugoAccount )
+                Log.e(TAG, "onClick: payasugoChecked "+payasugoChecked )
                 when (navFlowCall) {
                     EDIT_MOBILE -> {
                         if (noChanges) {
@@ -595,65 +659,28 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         }
                     }
 
-                    PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
-                        data = navData as ProfileDetailModel?
-                        if (data != null) {
-                            if (isItMobileNumber) {
-                                val phone = data?.personalInformation?.phoneCell
-                                if (phone.isNullOrEmpty().not() && phone.equals(
-                                        binding.inputMobileNumber.getText().toString().trim(), true
-                                    )
-                                ) {
-                                    findNavController().popBackStack()
-                                } else {
-                                    if (NewCreateAccountRequestModel.isCountryNotSupportForSms == true) {
-                                        updateProfileDetails(
-                                            data,
-                                            "N", "N"
-                                        )
-
-                                    } else {
-                                        hitApi()
-                                    }
-                                }
+                    PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                        if (payasugoAccount) {
+                            if (payasugoChecked) {
+                               profileNumberUpdate()
                             } else {
-                                val landline = data?.personalInformation?.phoneDay
-                                if (landline.isNullOrEmpty().not() && landline.equals(
-                                        binding.inputMobileNumber.getText().toString().trim(), true
-                                    )
-                                ) {
-                                    findNavController().popBackStack()
-                                } else {
-
-                                    loader?.show(
-                                        requireActivity().supportFragmentManager,
-                                        Constants.LOADER_DIALOG
-                                    )
-
-                                    updateProfileDetails(
-                                        data,
-                                        data?.accountInformation?.smsOption ?: "",
-                                        Utils.returnMfaStatus(
-                                            data?.accountInformation?.mfaEnabled ?: ""
-                                        )
-                                    )
-                                }
+                                findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_profileManagementFragment)
                             }
-
+                        }else{
+                            profileNumberUpdate()
                         }
+
                     }
 
                     PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                        if (NewCreateAccountRequestModel.isCountryNotSupportForSms == true) {
-                            loader?.show(
-                                requireActivity().supportFragmentManager,
-                                Constants.LOADER_DIALOG
-                            )
-
-                            updateProfileDetails(data, "N", "N")
-
-                        } else {
-                            hitApi()
+                        if (payasugoAccount) {
+                            if (payasugoChecked) {
+                                updateCommunicaionPref()
+                            } else {
+                                findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountFragment)
+                            }
+                        }else{
+                            updateCommunicaionPref()
                         }
                     }
 
@@ -663,6 +690,75 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
                 }
             }
+        }
+    }
+
+    private fun updateCommunicaionPref() {
+
+        if (NewCreateAccountRequestModel.isCountryNotSupportForSms == true) {
+            loader?.show(
+                requireActivity().supportFragmentManager,
+                Constants.LOADER_DIALOG
+            )
+
+            updateProfileDetails(
+                personalInformationModel,
+                accountInformationModel,
+                "N",
+                "N"
+            )
+
+        } else {
+            hitApi()
+        }
+    }
+
+    private fun profileNumberUpdate() {
+        Log.e(TAG, "profileNumberUpdate:isItMobileNumber "+isItMobileNumber )
+        data = navData as ProfileDetailModel?
+        if (data != null) {
+            if (isItMobileNumber) {
+                val phone = data?.personalInformation?.phoneCell
+                if ((!navFlowCall.equals(PROFILE_MANAGEMENT_2FA_CHANGE)) && phone.isNullOrEmpty()
+                        .not() && phone.equals(
+                        binding.inputMobileNumber.getText().toString()
+                            .trim(), true
+                    )
+                ) {
+                    Log.e(TAG, "profileNumberUpdate:isItMobileNumber " )
+                    findNavController().popBackStack()
+                } else {
+                    if (NewCreateAccountRequestModel.isCountryNotSupportForSms == true) {
+                        updateProfileDetails(
+                            data,
+                            "N", "N"
+                        )
+
+                    } else {
+                        hitApi()
+                    }
+                }
+            } else {
+                val landline = data?.personalInformation?.phoneDay
+                if (landline.isNullOrEmpty().not() && landline.equals(
+                        binding.inputMobileNumber.getText().toString()
+                            .trim(), true
+                    )
+                ) {
+                    findNavController().popBackStack()
+                } else {
+
+
+                    updateProfileDetails(
+                        data,
+                        data?.accountInformation?.smsOption ?: "",
+                        Utils.returnMfaStatus(
+                            data?.accountInformation?.mfaEnabled ?: ""
+                        )
+                    )
+                }
+            }
+
         }
     }
 
@@ -751,7 +847,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
                 if (isItMobileNumber && (binding.inputCountry.getSelectedDescription()
                         .equals("UK +44", true) || binding.inputCountry.getSelectedDescription()
-                        .equals(Constants.UNITED_KINGDOM, true))
+                        .equals(UNITED_KINGDOM, true))
                 ) {
                     requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
                         if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
@@ -846,7 +942,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     }
 
-                    PROFILE_MANAGEMENT_MOBILE_CHANGE, Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                    PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         data = navData as ProfileDetailModel?
                         if (isItMobileNumber) {
                             data?.personalInformation?.phoneCell =
@@ -902,16 +998,16 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (selected) {
             binding.inputMobileNumber.editText.setText("")
             binding.inputMobileNumber.removeError()
-            checkIncompatibleCountry(item)
+            checkIncompatibleCountry(item, 5)
         } else {
             if (fullCountryNameWithCode.size > 0) {
                 requiredCountryCode = fullCountryNameWithCode.any { it == item }
             } else {
-                requiredCountryCode = item == Constants.UNITED_KINGDOM
+                requiredCountryCode = item == UNITED_KINGDOM
             }
             binding.incompatibleLl.gone()
             if (requiredCountryCode) {
-                checkIncompatibleCountry(item)
+                checkIncompatibleCountry(item, 6)
             } else {
                 binding.incompatibleLl.gone()
             }
@@ -919,37 +1015,65 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
     }
 
-    private fun checkIncompatibleCountry(item: String) {
+    private fun checkIncompatibleCountry(
+        item: String,
+        type: Int,
+        showErrorMessage: Boolean = true
+    ) {
+        Log.e(
+            TAG,
+            "checkIncompatibleCountry: type " + type + " -isItMobileNumber -> " + isItMobileNumber
+        )
         NewCreateAccountRequestModel.isCountryNotSupportForSms = false
 
         if (isItMobileNumber) {
-            val smsSupportCountryList = Utils.smsSupportCountryList().map {
-                it.trim()
-                    .replace(" ", "")
-                    .replace("-", "").lowercase()
-            }
-            val isSupportedCountry = smsSupportCountryList.contains(
-                item.trim()
-                    .replace(" ", "").replace("-", "").lowercase()
-            )
-
-            if (isSupportedCountry) {
+            if (Utils.isSupportedCountry(item)) {
                 NewCreateAccountRequestModel.isCountryNotSupportForSms = false
-                binding.incompatibleLl.gone()
+                if (showErrorMessage) {
+                    binding.incompatibleLl.gone()
+                }
             } else {
                 NewCreateAccountRequestModel.isCountryNotSupportForSms = true
-                binding.incompatibleLl.visible()
-                binding.incompatibleTv.text =
-                    resources.getString(R.string.str_phone_number_starts_countrycode, item)
-                if (!NewCreateAccountRequestModel.prePay) {
-                    binding.payasugoCb.visible()
-                } else {
-                    binding.payasugoCb.gone()
+                if (showErrorMessage) {
+                    binding.incompatibleLl.visible()
+                    binding.incompatibleTv.text =
+                        resources.getString(R.string.str_phone_number_starts_countrycode, item)
+
+                    if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall == EDIT_MOBILE || navFlowCall == EDIT_ACCOUNT_TYPE || navFlowCall == EDIT_SUMMARY) {
+                        if (!NewCreateAccountRequestModel.prePay) {
+                            binding.payasugoCb.visible()
+                        } else {
+                            binding.payasugoCb.gone()
+                        }
+                    } else {
+                        Log.e(
+                            TAG,
+                            "checkIncompatibleCountry: accountType " + accountInformationModel?.accountType
+                        )
+                        Log.e(
+                            TAG,
+                            "checkIncompatibleCountry: accSubType " + accountInformationModel?.accSubType
+                        )
+                        if (accountInformationModel?.accSubType.equals(
+                                Constants.BUSINESS_ACCOUNT,
+                                true
+                            ) || accountInformationModel?.accSubType.equals(
+                                Constants.PREPAY_ACCOUNT,
+                                true
+                            )
+                        ) {
+                            binding.payasugoCb.gone()
+                        } else {
+                            binding.payasugoCb.visible()
+                        }
+                    }
                 }
             }
         } else {
             NewCreateAccountRequestModel.isCountryNotSupportForSms = false
-            binding.incompatibleLl.gone()
+            if (showErrorMessage) {
+                binding.incompatibleLl.gone()
+            }
         }
 
     }
@@ -957,6 +1081,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     private fun updateProfileDetails(
         dataModel: ProfileDetailModel?, smsOption: String, mfaEnabled: String
     ) {
+        loader?.show(
+            requireActivity().supportFragmentManager,
+            Constants.LOADER_DIALOG
+        )
 
         var phoneCell = dataModel?.personalInformation?.phoneCell
         var phoneCellCountryCode = dataModel?.personalInformation?.phoneCellCountryCode
@@ -973,6 +1101,20 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         }
 
+        if (isItMobileNumber) {
+            Log.e(
+                TAG,
+                "updateProfileDetails: isCountryNotSupportForSms " + NewCreateAccountRequestModel.isCountryNotSupportForSms
+            )
+            Log.e(
+                TAG,
+                "updateProfileDetails: notSupportedCountrySaveDetails " + NewCreateAccountRequestModel.notSupportedCountrySaveDetails
+            )
+            if (NewCreateAccountRequestModel.isCountryNotSupportForSms && NewCreateAccountRequestModel.notSupportedCountrySaveDetails == false) {
+                phoneCell = ""
+                phoneCellCountryCode = ""
+            }
+        }
 
         val request = Utils.returnEditProfileModel(
             dataModel?.accountInformation?.businessName,
@@ -1000,6 +1142,61 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             dataModel?.accountInformation?.stmtDelivaryInterval,
             mfaEnabled,
             accountType = dataModel?.accountInformation?.accountType
+        )
+
+        viewModelProfile.updateUserDetails(request)
+
+    }
+
+    private fun updateProfileDetails(
+        personalInformation: com.conduent.nationalhighways.data.model.account.PersonalInformation?,
+        accountInformation: AccountInformation?,
+        smsOption: String,
+        mfaEnabled: String
+    ) {
+
+        var phoneCell = personalInformation?.phoneCell
+        var phoneCellCountryCode = personalInformation?.phoneCellCountryCode
+        var phoneDay = personalInformation?.phoneDay
+        var phoneDayCountryCode = personalInformation?.phoneDayCountryCode
+
+        if (!isItMobileNumber) {
+            phoneDay = binding.inputMobileNumber.getText().toString().trim()
+            phoneDayCountryCode =
+                binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
+        } else {
+            phoneCell = binding.inputMobileNumber.getText().toString().trim()
+            phoneCellCountryCode =
+                binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
+        }
+
+
+        val request = Utils.returnEditProfileModel(
+            accountInformation?.businessName,
+            data?.accountInformation?.fein,
+            personalInformation?.firstName,
+            personalInformation?.lastName,
+            personalInformation?.addressLine1,
+            personalInformation?.addressLine2,
+            personalInformation?.city,
+            personalInformation?.state,
+            personalInformation?.zipcode,
+            personalInformation?.zipCodePlus,
+            personalInformation?.country,
+            personalInformation?.emailAddress,
+            personalInformation?.primaryEmailStatus,
+            personalInformation?.pemailUniqueCode,
+            phoneCell,
+            phoneCellCountryCode,
+            phoneDay,
+            phoneDayCountryCode,
+            personalInformation?.fax,
+            smsOption,
+            personalInformation?.eveningPhone,
+            accountInformation?.stmtDelivaryMethod,
+            accountInformation?.stmtDelivaryInterval,
+            mfaEnabled,
+            accountType = accountInformation?.accountType
         )
 
         viewModelProfile.updateUserDetails(request)

@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,7 +101,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
             R.id.tryPaymentAgain -> {
                 if (navFlowCall == Constants.PAYMENT_TOP_UP || navFlowCall == Constants.SUSPENDED) {
 
-                    if(paymentListSize==0){
+                    if (paymentListSize == 0) {
 
                         val bundle = Bundle()
                         bundle.putDouble(Constants.DATA, paymentTopup.toDouble())
@@ -111,13 +110,13 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                         bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                         bundle.putString(Constants.CURRENTBALANCE, currentbalance)
-                        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize ?: 0)
+                        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
 
                         findNavController().navigate(
                             R.id.action_tryPaymentAgainFragment_to_nmiPaymentFragment,
                             bundle
                         )
-                    }else{
+                    } else {
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
@@ -131,7 +130,11 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
 
 
                 } else if (navFlowCall == Constants.ADD_PAYMENT_METHOD) {
-                    accountInformation = dashboardViewModel.accountInformationData.value
+                    if (navFlowFrom == Constants.PAYG_SUSPENDED) {
+
+                    } else {
+                        accountInformation = dashboardViewModel.accountInformationData.value
+                    }
                     if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                         findNavController().popBackStack()
                     } else {

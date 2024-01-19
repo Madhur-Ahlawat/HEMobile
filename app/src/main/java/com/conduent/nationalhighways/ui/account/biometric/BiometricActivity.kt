@@ -459,6 +459,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
                     intent.putExtra(Constants.CROSSINGCOUNT, "")
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
                     intent.putExtra(
                         Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
                     )
@@ -552,6 +553,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             val intent = Intent(this, AuthActivity::class.java)
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
             intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
             intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
             intent.putExtra(Constants.PERSONALDATA, personalInformation)
 

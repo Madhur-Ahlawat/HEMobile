@@ -140,8 +140,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
             Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                binding.switchNotification.visible()
-                binding.notificationTxt.visible()
+                binding.switchNotification.gone()
+                binding.notificationTxt.gone()
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 oldSmsOption = sessionManager.fetchSmsOption().equals("Y")
@@ -317,29 +317,20 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                         if ((oldSmsOption == binding.switchCommunication.isChecked) && (oldPushOption == binding.switchNotification.isChecked)) {
                             findNavController().popBackStack()
                         } else {
-                            if (oldPushOption != binding.switchNotification.isChecked) {
-                                showLoader()
-                                callPushNotificationApi()
-                            } else {
+//                            if (oldPushOption != binding.switchNotification.isChecked) {
+//                                showLoader()
+//                                callPushNotificationApi()
+//                            } else {
                                 if (personalInformationModel?.phoneCell?.isEmpty() == true) {
                                     verifyMobileNumber()
                                 } else {
-                                    val smsSupportCountryList = Utils.smsSupportCountryList().map {
-                                        it.trim()
-                                            .replace(" ", "")
-                                            .replace("-", "").lowercase()
-                                    }
-                                    val isSupportedCountry = smsSupportCountryList.contains(
-                                        personalInformationModel?.phoneCellCountryCode.toString().trim()
-                                            .replace(" ", "").replace("-", "").lowercase()
-                                    )
-                                    if(isSupportedCountry){
+                                    if(Utils.isSupportedCountry(personalInformationModel?.phoneCellCountryCode.toString())){
                                         updateSmsOption()
                                     }else{
                                         verifyMobileNumber()
                                     }
                                 }
-                            }
+//                            }
                         }
                     }
 

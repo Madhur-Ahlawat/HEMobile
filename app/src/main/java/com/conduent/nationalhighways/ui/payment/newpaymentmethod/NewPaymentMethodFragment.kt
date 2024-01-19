@@ -73,15 +73,32 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
 
     override fun initCtrl() {
+
+        if(arguments?.containsKey(Constants.PERSONALDATA) == true){
+            if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+                personalInformation =
+                    arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+            }
+
+        }
+        if(arguments?.containsKey(Constants.ACCOUNTINFORMATION) == true){
+            if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+                accountInformation =
+                    arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+            }
+
+        }
         paymentList = ArrayList()
         directDebitPaymentList = ArrayList()
         cardPaymentList = ArrayList()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        title = HomeActivityMain.dataBinding?.titleTxt!!
+        if(requireActivity() is HomeActivityMain){
+            title = HomeActivityMain.dataBinding?.titleTxt!!
+        }
 
-
+        Log.e("TAG", "initCtrl: isViewCreated "+isViewCreated )
         if (!isViewCreated) {
             showLoader()
             viewModel.saveCardList()
@@ -121,10 +138,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
 
     private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
-
+        Log.e("TAG", "handleAccountDetails: response")
         hideLoader()
         when (status) {
             is Resource.Success -> {
+                Log.e("TAG", "handleAccountDetails: data"+status.data?.accountInformation)
                 personalInformation = status.data?.personalInformation
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
@@ -258,6 +276,11 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 }else{
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
+                    if(navFlowCall.equals(Constants.SUSPENDED)){
+                        bundle.putString(Constants.NAV_FLOW_FROM, Constants.PAYG_SUSPENDED)
+                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                    }
                     bundle.putDouble(Constants.DATA, 0.0)
                     bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
                     if (accountInformation?.accSubType.equals(Constants.PAYG)) {
@@ -298,7 +321,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             R.id.cardViewTopYourBalance -> {
-                title.text = getString(R.string.top_up)
+                if(requireActivity() is HomeActivityMain) {
+                    title.text = getString(R.string.top_up)
+                }
 
                 val bundle = Bundle()
                 if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
@@ -318,7 +343,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             R.id.cardViewThresholdLimit -> {
-                title.text = getString(R.string.set_threshold_limit)
+                if(requireActivity() is HomeActivityMain) {
+                    title.text = getString(R.string.set_threshold_limit)
+                }
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.THRESHOLD)
                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
@@ -578,7 +605,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     override fun onResume() {
-        title.text = getString(R.string.payment_management)
+        if(requireActivity() is HomeActivityMain){
+            title.text = getString(R.string.payment_management)
+        }
         super.onResume()
     }
 

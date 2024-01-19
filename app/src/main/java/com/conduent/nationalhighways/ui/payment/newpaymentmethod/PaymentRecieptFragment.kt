@@ -163,6 +163,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         observe(viewModel.countriesList, ::handleCountriesListResponse)
         observe(viewModel.countriesCodeList, ::handleCountryCodesListResponse)
     }
+
     private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -202,10 +203,14 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
 
                 if (navFlowCall == Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE) {
-                    var userCountryCode = HomeActivityMain.accountDetailsData?.personalInformation?.phoneDayCountryCode
+                    var userCountryCode =
+                        HomeActivityMain.accountDetailsData?.personalInformation?.phoneDayCountryCode
 
-                    if (HomeActivityMain.accountDetailsData?.personalInformation?.phoneCell.isNullOrEmpty().not()) {
-                        userCountryCode = HomeActivityMain.accountDetailsData?.personalInformation?.phoneCellCountryCode
+                    if (HomeActivityMain.accountDetailsData?.personalInformation?.phoneCell.isNullOrEmpty()
+                            .not()
+                    ) {
+                        userCountryCode =
+                            HomeActivityMain.accountDetailsData?.personalInformation?.phoneCellCountryCode
                     }
 
 
@@ -262,6 +267,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
         }
     }
+
     private fun getCountryCode(selectedItem: String): String {
         val openingParenIndex = selectedItem.indexOf("(")
         val closingParenIndex = selectedItem.indexOf(")")
@@ -274,6 +280,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             }
         return extractedText
     }
+
     private fun handleCountriesListResponse(response: Resource<List<CountriesModel?>?>?) {
         when (response) {
             is Resource.Success -> {
@@ -452,23 +459,12 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                     NewCreateAccountRequestModel.emailAddress = ""
                 }
                 if (binding.selectTextMessage.isChecked) {
-
-                    val smsSupportCountryList = Utils.smsSupportCountryList().map {
-                        it.trim()
-                            .replace(" ", "")
-                            .replace("-", "").lowercase()
-                    }
-                    val isSupportedCountry = smsSupportCountryList.contains(
-                        binding.inputCountry.selectedItemDescription
-                            .replace(" ", "").replace("-", "").lowercase()
-                    )
-
-                    if(isSupportedCountry){
+                    if (Utils.isSupportedCountry(binding.inputCountry.selectedItemDescription)) {
                         (navData as CrossingDetailsModelsResponse).recieptMode =
                             binding.inputMobileNumber.getText().toString().trim()
                         NewCreateAccountRequestModel.mobileNumber =
                             binding.inputMobileNumber.editText.text.toString().trim()
-                    }else{
+                    } else {
                         (navData as CrossingDetailsModelsResponse).recieptMode = ""
                         NewCreateAccountRequestModel.mobileNumber = ""
                     }
@@ -513,7 +509,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         override fun onTextChanged(
             charSequence: CharSequence?, start: Int, before: Int, count: Int
         ) {
-            Log.e("TAG", "onTextChanged: index "+index +" charca "+charSequence.toString() )
+            Log.e("TAG", "onTextChanged: index " + index + " charca " + charSequence.toString())
             requiredCountryCode =
                 fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
@@ -657,9 +653,9 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
     private fun checkButton() {
         if (binding.selectEmail.isChecked && binding.selectTextMessage.isChecked) {
-            Log.e("TAG", "checkButton:11 " +isEnable())
-            Log.e("TAG", "checkButton:22 " +requiredCountryCode)
-            Log.e("TAG", "checkButton:33 " +requiredMobileNumber)
+            Log.e("TAG", "checkButton:11 " + isEnable())
+            Log.e("TAG", "checkButton:22 " + requiredCountryCode)
+            Log.e("TAG", "checkButton:33 " + requiredMobileNumber)
             if (isEnable() && requiredCountryCode && requiredMobileNumber) {
                 binding.btnContinue.enable()
                 (navData as CrossingDetailsModelsResponse).countryCode =
@@ -687,7 +683,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     }
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
-        Log.e ("TAG", "onAutoCompleteItemClick() called with: item = $item, selected = $selected")
+        Log.e("TAG", "onAutoCompleteItemClick() called with: item = $item, selected = $selected")
         if (selected) {
             (navData as CrossingDetailsModelsResponse).countryCode =
                 getCountryCodeRequiredText(item)
@@ -723,32 +719,22 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             }
         }
 
-        if(item.isNotEmpty()){
+        if (item.isNotEmpty()) {
             binding.inputCountryHelper.visible()
-        }else{
+        } else {
             binding.inputCountryHelper.invisible()
         }
         checkSupportedCountry(item)
         checkButton()
     }
 
-    private fun checkSupportedCountry(item:String) {
-        if(requiredCountryCode){
+    private fun checkSupportedCountry(item: String) {
+        if (requiredCountryCode) {
             binding.incompatibleTv.text =
                 resources.getString(R.string.str_phone_number_starts_countrycode, item)
-
-            val smsSupportCountryList = Utils.smsSupportCountryList().map {
-                it.trim()
-                    .replace(" ", "")
-                    .replace("-", "").lowercase()
-            }
-            val isSupportedCountry = smsSupportCountryList.contains(
-                item.trim()
-                    .replace(" ", "").replace("-", "").lowercase()
-            )
-            if(isSupportedCountry){
+            if (Utils.isSupportedCountry(item)) {
                 binding.incompatibleLl.gone()
-            }else{
+            } else {
                 binding.incompatibleLl.visible()
             }
         }
@@ -760,7 +746,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     private fun seperateCountryCodeListFromNameList(fullCountryNameWithCode: MutableList<String>) {
         countryCodesList.clear()
         fullCountryNameWithCode.forEachIndexed { index, s ->
-            countryCodesList.add(s.substring(s.indexOf("(")+1,s.indexOf(")")))
+            countryCodesList.add(s.substring(s.indexOf("(") + 1, s.indexOf(")")))
         }
     }
 

@@ -30,6 +30,7 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -251,7 +252,12 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             }
 
             R.id.cancel_btn -> {
-                if (flow == Constants.CARD_IS_ALREADY_REGISTERED || flow == Constants.DIRECT_DEBIT_NOT_SET_UP || flow == Constants.CREDIT_NOT_SET_UP) {
+                if(navFlowFrom.equals(Constants.PAYG_SUSPENDED)){
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                        putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                    }
+                }else if (flow == Constants.CARD_IS_ALREADY_REGISTERED || flow == Constants.DIRECT_DEBIT_NOT_SET_UP || flow == Constants.CREDIT_NOT_SET_UP) {
                     findNavController().navigate(R.id.action_paymentSuccessFragment_to_paymentMethodFragment)
                 } else {
                     findNavController().popBackStack()

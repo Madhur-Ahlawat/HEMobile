@@ -189,6 +189,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
                     intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
                     intent.putExtra(Constants.NAV_FLOW_FROM, from)
                     intent.putExtra(
                         Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
@@ -287,7 +288,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     override fun onResume() {
         super.onResume()
-        Log.e("TAG", "onResume: -------> ")
         if (displayFingerPrintPopup() && sessionManager.fetchBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD)) {
             fingerPrintLogin()
         }

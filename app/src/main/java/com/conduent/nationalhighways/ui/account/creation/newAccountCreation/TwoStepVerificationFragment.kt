@@ -169,10 +169,10 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                         if(oldtwoStepVerification==binding.twoFactor.isChecked){
                             findNavController().popBackStack()
                         }else {
-                            NewCreateAccountRequestModel.twoStepVerification =
-                                binding.twoFactor.isChecked
+                            NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
                             val data = navData as ProfileDetailModel?
                             if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
+                                Log.e("TAG", "onClick: phonecell empty" )
                                 if (binding.twoFactor.isChecked) {
                                     verifyMobileNumber(data)
                                 } else {
@@ -180,11 +180,17 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 
                                 }
                             } else {
-                                loader?.show(
-                                    requireActivity().supportFragmentManager,
-                                    Constants.LOADER_DIALOG
-                                )
-                                updateProfileDetails(data)
+                                Log.e("TAG", "onClick: phonecell not empty" )
+                                if(Utils.isSupportedCountry( data?.personalInformation?.phoneCellCountryCode.toString()) ){
+                                    loader?.show(
+                                        requireActivity().supportFragmentManager,
+                                        Constants.LOADER_DIALOG
+                                    )
+                                    updateProfileDetails(data)
+                                }else{
+                                    verifyMobileNumber(data)
+                                }
+
                             }
                         }
                     }

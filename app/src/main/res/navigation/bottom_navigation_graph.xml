@@ -383,6 +383,16 @@
         <action
             android:id="@+id/action_HWMobileNumberCaptureVC_to_resetFragment"
             app:destination="@+id/resetFragment" />
+        <action
+            android:id="@+id/action_HWMobileNumberCaptureVC_to_profileManagementFragment"
+            app:destination="@+id/profileManagementFragment"
+            app:popUpTo="@+id/profileManagementFragment"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_HWMobileNumberCaptureVC_to_accountFragment"
+            app:destination="@+id/accountFragment"
+            app:popUpTo="@+id/accountFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment

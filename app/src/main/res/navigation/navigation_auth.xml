@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_auth"
-    app:startDestination="@id/forgotPasswordFragment"
-    >
+    app:startDestination="@id/forgotPasswordFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -104,22 +103,35 @@
             android:id="@+id/action_resenedCodeFragment_to_otpFragment"
             app:destination="@id/otpFragment"
             app:popUpTo="@id/otpFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
-    android:id="@+id/accountSuspendedFragment"
-    android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendedFragment"
-    android:label="accountSuspendedFragment"
-    tools:layout="@layout/fragment_account_suspend_halt_top_up">
-    <action
-        android:id="@+id/action_accountSuspendedFragment_to_accountSuspendedPaymentFragment"
-        app:destination="@id/accountSuspendedPaymentFragment" />
-    <action
-        android:id="@+id/action_accountSuspendedFragment_to_accountSuspendReOpenFragment"
-        app:destination="@id/accountSuspendReOpenFragment" />
-</fragment>
+        android:id="@+id/accountSuspendedFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendedFragment"
+        android:label="accountSuspendedFragment"
+        tools:layout="@layout/fragment_account_suspend_halt_top_up">
+        <action
+            android:id="@+id/action_accountSuspendedFragment_to_accountSuspendedPaymentFragment"
+            app:destination="@id/accountSuspendedPaymentFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedFragment_to_accountSuspendReOpenFragment"
+            app:destination="@id/accountSuspendReOpenFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/paymentMethodFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewPaymentMethodFragment"
+        android:label="Payment Management"
+        tools:layout="@layout/fragment_payment_method2">
+        <action
+            android:id="@+id/action_paymentMethodFragment_to_nmiPaymentFragment"
+            app:destination="@+id/nmiPaymentFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/accountSuspendedPaymentFragment"
@@ -143,8 +155,7 @@
         tools:layout="@layout/fragment_three_d_s_webview">
         <action
             android:id="@+id/action_threeDSWebViewFragment_to_accountSuspendedFinalPayFragment"
-            app:destination="@+id/accountSuspendedFinalPayFragment"
-            />
+            app:destination="@+id/accountSuspendedFinalPayFragment" />
 
     </fragment>
     <fragment
@@ -162,8 +173,8 @@
         <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendedPaymentFragment"
             app:destination="@id/accountSuspendedPaymentFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/accountSuspendedPaymentFragment"/>
+            app:popUpTo="@id/accountSuspendedPaymentFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -172,6 +183,9 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.NMIPaymentFragment"
         android:label="NMIFragment"
         tools:layout="@layout/nmi_payment_fragment">
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_accountSuspendReOpenFragment"
+            app:destination="@id/accountSuspendReOpenFragment" />
 
         <action
             android:id="@+id/action_nmiPaymentFragment_to_tryPaymentAgainFragment"
@@ -180,13 +194,41 @@
         <action
             android:id="@+id/action_nmiPaymentFragment_to_accountSuspendedFinalPayFragment"
             app:destination="@id/accountSuspendedFinalPayFragment" />
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_paymentSuccessFragment2"
+            app:destination="@id/paymentSuccessFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/accountSuspendReOpenFragment"
         android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendReOpenFragment"
         android:label="AccountSuspendReOpen"
         tools:layout="@layout/fragment_account_suspend_halt_reopened">
+
     </fragment>
+
+    <fragment
+        android:id="@+id/paymentSuccessFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewCardSuccessScreenFragment"
+        android:label="Add New Card Success"
+        tools:layout="@layout/fragment_new_card_success_screen">
+        <action
+            android:id="@+id/action_paymentSuccessFragment_to_paymentMethodFragment"
+            app:destination="@id/paymentMethodFragment"
+            app:popUpTo="@id/paymentMethodFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_paymentSuccessFragment_to_selectPaymentMethodFragment"
+            app:destination="@id/selectPaymentMethodFragment"
+            app:popUpTo="@id/selectPaymentMethodFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_paymentSuccessFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment"
+            app:popUpTo="@id/nmiPaymentFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/tryPaymentAgainFragment"
@@ -198,15 +240,14 @@
             android:id="@+id/action_tryPaymentAgainFragment_to_accountSuspendedPaymentFragment"
             app:destination="@id/accountSuspendedPaymentFragment"
             app:popUpTo="@id/accountSuspendedPaymentFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_tryPaymentAgainFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment"
             app:popUpTo="@id/nmiPaymentFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
     </fragment>
-
 
 
 </navigation>

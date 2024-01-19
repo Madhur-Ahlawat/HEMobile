@@ -159,8 +159,8 @@ object Utils {
         supportCountryList.add("Spain -  (+34)")
         supportCountryList.add("Sweden -  (+46)")
         supportCountryList.add("Switzerland -  (+41)")
-//        supportCountryList.add("Ukraine -  (+380)")
-        supportCountryList.add("United Kingdom -  (+44)")
+        supportCountryList.add("Ukraine -  (+380)")
+        supportCountryList.add("United Kingdom - (+44)")
 
         return supportCountryList
 
@@ -966,6 +966,7 @@ object Utils {
     }
 
     fun getNotificationStatus(context: Context): String {
+        return "N"
         val notificationManagerCompat = NotificationManagerCompat.from(context)
         val status = notificationManagerCompat.areNotificationsEnabled()
         if (status) {
@@ -1554,4 +1555,38 @@ object Utils {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) == PackageManager.PERMISSION_DENIED))
     }
+
+    fun isSupportedCountry(country:String):Boolean{
+        Log.e("TAG", "isSupportedCountry:  country "+country )
+        if(country.isEmpty()==true){
+            return true
+        }
+        val smsSupportCountryList = smsSupportCountryList().map {
+            it.trim()
+                .replace(" ", "")
+                .replace("-", "").lowercase()
+            extractTextWithinBrackets(it)
+        }
+        Log.e("TAG", "isSupportedCountry:  smsSupportCountryList "+smsSupportCountryList.toString() )
+
+        val isSupportedCoutry= smsSupportCountryList.contains(
+            extractTextWithinBrackets(country).toString().trim()
+                .replace(" ", "").replace("-", "").lowercase()
+        )
+        Log.e("TAG", "isSupportedCountry:  isSupportedCoutry "+isSupportedCoutry )
+
+        return isSupportedCoutry
+    }
+
+    fun extractTextWithinBrackets(input: String): String {
+        val startIndex = input.indexOf("(")
+        val endIndex = input.indexOf(")")
+
+        return if (startIndex != -1 && endIndex != -1 && endIndex > startIndex) {
+            input.substring(startIndex + 1, endIndex)
+        } else {
+            input
+        }
+    }
+
 }

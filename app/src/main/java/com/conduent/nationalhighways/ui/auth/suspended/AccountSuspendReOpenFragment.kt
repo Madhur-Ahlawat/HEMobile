@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.text.Html
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,14 +67,17 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
             responseModel = arguments?.getParcelable<CardResponseModel>(Constants.DATA)
-
-            if (responseModel?.checkCheckBox == true) {
-                binding.cardView.visible()
-                binding.succesfulCardAdded.visible()
-            } else {
+            if (navFlowFrom == Constants.PAYG_SUSPENDED) {
                 binding.cardView.gone()
                 binding.succesfulCardAdded.gone()
-            }
+            } else
+                if (responseModel?.checkCheckBox == true) {
+                    binding.cardView.visible()
+                    binding.succesfulCardAdded.visible()
+                } else {
+                    binding.cardView.gone()
+                    binding.succesfulCardAdded.gone()
+                }
 
             if (responseModel?.card?.type.equals("visa", true)) {
                 binding.ivCardType.setImageResource(R.drawable.visablue)
@@ -101,19 +104,25 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
              binding.cardView.gone()*/
 
         }
-        if (currentBalance.isNotEmpty()) {
-            val balance = currentBalance.replace("£", "")
-            val doubleBalance = balance.toDouble()
-            val intBalance = doubleBalance.toInt()
-            val finalCurrentBalance = 5.00 - doubleBalance
-            if (finalCurrentBalance < 5.00) {
-                binding.tvYouWillAlsoNeed.visible()
-            } else {
-                binding.tvYouWillAlsoNeed.gone()
 
+        if (navFlowFrom == Constants.PAYG_SUSPENDED) {
+            binding.tvYouWillAlsoNeed.invisible()
+            binding.feedbackBt.invisible()
+        } else {
+            binding.feedbackBt.visible()
+            if (currentBalance.isNotEmpty()) {
+                val balance = currentBalance.replace("£", "")
+                val doubleBalance = balance.toDouble()
+                val intBalance = doubleBalance.toInt()
+                val finalCurrentBalance = 5.00 - doubleBalance
+                if (finalCurrentBalance < 5.00) {
+                    binding.tvYouWillAlsoNeed.visible()
+                } else {
+                    binding.tvYouWillAlsoNeed.gone()
+
+                }
             }
         }
-
 
 
         binding.tvYouWillNeedToPay.text = Html.fromHtml(
@@ -127,7 +136,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
         binding.referenceNumberTv.text = transactionId
 
-        if (navFlowCall == Constants.PAYMENT_TOP_UP ) {
+        if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             binding.tvAccountSuspended.text = getString(
                 R.string.str_balance_topped_up_with,
                 getString(R.string.pound_symbol) + topUpAmount
@@ -138,14 +147,17 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             HomeActivityMain.setTitle(getString(R.string.top_up_success))
             binding.layoutPaymentReferenceNumber.visible()
         } else {
-            binding.tvYouWillAlsoNeed.text = getString(R.string.str_you_have_less_than, "£5.00")
-            binding.tvYouWillAlsoNeed.visible()
-
             binding.btnTopUpNow.text = getString(R.string.str_go_to_dashboard)
 
             binding.tvAccountSuspended.text = getString(R.string.str_account_reopened)
-            binding.layoutPaymentReferenceNumber.visible()
-            binding.layoutPaymentReferenceNumber.visible()
+            if (navFlowFrom == Constants.PAYG_SUSPENDED) {
+                binding.layoutPaymentReferenceNumber.invisible()
+                binding.tvYouWillAlsoNeed.invisible()
+            } else {
+                binding.layoutPaymentReferenceNumber.visible()
+                binding.tvYouWillAlsoNeed.text = getString(R.string.str_you_have_less_than, "£5.00")
+                binding.tvYouWillAlsoNeed.visible()
+            }
         }
 
     }
@@ -171,9 +183,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                         }
 
                     getString(R.string.str_continue) -> {
-                        if(navFlowFrom.equals(Constants.DASHBOARD)){
+                        if (navFlowFrom.equals(Constants.DASHBOARD)) {
                             findNavController().navigate(R.id.accountSuspendReOpenFragment_to_dashboardFragment)
-                        }else{
+                        } else {
                             findNavController().navigate(R.id.accountSuspendReOpenFragment_to_paymentMethodFragment)
                         }
 

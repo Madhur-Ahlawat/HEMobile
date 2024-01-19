@@ -232,6 +232,7 @@ object Constants {
 
     const val CURRENTBALANCE = "currentBalance"
     const val SUSPENDED = "suspended"
+    const val PAYG_SUSPENDED = "payg_suspended"
     const val NOTSUSPENDED = "notsuspended"
     const val THRESHOLD_AMOUNT = "threshold_amount"
     const val THRESHOLD = "threshold_amount"
@@ -277,6 +278,7 @@ object Constants {
     const val LANGUAGE = "ENU"
     const val ALERT_ITEM_KEY = "cscLookupKey"
     const val PERSONAL_ACCOUNT = "PRIVATE"
+    const val PREPAY_ACCOUNT = "STANDARD"
     const val BUSINESS_ACCOUNT = "BUSINESS"
     const val EXEMPT_ACCOUNT = "NONREVENUE"
     const val PRE_PAY_ACCOUNT = "pre_pay_account"

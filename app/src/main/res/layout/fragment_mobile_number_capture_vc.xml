@@ -164,6 +164,7 @@
                     style="@style/CheckBoxStyle"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:gravity="top"
+                    android:visibility="gone"
                     android:text="@string/str_save_mobile_number" />
 
 

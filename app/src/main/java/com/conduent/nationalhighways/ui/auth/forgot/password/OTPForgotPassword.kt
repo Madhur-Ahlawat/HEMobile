@@ -1061,7 +1061,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 if (accountStatus.equals(Constants.SUSPENDED, true)) {
                     crossingHistoryApi()
                 } else {
-                    if (!(sessionManager.hasAskedForBiometric() && sessionManager?.fetchTouchIdEnabled()!!)) {
+                    if (!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) {
                         sessionManager.saveHasAskedForBiometric(true)
                         if (hasTouchBiometric && hasFaceBiometric) {
                             displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
@@ -1204,6 +1204,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
         intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
         intent.putExtra(Constants.PERSONALDATA, personalInformation)
+        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
         intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
         intent.putExtra(
             Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance

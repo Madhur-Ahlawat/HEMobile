@@ -80,7 +80,6 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
 
         binding.toolBarLyt.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
-
         }
 
         previousScreen = if (intent.getIntExtra(
@@ -132,6 +131,7 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
             bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
             bundle.putString(Constants.CURRENTBALANCE, currentBalance)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
             bundle.putString(Constants.CROSSINGCOUNT,crossingCount)
             graph.setStartDestination(R.id.accountSuspendedFragment)
 
@@ -140,6 +140,7 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
             binding.toolBarLyt.titleTxt.text = getString(R.string.top_up)
             bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
             graph.setStartDestination(R.id.accountSuspendedPaymentFragment)
         }
 

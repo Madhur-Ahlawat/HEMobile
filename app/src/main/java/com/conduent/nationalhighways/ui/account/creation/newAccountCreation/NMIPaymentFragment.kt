@@ -577,13 +577,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.cellPhoneCountryCode = data.countryCode?.let { getRequiredText(it) }
             model.smsReferenceId = data.sms_referenceId
 
-            NewCreateAccountRequestModel.isCountryNotSupportForSms = Utils.smsSupportCountryList().map {
-                it.trim()
-                    .replace(" ", "")
-                    .replace("-", "").lowercase()
-            }.contains(model.cellPhoneCountryCode.toString().trim()
-                .replace(" ", "").replace("-", "").lowercase()
-            )
+            NewCreateAccountRequestModel.isCountryNotSupportForSms = Utils.isSupportedCountry(model.cellPhoneCountryCode.toString())
 
             if(!NewCreateAccountRequestModel.prePay){
                 if(!NewCreateAccountRequestModel.notSupportedCountrySaveDetails){
@@ -915,11 +909,21 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                     bundle.putParcelable(Constants.DATA, responseModel)
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
-                    findNavController().navigate(
-                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-                        bundle
-                    )
+                    if(navFlowFrom.equals(Constants.PAYG_SUSPENDED)){
+                        bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                        bundle.putParcelable(Constants.ACCOUNTINFORMATION,accountInformation)
+                        findNavController().navigate(
+                            R.id.action_nmiPaymentFragment_to_accountSuspendReOpenFragment,
+                            bundle
+                        )
+                    }else{
+                        findNavController().navigate(
+                            R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
+                            bundle
+                        )
+                    }
 
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
@@ -954,7 +958,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     val bundle = Bundle()
-
+                    bundle.putString(
+                        Constants.NAV_FLOW_FROM,
+                        navFlowFrom
+                    )
                     bundle.putString(
                         Constants.CARD_IS_ALREADY_REGISTERED,
                         Constants.CREDIT_NOT_SET_UP
@@ -973,19 +980,37 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     }
 
     private fun redirectToTryAgainPaymentScreen() {
-        val bundle = Bundle()
-        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
-        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
-        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-        bundle.putBoolean(Constants.IS_DIRECT_DEBIT, isDrectDebit)
 
-        findNavController().navigate(
-            R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment,
-            bundle
-        )
+        if(navFlowFrom.equals(Constants.PAYG_SUSPENDED)){
+            val bundle = Bundle()
+
+            bundle.putString(
+                Constants.NAV_FLOW_FROM,
+                navFlowFrom
+            )
+            bundle.putString(
+                Constants.CARD_IS_ALREADY_REGISTERED,
+                Constants.CREDIT_NOT_SET_UP
+            )
+            findNavController().navigate(
+                R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
+                bundle
+            )
+        }else {
+            val bundle = Bundle()
+            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+            bundle.putBoolean(Constants.IS_DIRECT_DEBIT, isDrectDebit)
+
+            findNavController().navigate(
+                R.id.action_nmiPaymentFragment_to_tryPaymentAgainFragment,
+                bundle
+            )
+        }
     }
 
 }
