@@ -108,17 +108,17 @@
     </fragment>
 
     <fragment
-    android:id="@+id/accountSuspendedFragment"
-    android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendedFragment"
-    android:label="accountSuspendedFragment"
-    tools:layout="@layout/fragment_account_suspend_halt_top_up">
-    <action
-        android:id="@+id/action_accountSuspendedFragment_to_accountSuspendedPaymentFragment"
-        app:destination="@id/accountSuspendedPaymentFragment" />
-    <action
-        android:id="@+id/action_accountSuspendedFragment_to_accountSuspendReOpenFragment"
-        app:destination="@id/accountSuspendReOpenFragment" />
-</fragment>
+        android:id="@+id/accountSuspendedFragment"
+        android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendedFragment"
+        android:label="accountSuspendedFragment"
+        tools:layout="@layout/fragment_account_suspend_halt_top_up">
+        <action
+            android:id="@+id/action_accountSuspendedFragment_to_accountSuspendedPaymentFragment"
+            app:destination="@id/accountSuspendedPaymentFragment" />
+        <action
+            android:id="@+id/action_accountSuspendedFragment_to_accountSuspendReOpenFragment"
+            app:destination="@id/accountSuspendReOpenFragment" />
+    </fragment>
 
 
     <fragment
@@ -152,6 +152,9 @@
         android:name="com.conduent.nationalhighways.ui.auth.suspended.AccountSuspendPayFragment"
         android:label="accountSuspendPayFragment"
         tools:layout="@layout/fragment_account_suspend_pay">
+        <action
+            android:id="@+id/action_accountSuspendPayFragment_to_accountSuspendReOpenFragment"
+            app:destination="@+id/accountSuspendReOpenFragment" />
         <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment"
             app:destination="@id/accountSuspendReOpenFragment" />

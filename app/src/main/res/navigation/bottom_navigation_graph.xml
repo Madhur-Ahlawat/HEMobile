@@ -116,14 +116,6 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment"
         android:label="Maximum Vehicle Number"
         tools:layout="@layout/fragment_maximum_vehicle_number">
-
-        <action
-            android:id="@+id/action_maximumVehicleFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment"
-            app:popUpTo="@+id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
-
-
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment"
@@ -158,9 +150,9 @@
             app:popUpTo="@id/vehicleHomeListFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_maximumFragment_to_businessVehicleDetailFragment"
+            android:id="@+id/action_maximumFragment_businessVehicleDetailFragment"
             app:destination="@+id/businessVehicleDetailFragment"
-           />
+            />
 
     </fragment>
 
@@ -701,6 +693,9 @@
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_newPaymentMethodFragment"
             app:destination="@+id/paymentMethodFragment" />
         <action
+            android:id="@+id/action_accountSuspendPayFragment_to_accountSuspendReOpenFragment"
+            app:destination="@+id/accountSuspendReOpenFragment" />
+        <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment"
             app:destination="@id/accountSuspendReOpenFragment" />
         <action
@@ -725,6 +720,9 @@
             android:id="@+id/action_nmiPaymentFragment_to_accountSuspendedFinalPayFragment"
             app:destination="@id/accountSuspendedFinalPayFragment" />
         <action
+            android:id="@+id/action_nmiPaymentFragment_to_accountSuspendReOpenFragment"
+            app:destination="@id/accountSuspendReOpenFragment" />
+        <action
             android:id="@+id/action_nmiPaymentFragment_to_paymentSuccessFragment2"
             app:destination="@id/paymentSuccessFragment" />
         <action
@@ -748,11 +746,6 @@
             android:id="@+id/accountSuspendReOpenFragment_to_paymentMethodFragment"
             app:destination="@id/paymentMethodFragment"
             app:popUpTo="@id/accountFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/accountSuspendReOpenFragment_to_dashboardFragment"
-            app:destination="@id/dashBoardFragment"
-            app:popUpTo="@id/dashBoardFragment"
             app:popUpToInclusive="true" />
     </fragment>
 

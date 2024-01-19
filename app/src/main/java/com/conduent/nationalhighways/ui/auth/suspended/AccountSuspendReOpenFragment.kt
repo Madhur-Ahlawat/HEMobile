@@ -2,13 +2,11 @@ package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.text.Html
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltReopenedBinding
@@ -28,9 +26,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
     View.OnClickListener {
     private var responseModel: CardResponseModel? = null
     private var personalInformation: PersonalInformation? = null
-    private var accountInformation: AccountInformation? = null
     private var currentBalance: String = ""
     private var transactionId: String = ""
+    private var navFlow: String = ""
     private var topUpAmount: String = ""
     private var newCard: Boolean = false
 
@@ -46,7 +44,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
     override fun initCtrl() {
         Utils.validationsToShowRatingDialog(requireActivity(), sessionManager)
-        binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
+        binding.feedbackBt?.movementMethod = LinkMovementMethod.getInstance()
         transactionId = arguments?.getString(Constants.TRANSACTIONID).toString()
         topUpAmount = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
 
@@ -57,10 +55,6 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
-        }
-        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
-            accountInformation =
-                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
 
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
@@ -127,7 +121,13 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
         binding.referenceNumberTv.text = transactionId
 
-        if (navFlowCall == Constants.PAYMENT_TOP_UP ) {
+
+        if (arguments?.getString(Constants.NAV_FLOW_KEY) != null) {
+            navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
+
+        }
+
+        if (navFlow == Constants.PAYMENT_TOP_UP) {
             binding.tvAccountSuspended.text = getString(
                 R.string.str_balance_topped_up_with,
                 getString(R.string.pound_symbol) + topUpAmount
@@ -137,15 +137,21 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             binding.btnTopUpNow.text = getString(R.string.str_continue)
             HomeActivityMain.setTitle(getString(R.string.top_up_success))
             binding.layoutPaymentReferenceNumber.visible()
+
         } else {
             binding.tvYouWillAlsoNeed.text = getString(R.string.str_you_have_less_than, "£5.00")
             binding.tvYouWillAlsoNeed.visible()
-
             binding.btnTopUpNow.text = getString(R.string.str_go_to_dashboard)
-
             binding.tvAccountSuspended.text = getString(R.string.str_account_reopened)
             binding.layoutPaymentReferenceNumber.visible()
-            binding.layoutPaymentReferenceNumber.visible()
+        }
+        if(arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED).equals(Constants.CARD_IS_ALREADY_REGISTERED)){
+            binding.layoutCardAlreadyExists.visible()
+            binding.succesfulCardAdded.gone()
+            binding.cardView.gone()
+        }
+        else{
+            binding.layoutCardAlreadyExists.gone()
         }
 
     }
@@ -171,11 +177,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                         }
 
                     getString(R.string.str_continue) -> {
-                        if(navFlowFrom.equals(Constants.DASHBOARD)){
-                            findNavController().navigate(R.id.accountSuspendReOpenFragment_to_dashboardFragment)
-                        }else{
-                            findNavController().navigate(R.id.accountSuspendReOpenFragment_to_paymentMethodFragment)
-                        }
+                        findNavController().navigate(R.id.accountSuspendReOpenFragment_to_paymentMethodFragment)
 
                     }
                 }
