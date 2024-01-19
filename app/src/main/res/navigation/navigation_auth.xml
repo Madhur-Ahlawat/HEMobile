@@ -164,6 +164,9 @@
         android:label="accountSuspendPayFragment"
         tools:layout="@layout/fragment_account_suspend_pay">
         <action
+            android:id="@+id/action_accountSuspendPayFragment_to_accountSuspendReOpenFragment"
+            app:destination="@+id/accountSuspendReOpenFragment" />
+        <action
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment"
             app:destination="@id/accountSuspendReOpenFragment" />
 

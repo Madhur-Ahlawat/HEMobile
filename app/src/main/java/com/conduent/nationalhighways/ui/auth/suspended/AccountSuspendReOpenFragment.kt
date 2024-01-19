@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltReopenedBinding
@@ -31,6 +30,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
     private var accountInformation: AccountInformation? = null
     private var currentBalance: String = ""
     private var transactionId: String = ""
+    private var navFlow: String = ""
     private var topUpAmount: String = ""
     private var newCard: Boolean = false
 
@@ -160,6 +160,14 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             }
         }
 
+        if(arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED).equals(Constants.CARD_IS_ALREADY_REGISTERED)){
+            binding.layoutCardAlreadyExists.visible()
+            binding.succesfulCardAdded.gone()
+            binding.cardView.gone()
+        }
+        else{
+            binding.layoutCardAlreadyExists.gone()
+        }
     }
 
     override fun init() {

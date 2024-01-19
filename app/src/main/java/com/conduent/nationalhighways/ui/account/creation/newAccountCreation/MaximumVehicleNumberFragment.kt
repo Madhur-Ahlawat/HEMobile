@@ -73,7 +73,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             when (navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
-                    binding.btnContinue.text = getString(R.string.return_to_landing_page)
+                    binding.btnContinue.text=getString(R.string.back_to_main_menu)
                     binding.descTv.text = getString(
                         R.string.crossing_vehicle_exempt_detail_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()
@@ -107,7 +107,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
                     binding.cancelBtn.visibility = View.GONE
-                    binding.btnContinue.text = getString(R.string.str_continue)
+                    binding.btnContinue.text=getString(R.string.back_to_main_menu)
                     binding.inCorrectVehicleNumber.gone()
                 }
             }
@@ -120,7 +120,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 Constants.PAY_FOR_CROSSINGS -> {
                     binding.cancelBtn.gone()
                     binding.inCorrectVehicleNumber.visible()
-                    binding.btnContinue.text = resources.getString(R.string.return_to_landingpage)
+                    binding.btnContinue.text=getString(R.string.back_to_main_menu)
                     binding.textMaximumVehicle.text =
                         getString(R.string.str_no_ruc_desc_pay_for_crossing)
                     binding.textMaximumVehicle.gravity = Gravity.CENTER
@@ -128,6 +128,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         R.string.str_vehicle_exempt_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
+                    binding.btnContinue.text=getString(R.string.back_to_main_menu)
                 }
 
                 else -> {

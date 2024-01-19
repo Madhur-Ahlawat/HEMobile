@@ -617,8 +617,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     payasugoAccount=true
                     payasugoChecked = binding.payasugoCb.isChecked
                 }
-                Log.e(TAG, "onClick: payasugoAccount "+payasugoAccount )
-                Log.e(TAG, "onClick: payasugoChecked "+payasugoChecked )
+
                 when (navFlowCall) {
                     EDIT_MOBILE -> {
                         if (noChanges) {

@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
-import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +13,6 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
@@ -31,8 +29,6 @@ import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.NmiErrorModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.NmiPaymentFragmentBinding
-import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
-import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CreateAccountViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -83,7 +79,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var isViewCreated: Boolean = false
 
     private var personalInformation: PersonalInformation? = null
-    private var accountInformation: AccountInformation? = null
     private var currentBalance: String = ""
     private var checkBox: Boolean = false
     private var paymentListSize: Int = 0
@@ -178,11 +173,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                Log.e("TAG", "handleAccountResponse() called with: response = $response")
-                Log.e(
-                    "TAG",
-                    "handleAccountResponse() called with: response = ${response.errorModel?.message}"
-                )
                 if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
                         Constants.INVALID_TOKEN
                     )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
@@ -927,22 +917,34 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
-                    displayCustomMessage(
-                        getString(R.string.str_warning),
-                        getString(R.string.the_card_you_are_trying_to_add_is_already),
-                        getString(R.string.str_add_another_card_small), getString(R.string.cancel),
-                        object : DialogPositiveBtnListener {
-                            override fun positiveBtnClick(dialog: DialogInterface) {
-                                val fragmentId = findNavController().currentDestination?.id
-                                findNavController().popBackStack(fragmentId!!, true)
-                                findNavController().navigate(fragmentId, arguments)
-                            }
-                        },
-                        object : DialogNegativeBtnListener {
-                            override fun negativeBtnClick(dialog: DialogInterface) {
-                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentMethodFragment)
-                            }
-                        })
+                    var bundle=Bundle()
+                    bundle.putString(
+                        Constants.CARD_IS_ALREADY_REGISTERED,
+                        Constants.CARD_IS_ALREADY_REGISTERED
+                    )
+//                    bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
+//                    bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
+
+                    findNavController().navigate(
+                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
+                        bundle
+                    )
+//                    displayCustomMessage(
+//                        getString(R.string.str_warning),
+//                        getString(R.string.the_card_you_are_trying_to_add_is_already),
+//                        getString(R.string.str_add_another_card_small), getString(R.string.cancel),
+//                        object : DialogPositiveBtnListener {
+//                            override fun positiveBtnClick(dialog: DialogInterface) {
+//                                val fragmentId = findNavController().currentDestination?.id
+//                                findNavController().popBackStack(fragmentId!!, true)
+//                                findNavController().navigate(fragmentId, arguments)
+//                            }
+//                        },
+//                        object : DialogNegativeBtnListener {
+//                            override fun negativeBtnClick(dialog: DialogInterface) {
+//                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentMethodFragment)
+//                            }
+//                        })
                 } else if (status.data?.statusCode?.equals("1333") == true) {
                     redirectToTryAgainPaymentScreen()
                 } else {
