@@ -1394,7 +1394,7 @@
     <string name="company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens">Company name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens</string>
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
-    <string name="you_can_pay_for_crossings_without_an_account_to">You can pay for crossings without an \naccount to:</string>
+    <string name="you_can_pay_for_crossings_without_an_account_to">Pay for crossings without an \naccount to:</string>
     <string name="str_pay_for_crossing_numberplate_point1">pay for crossings you’ve made since yesterday</string>
     <string name="str_pay_for_crossing_numberplate_point2">pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>

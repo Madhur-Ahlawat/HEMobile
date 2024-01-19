@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_15dp"
             android:layout_marginRight="@dimen/margin_15dp"
-            android:text="@string/str_go_to_start_menu"
+            android:text="@string/back_to_main_menu"
             android:layout_marginBottom="@dimen/margin_30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
