@@ -249,7 +249,6 @@
                 android:text="@string/feed_back_to_improve_service"
                 android:textColor="@color/new_btn_color"
                 android:textColorLink="@color/new_btn_color"
-                android:visibility="gone"
                 app:borderColor="@color/new_btn_color" />
 
 
