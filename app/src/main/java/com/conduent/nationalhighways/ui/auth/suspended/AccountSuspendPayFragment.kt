@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -25,6 +26,8 @@ import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendPayBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.topup.ManualTopUpViewModel
@@ -52,7 +55,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private var personalInformation: PersonalInformation? = null
     private var currentBalance: String = ""
     private var paymentSuccessResponse: PaymentSuccessResponse? = null
-    private var navFlow: String = ""
     private val formatter = DecimalFormat("#,###.00")
     private var cardModel: PaymentWithNewCardModel? = null
 
@@ -123,11 +125,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
 
         }
-
-        if (arguments?.getString(Constants.NAV_FLOW_KEY) != null) {
-            navFlow = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
-
-        }
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             HomeActivityMain.setTitle(resources.getString(R.string.str_top_up))
         }
@@ -190,8 +187,10 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     private fun topBalanceDecimal(b: Boolean) {
         if (!b) {
-            var mText = binding.lowBalance.getText().toString().trim().replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
-                .replace(" ", "")
+            var mText =
+                binding.lowBalance.getText().toString().trim().replace("$", "").replace("£", "")
+                    .replace("£.", "").replace(",", "")
+                    .replace(" ", "")
             if (mText.isEmpty()) {
                 mText = "£0.0"
             }
@@ -207,7 +206,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
             binding.lowBalance.setText("£" + formatedAmount)
             // Assuming editText is your EditText view
-            binding.lowBalance.setSelection(binding.lowBalance.editText.text?.length?:0)
+            binding.lowBalance.setSelection(binding.lowBalance.editText.text?.length ?: 0)
 
         }
 
@@ -264,7 +263,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
 
             R.id.btnCancel -> {
-                if (navFlow == Constants.PAYMENT_TOP_UP) {
+                if (navFlowCall == Constants.PAYMENT_TOP_UP) {
                     findNavController().popBackStack(R.id.accountSuspendedPaymentFragment, false)
                 } else {
                     requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
@@ -375,7 +374,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                 bundle.putString(Constants.TRANSACTIONID, status.data?.transactionId)
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
@@ -414,7 +413,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putParcelable(Constants.DATA, responseModel)
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putString(Constants.TRANSACTIONID, status.data.transactionId)
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                     bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
@@ -426,55 +425,62 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         bundle
                     )
                 } else if (status.data?.statusCode?.equals("1337") == true) {
-                    var bundle=Bundle()
-                    bundle.putString(
-                        Constants.CARD_IS_ALREADY_REGISTERED,
-                        Constants.CARD_IS_ALREADY_REGISTERED
-                    )
-                    bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
-                    bundle.putParcelable(Constants.DATA, responseModel)
-                    bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                    bundle.putBoolean(Constants.NEW_CARD, true)
-                    bundle.putString(Constants.TRANSACTIONID, status.data.transactionId)
-                    bundle.putString(
-                        Constants.CARD_IS_ALREADY_REGISTERED,
-                        Constants.CARD_IS_ALREADY_REGISTERED
-                    )
+                    if (navFlowCall.equals(Constants.PAYMENT_TOP_UP)) {
+                        var bundle = Bundle()
+                        bundle.putString(
+                            Constants.CARD_IS_ALREADY_REGISTERED,
+                            Constants.CARD_IS_ALREADY_REGISTERED
+                        )
+                        bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
+                        bundle.putParcelable(Constants.DATA, responseModel)
+                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                        bundle.putBoolean(Constants.NEW_CARD, true)
+                        bundle.putString(Constants.TRANSACTIONID, status.data.transactionId)
+                        bundle.putString(
+                            Constants.CARD_IS_ALREADY_REGISTERED,
+                            Constants.CARD_IS_ALREADY_REGISTERED
+                        )
 //                    bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
 //                    bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
-                    findNavController().navigate(
-                        R.id.action_accountSuspendPayFragment_to_accountSuspendReOpenFragment,
-                        bundle
-                    )
-//                    displayCustomMessage(
-//                        getString(R.string.str_warning),
-//                        getString(R.string.the_card_you_are_trying_to_add_is_already),
-//                        getString(R.string.str_add_another_card_small), getString(R.string.cancel),
-//                        object : DialogPositiveBtnListener {
-//                            override fun positiveBtnClick(dialog: DialogInterface) {
-//                                val fragmentId = findNavController().currentDestination?.id
-//                                findNavController().popBackStack(fragmentId!!, true)
-//                            }
-//                        },
-//                        object : DialogNegativeBtnListener {
-//                            override fun negativeBtnClick(dialog: DialogInterface) {
-//                                val bundle = Bundle()
-//                                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
-//                                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-//                                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-//                                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-//                                bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-//
-//                                findNavController().navigate(
-//                                    R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendedPaymentFragment,
-//                                    bundle
-//                                )
-//                            }
-//                        })
+                        findNavController().navigate(
+                            R.id.action_accountSuspendPayFragment_to_accountSuspendReOpenFragment,
+                            bundle
+                        )
+                    } else {
+                        displayCustomMessage(
+                            getString(R.string.str_warning),
+                            getString(R.string.the_card_you_are_trying_to_add_is_already),
+                            getString(R.string.str_add_another_card_small),
+                            getString(R.string.cancel),
+                            object : DialogPositiveBtnListener {
+                                override fun positiveBtnClick(dialog: DialogInterface) {
+                                    val fragmentId = findNavController().currentDestination?.id
+                                    findNavController().popBackStack(fragmentId!!, true)
+                                }
+                            },
+                            object : DialogNegativeBtnListener {
+                                override fun negativeBtnClick(dialog: DialogInterface) {
+                                    val bundle = Bundle()
+                                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+                                    bundle.putParcelable(
+                                        Constants.PERSONALDATA,
+                                        personalInformation
+                                    )
+                                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                                    bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+
+                                    findNavController().navigate(
+                                        R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendedPaymentFragment,
+                                        bundle
+                                    )
+                                }
+                            })
+                    }
                 } else {
                     redirectToTryAgainPage()
                 }

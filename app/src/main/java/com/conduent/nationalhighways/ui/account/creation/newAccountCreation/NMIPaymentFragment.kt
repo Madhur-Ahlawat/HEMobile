@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -30,6 +31,8 @@ import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.NmiErrorModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.NmiPaymentFragmentBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CreateAccountViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -393,7 +396,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
                                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                                bundle.putParcelable(
+                                    Constants.ACCOUNTINFORMATION,
+                                    accountInformation
+                                )
                                 bundle.putString(Constants.NAV_FLOW_KEY, flow)
                                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
@@ -569,10 +575,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             model.cellPhoneCountryCode = data.countryCode?.let { getRequiredText(it) }
             model.smsReferenceId = data.sms_referenceId
 
-            NewCreateAccountRequestModel.isCountryNotSupportForSms = Utils.isSupportedCountry(model.cellPhoneCountryCode.toString())
+            NewCreateAccountRequestModel.isCountryNotSupportForSms =
+                Utils.isSupportedCountry(model.cellPhoneCountryCode.toString())
 
-            if(!NewCreateAccountRequestModel.prePay){
-                if(!NewCreateAccountRequestModel.notSupportedCountrySaveDetails){
+            if (!NewCreateAccountRequestModel.prePay) {
+                if (!NewCreateAccountRequestModel.notSupportedCountrySaveDetails) {
                     model.cellPhone = ""
                     model.cellPhoneCountryCode = ""
                     model.smsReferenceId = ""
@@ -629,7 +636,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.cardFirstName = data.firstName   // model name
         model.cardCity = data.townCity   // address city
         model.threeDsVer = threeDsVersion  // 3ds verison
-        model.maskedNumber = maskedCardNumber// card masked number only we need to send last four digit
+        model.maskedNumber =
+            maskedCardNumber// card masked number only we need to send last four digit
         model.creditCardNumber = cardToken// card number should be token number
         model.cavv = cavv // 3ds cavv
         model.password = data.password  //model password
@@ -651,10 +659,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         model.replenishmentAmount = String.format("%.2f", topUpAmount.toDouble()) // top up amount
         model.directoryServerID = directoryServerId // 3ds serverId
         if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
-            if (!NewCreateAccountRequestModel.isCountryNotSupportForSms){
+            if (!NewCreateAccountRequestModel.isCountryNotSupportForSms) {
                 model.smsOption = "N"
                 model.mfaFlag = "N"
-            }else{
+            } else {
                 model.smsOption = "Y"
                 model.mfaFlag = "Y"
             }
@@ -903,14 +911,14 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                     bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
-                    if(navFlowFrom.equals(Constants.PAYG_SUSPENDED)){
-                        bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
-                        bundle.putParcelable(Constants.ACCOUNTINFORMATION,accountInformation)
+                    if (navFlowFrom.equals(Constants.PAYG_SUSPENDED)) {
+                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                         findNavController().navigate(
                             R.id.action_nmiPaymentFragment_to_accountSuspendReOpenFragment,
                             bundle
                         )
-                    }else{
+                    } else {
                         findNavController().navigate(
                             R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
                             bundle
@@ -919,7 +927,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
-                    var bundle=Bundle()
+                    var bundle = Bundle()
                     bundle.putString(
                         Constants.CARD_IS_ALREADY_REGISTERED,
                         Constants.CARD_IS_ALREADY_REGISTERED
@@ -927,26 +935,26 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 //                    bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
 //                    bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
-                    findNavController().navigate(
-                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-                        bundle
-                    )
-//                    displayCustomMessage(
-//                        getString(R.string.str_warning),
-//                        getString(R.string.the_card_you_are_trying_to_add_is_already),
-//                        getString(R.string.str_add_another_card_small), getString(R.string.cancel),
-//                        object : DialogPositiveBtnListener {
-//                            override fun positiveBtnClick(dialog: DialogInterface) {
-//                                val fragmentId = findNavController().currentDestination?.id
-//                                findNavController().popBackStack(fragmentId!!, true)
-//                                findNavController().navigate(fragmentId, arguments)
-//                            }
-//                        },
-//                        object : DialogNegativeBtnListener {
-//                            override fun negativeBtnClick(dialog: DialogInterface) {
-//                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentMethodFragment)
-//                            }
-//                        })
+//                    findNavController().navigate(
+//                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
+//                        bundle
+//                    )
+                    displayCustomMessage(
+                        getString(R.string.str_warning),
+                        getString(R.string.the_card_you_are_trying_to_add_is_already),
+                        getString(R.string.str_add_another_card_small), getString(R.string.cancel),
+                        object : DialogPositiveBtnListener {
+                            override fun positiveBtnClick(dialog: DialogInterface) {
+                                val fragmentId = findNavController().currentDestination?.id
+                                findNavController().popBackStack(fragmentId!!, true)
+                                findNavController().navigate(fragmentId, arguments)
+                            }
+                        },
+                        object : DialogNegativeBtnListener {
+                            override fun negativeBtnClick(dialog: DialogInterface) {
+                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_paymentMethodFragment)
+                            }
+                        })
                 } else if (status.data?.statusCode?.equals("1333") == true) {
                     redirectToTryAgainPaymentScreen()
                 } else {
@@ -985,7 +993,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private fun redirectToTryAgainPaymentScreen() {
 
-        if(navFlowFrom.equals(Constants.PAYG_SUSPENDED)){
+        if (navFlowFrom.equals(Constants.PAYG_SUSPENDED)) {
             val bundle = Bundle()
 
             bundle.putString(
@@ -1000,7 +1008,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
                 bundle
             )
-        }else {
+        } else {
             val bundle = Bundle()
             bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
