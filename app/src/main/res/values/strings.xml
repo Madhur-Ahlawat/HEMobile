@@ -1574,11 +1574,13 @@
     <string name="b_more_details"><b>More details</b>\nFor more details on Types of Vehicles and charge amounts visit <a href="https://www.gov.uk/pay-dartford-crossing-charge/charges-fines">understanding charges, discounts and penalties</a>.</string>
     <string name="b_if_you_re_disabled"><b>If you’re disabled</b>\nYou do not need to pay the charge if you get free UK vehicle tax because of a disability.\n\nYour vehicle will be checked automatically when you cross - you do not need to do anything.\n\nFind out how to <a href="https://www.gov.uk/get-vehicle-tax-exemption-disability">get free vehicle tax if you’re a driver with a disability</a>.</string>
     <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council</a>.\n\nYou can either\n\n<ul><li>pay £20 a year to use the Dartford Crossing as many times as you want</li>\n<li>pay £10 for 50 crossings, plus 20p for each additional crossing</li></ul>\n\nApply for a local resident discount online or by post.</string>
-
+    <string name="enablenow_lower_case">Enable Now</string>
+    <string name="enablelater_lower_case">Enable Later</string>
     <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a> or call the Dart Charge contact centre.</string>
     <string name="contact_dart_charge">Contact Dart Charge</string>
     <string name="do_you_have_dart_charge_account">Do you have Dart Charge Account?</string>
     <string name="sub_category">Sub-category</string>
+    <string name="str_sorry_service_unavailable">Sorry, the service is unavailable</string>
     <string name="date_time_submitted"><![CDATA[Date & time submitted]]></string>
     <string name="status_of_enquiry">Status of enquiry</string>
     <string name="date_enquiry_closed">Date enquiry closed</string>
@@ -1676,5 +1678,18 @@
     <string name="change_country_code">Change Country Code</string>
     <string name="sms_not_support_text">%s country is not supporting for sms.You can not enable 2fa</string>
     <string name="the_card_already_exists_on_this_account">The card already exists on the account.</string>
-
+    <string name="str_profile_biometrics">Profile Biometrics</string>
+    <string name="str_service_is_unavailable">Service is unavailable</string>
+    <string name="str_send_security_code_by_text_message">We’ll use this to send you a security code by text message.</string>
+    <string name="str_phone_number_starts_countrycode">Your phone number starts with the country code %1$s. At this time you will be unable to use the following services.</string>
+    <string name="str_receving_communications">Receiving communications about your account by text message</string>
+    <string name="str_receving_payment_receipt">Receiving your payment receipt by text message.</string>
+    <string name="str_two_step_verification">Two-step verification</string>
+    <string name="str_may_change_mobile_number">You may change your mobile phone number or continue with your account creation</string>
+    <string name="str_may_change_mobile_number_two_step">You may change your mobile phone number or continue to opt out of two-step verification and SMS messages.</string>
+    <string name="str_may_change_mobile_number_pay_for_crossings">You may change your mobile phone number or select only email to receive your receipt. Or continue without a receipt.</string>
+    <string name="str_save_mobile_number">Save this mobile number to my account contact details</string>
+    <string name="str_provide_payment_card_details">You have to provide your payment card details</string>
+    <string name="text_we_have_sent_a_reciept_email_to_text">We\'ve sent a receipt email to</string>
+    <string name="str_provide_payment_card_details_desc">Payment could not be taken for your crossing and your account has been suspended.\n\nTo continue using your account you have to provide your payment card details.\n\nIf you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
 </resources>

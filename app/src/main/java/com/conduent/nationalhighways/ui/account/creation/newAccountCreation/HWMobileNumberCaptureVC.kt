@@ -226,8 +226,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                                 ) {
                                     matchedCountry = s2
                                     matchedCountryCode =
-                                        "+"
-                                    +mCountryCode
+                                        "+"+mCountryCode
                                 }
                             }
                         }
