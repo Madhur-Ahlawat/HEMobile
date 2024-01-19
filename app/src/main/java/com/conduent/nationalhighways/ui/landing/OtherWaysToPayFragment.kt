@@ -66,6 +66,7 @@ class OtherWaysToPayFragment : BaseFragment<FragmentOtherWaysToPayBinding>() {
     }
     override fun initCtrl() {
         binding?.tvGuideline?.setMovementMethod(LinkMovementMethod.getInstance())
+        binding?.txtPayThroughWebsite?.setMovementMethod(LinkMovementMethod.getInstance())
     }
     override fun observer() {
     }

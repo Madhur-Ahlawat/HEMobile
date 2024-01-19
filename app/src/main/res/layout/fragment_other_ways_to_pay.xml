@@ -90,6 +90,7 @@
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:layout_width="wrap_content"
+                android:id="@+id/txt_pay_through_website"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_7dp"
                 android:fontFamily="@font/open_sans"

@@ -432,8 +432,6 @@
 
     <string name="str_remove_vehicle">Remove vehicle</string>
     <string name="str_select_vehicle_to_remove">Select vehicles you want to remove</string>
-    <string name="enablenow_lower_case">Enable Now</string>
-    <string name="enablelater_lower_case">Enable Later</string>
 
     <string name="start_again">Start again</string>
     <string name="your_session_has_expired">Your session has expired</string>
@@ -1576,6 +1574,8 @@
     <string name="b_more_details"><b>More details</b>\nFor more details on Types of Vehicles and charge amounts visit <a href="https://www.gov.uk/pay-dartford-crossing-charge/charges-fines">understanding charges, discounts and penalties</a>.</string>
     <string name="b_if_you_re_disabled"><b>If you’re disabled</b>\nYou do not need to pay the charge if you get free UK vehicle tax because of a disability.\n\nYour vehicle will be checked automatically when you cross - you do not need to do anything.\n\nFind out how to <a href="https://www.gov.uk/get-vehicle-tax-exemption-disability">get free vehicle tax if you’re a driver with a disability</a>.</string>
     <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council</a>.\n\nYou can either\n\n<ul><li>pay £20 a year to use the Dartford Crossing as many times as you want</li>\n<li>pay £10 for 50 crossings, plus 20p for each additional crossing</li></ul>\n\nApply for a local resident discount online or by post.</string>
+    <string name="enablenow_lower_case">Enable Now</string>
+    <string name="enablelater_lower_case">Enable Later</string>
     <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a> or call the Dart Charge contact centre.</string>
     <string name="contact_dart_charge">Contact Dart Charge</string>
     <string name="do_you_have_dart_charge_account">Do you have Dart Charge Account?</string>
@@ -1588,7 +1588,7 @@
     <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="str_other_ways_to_pay_1"><ul>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></ul></string>
-    <string name="str_other_ways_to_pay_2">pay or setup an account</string>
+    <string name="str_other_ways_to_pay_2">pay or set up an account through <a href="https://www.gov.uk/pay-dartford-crossing-charge/">the Dart Charge website</a></string>
     <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge.</string>
     <string name="str_or_you_can">Or you can:</string>
     <string name="about_this_service">About This Service</string>
@@ -1692,4 +1692,8 @@
     <string name="str_provide_payment_card_details">You have to provide your payment card details</string>
     <string name="str_provide_payment_card_details_desc">Payment could not be taken for your crossing and your account has been suspended.\n\nTo continue using your account you have to provide your payment card details.\n\nIf you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
     <string name="text_we_have_sent_a_reciept_email_to_text">We\'ve sent a receipt email to</string>
+    <string name="str_provide_payment_card_details_desc">Payment could not be taken for your crossing and your account has been suspended.\n\nTo continue using your account you have to provide your payment card details.\n\nIf you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
+    <string name="dartcharge_v1_0">DartCharge v1.0</string>
+    <string name="str_copyright">©2024 Conduent, Inc. All Rights Reserved</string>
+    <string name="str_credential_note">This will be the same as the credentials you use to login on the website</string>
 </resources>
