@@ -1124,6 +1124,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     val intent = Intent(requireActivity(), BiometricActivity::class.java)
                     intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
+                    intent.putExtra(Constants.NAV_FLOW_KEY, navFlowFrom)
 
                     startActivity(intent)
 

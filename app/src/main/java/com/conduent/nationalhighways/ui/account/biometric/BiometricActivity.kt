@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -64,6 +65,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var navFlowFrom: String = ""
+    var navFlowCall: String = ""
     @Inject
     lateinit var api: ApiService
 
@@ -79,6 +81,13 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
+        if (intent.hasExtra(Constants.NAV_FLOW_KEY)) {
+            navFlowCall = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
+        }
+
+        Log.e("TAG", "onCreateView: navFlowCall--> " + navFlowCall)
+        Log.e("TAG", "onCreateView: navFlowFrom--> " + navFlowFrom)
+
         if(navFlowFrom.equals(Constants.TWOFA) || navFlowFrom.equals(Constants.LOGIN)|| navFlowFrom.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
             binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
             binding.toolBarLyt.backButton.gone()
@@ -404,11 +413,19 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
     private fun goToHomeActivity() {
         startNewActivityByClearingStack(HomeActivityMain::class.java) {
-            if (navFlowFrom.equals(Constants.TWOFA)) {
-                putString(
-                    Constants.NAV_FLOW_FROM,
-                    navFlowFrom
-                )
+            if (navFlowFrom.equals(Constants.TWOFA)||navFlowFrom.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)||navFlowCall.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+
+               if(navFlowCall.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
+                   putString(
+                       Constants.NAV_FLOW_FROM,
+                       Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
+                   )
+               }else {
+                   putString(
+                       Constants.NAV_FLOW_FROM,
+                       navFlowFrom
+                   )
+               }
                 putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
             } else if(navFlowFrom.equals(Constants.LOGIN)){
 

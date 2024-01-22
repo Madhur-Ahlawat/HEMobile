@@ -1646,9 +1646,7 @@
     <string name="dart_charge_general_terms_and_conditions">Dart Charge General Terms and\nConditions</string>
     <string name="dart_charge_privacy_policy">Dart Charge Privacy Policy</string>
     <string name="terms_and_conditions_for_payg">Terms and Conditions for PAYG</string>
-    <string name="return_to_landing_page">Return To Landing Page</string>
     <string name="continue_with_your_selection">Continue With Your Selection</string>
-    <string name="return_to_landingpage">Return to landing page</string>
     <string name="enter_a_top_up_amount">Enter a top-up amount</string>
     <string name="southbound">Southbound</string>
     <string name="number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hypens_and_spaces">Number plate must only include letters a to z, numbers 0 to 9 and special characters such as hypens and spaces</string>
@@ -1690,7 +1688,6 @@
     <string name="str_may_change_mobile_number_pay_for_crossings">You may change your mobile phone number or select only email to receive your receipt. Or continue without a receipt.</string>
     <string name="str_save_mobile_number">Save this mobile number to my account contact details</string>
     <string name="str_provide_payment_card_details">You have to provide your payment card details</string>
-    <string name="str_provide_payment_card_details_desc">Payment could not be taken for your crossing and your account has been suspended.\n\nTo continue using your account you have to provide your payment card details.\n\nIf you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
     <string name="text_we_have_sent_a_reciept_email_to_text">We\'ve sent a receipt email to</string>
     <string name="str_provide_payment_card_details_desc">Payment could not be taken for your crossing and your account has been suspended.\n\nTo continue using your account you have to provide your payment card details.\n\nIf you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
     <string name="dartcharge_v1_0">DartCharge v1.0</string>

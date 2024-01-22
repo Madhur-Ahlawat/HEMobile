@@ -33,11 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:src="@drawable/ic_check_blue"
-                android:textSize="@dimen/font_14sp"
-
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="@dimen/font_14sp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_account_suspended"
@@ -47,10 +43,7 @@
                 android:layout_marginTop="25dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:text="@string/str_account_reopened"
-                android:textSize="@dimen/font_16sp"
-                app:layout_constraintEnd_toEndOf="@+id/ivWarning"
-                app:layout_constraintStart_toStartOf="@id/ivWarning"
-                app:layout_constraintTop_toBottomOf="@+id/ivWarning" />
+                android:textSize="@dimen/font_16sp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tvYouWillNeedToPay"
@@ -59,15 +52,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/open_sans"
-
                 android:gravity="center_horizontal"
                 android:text="@string/str_we_have_sent_confirmation"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="@+id/ivWarning"
-                app:layout_constraintStart_toStartOf="@id/ivWarning"
-                app:layout_constraintTop_toBottomOf="@+id/tv_account_suspended" />
+                android:textSize="15sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/layout_payment_reference_number"
@@ -76,10 +65,7 @@
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_marginRight="@dimen/margin_2dp"
                 app:cardElevation="@dimen/_3dp"
-                android:layout_marginBottom="5dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvYouWillNeedToPay">
+                android:layout_marginBottom="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -106,6 +92,19 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tvYouWillAlsoNeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_horizontal"
+                android:text="@string/str_you_have_less_than"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/layout_card_already_exists"
                 style="@style/cardView_style"
@@ -113,10 +112,7 @@
                 android:layout_marginTop="@dimen/margin_35dp"
                 android:layout_marginRight="@dimen/margin_2dp"
                 app:cardElevation="@dimen/_3dp"
-                android:layout_marginBottom="@dimen/_25dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvYouWillAlsoNeed">
+                android:layout_marginBottom="@dimen/_25dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -148,21 +144,6 @@
             </androidx.cardview.widget.CardView>
 
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/tvYouWillAlsoNeed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center_horizontal"
-                android:text="@string/str_you_have_less_than"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-
-                app:layout_constraintEnd_toEndOf="@+id/ivWarning"
-                app:layout_constraintStart_toStartOf="@id/ivWarning"
-                app:layout_constraintTop_toBottomOf="@+id/layout_payment_reference_number" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/succesful_card_added"
@@ -176,9 +157,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/ivWarning"
-                app:layout_constraintStart_toStartOf="@id/ivWarning"
-                app:layout_constraintTop_toBottomOf="@+id/tvYouWillAlsoNeed" />
+                tools:visibility="visible"/>
 
 
             <androidx.cardview.widget.CardView
@@ -191,9 +170,8 @@
                 android:elevation="3dp"
                 android:minHeight="@dimen/_74dp"
                 android:visibility="gone"
-                app:cardCornerRadius="@dimen/_5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/succesful_card_added">
+                tools:visibility="visible"
+                app:cardCornerRadius="@dimen/_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -236,7 +214,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_30dp"
-                android:layout_marginBottom="@dimen/margin_20dp"
+                android:layout_marginBottom="@dimen/margin_10dp"
                 android:text="@string/str_go_to_dashboard"
                 app:isEnabled="true" />
 

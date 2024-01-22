@@ -424,8 +424,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
                         bundle
                     )
-                } else if (status.data?.statusCode?.equals("1337") == true) {
-                    if (navFlowCall.equals(Constants.PAYMENT_TOP_UP)) {
+                } else if (status.data?.statusCode?.equals("1337") == true && status.data.transactionId!=null) {
+                    if (navFlowCall.equals(Constants.PAYMENT_TOP_UP) ||(navFlowCall.equals(Constants.SUSPENDED) && navFlowFrom.equals(Constants.DASHBOARD))) {
                         var bundle = Bundle()
                         bundle.putString(
                             Constants.CARD_IS_ALREADY_REGISTERED,

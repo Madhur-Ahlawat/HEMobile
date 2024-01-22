@@ -246,7 +246,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         bundle()
                     )
 
-                    requireActivity().resources.getString(R.string.return_to_landing_page)
+                    requireActivity().resources.getString(R.string.back_to_main_menu)
                         .lowercase() -> {
                         requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
                     }

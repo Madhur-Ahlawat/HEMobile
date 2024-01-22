@@ -37,14 +37,12 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
         crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""
-        Log.e("TAG", "init: accSubType "+accountInformation?.accSubType )
         if(accountInformation?.accSubType.equals(Constants.PAYG)){
             binding.textMaximumVehicle.text =
                 getString(R.string.str_provide_payment_card_details_desc)
             binding.maximumVehicleAdded.text =
                 getString(R.string.str_provide_payment_card_details)
-            binding.btnTopUpNow.text =
-                getString(R.string.str_continue)
+            binding.btnTopUpNow.text = getString(R.string.str_continue)
         }else{
             if (crossingCount.isNotEmpty() ) {
                 if (crossingCount.toInt() > 0) {
