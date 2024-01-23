@@ -17,10 +17,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountInformation
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltBinding
 import com.conduent.nationalhighways.ui.auth.adapter.SuspendPaymentMethodAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment

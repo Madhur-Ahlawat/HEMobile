@@ -5,14 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
-import com.conduent.nationalhighways.data.model.account.AccountInformation
-import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.ThresholdAmountApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
@@ -23,10 +17,12 @@ import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryA
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.remote.NoConnectivityException
 import com.conduent.nationalhighways.data.repository.dashboard.DashBoardRepo
-import com.conduent.nationalhighways.ui.transactions.paging.TransactionsPagingSource
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
@@ -48,10 +44,10 @@ class DashboardViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
-    val accountType: LiveData<AccountResponse> get() = _accountType
-    private val _accountType = MutableLiveData<AccountResponse>()
-    fun setAccountType(accountResponse: AccountResponse) {
-        _accountType.postValue(accountResponse)
+    val accountType: LiveData<ProfileDetailModel> get() = _accountType
+    private val _accountType = MutableLiveData<ProfileDetailModel>()
+    fun setAccountType(ProfileDetailModel: ProfileDetailModel) {
+        _accountType.postValue(ProfileDetailModel)
     }
 
     val alertLivData: LiveData<Resource<AlertMessageApiResponse?>?> get() = alertMutData
@@ -65,8 +61,8 @@ class DashboardViewModel @Inject constructor(
     val vehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _accountDetailsVal = MutableLiveData<Resource<AccountResponse?>?>()
-    val accountOverviewVal: MutableLiveData<Resource<AccountResponse?>?> get() = _accountDetailsVal
+    private val _accountDetailsVal = MutableLiveData<Resource<ProfileDetailModel?>?>()
+    val accountOverviewVal: MutableLiveData<Resource<ProfileDetailModel?>?> get() = _accountDetailsVal
 
     private val _lrdsVal = MutableLiveData<Resource<LRDSResponse?>?>()
     val lrdsVal: MutableLiveData<Resource<LRDSResponse?>?> get() = _lrdsVal
@@ -95,8 +91,12 @@ class DashboardViewModel @Inject constructor(
     val whereToReceivePaymentReceipt: LiveData<Resource<ResponseBody?>?> get() = _whereToReceivePaymentReceipt
 
 
-    var personalInformationData: MutableLiveData<PersonalInformation> = MutableLiveData()
-    var accountInformationData: MutableLiveData<AccountInformation> = MutableLiveData()
+    var personalInformationData: MutableLiveData<PersonalInformation> =
+        MutableLiveData()
+    var accountInformationData: MutableLiveData<AccountInformation> =
+        MutableLiveData()
+    var profileDetailModel: MutableLiveData<ProfileDetailModel> = MutableLiveData()
+
     var accountSubType: MutableLiveData<String> = MutableLiveData()
     var directDebitCardListSize: MutableLiveData<Int> = MutableLiveData()
     var paymentListSize: MutableLiveData<Int> = MutableLiveData()
@@ -109,14 +109,14 @@ class DashboardViewModel @Inject constructor(
             "", "", "", "", "",
             "", "", "", "", "", "", "",
             "", "", "", "", "", "",
-            "", "", false, false, false,
-            false, "", "", "",
+            "", "", "", "", "",
             "", "", "", "",
             "", "", "", "",
             "", "", "", "",
+            "", false, "", "",
             "", "", "", "",
             "", "", "", "",
-            "", "", "", "",
+            "", "", "", "", "",
             "", "", "", ""
         )
 
@@ -214,6 +214,7 @@ class DashboardViewModel @Inject constructor(
             }
         }
     }
+
     fun getLRDSResponse() {
         viewModelScope.launch {
             try {
@@ -245,7 +246,7 @@ class DashboardViewModel @Inject constructor(
                     val vehicleCountResponse: Response<List<VehicleResponse?>?>?
                     val crossingCountResponse: Response<CrossingHistoryApiResponse?>?
 //                    val thresholdAmountResponse: Response<ThresholdAmountApiResponse?>?
-                    val overviewResponse: Response<AccountResponse?>?
+                    val overviewResponse: Response<ProfileDetailModel?>?
                     val alertsResponse: Response<AlertMessageApiResponse?>?
 
                     val callVehicleCount = async { repository.getVehicleData() }

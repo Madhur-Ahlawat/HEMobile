@@ -77,25 +77,6 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/cancel_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin_50dp"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:gravity="center"
-                        android:text="@string/str_keep_only_while_using"
-                        android:textAlignment="center"
-                        android:textColor="@color/hyperlink_blue2"
-                        android:textSize="17sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#8F8F8F"
-                        android:alpha="0.3"/>
-
-
-
-                    <TextView
                         android:id="@+id/ok_btn"
                         android:layout_height="@dimen/margin_50dp"
                         android:layout_width="match_parent"
@@ -107,6 +88,25 @@
                         android:textSize="17sp"
 
                         />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#8F8F8F"
+                        android:alpha="0.3"/>
+
+                    <TextView
+                        android:id="@+id/cancel_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_50dp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="center"
+                        android:text="@string/str_keep_only_while_using"
+                        android:textAlignment="center"
+                        android:textColor="@color/color_E30000"
+                        android:textSize="17sp" />
+
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

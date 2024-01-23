@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class LRDSResponse(
     @SerializedName("srStatus") val srStatus : String?,
-    @SerializedName("statusCode") val statusCode : String?,
+    @SerializedName("statusCode") var statusCode : String?,
     @SerializedName("srNumber") val srNumber : String?,
     @SerializedName("srApprovalStatus") val srApprovalStatus : String?,
     @SerializedName("message") val message : String?,

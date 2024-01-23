@@ -31,7 +31,7 @@ import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingC
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithNewCardModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.*
 import com.conduent.nationalhighways.data.model.nominatedcontacts.CreateAccountRequestModel
-import com.conduent.nationalhighways.data.model.nominatedcontacts.CreateAccountResponseModel
+import com.conduent.nationalhighways.data.model.nominatedcontacts.CreateProfileDetailModelModel
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.*
 import com.conduent.nationalhighways.data.model.profile.*
@@ -162,7 +162,7 @@ interface ApiService {
     @POST(CREATE_SECONDARY_ACCOUNT)
     suspend fun createSecondaryAccount(
         @Body model: CreateAccountRequestModel?
-    ): Response<CreateAccountResponseModel?>?
+    ): Response<CreateProfileDetailModelModel?>?
 
     @GET(SECONDARY_ACCOUNT)
     suspend fun getSecondaryAccount(): Response<NominatedContactRes?>?
@@ -225,13 +225,13 @@ interface ApiService {
     suspend fun createAccount(
         @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Body model: com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel?
-    ): Response<com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel?>?
+    ): Response<com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel?>?
 
     @POST(CREATE_ACCOUNT)
     suspend fun createAccountNew(
         @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Body model: AccountCreationRequest?
-    ): Response<com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel?>?
+    ): Response<com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel?>?
 
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
     suspend fun getAddressListBasedOnPostalCode(
@@ -322,7 +322,7 @@ interface ApiService {
     ): Response<CheckedCrossingRecentTransactionsResponseModel?>?
 
     @GET(ACCOUNT_DETAILS)
-    suspend fun getAccountDetailsData(): Response<AccountResponse?>?
+    suspend fun getAccountDetailsData(): Response<ProfileDetailModel?>?
 
     @POST(Heart_Beat)
     suspend fun getHeartBeat(
@@ -445,7 +445,7 @@ interface ApiService {
     ): Response<List<VehicleResponse?>?>?
 
     @GET(ACCOUNT_SETTINGS)
-    suspend fun getAccountSettings(): Response<AccountResponse?>?
+    suspend fun getAccountSettings(): Response<ProfileDetailModel?>?
 
     @PUT(UPDATE_COMMUNICATION_PREFS)
     suspend fun updateCommunicationPrefs(

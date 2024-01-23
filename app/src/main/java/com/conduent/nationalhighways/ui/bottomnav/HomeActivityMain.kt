@@ -10,12 +10,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.account.AccountResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -48,7 +48,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener {
 
-    private var goToSuccessPage: Boolean=false
+    private var goToSuccessPage: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -70,7 +70,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     companion object {
         var dataBinding: ActivityHomeMainBinding? = null
         var dateRangeModel: PaymentDateRangeModel? = null
-        var accountDetailsData: AccountResponse? = null
+        var accountDetailsData: ProfileDetailModel? = null
         var crossing: TransactionData? = null
         var checkedCrossing: CheckedCrossingRecentTransactionsResponseModelItem? = null
         var paymentHistoryListData: MutableList<TransactionData> = mutableListOf()
@@ -80,43 +80,45 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         fun setTitle(title: String) {
             dataBinding?.titleTxt?.text = title
         }
-        fun removeBottomBar(){
+
+        fun removeBottomBar() {
             dataBinding?.bottomNavigationView?.gone()
         }
-        fun changeBottomIconColors(context: Context,pos: Int) {
+
+        fun changeBottomIconColors(context: Context, pos: Int) {
             Log.e("TAG", "changeBottomIconColors: pos " + pos)
             if (pos == 0) {
-                setSelectedIcon(context,0)
-                setDeselectedIcon(context,1)
-                setDeselectedIcon(context,2)
-                setDeselectedIcon(context,3)
+                setSelectedIcon(context, 0)
+                setDeselectedIcon(context, 1)
+                setDeselectedIcon(context, 2)
+                setDeselectedIcon(context, 3)
             }
 
             if (pos == 1) {
-                setSelectedIcon(context,1)
-                setDeselectedIcon(context,0)
-                setDeselectedIcon(context,2)
-                setDeselectedIcon(context,3)
+                setSelectedIcon(context, 1)
+                setDeselectedIcon(context, 0)
+                setDeselectedIcon(context, 2)
+                setDeselectedIcon(context, 3)
             }
 
             if (pos == 2) {
-                setSelectedIcon(context,2)
-                setDeselectedIcon(context,1)
-                setDeselectedIcon(context,0)
-                setDeselectedIcon(context,3)
+                setSelectedIcon(context, 2)
+                setDeselectedIcon(context, 1)
+                setDeselectedIcon(context, 0)
+                setDeselectedIcon(context, 3)
             }
 
             if (pos == 3) {
-                setSelectedIcon(context,3)
-                setDeselectedIcon(context,1)
-                setDeselectedIcon(context,2)
-                setDeselectedIcon(context,0)
+                setSelectedIcon(context, 3)
+                setDeselectedIcon(context, 1)
+                setDeselectedIcon(context, 2)
+                setDeselectedIcon(context, 0)
             }
 
 
         }
 
-        fun setDeselectedIcon(context: Context,i: Int) {
+        fun setDeselectedIcon(context: Context, i: Int) {
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
                 context.resources.getColor(R.color.new_btn_color)
             )
@@ -125,7 +127,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             )
         }
 
-        fun setSelectedIcon(context: Context,i: Int) {
+        fun setSelectedIcon(context: Context, i: Int) {
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
                 context.resources.getColor(R.color.hyperlink_blue2)
             )
@@ -143,7 +145,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding = ActivityHomeMainBinding.inflate(layoutInflater)
         setContentView(dataBinding?.root)
         setView()
-        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD,true)
+        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD, true)
     }
 
 
@@ -190,7 +192,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
 
         if (intent.hasExtra(Constants.GO_TO_SUCCESS_PAGE)) {
-            goToSuccessPage = intent.getBooleanExtra(Constants.GO_TO_SUCCESS_PAGE,false)
+            goToSuccessPage = intent.getBooleanExtra(Constants.GO_TO_SUCCESS_PAGE, false)
         }
 
         navController = (supportFragmentManager.findFragmentById(
@@ -215,13 +217,13 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
             navController.navigate(R.id.enquiryCategoryFragment, bundle)
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
-            changeBottomIconColors(this@HomeActivityMain,3)
+            changeBottomIconColors(this@HomeActivityMain, 3)
             from = ""
 
         } else {
             var bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, from)
-            bundle.putBoolean(Constants.GO_TO_SUCCESS_PAGE,goToSuccessPage)
+            bundle.putBoolean(Constants.GO_TO_SUCCESS_PAGE, goToSuccessPage)
             dataBinding?.idToolBarLyt?.gone()
             if (!this::navController.isInitialized) {
                 navController = (supportFragmentManager.findFragmentById(
@@ -230,7 +232,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             }
             navController.navigate(R.id.dashBoardFragment, bundle)
             getDashBoardAllData()
-            changeBottomIconColors(this@HomeActivityMain,0)
+            changeBottomIconColors(this@HomeActivityMain, 0)
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment) {
@@ -278,14 +280,14 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
                     when (navigationItem.position) {
                         0 -> {
-                            changeBottomIconColors(this@HomeActivityMain,0)
+                            changeBottomIconColors(this@HomeActivityMain, 0)
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
                                 dashboardClick()
                             }
                         }
 
                         1 -> {
-                            changeBottomIconColors(this@HomeActivityMain,1)
+                            changeBottomIconColors(this@HomeActivityMain, 1)
                             if (navController.currentDestination?.id != R.id.crossingHistoryFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
@@ -297,7 +299,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         2 -> {
-                            changeBottomIconColors(this@HomeActivityMain,2)
+                            changeBottomIconColors(this@HomeActivityMain, 2)
                             if (navController.currentDestination?.id != R.id.notificationFragment) {
                                 dataBinding?.idToolBarLyt?.visible()
                                 dataBinding?.titleTxt?.text =
@@ -309,7 +311,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         }
 
                         3 -> {
-                            changeBottomIconColors(this@HomeActivityMain,3)
+                            changeBottomIconColors(this@HomeActivityMain, 3)
                             if (navController.currentDestination?.id != R.id.accountFragment) {
                                 accountFragmentClick()
                             }
@@ -320,7 +322,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         )
 
     }
-
 
 
     fun backPressLogic() {
@@ -416,8 +417,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
     }
 
-    private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
-        refreshTokenApiCalled=false
+    private fun handleAccountDetailsResponse(status: Resource<ProfileDetailModel?>?) {
+        refreshTokenApiCalled = false
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -425,6 +426,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             is Resource.Success -> {
                 dashboardViewModel.personalInformationData.value = status.data?.personalInformation
                 dashboardViewModel.accountInformationData.value = status.data?.accountInformation
+                dashboardViewModel.profileDetailModel.value = status.data
                 personalInformation = status.data?.personalInformation
 
                 status.data?.apply {
@@ -482,15 +484,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun onResume() {
         super.onResume()
-        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
+        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, true)
         refreshTokenApi()
     }
 
     fun refreshTokenApi() {
-        if(refreshTokenApiCalled==false) {
+        if (refreshTokenApiCalled == false) {
             BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
         }
-        refreshTokenApiCalled=true
+        refreshTokenApiCalled = true
     }
 
     override fun onStart() {

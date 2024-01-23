@@ -17,15 +17,15 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountInformation
-import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
-import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
+import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentLoginChangesBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
@@ -99,7 +99,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         when (resource) {
 
             is Resource.Success -> {
-                if (resource.data?.statusCode == null) {
+
+                if (resource.data?.srApprovalStatus?.uppercase().equals("APPROVED")) {
                     startNewActivityByClearingStack(LandingActivity::class.java) {
                         putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
                     }
@@ -116,15 +117,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                        intent.putExtra(Constants.NAV_FLOW_FROM,from)
+                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
                         intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
                         startActivity(intent)
                     } else {
                         dashboardViewModel.getAccountDetailsData()
                     }
                     sessionManager.saveUserName(binding.edtEmail.getText().toString())
-
-
                 }
             }
 
@@ -147,9 +146,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                     )
-                    if(from.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
-                        intent.putExtra(Constants.NAV_FLOW_FROM, Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)
-                    }else{
+                    if (from.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+                        intent.putExtra(
+                            Constants.NAV_FLOW_FROM,
+                            Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
+                        )
+                    } else {
                         intent.putExtra(Constants.NAV_FLOW_FROM, Constants.LOGIN)
                     }
 
@@ -172,7 +174,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
 
-    private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
+    private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
         Log.e("TAG", "handleAccountDetails() called with: status = $status")
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -301,7 +303,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun init() {
-        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
+        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, false)
         BaseApplication.flowNameAnalytics = Constants.LOGIN
         BaseApplication.screenNameAnalytics = ""
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
@@ -501,7 +503,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         sessionManager.saveUserName(binding.edtEmail.getText().toString())
         sessionManager.run {
             saveAuthToken(response.data?.accessToken ?: "")
-            saveBooleanData(SessionManager.SendAuthTokenStatus,true)
+            saveBooleanData(SessionManager.SendAuthTokenStatus, true)
             saveTwoFAEnabled(response.data?.require2FA == "true")
             saveRefreshToken(response.data?.refreshToken ?: "")
             setAccountType(response.data?.accountType ?: Constants.PERSONAL_ACCOUNT)
@@ -542,7 +544,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_login -> {
-                sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
+                sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, false)
 
                 hideKeyboard()
                 loginModel = LoginModel(

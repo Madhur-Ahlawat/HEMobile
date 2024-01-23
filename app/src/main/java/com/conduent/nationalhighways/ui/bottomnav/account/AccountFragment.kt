@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.conduent.nationalhighways.utils.common.Constants
@@ -48,6 +50,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     private val viewModel: NominatedContactListViewModel by viewModels()
     private val raise_viewModel: RaiseNewEnquiryViewModel by viewModels()
     private val logOutViewModel: LogoutViewModel by viewModels()
+    private val dashboardViewModel: DashboardViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
 
@@ -206,6 +209,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.communication_preferences -> {
+                Log.e("TAG", "onClick:firstName "+dashboardViewModel.profileDetailModel.value?.personalInformation?.firstName )
                 title?.text = getString(R.string.communication_preferences)
                 val bundle = Bundle()
                 bundle.putString(

@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
@@ -216,7 +216,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 //        }
 //    }
 
-    private fun handleAccountDetailsResponse(status: Resource<AccountResponse?>?) {
+    private fun handleAccountDetailsResponse(status: Resource<ProfileDetailModel?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -236,7 +236,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
     }
 
-    private fun setTopUpVisibility(data: AccountResponse) {
+    private fun setTopUpVisibility(data: ProfileDetailModel) {
         if (data.accountInformation?.accountType.equals("BUSINESS", true)
             || (data.accountInformation?.accSubType.equals("STANDARD", true) &&
                     data.accountInformation?.accountType.equals("PRIVATE", true))) {
@@ -246,7 +246,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
     }
 
-    private fun setAccountDetailsView(data: AccountResponse) {
+    private fun setAccountDetailsView(data: ProfileDetailModel) {
         binding.apply {
             tvAvailableBalance.text = data.replenishmentInformation?.currentBalance?.run {
                 get(0) + " " + drop(1)

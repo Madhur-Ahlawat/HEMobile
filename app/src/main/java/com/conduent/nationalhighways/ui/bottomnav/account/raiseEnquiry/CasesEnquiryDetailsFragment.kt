@@ -53,7 +53,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     override fun init() {
 
         if (requireActivity() is RaiseEnquiryActivity) {
-            binding.btnNext.text = resources.getString(R.string.str_go_to_start_menu)
+            binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
         } else {
             binding.btnNext.text = resources.getString(R.string.str_continue)
         }

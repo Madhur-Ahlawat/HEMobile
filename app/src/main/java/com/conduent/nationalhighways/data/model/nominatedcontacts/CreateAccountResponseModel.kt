@@ -1,6 +1,6 @@
 package com.conduent.nationalhighways.data.model.nominatedcontacts
 
-data class CreateAccountResponseModel(
+data class CreateProfileDetailModelModel(
     val success: Boolean?,
     val statusCode: String?,
     val message: String?,

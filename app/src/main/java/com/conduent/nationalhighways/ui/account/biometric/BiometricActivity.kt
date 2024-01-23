@@ -16,12 +16,12 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.DialogFragment
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountInformation
-import com.conduent.nationalhighways.data.model.account.AccountResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
-import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityBiometricBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
@@ -455,7 +455,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     }
 
 
-    private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
+    private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
 
 
         when (status) {

@@ -27,8 +27,8 @@ class NominatedInvitationViewModel @Inject constructor(
 ) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _createAccount = MutableLiveData<Resource<CreateAccountResponseModel?>?>()
-    val createAccount: LiveData<Resource<CreateAccountResponseModel?>?> get() = _createAccount
+    private val _createAccount = MutableLiveData<Resource<CreateProfileDetailModelModel?>?>()
+    val createAccount: LiveData<Resource<CreateProfileDetailModelModel?>?> get() = _createAccount
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

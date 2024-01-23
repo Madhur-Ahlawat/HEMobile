@@ -25,8 +25,22 @@
             android:text="@string/you_can_pay_for_crossings_without_an_account_to"
             android:textColor="@color/black"
             android:visibility="gone"
+            tools:visibility="visible"
+
             android:textSize="16sp"
             android:fontFamily="@font/open_sans_semibold" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/youcan_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_you_can"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            tools:visibility="visible"
+
+            android:textSize="16sp"
+            android:fontFamily="@font/open_sans" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/enter_reference_txt"
@@ -68,7 +82,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             tools:visibility="visible"
-            android:layout_marginTop="@dimen/margin_20dp"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:orientation="horizontal">
 
             <ImageView

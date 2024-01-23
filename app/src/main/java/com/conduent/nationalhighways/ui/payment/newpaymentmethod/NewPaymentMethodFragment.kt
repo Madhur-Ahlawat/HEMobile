@@ -14,16 +14,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountInformation
-import com.conduent.nationalhighways.data.model.account.AccountResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
-import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodEditModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodEditResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
 import com.conduent.nationalhighways.databinding.FragmentPaymentMethod2Binding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
@@ -137,7 +137,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
 
-    private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
+    private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
         Log.e("TAG", "handleAccountDetails: response")
         hideLoader()
         when (status) {

@@ -19,11 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.account.AccountInformation
-import com.conduent.nationalhighways.data.model.account.AccountResponse
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
-import com.conduent.nationalhighways.data.model.account.ReplenishmentInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
@@ -32,7 +28,10 @@ import com.conduent.nationalhighways.data.model.communicationspref.Communication
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
+import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
@@ -290,12 +289,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
-        Log.e("TAG", "handleLrdsResposne: ")
         when (resource) {
 
             is Resource.Success -> {
-                Log.e("TAG", "handleLrdsResposne: statusCode " + resource.data?.srStatus)
-                if (resource.data?.statusCode == null) {
+
+                if (resource.data?.srApprovalStatus?.uppercase().equals("APPROVED")) {
                     requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
                         putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
                     }
@@ -1045,7 +1043,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
 
-    private fun handleAccountDetails(status: Resource<AccountResponse?>?) {
+    private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
 
         if (loader?.isVisible == true) {
             loader?.dismiss()

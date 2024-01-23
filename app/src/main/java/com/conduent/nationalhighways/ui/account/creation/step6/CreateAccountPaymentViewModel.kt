@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel
-import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
+import com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel
 import com.conduent.nationalhighways.data.repository.auth.CreateAccountRespository
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure
@@ -23,8 +23,8 @@ class CreateAccountPaymentViewModel @Inject constructor(
 ) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _createAccount = MutableLiveData<Resource<CreateAccountResponseModel?>?>()
-    val createAccount: LiveData<Resource<CreateAccountResponseModel?>?> get() = _createAccount
+    private val _createAccount = MutableLiveData<Resource<CreateProfileDetailModelModel?>?>()
+    val createAccount: LiveData<Resource<CreateProfileDetailModelModel?>?> get() = _createAccount
 
     fun createAccount(model: CreateAccountRequestModel?) {
         viewModelScope.launch {

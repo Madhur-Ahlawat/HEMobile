@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.payments.topup
 
-import android.accounts.Account
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
@@ -14,10 +13,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountInformation
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentThreeDSWebviewBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants

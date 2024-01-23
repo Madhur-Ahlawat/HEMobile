@@ -18,7 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
@@ -66,7 +66,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
     private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
-    private var accountResponse: AccountResponse? = null
+    private var ProfileDetailModel: ProfileDetailModel? = null
     private var loader: LoaderDialog? = null
     private val countPerPage = 100
     private var startIndex = 1
@@ -158,11 +158,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
-        Log.e("TAG", "handleLrdsResposne: " )
         when (resource) {
             is Resource.Success -> {
-                Log.e("TAG", "handleLrdsResposne: statusCode "+resource.data?.srStatus )
-                if (resource.data?.statusCode==null) {
+                if (resource.data?.srApprovalStatus?.uppercase().equals("APPROVED")) {
                     requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
                         putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
                     }
@@ -198,10 +196,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    private fun handleAccountType(accountResponse: AccountResponse) {
-        HomeActivityMain.accountDetailsData?.personalInformation = accountResponse.personalInformation
-        HomeActivityMain.accountDetailsData=accountResponse
-        accountResponse.apply {
+    private fun handleAccountType(ProfileDetailModel: ProfileDetailModel) {
+        HomeActivityMain.accountDetailsData?.personalInformation = ProfileDetailModel.personalInformation
+        HomeActivityMain.accountDetailsData=ProfileDetailModel
+        ProfileDetailModel.apply {
             if (accountInformation?.accountType.equals(
                     "BUSINESS",
                     true
@@ -293,7 +291,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         var tempDate: String? = null
 
         var limitedList = 2
-        if (accountResponse?.accountInformation?.accSubType.equals(Constants.PAYG)) {
+        if (ProfileDetailModel?.accountInformation?.accSubType.equals(Constants.PAYG)) {
             limitedList = 5
         }
         var transactionSize = transactionsList.size
@@ -360,7 +358,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    private fun showPayGUI(data: AccountResponse) {
+    private fun showPayGUI(data: ProfileDetailModel) {
         HomeActivityMain.accountDetailsData = data
 
         binding.apply {
@@ -424,7 +422,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         getPaymentHistoryList(startIndex)
     }
 
-    private fun showExemptPartnerUI(data: AccountResponse) {
+    private fun showExemptPartnerUI(data: ProfileDetailModel) {
         HomeActivityMain.accountDetailsData = data
 
         binding.apply {
@@ -484,7 +482,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    private fun showNonPayGUI(data: AccountResponse) {
+    private fun showNonPayGUI(data: ProfileDetailModel) {
         binding.apply {
             tvAvailableBalanceHeading.visible()
             tvAvailableBalance.visible()

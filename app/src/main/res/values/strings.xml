@@ -606,7 +606,6 @@
     <string name="str_check_enquiry_status">Check enquiry status</string>
     <string name="str_check_complaint_status">Check complaint status</string>
     <string name="str_case_enquiry_status">Cases enquiry status</string>
-    <string name="str_go_to_start_menu">Go to start menu</string>
     <string name="str_case_number">Case number</string>
     <string name="str_date">Date</string>
     <string name="underline_personal_info"><u>Personal info</u></string>
@@ -1394,7 +1393,7 @@
     <string name="company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens">Company name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens</string>
     <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
     <string name="enter_your_vehicle_model">Enter your vehicle model</string>
-    <string name="you_can_pay_for_crossings_without_an_account_to">Pay for crossings without an \naccount to:</string>
+    <string name="you_can_pay_for_crossings_without_an_account_to">Pay for crossings without an account to:</string>
     <string name="str_pay_for_crossing_numberplate_point1">pay for crossings you’ve made since yesterday</string>
     <string name="str_pay_for_crossing_numberplate_point2">pay for future crossings</string>
     <string name="recent_crossings">Recent Crossings</string>
@@ -1654,10 +1653,10 @@
     <string name="credit_transferred">Credit Transferred</string>
     <string name="str_crossing_data">%1$s crossing</string>
     <string name="str_crossings_data">%1$s crossings</string>
-    <string name="str_allow_location_title">Allow "\"DartCharge\"" to also use your location even when you are not using the app?</string>
-    <string name="str_allow_location_desc">Change to Always Allow to ensure that we send the notification to you, without you having to remember to open the app.</string>
-    <string name="str_keep_only_while_using">Keep Only While using</string>
-    <string name="str_change_to_always_allow">Change to Always Allow</string>
+    <string name="str_allow_location_title">Allow "\"DartCharge\"" to use your location when you are not using the app?</string>
+    <string name="str_allow_location_desc">Select Always Allow to ensure that we send the notification to you.</string>
+    <string name="str_keep_only_while_using">Opt Out</string>
+    <string name="str_change_to_always_allow">Always Allow</string>
 
 
     <string name="str_disable_notifications">Click here to disable notifications when you cross</string>
@@ -1691,6 +1690,8 @@
     <string name="text_we_have_sent_a_reciept_email_to_text">We\'ve sent a receipt email to</string>
     <string name="str_provide_payment_card_details_desc">Payment could not be taken for your crossing and your account has been suspended.\n\nTo continue using your account you have to provide your payment card details.\n\nIf you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
     <string name="dartcharge_v1_0">DartCharge v1.0</string>
-    <string name="str_copyright">©2024 Conduent, Inc. All Rights Reserved</string>
+    <string name="str_copyright">©2024 Conduent, Inc. All Rights Reserved.</string>
     <string name="str_credential_note">This will be the same as the credentials you use to login on the website</string>
+    <string name="str_you_can">You can:</string>
+
 </resources>

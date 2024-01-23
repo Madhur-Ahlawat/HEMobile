@@ -39,8 +39,7 @@ import javax.inject.Inject
 class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnClickListener {
 
     private var title: TextView? = null
-    private var personalInformation: com.conduent.nationalhighways.data.model.account.PersonalInformation? =
-        null
+    private var personalInformation: PersonalInformation? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -52,7 +51,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
     override fun init() {
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
 
-        if (arguments?.getParcelable<com.conduent.nationalhighways.data.model.account.PersonalInformation>(
+        if (arguments?.getParcelable<PersonalInformation>(
                 Constants.PERSONALDATA
             ) != null
         ) {

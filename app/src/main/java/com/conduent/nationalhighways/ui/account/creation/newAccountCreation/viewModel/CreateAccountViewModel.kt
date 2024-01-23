@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
-import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
+import com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.data.repository.account.AccountCreationRepository
@@ -26,8 +26,8 @@ class CreateAccountViewModel @Inject constructor(
 ) : ViewModel() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _account = MutableLiveData<Resource<CreateAccountResponseModel?>?>()
-    val account: LiveData<Resource<CreateAccountResponseModel?>?> get() = _account
+    private val _account = MutableLiveData<Resource<CreateProfileDetailModelModel?>?>()
+    val account: LiveData<Resource<CreateProfileDetailModelModel?>?> get() = _account
 
 
     fun createAccountNew(model: AccountCreationRequest?) {

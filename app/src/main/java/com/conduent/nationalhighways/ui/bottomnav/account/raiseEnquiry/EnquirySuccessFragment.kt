@@ -87,7 +87,7 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
         if (requireActivity() is RaiseEnquiryActivity) {
             //Non Account Holders
             binding.checkStatusBt.visible()
-            binding.btnNext.text = resources.getString(R.string.str_go_to_start_menu)
+            binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
         } else {
             //Account Holders
             binding.checkStatusBt.gone()

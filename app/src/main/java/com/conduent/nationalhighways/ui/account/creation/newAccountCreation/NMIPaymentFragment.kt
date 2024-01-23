@@ -14,9 +14,7 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.AccountInformation
-import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
+import com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.account.payment.VehicleItem
@@ -30,6 +28,8 @@ import com.conduent.nationalhighways.data.model.payment.AddCardModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.NmiErrorModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.NmiPaymentFragmentBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
@@ -149,7 +149,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     override fun observer() {
         if (!isViewCreated) {
-            observe(viewModel.account, ::handleAccountResponse)
+            observe(viewModel.account, ::handleProfileDetailModel)
             observe(paymentMethodViewModel.saveNewCard, ::handleSaveNewCardResponse)
             observe(oneOfPaymentViewModel.oneOfPaymentsPay, ::oneOfPaymentPay)
         }
@@ -158,7 +158,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     }
 
-    private fun handleAccountResponse(response: Resource<CreateAccountResponseModel?>?) {
+    private fun handleProfileDetailModel(response: Resource<CreateProfileDetailModelModel?>?) {
         hideLoader()
         when (response) {
             is Resource.Success -> {

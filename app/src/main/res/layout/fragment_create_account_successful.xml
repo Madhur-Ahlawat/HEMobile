@@ -8,7 +8,7 @@
 
         <variable
             name="model"
-            type="com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel" />
+            type="com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel" />
 
     </data>
 

@@ -18,13 +18,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentMobileNumberCaptureVcBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
@@ -69,8 +70,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     View.OnClickListener, OnRetryClickListener,
     NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
     val dashboardViewmodel: DashboardViewModel by activityViewModels()
-    var personalInformationModel: com.conduent.nationalhighways.data.model.account.PersonalInformation? =
-        null
+    var personalInformationModel: PersonalInformation? = null
     var accountInformationModel: AccountInformation? = null
     private val countryCodesList: MutableList<String> = mutableListOf()
     private var retrievedPhoneNumber: String? = null
@@ -1148,7 +1148,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun updateProfileDetails(
-        personalInformation: com.conduent.nationalhighways.data.model.account.PersonalInformation?,
+        personalInformation: PersonalInformation?,
         accountInformation: AccountInformation?,
         smsOption: String,
         mfaEnabled: String

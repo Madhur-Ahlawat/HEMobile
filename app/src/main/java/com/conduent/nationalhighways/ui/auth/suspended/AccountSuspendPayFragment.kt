@@ -18,13 +18,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithNewCardModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendPayBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener

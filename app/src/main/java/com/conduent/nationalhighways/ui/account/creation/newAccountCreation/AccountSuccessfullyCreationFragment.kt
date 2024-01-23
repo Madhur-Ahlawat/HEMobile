@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
+import com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel
 import com.conduent.nationalhighways.databinding.FragmentAccountSuccessfullyCreationBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AccountSuccessfullyCreationFragment :
     BaseFragment<FragmentAccountSuccessfullyCreationBinding>(), View.OnClickListener {
-    private var createAccountResponseModel: CreateAccountResponseModel? = null
+    private var createProfileDetailModelModel: CreateProfileDetailModelModel? = null
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -38,13 +38,13 @@ class AccountSuccessfullyCreationFragment :
     }
 
     override fun initCtrl() {
-        if (arguments?.getParcelable<CreateAccountResponseModel>(Constants.DATA) != null) {
-            createAccountResponseModel = arguments?.getParcelable(Constants.DATA)
+        if (arguments?.getParcelable<CreateProfileDetailModelModel>(Constants.DATA) != null) {
+            createProfileDetailModelModel = arguments?.getParcelable(Constants.DATA)
         }
 
-        if (createAccountResponseModel!=null){
-            binding.accountNumber.text=createAccountResponseModel?.accountNumber
-            binding.paymentReferenceNumber.text=createAccountResponseModel?.referenceNumber
+        if (createProfileDetailModelModel!=null){
+            binding.accountNumber.text=createProfileDetailModelModel?.accountNumber
+            binding.paymentReferenceNumber.text=createProfileDetailModelModel?.referenceNumber
         }
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
 

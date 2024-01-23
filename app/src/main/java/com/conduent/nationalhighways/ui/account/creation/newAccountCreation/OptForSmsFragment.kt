@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,17 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.account.AccountInformation
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
-import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
-import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
@@ -38,7 +34,6 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -449,83 +444,10 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         return bundle
     }
 
-    private fun updateBusinessUserProfile(
-        data: ProfileDetailModel?,
-        communication: String,
-        push: Boolean
-    ) {
-        data?.run {
-            val request = UpdateProfileRequest(
-                firstName = personalInformation?.firstName,
-                lastName = personalInformation?.lastName,
-                addressLine1 = personalInformation?.addressLine1,
-                addressLine2 = personalInformation?.addressLine2,
-                city = personalInformation?.city,
-                state = personalInformation?.state,
-                zipCode = personalInformation?.zipcode,
-                zipCodePlus = personalInformation?.zipCodePlus,
-                country = personalInformation?.country,
-                emailAddress = personalInformation?.emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = personalInformation?.pemailUniqueCode,
-                phoneCell = personalInformation?.phoneNumber ?: "",
-                phoneDay = personalInformation?.phoneDay,
-                phoneFax = "",
-                smsOption = communication,
-                phoneEvening = "",
-                fein = accountInformation?.fein,
-                businessName = personalInformation?.customerName
-            )
-
-            /*if(data.personalInformation?.phoneNumber.isNullOrEmpty()){
-                verifyMobileNumber(request)
-            }else {
-                viewModel.updateUserDetails(request)
-            }*/
-        }
-
-
-    }
-
-    private fun updateStandardUserProfile(
-        data: ProfileDetailModel?,
-        communication: String,
-        push: Boolean
-    ) {
-
-        data?.personalInformation?.run {
-            val request = UpdateProfileRequest(
-                firstName = firstName,
-                lastName = lastName,
-                addressLine1 = addressLine1,
-                addressLine2 = addressLine2,
-                city = city,
-                state = state,
-                zipCode = zipcode,
-                zipCodePlus = zipCodePlus,
-                country = country,
-                emailAddress = emailAddress,
-                primaryEmailStatus = Constants.PENDING_STATUS,
-                primaryEmailUniqueID = pemailUniqueCode,
-                phoneCell = phoneNumber ?: "",
-                phoneDay = phoneDay,
-                phoneFax = "",
-                smsOption = communication,
-                phoneEvening = ""
-            )
-
-            /* if(data.personalInformation?.phoneNumber.isNullOrEmpty()){
-                 verifyMobileNumber(request)
-             }else {
-                 viewModel.updateUserDetails(request)
-             }*/
-        }
-
-    }
-
     private fun verifyMobileNumber() {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
+        bundle.putParcelable(Constants.NAV_DATA_KEY, dashboardViewmodel.profileDetailModel.value)
         findNavController().navigate(
             R.id.action_optForSmsFragment_to_mobileVerificationFragment,
             bundle
