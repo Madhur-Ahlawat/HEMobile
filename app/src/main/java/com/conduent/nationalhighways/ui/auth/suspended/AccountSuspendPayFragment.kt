@@ -386,13 +386,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
-                        Constants.INVALID_TOKEN
-                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                if (checkSessionExpiredOrServerError(status.errorModel)
                 ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    redirectToTryAgainPage()
+                    if (status.errorModel?.message.equals("Something went wrong. Try again later")) {
+                    } else {
+                        redirectToTryAgainPage()
+                    }
                 }
             }
 
@@ -425,7 +426,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         bundle
                     )
                 } else if (status.data?.statusCode?.equals("1337") == true && status.data.transactionId!=null) {
-                    if (navFlowCall.equals(Constants.PAYMENT_TOP_UP) ||(navFlowCall.equals(Constants.SUSPENDED) && navFlowFrom.equals(Constants.DASHBOARD))) {
+                    if (navFlowCall.equals(Constants.PAYMENT_TOP_UP) || navFlowCall.equals(Constants.SUSPENDED)) {
                         var bundle = Bundle()
                         bundle.putString(
                             Constants.CARD_IS_ALREADY_REGISTERED,
@@ -487,13 +488,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
-                        Constants.INVALID_TOKEN
-                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                if (checkSessionExpiredOrServerError(status.errorModel)
                 ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    redirectToTryAgainPage()
+                    if (status.errorModel?.message.equals("Something went wrong. Try again later")) {
+                    } else {
+                        redirectToTryAgainPage()
+                    }
                 }
             }
 

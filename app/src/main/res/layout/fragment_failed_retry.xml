@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -30,6 +31,7 @@
                 android:id="@+id/title_tv"
                 style="@style/BoldText"
                 android:layout_marginTop="@dimen/margin_20dp"
+                android:gravity="center"
                 android:text="@string/failed_retry_title"
                 android:textColor="@color/dark_blue_color"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -40,6 +42,7 @@
                 android:id="@+id/decs1_tv"
                 style="@style/SemiBoldTextBlack_14sp"
                 android:layout_marginTop="@dimen/margin_20dp"
+                android:gravity="center"
                 android:text="@string/try_again_later_did_not_save_changes"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -49,9 +52,10 @@
                 android:id="@+id/decs2_tv"
                 style="@style/SemiBoldTextBlack_14sp"
                 android:layout_marginTop="@dimen/margin_20dp"
-                app:layout_constraintRight_toRightOf="parent"
                 android:text="@string/str_contact_dart_charge_contact_centre"
+                android:gravity="center"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/decs1_tv" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView

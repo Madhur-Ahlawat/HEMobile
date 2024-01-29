@@ -91,7 +91,7 @@ class ProfileEmailVerificationFragment : BaseFragment<FragmentProfileEmailVerifi
                 }
             }
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if (checkSessionExpiredOrServerError(resource.errorModel)) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     showError(binding.root, resource.errorMsg)

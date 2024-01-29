@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Log
 import com.conduent.nationalhighways.BuildConfig
@@ -46,9 +47,9 @@ class NotificationUtils(val context: Context) {
             builder = Notification.Builder(context, channelId).apply {
                 setContentTitle(title)
                 setContentText(message)
-                setSmallIcon(R.mipmap.ic_launcher_squircle)
+                setSmallIcon(R.drawable.notification_icon)
                 setContentIntent(pendingIntent)
-                setColor(context.resources.getColor(R.color.black, null))
+                setColor(context.resources.getColor(R.color.red, null))
                 setAutoCancel(true)
             }
         } else {

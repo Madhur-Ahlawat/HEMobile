@@ -46,9 +46,6 @@ interface RetryCallback {
             dispatchRetry: () -> Unit
         ) {
             if (context is Activity && !context.isFinishing) {
-                Log.e("TAG", "showRetryDialog:-context-> $context")
-
-
                 val dialog = Dialog(context)
                 dialog.setCancelable(false)
                 val binding: DialogRetryBinding = DialogRetryBinding.inflate(LayoutInflater.from(context))

@@ -204,13 +204,26 @@ abstract class BaseActivity<T> : AppCompatActivity() {
             .show()
     }
 
-    fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel) {
-        if (errorResponsModel.errorCode == Constants.TOKEN_FAIL && errorResponsModel.error.equals(
+    fun checkSessionExpiredOrServerError(errorResponsModel: ErrorResponseModel?): Boolean {
+        if ((errorResponsModel?.errorCode == Constants.TOKEN_FAIL && (errorResponsModel.error != null && errorResponsModel.error.equals(
+                Constants.INVALID_TOKEN
+            ))) || (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR &&
+                    (errorResponsModel.error != null && errorResponsModel.error.equals(
+                        Constants.SERVER_ERROR
+                    )))
+        ) {
+            return true
+        }
+        return false
+    }
+
+    fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel?) {
+        if (errorResponsModel?.errorCode == Constants.TOKEN_FAIL && errorResponsModel.error.equals(
                 Constants.INVALID_TOKEN
             )
         ) {
             Utils.displaySesionExpiryDialog(this)
-        } else if (errorResponsModel.errorCode == Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
+        } else if (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
                 Constants.SERVER_ERROR
             )
         ) {

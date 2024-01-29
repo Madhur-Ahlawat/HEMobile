@@ -132,11 +132,11 @@
                         android:id="@+id/label_card_already_exists"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
-                        android:layout_marginStart="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
                         android:text="@string/the_card_already_exists_on_this_account"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView_alert_card_exists"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
 

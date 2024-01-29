@@ -310,9 +310,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
-                        Constants.INVALID_TOKEN
-                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                if (checkSessionExpiredOrServerError(status.errorModel)
                 ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {

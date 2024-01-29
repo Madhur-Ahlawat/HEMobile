@@ -166,7 +166,7 @@ class AddVehicleDoneFragment : BaseFragment<FragmentAddVehicleDoneBinding>(), It
                 }
             }
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if (checkSessionExpiredOrServerError(resource.errorModel)) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     val bundle = Bundle().apply {

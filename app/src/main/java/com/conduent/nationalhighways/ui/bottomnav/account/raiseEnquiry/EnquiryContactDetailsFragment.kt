@@ -407,9 +407,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
-                        Constants.INVALID_TOKEN
-                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
+                if (checkSessionExpiredOrServerError(response.errorModel)
                 ) {
                     displaySessionExpireDialog(response.errorModel)
                 } else {

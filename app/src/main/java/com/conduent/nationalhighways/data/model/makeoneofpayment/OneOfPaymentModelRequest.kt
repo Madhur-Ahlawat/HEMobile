@@ -49,7 +49,7 @@ data class VehicleList(
     val pendingDues: String?,
     val futureTollCount: String?,
     val futureTollPayment: String?,
-    val vehicleColour: String?,
+    val vehicleColor: String?,
     val classRate: String?,
     val customerClass: String?,
     val customerClassRate: String?,

@@ -1,15 +1,12 @@
 package com.conduent.nationalhighways.ui.base
 
 import android.app.Dialog
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -107,7 +104,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                     // Implement your custom back navigation logic
                 } else {
-                  Utils.vibrate(requireActivity())
+                    Utils.vibrate(requireActivity())
                 }
             }
         }
@@ -147,14 +144,26 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         AdobeAnalytics.setLifeCycleCallAdobe(false)
     }
 
+    fun checkSessionExpiredOrServerError(errorResponsModel: ErrorResponseModel?): Boolean {
+        if ((errorResponsModel?.errorCode == Constants.TOKEN_FAIL && (errorResponsModel.error != null && errorResponsModel.error.equals(
+                Constants.INVALID_TOKEN
+            ))) || (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR &&
+                    (errorResponsModel.error != null && errorResponsModel.error.equals(
+                Constants.SERVER_ERROR
+            )))
+        ) {
+            return true
+        }
+        return false
+    }
 
-    fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel) {
-        if (errorResponsModel.errorCode == Constants.TOKEN_FAIL && errorResponsModel.error.equals(
+    fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel?) {
+        if (errorResponsModel?.errorCode == Constants.TOKEN_FAIL && errorResponsModel.error.equals(
                 Constants.INVALID_TOKEN
             )
         ) {
             Utils.displaySesionExpiryDialog(requireActivity())
-        } else if (errorResponsModel.errorCode == Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
+        } else if (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR && errorResponsModel.error.equals(
                 Constants.SERVER_ERROR
             )
         ) {
@@ -227,9 +236,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         pListener: DialogPositiveBtnListener?,
         nListener: DialogNegativeBtnListener?,
         cancelVisibility: Int = View.VISIBLE,
-        cancelButtonColor:Int=0,
-        typeFace:Typeface?=null,
-        lineView:Boolean?=false
+        cancelButtonColor: Int = 0,
+        typeFace: Typeface? = null,
+        lineView: Boolean? = false
     ) {
 
         val dialog = Dialog(requireActivity(), R.style.CustomDialogTheme1)
@@ -246,10 +255,10 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         val firstView = dialog.findViewById<View>(R.id.firstView)
         val secondView = dialog.findViewById<View>(R.id.secondView)
 
-        if(cancelButtonColor!=0){
+        if (cancelButtonColor != 0) {
             cancel.setTextColor(cancelButtonColor)
         }
-        if(typeFace!=null){
+        if (typeFace != null) {
             cancel.typeface = typeFace
         }
         title.text = fTitle
@@ -258,9 +267,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         ok.text = positiveBtnTxt
         cancel.visibility = cancelVisibility
 
-        if(lineView==true){
+        if (lineView == true) {
             firstView.visibility = View.VISIBLE
-        }else{
+        } else {
             firstView.visibility = cancelVisibility
         }
         secondView.visibility = cancelVisibility

@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.CountDownTimer
@@ -1542,18 +1543,21 @@ object Utils {
     }
 
     fun checkLocationpermission(context: Context): Boolean {
-        return !((ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-        ) == PackageManager.PERMISSION_DENIED) &&
-                (ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_DENIED) &&
-                (ContextCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_DENIED))
+        return if (Build.VERSION.SDK_INT >= VERSION_CODES.Q) {
+            !((ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) == PackageManager.PERMISSION_DENIED))
+        } else {
+            !((ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_DENIED) &&
+                    (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_DENIED))
+        }
     }
 
     fun isSupportedCountry(country:String):Boolean{
@@ -1588,5 +1592,15 @@ object Utils {
             input
         }
     }
+
+    fun openAppSettings(activity: Activity) {
+        val appSettingsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val packageName = activity.packageName // Replace with your app's package name
+        val appSettingsUri = Uri.fromParts("package", packageName, null)
+        appSettingsIntent.data = appSettingsUri
+        activity.startActivity(appSettingsIntent)
+    }
+
+
 
 }

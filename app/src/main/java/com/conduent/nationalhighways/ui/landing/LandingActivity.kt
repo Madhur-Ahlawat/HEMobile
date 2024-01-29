@@ -63,8 +63,9 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         fun setToolBarTitle(title: String) {
             binding.titleTxt.text = title
         }
+
         fun setBackIcon(status: Int) {
-            binding.btnBack.visibility=status
+            binding.btnBack.visibility = status
         }
 
     }
@@ -75,7 +76,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         navController = findNavController(this, R.id.nav_host_fragment_container)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
         Logg.logging("landingActivy", "test called $screenType")
-        Log.e("TAG", "initCtrl:fetchTouchIdEnabled "+sessionManager.fetchTouchIdEnabled() )
 
         if (intent?.hasExtra(Constants.NAV_FLOW_FROM) == true) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
@@ -112,7 +112,14 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
             onBackPressed()
         }
         backClickListener()
-        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
+        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, false)
+        if (sessionManager.fetchBooleanData(SessionManager.SettingsClick)) {
+            sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
+            sessionManager.saveBooleanData(
+                SessionManager.LOCATION_PERMISSION,
+                Utils.checkLocationpermission(this)
+            )
+        }
 
     }
 
@@ -151,7 +158,10 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
         initCtrl()
-        sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,Utils.areNotificationsEnabled(this))
+        sessionManager.saveBooleanData(
+            SessionManager.NOTIFICATION_PERMISSION,
+            Utils.areNotificationsEnabled(this)
+        )
 
     }
 

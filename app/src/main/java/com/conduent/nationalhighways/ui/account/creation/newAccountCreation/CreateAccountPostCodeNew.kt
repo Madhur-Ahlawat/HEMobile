@@ -233,18 +233,11 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 }
 
                 is Resource.DataError -> {
-
-                    if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && (response.errorModel.error != null && response.errorModel.error.equals(
-                            Constants.INVALID_TOKEN
-                        ))) || (response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR && (response.errorModel.error != null && response.errorModel.error.equals(
-                            Constants.SERVER_ERROR
-                        )))
-                    ) {
+                    if (checkSessionExpiredOrServerError(response.errorModel)) {
                         displaySessionExpireDialog(response.errorModel)
                     } else {
                         enterAddressManual()
                     }
-
                 }
 
                 else -> {

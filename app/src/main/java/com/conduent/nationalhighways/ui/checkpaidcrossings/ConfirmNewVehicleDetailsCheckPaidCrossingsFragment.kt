@@ -130,16 +130,9 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                     )
                 }
                 is Resource.DataError -> {
-                    if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
-                            Constants.INVALID_TOKEN
-                        )) || (status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR && status.errorModel.error.equals(
-                            Constants.SERVER_ERROR
-                        ))
-                    ) {
-                        Log.e("TAG", "balanceTransfer: 11", )
+                    if (checkSessionExpiredOrServerError(status.errorModel)) {
                         displaySessionExpireDialog(status.errorModel)
                     } else {
-                        Log.e("TAG", "balanceTransfer: 2211", )
                         ErrorUtil.showError(binding.root, status.errorModel?.message)
                     }
                 }

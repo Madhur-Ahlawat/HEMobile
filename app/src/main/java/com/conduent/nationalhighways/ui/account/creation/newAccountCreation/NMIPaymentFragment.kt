@@ -178,12 +178,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                if ((response.errorModel?.errorCode == Constants.TOKEN_FAIL && response.errorModel.error.equals(
-                        Constants.INVALID_TOKEN
-                    )) || response.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
-                ) {
+                if (checkSessionExpiredOrServerError(response.errorModel)) {
                     displaySessionExpireDialog(response.errorModel)
-                } else {
+                }else {
                     if (response.errorModel?.message.equals("Something went wrong. Try again later")) {
                     } else {
                         redirectToTryAgainPaymentScreen()
@@ -236,7 +233,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     override fun onClick(v: View?) {
 
-
     }
 
     private fun oneOfPaymentPay(resource: Resource<OneOfPaymentModelResponse?>?) {
@@ -274,13 +270,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(
-                        Constants.INVALID_TOKEN
-                    )) || resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
-                ) {
+                if (checkSessionExpiredOrServerError(resource.errorModel)) {
                     displaySessionExpireDialog(resource.errorModel)
-                } else {
-                    redirectToTryAgainPaymentScreen()
+                }else {
+                    if (resource.errorModel?.message.equals("Something went wrong. Try again later")) {
+                    } else {
+                        redirectToTryAgainPaymentScreen()
+                    }
                     AdobeAnalytics.setActionTrackPaymentMethod(
                         "Confirm ",
                         " one of payment: payment confirm",
@@ -463,7 +459,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             "makeOneOffPaymentApi:plateCountry  " + crossingDetailModelResponse?.plateCountry
         )
         val vehicleList = VehicleList(
-            crossingDetailModelResponse?.plateNo,
+            crossingDetailModelResponse?.plateNo?.uppercase(),
             crossingDetailModelResponse?.vehicleMake,
             crossingDetailModelResponse?.vehicleModel,
             crossingDetailModelResponse?.dvlaclass,
@@ -963,25 +959,26 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(
-                        Constants.INVALID_TOKEN
-                    )) || status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR
-                ) {
+                if (checkSessionExpiredOrServerError(status.errorModel)) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    val bundle = Bundle()
-                    bundle.putString(
-                        Constants.NAV_FLOW_FROM,
-                        navFlowFrom
-                    )
-                    bundle.putString(
-                        Constants.CARD_IS_ALREADY_REGISTERED,
-                        Constants.CREDIT_NOT_SET_UP
-                    )
-                    findNavController().navigate(
-                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-                        bundle
-                    )
+                    if (status.errorModel?.message.equals("Something went wrong. Try again later")) {
+                    } else {
+                        val bundle = Bundle()
+                        bundle.putString(
+                            Constants.NAV_FLOW_FROM,
+                            navFlowFrom
+                        )
+                        bundle.putString(
+                            Constants.CARD_IS_ALREADY_REGISTERED,
+                            Constants.CREDIT_NOT_SET_UP
+                        )
+                        findNavController().navigate(
+                            R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
+                            bundle
+                        )
+                    }
+
                 }
             }
 

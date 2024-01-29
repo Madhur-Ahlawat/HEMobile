@@ -203,7 +203,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                 }
 
                 is Resource.DataError -> {
-                    if ((status.errorModel?.errorCode == Constants.TOKEN_FAIL && status.errorModel.error.equals(Constants.INVALID_TOKEN))|| status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                    if (checkSessionExpiredOrServerError(status.errorModel) ) {
                         displaySessionExpireDialog(status.errorModel)
                     } else {
                         binding.edtEmail.setErrorText(status.errorMsg)
@@ -425,7 +425,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
             }
 
             is Resource.DataError -> {
-                if ((resource.errorModel?.errorCode == Constants.TOKEN_FAIL && resource.errorModel.error.equals(Constants.INVALID_TOKEN))|| resource.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR ) {
+                if (checkSessionExpiredOrServerError(resource.errorModel)) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     binding.edtEmail.setErrorText(resource.errorMsg)

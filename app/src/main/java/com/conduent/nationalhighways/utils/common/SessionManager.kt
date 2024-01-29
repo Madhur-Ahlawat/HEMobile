@@ -60,7 +60,9 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val GEOFENCE_ENTER_TIME="geofence_enter_time"
         val COUNTRIES="COUNTRIES"
         val LOCATION_PERMISSION="LOCATION_PERMISSION"
+        val FOREGROUND_LOCATION_SHOWN="FOREGROUND_LOCATION_SHOWN"
         val NOTIFICATION_PERMISSION="NOTIFICATION_PERMISSION"
+        val SettingsClick="SettingsClick"
     }
 
     /**

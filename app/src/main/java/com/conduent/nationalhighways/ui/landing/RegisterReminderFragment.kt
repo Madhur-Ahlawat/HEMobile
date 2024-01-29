@@ -3,13 +3,11 @@ package com.conduent.nationalhighways.ui.landing
 import android.Manifest
 import android.app.Dialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Build
-import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +15,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentRegisterReminderBinding
 import com.conduent.nationalhighways.databinding.LocationPermissionDialogBinding
@@ -26,6 +25,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.setToolBarTitle
 import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
 import com.conduent.nationalhighways.utils.GeofenceUtils
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
@@ -34,7 +34,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>() {
-
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -57,18 +56,43 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
         } else {
             binding.switchNotification.isChecked =
-                (sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION))
+                sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)
         }
 
-        if(!Utils.checkLocationpermission(requireContext())){
+        if (!Utils.checkLocationpermission(requireContext())) {
             binding.switchGeoLocation.isChecked = false
             sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
-        }else{
+        } else {
             binding.switchGeoLocation.isChecked =
                 sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
-            GeofenceUtils.startGeofence(this.requireContext())
         }
 
+        if (sessionManager.fetchBooleanData(SessionManager.SettingsClick) && ((arguments?.containsKey(Constants.GpsSettings)?:false)==false)) {
+            sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
+            if (!Utils.checkLocationpermission(requireContext())) {
+                findNavController().navigate(R.id.action_registerReminderFragment_to_gpsSettingsFragment)
+            } else {            sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
+
+                sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, true)
+                binding.switchGeoLocation.isChecked =
+                    sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
+            }
+        }
+
+        if (arguments?.containsKey(Constants.GpsSettings) == true) {
+            sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
+            val fromGpsSettings = arguments?.getBoolean(Constants.GpsSettings)?:false
+
+            if (fromGpsSettings) {
+                sessionManager.saveBooleanData(
+                    SessionManager.LOCATION_PERMISSION,
+                    Utils.checkLocationpermission(requireContext())
+                )
+                binding.switchGeoLocation.isChecked =
+                    sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
+            }
+        }
+        GeofenceUtils.startGeofence(this.requireContext())
 
     }
 
@@ -79,8 +103,18 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         }
 
         binding.switchGeoLocation.setOnClickListener {
-            if (binding.switchGeoLocation.isChecked) {
-                requestLocationPermission()
+            if (Utils.checkLocationpermission(requireContext())) {
+                sessionManager.saveBooleanData(
+                    SessionManager.LOCATION_PERMISSION,
+                    binding.switchGeoLocation.isChecked
+                )
+            } else if (binding.switchGeoLocation.isChecked) {
+
+                if (sessionManager.fetchBooleanData(SessionManager.FOREGROUND_LOCATION_SHOWN)) {
+                    showLocationServicesPopup()
+                } else {
+                    requestLocationPermission()
+                }
             }
         }
 
@@ -106,6 +140,10 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                     object : DialogNegativeBtnListener {
                         override fun negativeBtnClick(dialog: DialogInterface) {
                             binding.switchNotification.isChecked = false
+                            sessionManager.saveBooleanData(
+                                SessionManager.LOCATION_PERMISSION,
+                                false
+                            )
                         }
                     },
                     View.VISIBLE
@@ -116,28 +154,60 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     }
 
+    private fun showLocationServicesPopup() {
+        displayCustomMessage(
+            resources.getString(R.string.str_enable_location_services),
+            resources.getString(R.string.str_enable_location_services_desc),
+            getString(R.string.enablenow_lower_case),
+            getString(R.string.enablelater_lower_case),
+            object : DialogPositiveBtnListener {
+                override fun positiveBtnClick(dialog: DialogInterface) {
+                    dialog.dismiss()
+                    sessionManager.saveBooleanData(SessionManager.SettingsClick, true)
+                    Utils.openAppSettings(requireActivity())
+                }
+            },
+            object : DialogNegativeBtnListener {
+                override fun negativeBtnClick(dialog: DialogInterface) {
+                    binding.switchGeoLocation.isChecked = false
+                    dialog.dismiss()
+                }
+            })
+
+    }
+
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
+        var fineLocation = false
+        var coarseLocation = false
         when {
             permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
                 // Precise location access granted.
-                sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, true)
+                fineLocation = true
             }
 
             permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
                 // Only approximate location access granted.
-                sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, true)
+                coarseLocation = true
             }
 
             else -> {
                 // No location access granted.
-                sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
             }
         }
 
-        if (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)) {
-            GeofenceUtils.startGeofence(this.requireContext())
+        sessionManager.saveBooleanData(
+            SessionManager.LOCATION_PERMISSION,
+            Utils.checkLocationpermission(requireContext())
+        )
+        sessionManager.saveBooleanData(
+            SessionManager.FOREGROUND_LOCATION_SHOWN,
+            true
+        )
+
+        if (fineLocation || coarseLocation) {
+//            GeofenceUtils.startGeofence(this.requireContext())
             requestBackgroundLocationPermission()
         }
     }
@@ -185,11 +255,13 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         ) //Controlling width and height.
 
         binding.cancelBtn.setOnClickListener {
+            sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
             dialog.dismiss()
         }
 
         binding.okBtn.setOnClickListener {
-            openAppSettings()
+            Utils.openAppSettings(requireActivity())
+            sessionManager.saveBooleanData(SessionManager.SettingsClick, true)
             dialog.dismiss()
         }
         dialog.show()
@@ -197,13 +269,6 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     }
 
-    private fun openAppSettings() {
-        val appSettingsIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        val packageName = requireActivity().packageName // Replace with your app's package name
-        val appSettingsUri = Uri.fromParts("package", packageName, null)
-        appSettingsIntent.data = appSettingsUri
-        startActivity(appSettingsIntent)
-    }
 
     override fun observer() {
 

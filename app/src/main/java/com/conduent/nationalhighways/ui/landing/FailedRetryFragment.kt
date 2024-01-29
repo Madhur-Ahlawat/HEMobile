@@ -39,7 +39,6 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>() {
         showToolBar(true)
 //        binding.desc3.movementMethod = LinkMovementMethod.getInstance()
 //        makeLinksInLicenseAgreementDescription()
-        Log.e("TAG", "init:getLoggedInUser " + sessionManager.getLoggedInUser())
         if (sessionManager.getLoggedInUser()) {
             binding.decs1Tv.text = resources.getString(R.string.try_again_later_signin_account)
             binding.btnNext.text = resources.getString(R.string.sign_in)
