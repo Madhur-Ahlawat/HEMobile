@@ -176,7 +176,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20dp"
-            android:layout_marginBottom="@dimen/_23dp"
+            android:layout_marginBottom="@dimen/margin_23dp"
             android:visibility="gone"
             tools:visibility="visible"
             android:text="@string/cancel"

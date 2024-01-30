@@ -12,14 +12,14 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_62dp"
+        android:layout_height="@dimen/margin_62dp"
         android:elevation="@dimen/margin_1dp"
         app:cardCornerRadius="@dimen/margin_5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:id="@+id/cl_main"
-            android:layout_height="@dimen/_62dp">
+            android:layout_height="@dimen/margin_62dp">
 
             <View
                 android:id="@+id/vertical_strip_transaction_type"
@@ -47,7 +47,7 @@
                 android:text="£"
                 android:textColor="@color/white"
                 android:elevation="1dp"
-                android:textSize="@dimen/_12sp"
+                android:textSize="@dimen/font_12sp"
                 android:gravity="center"
                 android:textAlignment="center"
                 app:layout_constraintStart_toStartOf="@+id/indicator_icon_transaction_type"
@@ -59,13 +59,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginBottom="@dimen/_8dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
                 app:layout_constraintVertical_bias=".47"
                 android:layout_marginStart="@dimen/margin_12dp"
                 android:gravity="center"
                 android:text="@string/top_up"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_14sp"
+                android:textSize="@dimen/font_14sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_date"
                 app:layout_constraintStart_toEndOf="@+id/indicator_icon_transaction_type"
                 app:layout_constraintTop_toTopOf="@id/indicator_icon_euro" />
@@ -79,7 +79,7 @@
                 android:gravity="center"
                 android:text="@string/top_up"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_14sp"
+                android:textSize="@dimen/font_14sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_transaction_type"
                 app:layout_constraintBottom_toBottomOf="@id/indicator_icon_euro"
                 app:layout_constraintStart_toEndOf="@+id/indicator_icon_transaction_type"/>
@@ -87,8 +87,8 @@
 
             <ImageView
                 android:id="@+id/icon_arrow"
-                android:layout_width="@dimen/_16dp"
-                android:layout_height="@dimen/_16dp"
+                android:layout_width="@dimen/margin_16dp"
+                android:layout_height="@dimen/margin_16dp"
                 android:layout_marginStart="@dimen/margin_15dp"
                 android:src="@drawable/ic_right_purple"
                 android:layout_marginEnd="@dimen/margin_12dp"

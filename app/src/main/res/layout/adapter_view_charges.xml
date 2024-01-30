@@ -14,7 +14,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="@dimen/_3dp">
+        app:cardElevation="@dimen/margin_3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                     android:id="@+id/label_type_of_vehicle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_21dp"
+                    android:layout_marginLeft="@dimen/margin_21dp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center|left"
                     android:text="@string/str_type_of_vehicle"
@@ -77,10 +77,10 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/label_pay_as_you_go"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_40dp"
+                    android:layout_height="@dimen/margin_40dp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/_21dp"
+                    android:layout_marginTop="@dimen/margin_21dp"
                     android:text="@string/str_pay_g_service"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -108,7 +108,7 @@
                     android:id="@+id/view_footer"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:layout_marginTop="@dimen/_17dp"
+                    android:layout_marginTop="@dimen/margin_17dp"
                     android:background="@color/blue_vehicle_charge_heading"
                     app:layout_constraintTop_toBottomOf="@id/label_pay_as_you_go" />
 
@@ -143,14 +143,14 @@
                 <View
                     android:id="@+id/gap"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_31dp"
+                    android:layout_height="@dimen/margin_31dp"
                     app:layout_constraintTop_toBottomOf="@id/view_footer" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/value_type_ofVehicle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_21dp"
+                    android:layout_marginLeft="@dimen/margin_21dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center|left"
 
@@ -217,7 +217,7 @@
                 android:id="@+id/view_footer_gap"
                 app:layout_constraintTop_toBottomOf="@id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_36dp"/>
+                android:layout_height="@dimen/margin_36dp"/>
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"

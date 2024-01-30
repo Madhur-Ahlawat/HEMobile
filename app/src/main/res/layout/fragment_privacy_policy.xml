@@ -13,9 +13,9 @@
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_17dp"
-            android:layout_marginTop="@dimen/_12dp"
-            android:layout_marginEnd="@dimen/_19dp" />
+            android:layout_marginStart="@dimen/margin_17dp"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:layout_marginEnd="@dimen/margin_19dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

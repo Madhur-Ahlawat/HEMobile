@@ -14,15 +14,15 @@
             android:background="@color/white"
             android:gravity="start|top"
             android:orientation="vertical"
-            android:paddingHorizontal="@dimen/_23dp">
+            android:paddingHorizontal="@dimen/margin_23dp">
 
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_24dp"
-                android:height="@dimen/_22dp"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:height="@dimen/margin_22dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/str_enquiry"
                 android:textColor="@color/black"
@@ -31,12 +31,12 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_3dp"
+                android:layout_marginHorizontal="@dimen/margin_3dp"
                 android:layout_marginTop="@dimen/margin_14dp"
                 android:layout_marginBottom="3dp"
-                android:elevation="@dimen/_3dp"
-                android:minHeight="@dimen/_74dp"
-                app:cardCornerRadius="@dimen/_5dp">
+                android:elevation="@dimen/margin_3dp"
+                android:minHeight="@dimen/margin_74dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutVehicleRegistration"
@@ -69,12 +69,12 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_3dp"
-                android:layout_marginBottom="@dimen/_3dp"
+                android:layout_marginHorizontal="@dimen/margin_3dp"
+                android:layout_marginBottom="@dimen/margin_3dp"
 
-                android:elevation="@dimen/_3dp"
-                android:minHeight="@dimen/_74dp"
-                app:cardCornerRadius="@dimen/_5dp">
+                android:elevation="@dimen/margin_3dp"
+                android:minHeight="@dimen/margin_74dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardRecentCrossings"
@@ -108,12 +108,12 @@
                 android:id="@+id/emailCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_3dp"
-                android:layout_marginBottom="@dimen/_3dp"
+                android:layout_marginHorizontal="@dimen/margin_3dp"
+                android:layout_marginBottom="@dimen/margin_3dp"
 
-                android:elevation="@dimen/_3dp"
-                android:minHeight="@dimen/_74dp"
-                app:cardCornerRadius="@dimen/_5dp">
+                android:elevation="@dimen/margin_3dp"
+                android:minHeight="@dimen/margin_74dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -148,12 +148,12 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_3dp"
-                android:layout_marginBottom="@dimen/_3dp"
+                android:layout_marginHorizontal="@dimen/margin_3dp"
+                android:layout_marginBottom="@dimen/margin_3dp"
 
-                android:elevation="@dimen/_3dp"
-                android:minHeight="@dimen/_74dp"
-                app:cardCornerRadius="@dimen/_5dp">
+                android:elevation="@dimen/margin_3dp"
+                android:minHeight="@dimen/margin_74dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -188,12 +188,12 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_3dp"
-                android:layout_marginBottom="@dimen/_3dp"
+                android:layout_marginHorizontal="@dimen/margin_3dp"
+                android:layout_marginBottom="@dimen/margin_3dp"
 
-                android:elevation="@dimen/_3dp"
-                android:minHeight="@dimen/_74dp"
-                app:cardCornerRadius="@dimen/_5dp">
+                android:elevation="@dimen/margin_3dp"
+                android:minHeight="@dimen/margin_74dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -229,12 +229,12 @@
                 android:id="@+id/labelPaymentAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_3dp"
-                android:layout_marginBottom="@dimen/_3dp"
+                android:layout_marginHorizontal="@dimen/margin_3dp"
+                android:layout_marginBottom="@dimen/margin_3dp"
 
-                android:elevation="@dimen/_3dp"
-                android:minHeight="@dimen/_74dp"
-                app:cardCornerRadius="@dimen/_5dp">
+                android:elevation="@dimen/margin_3dp"
+                android:minHeight="@dimen/margin_74dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -269,10 +269,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_3dp"
-                android:layout_marginBottom="@dimen/_3dp"
-                android:minHeight="@dimen/_74dp"
-                app:cardCornerRadius="@dimen/_5dp">
+                android:layout_marginHorizontal="@dimen/margin_3dp"
+                android:layout_marginBottom="@dimen/margin_3dp"
+                android:minHeight="@dimen/margin_74dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

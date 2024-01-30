@@ -9,20 +9,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         android:background="@color/white"
-        android:paddingHorizontal="@dimen/_23dp">
+        android:paddingHorizontal="@dimen/margin_23dp">
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/crossing_amount"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_108dp"
+            android:layout_height="@dimen/margin_108dp"
             android:fontFamily="@font/open_sans"
             android:gravity="center"
-            android:paddingTop="@dimen/_36dp"
+            android:paddingTop="@dimen/margin_36dp"
             android:textColor="@color/black"
-            android:textSize="@dimen/_48sp"
+            android:textSize="@dimen/font_48sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="£10.00" />
@@ -30,18 +30,18 @@
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/label_crossing_amount"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_22dp"
+            android:layout_height="@dimen/margin_22dp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/payment_amount_topup_details"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintEnd_toEndOf="@id/crossing_amount"
             app:layout_constraintStart_toStartOf="@id/crossing_amount"
             app:layout_constraintTop_toBottomOf="@id/crossing_amount" />
         <View
             android:id="@+id/vw"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_85dp"
+            android:layout_height="@dimen/margin_85dp"
             app:layout_constraintTop_toBottomOf="@+id/label_crossing_amount" />
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -52,7 +52,7 @@
             android:gravity="center_vertical"
             android:text="@string/txt_payment_date"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/vw" />
 
@@ -63,7 +63,7 @@
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_payment_date_heading"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_payment_date_heading"
@@ -74,12 +74,12 @@
             android:id="@+id/tv_payment_time_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
+            android:layout_marginTop="@dimen/margin_22dp"
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:text="@string/txt_payment_time"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_payment_date_heading" />
 
@@ -90,7 +90,7 @@
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_payment_time_heading"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_payment_time_heading"
@@ -101,12 +101,12 @@
             android:id="@+id/tv_payment_reference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
+            android:layout_marginTop="@dimen/margin_22dp"
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:text="@string/txt_payment_reference"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_payment_time_heading" />
 
@@ -117,7 +117,7 @@
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_payment_reference"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_payment_reference"
@@ -128,12 +128,12 @@
             android:id="@+id/tv_type_of_payment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
+            android:layout_marginTop="@dimen/margin_22dp"
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:text="@string/txt_type_of_payment"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_payment_reference" />
 
@@ -144,7 +144,7 @@
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_type_of_payment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_type_of_payment"
@@ -155,12 +155,12 @@
             android:id="@+id/tv_payment_method"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
+            android:layout_marginTop="@dimen/margin_22dp"
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:text="@string/payment_method"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_type_of_payment_value" />
 
@@ -171,7 +171,7 @@
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_payment_method"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_payment_method"
@@ -182,12 +182,12 @@
             android:id="@+id/tv_channel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
+            android:layout_marginTop="@dimen/margin_22dp"
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:text="@string/txt_channel"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_payment_method" />
 
@@ -198,7 +198,7 @@
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_channel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_channel"
@@ -209,12 +209,12 @@
             android:id="@+id/tv_last_four_digits_of_the_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
+            android:layout_marginTop="@dimen/margin_22dp"
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:text="@string/txt_last_digits_of_card"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_channel" />
 
@@ -225,7 +225,7 @@
             android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_last_four_digits_of_the_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_last_four_digits_of_the_card"
@@ -234,10 +234,10 @@
             android:id="@+id/button_email_reciept"
             style="@style/PrimaryButton"
             app:layout_constraintTop_toBottomOf="@id/tv_last_four_digits_of_the_card"
-            android:layout_marginTop="@dimen/_75sp"
+            android:layout_marginTop="@dimen/font_75sp"
             android:text="@string/email_reciept"
             android:layout_width="match_parent"
-            android:textSize="@dimen/_14sp"
+            android:textSize="@dimen/font_14sp"
             android:fontFamily="@font/open_sans_semibold"
 
             android:layout_height="wrap_content"/>

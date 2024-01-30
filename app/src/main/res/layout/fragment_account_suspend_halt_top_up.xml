@@ -87,7 +87,7 @@
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/cancel_btn"
                 style="@style/secondaryButton"
-                android:layout_marginBottom="@dimen/_30dp"
+                android:layout_marginBottom="@dimen/margin_30dp"
                 android:text="@string/str_no_I_will_do_it_later"
                 android:textColor="@color/doItLaterColour"
                 app:borderColor="@color/doItLaterColour"

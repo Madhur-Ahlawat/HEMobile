@@ -89,8 +89,8 @@
 
                         <ImageView
                             android:id="@+id/img_pay_crossing"
-                            android:layout_width="@dimen/_63dp"
-                            android:layout_height="@dimen/_63dp"
+                            android:layout_width="@dimen/margin_63dp"
+                            android:layout_height="@dimen/margin_63dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_euro_circular_gray" />
 
@@ -108,17 +108,17 @@
                                 android:fontFamily="@font/open_sans_semibold"
                                 android:text="@string/str_make_one_of_payment"
                                 android:textColor="@color/grayColorIcon"
-                                android:textSize="@dimen/_16dp" />
+                                android:textSize="@dimen/margin_16dp" />
 
                             <View
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_5dp" />
+                                android:layout_height="@dimen/margin_5dp" />
 
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/click_here_to_search_using_your_number_plate"
-                                android:textSize="@dimen/_12sp" />
+                                android:textSize="@dimen/font_12sp" />
                         </LinearLayout>
 
 
@@ -127,10 +127,10 @@
                     <View
                         android:id="@+id/view_below_pay_for_crossings"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
+                        android:layout_height="@dimen/margin_1dp"
                         android:layout_below="@+id/payCrossingLayout"
-                        android:layout_marginStart="@dimen/_15dp"
-                        android:layout_marginEnd="@dimen/_34dp"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginEnd="@dimen/margin_34dp"
                         android:layout_marginBottom="@dimen/margin_15dp"
                         android:background="@color/gray_DADDDC" />
 
@@ -143,8 +143,8 @@
 
                         <ImageView
                             android:id="@+id/img_pcn"
-                            android:layout_width="@dimen/_63dp"
-                            android:layout_height="@dimen/_63dp"
+                            android:layout_width="@dimen/margin_63dp"
+                            android:layout_height="@dimen/margin_63dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_user_circular_gray" />
 
@@ -165,17 +165,17 @@
                                 android:fontFamily="@font/open_sans_semibold"
                                 android:text="@string/str_resolve_penalty_charge"
                                 android:textColor="@color/grayColorIcon"
-                                android:textSize="@dimen/_16dp" />
+                                android:textSize="@dimen/margin_16dp" />
 
                             <View
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_5dp" />
+                                android:layout_height="@dimen/margin_5dp" />
 
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/click_here_to_register_your_number_plate_and_create_an_automatic_top_up_account"
-                                android:textSize="@dimen/_12sp" />
+                                android:textSize="@dimen/font_12sp" />
                         </LinearLayout>
 
 
@@ -184,9 +184,9 @@
                     <View
                         android:id="@+id/view_below_setup_dart_charge_account"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="@dimen/_15dp"
-                        android:layout_marginEnd="@dimen/_34dp"
-                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginEnd="@dimen/margin_34dp"
+                        android:layout_height="@dimen/margin_1dp"
                         android:layout_below="@+id/pcnLayout"
                         android:layout_marginBottom="@dimen/margin_15dp"
                         android:background="@color/gray_DADDDC" />
@@ -200,8 +200,8 @@
 
                         <ImageView
                             android:id="@+id/img_crossing"
-                            android:layout_width="@dimen/_63dp"
-                            android:layout_height="@dimen/_63dp"
+                            android:layout_width="@dimen/margin_63dp"
+                            android:layout_height="@dimen/margin_63dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_car_circular_gray" />
 
@@ -223,17 +223,17 @@
                                 android:fontFamily="@font/open_sans_semibold"
                                 android:text="@string/str_check_for_paid_crossing"
                                 android:textColor="@color/grayColorIcon"
-                                android:textSize="@dimen/_16dp" />
+                                android:textSize="@dimen/margin_16dp" />
 
                             <View
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_5dp" />
+                                android:layout_height="@dimen/margin_5dp" />
 
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/click_here_to_search_using_your_number_plate"
-                                android:textSize="@dimen/_12sp" />
+                                android:textSize="@dimen/font_12sp" />
                         </LinearLayout>
 
 
@@ -243,9 +243,9 @@
                     <View
                         android:id="@+id/view_receive_notifications"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="@dimen/_15dp"
-                        android:layout_marginEnd="@dimen/_34dp"
-                        android:layout_height="@dimen/_1dp"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginEnd="@dimen/margin_34dp"
+                        android:layout_height="@dimen/margin_1dp"
                         android:layout_below="@+id/crossingLayout"
                         android:layout_marginBottom="@dimen/margin_15dp"
                         android:background="@color/gray_DADDDC" />
@@ -259,8 +259,8 @@
 
                         <ImageView
                             android:id="@+id/img_receive_notifications"
-                            android:layout_width="@dimen/_63dp"
-                            android:layout_height="@dimen/_63dp"
+                            android:layout_width="@dimen/margin_63dp"
+                            android:layout_height="@dimen/margin_63dp"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_receive_notifications" />
 
@@ -282,18 +282,18 @@
                                 android:fontFamily="@font/open_sans_semibold"
                                 android:text="@string/receive_notifications"
                                 android:textColor="@color/grayColorIcon"
-                                android:textSize="@dimen/_16dp" />
+                                android:textSize="@dimen/margin_16dp" />
 
                             <View
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_5dp" />
+                                android:layout_height="@dimen/margin_5dp" />
 
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
                                 android:id="@+id/notification_tv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/click_here_to_receive_notifications_when_you_cross"
-                                android:textSize="@dimen/_12sp" />
+                                android:textSize="@dimen/font_12sp" />
                         </LinearLayout>
 
 
@@ -304,7 +304,7 @@
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/btnSignIn"
                     style="@style/PrimaryButton"
-                    android:textSize="@dimen/_14sp"
+                    android:textSize="@dimen/font_14sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_25sdp"
@@ -314,13 +314,13 @@
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/btn_guidance_and_documents"
                     style="@style/secondaryButton"
-                    android:layout_marginBottom="@dimen/_32dp"
+                    android:layout_marginBottom="@dimen/margin_32dp"
                     android:layout_marginLeft="@dimen/_25sdp"
-                    android:layout_marginTop="@dimen/_26dp"
+                    android:layout_marginTop="@dimen/margin_26dp"
                     android:layout_marginRight="@dimen/_25sdp"
                     android:padding="0dp"
                     android:text="@string/dart_charge_guidance_and_documents"
-                    android:textSize="@dimen/_14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:isPrimary="false" />
             </LinearLayout>
 

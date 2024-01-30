@@ -20,7 +20,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingStart="18dp"
-            android:paddingTop="@dimen/_20dp"
+            android:paddingTop="@dimen/margin_20dp"
             android:paddingEnd="@dimen/margin_18dp"
             android:paddingBottom="@dimen/margin_20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
                 android:layout_marginLeft="@dimen/margin_2dp"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_marginRight="@dimen/margin_2dp"
-                app:cardElevation="@dimen/_3dp"
+                app:cardElevation="@dimen/margin_3dp"
                 android:layout_marginBottom="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,8 +111,8 @@
                 android:layout_marginLeft="@dimen/margin_2dp"
                 android:layout_marginTop="@dimen/margin_35dp"
                 android:layout_marginRight="@dimen/margin_2dp"
-                app:cardElevation="@dimen/_3dp"
-                android:layout_marginBottom="@dimen/_25dp">
+                app:cardElevation="@dimen/margin_3dp"
+                android:layout_marginBottom="@dimen/margin_25dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -121,8 +121,8 @@
 
                     <ImageView
                         android:id="@+id/imageView_alert_card_exists"
-                        android:layout_width="@dimen/_40dp"
-                        android:layout_height="@dimen/_40dp"
+                        android:layout_width="@dimen/margin_40dp"
+                        android:layout_height="@dimen/margin_40dp"
                         android:src="@drawable/warningicon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -168,10 +168,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:elevation="3dp"
-                android:minHeight="@dimen/_74dp"
+                android:minHeight="@dimen/margin_74dp"
                 android:visibility="gone"
                 tools:visibility="visible"
-                app:cardCornerRadius="@dimen/_5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -193,7 +193,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_18dp"
-                        android:layout_marginEnd="@dimen/_18dp"
+                        android:layout_marginEnd="@dimen/margin_18dp"
                         android:fontFamily="@font/open_sans"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_16sp"
@@ -213,7 +213,7 @@
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30dp"
+                android:layout_marginTop="@dimen/margin_30dp"
                 android:layout_marginBottom="@dimen/margin_10dp"
                 android:text="@string/str_go_to_dashboard"
                 app:isEnabled="true" />

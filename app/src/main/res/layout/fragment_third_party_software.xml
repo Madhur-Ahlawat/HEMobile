@@ -13,14 +13,14 @@
             android:id="@+id/text_terms_and_conditions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_24dp"
-            android:layout_marginTop="@dimen/_26dp"
-            android:layout_marginEnd="@dimen/_42dp"
+            android:layout_marginStart="@dimen/margin_24dp"
+            android:layout_marginTop="@dimen/margin_26dp"
+            android:layout_marginEnd="@dimen/margin_42dp"
             android:textColorLink="@color/btn_color"
             android:fontFamily="@font/open_sans"
             android:text="@string/third_party_software_full_message"
             android:textColor="@color/black"
-            android:textSize="@dimen/_14sp" />
+            android:textSize="@dimen/font_14sp" />
 
     </LinearLayout>
 </layout>

@@ -30,12 +30,12 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/top_title"
-            android:layout_marginStart="@dimen/_23dp"
+            android:layout_marginStart="@dimen/margin_23dp"
             android:layout_marginTop="@dimen/_50sdp"
             android:text="@string/str_charge_and_fines"
             style="@style/MediumTextBlack"
             android:visibility="visible"
-            android:textSize="@dimen/_16sp"
+            android:textSize="@dimen/font_16sp"
             android:fontFamily="@font/open_sans_semibold"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,13 +44,13 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/title_card"
-            android:layout_marginStart="@dimen/_23dp"
-            android:layout_marginEnd="@dimen/_23dp"
+            android:layout_marginStart="@dimen/margin_23dp"
+            android:layout_marginEnd="@dimen/margin_23dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_13dp"
+            android:layout_marginTop="@dimen/margin_13dp"
             android:backgroundTint="@color/white"
-            app:cardElevation="@dimen/_5dp"
+            app:cardElevation="@dimen/margin_5dp"
             app:cardCornerRadius="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

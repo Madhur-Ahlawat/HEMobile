@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         android:background="@color/white">
 
         <TextView
@@ -22,12 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_E0E0E0"
-            android:paddingHorizontal="@dimen/_20dp"
-            android:paddingVertical="@dimen/_4dp"
+            android:paddingHorizontal="@dimen/margin_20dp"
+            android:paddingVertical="@dimen/margin_4dp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/txt_dummy_date"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12sp"
+            android:textSize="@dimen/font_12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
                 android:orientation="vertical"
                 tools:listitem="@layout/item_crossings"
                 android:layout_width="match_parent"
-                android:minHeight="@dimen/_65dp"
+                android:minHeight="@dimen/margin_65dp"
                 android:layout_height="wrap_content"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

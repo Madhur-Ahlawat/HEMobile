@@ -16,12 +16,12 @@
             android:id="@+id/tv_use_this_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_17dp"
+            android:layout_marginTop="@dimen/margin_17dp"
             android:fontFamily="@font/open_sans_semibold"
             android:gravity="center_vertical"
             android:text="@string/str_use_this_service_to"
             android:textColor="@color/black"
-            android:textSize="@dimen/_17sp"
+            android:textSize="@dimen/font_17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -128,17 +128,17 @@
             android:layout_marginTop="@dimen/margin_60dp">
 
             <ImageView
-                android:layout_width="@dimen/_54dp"
-                android:layout_height="@dimen/_60dp"
+                android:layout_width="@dimen/margin_54dp"
+                android:layout_height="@dimen/margin_60dp"
                 android:layout_gravity="center_vertical"
-               android:layout_marginEnd="@dimen/_15dp"
+               android:layout_marginEnd="@dimen/margin_15dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_exclaimation_black" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_18dp"
+                android:layout_marginEnd="@dimen/margin_18dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:text="@string/str_you_must_pay"
                 android:textColor="@color/gray_707070"
@@ -150,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_55dp"
+            android:layout_marginTop="@dimen/margin_55dp"
             android:fontFamily="@font/open_sans_semibold"
             android:gravity="left"
             android:text="@string/learn_more_about_dartford_crossing_amp_dart_charge"
@@ -163,7 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_60dp"
+            android:layout_marginTop="@dimen/margin_60dp"
             android:fontFamily="@font/open_sans"
             android:gravity="left"
             android:text="@string/dartcharge_v1_0"
@@ -175,7 +175,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_18dp"
+            android:layout_marginTop="@dimen/margin_18dp"
             android:fontFamily="@font/open_sans"
             android:gravity="left"
             android:text="@string/str_copyright"

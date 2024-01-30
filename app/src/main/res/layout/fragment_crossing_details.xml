@@ -181,7 +181,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15dp"
+                android:layout_marginTop="@dimen/margin_15dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:id="@+id/errorTxt"
                 android:text="ssssss"
@@ -222,7 +222,7 @@
                     android:fontFamily="@font/open_sans"
                     android:text="@string/no_crossings_have_been_made_against_this_payment_reference"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -243,7 +243,7 @@
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/transfer_btn"
                 style="@style/secondaryButton"
-                android:layout_marginBottom="@dimen/_10dp"
+                android:layout_marginBottom="@dimen/margin_10dp"
                 android:text="@string/transfer_remaining_credit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -251,7 +251,7 @@
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/cancel_btn"
                 style="@style/secondaryButton"
-                android:layout_marginBottom="@dimen/_10dp"
+                android:layout_marginBottom="@dimen/margin_10dp"
                 android:text="@string/str_cancel"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:paddingTop="@dimen/_28dp"
-            android:paddingRight="@dimen/_20dp"
-            android:paddingBottom="@dimen/_20dp"
+            android:paddingTop="@dimen/margin_28dp"
+            android:paddingRight="@dimen/margin_20dp"
+            android:paddingBottom="@dimen/margin_20dp"
             tools:context=".ui.landing.ContactDartChargeFragment">
 
 
@@ -27,7 +27,7 @@
                 android:layout_width="@dimen/margin_0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
                 android:text="@string/str_dart_charge_contact_centre"
                 android:textColor="@color/dark_blue_color"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -38,9 +38,9 @@
                 android:id="@+id/telephone_tv"
                 android:layout_width="@dimen/margin_0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_31dp"
+                android:layout_marginTop="@dimen/margin_31dp"
                 android:fontFamily="@font/open_sans"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
                 android:text="@string/str_contact_address"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_14sp"
@@ -54,11 +54,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:fontFamily="@font/open_sans"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
                 android:text="@string/str_find_out_about_call_charges"
                 android:textColor="@color/hyperlink_blue2"
                 android:textColorLink="@color/hyperlink_blue2"
-                android:textSize="@dimen/_14sp"
+                android:textSize="@dimen/font_14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/telephone_tv" />
@@ -67,9 +67,9 @@
                 android:id="@+id/contact_dart_charge_tv"
                 android:layout_width="@dimen/margin_0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_31dp"
+                android:layout_marginTop="@dimen/margin_31dp"
                 android:fontFamily="@font/open_sans_bold"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
                 android:text="@string/str_contact_dart_charge_team"
                 android:textColor="@color/dark_blue_color"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_27dp"
                 android:fontFamily="@font/open_sans"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
                 android:text="@string/str_get_in_touch_about"
 
                 android:textColor="@color/black"
@@ -98,21 +98,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_25dp"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/getintouch_tv">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_8dp"
+                    android:layout_width="@dimen/margin_8dp"
                     android:layout_height="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/_6dp"
+                    android:layout_marginTop="@dimen/margin_6dp"
                     android:src="@drawable/circle_black_5dp" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/margin_10dp"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/str_charges"
                     android:textColor="@color/black" />
@@ -123,9 +123,9 @@
                 android:id="@+id/fines_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5dp"
+                android:layout_marginTop="@dimen/margin_5dp"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/charges_ll">
@@ -133,13 +133,13 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/margin_8dp"
                     android:layout_height="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/_6dp"
+                    android:layout_marginTop="@dimen/margin_6dp"
                     android:src="@drawable/circle_black_5dp" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/margin_10dp"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/str_fines"
                     android:textColor="@color/black" />
@@ -150,9 +150,9 @@
                 android:id="@+id/refund_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5dp"
+                android:layout_marginTop="@dimen/margin_5dp"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
 
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -161,13 +161,13 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/margin_8dp"
                     android:layout_height="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/_6dp"
+                    android:layout_marginTop="@dimen/margin_6dp"
                     android:src="@drawable/circle_black_5dp" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/margin_10dp"
                     android:fontFamily="@font/open_sans"
 
                     android:text="@string/str_refunds"
@@ -179,10 +179,10 @@
                 android:id="@+id/dart_charge_account_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5dp"
+                android:layout_marginTop="@dimen/margin_5dp"
 
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
 
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -191,13 +191,13 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/margin_8dp"
                     android:layout_height="@dimen/margin_8dp"
-                    android:layout_marginTop="@dimen/_6dp"
+                    android:layout_marginTop="@dimen/margin_6dp"
                     android:src="@drawable/circle_black_5dp" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/margin_10dp"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/str_dart_charge_accounts"
                     android:textColor="@color/black" />
@@ -208,25 +208,25 @@
                 android:id="@+id/complaints_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5dp"
+                android:layout_marginTop="@dimen/margin_5dp"
 
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
 
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dart_charge_account_ll">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_8dp"
-                    android:layout_height="@dimen/_8dp"
-                    android:layout_marginTop="@dimen/_6dp"
+                    android:layout_width="@dimen/margin_8dp"
+                    android:layout_height="@dimen/margin_8dp"
+                    android:layout_marginTop="@dimen/margin_6dp"
                     android:src="@drawable/circle_black_5dp" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/margin_10dp"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/str_complaints"
                     android:textColor="@color/black" />
@@ -237,23 +237,23 @@
                 android:id="@+id/general_enquiries_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5dp"
+                android:layout_marginTop="@dimen/margin_5dp"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/_30dp"
+                android:paddingLeft="@dimen/margin_30dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/complaints_ll">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_8dp"
-                    android:layout_height="@dimen/_8dp"
-                    android:layout_marginTop="@dimen/_6dp"
+                    android:layout_width="@dimen/margin_8dp"
+                    android:layout_height="@dimen/margin_8dp"
+                    android:layout_marginTop="@dimen/margin_6dp"
                     android:src="@drawable/circle_black_5dp" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/margin_10dp"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/str_general_enquiries"
                     android:textColor="@color/black" />
@@ -265,34 +265,34 @@
                 style="@style/PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_20dp"
-                android:layout_marginTop="@dimen/_60dp"
+                android:layout_marginLeft="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_60dp"
                 android:text="@string/str_get_in_touch"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/general_enquiries_ll"
-                app:radius="@dimen/_5dp" />
+                app:radius="@dimen/margin_5dp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/check_enquiry_status_mb"
                 style="@style/secondaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_20dp"
-                android:layout_marginTop="@dimen/_25dp"
+                android:layout_marginLeft="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_25dp"
                 android:text="@string/check_enquiry_status"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/get_in_touch_mb"
-                app:radius="@dimen/_5dp" />
+                app:radius="@dimen/margin_5dp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/feedback_to_improve_mb"
                 style="@style/secondaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_20dp"
-                android:layout_marginTop="@dimen/_25dp"
+                android:layout_marginLeft="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_25dp"
                 android:text="@string/feed_back_to_improve_service"
                 android:textColor="@color/new_btn_color"
                 android:visibility="gone"
@@ -301,7 +301,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/check_enquiry_status_mb"
-                app:radius="@dimen/_5dp" />
+                app:radius="@dimen/margin_5dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

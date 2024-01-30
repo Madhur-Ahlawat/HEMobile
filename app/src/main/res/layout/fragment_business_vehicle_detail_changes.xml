@@ -65,9 +65,9 @@
                     <View
                         android:id="@+id/seperator1"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
+                        android:layout_height="@dimen/margin_1dp"
                         android:visibility="gone"
-                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:layout_marginTop="@dimen/margin_3_5dp"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/reg_num" />
 
@@ -89,10 +89,10 @@
                     <View
                         android:id="@+id/seperator2"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
+                        android:layout_height="@dimen/margin_1dp"
                         android:visibility="gone"
 
-                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:layout_marginTop="@dimen/margin_3_5dp"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/typeOfVehicle" />
 
@@ -113,8 +113,8 @@
                     <View
                         android:id="@+id/seperator3"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
-                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:layout_height="@dimen/margin_1dp"
+                        android:layout_marginTop="@dimen/margin_3_5dp"
                         android:visibility="gone"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/vehicleMake" />
@@ -135,10 +135,10 @@
                     <View
                         android:id="@+id/seperator4"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
+                        android:layout_height="@dimen/margin_1dp"
                         android:visibility="gone"
 
-                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:layout_marginTop="@dimen/margin_3_5dp"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/vehicleModel" />
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -158,9 +158,9 @@
                     <View
                         android:id="@+id/seperator5"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1dp"
+                        android:layout_height="@dimen/margin_1dp"
                         android:visibility="gone"
-                        android:layout_marginTop="@dimen/_3_5dp"
+                        android:layout_marginTop="@dimen/margin_3_5dp"
                         android:background="@color/color_E0E0E0"
                         app:layout_constraintTop_toBottomOf="@+id/vehicleColor" />
 
@@ -172,7 +172,7 @@
                 android:id="@+id/confirmBtn"
                 style="@style/PrimaryButton"
                 android:text="@string/str_yes"
-                android:layout_marginTop="@dimen/_40dp"
+                android:layout_marginTop="@dimen/margin_40dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardView" />
 
