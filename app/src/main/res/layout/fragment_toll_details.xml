@@ -152,7 +152,7 @@
                 android:layout_marginTop="@dimen/margin_22dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:text="Location"
+                android:text="@string/str_direction"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_14sp"
                 app:layout_constraintStart_toStartOf="parent"
