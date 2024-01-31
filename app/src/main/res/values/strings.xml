@@ -1561,7 +1561,7 @@
     <string name="click_here_to_search_using_your_number_plate"><i>Click here to search using your number plate</i></string>
     <string name="click_here_to_register_your_number_plate_and_create_an_automatic_top_up_account"><i>Click here to register your number plate and create an automatic top up account</i></string>
     <string name="click_here_to_receive_notifications_when_you_cross"><i>Click here to receive notifications when you cross</i></string>
-    <string name="str_register_reminders">Register to receive reminders from DartCharge after you cross to help ensure you never miss another payment.</string>
+    <string name="str_register_reminders">Register to receive reminders from Dart Charge after you cross to help ensure you never miss another payment.</string>
     <string name="str_geo_location_enabled">Geo location enabled</string>
     <string name="str_register_to_receive_notifications">Register to Receive Notifications</string>
     <string name="receive_notifications">Receive Notifications</string>

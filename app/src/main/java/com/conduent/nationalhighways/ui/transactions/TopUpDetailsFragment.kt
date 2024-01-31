@@ -68,7 +68,11 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
                 0,
                 crossing?.rebillPaymentType?.indexOf("-")?:0
             ))
-            tvChannelValue.text =  Utils.capitalizeString(crossing?.paymentSource)
+            if(crossing?.paymentSource?.lowercase().equals("vrs")){
+                tvChannelValue.text =  Utils.capitalizeString("Phone")
+            }else{
+                tvChannelValue.text =  Utils.capitalizeString(crossing?.paymentSource)
+            }
             tvFourDigitsOfTheCardValue.text = crossing?.rebillPaymentType?.substring(
                 (crossing?.rebillPaymentType?.indexOf("-")?:0) + 1,
                 crossing?.rebillPaymentType?.length!!

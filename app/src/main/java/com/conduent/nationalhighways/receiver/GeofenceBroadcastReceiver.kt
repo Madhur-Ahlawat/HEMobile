@@ -24,16 +24,27 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Log.e(TAG, "geofenceTransition- receiver -> ")
         sessionManager = SessionManager(Utils.returnSharedPreference(context))
-        var checkLocationPermission=false
-        if(sessionManager.fetchBooleanData(SessionManager.SettingsClick)){
-            checkLocationPermission=Utils.checkLocationpermission(context)
-        }else{
-            checkLocationPermission = (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION) && Utils.checkLocationpermission(
-                context
-            ))
+        var checkLocationPermission = false
+        var checkNotificationPermission = false
+        if (sessionManager.fetchBooleanData(SessionManager.SettingsClick)) {
+            checkLocationPermission = Utils.checkLocationpermission(context)
+        } else {
+            checkLocationPermission =
+                (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION) && Utils.checkLocationpermission(
+                    context
+                ))
         }
-        Log.e(TAG, "onReceive: checkLocationPermission "+checkLocationPermission)
-        if (checkLocationPermission) {
+
+        if(Utils.areNotificationsEnabled(context)){
+            checkNotificationPermission = sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)
+        }else{
+            checkNotificationPermission = false
+        }
+        Log.e(TAG, "onReceive: checkLocationPermission-> " + checkLocationPermission +" checkNotificationPermission-> "+checkNotificationPermission)
+
+
+
+        if (checkLocationPermission && checkNotificationPermission) {
             notificationUtils = NotificationUtils(context)
             val geofencingEvent = GeofencingEvent.fromIntent(intent)
             if (geofencingEvent?.hasError() == true) {
@@ -51,7 +62,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                     SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
                 val dateString = dateFormat.format(Date())
                 sessionManager.saveStringData(SessionManager.GEOFENCE_ENTER_TIME, dateString)
-//                Toast.makeText(context, "Location entered", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Location entered", Toast.LENGTH_SHORT).show()
             }
 
             // Test that the reported transition was of interest.
@@ -76,7 +87,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                             context.resources.getString(R.string.str_responsible_paying),
                             Constants.GEO_FENCE_NOTIFICATION
                         )
-//                        Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
                     } else {
                         val diff = Utils.getTimeDifference(geofenceEnterTime, Date())
                         if (diff.first.toInt() == 0 && diff.second <= 5) {
@@ -85,14 +96,13 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                                 context.resources.getString(R.string.str_responsible_paying),
                                 Constants.GEO_FENCE_NOTIFICATION
                             )
-//                            Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
                         } else {
 //                            Toast.makeText(
 //                                context,
 //                                "Location time limited more than 5 minutes",
 //                                Toast.LENGTH_SHORT
 //                            ).show()
-
                         }
                     }
                     sessionManager.saveStringData(SessionManager.GEOFENCE_ENTER_TIME, "")
@@ -102,13 +112,18 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                         context.resources.getString(R.string.str_responsible_paying),
                         Constants.GEO_FENCE_NOTIFICATION
                     )
-//                    Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
                 }
-
             } else {
                 // Log the error.
                 Log.e(TAG, "geofenceTransition- error -> " + geofenceTransition)
             }
+        }else{
+            Toast.makeText(
+                context,
+                "Location permission is " + checkLocationPermission +" Notification premission is "+checkNotificationPermission,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

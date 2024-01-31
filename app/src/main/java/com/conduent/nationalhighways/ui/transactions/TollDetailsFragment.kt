@@ -69,7 +69,13 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
             }else{
                 binding.tvPaymentStatusValue.visible()
                 binding.tvPaymentStatus.visible()
-                tvPaymentStatusValue.text = Utils.capitalizeString(crossing?.tranSettleStatus)
+                if(crossing?.tranSettleStatus.toString().lowercase().equals("unsettled")){
+                    tvPaymentStatusValue.text = Utils.capitalizeString("Pending")
+                }else if(crossing?.tranSettleStatus.toString().lowercase().equals("pcr")){
+                    tvPaymentStatusValue.text = Utils.capitalizeString("Unpaid")
+                }else{
+                    tvPaymentStatusValue.text = Utils.capitalizeString(crossing?.tranSettleStatus)
+                }
             }
         }
         HomeActivityMain.setTitle(resources.getString(R.string.crossing_details))
