@@ -2,10 +2,12 @@ package com.conduent.nationalhighways.utils
 
 
 import android.app.Activity
+import android.content.Context
 import android.util.Log
 import com.conduent.apollo.security.cryptography.Hashing
 import com.conduent.nationalhighways.receiver.SmsBroadcastReceiver
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient
 import java.lang.Exception
 
 
@@ -23,6 +25,16 @@ object Utility {
         var returnableCode:String?=null
         if(!four_digit_code.isNullOrEmpty()) returnableCode=six_digit_code else returnableCode=four_digit_code
         return returnableCode
+    }
+    fun startSMSRetrieverClient(context:Activity?) {
+        val client: SmsRetrieverClient = SmsRetriever.getClient(context!!)
+        val task = client.startSmsRetriever()
+        task.addOnSuccessListener { aVoid ->
+            Log.e("Atiar OTP Receiver", "startSMSRetrieverClient addOnSuccessListener")
+        }
+        task.addOnFailureListener { e ->
+            Log.e("Atiar OTP Receiver", "startSMSRetrieverClient addOnFailureListener" + e.stackTrace)
+        }
     }
     fun startSmsUserConsent(activity:Activity?) {
         SmsRetriever.getClient(activity!!).also {

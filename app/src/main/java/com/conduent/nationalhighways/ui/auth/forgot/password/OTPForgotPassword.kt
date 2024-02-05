@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
@@ -47,6 +48,7 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
+import com.conduent.nationalhighways.utils.OTPReceiver
 import com.conduent.nationalhighways.utils.Utility
 import com.conduent.nationalhighways.utils.Utility.REQ_USER_CONSENT
 import com.conduent.nationalhighways.utils.Utility.startSmsUserConsent
@@ -70,6 +72,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -78,6 +81,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.OnClickListener {
 
+    private var myOTPReceiver: OTPReceiver?=null
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var data: RequestOTPModel? = null
     private var response: SecurityCodeResponseModel? = null
@@ -152,6 +156,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
         }
     }
+    fun startSMSRetrieverClient(context: Context) {
+        val client: SmsRetrieverClient = SmsRetriever.getClient(context)
+        val task = client.startSmsRetriever()
+        task.addOnSuccessListener { aVoid ->
+            Log.e("Atiar OTP Receiver", "startSMSRetrieverClient addOnSuccessListener")
+        }
+        task.addOnFailureListener { e ->
+            Log.e("Atiar OTP Receiver", "startSMSRetrieverClient addOnFailureListener" + e.stackTrace)
+        }
+    }
     override fun onStart() {
         super.onStart()
         registerToSmsBroadcastReceiver()
@@ -159,9 +173,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     override fun onStop() {
         super.onStop()
         requireActivity().unregisterReceiver(smsBroadcastReceiver)
+        requireActivity().unregisterReceiver(myOTPReceiver)
     }
     override fun initCtrl() {
-        startSmsUserConsent(requireActivity())
+//        startSmsUserConsent(requireActivity())
+        startSMSRetrieverClient(requireActivity())
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         Log.e("TAG", "initCtrl: editRequest " + editRequest)
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
@@ -212,6 +228,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
     }
     fun registerToSmsBroadcastReceiver() {
+        myOTPReceiver = OTPReceiver()
         smsBroadcastReceiver = SmsBroadcastReceiver().also {
             it.smsBroadcastReceiverListener = object : SmsBroadcastReceiver.SmsBroadcastReceiverListener {
                 override fun onSuccess(intent: Intent?) {
@@ -232,6 +249,23 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             intentFilter,
             ContextCompat.RECEIVER_EXPORTED
         )
+        requireContext().registerReceiver(myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+
+        //Receiving the OTP
+        myOTPReceiver!!.init(object : OTPReceiver.OTPReceiveListener {
+            override fun onOTPReceived(otp: String?) {
+                Log.e("OTP ", "OTP Received  $otp")
+                val code = otp?.let { Utility.fetchVerificationCode(it) }
+                binding.edtOtp.setText(code.toString())                // when its true automatically run the function which
+                // supposed to be run by clicking verify button
+                // verifyNumberOnClick.value = true
+            }
+
+            override fun onOTPTimeOut() {
+                Log.e("OTP ", "Timeout")
+            }
+        })
+
     }
     private fun setInputParamsData() {
         val profileNavdata = navData as ProfileDetailModel?

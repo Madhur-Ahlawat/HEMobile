@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivitySplashNewBinding
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
+import com.conduent.nationalhighways.utils.AppSignatureHelper
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -44,7 +45,8 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashNewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         mIsRooted = checkIfRootConditionAndDisplayMessage()
-
+        Log.i("Signature",AppSignatureHelper(this).appSignatures
+            .toString())
         sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,Utils.areNotificationsEnabled(this))
         Log.e("TAG", "initCtrl:fetchTouchIdEnabled "+sessionManager.fetchTouchIdEnabled() )
 
