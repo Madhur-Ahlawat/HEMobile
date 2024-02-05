@@ -15,7 +15,7 @@ class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
         apiService.getTransactionsListCheckCrossings(requestParam)
     suspend fun logout() = apiService.logout()
     suspend fun getThresholdAmount() = apiService.getThresholdValuePayment()
-    suspend fun getVehicleData() = apiService.getVehicleData(startIndex = "1", count = "100")
+    suspend fun getVehicleData() = apiService.getVehicleData(startIndex = "1", count = "20")
     suspend fun whereToReceivePaymentReceipt(request: PaymentReceiptDeliveryTypeSelectionRequest?)  = apiService.whereToReceivePaymentReceipt(request)
 
     suspend fun getAlertMessages() = apiService.getAlertMessages(Constants.LANGUAGE)

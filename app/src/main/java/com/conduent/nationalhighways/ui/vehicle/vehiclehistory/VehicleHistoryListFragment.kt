@@ -84,6 +84,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         binding.youHaveAddedVehicle.text = getString(R.string.vehicle_list)
 
         NewCreateAccountRequestModel.vehicleList.clear()
+        endlessScroll()
     }
 
     override fun initCtrl() {}
@@ -112,15 +113,17 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                 is Resource.Success -> {
                     resource.data?.let {
                         val response = resource.data
-                        totalCount = response.size
-                        mList.clear()
-                        mList.addAll(response)
-                        val dateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.ENGLISH)
 
-                        mList.sortedWith(compareBy(
+                        val dateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.ENGLISH)
+                        response.sortedWith(compareBy(
                             { if (it?.vehicleInfo?.effectiveStartDate.isNullOrEmpty()) null else dateFormat.parse(it?.vehicleInfo?.effectiveStartDate?:"") },
                             { it?.plateInfo?.number }))
 
+                        totalCount = response.size
+                        if(startIndex.toInt()==1) {
+                            mList.clear()
+                        }
+                        mList.addAll(response)
 
                         isLoading = false
                         mAdapter.setList(mList)
@@ -128,7 +131,9 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                     }
                 }
                 is Resource.DataError -> {
-                    mList.clear()
+                    if(startIndex.toInt()==1) {
+                        mList.clear()
+                    }
                     mAdapter.setList(mList)
                     hideLoader()
                     checkData()

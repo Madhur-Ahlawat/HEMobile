@@ -50,6 +50,8 @@ object GeofenceUtils {
         }
         geofenceCircularIntent = geofenceIntent
         geoClient = LocationServices.getGeofencingClient(context)
+
+        removeGeofenceByIds()
         geofenceList.clear()
         geofenceList.add(
             Geofence.Builder().apply {
@@ -103,10 +105,11 @@ object GeofenceUtils {
         }.build()
     }
 
-    fun removeGeofenceByIds(geofenceList: List<String>, context: Context) {
+    private fun removeGeofenceByIds() {
         Log.e(TAG, "removeGeofenceByIds : $geofenceList")
-        geoClient = LocationServices.getGeofencingClient(context)
-        geoClient.removeGeofences(geofenceList).run {
+        val list=ArrayList<String>()
+        list.add("geofenceDartCharge")
+        geoClient.removeGeofences(list).run {
             addOnSuccessListener {
                 Log.e(TAG, "removeGeofenceByIds : Circular fences removed ")
             }

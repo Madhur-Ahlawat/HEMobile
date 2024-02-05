@@ -74,14 +74,14 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         if (arguments?.containsKey(SHOW_BACK_BUTTON) == true) {
             backButton = arguments?.getBoolean(SHOW_BACK_BUTTON, true) ?: true
         }
-        Log.e("TAG", "onCreateView: navFlowCall " + navFlowCall)
-        Log.e("TAG", "onCreateView: navFlowFrom " + navFlowFrom)
-        Log.e("TAG", "onCreateView: edit_summary " + edit_summary)
+//        Log.e("TAG", "onCreateView: navFlowCall " + navFlowCall)
+//        Log.e("TAG", "onCreateView: navFlowFrom " + navFlowFrom)
+//        Log.e("TAG", "onCreateView: edit_summary " + edit_summary)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        checkBackIcon()
+//        checkBackIcon()
         observer()
         initCtrl()
         init()

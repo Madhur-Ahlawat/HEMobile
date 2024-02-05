@@ -1559,6 +1559,32 @@ object Utils {
                     ) == PackageManager.PERMISSION_DENIED))
         }
     }
+    fun checkAccessFineLocationPermission(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT >= VERSION_CODES.Q) {
+          return  !((ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_DENIED) &&
+                    (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_DENIED)&&
+                    (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    ) == PackageManager.PERMISSION_DENIED))
+        }else{
+           return !((ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_DENIED) &&
+                    (ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_DENIED))
+        }
+
+    }
 
     fun isSupportedCountry(country:String):Boolean{
         Log.e("TAG", "isSupportedCountry:  country "+country )

@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.landing
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -146,6 +147,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     override fun onResume() {
         super.onResume()
+        Log.e("TAG", "onResume: ---1. ", )
         sessionManager.setLoggedInUser(false)
 
         if (!Utils.areNotificationsEnabled(requireContext())) {

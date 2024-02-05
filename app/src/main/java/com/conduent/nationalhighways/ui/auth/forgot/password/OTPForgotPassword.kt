@@ -227,7 +227,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
         }
     }
-    fun registerToSmsBroadcastReceiver() {
+    private fun registerToSmsBroadcastReceiver() {
         myOTPReceiver = OTPReceiver()
         smsBroadcastReceiver = SmsBroadcastReceiver().also {
             it.smsBroadcastReceiverListener = object : SmsBroadcastReceiver.SmsBroadcastReceiverListener {
@@ -249,7 +249,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             intentFilter,
             ContextCompat.RECEIVER_EXPORTED
         )
-        requireContext().registerReceiver(myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requireContext().registerReceiver(myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
+                    Context.RECEIVER_NOT_EXPORTED)
+            }else{
+                requireContext().registerReceiver(myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+            }
+        }
 
         //Receiving the OTP
         myOTPReceiver!!.init(object : OTPReceiver.OTPReceiveListener {

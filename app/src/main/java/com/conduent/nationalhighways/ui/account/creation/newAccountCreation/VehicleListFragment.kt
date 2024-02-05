@@ -280,10 +280,10 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         val obj = vehicleList[index]
         val data = AddVehicleRequest()
         data.plateInfo?.number = obj.plateNumber
-        if (obj.plateCountry.isNullOrEmpty()) {
+        if (obj.isUK == true) {
             data.plateInfo?.country = "UK"
         } else {
-            data.plateInfo?.country = obj.plateCountry
+            data.plateInfo?.country = "NON-UK"
         }
         data.plateInfo?.vehicleGroup = " "
         data.plateInfo?.vehicleComments = ""

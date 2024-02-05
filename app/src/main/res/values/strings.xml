@@ -1653,10 +1653,10 @@
     <string name="credit_transferred">Credit Transferred</string>
     <string name="str_crossing_data">%1$s crossing</string>
     <string name="str_crossings_data">%1$s crossings</string>
-    <string name="str_allow_location_title">Allow "\"DartCharge\"" to use your location when you are not using the app?</string>
-    <string name="str_allow_location_desc">Select Always Allow to ensure that we send the notification to you.</string>
+    <string name="str_allow_location_title">Allow "\"Dart Charge\"" to use your location when you are not using the app?</string>
+    <string name="str_allow_location_desc">Change the setting to Always to ensure you receive the Dart Charge reminders.</string>
     <string name="str_opt_out">Opt Out</string>
-    <string name="str_change_to_always_allow">Always Allow</string>
+    <string name="str_change_to_always_allow">Go To Settings</string>
 
 
     <string name="str_disable_notifications">Click here to disable notifications when you cross</string>
@@ -1697,6 +1697,8 @@
     <string name="str_change_gps_settings_to_always_desc">Select Always to ensure we send the notifications to you. To change this setting go to settings.\n\nWe do not track your location we only detect if you cross Dart Charge.</string>
     <string name="go_to_settings">Go to settings</string>
     <string name="str_enable_location_services">Enable Location Services</string>
+    <string name="str_enable_push_notification">Enable Push Notifications</string>
     <string name="str_enable_location_services_desc">Go to Settings on your device to enable Location Services for the Dart Charge app</string>
+    <string name="str_enable_push_notification_desc">Go to Settings on your device to enable notifications for the Dart Charge app</string>
 
 </resources>

@@ -44,8 +44,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     private var email: String = ""
     private var mobileNumber: String = ""
     private var countryCode: String = ""
-
-    private lateinit var navController: NavController
     private var screenType: String = ""
     val viewModel: WebSiteServiceViewModel by viewModels()
 
@@ -73,7 +71,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     override fun initViewBinding() {
         binding = ActivityLandingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        navController = findNavController(this, R.id.nav_host_fragment_container)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
         Logg.logging("landingActivy", "test called $screenType")
 
@@ -92,9 +89,9 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         if (intent?.hasExtra(Constants.COUNTRY_TYPE) == true) {
             countryCode = intent.getStringExtra(Constants.COUNTRY_TYPE) ?: ""
         }
+
         loadFragment(screenType)
 
-        navControllerListener()
         if (screenType == LRDS_SCREEN) {
             binding.titleTxt.text = resources.getString(R.string.txt_my_account)
             setBackIcon(View.GONE)
@@ -114,7 +111,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         backClickListener()
         sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, false)
         if (sessionManager.fetchBooleanData(SessionManager.SettingsClick)) {
-            sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
+//            sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
             sessionManager.saveBooleanData(
                 SessionManager.LOCATION_PERMISSION,
                 Utils.checkLocationpermission(this)
@@ -140,20 +137,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     }
 
 
-    private fun navControllerListener() {
-        navController.addOnDestinationChangedListener(object :
-            NavController.OnDestinationChangedListener {
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-
-            }
-        })
-
-    }
-
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
@@ -177,9 +160,12 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     }
 
     private fun loadFragment(screenType: String) {
+        Log.e("TAG", "loadFragment: ", )
+
         val navHostFragment =
             (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment)
         val inflater = navHostFragment.navController.navInflater
+
         val oldGraph = inflater.inflate(R.navigation.nav_graph_landing)
 
         val bundle: Bundle = Bundle()
@@ -215,7 +201,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 }
             }
         }
-        navController.setGraph(oldGraph, bundle)
+        navHostFragment.navController.setGraph(oldGraph, bundle)
 
     }
 }

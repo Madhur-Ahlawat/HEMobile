@@ -68,7 +68,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var mLayoutManager: LinearLayoutManager? = null
     private var ProfileDetailModel: ProfileDetailModel? = null
     private var loader: LoaderDialog? = null
-    private val countPerPage = 100
+    private val countPerPage = 20
     private var startIndex = 1
     private var noOfPages = 1
 

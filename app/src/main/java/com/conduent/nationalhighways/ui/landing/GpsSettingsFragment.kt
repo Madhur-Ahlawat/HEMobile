@@ -36,6 +36,10 @@ class GpsSettingsFragment : BaseFragment<FragmentGpsSettingsBinding>() {
             Utils.openAppSettings(requireActivity())
         }
         binding.btnOptout.setOnClickListener {
+            sessionManager.saveBooleanData(
+                SessionManager.FOREGROUND_LOCATION_SHOWN,
+                true
+            )
             val bundle=Bundle()
             bundle.putBoolean(Constants.GpsSettings,true)
             findNavController().navigate(R.id.action_gpsSettingsFragment_to_registerReminderFragment,bundle)

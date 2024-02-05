@@ -437,7 +437,7 @@ object Constants {
     const val API_STATE = "API_STATE"
     const val API_END_TIME = "API_END_TIME"
     const val READ_STORAGE_REQUEST_CODE: Int = 1001
-    const val TIME_OUT_SEC = 60L
+    const val TIME_OUT_SEC = 80L
 
 
     //Notification Types

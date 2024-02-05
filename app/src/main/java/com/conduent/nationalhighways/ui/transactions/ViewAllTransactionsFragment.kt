@@ -168,7 +168,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         val request = AccountPaymentHistoryRequest(
             index,
             Constants.ALL_TRANSACTION,
-            100,
+            20,
             endDate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
             startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
         )
