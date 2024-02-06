@@ -64,7 +64,6 @@ object GeofenceUtils {
                 setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
             }.build()
         )
-        examinePermissionAndInitiateGeofence()
 
     }
 
@@ -112,9 +111,11 @@ object GeofenceUtils {
         geoClient.removeGeofences(list).run {
             addOnSuccessListener {
                 Log.e(TAG, "removeGeofenceByIds : Circular fences removed ")
+                examinePermissionAndInitiateGeofence()
             }
             addOnFailureListener {
                 Log.e(TAG, "removeGeofenceByIds : Circular removing failed")
+                examinePermissionAndInitiateGeofence()
             }
         }
     }

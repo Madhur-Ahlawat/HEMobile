@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FinancialInformation(
-    val availablePayments: String?,
+//    val availablePayments: String?,
     val currentBalance: String?,
     val editCardExpMonth: String?,
     val editCardExpYear: String?,

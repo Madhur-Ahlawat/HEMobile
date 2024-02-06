@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHis
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModel
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingTransactionsRequestModel
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
@@ -93,8 +94,8 @@ class DashboardViewModel @Inject constructor(
 
     var personalInformationData: MutableLiveData<PersonalInformation> =
         MutableLiveData()
-    var accountInformationData: MutableLiveData<AccountInformation> =
-        MutableLiveData()
+    var accountInformationData: MutableLiveData<AccountInformation> = MutableLiveData()
+    var communicationPreferenceData: MutableLiveData<ArrayList<CommunicationPrefsModel>> = MutableLiveData()
     var profileDetailModel: MutableLiveData<ProfileDetailModel> = MutableLiveData()
 
     var accountSubType: MutableLiveData<String> = MutableLiveData()

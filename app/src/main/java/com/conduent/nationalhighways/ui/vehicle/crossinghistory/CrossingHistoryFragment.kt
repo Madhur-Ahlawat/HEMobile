@@ -25,7 +25,6 @@ import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.CrossingHistoryFilterDialog
 import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.CrossingHistoryFilterDialogListener
 import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadFilterDialogListener
-import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.StorageHelper
 import com.conduent.nationalhighways.utils.common.Constants

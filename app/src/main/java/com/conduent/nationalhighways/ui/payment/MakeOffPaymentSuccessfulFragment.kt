@@ -24,7 +24,6 @@ import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccoun
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.StorageHelper
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil

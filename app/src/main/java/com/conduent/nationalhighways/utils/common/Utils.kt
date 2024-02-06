@@ -1247,6 +1247,18 @@ object Utils {
         }
 
     }
+    fun getMinSecTimeDifference(startTime: Date, endTime: Date): Pair<Long, Long> {
+        return try {
+            val differenceInMillis = endTime.time - startTime.time
+            val minutes = differenceInMillis % (1000 * 60 * 60) / (1000 * 60)
+            val seconds = differenceInMillis % (1000 * 60) / 1000
+
+            Pair( minutes,seconds)
+        } catch (e: Exception) {
+            Pair(0, 0)
+        }
+
+    }
 
     fun hasFaceId(context: Context): Boolean {
         val hasFaceBiometric = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

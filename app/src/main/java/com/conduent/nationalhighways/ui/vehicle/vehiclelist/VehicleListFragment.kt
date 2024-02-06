@@ -22,7 +22,6 @@ import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.addvehicle.dialog.AddVehicleDialog
 import com.conduent.nationalhighways.ui.vehicle.addvehicle.dialog.AddVehicleListener
 import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadFilterDialogListener
-import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
 import com.conduent.nationalhighways.ui.vehicle.vehiclelist.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickListener
 import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.RemoveVehicleDialog

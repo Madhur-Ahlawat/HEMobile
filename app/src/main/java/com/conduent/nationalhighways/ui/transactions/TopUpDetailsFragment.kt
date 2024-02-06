@@ -13,7 +13,6 @@ import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTy
 import com.conduent.nationalhighways.databinding.FragmentTopupDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.checkedCrossing
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -23,8 +22,6 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.ResponseBody
 import javax.inject.Inject

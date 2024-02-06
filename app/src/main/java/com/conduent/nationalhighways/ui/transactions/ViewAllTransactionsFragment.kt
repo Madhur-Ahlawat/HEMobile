@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.transactions
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi

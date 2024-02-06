@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.data.model.profile
 
 import android.os.Parcelable
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsModel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -16,7 +17,7 @@ data class AccountInformation(
     val challengeQuestionThree: String?,
     val challengeQuestionTwo: String?,
     val closeAccount: String?,
-    val communicationPreferences: String?,
+    var communicationPreferences: ArrayList<CommunicationPrefsModel> = ArrayList(),
     val deliveryType: String?,
     val fee: String?,
     val languagePref: String?,

@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.notification
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -35,7 +34,6 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.SwipeToDeleteCallback
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

@@ -52,8 +52,6 @@ class SplashActivity : AppCompatActivity() {
 
         if (!mIsRooted){
             if (!Utils.areNotificationsEnabled(this)) {
-
-
                 // Notifications are not enabled, request the user to enable them
                 if (Build.VERSION.SDK_INT >= 33) {
                     notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)

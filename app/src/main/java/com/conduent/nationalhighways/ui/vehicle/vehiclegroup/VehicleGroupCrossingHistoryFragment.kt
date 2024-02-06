@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -22,7 +21,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.history.adapter.AccountPaymentHistoryPaginationAdapter
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadFilterDialogListener
-import com.conduent.nationalhighways.ui.vehicle.crossinghistory.dialog.DownloadFormatSelectionFilterDialog
 import com.conduent.nationalhighways.ui.vehicle.vehiclegroup.adapter.VehicleGroupCrossingHistoryAdapter
 import com.conduent.nationalhighways.utils.StorageHelper
 /*import com.conduent.nationalhighways.utils.StorageHelper.checkStoragePermissions

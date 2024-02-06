@@ -26,6 +26,8 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModelList
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsResp
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
@@ -38,6 +40,7 @@ import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.receiver.SmsBroadcastReceiver
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
+import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
@@ -64,6 +67,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
+import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
@@ -81,7 +85,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.OnClickListener {
 
-    private var myOTPReceiver: OTPReceiver?=null
+    private var myOTPReceiver: OTPReceiver? = null
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var data: RequestOTPModel? = null
     private var response: SecurityCodeResponseModel? = null
@@ -109,9 +113,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var phoneDayCountryCode: String = ""
     private val dashboardViewmodel: DashboardViewModel by activityViewModels()
     private var accountStatus: String = ""
-    private var smsBroadcastReceiver: SmsBroadcastReceiver?=null
+    private var smsBroadcastReceiver: SmsBroadcastReceiver? = null
     var hasFaceBiometric = false
     var hasTouchBiometric = false
+
+    private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
+
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -127,6 +134,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
         loadUI()
 
+        binding.edtOtp.editText.requestFocus()
 
         /*AdobeAnalytics.setScreenTrack(
             "login:forgot password:choose options:otp",
@@ -142,7 +150,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
@@ -151,32 +158,40 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     //That gives all message to us. We need to get the code from inside with regex
                     val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
                     val code = message?.let { Utility.fetchVerificationCode(it) }
-                    binding.edtOtp.setText(code.toString())
+                    Log.e("TAG", "onActivityResult: code $code")
+                    binding.edtOtp.editText.setText(code.toString())
                 }
             }
         }
     }
-    fun startSMSRetrieverClient(context: Context) {
+
+    private fun startSMSRetrieverClient(context: Context) {
         val client: SmsRetrieverClient = SmsRetriever.getClient(context)
         val task = client.startSmsRetriever()
-        task.addOnSuccessListener { aVoid ->
+        task.addOnSuccessListener { _ ->
             Log.e("Atiar OTP Receiver", "startSMSRetrieverClient addOnSuccessListener")
         }
         task.addOnFailureListener { e ->
-            Log.e("Atiar OTP Receiver", "startSMSRetrieverClient addOnFailureListener" + e.stackTrace)
+            Log.e(
+                "Atiar OTP Receiver",
+                "startSMSRetrieverClient addOnFailureListener" + e.stackTrace
+            )
         }
     }
+
     override fun onStart() {
         super.onStart()
         registerToSmsBroadcastReceiver()
     }
+
     override fun onStop() {
         super.onStop()
         requireActivity().unregisterReceiver(smsBroadcastReceiver)
         requireActivity().unregisterReceiver(myOTPReceiver)
     }
+
     override fun initCtrl() {
-//        startSmsUserConsent(requireActivity())
+        startSmsUserConsent(requireActivity())
         startSMSRetrieverClient(requireActivity())
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         Log.e("TAG", "initCtrl: editRequest " + editRequest)
@@ -227,19 +242,24 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
         }
     }
+
     private fun registerToSmsBroadcastReceiver() {
         myOTPReceiver = OTPReceiver()
         smsBroadcastReceiver = SmsBroadcastReceiver().also {
-            it.smsBroadcastReceiverListener = object : SmsBroadcastReceiver.SmsBroadcastReceiverListener {
-                override fun onSuccess(intent: Intent?) {
-                    intent?.let { intent -> startActivityForResult(intent,
-                        REQ_USER_CONSENT
-                    ) }
-                }
+            it.smsBroadcastReceiverListener =
+                object : SmsBroadcastReceiver.SmsBroadcastReceiverListener {
+                    override fun onSuccess(intent: Intent?) {
+                        intent?.let { intent ->
+                            startActivityForResult(
+                                intent,
+                                REQ_USER_CONSENT
+                            )
+                        }
+                    }
 
-                override fun onFailure() {
+                    override fun onFailure() {
+                    }
                 }
-            }
         }
 
         val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
@@ -251,10 +271,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requireContext().registerReceiver(myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
-                    Context.RECEIVER_NOT_EXPORTED)
-            }else{
-                requireContext().registerReceiver(myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+                requireContext().registerReceiver(
+                    myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
+                    Context.RECEIVER_NOT_EXPORTED
+                )
+            } else {
+                requireContext().registerReceiver(
+                    myOTPReceiver,
+                    IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+                )
             }
         }
 
@@ -274,6 +299,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         })
 
     }
+
     private fun setInputParamsData() {
         val profileNavdata = navData as ProfileDetailModel?
 
@@ -322,12 +348,49 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             observe(dashboardViewModel.lrdsVal, ::handleLrdsResposne)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
+            observe(
+                communicationPrefsViewModel.updateCommunicationPrefs,
+                ::updateCommunicationSettingsPrefs
+            )
+
         }
 
 
         isViewCreated = true
 
     }
+
+    private fun updateCommunicationSettingsPrefs(resource: Resource<CommunicationPrefsResp?>?) {
+
+        when (resource) {
+            is Resource.Success -> {
+                updateSmsOption(
+                    dashboardViewmodel.personalInformationData.value,
+                    dashboardViewmodel.accountInformationData.value
+                )
+            }
+
+            is Resource.DataError -> {
+                if (loader?.isVisible == true) {
+                    loader?.dismiss()
+                }
+                if (checkSessionExpiredOrServerError(resource.errorModel)
+                ) {
+                    displaySessionExpireDialog(resource.errorModel)
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+
+            }
+
+            else -> {
+                if (loader?.isVisible == true) {
+                    loader?.dismiss()
+                }
+            }
+        }
+    }
+
 
     private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
         when (resource) {
@@ -343,9 +406,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 }
             }
 
-            is Resource.DataError ->{
+            is Resource.DataError -> {
                 dashboardViewModel.getAccountDetailsData()
             }
+
             else -> {
 
             }
@@ -387,7 +451,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                     if (navFlowCall == PROFILE_MANAGEMENT ||
                         navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE ||
-                        navFlowCall == PROFILE_MANAGEMENT_2FA_CHANGE) {
+                        navFlowCall == PROFILE_MANAGEMENT_2FA_CHANGE
+                    ) {
                         findNavController().navigate(
                             R.id.action_otpForgotFragment_to_resetForgotPassword,
                             bundle
@@ -872,11 +937,44 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     requireActivity().supportFragmentManager,
                     Constants.LOADER_DIALOG
                 )
+                val model = CommunicationPrefsRequestModel(ArrayList())
 
-                updateSmsOption(
-                    dashboardViewmodel.personalInformationData.value,
-                    dashboardViewmodel.accountInformationData.value
-                )
+                val communicationList =
+                    ArrayList<CommunicationPrefsRequestModelList>()
+                for (i in 0 until dashboardViewmodel.communicationPreferenceData.value.orEmpty().size) {
+                    val communicationModel =
+                        dashboardViewmodel.communicationPreferenceData.value?.get(
+                            i
+                        )
+
+                    val smsFlag = if(communicationModel?.category?.lowercase().equals("standard notification")) {
+                        "Y"
+                    }else{
+                        communicationModel?.smsFlag ?:"Y"
+                    }
+
+                    communicationList.add(
+                        CommunicationPrefsRequestModelList(
+                            communicationModel?.id,
+                            communicationModel?.category,
+                            communicationModel?.oneMandatory,
+                            communicationModel?.defEmail,
+                            communicationModel?.emailFlag,
+                            communicationModel?.mailFlag,
+                            communicationModel?.defSms,
+                            smsFlag,
+                            communicationModel?.defVoice,
+                            communicationModel?.voiceFlag,
+                            communicationModel?.pushNotFlag,
+                            communicationModel?.defPushNot,
+                            communicationModel?.defMail
+                            )
+                    )
+
+                }
+                model.categoryList = communicationList
+                communicationPrefsViewModel.updateCommunicationPrefs(model)
+
 
             }
 
@@ -954,8 +1052,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
     private fun updateProfileDetails(
-        dataModel: com.conduent.nationalhighways.data.model.profile.PersonalInformation?,
-        accountInformation: com.conduent.nationalhighways.data.model.profile.AccountInformation?
+        dataModel: PersonalInformation?,
+        accountInformation: AccountInformation?
     ) {
         var mfaEnabled = Utils.returnMfaStatus(accountInformation?.mfaEnabled ?: "")
         var smsOption = accountInformation?.smsOption
@@ -1084,7 +1182,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 personalInformation = status.data?.personalInformation
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
-                accountStatus = status.data?.accountInformation?.status?:""
+                accountStatus = status.data?.accountInformation?.status ?: ""
 
                 if (accountStatus.equals(Constants.SUSPENDED, true)) {
                     crossingHistoryApi()
@@ -1101,8 +1199,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             displayBiometricDialog(getString(R.string.str_enable_touch_ID))
 
                         }
-                    }
-                    else{
+                    } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                             putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                             putString(Constants.NAV_FLOW_FROM, navFlowFrom)
@@ -1208,7 +1305,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     if (accountStatus.equals(Constants.SUSPENDED, true)) {
-                        navigateWithCrossing( 0)
+                        navigateWithCrossing(0)
                     } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                             putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
