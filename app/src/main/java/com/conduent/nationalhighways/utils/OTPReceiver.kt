@@ -31,13 +31,13 @@ class OTPReceiver : BroadcastReceiver() {
 
             when (status.statusCode) {
                 CommonStatusCodes.SUCCESS -> {
-                    // Get SMS message contents
-                    var msg: String? = extras?.get(SmsRetriever.EXTRA_SMS_MESSAGE) as String
+                        // Get SMS message contents
+                        val msg: String = extras.get(SmsRetriever.EXTRA_SMS_MESSAGE) as String
 
-                    // extract the 6-digit code from the SMS
-                    val smsCode = msg?.let { "[0-9]{6}".toRegex().find(it) }
-                    Log.e("OTPReceiver", "onReceive: smsCode "+smsCode )
-                    smsCode?.value?.let { otpReceiveListener?.onOTPReceived(it) }
+                        // extract the 6-digit code from the SMS
+                        val smsCode = msg.let { "[0-9]{6}".toRegex().find(it) }
+                        Log.e("OTPReceiver", "onReceive: smsCode $smsCode")
+                        smsCode?.value?.let { otpReceiveListener?.onOTPReceived(it) }
                 }
                 CommonStatusCodes.TIMEOUT -> {
                     Log.e("OTPReceiver", "onReceive: smsCode timeout " )

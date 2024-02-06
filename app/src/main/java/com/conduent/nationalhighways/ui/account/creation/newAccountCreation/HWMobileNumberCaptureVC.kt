@@ -253,6 +253,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             }
                         }
                     }
+                    Log.e("TAG", "requestHint: matchedCountry $matchedCountry")
                     if (matchedCountry.isNullOrEmpty()) {
                         binding.inputCountry.setSelectedValue(UNITED_KINGDOM)
                         binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
@@ -262,10 +263,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             )
                         )
                     } else {
-                        binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
                         binding.inputCountry.setSelectedValue(
                             matchedCountry ?: UNITED_KINGDOM
                         )
+                        binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
                     }
 
                     if (binding.inputCountry.selectedItemDescription == UNITED_KINGDOM) {
@@ -769,11 +770,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     private fun handleNavFlow(mobileNumber: String, countryCode: String, bundle: Bundle, res: Int) {
         assignNumbers(mobileNumber, countryCode)
-        Log.e(
-            "TAG",
-            "handleNavFlow: isCountryNotSupportForSms " + NewCreateAccountRequestModel.isCountryNotSupportForSms
-        )
-        if ((!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) || NewCreateAccountRequestModel.isCountryNotSupportForSms == true) {
+        if ((!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) || NewCreateAccountRequestModel.isCountryNotSupportForSms ) {
             findNavController().navigate(res, bundle)
         } else {
             hitApi()
@@ -987,9 +984,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
         if (selected) {
-            binding.inputMobileNumber.editText.setText("")
+//            binding.inputMobileNumber.editText.setText("")
             binding.inputMobileNumber.removeError()
             checkIncompatibleCountry(item, 5)
+                        binding.inputMobileNumber.editText.setText(binding.inputMobileNumber.editText.text.toString())
+
         } else {
             if (fullCountryNameWithCode.size > 0) {
                 requiredCountryCode = fullCountryNameWithCode.any { it == item }
@@ -1011,10 +1010,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         type: Int,
         showErrorMessage: Boolean = true
     ) {
-        Log.e(
-            TAG,
-            "checkIncompatibleCountry: type " + type + " -isItMobileNumber -> " + isItMobileNumber
-        )
         NewCreateAccountRequestModel.isCountryNotSupportForSms = false
 
         if (isItMobileNumber) {
@@ -1037,14 +1032,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             binding.payasugoCb.gone()
                         }
                     } else {
-                        Log.e(
-                            TAG,
-                            "checkIncompatibleCountry: accountType " + accountInformationModel?.accountType
-                        )
-                        Log.e(
-                            TAG,
-                            "checkIncompatibleCountry: accSubType " + accountInformationModel?.accSubType
-                        )
                         if (accountInformationModel?.accSubType.equals(
                                 Constants.BUSINESS_ACCOUNT,
                                 true
@@ -1093,14 +1080,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         if (isItMobileNumber) {
-            Log.e(
-                TAG,
-                "updateProfileDetails: isCountryNotSupportForSms " + NewCreateAccountRequestModel.isCountryNotSupportForSms
-            )
-            Log.e(
-                TAG,
-                "updateProfileDetails: notSupportedCountrySaveDetails " + NewCreateAccountRequestModel.notSupportedCountrySaveDetails
-            )
             if (NewCreateAccountRequestModel.isCountryNotSupportForSms && NewCreateAccountRequestModel.notSupportedCountrySaveDetails == false) {
                 phoneCell = ""
                 phoneCellCountryCode = ""

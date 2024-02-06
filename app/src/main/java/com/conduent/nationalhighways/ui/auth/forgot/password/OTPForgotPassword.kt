@@ -186,15 +186,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     override fun onStop() {
         super.onStop()
-        requireActivity().unregisterReceiver(smsBroadcastReceiver)
+//        requireActivity().unregisterReceiver(smsBroadcastReceiver)
         requireActivity().unregisterReceiver(myOTPReceiver)
     }
 
     override fun initCtrl() {
-        startSmsUserConsent(requireActivity())
+//        startSmsUserConsent(requireActivity())
         startSMSRetrieverClient(requireActivity())
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
-        Log.e("TAG", "initCtrl: editRequest " + editRequest)
+        Log.e("TAG", "initCtrl: editRequest $editRequest")
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
 
 
@@ -263,20 +263,20 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
 
         val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-        ContextCompat.registerReceiver(
-            requireActivity(),
-            smsBroadcastReceiver,
-            intentFilter,
-            ContextCompat.RECEIVER_EXPORTED
-        )
+//        ContextCompat.registerReceiver(
+//            requireActivity(),
+//            smsBroadcastReceiver,
+//            intentFilter,
+//            ContextCompat.RECEIVER_EXPORTED
+//        )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requireContext().registerReceiver(
+                requireActivity().registerReceiver(
                     myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
-                    Context.RECEIVER_NOT_EXPORTED
+                    Context.RECEIVER_EXPORTED
                 )
             } else {
-                requireContext().registerReceiver(
+                requireActivity().registerReceiver(
                     myOTPReceiver,
                     IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
                 )

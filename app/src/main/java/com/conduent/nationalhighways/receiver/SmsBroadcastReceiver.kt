@@ -23,9 +23,11 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
 
             when (smsRetrieverStatus.statusCode) {
                 CommonStatusCodes.SUCCESS -> {
-                    extras.getParcelable<Intent>(SmsRetriever.EXTRA_CONSENT_INTENT).also {
-                        Log.e("SmsBroadcastReceiver", "onReceive: statusCode ->" +it)
-                        smsBroadcastReceiverListener.onSuccess(it)
+                    if(extras.containsKey(SmsRetriever.EXTRA_CONSENT_INTENT)) {
+                        extras.getParcelable<Intent>(SmsRetriever.EXTRA_CONSENT_INTENT).also {
+                            Log.e("SmsBroadcastReceiver", "onReceive: statusCode ->$it")
+                            smsBroadcastReceiverListener.onSuccess(it)
+                        }
                     }
                 }
 

@@ -45,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashNewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         mIsRooted = checkIfRootConditionAndDisplayMessage()
-        Log.i("Signature",AppSignatureHelper(this).appSignatures
+        Log.e("Signature",AppSignatureHelper(this).appSignatures
             .toString())
         sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,Utils.areNotificationsEnabled(this))
         Log.e("TAG", "initCtrl:fetchTouchIdEnabled "+sessionManager.fetchTouchIdEnabled() )

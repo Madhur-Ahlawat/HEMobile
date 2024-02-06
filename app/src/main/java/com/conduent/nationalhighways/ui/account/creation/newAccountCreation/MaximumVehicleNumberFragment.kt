@@ -107,7 +107,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
                     binding.cancelBtn.visibility = View.GONE
-                    binding.btnContinue.text=getString(R.string.back_to_main_menu)
+                    binding.btnContinue.text=getString(R.string.str_continue)
                     binding.inCorrectVehicleNumber.gone()
                 }
             }
