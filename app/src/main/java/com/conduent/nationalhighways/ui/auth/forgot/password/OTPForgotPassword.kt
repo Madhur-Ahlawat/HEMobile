@@ -130,11 +130,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         hasTouchBiometric = Utils.hasTouchId(requireContext())
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         loadUI()
-
-        binding.edtOtp.editText.requestFocus()
-
         /*AdobeAnalytics.setScreenTrack(
             "login:forgot password:choose options:otp",
             "forgot password",
@@ -696,6 +692,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 }
             }
         }
+        binding.edtOtp.editText.requestFocus()
     }
 
 
