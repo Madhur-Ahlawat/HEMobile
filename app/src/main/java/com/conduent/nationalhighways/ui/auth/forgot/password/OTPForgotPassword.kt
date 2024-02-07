@@ -54,7 +54,6 @@ import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.OTPReceiver
 import com.conduent.nationalhighways.utils.Utility
 import com.conduent.nationalhighways.utils.Utility.REQ_USER_CONSENT
-import com.conduent.nationalhighways.utils.Utility.startSmsUserConsent
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_MOBILE_FLOW
@@ -181,7 +180,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     override fun onStart() {
         super.onStart()
-        registerToSmsBroadcastReceiver()
+        registerOTPReceiver()
     }
 
     override fun onStop() {
@@ -243,32 +242,33 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
     }
 
-    private fun registerToSmsBroadcastReceiver() {
+    private fun registerOTPReceiver() {
         myOTPReceiver = OTPReceiver()
-        smsBroadcastReceiver = SmsBroadcastReceiver().also {
-            it.smsBroadcastReceiverListener =
-                object : SmsBroadcastReceiver.SmsBroadcastReceiverListener {
-                    override fun onSuccess(intent: Intent?) {
-                        intent?.let { intent ->
-                            startActivityForResult(
-                                intent,
-                                REQ_USER_CONSENT
-                            )
-                        }
-                    }
-
-                    override fun onFailure() {
-                    }
-                }
-        }
-
         val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-//        ContextCompat.registerReceiver(
-//            requireActivity(),
-//            smsBroadcastReceiver,
-//            intentFilter,
-//            ContextCompat.RECEIVER_EXPORTED
-//        )
+        ContextCompat.registerReceiver(
+            requireActivity(),
+            myOTPReceiver,
+            intentFilter,
+            ContextCompat.RECEIVER_EXPORTED
+        )
+//        smsBroadcastReceiver = SmsBroadcastReceiver().also {
+//            it.smsBroadcastReceiverListener =
+//                object : SmsBroadcastReceiver.SmsBroadcastReceiverListener {
+//                    override fun onSuccess(intent: Intent?) {
+//                        intent?.let { intent ->
+//                            startActivityForResult(
+//                                intent,
+//                                REQ_USER_CONSENT
+//                            )
+//                        }
+//                    }
+//
+//                    override fun onFailure() {
+//                    }
+//                }
+//        }
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requireActivity().registerReceiver(
@@ -278,7 +278,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             } else {
                 requireActivity().registerReceiver(
                     myOTPReceiver,
-                    IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+                    IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), Context.RECEIVER_EXPORTED
                 )
             }
         }

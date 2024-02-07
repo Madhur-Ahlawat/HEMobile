@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
@@ -64,6 +65,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import io.michaelrocks.libphonenumber.android.Phonenumber.PhoneNumber
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBinding>(),
@@ -410,7 +412,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         observe(viewModel.countriesList, ::getCountriesList)
         observe(viewModelProfile.updateProfileApiVal, ::handleUpdateProfileDetail)
         observe(viewModel.countriesCodeList, ::getCountryCodesList)
-        observe(createAccountViewModel.emailVerificationApiVal, ::handleEmailVerification)
+
+        lifecycleScope.launch {
+            createAccountViewModel.emailVerificationApiValStateFlow.collect {
+                handleEmailVerification(it)
+            }
+        }
     }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
@@ -893,7 +900,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             getRequiredText(binding.inputCountry.getSelectedDescription()) + binding.inputMobileNumber.getText()
                 .toString().trim()
         )
-        createAccountViewModel.emailVerificationApi(request)
+        createAccountViewModel.emailVerificationApiMutable(request)
 
 
     }
@@ -904,9 +911,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
         when (resource) {
             is Resource.Success -> {
-
-
-                Log.d("sms_referenceId", Gson().toJson(resource.data?.referenceId))
                 val bundle = Bundle()
                 bundle.putParcelable(
                     "data", RequestOTPModel(
@@ -920,7 +924,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     Constants.IS_MOBILE_NUMBER,
                     isItMobileNumber
                 )
-
                 bundle.putParcelable(
                     "response", SecurityCodeResponseModel(
                         resource.data?.emailStatusCode, 0L, resource.data?.referenceId, true
@@ -966,6 +969,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
                     bundle
                 )
+
+                lifecycleScope.launch {
+                    createAccountViewModel.emailVerificationApi.emit(null)
+                }
+
             }
 
             is Resource.DataError -> {

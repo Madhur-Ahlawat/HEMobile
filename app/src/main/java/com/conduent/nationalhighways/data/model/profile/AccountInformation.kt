@@ -17,7 +17,7 @@ data class AccountInformation(
     val challengeQuestionThree: String?,
     val challengeQuestionTwo: String?,
     val closeAccount: String?,
-    var communicationPreferences: ArrayList<CommunicationPrefsModel> = ArrayList(),
+    var communicationPreferences: ArrayList<CommunicationPrefsModel>?=null,
     val deliveryType: String?,
     val fee: String?,
     val languagePref: String?,
