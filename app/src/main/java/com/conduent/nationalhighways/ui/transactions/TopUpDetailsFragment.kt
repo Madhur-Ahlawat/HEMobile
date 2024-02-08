@@ -60,18 +60,32 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
             tvPaymentDateValue.text = crossing?.transactionDate
             tvPaymentTimeValue.text = crossing?.exitTime
             tvPaymentReferenceValue.text = crossing?.transactionNumber
-            tvTypeOfPaymentValue.text =  Utils.capitalizeString(crossing?.activity)
-            tvPaymentMethodValue.text =  Utils.capitalizeString(crossing?.rebillPaymentType?.substring(
-                0,
-                crossing?.rebillPaymentType?.indexOf("-")?:0
-            ))
-            if(crossing?.paymentSource?.lowercase().equals("vrs")){
-                tvChannelValue.text =  Utils.capitalizeString("Phone")
-            }else{
-                tvChannelValue.text =  Utils.capitalizeString(crossing?.paymentSource)
+            tvTypeOfPaymentValue.text = Utils.capitalizeString(crossing?.activity)
+            if (crossing?.rebillPaymentType?.substring(
+                    0,
+                    crossing?.rebillPaymentType?.indexOf("-") ?: 0
+                )?.lowercase().equals("current") ||
+                crossing?.rebillPaymentType?.substring(
+                    0,
+                    crossing?.rebillPaymentType?.indexOf("-") ?: 0
+                )?.lowercase().equals("savings")
+            ) {
+                tvPaymentMethodValue.text =  Utils.capitalizeString(resources.getString(R.string.direct_debit))
+            } else {
+                tvPaymentMethodValue.text = Utils.capitalizeString(
+                    crossing?.rebillPaymentType?.substring(
+                        0,
+                        crossing?.rebillPaymentType?.indexOf("-") ?: 0
+                    )
+                )
+            }
+            if (crossing?.paymentSource?.lowercase().equals("vrs")) {
+                tvChannelValue.text = Utils.capitalizeString("Phone")
+            } else {
+                tvChannelValue.text = Utils.capitalizeString(crossing?.paymentSource)
             }
             tvFourDigitsOfTheCardValue.text = crossing?.rebillPaymentType?.substring(
-                (crossing?.rebillPaymentType?.indexOf("-")?:0) + 1,
+                (crossing?.rebillPaymentType?.indexOf("-") ?: 0) + 1,
                 crossing?.rebillPaymentType?.length!!
             )
         }
@@ -102,9 +116,9 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    val bundle=Bundle()
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
-                    findNavController().navigate(R.id.emailRecieptSuccessFragment,bundle)
+                    val bundle = Bundle()
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                    findNavController().navigate(R.id.emailRecieptSuccessFragment, bundle)
                 }
             }
 

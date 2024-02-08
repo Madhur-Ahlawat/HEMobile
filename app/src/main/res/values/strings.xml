@@ -1700,5 +1700,6 @@
     <string name="str_enable_push_notification">Enable Push Notifications</string>
     <string name="str_enable_location_services_desc">Go to Settings on your device to enable Location Services for the Dart Charge app</string>
     <string name="str_enable_push_notification_desc">Go to Settings on your device to enable notifications for the Dart Charge app</string>
+    <string name="str_no_transactions_to_view">There are no recent transactions to view</string>
 
 </resources>

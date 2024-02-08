@@ -1028,37 +1028,57 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
             } else {
                 NewCreateAccountRequestModel.isCountryNotSupportForSms = true
-                if (showErrorMessage) {
-                    binding.incompatibleLl.visible()
-                    binding.incompatibleTv.text =
-                        resources.getString(R.string.str_phone_number_starts_countrycode, item)
 
-                    if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall == EDIT_MOBILE || navFlowCall == EDIT_ACCOUNT_TYPE || navFlowCall == EDIT_SUMMARY) {
-                        if (!NewCreateAccountRequestModel.prePay) {
-                            binding.payasugoCb.visible()
-                        } else {
-                            binding.payasugoCb.gone()
+                if(navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE){
+                    if(dashboardViewmodel.accountInformationData.value?.smsOption?.lowercase()
+                            .equals("n")
+                        && dashboardViewmodel.accountInformationData.value?.mfaEnabled?.lowercase()
+                            .equals("false")
+                    ){
+                        if (showErrorMessage) {
+                            binding.incompatibleLl.gone()
                         }
-                    } else {
-                        if (accountInformationModel?.accSubType.equals(
-                                Constants.BUSINESS_ACCOUNT,
-                                true
-                            ) || accountInformationModel?.accSubType.equals(
-                                Constants.PREPAY_ACCOUNT,
-                                true
-                            )
-                        ) {
-                            binding.payasugoCb.gone()
-                        } else {
-                            binding.payasugoCb.visible()
-                        }
+                    }else{
+                        showIncompatibleLayout(showErrorMessage,item)
                     }
+                }else {
+                    showIncompatibleLayout(showErrorMessage,item)
                 }
             }
         } else {
             NewCreateAccountRequestModel.isCountryNotSupportForSms = false
             if (showErrorMessage) {
                 binding.incompatibleLl.gone()
+            }
+        }
+
+    }
+
+    private fun showIncompatibleLayout(showErrorMessage: Boolean, item: String) {
+        if (showErrorMessage) {
+            binding.incompatibleLl.visible()
+            binding.incompatibleTv.text =
+                resources.getString(R.string.str_phone_number_starts_countrycode, item)
+
+            if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall == EDIT_MOBILE || navFlowCall == EDIT_ACCOUNT_TYPE || navFlowCall == EDIT_SUMMARY) {
+                if (!NewCreateAccountRequestModel.prePay) {
+                    binding.payasugoCb.visible()
+                } else {
+                    binding.payasugoCb.gone()
+                }
+            } else {
+                if (accountInformationModel?.accSubType.equals(
+                        Constants.BUSINESS_ACCOUNT,
+                        true
+                    ) || accountInformationModel?.accSubType.equals(
+                        Constants.PREPAY_ACCOUNT,
+                        true
+                    )
+                ) {
+                    binding.payasugoCb.gone()
+                } else {
+                    binding.payasugoCb.visible()
+                }
             }
         }
 

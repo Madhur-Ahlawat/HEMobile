@@ -300,13 +300,22 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 } else {
                     val vehicleList = NewCreateAccountRequestModel.vehicleList
                     val size = addedVehicleList.size + vehicleList.size
-                    Log.e("TAG", "onClick: isCrossingCall navFlowCall "+navFlowCall )
 
                     if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
                         val accountType =
                             HomeActivityMain.accountDetailsData?.accountInformation?.accountType
+                        val accSubType =
+                            HomeActivityMain.accountDetailsData?.accountInformation?.accSubType
 
-                        if (accountType == Constants.BUSINESS_ACCOUNT &&
+                        if (accSubType == Constants.EXEMPT_PARTNER &&
+                            ((size >= BuildConfig.EXEMPT.toInt()) || vehicleList.size >= 10)
+                        ) {
+                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                            findNavController().navigate(
+                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                bundle
+                            )
+                        } else if (accountType == Constants.BUSINESS_ACCOUNT &&
                             ((size >= BuildConfig.BUSINESS.toInt()) || vehicleList.size >= 10)
                         ) {
                             NewCreateAccountRequestModel.isMaxVehicleAdded = true
