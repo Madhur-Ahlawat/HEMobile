@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -37,23 +38,24 @@ class TransactionsInnerAdapterDashboard(
     }
 
     override fun getItemCount(): Int {
+        Log.e("TAG", "onBindViewHolder:transactionItemsList "+transactionItemsList.size )
+
         return transactionItemsList.size
     }
 
     override fun onBindViewHolder(
-        holder: TransactionViewHolder,
-        @SuppressLint("RecyclerView") position: Int
+        holder: TransactionViewHolder, position: Int
     ) {
         Log.e("TAG", "onBindViewHolder: " )
         pos = -1
-        var topup: String?
-        val recentTransactionItem = transactionItemsList[position]
+        var topup=""
+        val recentTransactionItem = transactionItemsList[holder.absoluteAdapterPosition]
         binding?.apply {
             valueCurrentBalance.text = recentTransactionItem.balance
             if (recentTransactionItem.activity?.lowercase()?.contains("toll") == false) {
                 indicatorIconEuro.visible()
                 Glide.with(indicatorIconTransactionType.context)
-                    .load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_euro_circular_green))
+                    .load(AppCompatResources.getDrawable(viewAllTransactionsFragment.requireContext(),R.drawable.ic_euro_circular_green))
                     .into(indicatorIconTransactionType)
                 tvTransactionType.text =
                     viewAllTransactionsFragment.resources.getString(R.string.top_up)
@@ -82,20 +84,20 @@ class TransactionsInnerAdapterDashboard(
                         Constants.EXEMPT_PARTNER
                     )
                 ) {
-                    topup = recentTransactionItem.amount
+                    topup = recentTransactionItem.amount?:""
                 } else {
                     topup = "-" + recentTransactionItem.amount
                 }
                 valueTopUpAmount.text = topup
                 indicatorIconEuro.gone()
                 Glide.with(indicatorIconTransactionType.context)
-                    .load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_car_grey))
+                    .load(AppCompatResources.getDrawable(viewAllTransactionsFragment.requireContext(),R.drawable.ic_car_grey))
                     .into(indicatorIconTransactionType)
-                valueTopUpAmount.setTextColor(viewAllTransactionsFragment.resources.getColor(R.color.red_status))
+                valueTopUpAmount.setTextColor(viewAllTransactionsFragment.resources.getColor(R.color.red_status,null))
             }
         }
         holder.itemView.setOnClickListener {
-            pos = position
+            pos = holder.absoluteAdapterPosition
             val bundle = Bundle()
             HomeActivityMain.crossing = transactionItemsList[pos]
             if (HomeActivityMain.crossing?.activity?.lowercase().equals("toll")) {
