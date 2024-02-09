@@ -105,11 +105,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
+        binding.rvRecenrTransactions.layoutManager=mLayoutManager
+        binding.rvRecenrTransactions.adapter = transactionsAdapter
+
         binding.rvRecenrTransactions.run {
             if (itemDecorationCount == 0) {
                 addItemDecoration(RecyclerViewItemDecoratorDashboardParentAdapter(3, 0))
             }
-            adapter = transactionsAdapter
         }
     }
 
@@ -243,8 +245,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     }
                 }
                 resource.data?.transactionList?.transaction?.let {
-                    Log.e("TAG", "handlePaymentResponse: "+it.size )
-                    if (it.size>0) {
+                    if (it.isNotEmpty()) {
                         binding.ivNoTransactions.gone()
                         binding.tvNoTransactions.gone()
                         binding.boxViewAll.visible()
@@ -261,9 +262,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         paymentHistoryListData =
                             Utils.sortTransactionsDateWiseDescending(paymentHistoryListData)
                                 .toMutableList()
-                        Log.e("TAG", ": paymentHistoryListData "+paymentHistoryListData.size )
                         paymentHistoryDatesList.clear()
-                        initTransactionsRecyclerView()
+//                        getDatesList(paymentHistoryListData)
+                        transactionsAdapter?.notifyDataSetChanged()
                     } else {
                         binding.rvRecenrTransactions.gone()
                         binding.ivNoTransactions.visible()

@@ -547,7 +547,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
 
         if (existingFragment != null) {
-            // Dismiss the existing fragment if it exists
             (existingFragment as LoaderDialog).dismiss()
         }
 

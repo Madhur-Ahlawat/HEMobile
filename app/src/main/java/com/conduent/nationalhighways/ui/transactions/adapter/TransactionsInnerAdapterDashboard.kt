@@ -29,12 +29,12 @@ class TransactionsInnerAdapterDashboard(
     class TransactionViewHolder(binding: ItemCrossingsBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private var binding: ItemCrossingsBinding? = null
+    lateinit var binding: ItemCrossingsBinding
     private var pos: Int = -1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         binding = ItemCrossingsBinding.inflate(inflater, parent, false)
-        return TransactionViewHolder(binding!!)
+        return TransactionViewHolder(binding)
     }
 
     override fun getItemCount(): Int {

@@ -498,19 +498,19 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recenrTransactions"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_8dp"
-                android:nestedScrollingEnabled="false"
+                android:layout_marginHorizontal="@dimen/margin_25dp"
                 android:orientation="vertical"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/box_cardType"
-                app:layout_constraintStart_toStartOf="@id/box_cardType"
-                app:layout_constraintTop_toBottomOf="@+id/box_viewAll"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_all_tansactions" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/box_viewAll"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_crossings" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
