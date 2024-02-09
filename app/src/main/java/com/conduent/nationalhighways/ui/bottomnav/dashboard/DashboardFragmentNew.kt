@@ -243,7 +243,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     }
                 }
                 resource.data?.transactionList?.transaction?.let {
-                    if (it.isNotEmpty()) {
+                    Log.e("TAG", "handlePaymentResponse: "+it.size )
+                    if (it.size>0) {
                         binding.ivNoTransactions.gone()
                         binding.tvNoTransactions.gone()
                         binding.boxViewAll.visible()
@@ -260,9 +261,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         paymentHistoryListData =
                             Utils.sortTransactionsDateWiseDescending(paymentHistoryListData)
                                 .toMutableList()
+                        Log.e("TAG", ": paymentHistoryListData "+paymentHistoryListData.size )
                         paymentHistoryDatesList.clear()
-//                        getDatesList(paymentHistoryListData)
-                        transactionsAdapter?.notifyDataSetChanged()
+                        initTransactionsRecyclerView()
                     } else {
                         binding.rvRecenrTransactions.gone()
                         binding.ivNoTransactions.visible()
@@ -381,20 +382,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
-                        if (cardType?.uppercase()?.contains(Constants.CURRENT, true)==true) {
-                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
-                                "CURRENT ending in ",
-                                "****"
-                            ) ?: ""
-                        } else if(cardType?.uppercase()?.contains(Constants.SAVINGS, true)==true){
-                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
-                                "SAVINGS ending in ",
-                                "****"
-                            ) ?: ""
-                        } else {
+                        if( data.accountInformation?.paymentTypeInfo.toString().length>=4){
+                            cardNumber.text = Utils.maskCardNumber(data.accountInformation?.paymentTypeInfo.toString())
+                        }else{
                             cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
                         }
+
                         cardNumber.setTypeface(null, Typeface.NORMAL)
 
                         DashboardUtils.setAccountStatusNew(
@@ -538,19 +531,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        if (cardType?.uppercase()?.contains(Constants.CURRENT, true)==true) {
-                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
-                                "CURRENT ending in ",
-                                "****"
-                            ) ?: ""
-                        } else if(cardType?.uppercase()?.contains(Constants.SAVINGS, true)==true){
-                            cardNumber.text = data.accountInformation?.paymentTypeInfo?.replace(
-                                "SAVINGS ending in ",
-                                "****"
-                            ) ?: ""
-                        } else {
+                        if( data.accountInformation?.paymentTypeInfo.toString().length>=4){
+                            cardNumber.text = Utils.maskCardNumber(data.accountInformation?.paymentTypeInfo.toString())
+                        }else{
                             cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
                         }
+
                         cardNumber.setTypeface(null, Typeface.NORMAL)
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus,1

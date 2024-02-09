@@ -727,13 +727,16 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     fun showLoader() {
         val fragmentManager = requireActivity().supportFragmentManager
         val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
-
-        if (existingFragment == null) {
+        if (existingFragment != null) {
+            // Dismiss the existing fragment if it exists
+            (existingFragment as LoaderDialog).dismiss()
+        }
+//        if (existingFragment == null) {
             // Fragment is not added, add it now
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
             loader?.show(fragmentManager, Constants.LOADER_DIALOG)
-        }
+//        }
     }
 
     fun hideLoader() {

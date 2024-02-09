@@ -70,7 +70,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
                     crossing?.rebillPaymentType?.indexOf("-") ?: 0
                 )?.lowercase().equals("savings")
             ) {
-                tvPaymentMethodValue.text =  Utils.capitalizeString(resources.getString(R.string.direct_debit))
+                tvPaymentMethodValue.text =  resources.getString(R.string.direct_debit)
             } else {
                 tvPaymentMethodValue.text = Utils.capitalizeString(
                     crossing?.rebillPaymentType?.substring(

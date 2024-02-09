@@ -176,8 +176,8 @@ object Utils {
             var date1: Date? = null
             var date2: Date? = null
             try {
-                date1 = dateFormat.parse(o1.transactionDate)
-                date2 = dateFormat.parse(o2.transactionDate)
+                date1 = dateFormat.parse(o1.transactionDate.toString())
+                date2 = dateFormat.parse(o2.transactionDate.toString())
             } catch (e: ParseException) {
                 e.printStackTrace()
             }

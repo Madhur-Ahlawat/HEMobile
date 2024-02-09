@@ -603,7 +603,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     countryCode == oldTelephoneCountryCode && mobileNumber == oldTelephoneNumber
                 }
 
-                if (NewCreateAccountRequestModel.isCountryNotSupportForSms == false) {
+                if (!NewCreateAccountRequestModel.isCountryNotSupportForSms) {
                     NewCreateAccountRequestModel.notSupportedCountrySaveDetails = true
                 } else {
                     if (binding.payasugoCb.visibility == View.VISIBLE) {
@@ -621,6 +621,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     payasugoAccount=true
                     payasugoChecked = binding.payasugoCb.isChecked
                 }
+
+                Log.e("TAG", "onClick: payasugoAccount "+payasugoAccount )
+                Log.e("TAG", "onClick: payasugoChecked "+payasugoChecked )
+                Log.e("TAG", "onClick: isCountryNotSupportForSms "+NewCreateAccountRequestModel.isCountryNotSupportForSms )
+                Log.e("TAG", "onClick: notSupportedCountrySaveDetails "+NewCreateAccountRequestModel.notSupportedCountrySaveDetails )
 
                 when (navFlowCall) {
                     EDIT_MOBILE -> {
@@ -722,7 +727,20 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (data != null) {
             if (isItMobileNumber) {
                 val phone = data?.personalInformation?.phoneCell
-                if ((!navFlowCall.equals(PROFILE_MANAGEMENT_2FA_CHANGE)) && phone.isNullOrEmpty()
+                val phoneCountryCode = data?.personalInformation?.phoneCellCountryCode
+
+                if(navFlowCall.equals(PROFILE_MANAGEMENT_MOBILE_CHANGE) &&
+                    dashboardViewmodel.accountInformationData.value?.smsOption?.lowercase()
+                        .equals("n")
+                    && dashboardViewmodel.accountInformationData.value?.mfaEnabled?.lowercase()
+                        .equals("false")){
+                    updateProfileDetails(
+                        data,
+                        dashboardViewmodel.accountInformationData.value?.smsOption.toString().uppercase(),
+                        Utils.returnMfaStatus( dashboardViewmodel.accountInformationData.value?.mfaEnabled?:"false")
+                    )
+
+                }else if ((!navFlowCall.equals(PROFILE_MANAGEMENT_2FA_CHANGE)) && phone.isNullOrEmpty()
                         .not() && phone.equals(
                         binding.inputMobileNumber.getText().toString()
                             .trim(), true
@@ -1019,7 +1037,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         showErrorMessage: Boolean = true
     ) {
         NewCreateAccountRequestModel.isCountryNotSupportForSms = false
-
+        Log.e(TAG, "checkIncompatibleCountry: showErrorMessage "+showErrorMessage )
+        Log.e(TAG, "checkIncompatibleCountry: isItMobileNumber "+isItMobileNumber )
+        Log.e(TAG, "checkIncompatibleCountry: isSupportedCountry "+Utils.isSupportedCountry(item) )
+        Log.e(TAG, "checkIncompatibleCountry: smsOption "+dashboardViewmodel.accountInformationData.value?.smsOption )
+        Log.e(TAG, "checkIncompatibleCountry: mfaEnabled "+dashboardViewmodel.accountInformationData.value?.mfaEnabled )
         if (isItMobileNumber) {
             if (Utils.isSupportedCountry(item)) {
                 NewCreateAccountRequestModel.isCountryNotSupportForSms = false
@@ -1027,7 +1049,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     binding.incompatibleLl.gone()
                 }
             } else {
-                NewCreateAccountRequestModel.isCountryNotSupportForSms = true
 
                 if(navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE){
                     if(dashboardViewmodel.accountInformationData.value?.smsOption?.lowercase()
@@ -1055,6 +1076,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun showIncompatibleLayout(showErrorMessage: Boolean, item: String) {
+        NewCreateAccountRequestModel.isCountryNotSupportForSms = true
+
         if (showErrorMessage) {
             binding.incompatibleLl.visible()
             binding.incompatibleTv.text =

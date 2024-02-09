@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.transactions.adapter
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -43,6 +44,7 @@ class TransactionsInnerAdapterDashboard(
         holder: TransactionViewHolder,
         @SuppressLint("RecyclerView") position: Int
     ) {
+        Log.e("TAG", "onBindViewHolder: " )
         pos = -1
         var topup: String?
         val recentTransactionItem = transactionItemsList[position]
