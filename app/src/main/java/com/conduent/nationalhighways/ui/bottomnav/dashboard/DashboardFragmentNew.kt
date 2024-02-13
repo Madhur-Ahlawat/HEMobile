@@ -1,17 +1,17 @@
 package com.conduent.nationalhighways.ui.bottomnav.dashboard
+
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -105,7 +105,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
-        binding.rvRecenrTransactions.layoutManager=mLayoutManager
+        binding.rvRecenrTransactions.layoutManager = mLayoutManager
         binding.rvRecenrTransactions.adapter = transactionsAdapter
 
         binding.rvRecenrTransactions.run {
@@ -124,12 +124,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
 
     override fun initCtrl() {
-        if(arguments?.containsKey(Constants.NAV_FLOW_KEY)==true){
-            navFlowFrom=arguments?.getString(Constants.NAV_FLOW_KEY)?:""
+        if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
+            navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY) ?: ""
         }
 
-        if(arguments?.containsKey(Constants.GO_TO_SUCCESS_PAGE)==true){
-            goToSuccessPage= arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE,false)!!
+        if (arguments?.containsKey(Constants.GO_TO_SUCCESS_PAGE) == true) {
+            goToSuccessPage = arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE, false)!!
         }
         binding.labelViewAll.setOnClickListener {
             (requireActivity() as HomeActivityMain).viewAllTransactions()
@@ -168,7 +168,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     }
                 }
             }
-            else ->{
+
+            else -> {
 
             }
         }
@@ -199,8 +200,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleAccountType(ProfileDetailModel: ProfileDetailModel) {
-        HomeActivityMain.accountDetailsData?.personalInformation = ProfileDetailModel.personalInformation
-        HomeActivityMain.accountDetailsData=ProfileDetailModel
+        HomeActivityMain.accountDetailsData?.personalInformation =
+            ProfileDetailModel.personalInformation
+        HomeActivityMain.accountDetailsData = ProfileDetailModel
         ProfileDetailModel.apply {
             if (accountInformation?.accountType.equals(
                     "BUSINESS",
@@ -218,13 +220,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showExemptPartnerUI(this)
             }
         }
-        if(navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage){
+        if (navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage) {
             var bundle = Bundle()
-            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
-            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
-            findNavController().navigate(R.id.action_dashBoardFragment_to_accountManagementFragment,bundle)
+            bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
+            bundle.putParcelable(
+                Constants.PERSONALDATA,
+                HomeActivityMain.accountDetailsData?.personalInformation
+            )
+            findNavController().navigate(
+                R.id.action_dashBoardFragment_to_accountManagementFragment,
+                bundle
+            )
             HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
-        }else{
+        } else {
             HomeActivityMain.changeBottomIconColors(requireActivity(), 0)
         }
 
@@ -376,6 +384,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupMethod.gone()
             buttonTopup.gone()
 
+            setGuideLinePercent(0.25F, R.dimen.margin_15dp)
+
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
 
@@ -383,16 +393,22 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        if( data.accountInformation?.paymentTypeInfo.toString().length>=4){
-                            cardNumber.text = Utils.maskCardNumber(data.accountInformation?.paymentTypeInfo.toString())
-                        }else{
+                        if (data.accountInformation?.paymentTypeInfo.toString().takeLast(4)
+                                .lowercase() == "cash"
+                        ) {
+                            cardNumber.text =
+                                requireActivity().resources.getString(R.string.str_cash)
+                        } else if (data.accountInformation?.paymentTypeInfo.toString().length >= 4) {
+                            cardNumber.text =
+                                Utils.maskCardNumber(data.accountInformation?.paymentTypeInfo.toString())
+                        } else {
                             cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
                         }
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
 
                         DashboardUtils.setAccountStatusNew(
-                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus,2
+                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 2
                         )
                     }
                     it.type?.let {
@@ -410,10 +426,34 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 cardLogo.gone()
             } else {
                 cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(data.accountInformation?.paymentTypeInfo ?: ""))
+                cardLogo.setImageResource(
+                    Utils.setCardImage(
+                        data.accountInformation?.paymentTypeInfo ?: ""
+                    )
+                )
             }
         }
-        getPaymentHistoryList(startIndex)
+        getPaymentHistoryList(startIndex,Constants.TOLL_TRANSACTION)
+    }
+
+    private fun setGuideLinePercent(percent: Float, margin0dp: Int) {
+
+        val layoutParams = binding.guideline1.layoutParams as ConstraintLayout.LayoutParams
+
+        layoutParams.guidePercent = percent
+        binding.guideline1.layoutParams = layoutParams
+
+        val paddingInPx =
+            resources.getDimensionPixelSize(margin0dp) // You can define your padding size in resources
+        val padding15InPx =
+            resources.getDimensionPixelSize(R.dimen.margin_15dp) // You can define your padding size in resources
+        binding.boxAccountInformation.setPadding(
+            padding15InPx,
+            paddingInPx,
+            padding15InPx,
+            padding15InPx
+        )
+
     }
 
     private fun showExemptPartnerUI(data: ProfileDetailModel) {
@@ -445,6 +485,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             valueAutopay.text = getString(R.string.exempt)
 
             buttonTopup.gone()
+            setGuideLinePercent(0.25F, R.dimen.margin_15dp)
 
             tvAccountNumberHeading.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
@@ -455,7 +496,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         DashboardUtils.setAccountStatusNew(
-                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus,3
+                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 3
                         )
                     }
 
@@ -500,6 +541,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupMethod.visible()
 
             buttonTopup.visible()
+            setGuideLinePercent(0.2F, R.dimen.margin_0dp)
 
             binding.buttonTopup.setOnClickListener {
                 val bundle = Bundle()
@@ -517,8 +559,14 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
 
                 bundle.putString(Constants.NAV_FLOW_FROM, Constants.DASHBOARD)
-                bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
-                bundle.putParcelable(Constants.ACCOUNTINFORMATION, HomeActivityMain.accountDetailsData?.accountInformation)
+                bundle.putParcelable(
+                    Constants.PERSONALDATA,
+                    HomeActivityMain.accountDetailsData?.personalInformation
+                )
+                bundle.putParcelable(
+                    Constants.ACCOUNTINFORMATION,
+                    HomeActivityMain.accountDetailsData?.accountInformation
+                )
 
                 findNavController().navigate(
                     R.id.action_dashBoardFragment_to_accountSuspendedPaymentFragment, bundle
@@ -532,20 +580,23 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 it.accountInformation?.let {
                     it.accountStatus?.let {
                         boxCardType.visible()
-                        if( data.accountInformation?.paymentTypeInfo.toString().length>=4){
-                            cardNumber.text = Utils.maskCardNumber(data.accountInformation?.paymentTypeInfo.toString())
-                        }else{
+                        if (data.accountInformation?.paymentTypeInfo.toString().takeLast(4)
+                                .lowercase() == "cash"
+                        ) {
+                            cardNumber.text =
+                                requireActivity().resources.getString(R.string.str_cash)
+                        } else if (data.accountInformation?.paymentTypeInfo.toString().length >= 4) {
+                            cardNumber.text =
+                                Utils.maskCardNumber(data.accountInformation?.paymentTypeInfo.toString())
+                        } else {
                             cardNumber.text = data.accountInformation?.paymentTypeInfo ?: ""
                         }
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
                         DashboardUtils.setAccountStatusNew(
-                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus,1
+                            it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 1
                         )
                     }
-//                    it.accountFinancialstatus?.let {
-//                        valueAutopay.text = it
-//                    }
 
                     valueAutopay.text = resources.getString(R.string.str_auto_pay)
                     it.type?.let {
@@ -563,14 +614,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             } else {
                 viewCard.visible()
                 cardLogo.visible()
-                cardLogo.setImageResource(Utils.setCardImage(data.accountInformation?.paymentTypeInfo ?: ""))
+                cardLogo.setImageResource(
+                    Utils.setCardImage(
+                        data.accountInformation?.paymentTypeInfo ?: ""
+                    )
+                )
             }
             getPaymentHistoryList(startIndex)
         }
     }
 
     private fun getPaymentHistoryList(
-        index: Int
+        index: Int?=0,
+        transactionType:String?=Constants.ALL_TRANSACTION
     ) {
         if (loader?.isVisible == false && loader?.isAdded == true) {
             loader?.showsDialog
@@ -582,9 +638,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             ""
         )
         val request = AccountPaymentHistoryRequest(
-            index, Constants.ALL_TRANSACTION, countPerPage,
-            endDate= DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
-            startDate= DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
+            index, transactionType, countPerPage,
+            endDate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
+            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }
@@ -609,8 +665,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun logOutOfAccount() {
 //        sessionManager.clearAll()
-        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
-        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD,true)
+        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, false)
+        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD, true)
         Intent(requireActivity(), LandingActivity::class.java).apply {
             putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

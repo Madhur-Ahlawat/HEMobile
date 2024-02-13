@@ -180,7 +180,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             is Resource.DataError -> {
                 if (checkSessionExpiredOrServerError(response.errorModel)) {
                     displaySessionExpireDialog(response.errorModel)
-                }else {
+                } else {
                     if (response.errorModel?.message.equals("Something went wrong. Try again later")) {
                     } else {
                         redirectToTryAgainPaymentScreen()
@@ -272,7 +272,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             is Resource.DataError -> {
                 if (checkSessionExpiredOrServerError(resource.errorModel)) {
                     displaySessionExpireDialog(resource.errorModel)
-                }else {
+                } else {
                     if (resource.errorModel?.message.equals("Something went wrong. Try again later")) {
                     } else {
                         redirectToTryAgainPaymentScreen()
@@ -303,7 +303,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             if (data.isNotEmpty()) {
                 MainScope().launch {
                     when (data) {
-                        "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt", "cancelClicked" -> hideLoader()
+                        "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt" -> hideLoader()
                         "3DStarted" -> showLoader()
                         "3DSNotIntiated" -> redirectToTryAgainPaymentScreen()
 
@@ -312,6 +312,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
                         "3DStarted1" -> threeDStarted = true
+                        "cancelClicked" -> {
+                            hideLoader()
+                            findNavController().popBackStack()
+                        }
+
 
                         else -> {
 

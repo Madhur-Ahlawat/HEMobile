@@ -22,9 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_E0E0E0"
+            android:fontFamily="@font/open_sans_semibold"
             android:paddingHorizontal="@dimen/margin_20dp"
             android:paddingVertical="@dimen/margin_4dp"
-            android:fontFamily="@font/open_sans_semibold"
             android:text="@string/txt_dummy_date"
             android:textColor="@color/black"
             android:textSize="@dimen/font_12sp"
@@ -32,16 +32,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                app:layout_constraintTop_toBottomOf="@+id/header_date"
-                android:id="@+id/rvCrossings"
-                tools:itemCount="4"
-                android:nestedScrollingEnabled="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="vertical"
-                tools:listitem="@layout/item_crossings"
-                android:layout_width="match_parent"
-                android:minHeight="@dimen/margin_65dp"
-                android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCrossings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/margin_65dp"
+            android:layout_marginTop="3dp"
+            android:nestedScrollingEnabled="false"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/header_date"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_crossings" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

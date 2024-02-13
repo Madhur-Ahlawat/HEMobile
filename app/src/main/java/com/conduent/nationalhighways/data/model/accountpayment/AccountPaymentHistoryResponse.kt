@@ -40,7 +40,7 @@ class TransactionData (
  val entryDirection: String?="",
  val exitDirection: String?="",
  val plateNumber: String?="",
- val rebillPaymentType: String?="",
+ var rebillPaymentType: String?="",
  val tranSettleStatus: String?="",
  val paymentSource: String?=""
  ) : Parcelable

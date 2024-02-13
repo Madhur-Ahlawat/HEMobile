@@ -428,6 +428,7 @@ object Constants {
     const val HISTORY_LIST = "history_list"
     const val ENQUIRY_STATUS = "enquiry_status"
     const val ACCOUNT_CONTACT_US = "account_contact_us"
+    const val IS_IT_MOBILE_NUMBER = "is_it_mobile_number"
 
     const val API_TIMEOUT_ERROR = 100100
     const val TOKEN_FAIL = 401

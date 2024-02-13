@@ -35,7 +35,7 @@ data class AccountInformation(
     val paymentTypeInfo: String?,
     val securityPin: String?,
     val showSuspendedInfo: String?,
-    val smsOption: String?,
+    var smsOption: String?,
     val status: String?,
     val stmtDelivaryInterval: String?,
     val stmtDelivaryMethod: String?,

@@ -376,7 +376,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                             binding.switchCommunication.isChecked
                         if (binding.switchCommunication.isChecked == oldCommunicationTextMessage) {
                             findNavController().popBackStack()
-                        } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.switchCommunication.isChecked) && NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true) {
+                        } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.switchCommunication.isChecked) &&
+                            (NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true || NewCreateAccountRequestModel.isCountryNotSupportForSms)) {
                             findNavController().navigate(
                                 R.id.action_optForSmsFragment_to_mobileVerificationFragment,
                                 bundle()
@@ -550,12 +551,10 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             (existingFragment as LoaderDialog).dismiss()
         }
 
-//        if (existingFragment == null) {
-            // Fragment is not added, add it now
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
-            loader?.show(fragmentManager, Constants.LOADER_DIALOG)
-//        }
+        // Fragment is not added, add it now
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+        loader?.show(fragmentManager, Constants.LOADER_DIALOG)
     }
 
 }

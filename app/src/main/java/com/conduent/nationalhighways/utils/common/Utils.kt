@@ -162,6 +162,7 @@ object Utils {
         supportCountryList.add("Switzerland -  (+41)")
         supportCountryList.add("Ukraine -  (+380)")
         supportCountryList.add("United Kingdom - (+44)")
+        supportCountryList.add("Romania - (+40)")
 
         return supportCountryList
 
@@ -1599,7 +1600,6 @@ object Utils {
     }
 
     fun isSupportedCountry(country:String):Boolean{
-        Log.e("TAG", "isSupportedCountry:  country "+country )
         if(country.isEmpty()==true){
             return true
         }
@@ -1609,13 +1609,12 @@ object Utils {
                 .replace("-", "").lowercase()
             extractTextWithinBrackets(it)
         }
-        Log.e("TAG", "isSupportedCountry:  smsSupportCountryList "+smsSupportCountryList.toString() )
 
         val isSupportedCoutry= smsSupportCountryList.contains(
             extractTextWithinBrackets(country).toString().trim()
                 .replace(" ", "").replace("-", "").lowercase()
         )
-        Log.e("TAG", "isSupportedCountry:  isSupportedCoutry "+isSupportedCoutry )
+        Log.e("TAG", "country is "+country +" isSupportedCoutry-> "+country )
 
         return isSupportedCoutry
     }

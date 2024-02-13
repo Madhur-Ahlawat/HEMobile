@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
@@ -41,7 +42,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         hashMapOf()
     private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var mLayoutManager: LinearLayoutManager? = null
-    private val dashboardViewModel: DashboardViewModel by viewModels()
+    private val dashboardViewModel: DashboardViewModel by activityViewModels()
     val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
     //    private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
@@ -51,6 +52,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
 
     @Inject
     lateinit var sessionManager: SessionManager
+    private var transactionType=Constants.ALL_TRANSACTION
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -78,6 +80,10 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         binding.rvRecenrTransactions.apply {
             layoutManager = mLayoutManager
             adapter = transactionsAdapter
+        }
+
+        if(dashboardViewModel.accountInformationData.value?.accSubType.equals(Constants.PAYG)){
+            transactionType=Constants.TOLL_TRANSACTION
         }
         getPaymentHistoryList(1)
         if (requireActivity() is HomeActivityMain) {
@@ -164,9 +170,10 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         if (loader?.isVisible == false && loader?.isAdded == true) {
             loader?.showsDialog
         }
+
         val request = AccountPaymentHistoryRequest(
             index,
-            Constants.ALL_TRANSACTION,
+            transactionType,
             20,
             endDate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
             startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)

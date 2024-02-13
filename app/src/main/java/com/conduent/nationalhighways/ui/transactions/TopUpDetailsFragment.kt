@@ -61,36 +61,41 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
             tvPaymentTimeValue.text = crossing?.exitTime
             tvPaymentReferenceValue.text = crossing?.transactionNumber
             tvTypeOfPaymentValue.text = Utils.capitalizeString(crossing?.activity)
-            if (crossing?.rebillPaymentType?.substring(
+
+            var rebillPaymentType = crossing?.rebillPaymentType
+            if (crossing?.rebillPaymentType?.contains("-") == true) {
+                rebillPaymentType = crossing?.rebillPaymentType?.substring(
                     0,
                     crossing?.rebillPaymentType?.indexOf("-") ?: 0
-                )?.lowercase().equals("current") ||
-                crossing?.rebillPaymentType?.substring(
-                    0,
-                    crossing?.rebillPaymentType?.indexOf("-") ?: 0
-                )?.lowercase().equals("savings")
-            ) {
-                tvPaymentMethodValue.text =  resources.getString(R.string.direct_debit)
-            } else {
-                tvPaymentMethodValue.text = Utils.capitalizeString(
-                    crossing?.rebillPaymentType?.substring(
-                        0,
-                        crossing?.rebillPaymentType?.indexOf("-") ?: 0
-                    )
                 )
+            }
+
+            if (rebillPaymentType?.lowercase().equals("current") ||
+                rebillPaymentType?.lowercase().equals("savings")
+            ) {
+                tvPaymentMethodValue.text = resources.getString(R.string.direct_debit)
+            } else {
+                tvPaymentMethodValue.text = Utils.capitalizeString(rebillPaymentType)
             }
             if (crossing?.paymentSource?.lowercase().equals("vrs")) {
                 tvChannelValue.text = Utils.capitalizeString("Phone")
             } else {
                 tvChannelValue.text = Utils.capitalizeString(crossing?.paymentSource)
             }
-            tvFourDigitsOfTheCardValue.text = crossing?.rebillPaymentType?.substring(
+
+            val rebillPayment= crossing?.rebillPaymentType?.substring(
                 (crossing?.rebillPaymentType?.indexOf("-") ?: 0) + 1,
-                crossing?.rebillPaymentType?.length!!
+                crossing?.rebillPaymentType?.length?:0
             )
+            if(rebillPayment?.lowercase()?.all { it.isDigit() } == true){
+                tvFourDigitsOfTheCardValue.text = rebillPayment
+            }else{
+                tvFourDigitsOfTheCardValue.text = "N/A"
+            }
         }
         HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
     }
+
 
     override fun initCtrl() {
         binding.buttonEmailReciept.setOnClickListener {

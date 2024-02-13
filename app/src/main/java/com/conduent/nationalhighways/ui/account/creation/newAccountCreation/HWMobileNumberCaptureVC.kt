@@ -110,10 +110,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         viewModel.getCountries()
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
-        if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
-            setTelephoneView()
+        if (arguments?.containsKey(Constants.IS_IT_MOBILE_NUMBER) == true) {
+            if (arguments?.getBoolean(Constants.IS_IT_MOBILE_NUMBER) == true) {
+                setMobileView()
+            } else {
+                setTelephoneView()
+            }
         } else {
-            setMobileView()
+            if (!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) {
+                setTelephoneView()
+            } else {
+                setMobileView()
+            }
         }
 
         binding.btnNext.setOnClickListener(this)
@@ -255,7 +263,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             }
                         }
                     }
-                    Log.e("TAG", "requestHint: matchedCountry $matchedCountry")
                     if (matchedCountry.isNullOrEmpty()) {
                         binding.inputCountry.setSelectedValue(UNITED_KINGDOM)
                         binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
@@ -306,10 +313,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     )
                 }
             }.addOnFailureListener {
-                Log.e(
-                    TAG,
-                    "Phone Number Hint failed"
-                )
             }
     }
 
@@ -617,15 +620,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 var payasugoAccount = false
                 var payasugoChecked = false
 
-                if (binding.payasugoCb.visibility == View.VISIBLE && binding.incompatibleLl.visibility== View.VISIBLE) {
-                    payasugoAccount=true
+                if (binding.payasugoCb.visibility == View.VISIBLE && binding.incompatibleLl.visibility == View.VISIBLE) {
+                    payasugoAccount = true
                     payasugoChecked = binding.payasugoCb.isChecked
                 }
-
-                Log.e("TAG", "onClick: payasugoAccount "+payasugoAccount )
-                Log.e("TAG", "onClick: payasugoChecked "+payasugoChecked )
-                Log.e("TAG", "onClick: isCountryNotSupportForSms "+NewCreateAccountRequestModel.isCountryNotSupportForSms )
-                Log.e("TAG", "onClick: notSupportedCountrySaveDetails "+NewCreateAccountRequestModel.notSupportedCountrySaveDetails )
 
                 when (navFlowCall) {
                     EDIT_MOBILE -> {
@@ -635,6 +633,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                                 bundle
                             )
                         } else {
+                            if (NewCreateAccountRequestModel.isCountryNotSupportForSms) {
+                                NewCreateAccountRequestModel.communicationTextMessage = false
+                                NewCreateAccountRequestModel.twoStepVerification = false
+                            }
                             val res: Int =
                                 R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
                             handleNavFlow(mobileNumber, countryCode, bundle, res)
@@ -642,6 +644,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
 
                     EDIT_SUMMARY -> {
+                        if (NewCreateAccountRequestModel.isCountryNotSupportForSms) {
+                            NewCreateAccountRequestModel.communicationTextMessage = false
+                            NewCreateAccountRequestModel.twoStepVerification = false
+                        }
                         val res: Int =
                             R.id.action_HWMobileNumberCaptureVC_to_accountSummaryFragment
                         handleNavFlow(mobileNumber, countryCode, bundle, res)
@@ -655,7 +661,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             )
                         } else {
                             assignNumbers(mobileNumber, countryCode)
-
                             if (isItMobileNumber && NewCreateAccountRequestModel.isCountryNotSupportForSms == false) {
                                 hitApi()
                             } else {
@@ -670,11 +675,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         if (payasugoAccount) {
                             if (payasugoChecked) {
-                               profileNumberUpdate()
+                                profileNumberUpdate()
                             } else {
                                 findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_profileManagementFragment)
                             }
-                        }else{
+                        } else {
                             profileNumberUpdate()
                         }
 
@@ -687,12 +692,16 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                             } else {
                                 findNavController().navigate(R.id.action_HWMobileNumberCaptureVC_to_accountFragment)
                             }
-                        }else{
+                        } else {
                             updateCommunicaionPref()
                         }
                     }
 
                     else -> {
+                        if (NewCreateAccountRequestModel.isCountryNotSupportForSms) {
+                            NewCreateAccountRequestModel.communicationTextMessage = false
+                            NewCreateAccountRequestModel.twoStepVerification = false
+                        }
                         val res: Int = R.id.action_HWMobileNumberCaptureVC_to_createVehicleFragment
                         handleNavFlow(mobileNumber, countryCode, bundle, res)
                     }
@@ -722,31 +731,33 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
     }
 
     private fun profileNumberUpdate() {
-        Log.e(TAG, "profileNumberUpdate:isItMobileNumber "+isItMobileNumber )
         data = navData as ProfileDetailModel?
         if (data != null) {
             if (isItMobileNumber) {
                 val phone = data?.personalInformation?.phoneCell
                 val phoneCountryCode = data?.personalInformation?.phoneCellCountryCode
 
-                if(navFlowCall.equals(PROFILE_MANAGEMENT_MOBILE_CHANGE) &&
+                if (navFlowCall.equals(PROFILE_MANAGEMENT_MOBILE_CHANGE) &&
                     dashboardViewmodel.accountInformationData.value?.smsOption?.lowercase()
                         .equals("n")
                     && dashboardViewmodel.accountInformationData.value?.mfaEnabled?.lowercase()
-                        .equals("false")){
+                        .equals("false")
+                ) {
                     updateProfileDetails(
                         data,
-                        dashboardViewmodel.accountInformationData.value?.smsOption.toString().uppercase(),
-                        Utils.returnMfaStatus( dashboardViewmodel.accountInformationData.value?.mfaEnabled?:"false")
+                        dashboardViewmodel.accountInformationData.value?.smsOption.toString()
+                            .uppercase(),
+                        Utils.returnMfaStatus(
+                            dashboardViewmodel.accountInformationData.value?.mfaEnabled ?: "false"
+                        )
                     )
 
-                }else if ((!navFlowCall.equals(PROFILE_MANAGEMENT_2FA_CHANGE)) && phone.isNullOrEmpty()
+                } else if ((!navFlowCall.equals(PROFILE_MANAGEMENT_2FA_CHANGE)) && phone.isNullOrEmpty()
                         .not() && phone.equals(
                         binding.inputMobileNumber.getText().toString()
                             .trim(), true
                     )
                 ) {
-                    Log.e(TAG, "profileNumberUpdate:isItMobileNumber " )
                     findNavController().popBackStack()
                 } else {
                     if (NewCreateAccountRequestModel.isCountryNotSupportForSms == true) {
@@ -795,7 +806,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     private fun handleNavFlow(mobileNumber: String, countryCode: String, bundle: Bundle, res: Int) {
         assignNumbers(mobileNumber, countryCode)
-        if ((!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) || NewCreateAccountRequestModel.isCountryNotSupportForSms ) {
+        if ((!NewCreateAccountRequestModel.communicationTextMessage && !NewCreateAccountRequestModel.twoStepVerification) || NewCreateAccountRequestModel.isCountryNotSupportForSms) {
             findNavController().navigate(res, bundle)
         } else {
             hitApi()
@@ -982,7 +993,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 NewCreateAccountRequestModel.sms_referenceId = resource.data?.referenceId
-                Log.e("TAG", "handleEmailVerification: ")
+                if (NewCreateAccountRequestModel.isCountryNotSupportForSms) {
+                    NewCreateAccountRequestModel.communicationTextMessage = false
+                    NewCreateAccountRequestModel.twoStepVerification = false
+                }
                 findNavController().navigate(
                     R.id.action_HWMobileNumberCaptureVC_to_forgotOtpFragment,
                     bundle
@@ -1013,7 +1027,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 //            binding.inputMobileNumber.editText.setText("")
             binding.inputMobileNumber.removeError()
             checkIncompatibleCountry(item, 5)
-                        binding.inputMobileNumber.editText.setText(binding.inputMobileNumber.editText.text.toString())
+            binding.inputMobileNumber.editText.setText(binding.inputMobileNumber.editText.text.toString())
 
         } else {
             if (fullCountryNameWithCode.size > 0) {
@@ -1037,11 +1051,6 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         showErrorMessage: Boolean = true
     ) {
         NewCreateAccountRequestModel.isCountryNotSupportForSms = false
-        Log.e(TAG, "checkIncompatibleCountry: showErrorMessage "+showErrorMessage )
-        Log.e(TAG, "checkIncompatibleCountry: isItMobileNumber "+isItMobileNumber )
-        Log.e(TAG, "checkIncompatibleCountry: isSupportedCountry "+Utils.isSupportedCountry(item) )
-        Log.e(TAG, "checkIncompatibleCountry: smsOption "+dashboardViewmodel.accountInformationData.value?.smsOption )
-        Log.e(TAG, "checkIncompatibleCountry: mfaEnabled "+dashboardViewmodel.accountInformationData.value?.mfaEnabled )
         if (isItMobileNumber) {
             if (Utils.isSupportedCountry(item)) {
                 NewCreateAccountRequestModel.isCountryNotSupportForSms = false
@@ -1050,20 +1059,20 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
             } else {
 
-                if(navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE){
-                    if(dashboardViewmodel.accountInformationData.value?.smsOption?.lowercase()
+                if (navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE) {
+                    if (dashboardViewmodel.accountInformationData.value?.smsOption?.lowercase()
                             .equals("n")
                         && dashboardViewmodel.accountInformationData.value?.mfaEnabled?.lowercase()
                             .equals("false")
-                    ){
+                    ) {
                         if (showErrorMessage) {
                             binding.incompatibleLl.gone()
                         }
-                    }else{
-                        showIncompatibleLayout(showErrorMessage,item)
+                    } else {
+                        showIncompatibleLayout(showErrorMessage, item)
                     }
-                }else {
-                    showIncompatibleLayout(showErrorMessage,item)
+                } else {
+                    showIncompatibleLayout(showErrorMessage, item)
                 }
             }
         } else {

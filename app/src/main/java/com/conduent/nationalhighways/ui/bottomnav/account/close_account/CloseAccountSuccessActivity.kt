@@ -40,6 +40,7 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
     }
 
     private fun setView() {
+        sessionManager.clearAll()
         binding.toolbar.backButton.gone()
         binding.toolbar.titleTxt.text = resources.getString(R.string.str_close_account)
         if (intent.hasExtra(Constants.EMAIL)) {

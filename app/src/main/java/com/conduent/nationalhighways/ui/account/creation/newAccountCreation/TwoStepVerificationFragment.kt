@@ -149,7 +149,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                         if (binding.twoFactor.isChecked == oldtwoStepVerification) {
                             findNavController().popBackStack()
                         } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.twoFactor.isChecked)
-                            && NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true) {
+                            &&( NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true || NewCreateAccountRequestModel.isCountryNotSupportForSms)) {
                             findNavController().navigate(
                                 R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,
                                 bundle()

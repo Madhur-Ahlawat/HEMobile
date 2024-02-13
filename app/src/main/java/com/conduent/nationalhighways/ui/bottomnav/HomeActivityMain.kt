@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -21,6 +22,7 @@ import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
+import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -64,8 +66,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     var from: String = ""
     var refreshTokenApiCalled: Boolean = false
-
-    private var currentFragment: BaseFragment<*>? = null // Keep a reference to the current fragment
+    private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
 
     companion object {
         var dataBinding: ActivityHomeMainBinding? = null
@@ -384,7 +385,52 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             observe(webServiceViewModel.pushNotification, ::handlePushNotificationResponse)
         }
 
+        observe(
+            communicationPrefsViewModel.getAccountSettingsPrefs,
+            ::getCommunicationSettingsPref
+        )
+
+
     }
+
+
+    private fun getCommunicationSettingsPref(resource: Resource<ProfileDetailModel?>?) {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        when (resource) {
+            is Resource.Success -> {
+
+                for (i in 0 until resource.data?.accountInformation?.communicationPreferences.orEmpty().size) {
+                    val communicationModel =
+                        resource.data?.accountInformation?.communicationPreferences?.get(i)
+
+                    if (communicationModel?.category?.lowercase().equals("standard notification")) {
+                       val oldSmsOption = communicationModel?.smsFlag?.uppercase()
+                        dashboardViewModel.accountInformationData.value?.smsOption = oldSmsOption
+                        break
+                    }
+                }
+
+                Log.e("TAG", "getCommunicationSettingsPref: smsOption "+dashboardViewModel.accountInformationData.value?.smsOption )
+
+                dashboardViewModel.communicationPreferenceData.value = resource.data?.accountInformation?.communicationPreferences
+
+            }
+
+            is Resource.DataError -> {
+                if (resource.errorModel?.errorCode == Constants.TOKEN_FAIL) {
+                    displaySessionExpireDialog(resource.errorModel)
+                } else {
+                    ErrorUtil.showError(dataBinding?.root, resource.errorMsg)
+                }
+            }
+
+            else -> {
+            }
+        }
+    }
+
 
     private fun handlePushNotificationResponse(resource: Resource<EmptyApiResponse?>) {
         when (resource) {
@@ -418,9 +464,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     private fun handleAccountDetailsResponse(status: Resource<ProfileDetailModel?>?) {
         refreshTokenApiCalled = false
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+
+        communicationPrefsViewModel.getAccountSettingsPrefs()
         when (status) {
             is Resource.Success -> {
                 dashboardViewModel.personalInformationData.value = status.data?.personalInformation
@@ -456,12 +501,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     dashboardViewModel.setAccountType(this)
                 }
 
-                if (status.data?.accountInformation?.accSubType.equals("LRDS")) {
-//                    startNewActivityByClearingStack(LandingActivity::class.java) {
-//                        putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
-//                    }
+                Log.e("TAG", "getCommunicationSettingsPref: smsOption-> "+dashboardViewModel.accountInformationData.value?.smsOption )
 
-                }
             }
 
             is Resource.DataError -> {

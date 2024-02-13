@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_MOBILE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Constants.N
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Resource
@@ -32,7 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener {
-    private var url: String? = ""
+    private var isItMobileNumber: Boolean = false
     private var dataModel: NewCreateAccountRequestModel? = null
     private lateinit var title: TextView
 
@@ -59,55 +60,54 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         binding.emailAddressSummary.visible()
         binding.emailCardProfile.gone()
         dataModel = NewCreateAccountRequestModel
-        (dataModel!!.firstName + " " + dataModel!!.lastName).also { binding.fullName.text = it }
-        if (!dataModel!!.personalAccount) {
+        (dataModel?.firstName + " " + dataModel?.lastName).also { binding.fullName.text = it }
+        if (dataModel?.personalAccount == false) {
             binding.companyNameCard.visible()
-            binding.companyName.text = dataModel!!.companyName
+            binding.companyName.text = dataModel?.companyName ?: ""
             binding.editCompanyName.setOnClickListener(this)
         } else {
             binding.companyNameCard.gone()
 
         }
         binding.passwordCard.gone()
-        if (dataModel!!.communicationTextMessage) {
+        if (dataModel?.communicationTextMessage == true) {
             binding.communications.text = getString(R.string.yes)
         } else {
             binding.communications.text = getString(R.string.no)
         }
 
-        if (dataModel!!.twoStepVerification) {
+        if (dataModel?.twoStepVerification == true) {
             binding.twoStepVerification.text = getString(R.string.yes)
         } else {
             binding.twoStepVerification.text = getString(R.string.no)
         }
 
         binding.address.text =
-            dataModel!!.addressLine1 + "\n" + dataModel!!.townCity + "\n" + dataModel!!.zipCode
-        binding.emailAddress.text = dataModel!!.emailAddress
-        if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
-            if (dataModel!!.mobileNumber?.isEmpty() != false) {
-                binding.phoneCard.gone()
-            } else {
-                binding.phoneCard.visible()
-                binding.mobileNumber.text =
-                    dataModel!!.countryCode?.let { getRequiredText(it) } + " " + dataModel!!.mobileNumber
-            }
+            dataModel?.addressLine1 + "\n" + dataModel?.townCity + "\n" + dataModel?.zipCode
+        binding.emailAddress.text = dataModel?.emailAddress
+        if ((NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) ||
+            NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true
+        ) {
+            binding.phoneCard.visible()
+            binding.mobileNumber.text =
+                dataModel?.countryCode?.let { getRequiredText(it) } + " " + dataModel?.mobileNumber
         } else {
-            if (dataModel!!.telephoneNumber?.isEmpty() != false) {
-                binding.phoneCard.gone()
-            } else {
+            if (NewCreateAccountRequestModel.telephoneNumber?.isNotEmpty() == true) {
                 binding.phoneCard.visible()
                 binding.mobileNumber.text =
-                    dataModel!!.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel!!.telephoneNumber
+                    dataModel?.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel?.telephoneNumber
+            } else {
+                binding.phoneCard.gone()
             }
         }
-        if(NewCreateAccountRequestModel.notSupportedCountrySaveDetails){
+
+        if (NewCreateAccountRequestModel.notSupportedCountrySaveDetails) {
             binding.phoneCard.visible()
-        }else{
+        } else {
             binding.phoneCard.gone()
         }
 
-        if (dataModel?.personalAccount?:false) {
+        if (dataModel?.personalAccount ?: false) {
             binding.accountSubType.visible()
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
@@ -137,22 +137,27 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 binding.btnNext.disable()
             }
         }
-        if (NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) {
+        if ((NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification)
+            || NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true
+        ) {
+            isItMobileNumber = true
             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
         } else {
+            isItMobileNumber = false
             binding.txtMobileNumber.text = getString(R.string.telephone_number)
         }
 
+
         binding.checkBoxTerms.makeLinks(Pair("terms & conditions", View.OnClickListener {
             if (NewCreateAccountRequestModel.prePay) {
-                title.text=getString(R.string.str_terms_condition)
+                title.text = getString(R.string.str_terms_condition)
             } else {
-                title.text=getString(R.string.str_payg_terms_conditions)
+                title.text = getString(R.string.str_payg_terms_conditions)
             }
 
-            if(NewCreateAccountRequestModel.prePay){
+            if (NewCreateAccountRequestModel.prePay) {
                 findNavController().navigate(R.id.action_createAccountSummaryFragment_to_generalTermsAndConditions)
-            }else{
+            } else {
                 findNavController().navigate(R.id.action_createAccountSummaryFragment_to_paygtermsandconditions)
             }
 
@@ -245,6 +250,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 bundle.putString(NAV_FLOW_KEY, EDIT_MOBILE)
                 bundle.putString(NAV_FLOW_FROM, EDIT_SUMMARY)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                bundle.putBoolean(Constants.IS_IT_MOBILE_NUMBER, isItMobileNumber)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_mobileNumberFragment,
                     bundle
@@ -278,7 +284,6 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             R.id.editAccountSubType -> {
                 val bundle = Bundle()
                 bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
-//                bundle.putParcelable(NAV_DATA_KEY, dataModel!!. as Parcelable)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountTypesFragment, bundle

@@ -220,9 +220,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.cancel_bt->{
+            R.id.cancel_bt -> {
                 findNavController().popBackStack()
             }
+
             R.id.findVehicle -> {
                 emailHeartBeatApi()
                 smsHeartBeatApi()
@@ -235,14 +236,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     Constants.PLATE_NUMBER,
                     binding.editNumberPlate.editText.text.toString()
                 )
-
-//                if(navFlowCall==Constants.TRANSFER_CROSSINGS){
-//                    checkVehicle(   binding.editNumberPlate.editText.text.toString().trim()
-//                        .replace(" ", "")
-//                        .replace("-", ""))
-//                    return
-//                }
-                Log.e("TAG", "onClick: isCrossingCall "+isPayForCrossingFlow.not() )
                 if (plateNumber.isNotEmpty() && plateNumber == binding.editNumberPlate.editText.text
                         .toString().trim() && isPayForCrossingFlow.not()
                 ) {
@@ -252,7 +245,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             bundle
                         )
                     } else {
-                        if (edit_vehicle || navFlowCall==Constants.TRANSFER_CROSSINGS) {
+                        if (edit_vehicle || navFlowCall == Constants.TRANSFER_CROSSINGS) {
                             val numberPlate =
                                 binding.editNumberPlate.editText.text.toString().trim()
                                     .replace(" ", "")
@@ -282,7 +275,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 val addedVehicleList = NewCreateAccountRequestModel.addedVehicleList
                 var isVehicleExist = false
                 for (obj in addedVehicleList) {
-                    if (obj?.plateInfo?.number?.replace(" ","")?.lowercase()?.trim().equals(numberPlate.replace(" ","").lowercase().trim(), true)) {
+                    if (obj?.plateInfo?.number?.replace(" ", "")?.lowercase()?.trim()
+                            .equals(numberPlate.replace(" ", "").lowercase().trim(), true)
+                    ) {
                         isVehicleExist = true
                     }
                 }
@@ -306,33 +301,37 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             HomeActivityMain.accountDetailsData?.accountInformation?.accountType
                         val accSubType =
                             HomeActivityMain.accountDetailsData?.accountInformation?.accSubType
+                        if (accSubType == Constants.EXEMPT_PARTNER) {
+                            if ((size >= BuildConfig.EXEMPT.toInt()) || vehicleList.size >= 10) {
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                                findNavController().navigate(
+                                    R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                    bundle
+                                )
+                            } else {
+                                checkVehicle(numberPlate)
+                            }
 
-                        if (accSubType == Constants.EXEMPT_PARTNER &&
-                            ((size >= BuildConfig.EXEMPT.toInt()) || vehicleList.size >= 10)
-                        ) {
-                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                            findNavController().navigate(
-                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                                bundle
-                            )
-                        } else if (accountType == Constants.BUSINESS_ACCOUNT &&
-                            ((size >= BuildConfig.BUSINESS.toInt()) || vehicleList.size >= 10)
-                        ) {
-                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                            findNavController().navigate(
-                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                                bundle
-                            )
-                        } else if (accountType != Constants.BUSINESS_ACCOUNT &&
-                            ((size >= BuildConfig.PERSONAL.toInt()) || vehicleList.size >= 10)
-                        ) {
-                            NewCreateAccountRequestModel.isMaxVehicleAdded = true
-                            findNavController().navigate(
-                                R.id.action_findVehicleFragment_to_maximumVehicleFragment,
-                                bundle
-                            )
                         } else {
-                            checkVehicle(numberPlate)
+                            if (accountType == Constants.BUSINESS_ACCOUNT &&
+                                ((size >= BuildConfig.BUSINESS.toInt()) || vehicleList.size >= 10)
+                            ) {
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                                findNavController().navigate(
+                                    R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                    bundle
+                                )
+                            } else if (accountType != Constants.BUSINESS_ACCOUNT &&
+                                ((size >= BuildConfig.PERSONAL.toInt()) || vehicleList.size >= 10)
+                            ) {
+                                NewCreateAccountRequestModel.isMaxVehicleAdded = true
+                                findNavController().navigate(
+                                    R.id.action_findVehicleFragment_to_maximumVehicleFragment,
+                                    bundle
+                                )
+                            } else {
+                                checkVehicle(numberPlate)
+                            }
                         }
                     } else {
                         if (NewCreateAccountRequestModel.personalAccount && size >= BuildConfig.PERSONAL.toInt()) {
@@ -361,8 +360,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private fun checkVehicle(numberPlate: String) {
         if (isPayForCrossingFlow) {
             if (edit_summary) {
-                if (oldPlateNumber.uppercase() == binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
-                    .replace("-", "").uppercase()
+                if (oldPlateNumber.uppercase() == binding.editNumberPlate.editText.text.toString()
+                        .trim().replace(" ", "")
+                        .replace("-", "").uppercase()
                 ) {
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAY_FOR_CROSSINGS)
@@ -396,7 +396,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         } else {
 
             if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS, true)) {
-                if (oldPlateNumber==binding.editNumberPlate.editText.text.toString().trim()){
+                if (oldPlateNumber == binding.editNumberPlate.editText.text.toString().trim()) {
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(
@@ -404,13 +404,19 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         data
                     )
 
-                    findNavController().navigate(R.id.action_findVehicleFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,bundle)
-                }else{
+                    findNavController().navigate(
+                        R.id.action_findVehicleFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,
+                        bundle
+                    )
+                } else {
                     loader?.show(
                         requireActivity().supportFragmentManager,
                         Constants.LOADER_DIALOG
                     )
-                    viewModel.getVehiclePlateData(numberPlate.uppercase(), Constants.AGENCY_ID.toInt())
+                    viewModel.getVehiclePlateData(
+                        numberPlate.uppercase(),
+                        Constants.AGENCY_ID.toInt()
+                    )
 
                 }
 
@@ -689,14 +695,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                     Log.e("TAG", "apiResponseDVRM1: 22")
 
-                    if(vehicleItem.isExempted.lowercase().equals("y")){
+                    if (vehicleItem.isExempted.lowercase().equals("y")) {
                         NewCreateAccountRequestModel.isExempted = true
                         findNavController().navigate(
                             R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                             bundle
                         )
 
-                    }else{
+                    } else {
                         findNavController().navigate(
                             R.id.action_findVehicleFragment_to_businessVehicleDetailFragment,
                             bundle
@@ -715,7 +721,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     val numberPlate =
                         binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                             .replace("-", "")
-                    Log.e("TAG", "apiResponsePlateInfo: isVehicleExist "+isVehicleExist )
+                    Log.e("TAG", "apiResponsePlateInfo: isVehicleExist " + isVehicleExist)
                     for (obj in vehicleList) {
                         if (obj.plateNumber.equals(numberPlate, true)) {
                             isVehicleExist = true
@@ -751,11 +757,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                         .replace(" ", "")
                                         .replace("-", "")
 
-                                vehicleColor=""
-                                vehicleMake=""
-                                vehicleClass=""
-                                vehicleModel=""
-                                vehicleType=""
+                                vehicleColor = ""
+                                vehicleMake = ""
+                                vehicleClass = ""
+                                vehicleModel = ""
+                                vehicleType = ""
                             }
                         )
 
@@ -904,15 +910,21 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         if (navData == null) {
                             Log.e("TAG", "apiResponseDVRM: --->** ")
                             navData =
-                                CrossingDetailsModelsResponse(plateNo = binding.editNumberPlate.editText.text.toString(),
-                                    vehicleMake = "", vehicleClass = "", vehicleColor = "", vehicleModel = "", vehicleType = "")
-                        }else{
-                            if(navData is CrossingDetailsModelsResponse){
-                                (navData as CrossingDetailsModelsResponse).vehicleMake=""
-                                (navData as CrossingDetailsModelsResponse).vehicleClass=""
-                                (navData as CrossingDetailsModelsResponse).vehicleColor=""
-                                (navData as CrossingDetailsModelsResponse).vehicleModel=""
-                                (navData as CrossingDetailsModelsResponse).vehicleType=""
+                                CrossingDetailsModelsResponse(
+                                    plateNo = binding.editNumberPlate.editText.text.toString(),
+                                    vehicleMake = "",
+                                    vehicleClass = "",
+                                    vehicleColor = "",
+                                    vehicleModel = "",
+                                    vehicleType = ""
+                                )
+                        } else {
+                            if (navData is CrossingDetailsModelsResponse) {
+                                (navData as CrossingDetailsModelsResponse).vehicleMake = ""
+                                (navData as CrossingDetailsModelsResponse).vehicleClass = ""
+                                (navData as CrossingDetailsModelsResponse).vehicleColor = ""
+                                (navData as CrossingDetailsModelsResponse).vehicleModel = ""
+                                (navData as CrossingDetailsModelsResponse).vehicleType = ""
                             }
                         }
                         bundle.putParcelable(

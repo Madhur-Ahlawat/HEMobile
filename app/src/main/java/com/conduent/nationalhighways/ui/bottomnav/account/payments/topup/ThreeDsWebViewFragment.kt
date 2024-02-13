@@ -71,8 +71,12 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             if (data.isNotEmpty()) {
                 MainScope().launch {
                     when (data) {
-                        "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt", "cancelClicked" -> hideLoader()
+                        "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt" -> hideLoader()
                         "threeDSStarted"->showLoader()
+                        "cancelClicked" -> {
+                            hideLoader()
+                            findNavController().popBackStack()
+                        }
 
                         else -> {
                             val gson = Gson()

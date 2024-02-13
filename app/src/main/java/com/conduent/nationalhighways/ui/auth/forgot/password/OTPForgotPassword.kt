@@ -76,6 +76,7 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
+import com.google.firebase.crashlytics.internal.Logger
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -126,6 +127,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         FragmentForgotOtpchangesBinding.inflate(inflater, container, false)
 
     override fun init() {
+        Log.e("TAG", "handleEmailVerification: communicationTextMessage%^& -> "+NewCreateAccountRequestModel.communicationTextMessage )
+
         hasFaceBiometric = Utils.hasFaceId(requireContext())
         hasTouchBiometric = Utils.hasTouchId(requireContext())
         loader = LoaderDialog()

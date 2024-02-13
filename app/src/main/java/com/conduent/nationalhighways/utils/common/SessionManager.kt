@@ -213,7 +213,8 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     fun clearAll() {
         val last_rating_time=fetchStringData(LAST_RATING_TIME)
         val LOCATION_PERMISSION=fetchBooleanData(LOCATION_PERMISSION)
-        val email=fetchAccountEmailId()
+        val FOREGROUND_LOCATION_SHOWN=fetchBooleanData(FOREGROUND_LOCATION_SHOWN)
+        val NOTIFICATION_PERMISSION=fetchBooleanData(NOTIFICATION_PERMISSION)
         prefs.edit().clear().apply()
         HomeActivityMain.accountDetailsData = null
         HomeActivityMain.crossing = null
@@ -221,6 +222,8 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         HomeActivityMain.paymentHistoryListData = mutableListOf()
         saveStringData(LAST_RATING_TIME,last_rating_time)
         saveBooleanData(Companion.LOCATION_PERMISSION, LOCATION_PERMISSION)
+        saveBooleanData(Companion.NOTIFICATION_PERMISSION, NOTIFICATION_PERMISSION)
+        saveBooleanData(Companion.FOREGROUND_LOCATION_SHOWN, FOREGROUND_LOCATION_SHOWN)
     }
 
     fun setSessionTime(code: Long?) {
