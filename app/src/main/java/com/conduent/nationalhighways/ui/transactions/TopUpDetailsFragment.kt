@@ -77,8 +77,12 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
             } else {
                 tvPaymentMethodValue.text = Utils.capitalizeString(rebillPaymentType)
             }
-            if (crossing?.paymentSource?.lowercase().equals("vrs")) {
-                tvChannelValue.text = Utils.capitalizeString("Phone")
+
+            val paymentSource= crossing?.paymentSource?.lowercase()
+            if (paymentSource.equals("vrs") || paymentSource.equals("ivr")) {
+                tvChannelValue.text = Utils.capitalizeString(resources.getString(R.string.str_phone))
+            }else if (paymentSource.equals("mail-in")) {
+                tvChannelValue.text = Utils.capitalizeString(resources.getString(R.string.str_post))
             } else {
                 tvChannelValue.text = Utils.capitalizeString(crossing?.paymentSource)
             }

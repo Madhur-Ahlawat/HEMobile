@@ -379,7 +379,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         if (intent.hasExtra(Constants.FIRST_TYM_REDIRECTS) && intent.getBooleanExtra(
                 Constants.FIRST_TYM_REDIRECTS,
                 false
-            ) == true
+            )
         ) {
             callPushNotificationApi()
             observe(webServiceViewModel.pushNotification, ::handlePushNotificationResponse)
@@ -483,6 +483,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     sessionManager.saveZipCode(personalInformation?.zipCode ?: "")
                     sessionManager.savePhoneNumber(personalInformation?.phoneNumber ?: "")
                     sessionManager.saveAccountNumber(accountInformation?.number ?: "")
+                    sessionManager.saveAccountType(accountInformation?.accountType)
+                    sessionManager.saveSubAccountType(accountInformation?.accSubType)
                     sessionManager.saveSmsOption(accountInformation?.smsOption ?: "")
                     if (personalInformation?.phoneCellCountryCode?.isEmpty() == true) {
                         sessionManager.saveUserCountryCode(

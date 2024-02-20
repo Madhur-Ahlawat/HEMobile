@@ -28,15 +28,6 @@
             android:id="@+id/action_findVehicleFragment_to_accountSummaryFragment"
             app:destination="@+id/createAccountSummaryFragment" />
 
-
-        <action
-            android:id="@+id/action_findVehicleFragment_to_businessVehicleUKListFragment"
-            app:destination="@+id/businessVehicleUKListFragment" />
-
-        <action
-            android:id="@+id/action_findVehicleFragment_to_businessVehicleNonUKMakeFragment"
-            app:destination="@+id/businessNonUKMakeFragment" />
-
         <action
             android:id="@+id/action_findYourVehicleFragment_to_businessVehicleDetailFragment"
             app:destination="@id/businessVehicleDetailFragment" />
@@ -131,68 +122,6 @@
     </fragment>
 
 
-    <!-- BUSINESS ACCOUNT -->
-
-    <!--
-        <fragment
-            android:id="@+id/businessVehicleTitleFragment"
-            android:name="com.heandroid.ui.account.creation.step5.businessaccount.BusinessVehicleTitleFragment"
-            android:label="BusinessVehicleTitle"
-            tools:layout="@layout/fragment_business_vehicle_title_fragment">
-
-            <action
-                android:id="@+id/action_businessVehicleTitleFragment_to_businessVehicleUKFragment"
-                app:destination="@id/findYourVehicleFragment" />
-
-        </fragment>
-    -->
-
-    <fragment
-        android:id="@+id/businessVehicleUKListFragment"
-        android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleFindUK"
-        android:label="BusinessUKVehicleList"
-        tools:layout="@layout/fragment_business_vehicle_find_uk">
-
-        <action
-            android:id="@+id/action_businessUKListFragment_to_businessNonUKMakeFragment"
-            app:destination="@id/businessNonUKMakeFragment" />
-        <action
-            android:id="@+id/action_businessUKListFragment_to_businessVehicleDetailFragment"
-            app:destination="@id/businessVehicleDetailFragment" />
-    </fragment>
-
-
-    <fragment
-        android:id="@+id/businessNonUKMakeFragment"
-        android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKMakeFragment"
-        android:label="BusinessNonUKMake"
-        tools:layout="@layout/fragment_business_vehicle_non_uk_make">
-
-        <action
-            android:id="@+id/action_businessNonUkMakeFragment_to_businessNonUKClassFragment"
-            app:destination="@+id/businessNonUKClassFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/businessNonUKClassFragment"
-        android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleNonUKClassFragment"
-        android:label="BusinessNonUkDetails"
-        tools:layout="@layout/fragment_business_vehicle_non_uk_details">
-
-        <action
-            android:id="@+id/action_businessNonUKDetailsFragment_to_businessVehicleDetailFragment"
-            app:destination="@id/businessVehicleDetailFragment" />
-
-        <action
-            android:id="@+id/action_businessNonUkMakeFragment_to_findYourVehicleFragment"
-            app:destination="@id/findYourVehicleFragment"
-            app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true" />
-
-
-    </fragment>
-
     <fragment
         android:id="@+id/vehicleIsExemptFromDartChargesFragment"
         android:name="com.conduent.nationalhighways.ui.checkpaidcrossings.VehicleIsExemptFromDartChargesFragment"
@@ -216,7 +145,7 @@
         android:id="@+id/businessVehicleDetailFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.step5.businessaccount.BusinessVehicleDetailFragment"
         android:label="BusinessVehicleDetail"
-        tools:layout="@layout/fragment_business_vehicle_detail">
+        tools:layout="@layout/fragment_business_vehicle_detail_changes">
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_maximumVehicleFragment"
             app:destination="@+id/maximumVehicleFragment" />
@@ -565,10 +494,6 @@
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
         android:label="Reset Password"
         tools:layout="@layout/fragment_forgot_reset">
-        <action
-            android:id="@+id/action_resetFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment" />
         <action
             android:id="@+id/action_resetFragment_to_profileManagementFragment"
             app:destination="@id/profileManagementFragment" />

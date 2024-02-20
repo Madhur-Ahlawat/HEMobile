@@ -1,4 +1,4 @@
-package com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog
+package com.conduent.nationalhighways.ui.vehicle.vehiclehistory
 
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 

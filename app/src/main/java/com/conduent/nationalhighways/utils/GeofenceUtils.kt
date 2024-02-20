@@ -32,14 +32,12 @@ object GeofenceUtils {
     lateinit var geoClient: GeofencingClient
     lateinit var geofenceCircularIntent: PendingIntent
 
-    @SuppressLint("StaticFieldLeak")
     lateinit var context: Context
 
     //starting geofence
     fun startGeofence(context1: Context) {
         context = context1
         val geofenceIntent: PendingIntent by lazy {
-            Log.e(TAG, "startGeofence: 122233 ")
             val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
             PendingIntent.getBroadcast(
                 context,

@@ -55,15 +55,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.bottomnav.dashboard.topup.ManualTopUpActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileWhite" />
-        <activity
-            android:name=".ui.startNow.StartNowBaseActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.auth.controller.AuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount" />
@@ -79,10 +70,6 @@
             android:name=".ui.landing.LandingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileDark" />
-        <activity
-            android:name=".ui.vehicle.VehicleMgmtActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobile" />
         <activity
             android:name=".ui.bottomnav.HomeActivityMain"
             android:screenOrientation="portrait"
@@ -100,10 +87,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.account.profile.ProfileActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileWhite" />
         <activity
             android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
             android:screenOrientation="portrait" />

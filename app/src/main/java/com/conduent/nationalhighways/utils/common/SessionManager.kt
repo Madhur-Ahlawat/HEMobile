@@ -1,10 +1,10 @@
 package com.conduent.nationalhighways.utils.common
 
 import android.content.SharedPreferences
-import com.google.gson.Gson
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -52,17 +52,18 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val TOUCH_ID_USER_ID: String = "TOUCH_ID_USER_ID"
         val PRIVATE_KEY: String = ""
         val PUBLIC_KEY: String = ""
-        val CATEGORIES_DATA="categories_data"
-        val SUB_CATEGORIES_DATA="sub_categories_data"
-        val LAST_TOKEN_TIME="last_token_time"
-        val LAST_RATING_TIME="last_rating_time"
+        val CATEGORIES_DATA = "categories_data"
+        val SUB_CATEGORIES_DATA = "sub_categories_data"
+        val LAST_TOKEN_TIME = "last_token_time"
+        val LAST_RATING_TIME = "last_rating_time"
 
-        val GEOFENCE_ENTER_TIME="geofence_enter_time"
-        val COUNTRIES="COUNTRIES"
-        val LOCATION_PERMISSION="LOCATION_PERMISSION"
-        val FOREGROUND_LOCATION_SHOWN="FOREGROUND_LOCATION_SHOWN"
-        val NOTIFICATION_PERMISSION="NOTIFICATION_PERMISSION"
-        val SettingsClick="SettingsClick"
+        val GEOFENCE_ENTER_TIME = "geofence_enter_time"
+        val COUNTRIES = "COUNTRIES"
+        val LOCATION_PERMISSION = "LOCATION_PERMISSION"
+        val FOREGROUND_LOCATION_SHOWN = "FOREGROUND_LOCATION_SHOWN"
+        val LOCATION_SWITCH_STATUS = "LOCATION_SWITCH_STATUS"
+        val NOTIFICATION_PERMISSION = "NOTIFICATION_PERMISSION"
+        val SettingsClick = "SettingsClick"
     }
 
     /**
@@ -211,19 +212,21 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun clearAll() {
-        val last_rating_time=fetchStringData(LAST_RATING_TIME)
-        val LOCATION_PERMISSION=fetchBooleanData(LOCATION_PERMISSION)
-        val FOREGROUND_LOCATION_SHOWN=fetchBooleanData(FOREGROUND_LOCATION_SHOWN)
-        val NOTIFICATION_PERMISSION=fetchBooleanData(NOTIFICATION_PERMISSION)
+        val lastRatingTime = fetchStringData(LAST_RATING_TIME)
+        val locationPermissiom = fetchBooleanData(LOCATION_PERMISSION)
+        val foregroundLocationShown = fetchBooleanData(FOREGROUND_LOCATION_SHOWN)
+        val notificationPermission = fetchBooleanData(NOTIFICATION_PERMISSION)
+        val locationSwitchStatus = fetchBooleanData(LOCATION_SWITCH_STATUS)
         prefs.edit().clear().apply()
         HomeActivityMain.accountDetailsData = null
         HomeActivityMain.crossing = null
         HomeActivityMain.dateRangeModel = null
         HomeActivityMain.paymentHistoryListData = mutableListOf()
-        saveStringData(LAST_RATING_TIME,last_rating_time)
-        saveBooleanData(Companion.LOCATION_PERMISSION, LOCATION_PERMISSION)
-        saveBooleanData(Companion.NOTIFICATION_PERMISSION, NOTIFICATION_PERMISSION)
-        saveBooleanData(Companion.FOREGROUND_LOCATION_SHOWN, FOREGROUND_LOCATION_SHOWN)
+        saveStringData(LAST_RATING_TIME, lastRatingTime)
+        saveBooleanData(LOCATION_PERMISSION, locationPermissiom)
+        saveBooleanData(NOTIFICATION_PERMISSION, notificationPermission)
+        saveBooleanData(FOREGROUND_LOCATION_SHOWN, foregroundLocationShown)
+        saveBooleanData(LOCATION_SWITCH_STATUS, locationSwitchStatus)
     }
 
     fun setSessionTime(code: Long?) {
@@ -346,6 +349,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
             putBoolean(TOUCH_ID_ENABLED, privateKey)
         }.apply()
     }
+
     fun fetchTouchIdEnabled(): Boolean {
         return prefs.getBoolean(TOUCH_ID_ENABLED, false)
     }
@@ -377,7 +381,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         return Gson().fromJson(json, type) ?: ArrayList()
     }
 
-    fun saveSubCategoriesData(arrayList: List<CaseCategoriesModel?>?){
+    fun saveSubCategoriesData(arrayList: List<CaseCategoriesModel?>?) {
         val gson = Gson()
         val json = gson.toJson(arrayList)
 
@@ -405,16 +409,17 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun fetchStringData(key: String): String {
-        return prefs.getString(key,"")?:""
+        return prefs.getString(key, "") ?: ""
     }
-  fun saveIntData(key: String, privateKey:Int) {
+
+    fun saveIntData(key: String, privateKey: Int) {
         prefs.edit().apply {
             putInt(key, privateKey)
         }.apply()
     }
 
     fun fetchIntData(key: String): Int {
-        return prefs.getInt(key,0)?:0
+        return prefs.getInt(key, 0)
     }
 
     fun saveTwoFAEnabled(b: Boolean) {
@@ -422,19 +427,20 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
             putBoolean(Constants.TWOFA_ENABLED, b)
         }.apply()
     }
+
     fun saveHasAskedForBiometric(b: Boolean) {
         prefs.edit().apply {
             putBoolean(Constants.HAS_ASKED_FOR_BIOMETRIC, b)
         }.apply()
     }
 
-    fun getTwoFAEnabled() : Boolean {
-        return prefs.getBoolean(Constants.TWOFA_ENABLED,false)
+    fun getTwoFAEnabled(): Boolean {
+        return prefs.getBoolean(Constants.TWOFA_ENABLED, false)
 
     }
 
     fun hasAskedForBiometric(): Boolean {
-        return prefs.getBoolean(Constants.HAS_ASKED_FOR_BIOMETRIC,false)
+        return prefs.getBoolean(Constants.HAS_ASKED_FOR_BIOMETRIC, false)
     }
 
 }

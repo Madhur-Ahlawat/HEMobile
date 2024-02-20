@@ -29,7 +29,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.nominatedcontacts.list.NominatedContactListViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -47,7 +46,6 @@ import javax.inject.Inject
 class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickListener,
     OnLogOutListener, BackPressListener {
 
-    private val viewModel: NominatedContactListViewModel by viewModels()
     private val raise_viewModel: RaiseNewEnquiryViewModel by viewModels()
     private val logOutViewModel: LogoutViewModel by viewModels()
     private val dashboardViewModel: DashboardViewModel by activityViewModels()
@@ -187,7 +185,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun observer() {
         lifecycleScope.launch {
-            observe(viewModel.contactList, ::handleContactListResponse)
             observe(logOutViewModel.logout, ::handleLogout)
         }
     }
@@ -295,24 +292,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     }
 
-    private fun handleContactListResponse(status: Resource<NominatedContactRes?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (status) {
-            is Resource.Success -> {
-
-
-            }
-
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
-
-            else -> {
-            }
-        }
-    }
 
     private fun handleLogout(status: Resource<AuthResponseModel?>?) {
         if (loader?.isVisible == true) {

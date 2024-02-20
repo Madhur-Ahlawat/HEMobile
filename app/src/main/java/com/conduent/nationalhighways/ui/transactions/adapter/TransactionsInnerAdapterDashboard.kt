@@ -23,7 +23,8 @@ import com.conduent.nationalhighways.utils.extn.visible
 
 class TransactionsInnerAdapterDashboard(
     private var viewAllTransactionsFragment: Fragment,
-    private var transactionItemsList: List<TransactionData>
+    private var transactionItemsList: List<TransactionData>,
+    private var accSubType: String
 ) :
     RecyclerView.Adapter<TransactionsInnerAdapterDashboard.TransactionViewHolder>() {
     class TransactionViewHolder(binding: ItemCrossingsBinding) :
@@ -38,24 +39,31 @@ class TransactionsInnerAdapterDashboard(
     }
 
     override fun getItemCount(): Int {
-        Log.e("TAG", "onBindViewHolder:transactionItemsList "+transactionItemsList.size )
-
         return transactionItemsList.size
     }
 
     override fun onBindViewHolder(
         holder: TransactionViewHolder, position: Int
     ) {
-        Log.e("TAG", "onBindViewHolder: " )
         pos = -1
-        var topup=""
+        var topup = ""
         val recentTransactionItem = transactionItemsList[holder.absoluteAdapterPosition]
         binding?.apply {
-            valueCurrentBalance.text = recentTransactionItem.balance
+            if (accSubType == Constants.PAYG) {
+                balanceCl.gone()
+            }else{
+                balanceCl.visible()
+                valueCurrentBalance.text = recentTransactionItem.balance
+            }
             if (recentTransactionItem.activity?.lowercase()?.contains("toll") == false) {
                 indicatorIconEuro.visible()
                 Glide.with(indicatorIconTransactionType.context)
-                    .load(AppCompatResources.getDrawable(viewAllTransactionsFragment.requireContext(),R.drawable.ic_euro_circular_green))
+                    .load(
+                        AppCompatResources.getDrawable(
+                            viewAllTransactionsFragment.requireContext(),
+                            R.drawable.ic_euro_circular_green
+                        )
+                    )
                     .into(indicatorIconTransactionType)
                 tvTransactionType.text =
                     viewAllTransactionsFragment.resources.getString(R.string.top_up)
@@ -84,16 +92,26 @@ class TransactionsInnerAdapterDashboard(
                         Constants.EXEMPT_PARTNER
                     )
                 ) {
-                    topup = recentTransactionItem.amount?:""
+                    topup = recentTransactionItem.amount ?: ""
                 } else {
                     topup = "-" + recentTransactionItem.amount
                 }
                 valueTopUpAmount.text = topup
                 indicatorIconEuro.gone()
                 Glide.with(indicatorIconTransactionType.context)
-                    .load(AppCompatResources.getDrawable(viewAllTransactionsFragment.requireContext(),R.drawable.ic_car_grey))
+                    .load(
+                        AppCompatResources.getDrawable(
+                            viewAllTransactionsFragment.requireContext(),
+                            R.drawable.ic_car_grey
+                        )
+                    )
                     .into(indicatorIconTransactionType)
-                valueTopUpAmount.setTextColor(viewAllTransactionsFragment.resources.getColor(R.color.red_status,null))
+                valueTopUpAmount.setTextColor(
+                    viewAllTransactionsFragment.resources.getColor(
+                        R.color.red_status,
+                        null
+                    )
+                )
             }
         }
         holder.itemView.setOnClickListener {

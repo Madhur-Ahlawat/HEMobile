@@ -8,7 +8,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
-import com.conduent.nationalhighways.ui.vehicle.vehiclelist.dialog.ItemClickListener
+import com.conduent.nationalhighways.ui.vehicle.vehiclehistory.ItemClickListener
 
 
 class AddedVehicleListAdapter(var mListener: ItemClickListener) :

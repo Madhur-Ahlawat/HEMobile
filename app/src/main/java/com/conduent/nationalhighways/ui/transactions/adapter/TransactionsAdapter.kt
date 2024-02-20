@@ -19,7 +19,8 @@ import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
 class TransactionsAdapter(
     var context: Fragment,
     var transactionItemList: MutableList<String>,
-    var transactionItemHashMap: MutableMap<String, MutableList<TransactionData>>
+    var transactionItemHashMap: MutableMap<String, MutableList<TransactionData>>,
+    var accSubType:String
 ) :
     RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder>() {
     class TransactionViewHolder(binding: ItemAllTansactionsBinding) :
@@ -57,7 +58,7 @@ class TransactionsAdapter(
             innerAdapter = TransactionsInnerAdapter(
                 context, Utils.sortTransactionsDateWiseDescending(
                     transactionItemHashMap.get(recentTransactionItem) ?: mutableListOf()
-                )
+                ),accSubType
             )
             var layoutManager = LinearLayoutManager(context.requireContext())
             rvCrossings.layoutManager = layoutManager

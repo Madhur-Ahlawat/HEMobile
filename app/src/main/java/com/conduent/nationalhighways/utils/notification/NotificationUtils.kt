@@ -1,14 +1,12 @@
 package com.conduent.nationalhighways.utils.notification
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.os.Build
-import android.util.Log
+import androidx.core.app.NotificationCompat
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.landing.LandingActivity
@@ -19,15 +17,15 @@ class NotificationUtils(val context: Context) {
     private var channelId = BuildConfig.APPLICATION_ID
     lateinit var notificationManager: NotificationManager
     lateinit var intent: Intent
-    lateinit var builder: Notification.Builder
+    lateinit var builder: NotificationCompat.Builder
     lateinit var notificationChannel: NotificationChannel
 
-    public fun showNotification(title:String,message:String,type:String){
+    fun showNotification(title: String, message: String, type: String) {
         notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        if(type==Constants.GEO_FENCE_NOTIFICATION){
-            intent=Intent(context,LandingActivity::class.java)
+        if (type == Constants.GEO_FENCE_NOTIFICATION) {
+            intent = Intent(context, LandingActivity::class.java)
             intent.putExtra(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
             intent.putExtra(Constants.NAV_FLOW_FROM, Constants.CHECK_FOR_PAID_CROSSINGS_ONEOFF)
         }
@@ -40,24 +38,24 @@ class NotificationUtils(val context: Context) {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.e("TAG", "showNotification: " )
             notificationChannel =
                 NotificationChannel(channelId, message, NotificationManager.IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(notificationChannel)
-            builder = Notification.Builder(context, channelId).apply {
+            builder = NotificationCompat.Builder(context, channelId).apply {
                 setContentTitle(title)
                 setContentText(message)
                 setSmallIcon(R.drawable.notification_icon)
                 setContentIntent(pendingIntent)
+                setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 setColor(context.resources.getColor(R.color.red, null))
                 setAutoCancel(true)
             }
         } else {
-            @Suppress("DEPRECATION")
-            builder = Notification.Builder(context).apply {
+            builder = NotificationCompat.Builder(context).apply {
                 setContentTitle(title)
                 setContentText(message)
                 setSmallIcon(R.mipmap.ic_launcher_squircle)
+                setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 setContentIntent(pendingIntent)
                 setAutoCancel(true)
             }

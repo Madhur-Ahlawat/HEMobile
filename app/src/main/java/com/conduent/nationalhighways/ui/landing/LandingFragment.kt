@@ -38,6 +38,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.openActivityWithData
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
+import com.conduent.nationalhighways.utils.notification.NotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -69,6 +70,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
+
         BaseApplication.screenNameAnalytics = ""
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
             plateNumber = arguments?.getString(Constants.PLATE_NUMBER) ?: ""

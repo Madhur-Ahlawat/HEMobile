@@ -23,7 +23,8 @@ import java.text.SimpleDateFormat
 
 class TransactionsInnerAdapter(
     var viewAllTransactionsFragment: Fragment,
-    var transactionItemsList: List<TransactionData>
+    var transactionItemsList: List<TransactionData>,
+    var accSubType:String
 ) :
     RecyclerView.Adapter<TransactionsInnerAdapter.TransactionViewHolder>() {
     class TransactionViewHolder(binding: ItemCrossingsBinding) :
@@ -38,7 +39,6 @@ class TransactionsInnerAdapter(
     }
 
     override fun getItemCount(): Int {
-        Log.e("TAG", "getItemCount: transactionItemsList "+transactionItemsList.size )
         return transactionItemsList.size
     }
 
@@ -47,8 +47,13 @@ class TransactionsInnerAdapter(
         var topup: String? = null
         var recentTransactionItem = transactionItemsList.get(position)
         binding?.apply {
-            valueCurrentBalance.text = recentTransactionItem.balance
-            if (recentTransactionItem.activity?.toLowerCase()?.contains("toll") == false) {
+            if (accSubType == Constants.PAYG) {
+                balanceCl.gone()
+            }else{
+                balanceCl.visible()
+                valueCurrentBalance.text = recentTransactionItem.balance
+            }
+            if (recentTransactionItem.activity?.lowercase()?.contains("toll") == false) {
                 indicatorIconEuro.visible()
                 Glide.with(indicatorIconTransactionType.context).load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_euro_circular_green)).into(indicatorIconTransactionType)
                 tvTransactionType.text =

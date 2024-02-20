@@ -89,7 +89,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     ) = FragmentDashboardNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        initTransactionsRecyclerView()
         initLoaderDialog()
         setBackPressListener(this)
     }
@@ -101,7 +100,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun initTransactionsRecyclerView() {
         transactionsAdapter = TransactionsInnerAdapterDashboard(
-            this@DashboardFragmentNew, paymentHistoryListData
+            this@DashboardFragmentNew, paymentHistoryListData,
+            dashboardViewModel.accountInformationData.value?.accSubType?:""
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
@@ -271,7 +271,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                             Utils.sortTransactionsDateWiseDescending(paymentHistoryListData)
                                 .toMutableList()
                         paymentHistoryDatesList.clear()
-//                        getDatesList(paymentHistoryListData)
+                        initTransactionsRecyclerView()
                         transactionsAdapter?.notifyDataSetChanged()
                     } else {
                         binding.rvRecenrTransactions.gone()

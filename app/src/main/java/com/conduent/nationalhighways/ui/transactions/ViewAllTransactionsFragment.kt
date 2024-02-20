@@ -66,7 +66,8 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         transactionsAdapter = TransactionsAdapter(
             this@ViewAllTransactionsFragment,
             paymentHistoryDatesList,
-            paymentHistoryHashMap
+            paymentHistoryHashMap,
+            dashboardViewModel.accountInformationData.value?.accSubType?:""
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL

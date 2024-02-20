@@ -4,9 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,11 +12,8 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentGuidanceDocumentsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
-import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
-import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
-import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -27,8 +22,8 @@ import javax.inject.Inject
 class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>() {
     val raise_viewModel: RaiseNewEnquiryViewModel by activityViewModels()
 
-@Inject
-lateinit var sessionManager:SessionManager
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -37,7 +32,7 @@ lateinit var sessionManager:SessionManager
         FragmentGuidanceDocumentsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.feedbackToImproveMb.setMovementMethod(LinkMovementMethod.getInstance())
+        binding.feedbackToImproveMb.movementMethod = LinkMovementMethod.getInstance()
 
         binding.contactDartChargeCv.setOnClickListener {
             when (raise_viewModel.apiState.value) {
@@ -48,21 +43,26 @@ lateinit var sessionManager:SessionManager
                 else -> {
                     findNavController().navigate(
                         R.id.action_guidanceanddocumentsFragment_to_serviceUnavailableFragment,
-                        getBundleData(raise_viewModel.apiState.value, raise_viewModel.apiEndTime.value)
+                        getBundleData(
+                            raise_viewModel.apiState.value,
+                            raise_viewModel.apiEndTime.value
+                        )
                     )
                 }
             }
 
         }
         binding.youtubeCl.setOnClickListener {
-            val url = "https://www.youtube.com/c/nationalhighways?cbrd=1" // Replace with the desired URL
+            val url =
+                "https://www.youtube.com/c/nationalhighways?cbrd=1" // Replace with the desired URL
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
 
         }
         binding.faqCl.setOnClickListener {
-            val url = "https://nationalhighways.co.uk/help-centre/dart-charge-help-page/" // Replace with the desired URL
+            val url =
+                "https://nationalhighways.co.uk/help-centre/dart-charge-help-page/" // Replace with the desired URL
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)

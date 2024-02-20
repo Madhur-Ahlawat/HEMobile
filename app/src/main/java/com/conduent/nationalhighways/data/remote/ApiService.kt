@@ -132,6 +132,11 @@ interface ApiService {
         @Query("startIndex") startIndex: String?,
         @Query("count") count: String?
     ): Response<List<VehicleResponse?>?>?
+  @GET(VEHICLELIST)
+    suspend fun getVehicleListData(
+        @Query("startIndex") startIndex: String?,
+        @Query("count") count: String?
+    ): Response<VehicleListResponse?>?
 
     @GET(VEHICLE_GROUP_UNALLOCATED)
     suspend fun getUnAllocatedVehicles(): Response<List<VehicleResponse?>?>?

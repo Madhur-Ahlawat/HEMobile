@@ -148,11 +148,6 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
             R.id.cancel_btn -> {
                 requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
             }
-            R.id.nextBtn -> {
-                findNavController().navigate(
-                    R.id.action_crossing_details_to_create_account
-                )
-            }
 
         }
 

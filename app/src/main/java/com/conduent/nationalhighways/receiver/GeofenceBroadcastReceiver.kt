@@ -56,6 +56,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 return
             }
 
+
             // Get the transition type.
             val geofenceTransition = geofencingEvent?.geofenceTransition
             Log.e(TAG, "geofenceTransition- geofenceTransition -> $geofenceTransition")

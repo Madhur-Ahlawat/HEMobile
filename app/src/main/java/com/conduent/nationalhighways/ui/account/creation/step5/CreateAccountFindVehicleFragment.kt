@@ -51,7 +51,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var isPayForCrossingFlow = false
     private var isClicked: Boolean = false
     private var edit_vehicle: Boolean = false
-
+    private var totalVehicleCount: Int = -1
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentCreateAccountFindVehicleBinding.inflate(inflater, container, false)
@@ -59,6 +59,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun init() {
         if (arguments?.containsKey(Constants.EDIT_VEHICLE) == true) {
             edit_vehicle = arguments?.getBoolean(Constants.EDIT_VEHICLE) ?: false
+        }
+        if (arguments?.containsKey(Constants.COUNT) == true) {
+            totalVehicleCount = arguments?.getInt(Constants.COUNT) ?: 0
         }
         isPayForCrossingFlow = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS, true)
         if (NewCreateAccountRequestModel.oneOffVehiclePlateNumber.isNotEmpty()) {
@@ -293,9 +296,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         bundleData
                     )
                 } else {
+                    var vehicleAddedCount = NewCreateAccountRequestModel.addedVehicleList.size
+                    if (totalVehicleCount != -1) {
+                        vehicleAddedCount = totalVehicleCount
+                    }
                     val vehicleList = NewCreateAccountRequestModel.vehicleList
-                    val size = addedVehicleList.size + vehicleList.size
-
+                    val size = vehicleAddedCount + vehicleList.size
+                    Log.e("TAG", "onClick: vehicleAddedCount -> "+vehicleAddedCount )
+                    Log.e("TAG", "onClick: vehicleList -> "+vehicleList.size )
                     if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
                         val accountType =
                             HomeActivityMain.accountDetailsData?.accountInformation?.accountType

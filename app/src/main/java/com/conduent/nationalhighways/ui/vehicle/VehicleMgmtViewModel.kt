@@ -61,6 +61,10 @@ class VehicleMgmtViewModel @Inject constructor(
     val vehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val _vehicleListResponseVal = MutableLiveData<Resource<VehicleListResponse?>?>()
+    val vehicleListResponseVal: LiveData<Resource<VehicleListResponse?>?> get() = _vehicleListResponseVal
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _unAllocatedVehicleListVal = MutableLiveData<Resource<List<VehicleResponse?>?>?>()
     val unAllocatedVehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _unAllocatedVehicleListVal
 
@@ -257,12 +261,26 @@ class VehicleMgmtViewModel @Inject constructor(
             try {
                 _vehicleListVal.postValue(
                     ResponseHandler.success(
-                        repository.getVehicleListApiCall(start, count),
+                        repository.getVehicleApiCall(start, count),
                         errorManager
                     )
                 )
             } catch (e: Exception) {
                 _vehicleListVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+    fun getVehicleListApi(start: String, count: String) {
+        viewModelScope.launch {
+            try {
+                _vehicleListResponseVal.postValue(
+                    ResponseHandler.success(
+                        repository.getVehicleListApiCall(start, count),
+                        errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                _vehicleListResponseVal.postValue(ResponseHandler.failure(e))
             }
         }
     }

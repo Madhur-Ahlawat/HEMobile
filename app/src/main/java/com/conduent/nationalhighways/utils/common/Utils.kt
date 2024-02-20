@@ -104,28 +104,32 @@ object Utils {
 
     val splCharAddress1: String by lazy {
         ALLOWED_CHARS_BUILDING_STREE_NO
-//        getSplCharString(ALLOWED_CHARS_BUILDING_STREE_NO)
     }
 
     val splCharAddress2: String by lazy {
         ALLOWED_CHARS_ADDRESS_LINE_2
-//        getSplCharString(ALLOWED_CHARS_ADDRESS_LINE_2)
     }
 
     val splCharTownCity: String by lazy {
         ALLOWED_CHARS_TOWN_OR_CITY
-//        getSplCharString(ALLOWED_CHARS_TOWN_OR_CITY)
     }
 
     val splCharPostCode: String by lazy {
         ALLOWED_CHARS_POSTCODE
-//        getSplCharString(ALLOWED_CHARS_POSTCODE)
     }
 
     fun capitalizeString(str: String?): String? {
-        return if (str.isNullOrEmpty()) str else str.substring(0, 1)
-            .uppercase(Locale.getDefault()) + str.substring(1).lowercase(Locale.getDefault())
+        return if (str.isNullOrEmpty()) {
+            str
+        }  else {
+            str.split("\\s+".toRegex()).joinToString(" ") { word ->
+                word.split("-").joinToString("-") { part ->
+                    part.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+                }
+            }
+        }
     }
+
 
     fun smsSupportCountryList(): ArrayList<String> {
         val supportCountryList = ArrayList<String>()

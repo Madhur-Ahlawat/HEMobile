@@ -5,24 +5,6 @@
     android:id="@+id/navigation_auth"
     app:startDestination="@id/forgotPasswordFragment">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.conduent.nationalhighways.ui.auth.login.LoginActivity"
-        android:label="LoginFragment"
-        tools:layout="@layout/fragment_login_changes">
-        <action
-            android:id="@+id/action_loginFragment_to_forgotEmailFragment"
-            app:destination="@id/forgotEmailFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/forgotEmailFragment"
-        android:name="com.conduent.nationalhighways.ui.auth.forgot.email.ForgotEmailFragment"
-        android:label="ForgotEmailFragment"
-        tools:layout="@layout/fragment_forgot_email" />
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -43,23 +25,10 @@
         android:label="ChooseOptionFragment"
         tools:layout="@layout/fragment_forgot_choose_optionchanges">
         <action
-            android:id="@+id/action_chooseOptionFragment_to_postalEmailFragment"
-            app:destination="@id/postalEmailFragment" />
-        <action
             android:id="@+id/action_chooseOptionFragment_to_otpFragment"
             app:destination="@id/otpFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/postalEmailFragment"
-        android:name="com.conduent.nationalhighways.ui.auth.forgot.password.PostEmailForgotFragment"
-        android:label="PostatEmailFragment"
-        tools:layout="@layout/fragment_forgot_password_postal_email">
-        <action
-            android:id="@+id/action_postalEmailFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/otpFragment"
@@ -89,10 +58,6 @@
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
         android:label="ResetFragment"
         tools:layout="@layout/fragment_forgot_reset">
-        <action
-            android:id="@+id/action_resetFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/resenedCodeFragment"

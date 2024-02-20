@@ -1,4 +1,4 @@
-package com.conduent.nationalhighways.ui.bottomnav.dashboard.topup
+package com.conduent.nationalhighways.ui.auth.suspended
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
