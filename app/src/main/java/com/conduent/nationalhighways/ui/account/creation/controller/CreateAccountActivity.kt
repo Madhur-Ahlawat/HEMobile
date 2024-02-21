@@ -38,8 +38,6 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
             onBackPressedDispatcher.onBackPressed()
 
         }
-
-        Log.e("TAG", "init: onOffVehiclePlateNumber "+NewCreateAccountRequestModel.oneOffVehiclePlateNumber )
         AdobeAnalytics.setScreenTrack(
             "create account",
             "create account",

@@ -503,7 +503,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         override fun onTextChanged(
             charSequence: CharSequence?, start: Int, before: Int, count: Int
         ) {
-            Log.e("TAG", "onTextChanged: index " + index + " charca " + charSequence.toString())
             requiredCountryCode =
                 fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
 
@@ -647,9 +646,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
 
     private fun checkButton() {
         if (binding.selectEmail.isChecked && binding.selectTextMessage.isChecked) {
-            Log.e("TAG", "checkButton:11 " + isEnable())
-            Log.e("TAG", "checkButton:22 " + requiredCountryCode)
-            Log.e("TAG", "checkButton:33 " + requiredMobileNumber)
             if (isEnable() && requiredCountryCode && requiredMobileNumber) {
                 binding.btnContinue.enable()
                 (navData as CrossingDetailsModelsResponse).countryCode =
@@ -677,7 +673,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     }
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
-        Log.e("TAG", "onAutoCompleteItemClick() called with: item = $item, selected = $selected")
         if (selected) {
             (navData as CrossingDetailsModelsResponse).countryCode =
                 getCountryCodeRequiredText(item)

@@ -302,8 +302,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     }
                     val vehicleList = NewCreateAccountRequestModel.vehicleList
                     val size = vehicleAddedCount + vehicleList.size
-                    Log.e("TAG", "onClick: vehicleAddedCount -> "+vehicleAddedCount )
-                    Log.e("TAG", "onClick: vehicleList -> "+vehicleList.size )
                     if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
                         val accountType =
                             HomeActivityMain.accountDetailsData?.accountInformation?.accountType
@@ -444,7 +442,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseDVRM1(resource: Resource<ArrayList<NewVehicleInfoDetails>?>?) {
-        Log.e("TAG", "apiResponseDVRM: 22->")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -553,7 +550,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             NewCreateAccountRequestModel.plateNumber =
                                 binding.editNumberPlate.getText().toString().trim().replace(" ", "")
                                     .replace("-", "")
-                            Log.e("TAG", "apiResponseDVRM1: 11")
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_businessVehicleDetailFragment,
                                 bundle
@@ -672,7 +668,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponsePlateInfo(resource: Resource<GetPlateInfoResponseModel?>?) {
-        Log.e("TAG", "apiResponseDVRM: 33->")
         val bundle = Bundle()
         bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
 
@@ -701,7 +696,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    Log.e("TAG", "apiResponseDVRM1: 22")
 
                     if (vehicleItem.isExempted.lowercase().equals("y")) {
                         NewCreateAccountRequestModel.isExempted = true
@@ -729,7 +723,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     val numberPlate =
                         binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                             .replace("-", "")
-                    Log.e("TAG", "apiResponsePlateInfo: isVehicleExist " + isVehicleExist)
                     for (obj in vehicleList) {
                         if (obj.plateNumber.equals(numberPlate, true)) {
                             isVehicleExist = true
@@ -796,7 +789,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
-        Log.e("TAG", "apiResponseDVRM: 11->$isClicked")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -867,7 +859,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 Constants.NAV_DATA_KEY,
                                 navData as CrossingDetailsModelsResponse
                             )
-                            Log.e("TAG", "apiResponseDVRM1: 33")
                             findNavController().navigate(
                                 R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
                                 bundle
@@ -916,7 +907,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
 
                         if (navData == null) {
-                            Log.e("TAG", "apiResponseDVRM: --->** ")
                             navData =
                                 CrossingDetailsModelsResponse(
                                     plateNo = binding.editNumberPlate.editText.text.toString(),
@@ -939,7 +929,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             Constants.NAV_DATA_KEY,
                             navData as CrossingDetailsModelsResponse
                         )
-                        Log.e("TAG", "apiResponseDVRM: isVehicleExist " + isVehicleExist)
                         if (isVehicleExist) {
                             accountData.isVehicleAlreadyAddedLocal = true
                             bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -985,7 +974,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseValidVehicle(resource: Resource<String?>?) {
-        Log.e("TAG", "apiResponseDVRM: 44->")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }

@@ -221,9 +221,6 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
                     getString(R.string.str_try_again) -> {
                         if (flow == Constants.CREDIT_NOT_SET_UP) {
-                            Log.e("TAG", "onClick: accountSubType --> "+dashboardViewModel.accountSubType.value )
-                            Log.e("TAG", "onClick: directDebitCardListSize --> "+dashboardViewModel.directDebitCardListSize.value )
-                            Log.e("TAG", "onClick: paymentListSize --> "+dashboardViewModel.paymentListSize.value )
                             if (dashboardViewModel.accountSubType.value.equals(Constants.PAYG)) {
                                 findNavController().popBackStack()
                             } else {

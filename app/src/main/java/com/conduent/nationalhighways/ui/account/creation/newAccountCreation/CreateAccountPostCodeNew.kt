@@ -263,7 +263,6 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         }
         bundle.putString(Constants.POST_CODE, postcode)
         bundle.putString(Constants.EDIT_POST_CODE, binding.inputPostCode.editText.text.toString())
-        Log.e("TAG", "handleAddressApiResponse:enterAddressManual-> ")
 
         findNavController().navigate(R.id.action_createAccountPostCodeNew_to_ManualAddress, bundle)
     }

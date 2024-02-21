@@ -302,7 +302,6 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         .lowercase() -> {
                         val accountData = NewCreateAccountRequestModel
                         val vehicleList = accountData.vehicleList
-                        Log.e("TAG", "onClick: "+nonUKVehicleModel?.isDblaAvailable )
                         if(nonUKVehicleModel?.isDblaAvailable==true){
                             findNavController().navigate(
                                 R.id.action_maximumFragment_to_businessVehicleDetailFragment,

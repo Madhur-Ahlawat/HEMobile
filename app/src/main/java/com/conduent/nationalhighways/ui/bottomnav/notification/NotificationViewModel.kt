@@ -62,7 +62,6 @@ class NotificationViewModel @Inject constructor(
         }
     }
     fun getAlertsApi(lang: String) {
-        Log.e("TAG", "getAlertsApi: lang "+lang )
         viewModelScope.launch {
             try {
                 alertMutData.postValue(

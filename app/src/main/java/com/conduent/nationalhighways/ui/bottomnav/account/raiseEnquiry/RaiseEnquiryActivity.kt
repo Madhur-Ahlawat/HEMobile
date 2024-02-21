@@ -185,9 +185,5 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
         Utils.sessionExpired(this, this, sessionManager,api)
     }
 
-//    override fun onRetryClick(chain: Interceptor.Chain, context: Context) {
-//        super.onRetryClick(chain, context)
-//        Log.e("TAG", "onRetryClick: '" )
-//    }
 
 }

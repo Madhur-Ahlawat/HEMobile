@@ -278,7 +278,6 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
 
     private fun handleAccountEditNavigation(emailText: String) {
         if (emailText == oldEmail) {
-            Log.e("TAG", "handleAccountEditNavigation: 1111 " )
             val bundle = Bundle()
             bundle.putString(
                 Constants.NAV_FLOW_KEY,
@@ -289,7 +288,6 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                 bundle
             )
         } else {
-            Log.e("TAG", "handleAccountEditNavigation: 2222 " )
             NewCreateAccountRequestModel.emailAddress = emailText
             checkEmailAddress()
         }

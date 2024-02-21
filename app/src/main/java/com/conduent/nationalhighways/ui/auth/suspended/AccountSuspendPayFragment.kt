@@ -102,7 +102,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
             responseModel = arguments?.getParcelable(Constants.DATA)
-            Log.e("TAG", "postMessage: paymentList responseModel " + responseModel)
 
             if (responseModel?.card?.type.equals("visa", true)) {
                 binding.ivCardType.setImageResource(R.drawable.visablue)
@@ -148,11 +147,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         binding.lowBalance.setText(
             "£" + formatter.format(topUpAmount)
         )
-        Log.e("TAG", "postMessage: paymentList " + paymentList.size)
-        Log.e("TAG", "postMessage: paymentList " + position)
 
         if (paymentList.isNotEmpty() == true) {
-            Log.e("TAG", "postMessage: paymentList " + paymentList.get(position).toString())
 
             binding.ivCardType.setImageResource(
                 Utils.setCardImage(

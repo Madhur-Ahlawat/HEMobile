@@ -87,7 +87,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
 
         fun changeBottomIconColors(context: Context, pos: Int) {
-            Log.e("TAG", "changeBottomIconColors: pos " + pos)
             if (pos == 0) {
                 setSelectedIcon(context, 0)
                 setDeselectedIcon(context, 1)
@@ -276,7 +275,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 override fun onNavigationItemChanged(
                     navigationItem: BottomNavigationView.NavigationItem
                 ) {
-                    Log.e("TAG", "onNavigationItemChanged: position " + navigationItem.position)
 
                     when (navigationItem.position) {
                         0 -> {
@@ -326,19 +324,14 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     fun backPressLogic() {
         val currentDestination = navController.currentDestination
-        Log.e("TAG", "backPressLogic:currentDestination " + currentDestination?.id)
         if ((currentDestination?.id == R.id.notificationFragment) ||
             (currentDestination?.id == R.id.crossingHistoryFragment)
             || (currentDestination?.id == R.id.accountFragment)
         ) {
-            Log.e("TAG", "backPressLogic:dashboard ")
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
-//            dashboardClick()
         } else if (currentDestination?.id == R.id.caseEnquiryHistoryListFragment) {
-            Log.e("TAG", "backPressLogic:account ")
             redirectToAccountFragment()
         } else {
-            Log.e("TAG", "backPressLogic:onback ")
             onBackPressedDispatcher.onBackPressed()
         }
     }
@@ -412,7 +405,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     }
                 }
 
-                Log.e("TAG", "getCommunicationSettingsPref: smsOption "+dashboardViewModel.accountInformationData.value?.smsOption )
 
                 dashboardViewModel.communicationPreferenceData.value = resource.data?.accountInformation?.communicationPreferences
 
@@ -502,9 +494,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     )
                     dashboardViewModel.setAccountType(this)
                 }
-
-                Log.e("TAG", "getCommunicationSettingsPref: smsOption-> "+dashboardViewModel.accountInformationData.value?.smsOption )
-
             }
 
             is Resource.DataError -> {
@@ -559,36 +548,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
     }
-
-//    @Deprecated("Deprecated in Java")
-//    override fun onBackPressed() {
-//        val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
-//        navHost?.let { navFragment ->
-//            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
-//                if(fragment is BaseFragment<*>) {
-//                    currentFragment = fragment
-//                }
-//
-//              /*  if ((fragment is NotificationFragment) || (fragment is ViewAllTransactionsFragment) || (fragment is AccountFragment)) {
-//                    Log.e("TAG", "onBackPressed: 11" )
-//                    dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
-//                } else if (fragment is DeletePaymentMethodSuccessFragment ||
-//                    fragment is AccountSuspendReOpenFragment ||
-//                    fragment is NewCardSuccessScreenFragment
-//                ) {
-//                    Log.e("TAG", "onBackPressed:22 " )
-//
-//                } else {
-//                    Log.e("TAG", "onBackPressed: 33" )
-//                    onBackPressedDispatcher.onBackPressed()
-//
-//                }
-//*/
-//                backPressLogic()
-//            }
-//        }
-//        super.onBackPressed()
-//    }
 
     fun redirectToDashBoardFragment() {
         dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)

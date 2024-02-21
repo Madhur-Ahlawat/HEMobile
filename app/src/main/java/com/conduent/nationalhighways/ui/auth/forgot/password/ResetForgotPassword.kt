@@ -115,13 +115,8 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
                     binding.title.text = getString(R.string.name_change_successful)
                     var email = personalInformation?.emailAddress
-                    Log.e("TAG", "init: @@##$$ email -> " + email)
 
                     if (navData is PersonalInformation && (email == null || email.isEmpty() == true)) {
-                        Log.e(
-                            "TAG",
-                            "init: @@##$$ emailAddress -> " + (navData as PersonalInformation).emailAddress
-                        )
                         email = (navData as PersonalInformation).emailAddress
                     }
                     binding.subTitle.text = Html.fromHtml(

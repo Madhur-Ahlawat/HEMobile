@@ -160,7 +160,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     }
 
     private fun loadFragment(screenType: String) {
-        Log.e("TAG", "loadFragment: ", )
 
         val navHostFragment =
             (supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment)
@@ -184,7 +183,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         bundle.putString(Constants.EMAIL, email)
         bundle.putString(Constants.MOBILE_NUMBER, mobileNumber)
         bundle.putString(Constants.COUNTRY_TYPE, countryCode)
-        Log.e("TAG", "loadFragment:screenType " + screenType)
         oldGraph.apply {
             when (screenType) {
                 START_NOW_SCREEN -> setStartDestination(R.id.landingFragment)

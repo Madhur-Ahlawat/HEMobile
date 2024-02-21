@@ -55,7 +55,6 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
         setBackPressListener(this)
 
         binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
-        Log.e("TAG", "loadFragment:screenType " + serviceType)
         binding.decs1Tv.gravity = Gravity.CENTER_HORIZONTAL
 
         when (serviceType) {

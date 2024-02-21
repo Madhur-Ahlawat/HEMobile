@@ -238,7 +238,6 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                         val bundle = Bundle()
                         bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
                         bundle.putParcelable(Constants.NAV_DATA_KEY,data)
-                        Log.e("TAG", "createPaymentsHistoryListAdapter: activity "+ HomeActivityMain.checkedCrossing?.activity)
                         if (HomeActivityMain.checkedCrossing?.activity?.lowercase().equals("toll")) {
                             findNavController().navigate(
                                 R.id.action_crossing_details_to_tollDetails,

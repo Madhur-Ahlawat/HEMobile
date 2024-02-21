@@ -320,9 +320,6 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
 
                 if (phoneNumber.isNotEmpty()) {
-                    Log.e("TAG", "contactDetailsErrorMessage: phoneNumber "+phoneNumber )
-                    Log.e("TAG", "contactDetailsErrorMessage: countrycode "+binding.countrycodeEt.getSelectedDescription() )
-
                     if (binding.countrycodeEt.getSelectedDescription()
                             .equals(Constants.UNITED_KINGDOM, true)
                     ) {

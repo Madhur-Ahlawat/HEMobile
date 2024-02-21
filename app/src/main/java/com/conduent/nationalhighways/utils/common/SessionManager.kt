@@ -61,7 +61,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val COUNTRIES = "COUNTRIES"
         val LOCATION_PERMISSION = "LOCATION_PERMISSION"
         val FOREGROUND_LOCATION_SHOWN = "FOREGROUND_LOCATION_SHOWN"
-        val LOCATION_SWITCH_STATUS = "LOCATION_SWITCH_STATUS"
         val NOTIFICATION_PERMISSION = "NOTIFICATION_PERMISSION"
         val SettingsClick = "SettingsClick"
     }
@@ -216,7 +215,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val locationPermissiom = fetchBooleanData(LOCATION_PERMISSION)
         val foregroundLocationShown = fetchBooleanData(FOREGROUND_LOCATION_SHOWN)
         val notificationPermission = fetchBooleanData(NOTIFICATION_PERMISSION)
-        val locationSwitchStatus = fetchBooleanData(LOCATION_SWITCH_STATUS)
         prefs.edit().clear().apply()
         HomeActivityMain.accountDetailsData = null
         HomeActivityMain.crossing = null
@@ -226,7 +224,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         saveBooleanData(LOCATION_PERMISSION, locationPermissiom)
         saveBooleanData(NOTIFICATION_PERMISSION, notificationPermission)
         saveBooleanData(FOREGROUND_LOCATION_SHOWN, foregroundLocationShown)
-        saveBooleanData(LOCATION_SWITCH_STATUS, locationSwitchStatus)
     }
 
     fun setSessionTime(code: Long?) {

@@ -40,7 +40,6 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
             data = CrossingDetailsModelsResponse()
         }
 //        data?.vehicleClass = nonUKVehicleModel?.vehicleClass
-        Log.e("TAG", "init: vehicleClass @ -> " + nonUKVehicleModel?.vehicleClass)
     }
 
     override fun initCtrl() {

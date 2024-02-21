@@ -118,12 +118,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         setClickListeners()
         initAdapter(priority_notifications)
         setBackPressListener(this)
-//        binding.filterTxt.setOnClickListener {
-//            FilterDialog.newInstance(
-//                getString(R.string.str_sort),
-//                this
-//            ).show(requireActivity().supportFragmentManager, FilterDialog.TAG)
-//        }
 
     }
     private fun enableSwipeToDeleteAndUndo(notifications: MutableList<AlertMessage>) {

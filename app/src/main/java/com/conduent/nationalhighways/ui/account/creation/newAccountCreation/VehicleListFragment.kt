@@ -158,7 +158,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     private fun invalidateList() {
         val accountData = NewCreateAccountRequestModel
         vehicleList = accountData.vehicleList as ArrayList<NewVehicleInfoDetails>
-        Log.e("TAG", "onClick:  vehicleList " + vehicleList)
 
         vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
         val size = vehicleAdapter.itemCount

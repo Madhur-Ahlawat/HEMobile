@@ -56,7 +56,6 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
         topUpAmount = arguments?.getDouble(Constants.PAYMENT_TOP_UP) ?: 0.0
-        Log.e("TAG", "init: topUpAmount "+topUpAmount )
         binding.webView.settings.javaScriptEnabled = true
 
         binding.webView.loadUrl("file:///android_asset/ThreeDSGateway.html")
@@ -84,7 +83,6 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                                 gson.fromJson(data, PaymentSuccessResponse::class.java)
 
                             if (paymentSuccessResponse.cardHolderAuth.equals("verified", true)) {
-                                Log.e("TAG", "postMessage: paymentList "+paymentList.toString() )
                                 val bundle = Bundle()
                                 bundle.putParcelable(Constants.NEW_CARD, paymentSuccessResponse)
                                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)

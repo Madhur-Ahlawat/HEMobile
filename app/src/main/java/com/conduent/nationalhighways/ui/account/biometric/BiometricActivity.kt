@@ -85,8 +85,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             navFlowCall = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
         }
 
-        Log.e("TAG", "onCreateView: navFlowCall--> " + navFlowCall)
-        Log.e("TAG", "onCreateView: navFlowFrom--> " + navFlowFrom)
 
         if(navFlowFrom.equals(Constants.TWOFA) || navFlowFrom.equals(Constants.LOGIN)|| navFlowFrom.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
             binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)

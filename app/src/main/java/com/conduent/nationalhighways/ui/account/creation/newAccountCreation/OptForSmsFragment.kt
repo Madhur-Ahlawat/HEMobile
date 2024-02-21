@@ -198,10 +198,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         when (resource) {
             is Resource.Success -> {
                 accountInformationModel = resource.data?.accountInformation
-                Log.e(
-                    "TAG",
-                    "getCommunicationSettingsPref: " + accountInformationModel?.communicationPreferences.orEmpty().size
-                )
 
                 dashboardViewmodel.communicationPreferenceData.value =
                     resource.data?.accountInformation?.communicationPreferences ?: ArrayList()

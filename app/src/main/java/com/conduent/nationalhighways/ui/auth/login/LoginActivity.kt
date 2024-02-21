@@ -120,7 +120,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
                         startActivity(intent)
                     } else {
-                        Log.e("TAG", "handleLrdsResposne: account" )
                         dashboardViewModel.getAccountDetailsData()
                     }
                     sessionManager.saveUserName(binding.edtEmail.getText().toString())
@@ -136,8 +135,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
     }
 
-    fun showLoader() {
-        Log.e("TAG", "showLoader: " )
+    private fun showLoader() {
         val fragmentManager = supportFragmentManager
         val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
         if (existingFragment != null) {
@@ -153,7 +151,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun hideLoader() {
-        Log.e("TAG", "hideLoader: " )
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -201,7 +198,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
-        Log.e("TAG", "handleAccountDetails() called with: status = $status")
         hideLoader()
 
         when (status) {
@@ -448,7 +444,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     private fun fingerPrintLogin() {
         Handler(Looper.getMainLooper()).post {
-            Log.e("TAG", "fingerPrintLogin: ")
             biometricPrompt.authenticate(promptInfo)
         }
     }

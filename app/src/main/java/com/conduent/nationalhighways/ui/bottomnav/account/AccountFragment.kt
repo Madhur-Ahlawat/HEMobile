@@ -206,7 +206,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.communication_preferences -> {
-                Log.e("TAG", "onClick:firstName "+dashboardViewModel.profileDetailModel.value?.personalInformation?.firstName )
                 title?.text = getString(R.string.communication_preferences)
                 val bundle = Bundle()
                 bundle.putString(
@@ -285,7 +284,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e("TAG", "onDestroy: ")
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }

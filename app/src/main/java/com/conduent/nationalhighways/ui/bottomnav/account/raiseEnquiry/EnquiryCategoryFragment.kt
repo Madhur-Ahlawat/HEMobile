@@ -64,11 +64,6 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         binding.categoryDropdown.dropDownItemSelectListener = this
         binding.subcategoryDropdown.dropDownItemSelectListener = this
         binding.btnNext.setOnClickListener {
-            Log.e("TAGTAG", "init: editRequest "+editRequest )
-            Log.e("TAGTAG", "init: previousCategory "+previousCategory )
-            Log.e("TAGTAG", "init: previousCategory!! "+viewModel.edit_enquiryModel.value?.category?.value )
-            Log.e("TAGTAG", "init: previousSubCategory "+previousSubCategory )
-            Log.e("TAGTAG", "init: previousSubCategory!! "+viewModel.edit_enquiryModel.value?.subCategory?.value )
             if (editRequest == Constants.EDIT_SUMMARY && previousCategory == viewModel.edit_enquiryModel.value?.category?.value && previousSubCategory == viewModel.edit_enquiryModel.value?.subCategory?.value) {
                 findNavController().navigate(
                     R.id.action_enquiryCategoryFragment_to_enquirySummaryFragment, getBundleData()
@@ -268,10 +263,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     }
 
     override fun onItemSlected(position: Int, selectedItem: String) {
-        Log.e("TAG", "onItemSlected: selectedItem "+isCategory(selectedItem) )
         if (isCategory(selectedItem)) {
-//            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
             apiViewModel.getSubCategories(categoryList[position].name.toString())
             viewModel.edit_enquiryModel.value?.category = categoryList.get(position)
             binding.apply {

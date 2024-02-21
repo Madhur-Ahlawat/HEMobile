@@ -134,7 +134,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             if (mText.isEmpty()) {
                 mText = "£0.0"
             }
-            Log.e("TAG", "topBalanceDecimal: mText " + mText)
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")

@@ -127,10 +127,6 @@ class BaseApplication : Application() {
 
 
         fun saveToken(sessionManager: SessionManager, response: Response<LoginResponse?>?) {
-            Log.e(
-                "TAG",
-                "saveToken() called with: sessionManager = $sessionManager, response = $response"
-            )
             sessionManager.run {
                 saveAuthToken(response?.body()?.accessToken ?: "")
                 saveBooleanData(SessionManager.SendAuthTokenStatus,true)
@@ -139,18 +135,6 @@ class BaseApplication : Application() {
             }
         }
 
-        /*
-                private fun userSessionStart() {
-                    timer?.cancel()
-                    timer = Timer()
-                    timer?.schedule(object : TimerTask() {
-                        override fun run() {
-                            Log.d("timeout",Gson().toJson("timeout finally"))
-                            logoutListener?.onLogout()
-                        }
-                    }, Constants.LOCAL_APP_SESSION_TIMEOUT)
-                }
-        */
     }
 
     override fun onCreate() {

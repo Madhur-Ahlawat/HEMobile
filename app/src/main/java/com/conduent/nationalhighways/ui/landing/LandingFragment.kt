@@ -149,7 +149,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     override fun onResume() {
         super.onResume()
-        Log.e("TAG", "onResume: ---1. ", )
         sessionManager.setLoggedInUser(false)
 
         if (!Utils.areNotificationsEnabled(requireContext())) {

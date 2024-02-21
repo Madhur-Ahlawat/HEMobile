@@ -79,7 +79,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
             }
 
             val paymentSource= crossing?.paymentSource?.lowercase()
-            if (paymentSource.equals("vrs") || paymentSource.equals("ivr")) {
+            if (paymentSource.equals("vrs") || paymentSource.equals("ivr")|| paymentSource.equals("phone-in")) {
                 tvChannelValue.text = Utils.capitalizeString(resources.getString(R.string.str_phone))
             }else if (paymentSource.equals("mail-in")) {
                 tvChannelValue.text = Utils.capitalizeString(resources.getString(R.string.str_post))

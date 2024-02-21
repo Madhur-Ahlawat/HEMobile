@@ -459,10 +459,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             futureTollCount =Additional crossing selected
             future toll payment =Additional Crossing Selected * Charging Rate
         * */
-        Log.e(
-            "TAG",
-            "makeOneOffPaymentApi:plateCountry  " + crossingDetailModelResponse?.plateCountry
-        )
+
         val vehicleList = VehicleList(
             crossingDetailModelResponse?.plateNo?.uppercase(),
             crossingDetailModelResponse?.vehicleMake,
@@ -486,7 +483,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         val ftVehicleList = FtVehicleList(mVehicleList)
         val oneOfPayModelReq = OneOfPaymentModelRequest(ftVehicleList, paymentTypeInfo)
 
-        Log.e("TAG", "makeOneOffPaymentApi: oneOfPayModelReq $oneOfPayModelReq")
         oneOfPaymentViewModel.oneOfPaymentsPay(oneOfPayModelReq)
     }
 
@@ -812,12 +808,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     }
 
                     Constants.PAY_FOR_CROSSINGS -> {
-                        Log.e("TAG", "onPageFinished: topUpAmount " + topUpAmount)
                         val amountData = getString(R.string.currency_symbol) + String.format(
                             "%.2f",
                             topUpAmount.toDouble()
                         )
-                        Log.e("TAG", "onPageFinished: amountData " + amountData)
 
                         view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'block'; document.getElementById('title').innerText = 'Payment Details';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${NewCreateAccountRequestModel.emailAddress}';})()")

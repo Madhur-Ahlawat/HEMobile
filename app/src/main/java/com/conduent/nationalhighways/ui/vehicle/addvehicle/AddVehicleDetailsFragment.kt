@@ -108,10 +108,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             }
         }
         if (data == null) {
-            Log.e("TAG", "init:((((*** ")
             data = CrossingDetailsModelsResponse()
         }
-        Log.e("TAG", "init: vehcilc als " + data?.vehicleClass)
 
         binding.vehicleRegTv.editText.filters = arrayOf(LengthFilter(10))
         binding.vehicleRegTv.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
@@ -219,7 +217,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 }
             }
 
-            Log.e("TAG", "init: vehicleClass " + data?.vehicleClass)
             if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
                 if (data?.vehicleClass == "D") {
                     binding.typeVehicle.visible()
@@ -292,14 +289,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             if (data?.vehicleClass?.isEmpty() == true && data?.vehicleType?.isNotEmpty() == true) {
                 data?.vehicleClass =
                     Utils.getManuallyAddedVehicleClass(requireActivity(), (data?.vehicleType ?: ""))
-                Log.e("TAG", "updateView: -->vehicleType " + (data?.vehicleClass))
 
                 binding.typeVehicle.setSelectedValue(data?.vehicleType ?: "")
                 vehicleClassSelected = binding.typeVehicle.getSelectedValue() ?: ""
                 typeOfVehicleChecked = true
             } else {
-                Log.e("TAG", "updateView: -->vehicleType**( " + (data?.vehicleClass))
-
                 if (data?.vehicleClass.orEmpty().length == 1) {
                     binding.typeVehicle.setSelectedValue(
                         (Utils.getVehicleType(
@@ -394,17 +388,12 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         isUK: Boolean = false,
         type: Int
     ) {
-        Log.e(
-            "TAG",
-            "updateView() called with: plateNumber = $plateNumber, vehicleMake = $vehicleMake, vehicleColor = $vehicleColor, vehicleClass = $vehicleClass, vehicleModel = $vehicleModel, isUK = $isUK, type = $type"
-        )
         if (edit_summary == true && navFlowCall.equals(Constants.PAY_FOR_CROSSINGS)) {
 
         } else {
             binding.vehiclePlateNumber.text = plateNumber
             binding.makeInputLayout.setText(vehicleMake)
             binding.colorInputLayout.setText(vehicleColor)
-            Log.e("TAG", "updateView: --> " + vehicleClass)
             binding.typeVehicle.setSelectedValue(
                 Utils.getVehicleType(
                     requireActivity(),
@@ -642,8 +631,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
     private fun checkButton() {
         if (NewCreateAccountRequestModel.isExempted) {
-            Log.e("TAG", "updateView: -->vehicleClassSelected " + vehicleClassSelected)
-
             binding.typeVehicle.setSelectedValue(vehicleClassSelected)
             if (typeOfVehicleChecked && binding.checkBoxTerms.isChecked
             ) {
@@ -777,11 +764,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    Log.e(
-                        "TAG",
-                        "onClick: vehicleClassBalanceTransfer -> " + data?.vehicleClassBalanceTransfer
-                    )
-                    Log.e("TAG", "onClick: vehicleClass -> " + data?.vehicleClass)
                     if (!data?.vehicleClassBalanceTransfer.equals(
                             Utils.getManuallyAddedVehicleClass(
                                 requireActivity(),
@@ -845,11 +827,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                                 dataModel.isDblaAvailable =
                                     arguments?.getBoolean(Constants.IS_DBLA_AVAILABLE)
                             }
-                            Log.e(
-                                "TAG",
-                                "onClick: nonUKVehicleModel " + nonUKVehicleModel.toString()
-                            )
-                            Log.e("TAG", "onClick: vehicleClassSelected " + vehicleClassSelected)
+
                             if (vehicleClassSelected.isNotEmpty()) {
                                 dataModel.vehicleClass =
                                     Utils.getManuallyAddedVehicleClass(
@@ -941,10 +919,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun checkRUC(newVehicleInfoDetails: NewVehicleInfoDetails, from: Int) {
-        Log.e(
-            "TAG",
-            "checkRUC: from " + from + " vehicleClass " + newVehicleInfoDetails.vehicleClass
-        )
         val bundle: Bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         if (newVehicleInfoDetails.vehicleClass?.uppercase().equals("A", true)) {
@@ -970,7 +944,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                         Constants.VEHICLE_DETAIL,
                         newVehicleInfoDetails
                     )
-                    Log.e("TAG", "checkRUC: ------11 ")
                     findNavController().navigate(
                         R.id.action_addVehicleDetailFragment_to_max_vehicleFragment,
                         bundle

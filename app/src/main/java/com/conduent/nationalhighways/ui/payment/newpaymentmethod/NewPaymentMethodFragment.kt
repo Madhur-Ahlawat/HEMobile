@@ -98,7 +98,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             title = HomeActivityMain.dataBinding?.titleTxt!!
         }
 
-        Log.e("TAG", "initCtrl: isViewCreated "+isViewCreated )
         if (!isViewCreated) {
             showLoader()
             viewModel.saveCardList()
@@ -138,11 +137,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
 
     private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
-        Log.e("TAG", "handleAccountDetails: response")
         hideLoader()
         when (status) {
             is Resource.Success -> {
-                Log.e("TAG", "handleAccountDetails: data"+status.data?.accountInformation)
                 personalInformation = status.data?.personalInformation
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
@@ -608,7 +605,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
-        Log.e("TAG", "handleDeleteCardResponse() called with: status = $status")
         hideLoader()
 
         when (status) {
@@ -673,7 +669,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         when (status) {
             is Resource.Success -> {
                 showLoader()
-                Log.e("TAG", "handleDefaultCardResponse: makeDefault " + makeDefault)
                 if (makeDefault) {
                     viewModel.saveCardList()
                 } else {

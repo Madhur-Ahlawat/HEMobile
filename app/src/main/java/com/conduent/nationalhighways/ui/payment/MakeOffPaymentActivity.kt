@@ -102,29 +102,6 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
 
     override fun observeViewModel() {}
 
-    /*
-        override fun onBackPressed() {
-            super.onBackPressed()
-
-            navHostFragment?.let { navFragment ->
-                navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
-                    Log.e("TAG", "onBackPressed: fragment "+fragment )
-                    if (fragment is MakeOneOffPaymentSuccessfullyFragment) {
-                        Log.e("TAG", "onBackPressed: 11 " )
-                    } else if(fragment is CreateAccountFindVehicleFragment){
-                        Log.e("TAG", "onBackPressed: 1122 " )
-                        onBackPressedDispatcher.onBackPressed()
-                    }else {
-                        Log.e("TAG", "onBackPressed: 112233 " )
-                        navHostFragment?.findNavController()?.popBackStack()
-                    }
-
-                }
-            }
-
-        }
-    */
-
 
     override fun onUserInteraction() {
         super.onUserInteraction()

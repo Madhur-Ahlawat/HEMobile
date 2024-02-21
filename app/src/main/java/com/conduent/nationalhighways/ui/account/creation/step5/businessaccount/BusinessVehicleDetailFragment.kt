@@ -45,7 +45,6 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
-        Log.e("TAG", "init: vehicleClass !! " + data?.vehicleClass)
 
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)

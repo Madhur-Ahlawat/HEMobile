@@ -171,7 +171,6 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                             NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
                             val data = navData as ProfileDetailModel?
                             if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
-                                Log.e("TAG", "onClick: phonecell empty" )
                                 if (binding.twoFactor.isChecked) {
                                     verifyMobileNumber(data)
                                 } else {
@@ -179,7 +178,6 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 
                                 }
                             } else {
-                                Log.e("TAG", "onClick: phonecell not empty" )
                                 if(Utils.isSupportedCountry( data?.personalInformation?.phoneCellCountryCode.toString()) ){
                                     loader?.show(
                                         requireActivity().supportFragmentManager,

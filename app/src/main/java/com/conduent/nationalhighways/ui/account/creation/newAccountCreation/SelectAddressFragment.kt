@@ -148,9 +148,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         }
         when (response) {
             is Resource.Success -> {
-//                mainList = response.data?.toMutableList() ?: ArrayList()
                val dataAddresses = response.data?.toMutableList() ?: ArrayList()
-                Log.e("TAG", "handleAddressApiResponse:!!@ "+dataAddresses.toString() )
 
                 mainList = dataAddresses.sortedWith(compareBy { address ->
                     val street = address?.street ?: ""
@@ -161,7 +159,6 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                     }
                 })?.toMutableList()?:ArrayList()
 
-                Log.e("TAG", "handleAddressApiResponse: "+mainList.toString() )
                 selectAddressAdapter?.updateList(mainList)
                 binding.txtAddressCount.text = "${mainList.size} Addresses Found"
 

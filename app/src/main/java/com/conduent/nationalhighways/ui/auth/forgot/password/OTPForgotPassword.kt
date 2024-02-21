@@ -127,8 +127,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         FragmentForgotOtpchangesBinding.inflate(inflater, container, false)
 
     override fun init() {
-        Log.e("TAG", "handleEmailVerification: communicationTextMessage%^& -> "+NewCreateAccountRequestModel.communicationTextMessage )
-
         hasFaceBiometric = Utils.hasFaceId(requireContext())
         hasTouchBiometric = Utils.hasTouchId(requireContext())
         loader = LoaderDialog()
@@ -156,7 +154,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     //That gives all message to us. We need to get the code from inside with regex
                     val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
                     val code = message?.let { Utility.fetchVerificationCode(it) }
-                    Log.e("TAG", "onActivityResult: code $code")
                     binding.edtOtp.editText.setText(code.toString())
                 }
             }
@@ -192,7 +189,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 //        startSmsUserConsent(requireActivity())
         startSMSRetrieverClient(requireActivity())
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
-        Log.e("TAG", "initCtrl: editRequest $editRequest")
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
 
 
