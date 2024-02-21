@@ -2,114 +2,110 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="isEnable"
-            type="Boolean" />
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="@dimen/margin_18dp"
-        android:paddingStart="@dimen/margin_20dp"
-        android:paddingEnd="@dimen/margin_20dp"
-
-        >
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/top_title"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/MediumTextBlack"
-            android:text="@string/str_check_your_mail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/margin_20dp"
+            android:paddingTop="@dimen/margin_18dp"
+            android:paddingEnd="@dimen/margin_20dp"
+            android:paddingBottom="@dimen/margin_20dp"
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/message_received_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:gravity="start"
-            android:lineSpacingExtra="2dp"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:fontFamily="@font/open_sans"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_title" />
-        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-            android:id="@+id/edt_otp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="@style/input_text"
-            app:maxLength="6"
-            android:maxLength="6"
-            app:labelText="@string/str_six_digit_security_code"
-            app:inputType="number"
-            app:imeOptions="actionDone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/message_received_txt" />
+            >
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/top_title"
+                style="@style/MediumTextBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/str_check_your_mail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/message_received_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="start"
+                android:lineSpacingExtra="2dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_title" />
 
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/not_received_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:gravity="start"
-            android:lineSpacingExtra="@dimen/_4sdp"
-            android:text="@string/str_not_received_otp_txt"
-            style="@style/RegularTextBlack"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_otp" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                android:id="@+id/edt_otp"
+                style="@style/input_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:autofillHints="smsOTPCode"
+                android:importantForAutofill="yes"
+                android:maxLength="6"
+                app:imeOptions="actionDone"
+                app:inputType="number"
+                app:labelText="@string/str_six_digit_security_code"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/message_received_txt"
+                app:maxLength="6" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/resend_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_25sdp"
-            android:text="@string/ifyoudidnot"
-             style="@style/RegularTextBlack"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/not_received_txt"
-            />
-
-        <com.conduent.apollo.ui.CMButton
-            android:id="@+id/btn_verify"
-            style="@style/PrimaryButton"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:text="@string/str_continue"
-            app:isEnabled="false"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/resend_txt"
-            />
-
-        <com.conduent.apollo.ui.CMButton
-            android:id="@+id/btn_Resend"
-            style="@style/secondaryButton"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:text="@string/resendcode"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_verify"
-            />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/not_received_txt"
+                style="@style/RegularTextBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="start"
+                android:lineSpacingExtra="@dimen/_4sdp"
+                android:text="@string/str_not_received_otp_txt"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_otp" />
 
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/resend_txt"
+                style="@style/RegularTextBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:text="@string/ifyoudidnot"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/not_received_txt" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btn_verify"
+                style="@style/PrimaryButton"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/str_continue"
+                app:isEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/resend_txt" />
+
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btn_Resend"
+                style="@style/secondaryButton"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:text="@string/resendcode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_verify" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
 
 </layout>

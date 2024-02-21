@@ -1,24 +1,30 @@
 package com.conduent.nationalhighways.ui.account.creation.controller
 
-import android.view.View
-import android.widget.Toast
+import android.util.Log
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
-import com.conduent.nationalhighways.utils.extn.startNormalActivity
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.logout.LogoutListener
+import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class CreateAccountActivity : BaseActivity<Any>() {
+class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
     lateinit var binding: ActivityCreateAccountBinding
+
     @Inject
     lateinit var sessionManager: SessionManager
 
+    @Inject
+    lateinit var api: ApiService
     override fun initViewBinding() {
         binding = ActivityCreateAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -32,8 +38,6 @@ class CreateAccountActivity : BaseActivity<Any>() {
             onBackPressedDispatcher.onBackPressed()
 
         }
-
-
         AdobeAnalytics.setScreenTrack(
             "create account",
             "create account",
@@ -44,20 +48,20 @@ class CreateAccountActivity : BaseActivity<Any>() {
             sessionManager.getLoggedInUser()
         )
 
-
     }
+
 
     override fun observeViewModel() {}
 
 
-
     override fun onBackPressed() {
+        super.onBackPressed()
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         navHost?.let { navFragment ->
-            navFragment.childFragmentManager.primaryNavigationFragment?.let {fragment->
-                if (fragment is AccountSuccessfullyCreationFragment){
+            navFragment.childFragmentManager.primaryNavigationFragment?.let { fragment ->
+                if (fragment is AccountSuccessfullyCreationFragment) {
 
-                }else{
+                } else {
                     onBackPressedDispatcher.onBackPressed()
                 }
 
@@ -65,5 +69,26 @@ class CreateAccountActivity : BaseActivity<Any>() {
         }
 
     }
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        loadSession()
     }
+
+    private fun loadSession() {
+        LogoutUtil.stopLogoutTimer()
+        LogoutUtil.startLogoutTimer(this)
+    }
+
+    override fun onLogout() {
+        LogoutUtil.stopLogoutTimer()
+//        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager, api)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
+    }
+}
 

@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_landing"
     app:startDestination="@id/landingFragment">
-    <fragment
-        android:id="@+id/startNow"
-        android:name="com.conduent.nationalhighways.ui.landing.StartNowFragment"
-        android:label="@string/str_start_now"
-        tools:layout="@layout/fragment_start_now"/>
+
 
     <fragment
         android:id="@+id/landingFragment"
         android:name="com.conduent.nationalhighways.ui.landing.LandingFragment"
         android:label="@string/str_landing_screen"
         tools:layout="@layout/fragment_landing">
-
         <action
-            android:id="@+id/action_landingFragment_to_startNow"
-            app:destination="@id/startNow" />
+            android:id="@+id/action_landingFragment_to_registerReminderFragment"
+            app:destination="@id/registerReminderFragment" />
+        <action
+            android:id="@+id/action_landingFragment_to_serviceUnavailableFragment"
+            app:destination="@id/serviceUnavailableFragment"
+            app:popUpTo="@id/serviceUnavailableFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -40,9 +40,37 @@
         tools:layout="@layout/fragment_session_expire" />
 
     <fragment
+        android:id="@+id/serviceUnavailableFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.ServiceUnavailableFragment"
+        android:label="ServiceUnavailableFragment"
+        tools:layout="@layout/fragment_service_unavailable" />
+
+    <fragment
         android:id="@+id/failedRetryFragment"
         android:name="com.conduent.nationalhighways.ui.landing.FailedRetryFragment"
         android:label="FailedRetryFragment"
-        tools:layout="@layout/fragment_failed_retry"/>
+        tools:layout="@layout/fragment_failed_retry" />
+    <fragment
+        android:id="@+id/registerReminderFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.RegisterReminderFragment"
+        android:label="RegisterReminderFragment"
+        tools:layout="@layout/fragment_register_reminder" >
+        <action
+            android:id="@+id/action_registerReminderFragment_to_gpsSettingsFragment"
+            app:destination="@id/gpsSettingsFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/gpsSettingsFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.GpsSettingsFragment"
+        android:label="GpsSettingsFragment"
+        tools:layout="@layout/fragment_gps_settings" >
+        <action
+            android:id="@+id/action_gpsSettingsFragment_to_registerReminderFragment"
+            app:destination="@id/registerReminderFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/registerReminderFragment"/>
+
+    </fragment>
 
 </navigation>

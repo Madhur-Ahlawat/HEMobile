@@ -20,6 +20,7 @@ data class AlertMessage(
     @SerializedName("message") val message: String?,
     @SerializedName("messageId") val messageId: Int?,
     @SerializedName("cscLookUpKey") val cscLookUpKey: String?,
+    @SerializedName("isDeleted") val isDeleted: String?,
     var isRead: Boolean = false,
     var iSel: Boolean = false,
     var isSelectListItem: Boolean = false,

@@ -5,25 +5,31 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class CardListResponseModel(
-    val addressLine1: String?,
-    val bankAccount: Boolean?,
-    var check : Boolean=false,
-    val bankAccountNumber: String?,
-    val bankAccountType: String?,
-    val bankRoutingNumber: String?,
-    val cardType: String?,
-    var cardNumber: String?,
-    val city: String?,
-    val country: String?,
-    val customerVaultId: String?,
-    val firstName: String?,
-    val middleName: String?,
-    val lastName: String?,
-    val paymentSeqNumber: Int?,
-    val primaryCard: Boolean?,
-    val rowId: String?,
-    val state: String?,
-    val zipCode: String?,
-    var isSelected:Boolean=false
+    var rowId: String="",
+    var bankAccount: Boolean?,
+    var bankAccountType: String="",
+    var bankAccountNumber: String="",
+    var paymentSeqNumber: Int?,
+    var firstName: String="",
+    var lastName: String="",
+    var primaryCard: Boolean?,
+    var customerVaultId: String="",
+    var addressLine1: String="",
+    var city: String="",
+    var state: String="",
+    var zipCode: String="",
+    var country: String="",
+    var emandateStatus:String="",
 
-) : Parcelable
+    var check : Boolean=false,
+    var bankRoutingNumber: String="",
+    var cardType: String="",
+    var cardNumber: String="",
+    var middleName: String="",
+    var isSelected:Boolean=false,
+    var expMonth:String="",
+    var expYear:String=""
+
+) : Parcelable{
+
+}

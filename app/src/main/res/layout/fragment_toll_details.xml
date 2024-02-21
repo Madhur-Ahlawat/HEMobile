@@ -2,173 +2,200 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_8dp"
-        android:background="@color/white"
-        android:paddingHorizontal="@dimen/_23dp">
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:background="@color/white"
+            android:paddingHorizontal="@dimen/margin_23dp">
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/crossing_amount"
-            android:layout_width="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="@dimen/_108dp"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center"
-            android:paddingTop="@dimen/_36dp"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_48sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="£10.00" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/crossing_amount"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/margin_108dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_36dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_48sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="£10.00" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/label_crossing_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_22dp"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="@string/txt_crossing_amount"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintEnd_toEndOf="@id/crossing_amount"
-            app:layout_constraintStart_toStartOf="@id/crossing_amount"
-            app:layout_constraintTop_toBottomOf="@id/crossing_amount" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/label_crossing_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_22dp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/txt_crossing_amount"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintEnd_toEndOf="@id/crossing_amount"
+                app:layout_constraintStart_toStartOf="@id/crossing_amount"
+                app:layout_constraintTop_toBottomOf="@id/crossing_amount" />
+            <View
+                android:id="@+id/vw"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_85dp"
+                app:layout_constraintTop_toBottomOf="@+id/label_crossing_amount" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_account_number_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_100dp"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:text="@string/txt_account_number"
-            android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_crossing_amount" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_crossing_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_vertical"
+                android:text="@string/str_crossing_date_cap"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vw" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_account_number_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_account_number_heading"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_account_number_heading"
-            tools:text="118324408" />
-
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_vehicle_registration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:text="@string/txt_vehicle_registration"
-            android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_account_number_heading" />
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_vehicle_registration_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_vehicle_registration"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_vehicle_registration"
-            tools:text="AJ66 MHA" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_crossing_date_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_vertical"
+                android:textColor="@color/label_color"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_crossing_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_crossing_date"
+                tools:text="28 Jan 2020" />
 
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:text="@string/txt_time"
-            android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_vehicle_registration_value" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tv_vrn_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_crossing_date_value">
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_time_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_time"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_time"
-            tools:text="2:45 PM" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_vrn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="@dimen/margin_5dp"
+                    android:text="@string/vehicle_reg_number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/barrier"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:text="@string/txt_location"
-            android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_time" />
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_location_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_location"
-            tools:text="Northbound" />
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="left"
+                    app:constraint_referenced_ids="tv_vrn_value" />
 
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22dp"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:text="@string/txt_status"
-            android:textColor="@color/label_color"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_location_value" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/tv_vrn_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/label_color"
+                    android:textSize="@dimen/font_14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/barrier"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2165322131" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_status_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_status"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_status"
-            tools:text="Paid" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_22dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_vertical"
+                android:text="Time"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_vrn_cl" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_time_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_vertical"
+                android:textColor="@color/label_color"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_time"
+                tools:text="Initial payment" />
+
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_22dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_vertical"
+                android:text="@string/str_direction"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_time_value" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_location_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_vertical"
+                android:textColor="@color/label_color"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_location"
+                tools:text="Northbound" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_payment_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_22dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_vertical"
+                android:text="Payment Status"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_location_value" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_payment_status_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center_vertical"
+                android:textColor="@color/label_color"
+                android:textSize="@dimen/font_14sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_payment_status"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_payment_status"
+                tools:text="Paid" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </layout>

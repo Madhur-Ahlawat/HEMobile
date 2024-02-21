@@ -10,10 +10,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsOptionsModel
+import com.conduent.nationalhighways.data.model.account.LoginWithPlateAndReferenceNumberResponseModel
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsRequest
-import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsResponse
-import com.conduent.nationalhighways.databinding.FragmentPaidCrossingCheckBinding
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
+import com.conduent.nationalhighways.databinding.FragmentPaidPreviousCrossingsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
@@ -23,19 +23,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding>(),
+class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBinding>(),
     View.OnClickListener {
 
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     private var isCalled = false
+
     @Inject
     lateinit var sessionManager: SessionManager
-
+    var paymentRefereceNumberRegex = "^[a-zA-Z0-9-]+$"
+    var plateNumberREgex = "[0-9a-zA-Z -]{1,10}$"
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = FragmentPaidCrossingCheckBinding.inflate(inflater, container, false)
+    ) = FragmentPaidPreviousCrossingsBinding.inflate(inflater, container, false)
 
     override fun init() {
 
@@ -49,16 +51,24 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
             sessionManager.getLoggedInUser()
         )
 
-        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
+//        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        isEnable()
+//        binding.editReferenceNumber.setText("1-99352459")
+//        binding.editNumberPlate.setText("ERR")
+        binding.editNumberPlate.editText.addTextChangedListener {
+            isEnable()
+        }
+        binding.editReferenceNumber.editText.addTextChangedListener {
+            isEnable()
+        }
+//        isEnable()
     }
 
     override fun initCtrl() {
-        binding.paymentRefNo.addTextChangedListener { isEnable() }
-        binding.vrmNo.addTextChangedListener { isEnable() }
-        binding.continueBtn.setOnClickListener(this)
+        binding.editReferenceNumber.editText.addTextChangedListener { isEnable() }
+        binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
+        binding.findVehicle.setOnClickListener(this)
     }
 
     override fun observer() {
@@ -68,22 +78,56 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
     }
 
     private fun isEnable() {
-        if (binding.paymentRefNo.length() > 0 && binding.vrmNo.length() > 0) binding.model =
-            CheckPaidCrossingsOptionsModel(
-                enable = true,
-                ref = binding.paymentRefNo.text.toString(),
-                vrm = binding.vrmNo.text.toString()
-            )
-        else binding.model = CheckPaidCrossingsOptionsModel(
-            enable = false,
-            ref = binding.paymentRefNo.text.toString(),
-            vrm = binding.vrmNo.text.toString()
-        )
+        var isReferenceNumberValid=true
+        var isPlateNumberValid=true
+        if (binding.editReferenceNumber.getText().toString().trim().isNullOrEmpty()) {
+            binding.editReferenceNumber.removeError()
+            isReferenceNumberValid=false
+        }
+        else {
+            if (!Regex(paymentRefereceNumberRegex).matches(
+                    binding.editReferenceNumber.getText().toString()
+                )
+            ) {
+                isReferenceNumberValid=false
+                binding.editReferenceNumber.setErrorText(getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9))
+
+            }
+            else{
+                binding.editReferenceNumber.removeError()
+            }
+        }
+
+        if (binding.editNumberPlate.getText().toString().trim().isNullOrEmpty()) {
+            isPlateNumberValid=false
+            binding.editNumberPlate.removeError()
+        } else {
+            if (!Regex(plateNumberREgex).matches(binding.editNumberPlate.getText().toString())) {
+                isPlateNumberValid=false
+                binding.editNumberPlate.setErrorText(getString(R.string.str_vehicle_registration))
+            }
+            else{
+                binding.editNumberPlate.removeError()
+            }
+        }
+        if(isPlateNumberValid && isReferenceNumberValid){
+            binding.findVehicle.isEnabled = true
+        }
+        else{
+            binding.findVehicle.isEnabled = false
+
+        }
+
+//        else if(Regex(paymentRefereceNumberRegex).matches(binding.editReferenceNumber.getText().toString()) && Regex(plateNumberREgex).matches(binding.editNumberPlate.getText().toString())){
+//            binding.findVehicle.isEnabled = true
+//            binding.editReferenceNumber.removeError()
+//            binding.editNumberPlate.removeError()
+//        }
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.continue_btn -> {
+            R.id.findVehicle -> {
 
                 AdobeAnalytics.setActionTrack(
                     "continue",
@@ -98,35 +142,57 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidCrossingCheckBinding
                 hideKeyboard()
                 isCalled = true
                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                val checkPaidCrossingReq =
-                    CheckPaidCrossingsRequest(binding.model?.ref, binding.model?.vrm)
+                val checkPaidCrossingReq = CheckPaidCrossingsRequest(
+                    referenceNumber =
+                    binding.editReferenceNumber.getText().toString(),
+                    plateNumber = binding.editNumberPlate.getText().toString().uppercase()
+                )
                 viewModel.checkPaidCrossings(checkPaidCrossingReq)
             }
         }
 
     }
 
-    private fun loginWithRefHeader(status: Resource<CheckPaidCrossingsResponse?>?) {
+    private fun loginWithRefHeader(status: Resource<LoginWithPlateAndReferenceNumberResponseModel?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
         if (isCalled) {
             when (status) {
                 is Resource.Success -> {
+                    val dataObj = status.data
                     val bundle = Bundle().apply {
-                        putParcelable(Constants.CHECK_PAID_CHARGE_DATA_KEY, status.data)
-                        putParcelable(Constants.CHECK_PAID_REF_VRM_DATA_KEY, binding.model)
+                        putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        val crossingDetailsModelsResponse = CrossingDetailsModelsResponse().apply {
+                            referenceNumber = binding.editReferenceNumber.getText().toString()
+                            accountActStatus = dataObj?.get(0)?.accountActStatus?:""
+                            accountBalance = dataObj?.get(0)?.accountBalance?:""
+                            accountNo = dataObj?.get(0)?.accountNo?:""
+                            accountTypeCd = dataObj?.get(0)?.accountStatusCd?:""
+                            expirationDate = dataObj?.get(0)?.expirationDate?:""
+                            plateCountry = dataObj?.get(0)?.plateCountry
+                            plateCountryToTransfer = dataObj?.get(0)?.plateCountry
+                            plateNumberToTransfer = dataObj?.get(0)?.plateNo?:""
+                            unusedTrip = dataObj?.get(0)?.unusedTrip?:""
+                            vehicleClassBalanceTransfer = dataObj?.get(0)?.vehicleClass
+                        }
+                        putParcelable(Constants.NAV_DATA_KEY, crossingDetailsModelsResponse)
                     }
-                    viewModel.setPaidCrossingOption(binding.model)
-                    viewModel.setPaidCrossingResponse(status.data)
                     findNavController().navigate(
-                        R.id.action_crossingCheck_to_checkChargesOption,
+                        R.id.action_crossingCheck_to_crossing_details,
                         bundle
                     )
                 }
+
                 is Resource.DataError -> {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
+                    if (status.errorMsg.contains("401")) {
+                        binding.editReferenceNumber.setErrorText(getString(R.string.error_check_paid_crossings))
+                    } else {
+                        binding.editReferenceNumber.removeError()
+                        ErrorUtil.showError(binding.root, status.errorMsg)
+                    }
                 }
+
                 else -> {
                 }
             }

@@ -6,18 +6,19 @@ plugins {
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 
 }
 
 apply from: '../jacoco.gradle'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 33
+        targetSdkVersion 34
         applicationId "com.conduent.nationalhighways"
         versionCode 1
         versionName "1.1"
@@ -52,19 +53,29 @@ android {
 
     signingConfigs {
         conduentdev {
-            storeFile file("keystore.jks")
+
+            storeFile file("C:\\Users\\52409756\\StudioProjects\\HE-MAPP-Android\\app\\keystore.jks")
             storePassword "Conduent@123"
             keyAlias "conduent"
             keyPassword "Conduent@123"
+
+            v1SigningEnabled true
+            v2SigningEnabled true
+
+            enableV3Signing = true
+            enableV4Signing = true
         }
     }
 
     buildTypes {
+        debug {
+            ext.enableCrashlytics = true
+        }
         release {
             signingConfig signingConfigs.conduentdev
             minifyEnabled true
             shrinkResources true
-            debuggable true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
@@ -126,13 +137,13 @@ android {
     dependencies {
 
         def hiltLifeCycleVersion = '1.0.0-alpha03'
-        def nav_version = "2.5.3"
-        def lifecycle_version = "2.5.1"
+        def nav_version = "2.7.5"
+        def lifecycle_version = "2.6.2"
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        implementation 'androidx.core:core-ktx:1.9.0'
+        implementation 'androidx.core:core-ktx:1.12.0'
         implementation 'androidx.appcompat:appcompat:1.6.1'
-        implementation 'com.google.android.material:material:1.8.0'
+        implementation 'com.google.android.material:material:1.10.0'
         implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
         implementation 'androidx.test:core-ktx:1.5.0'
         implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -145,13 +156,13 @@ android {
         // Architectural Components
         implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
         implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-        kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+       // kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
         // coroutines
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
         //UI
-        implementation "androidx.recyclerview:recyclerview:1.3.0-rc01"
+        implementation "androidx.recyclerview:recyclerview:1.3.2"
         implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
         implementation 'com.intuit.sdp:sdp-android:1.0.6'
         implementation 'com.intuit.ssp:ssp-android:1.0.6'
@@ -164,7 +175,7 @@ android {
         implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
         implementation 'com.squareup.okhttp3:okhttp:4.9.0'
         implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
-        implementation 'com.google.code.gson:gson:2.8.9'
+        implementation 'com.google.code.gson:gson:2.10'
 
         //Hilt for DI
         implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
@@ -177,17 +188,23 @@ android {
 
         //Adobe analytics
         implementation 'com.adobe.marketing.mobile:analytics:1.2.10'
-        implementation 'com.adobe.marketing.mobile:sdk-core:1.1.0'
+        implementation 'com.adobe.marketing.mobile:sdk-core:1.11.4'
         implementation 'com.adobe.marketing.mobile:userprofile:1.1.0'
+        
+        // Import the Firebase BoM
+        implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
 
-        // Firebase cloud messaging
-        implementation 'com.google.firebase:firebase-messaging-ktx:23.1.1'
+        // Firebase Cloud Messaging (Kotlin)
+        implementation("com.google.firebase:firebase-messaging-ktx")
+        implementation 'com.google.firebase:firebase-crashlytics-ktx'
+
 
         //Crypto shared pref
         implementation "androidx.security:security-crypto:1.0.0"
 
         //Biometric dependency
         implementation "androidx.biometric:biometric:1.1.0"
+
 
         // -------------- Testing Dependencies -------------- //
 
@@ -197,7 +214,7 @@ android {
         def kotlinRunnerVersion = '1.1.1'
         def mockitoTestVersion = '2.13.0'
         def mockk_version = "1.10.0"
-        def nav_test_version = "2.5.3"
+        def nav_test_version = "2.7.5"
         def test_version = "1.2.0"
 
         implementation 'androidx.test:runner:1.5.2'
@@ -225,7 +242,7 @@ android {
         testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
 
         // Fragment testing
-        debugImplementation 'androidx.fragment:fragment-testing:1.5.5'
+        debugImplementation 'androidx.fragment:fragment-testing:1.6.2'
 
         // Navigation testing
         implementation "androidx.navigation:navigation-testing:$nav_test_version"
@@ -257,10 +274,14 @@ android {
         implementation 'org.bouncycastle:bcpkix-jdk15to18:1.68'
         implementation 'org.bouncycastle:bcprov-jdk15to18:1.68'
 
+        implementation 'androidx.activity:activity-ktx:1.8.1'
+        implementation 'com.github.bumptech.glide:glide:4.16.0'
+        implementation "androidx.autofill:autofill:1.1.0"
 
-        implementation 'androidx.activity:activity-ktx:1.6.1'
-
-
+        //SMS retriever API
+        implementation 'com.google.android.gms:play-services-auth:20.7.0'
+        implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
+        //https://stackoverflow.com/questions/51365778/how-to-generate-11-char-hash-key-for-sms-retriever-with-google-app-signing
     }
 
     hilt {
@@ -270,7 +291,12 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.webkit:webkit:1.9.0'
+    implementation 'androidx.paging:paging-common-ktx:3.2.1'
+    implementation 'androidx.paging:paging-runtime-ktx:3.2.1'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'io.michaelrocks:libphonenumber-android:8.13.28'
 }

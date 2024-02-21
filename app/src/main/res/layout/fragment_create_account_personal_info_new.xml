@@ -3,13 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <data>
 
-        <variable
-            name="userInfoModel"
-            type="com.conduent.nationalhighways.data.model.account.AccountCreateRequestModel.UserInfoModel" />
-
-    </data>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,9 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/margin_20dp"
-            android:paddingTop="@dimen/margin_18dp"
-            android:paddingEnd="@dimen/margin_20dp"
-            android:paddingBottom="@dimen/margin_18dp">
+            android:paddingTop="@dimen/margin_20dp"
+            android:paddingEnd="@dimen/margin_20dp">
 
             <TextView
                 android:id="@+id/txtSignUp"
@@ -39,12 +32,11 @@
                 style="@style/input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:padding="0dp"
                 app:maxLength="50"
                 app:imeOptions="actionNext"
                 app:inputType="text"
-
                 app:labelText="@string/primary_account_contact_first_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

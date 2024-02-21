@@ -1,97 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:overScrollMode="never">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
-        android:paddingTop="18dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="18dp"
-        tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
+        android:paddingEnd="20dp">
 
-        <ImageView
-            android:id="@+id/warningIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/warningicon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/maximumVehicleAdded"
+        <LinearLayout
+            android:id="@+id/top_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:fontFamily="@font/open_sans_bold"
-            android:gravity="center"
-            android:text="@string/str_your_account_has_been_suspended"
-            android:textColor="@color/new_btn_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/bottom_ll"
+            android:orientation="vertical">
 
-        <TextView
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:overScrollMode="never">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+
+                    tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
+
+                    <ImageView
+                        android:id="@+id/warningIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/warningicon" />
+
+                    <TextView
+                        android:id="@+id/maximumVehicleAdded"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="23dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center"
+                        android:text="@string/str_your_account_has_been_suspended"
+                        android:textColor="@color/new_btn_color"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textMaximumVehicle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="35dp"
+                        android:fontFamily="@font/open_sans"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/str_you_have_reached_the_maximum_vehicle"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/desc_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="35dp"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/str_you_have_reached_the_maximum_vehicle"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:visibility="visible" />
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/maximumVehicleAddedNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_35dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center_horizontal"
+                        android:text="@string/str_vehicle_already_note_desc"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_14sp"
+
+                        />
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/bottom_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
-            android:text="@string/str_you_have_reached_the_maximum_vehicle"
-            android:lineSpacingExtra="2dp"
-            android:fontFamily="@font/open_sans"
-            android:textColor="@color/black"
-            android:layout_marginTop="17dp"
-            android:textSize="14sp"
-            android:id="@+id/textMaximumVehicle" />
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/margin_5dp"
+            android:paddingBottom="@dimen/margin_35dp"
+            >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/str_vehicle_already_note_desc"
-            app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:fontFamily="@font/open_sans_bold"
-            android:textSize="@dimen/font_14sp"
-            android:layout_marginTop="@dimen/margin_15dp"
-            android:id="@+id/maximumVehicleAddedNote"
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnContinue"
+                style="@style/PrimaryButton"
+                android:text="@string/str_continue" />
 
-            />
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/cancel_btn"
+                style="@style/secondaryButton"
+                android:text="@string/str_cancel" />
 
-        <com.conduent.apollo.ui.CMButton
-            style="@style/PrimaryButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/cancel_btn"
-            android:text="@string/str_continue"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="@dimen/margin_70dp"
-            android:id="@+id/btnContinue"/>
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/inCorrectVehicleNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_25dp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
+                android:text="@string/str_incorrect_vehicle_registration"
+                android:textColor="@color/new_btn_color"
+                android:textSize="14sp"
+                android:visibility="visible" />
+        </LinearLayout>
 
-        <com.conduent.apollo.ui.CMButton
-            style="@style/secondaryButton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/str_cancel"
-            android:id="@+id/cancel_btn"
-            android:layout_marginBottom="@dimen/_30dp"
-            />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    </RelativeLayout>
 
 </layout>

@@ -9,6 +9,8 @@ object NewCreateAccountRequestModel{
     var emailAddress: String? = ""
     var mobileNumber: String? = ""
     var countryCode: String? = ""
+    var telephoneNumber: String? = ""
+    var telephone_countryCode: String? = ""
     var communicationTextMessage:Boolean=false
     var termsCondition:Boolean=false
     var twoStepVerification:Boolean=false
@@ -16,19 +18,21 @@ object NewCreateAccountRequestModel{
     var firstName:String=""
     var lastName:String=""
     var companyName:String=""
-    var addressline1:String=""
-    var addressline2:String=""
+    var addressLine1:String=""
+    var addressLine2:String=""
     var townCity:String=""
     var state:String=""
     var country:String=""
+    var address_country_code:String=""
     var zipCode:String=""
+    var selectedAddressId:Int =-1
     var prePay:Boolean=false
-    var payAsYouGo:Boolean=false
     var plateCountry:String = ""
     var plateNumber:String=""
     var plateNumberIsNotInDVLA:Boolean=false
     var vehicleList = mutableListOf<NewVehicleInfoDetails>()
     var addedVehicleList = ArrayList<VehicleResponse?>()
+    var addedVehicleList2 = ArrayList<VehicleResponse?>()
     var isRucEligible:Boolean=false
     var isExempted:Boolean=false
     var isVehicleAlreadyAdded:Boolean=false
@@ -39,7 +43,10 @@ object NewCreateAccountRequestModel{
     var smsSecurityCode:String=""
     var password:String=""
 
-
+    var sms_referenceId: String? = ""
+    var oneOffVehiclePlateNumber:String=""
+    var isCountryNotSupportForSms=false
+    var notSupportedCountrySaveDetails=true
 
 
 }

@@ -1,0 +1,55 @@
+<html>
+    <body>
+        <script src="https://secure.nmi.com/js/v1/Gateway.js"></script>
+        <meta name="viewport" content="user-scalable=no; width=device-width;  initial-scale=1.0">
+            <script>
+                function loaded() {
+                    window.appInterface.postMessage("threeDSStarted");
+                    const gateway = Gateway.create('checkout_public_GYQ9D49Eq589t5BbEGQJ4R4QQ9Ame798');
+                    const threeDS = gateway.get3DSecure();
+                    const options = {
+                        currency: 'GBP',
+                        amount: document.getElementById("amount").innerText,
+                        customerVaultId: document.getElementById("customerVaultId").innerText,
+                        state: '',
+                        email: document.getElementById("email").innerText,
+                        city : document.getElementById("city").innerText,
+                        address1 : document.getElementById("address1").innerText,
+                        firstName : document.getElementById("firstName").innerText,
+                        lastName : document.getElementById("lastName").innerText,
+                        postalCode : document.getElementById("postalCode").innerText,
+                        country: 'GB'
+                    };
+                    const threeDSsecureInterface = threeDS.createUI(options);
+                    threeDSsecureInterface.start('body');
+                    
+                    threeDSsecureInterface.on('challenge', function(e) {
+                        window.appInterface.postMessage("3DSLoaded");
+                    });
+                    
+                    threeDSsecureInterface.on('complete', function(e) {
+                        var apiResponse = JSON.stringify(e, null, "");
+                        window.appInterface.postMessage(apiResponse);
+                    });
+                    
+                    threeDSsecureInterface.on('failure', function(e) {
+                        window.appInterface.postMessage("cancelClicked");
+                    });
+                    
+                    gateway.on('error', function (e) {
+                        window.appInterface.postMessage("errorMessage","{\"error\":"+JSON.stringify(e, null, "")+"}");
+                    });
+                }
+            </script>
+            <label id="firstName" style="display: none;">Name on card</label>
+            <label id="lastName" style="display: none;">Name on card</label>
+            <label id="customerVaultId" style="display: none;">Name on card</label>
+            <label id="amount" style="display: none;">Name on card</label>
+            <label id="email" style="display: none;">Name on card</label>
+            <label id="phone" style="display: none;">Name on card</label>
+            <label id="city" style="display: none;">Name on card</label>
+            <label id="address1" style="display: none;">Name on card</label>
+            <label id="country" style="display: none;">Name on card</label>
+            <label id="postalCode" style="display: none;">Name on card</label>
+    </body>
+</html>

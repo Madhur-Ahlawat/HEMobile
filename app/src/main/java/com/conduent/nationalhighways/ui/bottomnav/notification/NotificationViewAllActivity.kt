@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
+import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityViewallNotificationBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationViewAllAdapter
@@ -25,12 +26,14 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
     private lateinit var binding: ActivityViewallNotificationBinding
     private var mNotificationAdapter: NotificationViewAllAdapter? = null
     private var mList = ArrayList<AlertMessage>()
-    private var loader: LoaderDialog?=null
+    private var loader: LoaderDialog? = null
     private val viewModel: NotificationViewAllViewModel by viewModels()
 
     @Inject
     lateinit var sessionManager: SessionManager
 
+    @Inject
+    lateinit var api: ApiService
     override fun initViewBinding() {
         binding = ActivityViewallNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -39,7 +42,7 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
     }
 
     override fun observeViewModel() {
-       // observe(viewModel.alertLivData, ::handleAlertDeleteResponse)
+        // observe(viewModel.alertLivData, ::handleAlertDeleteResponse)
     }
 
     private fun initCtrl() {
@@ -49,29 +52,32 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
         binding.idToolBarLyt.titleTxt.text = "Notifications"
     }
 
-    private fun handleAlertDeleteResponse(resource: Resource<String?>?){
+    private fun handleAlertDeleteResponse(resource: Resource<String?>?) {
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
-                if(resource.data != null)
+                if (resource.data != null)
                     showToast("Item deleted")
-                 else
-                     showToast("Item not deleted")
+                else
+                    showToast("Item not deleted")
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+
             else -> {
                 // do nothing
             }
         }
     }
 
-    private fun setView(){
-         mList = intent?.getParcelableArrayListExtra<AlertMessage?>("list") as ArrayList<AlertMessage>
+    private fun setView() {
+        mList =
+            intent?.getParcelableArrayListExtra<AlertMessage?>("list") as ArrayList<AlertMessage>
 
         val mAdapter = NotificationViewAllAdapter(this, mList)
-       // mAdapter.setListener(this)
+        // mAdapter.setListener(this)
 
         binding.categoryTitle.text = mList[0].category
 
@@ -93,14 +99,14 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
             }
         }
 
-        binding.clearSelected.setOnClickListener{
+        binding.clearSelected.setOnClickListener {
             apiInitialization()
         }
 
-       // mNotificationAdapter.
+        // mNotificationAdapter.
     }
 
-    private fun apiInitialization(){
+    private fun apiInitialization() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         //loader?.show(requireActivity().supportFragmentManager, "")
@@ -108,7 +114,7 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
         observe(viewModel.alertLivData, ::handleAlertDeleteResponse)
     }
 
-//    override fun onClick(notificationModel: AlertMessage?, pos: Int) {
+    //    override fun onClick(notificationModel: AlertMessage?, pos: Int) {
 //    }
 //
 //    override fun onLongClick(notificationModel: AlertMessage?, pos: Int) {
@@ -116,10 +122,10 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
 //        mList[pos] = notificationModel!!
 //        mNotificationAdapter?.notifyItemChanged(pos)
 //    }
-override fun onStart() {
-    super.onStart()
-    loadSession()
-}
+    override fun onStart() {
+        super.onStart()
+        loadSession()
+    }
 
     override fun onUserInteraction() {
         super.onUserInteraction()
@@ -132,8 +138,14 @@ override fun onStart() {
     }
 
     override fun onLogout() {
-        sessionManager.clearAll()
-        Utils.sessionExpired(this)
+        LogoutUtil.stopLogoutTimer()
+//        sessionManager.clearAll()
+        Utils.sessionExpired(this, this, sessionManager,api)
+    }
+
+    override fun onDestroy() {
+        LogoutUtil.stopLogoutTimer()
+        super.onDestroy()
     }
 
 }

@@ -31,9 +31,8 @@
             android:layout_marginTop="30dp"
             app:labelText="Postcode"
             app:inputType="text"
-            app:imeOptions="actionDone"
             app:maxLength="10"
-            android:maxLength="10"
+            app:imeOptions="actionDone"
             style="@style/input_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +64,16 @@
             android:id="@+id/btnEnterAddressManually"
             style="@style/secondaryButton"
             android:layout_marginTop="@dimen/margin_20dp"
-            android:text="@string/enter_address_manually"
+            android:visibility="gone"
+            android:text="@string/str_enter_address_manually"
+            app:layout_constraintTop_toBottomOf="@id/btnFindAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <com.conduent.apollo.ui.CMButton
+            android:id="@+id/btnUpdateAddressManually"
+            style="@style/secondaryButton"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:text="@string/update_address_manually"
             app:layout_constraintTop_toBottomOf="@id/btnFindAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

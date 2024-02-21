@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.utils
 
+import android.util.Log
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -10,14 +11,31 @@ import java.util.concurrent.TimeUnit
 
 object DateUtils {
 
+
     private val dateFormat = SimpleDateFormat("MM/dd/yyyy")
+     val dd_mmm_yyyy_hh_mm_a = "dd MMM yyyy hh:mm a"
+     val dd_mmm_yyyy_hh_mm_a_ = "dd MMM yyyy hh:mma"
+     val dd_mmm_yyyy = "dd MMM yyyy"
+     val dd_mm_yyyy = "MM/dd/yyyy"
+    val dd_mmm_yyyy_="dd-MMMM-yyyy"
+    val mmmm_dd_yyyy="MMMM dd, yyyy"
+    val mm_dd_yyyy_hh_mm_ss_a="MM/dd/yyyy hh:mm:ss a"
+    val yyyy_mm_dd_hh_mm_ss_s="yyyy-MM-dd hh:mm:ss.s"
 
     fun currentDate(): String? {
         return dateFormat.format(Calendar.getInstance().time)
     }
 
-    fun currentDateAs(): String? {
-        return SimpleDateFormat("MMMM dd, yyyy", Locale.US).format(Calendar.getInstance().time)
+    fun currentDateAs(dateFormat: String): String? {
+        return SimpleDateFormat(dateFormat, Locale.US).format(Calendar.getInstance().time)
+    }
+
+    fun getLast90DaysDate(dateFormat: String): String {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, -31) // Subtract 90 days
+
+        val dateFormat = SimpleDateFormat(dateFormat,Locale.US) // Define the date format
+        return dateFormat.format(calendar.time) // Format the date and return as a string
     }
 
     fun lastPriorDate(day: Int): String? {
@@ -99,11 +117,10 @@ object DateUtils {
         try {
             b = if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
                 true // If start date is before end date.
-            } else if (dfDate.parse(startDate) == dfDate.parse(endDate)) {
-                true // If two dates are equal.
             } else {
                 false // If start date is after the end date.
             }
+
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -151,25 +168,6 @@ object DateUtils {
         return date ?: ""
     }
 
-    fun getTimeForCasesAndEnquiry(date: String?): String {
-        val list = mutableListOf<DateFormat>()
-        val dateFormatter1: DateFormat = SimpleDateFormat("MMM dd,yyyy, hh:mm")
-        val dateFormatter2: DateFormat = SimpleDateFormat("dd MMM yyyy hh:mm aa")
-        list.add(dateFormatter1)
-        list.add(dateFormatter2)
-
-        list.forEach { myDate ->
-            try {
-                val dateObj = myDate.parse(date)
-                val postFormatter = SimpleDateFormat("hh:mm")
-                return postFormatter.format(dateObj)
-            } catch (e: Exception) {
-
-            }
-        }
-        return date ?: ""
-    }
-
     fun convertDateToMonth(date: String): String {
         val dateFormatter: DateFormat = SimpleDateFormat("dd/MM/yyyy")
         return try {
@@ -190,6 +188,48 @@ object DateUtils {
         } catch (e: Exception) {
             date
         }
+    }
+    fun convertDateToFullDate(date: String): String {
+        val dateFormatter: DateFormat = SimpleDateFormat("dd MMM yyyy hh:mm a")
+        return try {
+            val dateObj = dateFormatter.parse(date)
+            val postFormatter = SimpleDateFormat("dd MMM yyyy hh:mm a")
+            postFormatter.format(dateObj).replace("AM","am").replace("PM","pm")
+        } catch (e: Exception) {
+            date.replace("AM","am").replace("PM","pm")
+        }
+    }
+    fun convertStringDatetoAnotherFormat(date: String,dateFormat1:String,dateFormat2:String): String {
+        Log.e(
+            "TAG",
+            "convertStringDatetoAnotherFormat() called with: date = $date, dateFormat1 = $dateFormat1, dateFormat2 = $dateFormat2"
+        )
+        val dateFormatter: DateFormat = SimpleDateFormat(dateFormat1)
+        return try {
+            val dateObj = dateFormatter.parse(date)
+            val postFormatter = SimpleDateFormat(dateFormat2)
+            postFormatter.format(dateObj).replace("AM","am").replace("PM","pm")
+        } catch (e: Exception) {
+            date
+        }
+    }
+
+    fun convertDateFormatToDateFormat(date: String): String {
+        val dateFormatter: DateFormat = SimpleDateFormat("yyyy-MM-dd h:mm:ss")
+        return try {
+            val dateObj = dateFormatter.parse(date)
+            val postFormatter = SimpleDateFormat("dd MMM yyyy")
+            postFormatter.format(dateObj)
+        } catch (e: Exception) {
+            date
+        }
+    }
+
+    fun convertDateToString(date:Date,dateFormat:String):String{
+
+        val dateFormat = SimpleDateFormat(dateFormat) // Define your desired date format
+       return dateFormat.format(date) // Convert Date to String
+
     }
 
 }

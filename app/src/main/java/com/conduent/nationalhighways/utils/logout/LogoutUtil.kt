@@ -6,12 +6,13 @@ import com.conduent.nationalhighways.ui.base.BaseApplication
 object LogoutUtil {
 
     private var timer: CountDownTimer? = null
-    var LOGOUT_TIME: Long = 1000 * 300
+    var LOGOUT_TIME: Long = 780000
+    //var LOGOUT_TIME: Long = 120000
     private var listner: LogoutListener? = null
     private var isTimeFinish = false
 
     @Synchronized
-    fun startLogoutTimer(listne: LogoutListener?) {
+    fun startLogoutTimer(listener: LogoutListener?) {
         if (timer != null) {
             timer?.cancel()
             timer = null
@@ -20,7 +21,7 @@ object LogoutUtil {
 
         isTimeFinish = false
         if (timer == null) {
-            listner = listne
+            listner = listener
             timer = object : CountDownTimer(LOGOUT_TIME, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     BaseApplication.INSTANCE?.setSessionTime()

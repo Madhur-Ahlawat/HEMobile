@@ -26,8 +26,10 @@ class VehicleRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun downloadCrossingHistoryAPiCall(requestParam: TransactionHistoryDownloadRequest?) =
         apiService.getDownloadTransactionListDataInFile(requestParam)
 
-    suspend fun getVehicleListApiCall(start: String, count: String) =
+    suspend fun getVehicleApiCall(start: String, count: String) =
         apiService.getVehicleData(startIndex = start, count = count)
+    suspend fun getVehicleListApiCall(start: String, count: String) =
+        apiService.getVehicleListData(startIndex = start, count = count)
 
     suspend fun getUnAllocatedVehiclesApiCall() = apiService.getUnAllocatedVehicles()
 

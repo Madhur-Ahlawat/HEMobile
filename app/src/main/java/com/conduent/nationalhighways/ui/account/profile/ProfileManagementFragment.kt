@@ -9,12 +9,14 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBinding
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
@@ -25,6 +27,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_M
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
@@ -40,6 +43,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
     private val viewModel: ProfileViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var profileDetailModel: ProfileDetailModel? = null
+    private val countryViewModel: CreateAccountPostCodeViewModel by viewModels()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -51,24 +55,33 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         FragmentCreateAccountSummaryBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if (arguments?.containsKey(NAV_FLOW_KEY) == true) {
+            navFlowFrom = arguments?.getString(NAV_FLOW_KEY,"").toString()
+        }
         binding.accountCard.gone()
+        binding.accountSubType.gone()
         binding.emailCard.gone()
         binding.title.gone()
-        binding.subType.gone()
         binding.communicationCard.gone()
         binding.vehicleHeading.invisible()
         binding.recyclerView.gone()
         binding.checkBoxTerms.gone()
         binding.btnNext.gone()
-        binding.passwordCard.visible()
+        binding.emailProfileManagement.visible()
+        binding.emailAddressSummary.gone()
         binding.emailCardProfile.visible()
         binding.biometricsCard.visible()
+        binding.passwordCard.visible()
 
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        viewModel.accountDetail()
+        if (sessionManager.fetchStringData(SessionManager.COUNTRIES).isEmpty()) {
+            countryViewModel.getCountries()
+        } else {
+            viewModel.accountDetail()
+        }
         val title: TextView? = requireActivity().findViewById(R.id.title_txt)
         title?.text = getString(R.string.profile_management)
     }
@@ -86,10 +99,11 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editMobileNumber.setOnClickListener(this)
         binding.editCommunications.setOnClickListener(this)
         binding.editTwoStepVerification.setOnClickListener(this)
-        binding.editPassword.setOnClickListener(this)
         binding.editEmailAddress.setOnClickListener(this)
         binding.editBiometrics.setOnClickListener(this)
         binding.editAccountType.setOnClickListener(this)
+        binding.editCompanyName.setOnClickListener(this)
+        binding.editPassword.setOnClickListener(this)
 
 
     }
@@ -102,13 +116,41 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         }
         super.onStart()
     }
+
     override fun observer() {
         observe(viewModel.accountDetail, ::handleAccountDetail)
+        observe(countryViewModel.countriesList, ::getCountriesList)
+    }
+
+
+    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
+        viewModel.accountDetail()
+
+        when (response) {
+            is Resource.Success -> {
+                sessionManager.saveStringData(SessionManager.COUNTRIES, response.data.toString())
+            }
+
+            is Resource.DataError -> {
+                if (checkSessionExpiredOrServerError(response.errorModel)
+                ) {
+                    displaySessionExpireDialog(response.errorModel)
+                } else {
+                    ErrorUtil.showError(binding.root, response.errorMsg)
+                }
+            }
+
+            else -> {
+            }
+
+        }
+
     }
 
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
         loader?.dismiss()
+
         when (status) {
             is Resource.Success -> {
                 status.data?.run {
@@ -116,7 +158,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                     else {
                         profileDetailModel = status.data
 //                        profileDetailModel?.personalInformation?.phoneCell = ""
-                        (personalInformation?.firstName + " " + personalInformation?.lastName).also {
+                        (Utils.capitalizeString(personalInformation?.firstName) + " " + Utils.capitalizeString(
+                            personalInformation?.lastName
+                        )).also {
                             binding.fullName.text = it
                         }
 
@@ -126,10 +170,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             binding.twoStepVerification.text = getString(R.string.no)
                         }
 
-                        binding.address.text =
-                            personalInformation?.addressLine1 + "\n" + personalInformation?.city + "\n" + personalInformation?.zipcode
-                        binding.password.text = accountInformation?.password
-                        binding.emailAddressProfile.text = personalInformation?.emailAddress
+                      setAddressToView(personalInformation)
+                        binding.emailAddressProfile.text =
+                            personalInformation?.userName?.lowercase()
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
@@ -139,25 +182,93 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             }
                         } else if (personalInformation?.phoneDay.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
-                            personalInformation?.phoneDay?.let { binding.mobileNumber.text = it }
+
+                            personalInformation?.phoneDay?.let {
+                                binding.mobileNumber.text =
+                                    personalInformation?.phoneDayCountryCode + " " + it
+                            }
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
-                        if (accountInformation?.accountType.equals(Constants.BUSINESS_ACCOUNT,true)) {
+                        binding.accountType.text = accountInformation!!.accountType
+
+                        if (accountInformation.accountType.equals(
+                                Constants.BUSINESS_ACCOUNT,
+                                true
+                            )
+                        ) {
                             binding.companyNameCard.visible()
                             binding.companyName.text = personalInformation?.customerName
+                        } else {
+                            binding.companyNameCard.gone()
                         }
+                        binding.password.text = accountInformation.password
                     }
                 }
 
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
+                if (checkSessionExpiredOrServerError(status.errorModel)
+                ) {
+                    displaySessionExpireDialog(status.errorModel)
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
             }
+        }
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            var bundle = Bundle()
+            bundle.putString(NAV_FLOW_KEY,navFlowFrom)
+            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+            findNavController()?.navigate(R.id.action_profileManagementFragment_to_resetFragment,bundle)
+        }
+    }
+
+    private fun setAddressToView(personalInformation: PersonalInformation?) {
+        var address = ""
+        if (personalInformation?.addressLine1?.isNotEmpty() == true) {
+            address = address + personalInformation.addressLine1
+        }
+        if (personalInformation?.addressLine2?.isNotEmpty() == true) {
+            if (address.isNotEmpty() == true) {
+                address = address + "\n"
+            }
+            address = address + personalInformation.addressLine2
+        }
+        if (personalInformation?.city?.isNotEmpty() == true) {
+            if (address.isNotEmpty() == true) {
+                address = address + "\n"
+            }
+            address = address + personalInformation.city
+        }
+        if (personalInformation?.zipcode?.isNotEmpty() == true) {
+            if (address.isNotEmpty() == true) {
+                address = address + "\n"
+            }
+            address = address + personalInformation.zipcode
+        }
+        if (Utils.getCountryName(
+                sessionManager,
+                personalInformation?.country ?: ""
+            ).isNotEmpty()
+        ) {
+            if (address.isNotEmpty() == true) {
+                address = address + "\n"
+            }
+            address = address + Utils.getCountryName(
+                sessionManager,
+                personalInformation?.country ?: ""
+            )
+        }
+        if (personalInformation?.addressLine1?.isEmpty() == true && personalInformation?.city?.isEmpty() == true && personalInformation?.zipcode?.isEmpty() == true) {
+
+        } else {
+            binding.address.text = address
         }
     }
 
@@ -166,7 +277,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         bundle.putParcelable(NAV_DATA_KEY, profileDetailModel)
         when (v?.id) {
 
-            R.id.editCompanyName,R.id.editFullName -> {
+            R.id.editCompanyName, R.id.editFullName -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_personalInfoFragment,
                     bundle()
@@ -207,13 +318,14 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             R.id.editPassword -> {
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_changePassword,
-                    bundle()
+                    bundle
                 )
             }
+
             R.id.editAccountType -> {
                 findNavController().navigate(
-                    R.id.action_profileManagementFragment_to_changePassword,
-                    bundle()
+                    R.id.action_profileManagementFragment_to_createAccountTypes,
+                    bundle
                 )
             }
 
@@ -222,6 +334,10 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                     putInt(
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
+                    )
+                    putString(
+                        Constants.NAV_FLOW_FROM,
+                        Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE.toString()
                     )
                 }
             }

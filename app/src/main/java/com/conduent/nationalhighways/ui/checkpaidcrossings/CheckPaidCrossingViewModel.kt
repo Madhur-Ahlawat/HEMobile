@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
+import com.conduent.nationalhighways.data.model.account.LoginWithPlateAndReferenceNumberResponseModel
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
 import com.conduent.nationalhighways.data.model.checkpaidcrossings.*
+import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.repository.checkpaidcrossings.CheckPaidCrossingsRepo
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
@@ -33,8 +35,8 @@ class CheckPaidCrossingViewModel @Inject constructor(
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _loginWithRefAndPlateNumber = MutableLiveData<Resource<CheckPaidCrossingsResponse?>?>()
-    val loginWithRefAndPlateNumber: LiveData<Resource<CheckPaidCrossingsResponse?>?> get() = _loginWithRefAndPlateNumber
+    private val _loginWithRefAndPlateNumber = MutableLiveData<Resource<LoginWithPlateAndReferenceNumberResponseModel?>?>()
+    val loginWithRefAndPlateNumber: LiveData<Resource<LoginWithPlateAndReferenceNumberResponseModel?>?> get() = _loginWithRefAndPlateNumber
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -49,14 +51,14 @@ class CheckPaidCrossingViewModel @Inject constructor(
     private val _paidCrossingOption = MutableLiveData<CheckPaidCrossingsOptionsModel?>()
     val paidCrossingOption: LiveData<CheckPaidCrossingsOptionsModel?> get() = _paidCrossingOption
 
-    private val _paidCrossingResponse = MutableLiveData<CheckPaidCrossingsResponse?>()
-    val paidCrossingResponse: LiveData<CheckPaidCrossingsResponse?> get() = _paidCrossingResponse
+    private val _paidCrossingResponse = MutableLiveData<CrossingDetailsModelsResponse?>()
+    val paidCrossingResponse: LiveData<CrossingDetailsModelsResponse?> get() = _paidCrossingResponse
 
 
     fun setPaidCrossingOption(data : CheckPaidCrossingsOptionsModel?){
         _paidCrossingOption.value = data
     }
-    fun setPaidCrossingResponse(data : CheckPaidCrossingsResponse?){
+    fun setPaidCrossingResponse(data : CrossingDetailsModelsResponse?){
         _paidCrossingResponse.value = data
     }
 
@@ -72,13 +74,12 @@ class CheckPaidCrossingViewModel @Inject constructor(
                         Logg.logging("CheckpaidCrossi","serverToken $serverToken")
 
                         sessionManager.saveAuthToken(serverToken ?: "")
+                        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
                         _loginWithRefAndPlateNumber.postValue(Resource.Success(response.body()))
                     } else {
                         _loginWithRefAndPlateNumber.postValue(
-                            Resource.DataError(
-                                errorManager.getError(
-                                    response.code()
-                                ).description
+                            Resource.DataError(msg=
+                            response.code().toString().trim()
                             )
                         )
                     }

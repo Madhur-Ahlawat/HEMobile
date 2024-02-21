@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_24dp"
+            android:layout_marginHorizontal="@dimen/margin_2dp"
+            android:gravity="start|top"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/str_check_your_answer_paying"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_16sp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutVehicleRegistration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_15dp">
+
+                    <TextView
+                        android:id="@+id/txtVehicleRegistration"
+                        style="@style/MediumTextBlack"
+                        android:layout_width="0dp"
+                        android:text="@string/vehicle_registration_number_plate"
+                        android:textSize="15sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/barrier"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/vehicleRegisration"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/barrier"
+                        app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration"
+                        tools:text="AJ66 MHA" />
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="left"
+                        app:constraint_referenced_ids="editRegistrationNumber" />
+
+                    <ImageView
+                        android:id="@+id/editRegistrationNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/recent_crossings_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardRecentCrossings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_15dp">
+
+                    <TextView
+                        android:id="@+id/txtRecentCrossings"
+                        style="@style/MediumTextBlack"
+                        android:text="@string/recent_crossings"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/recentCrossings"
+                        style="@style/RegularTextBlack"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtRecentCrossings" />
+
+                    <ImageView
+                        android:id="@+id/editRecentCrossings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/creditForAdditionalCrossings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_15dp">
+
+                    <TextView
+                        android:id="@+id/txtCreditAdditionalCrossings"
+                        style="@style/MediumTextBlack"
+                        android:text="@string/credit_for_additional_crossings"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/creditAdditionalCrossings"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        android:text="1"
+                        app:layout_constraintEnd_toStartOf="@+id/editCreditForAdditionalCrossings"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtCreditAdditionalCrossings" />
+
+                    <ImageView
+                        android:id="@+id/editCreditForAdditionalCrossings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/labelPaymentAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_15dp">
+
+                    <TextView
+                        android:id="@+id/txtPaymentAmount"
+                        style="@style/MediumTextBlack"
+                        android:text="@string/str_total_payment_amount"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/paymentAmount"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtPaymentAmount" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/labelEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_15dp">
+
+                    <TextView
+                        android:id="@+id/txtEmail"
+                        style="@style/MediumTextBlack"
+                        android:text="@string/str_email"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        app:layout_constraintEnd_toStartOf="@+id/editEmail"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtEmail" />
+
+                    <ImageView
+                        android:id="@+id/editEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/labelMobileNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_15dp">
+
+                    <TextView
+                        android:id="@+id/txtMobileNumber"
+                        style="@style/MediumTextBlack"
+                        android:text="@string/mobile_number"
+                        android:textSize="15sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/mobileNumber"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        app:layout_constraintEnd_toStartOf="@+id/editMobileNumber"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />
+
+                    <ImageView
+                        android:id="@+id/editMobileNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/btnNext"
+                style="@style/PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_55dp"
+                android:layout_marginBottom="@dimen/_50sdp"
+                android:text="@string/pay"
+                app:radius="5dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

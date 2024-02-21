@@ -19,10 +19,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EmailRecieptSuccessFragment : BaseFragment<FragmentEmailRecieptSuccessBinding>() {
 
-    private var dateRangeModel: PaymentDateRangeModel?=null
-    private var topup: String?=null
-    private val dashboardViewModel: DashboardViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -47,15 +43,13 @@ class EmailRecieptSuccessFragment : BaseFragment<FragmentEmailRecieptSuccessBind
     }
 
     override fun initCtrl() {
-        try{
-            binding.message.text="We’ve sent a receipt email to\n${HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress}".toLowerCase()
-        }
-        catch (e:Exception){
-            binding.message.text="We’ve sent a receipt email to\n${HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress}"
-        }
+        binding.emailTv.text = HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
+
         binding.btnContinue.setOnClickListener {
-            findNavController().popBackStack(R.id.dashBoardFragment,false)
+            findNavController().popBackStack(R.id.crossingHistoryFragment, false)
         }
+        HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
+
     }
 
     override fun observer() {

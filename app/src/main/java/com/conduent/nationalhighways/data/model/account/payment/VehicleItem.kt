@@ -9,4 +9,5 @@ class VehicleItem {
     var vehicleModel: String? = null
     var vehicleClassDesc: String? = null
     var vehicleMake: String? = null
+
 }

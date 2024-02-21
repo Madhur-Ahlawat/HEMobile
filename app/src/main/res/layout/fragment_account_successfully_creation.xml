@@ -73,7 +73,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="7574048003"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,7 +86,7 @@
                 android:layout_marginTop="15dp"
                 android:id="@+id/pay_as_go_text"
                 android:visibility="gone"
-                android:text="@string/we_sent_confirmation_email" />
+                android:text="@string/str_your_pay_as_you_go" />
 
 
             <androidx.cardview.widget.CardView
@@ -114,7 +113,7 @@
                         style="@style/MediumTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/payment_reference_number"
+                        android:text="@string/str_payment_reference_number"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -124,7 +123,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="48750208"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -190,16 +188,20 @@
                 android:text="@string/sign_in"
                 android:id="@+id/signIn"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/feedback_bt"
+                style="@style/secondaryButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_15dp"
                 android:textColor="@color/new_btn_color"
-                android:fontFamily="@font/open_sans_semibold"
-                android:textSize="14sp"
+                app:borderColor="@color/new_btn_color"
+                android:textColorLink="@color/new_btn_color"
                 android:text="@string/feed_back_to_improve_service"
-                android:visibility="gone"/>
+                android:layout_marginBottom="@dimen/margin_20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
 
         </LinearLayout>

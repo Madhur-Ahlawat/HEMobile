@@ -123,8 +123,8 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
         when (view?.id) {
             R.id.update_btn -> {
                 binding.apply {
-                    val autoTopUP: Double = topUpMyAccount.text.toString().toDouble()
-                    val thresholdAmount: Double = topUpFallsAmount.text.toString().toDouble()
+                    val autoTopUP: Double = topUpMyAccount.getText().toString().toDouble()
+                    val thresholdAmount: Double = topUpFallsAmount.getText().toString().toDouble()
 
                     when {
                         autoTopUP < 10.0 -> {
@@ -142,7 +142,7 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                         else -> {
                             val request = AccountTopUpUpdateThresholdRequest(
                                 thresholdAmount.toString(),
-                                customerAmount.text.toString()
+                                customerAmount.getText().toString()
                             )
                             loader?.show(
                                 requireActivity().supportFragmentManager,
@@ -157,8 +157,8 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
     }
 
     private fun checkButton() {
-        val topUpValue = binding.topUpMyAccount.text.toString().trim()
-        val thresholdValue = binding.topUpFallsAmount.text.toString().trim()
+        val topUpValue = binding.topUpMyAccount.getText().toString().trim()
+        val thresholdValue = binding.topUpFallsAmount.getText().toString().trim()
         val topUp = try {
             topUpValue.toFloat()
         } catch (ex: NumberFormatException) {

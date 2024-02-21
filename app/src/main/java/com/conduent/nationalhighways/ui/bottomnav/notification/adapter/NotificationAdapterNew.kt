@@ -1,21 +1,25 @@
 package com.conduent.nationalhighways.ui.bottomnav.notification.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
-import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.databinding.ItemNotificationsBinding
 import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewModel
+import kotlinx.coroutines.launch
 
-class NotificationAdapterNew(private val context: Context, private val list: List<AlertMessage?>?) :
+class NotificationAdapterNew(
+    private val context: NotificationFragment,
+    private val list: List<AlertMessage?>?,
+    private var viewModel: NotificationViewModel
+) :
     RecyclerView.Adapter<NotificationAdapterNew.NotificationViewHolderNew>() {
 
     class NotificationViewHolderNew(var binding: ItemNotificationsBinding) :
@@ -25,115 +29,92 @@ class NotificationAdapterNew(private val context: Context, private val list: Lis
         parent: ViewGroup,
         viewType: Int
     ): NotificationViewHolderNew {
-        var binding = ItemNotificationsBinding.inflate(LayoutInflater.from(context), parent, false)
+        val binding = ItemNotificationsBinding.inflate(LayoutInflater.from(context.requireContext()), parent, false)
         return NotificationViewHolderNew(binding)
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolderNew, @SuppressLint("RecyclerView") position: Int) {
-        var binding = holder.binding
-        var item = list!![position]
-        var clickedItem=-1
+        val binding = holder.binding
+        val item = list!![position]
+        var clickedItem: Int
 
-        binding.notificationDate.text = Html.fromHtml(item?.createTs, Html.FROM_HTML_MODE_LEGACY)
-        binding.message.text = item?.message
-//        binding.message.movementMethod = LinkMovementMethod.getInstance()
-        if(item!!.isSeeMore){
-            binding.message.minLines=1
-            binding.message.maxLines=20
-            binding.seeMore.text= "See less"
-        }
-        else{
-            binding.message.maxLines=2
-            binding.message.minLines=1
-            binding.seeMore.text= "See more"
-        }
-        if (item!!.isSelectListItem!!) {
-            binding.selectNotification.isChecked=true
-        } else {
-            binding.selectNotification.isChecked=false
-        }
-        if(NotificationFragment.isSelectionMode!!){
-            binding.selectNotification.visible()
-        }
-        else{
-            binding.selectNotification.gone()
-        }
-        binding.seeMore.setOnClickListener {
-            clickedItem=position
-            if(item!!.isSeeMore){
-                item!!.isSeeMore=false
+
+        binding.message.text = Html.fromHtml(item?.message, Html.FROM_HTML_MODE_LEGACY)
+        binding.notificationDate.text = item?.createTs?.replace("AM","am")?.replace("PM","pm")
+
+        binding.selectNotification.isChecked = item?.isSelectListItem == true
+        binding.selectNotification.setOnCheckedChangeListener { _, p1 ->
+            clickedItem = position
+            val item2 = list[clickedItem]
+            item2?.isSelectListItem = p1
+            context.lifecycleScope.launch {
+                viewModel.notificationCheckUncheck.emit(item2!!)
             }
-            else{
-                item!!.isSeeMore=true
-            }
-            notifyItemChanged(clickedItem)
         }
-        binding.message.setOnLongClickListener(object:OnLongClickListener{
-            override fun onLongClick(v: View?): Boolean {
-                clickedItem=position
-                var item=list!![clickedItem]
-                item?.isSelectListItem=true
-                NotificationFragment.isSelectionMode=true
-                this@NotificationAdapterNew.notifyDataSetChanged()
-                return false
-            }
-        })
-        binding.notificationDate.setOnLongClickListener(object:OnLongClickListener{
-            override fun onLongClick(v: View?): Boolean {
-                clickedItem=position
-                var item=list!![clickedItem]
-                item?.isSelectListItem=true
-                NotificationFragment.isSelectionMode=true
-                this@NotificationAdapterNew.notifyDataSetChanged()
-                return false
-            }
-        })
-        binding.root.setOnLongClickListener(object:OnLongClickListener{
-            override fun onLongClick(v: View?): Boolean {
-                clickedItem=position
-                var item=list!![clickedItem]
-                item?.isSelectListItem=true
-                NotificationFragment.isSelectionMode=true
-                this@NotificationAdapterNew.notifyDataSetChanged()
-                return false
-            }
-        })
+        binding.message.setOnLongClickListener {
+            clickedItem = position
+            val item1 = list[clickedItem]
+            item1?.isSelectListItem = true
+            this@NotificationAdapterNew.notifyDataSetChanged()
+            false
+        }
+        binding.notificationDate.setOnLongClickListener {
+            clickedItem = position
+            val item = list[clickedItem]
+            item?.isSelectListItem = true
+            this@NotificationAdapterNew.notifyDataSetChanged()
+            false
+        }
+        binding.root.setOnLongClickListener {
+            clickedItem = position
+            val item = list[clickedItem]
+            item?.isSelectListItem = true
+            this@NotificationAdapterNew.notifyDataSetChanged()
+            false
+        }
         binding.root.setOnClickListener {
-            clickedItem=position
-            var item=list!![clickedItem]
-            if(item!!.isSelectListItem){
-                item?.isSelectListItem=false
-            }
-            else{
-                item?.isSelectListItem=true
-            }
+            clickedItem = position
+            val item = list[clickedItem]
+            item?.isSelectListItem = item?.isSelectListItem != true
             this@NotificationAdapterNew.notifyItemChanged(clickedItem)
         }
         binding.message.setOnClickListener {
-            clickedItem=position
-            var item=list!![clickedItem]
-            if(item!!.isSelectListItem){
-                item?.isSelectListItem=false
-            }
-            else{
-                item?.isSelectListItem=true
+            clickedItem = position
+            val item = list[clickedItem]
+            if (item?.isSelectListItem == true) {
+                item.isSelectListItem = false
+            } else {
+                item?.isSelectListItem = true
             }
             this@NotificationAdapterNew.notifyItemChanged(clickedItem)
         }
         binding.notificationDate.setOnClickListener {
-            clickedItem=position
-            var item=list!![clickedItem]
-            if(item!!.isSelectListItem){
-                item?.isSelectListItem=false
-            }
-            else{
-                item?.isSelectListItem=true
+            clickedItem = position
+            val item4 = list[clickedItem]
+            if (item4?.isSelectListItem == true) {
+                item4.isSelectListItem = false
+            } else {
+                item4?.isSelectListItem = true
             }
             this@NotificationAdapterNew.notifyItemChanged(clickedItem)
+        }
+        binding.message.movementMethod = LinkMovementMethod.getInstance()
+        if(item?.isViewed!=null && item.isViewed.equals("Y")!!){
+            holder.itemView.isFocusable=false
+            holder.itemView.isEnabled=false
+            binding.notificationDate.setTextColor(context.resources.getColor(R.color.hint_color))
+            binding.message.setTextColor(context.resources.getColor(R.color.hint_color))
+        }
+        else{
+            holder.itemView.isFocusable=true
+            holder.itemView.isEnabled=true
+            binding.notificationDate.setTextColor(context.resources.getColor(R.color.black))
+            binding.message.setTextColor(context.resources.getColor(R.color.black))
+
         }
     }
 
     override fun getItemCount(): Int {
-        return list!!.size
+        return list?.size?:0
     }
 }

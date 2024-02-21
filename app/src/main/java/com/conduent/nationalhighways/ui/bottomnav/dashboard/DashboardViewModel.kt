@@ -6,15 +6,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
-import com.conduent.nationalhighways.data.model.account.AccountResponse
+import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.account.ThresholdAmountApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
+import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModel
+import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingTransactionsRequestModel
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.remote.NoConnectivityException
 import com.conduent.nationalhighways.data.repository.dashboard.DashBoardRepo
@@ -37,8 +43,16 @@ class DashboardViewModel @Inject constructor(
     private val repository: DashBoardRepo,
     val errorManager: ErrorManager
 ) : ViewModel() {
+
     private val alertMutData = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
+    val accountType: LiveData<ProfileDetailModel> get() = _accountType
+    private val _accountType = MutableLiveData<ProfileDetailModel>()
+    fun setAccountType(ProfileDetailModel: ProfileDetailModel) {
+        _accountType.postValue(ProfileDetailModel)
+    }
+
     val alertLivData: LiveData<Resource<AlertMessageApiResponse?>?> get() = alertMutData
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _crossingHistoryVal = MutableLiveData<Resource<CrossingHistoryApiResponse?>?>()
     val crossingHistoryVal: LiveData<Resource<CrossingHistoryApiResponse?>?> get() = _crossingHistoryVal
@@ -48,8 +62,11 @@ class DashboardViewModel @Inject constructor(
     val vehicleListVal: LiveData<Resource<List<VehicleResponse?>?>?> get() = _vehicleListVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _accountDetailsVal = MutableLiveData<Resource<AccountResponse?>?>()
-    val accountOverviewVal: MutableLiveData<Resource<AccountResponse?>?> get() = _accountDetailsVal
+    private val _accountDetailsVal = MutableLiveData<Resource<ProfileDetailModel?>?>()
+    val accountOverviewVal: MutableLiveData<Resource<ProfileDetailModel?>?> get() = _accountDetailsVal
+
+    private val _lrdsVal = MutableLiveData<Resource<LRDSResponse?>?>()
+    val lrdsVal: MutableLiveData<Resource<LRDSResponse?>?> get() = _lrdsVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _thresholdAmountVal = MutableLiveData<Resource<ThresholdAmountApiResponse?>?>()
@@ -60,6 +77,11 @@ class DashboardViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val accountPaymentMutLiveData =
         MutableLiveData<Resource<AccountPaymentHistoryResponse?>?>()
+    val paymentHistoryLiveDataCheckedCrossing: LiveData<Resource<CheckedCrossingRecentTransactionsResponseModel?>?> get() = accountPaymentMutLiveDataCheckedCrossing
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    private val accountPaymentMutLiveDataCheckedCrossing =
+        MutableLiveData<Resource<CheckedCrossingRecentTransactionsResponseModel?>?>()
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _alertsVal = MutableLiveData<Resource<AlertMessageApiResponse?>?>()
@@ -68,6 +90,38 @@ class DashboardViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _whereToReceivePaymentReceipt = MutableLiveData<Resource<ResponseBody?>?>()
     val whereToReceivePaymentReceipt: LiveData<Resource<ResponseBody?>?> get() = _whereToReceivePaymentReceipt
+
+
+    var personalInformationData: MutableLiveData<PersonalInformation> =
+        MutableLiveData()
+    var accountInformationData: MutableLiveData<AccountInformation> = MutableLiveData()
+    var communicationPreferenceData: MutableLiveData<ArrayList<CommunicationPrefsModel>> = MutableLiveData()
+    var profileDetailModel: MutableLiveData<ProfileDetailModel> = MutableLiveData()
+
+    var accountSubType: MutableLiveData<String> = MutableLiveData()
+    var directDebitCardListSize: MutableLiveData<Int> = MutableLiveData()
+    var paymentListSize: MutableLiveData<Int> = MutableLiveData()
+
+    init {
+        accountSubType.value = ""
+        directDebitCardListSize.value = 0
+        paymentListSize.value = 0
+        personalInformationData.value = PersonalInformation(
+            "", "", "", "", "",
+            "", "", "", "", "", "", "",
+            "", "", "", "", "", "",
+            "", "", "", "", "",
+            "", "", "", "",
+            "", "", "", "",
+            "", "", "", "",
+            "", false, "", "",
+            "", "", "", "",
+            "", "", "", "",
+            "", "", "", "", "",
+            "", "", "", ""
+        )
+
+    }
 
     fun paymentHistoryDetails(request: AccountPaymentHistoryRequest) {
         viewModelScope.launch {
@@ -84,6 +138,23 @@ class DashboardViewModel @Inject constructor(
             }
         }
     }
+
+    fun paymentHistoryDetailsCheckCrossings(request: CheckedCrossingTransactionsRequestModel) {
+        viewModelScope.launch {
+            try {
+                accountPaymentMutLiveDataCheckedCrossing.postValue(
+                    ResponseHandler.success(
+                        repository.getAccountPaymentCheckCrossings(
+                            request
+                        ), errorManager
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                accountPaymentMutLiveData.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
     fun getVehicleInformationApi() {
         viewModelScope.launch {
             try {
@@ -145,6 +216,18 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
+    fun getLRDSResponse() {
+        viewModelScope.launch {
+            try {
+                _lrdsVal.postValue(
+                    ResponseHandler.success(repository.getLrdsStatusApi(), errorManager)
+                )
+            } catch (e: Exception) {
+                _lrdsVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
     fun getThresholdAmountData() {
         viewModelScope.launch {
             try {
@@ -164,7 +247,7 @@ class DashboardViewModel @Inject constructor(
                     val vehicleCountResponse: Response<List<VehicleResponse?>?>?
                     val crossingCountResponse: Response<CrossingHistoryApiResponse?>?
 //                    val thresholdAmountResponse: Response<ThresholdAmountApiResponse?>?
-                    val overviewResponse: Response<AccountResponse?>?
+                    val overviewResponse: Response<ProfileDetailModel?>?
                     val alertsResponse: Response<AlertMessageApiResponse?>?
 
                     val callVehicleCount = async { repository.getVehicleData() }
@@ -174,7 +257,8 @@ class DashboardViewModel @Inject constructor(
 //                    val callThreshold = async { repository.getThresholdAmountApiCAll() }
 //                    delay(100)
                     val callOverview = async {
-                        repository.getAccountDetailsApiCall() }
+                        repository.getAccountDetailsApiCall()
+                    }
                     delay(100)
                     val callAlerts = async { repository.getAlertMessages() }
 
@@ -184,15 +268,14 @@ class DashboardViewModel @Inject constructor(
                     overviewResponse = callOverview.await()
                     alertsResponse = callAlerts.await()
 
-                    if(alertsResponse?.isSuccessful == true){
+                    if (alertsResponse?.isSuccessful == true) {
                         _alertsVal.postValue(
                             ResponseHandler.success(
                                 alertsResponse,
                                 errorManager
                             )
                         )
-                    }
-                    else {
+                    } else {
                         _alertsVal.value =
                             Resource.DataError("Something went wrong. Try again later")
                     }
@@ -204,8 +287,7 @@ class DashboardViewModel @Inject constructor(
                                 errorManager
                             )
                         )
-                    }
-                    else {
+                    } else {
                         _vehicleListVal.value =
                             Resource.DataError("Something went wrong. Try again later")
                     }
@@ -217,8 +299,7 @@ class DashboardViewModel @Inject constructor(
                                 errorManager
                             )
                         )
-                    }
-                    else {
+                    } else {
                         _crossingHistoryVal.value =
                             Resource.DataError("Something went wrong. Try again later")
                     }
@@ -230,20 +311,17 @@ class DashboardViewModel @Inject constructor(
                                 errorManager
                             )
                         )
-                    }
-                    else {
+                    } else {
                         _accountDetailsVal.value =
                             Resource.DataError("Something went wrong. Try again later")
                     }
                 }
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 if (e is NoConnectivityException) {
                     _accountDetailsVal.value = Resource.DataError(e.message)
                 } else if (e is SocketTimeoutException || e is InterruptedIOException) {
                     _accountDetailsVal.value = Resource.DataError(Constants.VPN_ERROR)
-                }
-                else{
+                } else {
                     _accountDetailsVal.value = Resource.DataError(e.message)
                 }
             }
@@ -263,6 +341,7 @@ class DashboardViewModel @Inject constructor(
             }
         }
     }
+
     fun whereToReceivePaymentReceipt(request: PaymentReceiptDeliveryTypeSelectionRequest) {
         viewModelScope.launch {
             try {

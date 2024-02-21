@@ -3,12 +3,12 @@ package com.conduent.nationalhighways.ui.customviews
 import android.content.Context
 import android.graphics.Canvas
 import androidx.appcompat.widget.AppCompatTextView
-import android.R
 import android.graphics.Paint
 import android.util.AttributeSet
 
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.conduent.nationalhighways.R
 
 class CustomTabView: AppCompatTextView {
 
@@ -43,7 +43,7 @@ class CustomTabView: AppCompatTextView {
     {
         showDividerVal = show
     }
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         if(showDividerVal)

@@ -15,5 +15,7 @@ data class CommunicationPrefsRequestModelList(
     val smsFlag: String?,
     val defVoice: String?,
     val voiceFlag: String?,
-    val pushNotFlag: String?
+    val pushNotFlag: String?,
+    val defPushNot: String?,
+    val defMail: String?
 ):Parcelable

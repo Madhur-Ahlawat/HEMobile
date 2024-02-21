@@ -40,7 +40,13 @@ class TermsConditionFragment : BaseFragment<FragmentTermsConditionBinding>() {
 
     override fun init() {
         binding.webView.settings.javaScriptEnabled = true
-        binding.webView.loadUrl(url)
+        if(url.isNullOrEmpty()){
+            binding.webView.loadUrl("file:///android_asset/termsandconditionspage.html")
+        }
+        else{
+            binding.webView.loadUrl(url)
+        }
+
     }
 
     override fun observer() {

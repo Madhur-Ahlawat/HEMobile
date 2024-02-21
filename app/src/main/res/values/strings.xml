@@ -50,7 +50,7 @@
     <string name="txt_account_number">Account number</string>
     <string name="txt_error_account_number">Please enter account number</string>
     <string name="txt_error_zip_code">Please enter postal code</string>
-    <string name="txt_postcode">Building Number and Street</string>
+    <string name="txt_building_number_and_street"><b>Building Number and Street</b></string>
     <string name="txt_next">Next</string>
     <string name="txt_login">Log in</string>
     <string name="txt_your_username"><b>Your username</b></string>
@@ -66,7 +66,7 @@
     <string name="str_account_number">Account number</string>
     <string name="str_post_cde">Post code</string>
     <string name="str_next">Next</string>
-    <string name="str_choose_method_to_get_ur_link">A code will be sent to your email address or mobile.</string>
+    <string name="str_choose_method_to_get_ur_link">A code will be sent to your mobile or email address.</string>
     <string name="str_choose_method_to_get_email_code">A code will be sent to your email address.</string>
     <string name="str_continue">Continue</string>
     <string name="str_check_your_mail">Check your email for a security code</string>
@@ -78,7 +78,7 @@
     <string name="str_letter_posted_txt">"A letter will be posted to your registered address with a temporary password. The password will be active for seven days. Please use the password to login to your account "</string>
     <string name="str_letter_not_received">If you do not receive the letter within 5 days, please contact :</string>
     <string name="str_dart_change_contact">Dart Change contact centre</string>
-    <string name="str_contact_address">Telephone: 03003000120\nTextPhone: 1800 1 0300 300 0120\nEveryday, 8am to 8pm</string>
+    <string name="str_contact_address">Telephone: 0300 300 0120\nTextPhone: 18001 0300 300 0120\nEveryday, 8am to 8pm</string>
     <string name="str_accept">Accept</string>
     <string name="txt_email_address">Email address</string>
     <string name="txt_enter_security_code">Enter security code</string>
@@ -102,6 +102,7 @@
     <string name="str_not_received_resend">If you have not received the email please click resend</string>
     <string name="str_resend_message">Please check your text message, if you have not received the text message, please click resend</string>
     <string name="str_make_one_of_payment">Pay for crossings without an account</string>
+    <string name="one_of_payment">Pay For Crossings</string>
     <string name="str_make_one_of_payment_continue">Make a one off payment \nMake a payment for crossings without creating an account</string>
     <string name="str_charges_for_crossing">The charges for crossings</string>
     <string name="str_six_am_morning_txt">\u2022  You have made since 6 am yesterday morning</string>
@@ -114,7 +115,7 @@
     <string name="str_what_would_you_like_to_do">What would you like to do?</string>
     <string name="str_create_account">Set up a Dart Charge account</string>
     <string name="str_resolve_penalty_charge">Setup a Dart charge account</string>
-    <string name="str_check_for_paid_crossing">Check which crossing you\'ve paid for</string>
+    <string name="str_check_for_paid_crossing">Check which crossings you\'ve paid for</string>
     <string name="str_view_charges">Understanding charges and fines</string>
     <string name="str_add_vehicle_to_account">Add vehicle to your account</string>
     <string name="str_no_vehicles_added_txt">No Vehicles has been added yet</string>
@@ -202,7 +203,7 @@
     <string name="str_password_recovery">Password recovery</string>
     <string name="str_enter_one_time_code">Code</string>
     <string name="str_resend_one_time_code"><u>Resend one time code</u></string>
-    <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. \n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.\n\nIf you did not get a code, or it has expired, select resend security code.</string>
+    <string name="str_not_received_otp_txt">Check the email for 6-digit security code. This code will expire after 15 minutes. \n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.\n\n\nIf you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_not_received_otp_sms">Check the text message for a 6-digit security code. This code will expire after 15 minutes. \n\nYour text message might take a few minutes to arrive. \n\nIf you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_not_sms_received_otp_txt">If you haven\'t received the one time code, please re-check your phone number and click resend one time code</string>
     <string name="str_verify_one_time_code">Verify code</string>
@@ -211,12 +212,12 @@
     <string name="str_confirm_password">Confirm password</string>
     <string name="str_password_reset_successfull">Password Reset Successfully</string>
     <string name="str_pay_dart_ford_crossing_charge">Pay the Dartford Crossing charge (Dart Charge)</string>
-    <string name="str_pay_dart_ford_crossing_free_flow_crossing">Dartford Crossing is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossings in various ways.</string>
-    <string name="str_about_this_service">About this service</string>
+    <string name="str_pay_dart_ford_crossing_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossing in various ways.</string>
+    <string name="str_about_this_service">About This Service</string>
     <string name="str_crossing_service_update">Crossing service updates</string>
     <string name="str_contact_dart_charge">Contact Dart Charge</string>
     <string name="str_start_now">Start now</string>
-    <string name="str_use_this_service_to">Use this service to</string>
+    <string name="str_use_this_service_to"><b>Use the service to:</b></string>
 
     <string name="str_learn_about_"><u>Learn more about Dartford Crossings &amp; Dart Charge</u></string>
     <string name="str_timing">Timings : Every day, 8am to 8pm</string>
@@ -234,6 +235,7 @@
     <string name="str_charge_and_fines">6am to 10pm, charges apply everyday.</string>
     <string name="str_charges_6am_10pm">Charges  and fines</string>
     <string name="str_type_of_vehicle">Type of\nvehicle</string>
+    <string name="type_of_vehicle">Type of Vehicle</string>
     <string name="str_one_of_payment">One of \npayment</string>
     <string name="str_pay_g_service">Pay as \nyou go</string>
     <string name="str_pre_pay_service">Pre-Pay</string>
@@ -265,8 +267,9 @@
     <string name="str_communication">Communication</string>
     <string name="str_communications">Communications</string>
     <string name="crossing_history">Crossing history</string>
+    <string name="str_crossing_history">Crossing History</string>
     <string name="str_activity_log">Activity log</string>
-    <string name="str_close_account">Close account</string>
+    <string name="str_close_account">Close Account</string>
     <string name="str_close">Close</string>
     <string name="str_vehicle_list">Vehicle list</string>
     <string name="str_full_name">Full name</string>
@@ -277,7 +280,6 @@
     <string name="str_dart_charge_pin">Dart Charge pin</string>
     <string name="str_vehicle_management">Vehicle management</string>
     <string name="str_vehicle_history">Vehicle history</string>
-    <string name="str_crossing_history">Crossing history</string>
     <string name="str_change_password">Change Password</string>
     <string name="str_edit_details">Edit details</string>
     <string name="str_save">Save</string>
@@ -298,7 +300,7 @@
     <string name="str_txt_msg_will_sent_to_mobile">Text messages will be sent to the mobile number mentioned below</string>
     <string name="str_txt_will_send_to_email">We will send you an email to advise you that your statement is ready for you to view and download from your Dart Charge Account. Would you also like to be advised by Text? </string>
     <string name="please_enter_phone_number">Please enter phone number</string>
-    <string name="str_top_up">Top up</string>
+    <string name="str_top_up">Top Up</string>
     <string name="str_clear_all">Clear all</string>
     <string name="str_take_action">Take action</string>
     <string name="str_in_order">In order</string>
@@ -352,6 +354,7 @@
 
     <string name="str_your_crossing">Your crossing</string>
     <string name="str_crossing_date">Crossing date</string>
+    <string name="str_crossing_date_cap">Crossing Date</string>
     <string name="str_crossing_time">Crossing time</string>
     <string name="str_direction">Direction</string>
     <string name="str_status">Status</string>
@@ -378,7 +381,7 @@
     <string name="error_password_not_match">Confirm password does not match</string>
     <string name="error_postal_code">Please enter post code</string>
     <string name="check_sms">Check your SMS</string>
-    <string name="str_check_sms">Check your text messages for a security code.</string>
+    <string name="str_check_sms">Check your phone for a security code.</string>
     <string name="enter_otp">Please enter correct otp</string>
 
     <string name="str_log_out">Logout</string>
@@ -432,13 +435,16 @@
 
     <string name="start_again">Start again</string>
     <string name="your_session_has_expired">Your session has expired</string>
+    <string name="str_session_expired">Session Expired</string>
+    <string name="str_your_security_signed_you_out">For your security, we signed you out.</string>
     <string name="select_the_start_now_button_to_restart_your_session">Select the start now button to restart your session</string>
     <string name="select_the_sign_in_button_to_log_in_to_your_account">Select the sign in button to log in to your account</string>
     <string name="email_recovery">Email Recovery</string>
     <string name="contact_us">Contact us</string>
+    <string name="str_contact_us">Contact Us</string>
     <string name="str_no_active_contacts">No contacts currently</string>
     <string name="str_nominated_contacts_limit_reached">A total of %d contacts has been set-up, if you wish to add further nominated contacts you need to remove any one of the contact</string>
-    <string name="str_logout_msg">You have successfully signed out of your account</string>
+    <string name="str_logout_msg">You\'ve signed out of your account</string>
     <string name="str_session_time_out">Session Time out</string>
     <string name="str_verification">Verification</string>
     <string name="str_step_f_of_l">Step %d of %d</string>
@@ -472,7 +478,7 @@
         \n \u25CF Register for a personal account if your company is not registered with Companies house</string>
     <string name="str_business_account_desc">To create a business account you will need \n\u25CF Your company details \n\u25CF Details of the vehicles you are registering \n\u25CF A valid debit or credit card</string>
     <string name="str_business_account_desc_info">\u25CF An initial deposit of £10.00 \n\u25CF Company details and details of the primary vehicle which you are registering \n\u25CF A valid debit or credit card</string>
-    <string name="str_prepay">Pre-pay</string>
+    <string name="str_prepay">Pre-Pay</string>
     <string name="str_pre_pay_desc">\u25CF Discount applied to every crossing \n\u25CF Minimum of £10 deposit required \n\u25CF Auto top-up from your debit or credit card when your   balance is low \n\u25CF Personal details and details of the primary vehicle which you are registering \n\u25CF Can apply Local Resident Discount Scheme on your vehicle</string>
     <string name="str_payg_account">Pay as you go</string>
     <string name="str_payg_desc">\u25CF No discount, No initial deposit \n\u25CF Pay taken automatically after you cross from your debit/credit card</string>
@@ -480,6 +486,7 @@
     <string name="str_personal_pre_pay_account">Personal Pre-pay account</string>
     <string name="str_provide_below_details">In order to set up your Dart Charge account, please provide the below information. </string>
     <string name="payment_amount">Payment amount</string>
+    <string name="payment_amount_topup_details">Payment Amount</string>
     <string name="your_vehicle">Your vehicle</string>
     <string name="future_crossings_are_valid_for_12_months_from_the_date_you_make_them">Future crossings are valid for 12 months from the date you make them.</string>
     <string name="future_crossings">Future crossings</string>
@@ -518,7 +525,7 @@
     <string name="str_lrds_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae tincidunt lobortis suspendisse id lacus enim sed diam. Posuere eu elementum enim et nisi, sed elit. Id aliquam faucibus cursus gravida porta donec fermentum vivamus consequat. Mi aliquet lacus, fusce lacus, quis morbi facilisis imperdiet odio.</string>
     <string name="str_find_address">Find address</string>
     <string name="str_enter_evening_no">Evening number (optional)</string>
-    <string name="str_understanding_charges_fines">Understanding charges and fines</string>
+    <string name="str_understanding_charges_fines">Understanding Charges and Fines</string>
     <string name="str_accessibility">Accessibility requests</string>
     <string name="str_dart_charge_guidance_and_documents">Dart Charges guidance and documents</string>
     <string name="str_normal_phone_no">0300 300 0120</string>
@@ -528,7 +535,6 @@
     <string name="make_enquiry">Make an enquiry</string>
     <string name="str_text_phone">Textphone</string>
     <string name="str_do_you_have">Do you have a Dart Charge account?</string>
-    <string name="cases_and_enquiry">Cases and enquiry</string>
     <string name="account_created_successfully">Account Created Successfully</string>
 
     <string name="cases_history">Case history</string>
@@ -540,8 +546,8 @@
     <string name="first_name">First name</string>
     <string name="case_number">Case number</string>
     <string name="last_name">Last name</string>
+    <string name="str_last_name_">Last Name</string>
     <string name="telephone">Telephone no (Optional)</string>
-    <string name="raise_new_query">‘Cases and enquiry</string>
     <string name="case_number_column">Case number : </string>
     <string name="submitted_date_column">Submitted date : </string>
     <string name="submitted_time_column">Submitted time : </string>
@@ -554,20 +560,20 @@
     <string name="str_category">Category</string>
     <string name="str_comments">Comments</string>
     <string name="str_summary">Summary</string>
-    <string name="str_raise_new_enquiry">Raise a new enquiry</string>
+    <string name="str_raise_new_enquiry">Raise a New Enquiry</string>
     <string name="str_submit_enquiry">Submit enquiry</string>
     <string name="resend_success">Resend Success</string>
     <string name="add_a_vehicle">Add a vehicle</string>
     <string name="vehicle_reg_number">Vehicle Registration (number plate)</string>
     <string name="make">Make</string>
     <string name="colour">Colour</string>
-    <string name="country_registration">Country of registration</string>
+    <string name="country_registration">Country of Registration</string>
     <string name="not_vehicle">This is not your vehicle</string>
     <string name="personal_account_setup">Personal account setup</string>
     <string name="personal_pre_pay_account">Personal Pre-pay account</string>
     <string name="personal_pre_pay_account_info">Personal Pre-pay account \n information</string>
     <string name="in_order_to_set_up_your_dart_charge_account_please_provide_the_below_information">In order to set up your Dart Charge account, please provide the below information.</string>
-    <string name="postcode">Postcode</string>
+    <string name="postcode"><b>Postcode</b></string>
     <string name="underline_postcode"><u>Postcode</u></string>
     <string name="password">Password</string>
     <string name="underline_password"><u>Password</u></string>
@@ -576,7 +582,7 @@
     <string name="find_address">Find address</string>
     <string name="cap_pin"> PIN </string>
     <string name="underline_cap_pin"> <u>PIN</u> </string>
-    <string name="please_enter_postcode">Please enter post code</string>
+    <string name="please_enter_postcode">Enter a postcode</string>
     <string name="contact_centre_pin">Contact centre PIN</string>
     <string name="pin_desc1">• Your PIN must be made up of four digits.</string>
     <string name="pin_desc2">• This would be used to verify your identity if you contact us by phone</string>
@@ -588,21 +594,18 @@
     <string name="str_sub_category">Sub-category</string>
     <string name="str_select_category">Category : </string>
     <string name="str_select_sub_category">Sub-category : </string>
-    <string name="str_please_provide_additional_information_txt">please provide additional information such as vehicle registration, transaction ID or crossing date if related to the enquiry</string>
     <string name="str_description">Descritption</string>
-    <string name="str_you_have_chars_remain">You have 895 characters remaining</string>
-    <string name="str_upload_file">Upload file (Optional)</string>
-    <string name="str_upto_four_files_uploaded">\u25CF Up to 4 files can be uploaded</string>
-    <string name="str_file_size_may_be">\u25CF File size can be up to 8mb each</string>
-    <string name="str_permitted_file_types_are_doc_docx_xls">\u25CF Permitted file types are \n .doc/.docx, .xls/.xlsx, .pdf, .jpg, .mbp, .tiff, .csv</string>
+    <string name="str_you_have_chars_remain">You have %1$s characters remaining</string>
+    <string name="str_upload_file_optional">Upload file (Optional)</string>
     <string name="str_duplicate_statements">Duplicate Statments</string>
     <string name="str_transaction">Transaction</string>
-    <string name="str_Your_enquiry_submitted">Your enquiry has been submitted successfully</string>
+    <string name="str_Your_enquiry_submitted">Your enquiry has been\nsubmitted successfully</string>
+    <string name="str_Your_complaint_submitted">Your complaint has been\nsubmitted successfully</string>
     <string name="str_we_will_get_back_to_you">\u25CF We will get back to you with in 7 working days</string>
     <string name="str_email_conformation">\u25CF We will send an email confirmation to %1$s post verification</string>
     <string name="str_check_enquiry_status">Check enquiry status</string>
-    <string name="str_enquiry_status">Cases enquiry status</string>
-    <string name="str_go_to_start_menu">Go to start menu</string>
+    <string name="str_check_complaint_status">Check complaint status</string>
+    <string name="str_case_enquiry_status">Cases enquiry status</string>
     <string name="str_case_number">Case number</string>
     <string name="str_date">Date</string>
     <string name="underline_personal_info"><u>Personal info</u></string>
@@ -620,7 +623,7 @@
     <string name="select_account_type">Please select account type</string>
     <string name="pin">PIN</string>
     <string name="in_progress">Work in Progress</string>
-    <string name="pay_as_you_go">Personal -Pay as you go</string>
+    <string name="pay_as_you_go">Pay as you go</string>
     <string name="change">Change</string>
     <string name="top_up_my_account_by_10_00_when_my_balance_falls_below_10_00">Top-up my account by £10.00 when\nmy balance falls below £10.00</string>
     <string name="top_up_my_account_by_05_00_when_my_balance_falls_below_10_00">Top-up my account by £5.00 when\nmy balance falls below £10.00</string>
@@ -638,10 +641,9 @@
     <string name="txt_view_crossings">View crossings</string>
     <string name="txt_view_crossing">View crossing</string>
     <string name="str_account_type">Account type</string>
-    <string name="str_cases_and_enquiries">Cases and enquiry</string>
+    <string name="str_cases_and_enquiries">Cases and Enquiry</string>
     <string name="str_what_you_want_to_do">What you want to do?</string>
     <string name="edit_details">Edit details</string>
-    <string name="change_password">Change password</string>
     <string name="current_password_validation">New password can\'t be same as current password</string>
     <string name="confirm_password_validation">\u25CF Confirm Password \n\u25CF Must begin with a letter
                 \n\u25CF Be at least 8 characters long
@@ -657,6 +659,7 @@
                 \n\u25CF 1 number \n</string>
     <string name="email_address_had_been_updated_nsucessfully">Email address had been updated \nsuccessfully</string>
     <string name="sent_email">We have sent a confirmation email to %s</string>
+    <string name="sent_email_line">We have sent a confirmation email to\n%s</string>
     <string name="str_threshold_val_msg">You have chosen to top-up by %s, when your balance falls below %s.</string>
     <string name="str_threshold_val_update_msg">Change your low balance and auto top-up</string>
 
@@ -713,12 +716,14 @@
     <string name="business_prepay">Business Prepay Info</string>
     <string name="business_prepay_account">Business pre-pay account</string>
     <string name="initial_deposit_account">Initial deposit to your account</string>
-    <string name="initial_payment">The auto top-up amount must be a minimum of £ 10 and the low balance threshold must be a minimum of £ 5 to open your account</string>
+    <string name="initial_payment">The auto top-up amount must be a minimum of £ 10 and the low balance threshold must be a minimum of £5 to open your account</string>
     <string name="auto_top_up_funds">To top-up, funds will be added automatically to your account when the balance falls below the specified threshold</string>
     <string name="how_many_vehicle">How many <b>vehicles</b> do you plan to have on your account?</string>
     <string name="no_of_vehicle">Number of vehicle</string>
     <string name="how_many_crossing">How many <b>crossings</b> will each vehicle make on average on each month?</string>
-    <string name="crossings">Crossings</string>
+    <string name="crossing">crossing</string>
+    <string name="crossings">crossings</string>
+
     <string name="top_up_recommendation">Top-up recommendations</string>
     <string name="top_up_calculate">calculate top up</string>
     <string name="top_up_calculate_recommend">We recommend that you have a minimum top-up amount of £10,000 and a minimum balance threshold of £5,000.\nPlease note that you can change these amounts by manually entering the amounts you require.</string>
@@ -731,6 +736,7 @@
     <string name="vehicle_not_recognized">The vehicle registration number is not recognised. You have to self declare the details below</string>
     <string name="reg_no">Registration number -</string>
     <string name="appearance">Appearance</string>
+    1-99462371
     <string name="vehicle_class">Vehicle class</string>
     <string name="two_plus_axles">2+ Axle vehicles</string>
     <string name="group_name_field">The group name field can be used to help you distinguish different vehicles associated with your account</string>
@@ -743,9 +749,9 @@
     <string name="str_A">A</string>
     <string name="business_topup_recommendation">Business Topup Recommendation</string>
     <string name="company_reg_no">Company registration number</string>
-    <string name="company_name">Company Name</string>
+    <string name="company_name">Company name</string>
     <string name="str_account_holder_profile">Account holder profile</string>
-    <string name="str_additional_details">Additional details (optional)</string>
+    <string name="str_additional_details">Future details (optional)</string>
     <string name="str_profile_updated_successfully">Profile updated successfully</string>
     <string name="str_this_is_only_for_uk_registered_vehicles">This is ony applicable for UK registered phone number</string>
     <string name="str_you_have_opted_to_receive_text_msgs">You have opted to receive text messages. They will be send to the mobile phone number</string>
@@ -816,6 +822,7 @@
     <string name="str_after_u_have_made_one_of_txt">After you\'ve made a one off payment, you can check which crossings you\'ve paid for</string>
     <string name="str_please_note_it_can_take">Please note it can take up to one day for your payment to be matched to crossings</string>
     <string name="str_payment_reference_number">Payment reference number</string>
+    <string name="payment_reference_number">Payment reference number</string>
     <string name="str_if_have_paid_by_web_or_phone_txt">"If you've paid by web or phone, this is the HD number on your receipt. If you've paid through payzone, this is the TXN number "</string>
     <string name="str_payment_ref_number_error_mess">Please enter valid payment reference number</string>
     <string name="str_please_enter_valid_vrm_number">Pease enter valid vrm number</string>
@@ -842,7 +849,8 @@
     <string name="str_house_number">House Number</string>
     <string name="str_town_city_state_province">Town/City/State/Province</string>
     <string name="str_street_name">Street Name</string>
-    <string name="str_country">Country</string>
+    <string name="failed_problem_with_service">Problem with the service</string>
+    <string name="str_country"><b>Country</b></string>
     <string name="failed_retry_title">Sorry, there is a problem with the service.</string>
     <string name="failed_retry_desc">Your requested action may not have completed successfully.</string>
     <string name="failed_retry_desc2">If you need help with your account or want to make a payment, you can call us on :</string>
@@ -851,6 +859,8 @@
     <string name="failed_retry_num2">+44 300 300 0120</string>
     <string name="failed_retry_desc4">Lines are open from Mon to Sun 08:00 to 20:00</string>
     <string name="try_again_later">Try again later.</string>
+    <string name="try_again_later_did_not_save_changes">Try again later. We did not save your changes.</string>
+    <string name="try_again_later_signin_account">Try again later or sign into your account.</string>
 
 
     // account status
@@ -864,6 +874,7 @@
     <string name="personal">Personal</string>
     <string name="business">Business</string>
     <string name="exempt_partner">Exempt Partner</string>
+    <string name="exempt">Exempt</string>
 
     // account sub type
     <string name="pay_as_you_go_acc">Pay as you go account</string>
@@ -881,7 +892,8 @@
     <string name="str_free_text_field_can_be_used_to_distingush">The free text field can be used to help you distinguish different vehicles associated with your account</string>
     <string name="str_vehicle_added_successfully">Vehicle added successfully</string>
     <string name="str_how_can_i_make">How can I make accessibility requests?</string>
-    <string name="str_guidance_and_documents">Guidance and documents</string>
+    <string name="str_dart_charge_forms_guidance">Dart Charge Forms and Guidance</string>
+    <string name="str_dart_charge_terms_conditions">Dart Charge Terms and Conditions</string>
     <string name="str_guidance_and_documents_answers">Scheme user information is available in braille, large print and alternative languages. This is available on request by using the Dart Charge Online enquiries or through the Dart Charge contact centre.</string>
     <string name="no_file_chosen">No file chosen</string>
     <string name="select">Select</string>
@@ -898,15 +910,20 @@
     <string name="doyouwantenablebiometric">You can enable now, or later from Settings on your device</string>
     <string name="biometriclogin">Biometric Login</string>
     <string name="biometrics">Biometrics</string>
+    <string name="profile_biometrics">Profile Biometrics</string>
     <string name="biometric">Biometric</string>
-    <string name="usefingerprinttologin">Use fingerprint or face to login</string>
+    <string name="usefingerprinttologin">Use Face ID or Touch ID to login</string>
+    <string name="usetouchidtologin">Use Touch ID to login</string>
+    <string name="usefaceidtologin">Use Face ID to login</string>
+
+
     <string name="pleaseenablebiometric">Please enable Biometric login in Settings.</string>
     <string name="free">Free</string>
 
     <string name="ifyoudidnotreceivethecode">If you did not get a code, or it has expired, select resend security code.</string>
-    <string name="resendcode">Resend code</string>
+    <string name="resendcode">Resend Security Code</string>
     <string name="wehavesentanemail">We\'ve sent an email to</string>
-    <string name="wehavesentatextmessageto">We\'ve sent a text message to</string>
+    <string name="wehavesentatextmessageto">We’ve sent a text message to</string>
     <string name="ifyoudidnot">If you did not get a code, or it has expired, select Resend code.</string>
     <string name="str_your_password_must">Your password must:</string>
     <string name="dotunicode">\u25CF</string>
@@ -920,12 +937,8 @@
     <string name="str_enter_six_digit_code">Enter 6-digit security code</string>
     <string name="str_understanding_charges">If you’re disabled, you do not need to pay the charge if you get free UK vehicle tax because of a disability. \n\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can find out which is your local council. \n\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days. \n\n For further information: <a href="https://www.google.com/">Click Here</a></string>
     <string name="str_free">Free</string>
-    <string name="resend_code">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder.\n\n The code will expire after 15 minutes.</string>
-    <string name="resend_code_text">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
-    <string name="resend_code_expire">We’ll send a text message to %s. \n\nThe code will expire after 15 minutes.</string>
-
-
-    <string name="resend_code_text_message">We’ll send a text message to %s. \n\nYour text message might take a few minutes to arrive. The code will expire after 15 minutes.</string>
+    <string name="resend_code_email">We’ll send an email to %s. \n\nYour email might take a few minutes to arrive. If you do not get an email, check your spam folder.\n\n The code will expire after 15 minutes.</string>
+    <string name="resend_code_text">A text will be sent to %s.\n\nYour text message might take a few minutes to arrive.\n\nThe code will expire after 15 minutes.</string>
     <string name="str_request_new_security_code">Request a new security code</string>
     <string name="requestanewsecuritycode">Send a new code</string>
     <string name="str_message_data_rates">Message and data rates may apply.</string>
@@ -938,14 +951,12 @@
     <string name="str_select_your_address">Select your address</string>
     <string name="str_if_you_dont_see">If you don\u0027t see your address you can enter it manually.</string>
     <string name="str_enter_address_manually">Enter address manually</string>
+    <string name="str_about_this_service_1">pay for the crossing</string>
+    <string name="str_about_this_service_2">sign in or set up a Dart Charge account</string>
+    <string name="str_about_this_service_3">check with crossings you\'ve paid for</string>
+    <string name="str_about_this_service_4">register to receive notifications when you cross</string>
 
 
-    <string name="str_use_service_guideline">
-        \u2022   Pay for crossings without an account
-        <!--\n\u25CF Pay or challenge a penalty charge notice (PCN)-->
-        \n\u2022 Sign in or set up a Dart Charge account
-        \n\u2022 Check with crossing you\u0027ve paid for
-    </string>
     <string name="a_valid_debit_or_credit_card">a valid debit or credit card</string>
     <string name="create_account">Create account</string>
     <string name="the_vehicle_registration_number_plate_you_want_to_add_to_the_account">the vehicle registration (number plate) you want to add to the account</string>
@@ -960,19 +971,21 @@
     <string name="what_is_your_address">What is your registered office address?</string>
     <string name="this_should_be_the_address_were_the_vehicle_is_registered">This should be the address were the vehicle is registered.</string>
     <string name="enter_address_manually">Enter address manually</string>
+    <string name="enter_your_address_manually">Enter your address manually</string>
+    <string name="update_address_manually">Update address manually</string>
     <string name="what_is_your_name">What is your name?</string>
     <string name="what_is_your_company_name">What is your company name?</string>
     <string name="primary_account_holder_first_name">Primary account holder’s first name</string>
     <string name="should_be_company_name">This should be your company name</string>
     <string name="primary_account_holder_last_name">Primary account holder’s last name</string>
     <string name="would_you_like_to_receive">Would you like to receive \ncommunications about \nyour account by text message?</string>
-    <string name="would_you_like_to_receive_push">Would you like to receive \npush notification about \nyour account?</string>
+    <string name="would_you_like_to_receive_push">Would you like to receive\npush notifications about\nyour account?</string>
     <string name="this_will_be_in_addition">This will be in addition to receiving notifications by email.</string>
     <string name="this_will_be_in_addition_push">This will be enabled in your device settings.</string>
     <string name="agree_terms_condition">I agree to the <u>terms and conditions</u> and understand that standard text message and data charges may apply</string>
 
 
-    <string name="eligibleLRDSDescription">Your postcode has been recognised as a valid Local Resident Discount Scheme (LRDS) postcode. \n\nTo apply for a LRDS plan, click on this link which will navigate to the account creation journey on the web.</string>
+    <string name="eligibleLRDSDescription">Your postcode has been recognised as a valid Local Resident Discount Scheme (LRDS) postcode. \n\nTo apply for a LRDS plan, click on the continue button which will navigate to the account creation journey on the web.</string>
     <string name="you_qualify_for_a_dart_charge_discount">You qualify for a Dart Charge discount</string>
     <string name="continueWithoutApplying">Continue without applying</string>
     <string name="crossing_charges_per_account">CROSSING CHARGES PER ACCOUNT</string>
@@ -984,8 +997,8 @@
     <string name="str_personal_account_description"><b>Personal Account</b>\nIf you live in Dartford or Thurrock, you may qualify for a local resident discount with this account</string>
     <string name="str_personal_business_account_description"><b>Business Account</b>\nIf you need to add more than 10 vehicles we recommend you create your account on the website not in the app</string>
     <string name="str_building_number">Building Number and Street</string>
-    <string name="str_address_line2">Address line 2 (optional)</string>
-    <string name="str_town_city">Town or City</string>
+    <string name="str_address_line2"><b>Address line 2 (optional)</b></string>
+    <string name="str_town_city"><b>Town or City</b></string>
     <string name="str_address_example">For example 46, Flat 2a or Rose Cottage</string>
     <string name="primary_account_contact_first_name">Primary account contact first name</string>
     <string name="primary_account_contact_last_name">Primary account contact last name</string>
@@ -1025,7 +1038,6 @@
     <string name="vehicle_registration_number_plate_error">Vehicle Registration (number plate) must be 10 characters or fewer</string>
     <string name="str_is_this_your_vehicle_looking_for">Is this the vehicle you’re looking for?</string>
     <string name="str_incorrect_vehicle_registration">INCORRECT VEHICLE REGISTRATION</string>
-    <string name="str_where_is_your_vehicle_registered">Where is your vehicle registered?</string>
     <string name="str_where_is_your_vehicle_is_registered">Where is your vehicle registered?</string>
     <string name="str_in_the_uk">In the UK</string>
     <string name="str_outside_the_uk">Outside the UK</string>
@@ -1033,8 +1045,7 @@
     <string name="str_do_you_want_to_add">Do you want to add another vehicle?</string>
     <string name="str_maximum_vehicle_registered">Maximum number of vehicles have been registered against the account</string>
     <string name="str_you_have_reached_the_maximum_vehicle">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
-    <string name="where_is_your_vehicle_registered">Where is your vehicle registered?</string>
-    <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle.</string>
+    <string name="we_need_more_information_about_your_vehicle">We need more information about your vehicle</string>
     <string name="i_confirm_that_the_vehicle_information_provided_is_correct">I confirm that the vehicle information provided is correct.</string>
     <string name="str_vehicle_registration_number_plate">Vehicle Registration (number plate)</string>
     <string name="str_are_you_sure_you_want_to_remove">Are you sure you want to remove vehicle %s ?</string>
@@ -1042,33 +1053,37 @@
     <string name="address">Address</string>
     <string name="mobile_phone_number">Mobile phone number</string>
     <string name="personal_details">Personal Details</string>
+    <string name="check_your_answers_before_confirming_vehicle">Check your answers before confirming your new vehicle</string>
     <string name="check_your_answers_before_making_a_payment">Check your answers before making a payment.</string>
     <string name="account_details">Account Details</string>
     <string name="type_of_account">Type of account</string>
     <string name="text_message_communications">Text message communications</string>
     <string name="two_step_verification">Two-step verification</string>
     <string name="vehicle_details">Vehicle Details</string>
-    <string name="i_accept_the_terms_conditions">I accept the <u>terms &amp; conditions</u></string>
+    <string name="i_accept_the_terms_conditions"><a href=""></a>I accept the <u>terms &amp; conditions</u></string>
     <string name="add_another_vehicle">Add Another Vehicle</string>
     <string name="for_example_cu57abc">For example, CU57ABC</string>
     <string name="the_vehicle_has_already_been_added">The vehicle has already been added.</string>
-    <string name="are_you_sure_you_want_to_remove_vehicle">Are you sure you want to remove vehicle\n%s?</string>
+    <string name="are_you_sure_you_want_to_remove_vehicle">Are you sure you want to remove vehicle %s?</string>
     <string name="it_is_required_that_you_have_two_vehicles_before_you_are_able_to_delete_one_of_them">It is required that you have two vehicles before you are able to delete one of them.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="str_make_error_message">Vehicle make must only include letters a to z, and special characters such as hyphens</string>
     <string name="str_model_error_message">Vehicle model must only include letters a to z, numbers 0 to 9, and special characters such as hyphens</string>
     <string name="str_colour_error_message">Vehicle colour must only include letters a to z, and the special character forward slash</string>
-    <string name="str_vehicle_exempt_message">Vehicle %s is exempt from Dart Charge payment</string>
-    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and can not be added to the account.\n\nContact the Dart Charge contact center for help.\n\n Telephone: 0300 300 0120\n Every day: 8am to 8pm</string>
+    <string name="str_vehicle_exempt_message">Vehicle %s is not charged\nNo Dart Charge payment is due</string>
+    <string name="str_vehicle_exempt_detail_message">Our records show that %s is exempt from Dart Charge payment and cannot be added to the account.\n\nContact the Dart Charge contact center for help.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="crossing_vehicle_exempt_detail_message">Our records show that %s is exempt from\nDart Charge payment.</string>
     <string name="str_no_ruc_desc">Motorcycles, mopeds and quad bikes do not need to pay for a crossing. You do not need an account for this vehicle.</string>
-    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\n Telephone: 0300 300 0120 \n Every day: 8am to 8pm</string>
+    <string name="str_no_ruc_desc_pay_for_crossing">Motorcycles, mopeds and quad bikes do not need to pay for a crossing.</string>
+    <string name="str_vehicle_already_exist_desc">Vehicle %s already exists in the system and cannot be added to the account.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="str_vehicle_already_exist">Vehicle %s already exists in the system and cannot be added to the account.</string>
     <string name="str_vehicle_already_note_desc">If you do not pay the Dart Charge when crossing with this vehicle, you could get a fine.</string>
     <string name="you_have_already_added_this_vehicle_to_this_account">You have already added this vehicle to this account.</string>
-    <string name="vehicle_s_mha_has_already_been_assigned_to_this_account">Vehicle %s MHA has already been assigned to this account</string>
+    <string name="vehicle_s_mha_has_already_been_assigned_to_this_account">Vehicle %s has already been assigned to this account</string>
     <string name="str_add_to_account">ADD TO ACCOUNT</string>
     <string name="str_add_another">ADD ANOTHER VEHICLE</string>
-    <string name="str_vehicle_already_added_system">Vehicle %S MHA already exists in the system</string>
+    <string name="str_vehicle_already_added_system">Vehicle %S already exists in the system</string>
     <string name="str_effective_start_date">Effective start date</string>
 
     <!--First,Last Name Error Message-->
@@ -1083,9 +1098,9 @@
     <!-- Manual Address Error Message-->
     <string name="str_building_error_message">Enter a building number and street </string>
     <string name="str_building_number_error_message">Building number and street must be 200 characters or fewer</string>
-    <string name="str_building_number_character_allowed">Building number and street must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas, apostrophes and hash signs</string>
+    <string name="str_building_number_character_allowed">Building number and street must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas and apostrophes</string>
     <string name="str_address_line2_length_error_message">Address line 2 must be 100 characters or fewer</string>
-    <string name="str_address_line2_character_allowed">Address line 2 must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas, apostrophes and hash signs</string>
+    <string name="str_address_line2_character_allowed">Address line 2 must only include letters a to z, numbers 0 to 9 and special characters such as hyphens, full stops, commas and apostrophes</string>
     <string name="str_town_city_error_message">Enter a town or city </string>
     <string name="str_town_city_length_error_message">Town or city must be 50 characters or fewer</string>
     <string name="str_town_city_character_allowed">Town or city must only include letters a to z and special characters such as hyphens, full stops, commas, and apostrophes</string>
@@ -1096,7 +1111,7 @@
     <string name="str_email_error_message">Enter your email address</string>
     <string name="str_email_format_error_message">Enter an email address in the correct format, like name@example.com</string>
     <string name="str_email_already_associated_with_other_account">An account with this email address already exists</string>
-    <string name="str_email_length_less_than_eight">Enter an email address that is 8 characters or more </string>
+    <string name="str_email_length_less_than_eight">Enter an email address that is 8 characters or more</string>
     <string name="str_email_length_more_than_100">Email address must be 64 100 characters or fewer</string>
     <string name="str_email_disallowed_character">Email address must not include [disallowed character]</string>
 
@@ -1104,7 +1119,7 @@
     <string name="str_code_empty">Enter the 6-digit security code</string>
     <string name="str_security_code_must_be_6_characters">Security code must be 6 characters</string>
     <string name="str_security_code_expired_message">Security code has expired</string>
-    <string name="str_security_code_not_correct">Security code must contain correct numbers </string>
+
 
     <!--Create Password Error Message-->
     <string name="str_enter_your_password">Enter your password</string>
@@ -1117,10 +1132,20 @@
     <string name="str_confirm_password_error_message">Confirm your password</string>
     <string name="str_your_password_must_match">Your passwords must match</string>
 
+    <string name="str_new_password_must_be_8_characters">New password must be 8 characters or more</string>
+    <string name="str_new_password_must_contain_at_least_one_character">New password must contain at least 1 number</string>
+    <string name="str_new_password_must_least_contain_one_upper_case">New password must contain at least 1 upper case letter</string>
+    <string name="str_new_password_must_least_contain_one_lower_case">New password must contain at least 1 lower case letter</string>
+    <string name="str_new_password_must_not_include_disallowed_character">Password must not include [disallowed character]</string>
+    <string name="str_new_your_password_must_match">Your new passwords must match</string>
+    <string name="str_newpassword_cannot_be_same_current_password">New password cannot be the same as the current password</string>
+
     <!--Mobile Number Error Message-->
     <string name="str_phoneNumber_error_message">Enter your mobile phone number</string>
     <string name="str_uk_phoneNumber_error_message">The UK mobile phone number entered is invalid, please try again</string>
     <string name="str_non_uk_phoneNumber_error_message">The non-UK phone number entered must be between 8 and 15 digits</string>
+    <string name="str_non_uk_phoneNumber_error_message_tryagain">The non-UK phone number entered is invalid, please try again</string>
+    <string name="telephone_error_message">Enter a telephone number that is between 8 and 15 digits</string>
     <string name="maximum_number_of_vehicles_have_been_registered_against_the_account">Maximum number of vehicles have been registered against the account</string>
     <string name="you_ve_reached_the_maximum_amount_of_vehicles_that_you_can_add_to_your_account_you_ll_need_to_remove_a_vehicle_before_adding_another">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
     <string name="enter_the_vehicle_registration_number_plate_of_your_vehicle">Enter the Vehicle Registration (number plate) of your vehicle</string>
@@ -1134,11 +1159,14 @@
     <string name="str_low_balance_threshold">Your low balance threshold</string>
     <string name="str_if_your_balance_falls_below">If your balance falls below this amount, we’ll top it up</string>
     <string name="str_low_balance">Low balance threshold</string>
-    <string name="str_minimum_amount">Minimum amount £5</string>
+    <string name="str_minimum_amount">Minimum amount £%s</string>
     <string name="str_top_up_amount">Your top-up amount</string>
     <string name="str_you_will_automatically_top_up">We\'ll automatically top-up your account with this amount</string>
     <string name="top_up_amount">Top-up amount</string>
-    <string name="top_up_minimum_amount">Minimum amount £10</string>
+    <string name="top_up_amount_value">Top-up amount £%s</string>
+    <string name="top_up_minimum_amount">Minimum amount £%s</string>
+    <string name="no_payment_method_required">No Payment method required</string>
+    <string name="str_zero_euro">£0.00</string>
 
     <string name="str_how_do_you_want_to_pay">How do you want to pay?</string>
     <string name="str_payment_amount">Payment amount</string>
@@ -1151,16 +1179,16 @@
     <string name="proceed_with_payment">PROCEED WITH PAYMENT</string>
     <string name="pay_sample">PAYG SAMPLE PAGE</string>
     <string name="str_you_choose_to_pay">You chose to pay as you go. We’ll collect payment from your card each time you cross.</string>
-    <string name="str_your_payment_has_been_declined">Your payment has been declined</string>
-    <string name="str_contact_your_bank_for_more_details">Contact your bank for more details. No money has been taken from your account. Go back to try the payment again</string>
+    <string name="str_your_payment_has_been_declined">Your payment has been declined.</string>
+    <string name="str_contact_your_bank_for_more_details">Contact your bank for more details. No money has been taken from your account.</string>
     <string name="str_try_payment_again">Try payment again</string>
 
     <!--TOP UP Error Message-->
     <string name="str_low_balance_threshold_error_message">Low balance threshold must only include numbers 0 to 9, full stops and commas</string>
-    <string name="str_low_balance_must_be_more">Low balance threshold must be £5 of more</string>
+    <string name="str_low_balance_must_be_more">Low balance threshold must be £%s or more</string>
     <string name="str_low_balance_must_be_8_characters">Low balance threshold must be 8 characters or fewer</string>
     <string name="str_top_balance">Top-up amount must only include numbers 0 to 9, full stops and commas</string>
-    <string name="str_top_up_amount_must_be_more">Top-up amount must be £10 or more</string>
+    <string name="str_top_up_amount_must_be_more">Top-up amount must be £%s or more</string>
     <string name="str_top_up_amount_must_be_8_characters">Top-up amount must be 8 characters or fewer</string>
 
     <!--Card Error Message-->
@@ -1171,25 +1199,26 @@
     <string name="str_application_complete">Application Complete</string>
     <string name="we_sent_confirmation_email">We’ve sent a confirmation email with your account details to %s.</string>
     <string name="your_account_number">Your account number</string>
-    <string name="payment_reference_number">Payment reference number</string>
     <string name="what_happens_text">What happens next</string>
     <string name="you_can_now_make_crossing">You can now make a crossing. If you’ve already crossed since 6 am yesterday, this crossing will be settled against your account.</string>
     <string name="sign_in_into_your_account">Sign in to your account to:</string>
     <string name="str_upload_more_vehicles">upload more vehicles </string>
     <string name="change_how_pay_for_crossing">change how you pay for crossings </string>
     <string name="change_how_to_receive_communication">change how you receive communications</string>
-    <string name="feed_back_to_improve_service"><u>FEEDBACK TO IMPROVE THE SERVICE</u></string>
+    <string name="feed_back_to_improve_service"><a href="https://websurveys2.servmetric.com/theme/gm/2712?GUID=c1694af9-bd75-49a9-90b2-8af9ca81d41e"><u>FEEDBACK TO IMPROVE THE SERVICE</u></a></string>
     <string name="the_name_on_card_must_only_include_letters_a_to_z_and_special_characters_such_as_hyphens">The name on card must only include letters a to z, and special characters such as hyphens</string>
     <string name="card_security_code_must_be_3_digits_or_more">Card security code must be 3 digits or more</string>
     <string name="invalid_date_format">Invalid date format</string>
     <string name="card_number_must_be_16_digits_or_more">Card number must be 16 digits or more</string>
     <string name="expiry_date_cannot_be_in_the_past">Expiry date cannot be in the past</string>
     <string name="str_your_pay_as_you_go">Your pay-as-you-go payment will get taken each time you make a crossing.</string>
-    <string name="str_radio_sms">Text %s\n Message and data rates may apply</string>
-    <string name="str_radio_email">Email %s</string>
+    <string name="str_radio_sms"><Data><![CDATA[<b>Mobile</b> %s<br><i>Message and data rates may apply</i></b>]]></Data></string>
+    <string name="str_radio_email"><Data><![CDATA[<b>Email</b> %s]]></Data></string>
     <string name="str_incorrect_email_or_password">Incorrect email or password. Please try again.</string>
-    <string name="str_enable_face_ID_fingerprint">Enable Biometric</string>
-    <string name="str_enable_face_ID">Enable Biometric</string>
+    <string name="str_enable_face_ID_fingerprint">Enable Face ID or Touch ID</string>
+    <string name="str_enable_face_ID">Enable Face ID</string>
+    <string name="str_enable_touch_ID">Enable Touch ID</string>
+
     <string name="str_for_your_security_we_have_locked">For your security we have locked your account.Try again after 30 minutes.</string>
     <string name="vehicle_management">Vehicle Management</string>
     <string name="vehicle_list">Vehicle List</string>
@@ -1201,14 +1230,13 @@
     <string name="str_select_payment_method">Select payment method</string>
     <string name="str_Mastercard">Mastercard ****4563</string>
     <string name="str_account_reopened">Account reopened</string>
-    <string name="str_we_have_sent_confirmation">We’ve sent a confirmation email to\n%s</string>
+    <string name="str_we_have_sent_confirmation">We’ve sent a confirmation email to\n<Data><![CDATA[<b><br>%s</b>]]></Data></string>
     <string name="str_go_to_dashboard">GO TO DASHBOARD</string>
-    <string name="str_feedback_to_improve_the_service"><u>FEEDBACK_TO_IMPROVE_THE_SERVICE</u></string>
     <string name="str_check_your_answers_before_making_payment">Check your answers before making a payment.</string>
     <string name="str_personal_details">Personal Details</string>
     <string name="str_play">Play</string>
     <string name="str_account_suspended">Account Suspended</string>
-    <string name="str_sign_in_validation">Sign in Validation</string>
+    <string name="str_sign_in_validation">Sign In Validation</string>
     <string name="str_no_I_will_do_it_later">NO I\'LL DO IT LATER</string>
     <string name="str_new_payment_method">+ NEW PAYMENT METHOD</string>
     <string name="str_you_have_no_payment_method">You have no payment methods on file</string>
@@ -1219,11 +1247,11 @@
 
     <string name="plus_top_up">+ TOP UP</string>
     <string name="txt_low_threshold_balance">Low Balance Threshold</string>
-    <string name="txt_topup_method">Top-Up Method</string>
+    <string name="txt_topup_method">Top-Up\nMethod</string>
     <string name="txt_dumy_card_number">••••••7890</string>
     <string name="txt_recent_transacions">Recent Transactions</string>
-    <string name="top_up">Top- Up</string>
-    <string name="txt_topup_amount">Top-Up Amount</string>
+    <string name="top_up">Top Up</string>
+    <string name="txt_topup_amount">Top-Up\nAmount</string>
     <string name="vehicle_deleted">Vehicle Deleted</string>
     <string name="vehicle_added_to_your_account">Vehicle added to your account</string>
     <string name="vehicles_not_added">Vehicles not added</string>
@@ -1237,9 +1265,9 @@
     <string name="str_dummy_name">Alex Jonson</string>
     <string name="account">Account</string>
     <string name="txt_my_account">My Account</string>
-    <string name="no_vehicle_found">No vehicle found</string>
+    <string name="no_vehicle_found">There are no vehicles on this account</string>
     <string name="success">Success</string>
-    <string name="str_you_have_successfully_added_new_card">You have successfully added the new card:</string>
+    <string name="str_you_have_successfully_added_new_card">You have successfully added\nthe new card:</string>
     <string name="txt_dummy_date">28 Jan 2020</string>
     <string name="str_payment_reference">Payment reference</string>
     <string name="vehicle_added">Vehicle added</string>
@@ -1253,16 +1281,17 @@
     <string name="txt_payment_reference">Payment Reference</string>
     <string name="txt_type_of_payment">Type of payment</string>
     <string name="txt_channel">Channel</string>
-    <string name="txt_last_digits_of_card">Last four digit of card</string>
-    <string name="email_reciept">Email Reciept</string>
+    <string name="txt_last_digits_of_card">Last four digits of card</string>
+    <string name="email_reciept">Email Receipt</string>
     <string name="vehicles_added_to_your_account">Vehicles added to your account</string>
     <string name="name_change_successful">Name change successful</string>
     <string name="address_change_successful">Address change successful</string>
     <string name="communication_change_successful">Communication preference change successful</string>
-    <string name="mobile_change_successful">Mobile phone change successful</string>
+    <string name="mobile_change_successful">Mobile number change successful</string>
     <string name="telephone_change_successful">Telephone number change successful</string>
     <string name="two_factor_change_successful">Two Factor Authentication \n change successful</string>
-    <string name="we_ve_sent_a_confirmation_email_to_s">We’ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="we_ve_sent_a_confirmation_email_to_s">We\'ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
+    <string name="you_will_receive_a_confirmation_email">You\'ll receive a confirmation email at <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
     <string name="email_receipt_send_successful">Email receipt send successful</string>
@@ -1271,18 +1300,25 @@
     <string name="any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method">Any remaining credit will be refunded to your\ndefault payment method.</string>
     <string name="you_will_have_to_pay_for_any_future_crossings_nseparately">You will have to pay for any future crossings\nseparately.</string>
     <string name="your_account_is_now_closed">Your account is now closed</string>
-    <string name="we_will_send_an_email_to_johndoe_email_com_nwhen_the_account_has_been_closed">We will send an email to johndoe@email.com\nwhen the account has been closed.</string>
+    <string name="str_we_are_closing_account">We are closing your account</string>
+    <string name="str_you_can_no_longer_access_account">You can no longer access this account.</string>
+    <string name="we_will_send_an_email_to_when_the_account_has_been_closed"><![CDATA[We will send an email to\n<b>%1$s</b>\nwhen the account has been closed.]]></string>
+    <string name="str_donot_pay_dartcharge">If you do not pay the Dart Charge when\ncrossing, you could get a fine (Penalty Charge\nNotice)</string>
     <string name="what_happens_next">What happens next</string>
     <string name="str_account_closed">Account Closed</string>
     <string name="resizable_text_read_more">See more</string>
     <string name="resizable_text_read_less">See less</string>
-    <string name="str_telephone_number_optional">Telephone number (optional)</string>
+    <string name="str_telephone_number_optional">Telephone number</string>
     <string name="str_company_name_must_not_include_special_characters">Company name must not include special characters</string>
-    <string name="postcode_must_not_contain_special_characters">Postcode must not contain special characters</string>
+    <string name="postcode_must_not_contain_special_characters_except_single_hypen">Postcode must only include letters a to z, numbers 0 to 9 and single hyphens</string>
+    <string name="postcode_must_not_contain_special_characters_except_hyphen">Postcode must only include letters a to z and numbers 0 to 9 and single hyphen</string>
+    <string name="postcode_must_not_contain_special_characters">Postcode must only include letters a to z and numbers 0 to 9</string>
     <string name="postcode_must_not_contain_hypen_more_than_once">Postalcode must not contain hypen more than once!</string>
-    <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be less than 50 characters</string>
+    <string name="name_must_not_contain_hypen_more_than_once">Name must not contain hypen more than once!</string>
+    <string name="vehicle_make_must_be_less_than_fifty">Vehicle make must be 50 characters or fewer</string>
     <string name="password_must_not_have_special_characters">Password must not have special characters!</string>
-    <string name="profile_mobile_number">Profile mobile number</string>
+    <string name="profile_mobile_number">Profile Mobile Number</string>
+    <string name="profile_phone_number">Profile Phone Number</string>
     <string name="would_you_like_to_opt_in_to_two_step_verification">Would you like to opt in to two-step verification?</string>
     <string name="this_will_make_access_to_your_account_more_secure">This will make access to your account more secure.</string>
     <string name="two_factor_verification">Two Factor Verification</string>
@@ -1293,21 +1329,378 @@
     <string name="str_confirm_new_password">Confirm New Password</string>
     <string name="profile_2fa">Profile 2FA</string>
     <string name="password_change_successful">Password change successful</string>
-    <string name="clear_notification">CLEAR NOTIFICATION</string>
+    <string name="clear_notification">CLEAR NOTIFICATIONS</string>
     <string name="what_is_your_email_address">What is your email address?</string>
     <string name="str_email_address">Email address</string>
     <string name="this_will_be_your_username_when_you_log_in_to_your_account">This will be your username when you log in to your account.</string>
     <string name="check_your_email_for_a_security_code">Check your email for a security code.</string>
-    <string name="we_ve_sent_an_email_to_j_e_com">We’ve sent an email to j*****@e****.com.</string>
+    <string name="we_ve_sent_an_email_to_j_e_com">We’ve sent an email to</string>
     <string name="str_code">Code</string>
     <string name="check_the_email_for_6_digit_security_code_this_code_will_expire_after_15_minutes_your_email_might_take_a_few_minutes_to_arrive_if_you_do_not_get_an_email_check_your_spam_folder">Check the email for 6-digit security code. This code will expire after 15 minutes.\n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.</string>
     <string name="if_you_did_not_get_a_code_or_it_has_expired_select_resend_security_code">If you did not get a code, or it has expired, select resend security code.</string>
     <string name="str_verify_code">VERIFY CODE</string>
     <string name="email_address_change_successful">Email address change successful</string>
-    <string name="payment_method_information">Payment Method Information</string>
+    <string name="payment_method_information">Payment Methods</string>
     <string name="set_threshold_limit">Set Threshold Limit</string>
+    <string name="top_up_your_balance">Top-Up your Balance</string>
+    <string name="add_new_payment_method">+ ADD NEW PAYMENT METHOD</string>
+    <string name="choose_your_new_payment_method">Choose your new payment method</string>
+    <string name="debit_credit_card">Debit or Credit Card</string>
+    <string name="currency_symbol">£</string>
+    <string name="str_default">Default</string>
+    <string name="str_balance_topped_up_with">Balance topped up with %s</string>
+    <string name="pound_symbol">£</string>
+    <string name="enter_your_vihicle_color">Enter your vehicle color</string>
+    <string name="an_account_with_this_email_address_already_exists">An account with this email address already exists</string>
+    <string name="email_address_must_be_100_characters_or_fewer">Email address must be 100 characters or fewer</string>
 
+    <!--
+    payment method string
+    -->
+    <string name="str_you_are_removing_all_the_payments_method">You are removing all the payment methods registered on the account</string>
+    <string name="str_remove_card_description">No payments will be made from your account for any crossings that you make and you will have to pay for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_payment_method_deleted">Your Credit Card for %s\n has been removed</string>
+    <string name="str_your_default_payment_method">Your default payment method is now:</string>
+    <string name="str_you_are_removing_all_the_registered_payment_now">You are removing all the payment methods registered on the account</string>
+    <string name="str_your_balance_will_no_longer_available">Your balance will no longer be topped up automatically.\nIf you do not have enough credit to pay for crossings, your account will be suspended and you will have to pay standard Dart Charge rates for crossings separately.\n\nIf you do not pay the Road User Charge on time, you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_you_must_pay">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_you_must_pay_crossing">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
+    <string name="str_your_new_direct">Your new Direct Debit will take up to 4 days to get setup</string>
+    <string name="str_while_your_new_direct_debit">While your new Direct Debit gets set up, we’ll still use your current default payment method.</string>
+    <string name="str_your_direct_debit_for">Your Direct Debit for %s is pending. While it gets set up, we’ll use your current default payment method.</string>
+    <string name="str_your_direct_debit_was_not_setup">Your Direct Debit was not setup</string>
+    <string name="str_your_credit_card_was_not_setup">Your Credit Card was not setup</string>
+    <string name="str_you_can_try">You can try again or contact your bank for more details.</string>
+    <string name="the_card_you_are_trying_to_add_is_already">The card you are trying to add is already registered to your account.</string>
+    <string name="do_you_want_to_add_another_card">Do you want to add another card?</string>
+    <string name="add_another_card">ADD ANOTHER CARD</string>
+    <string name="str_threshold_limit">Threshold limit updated successfully</string>
+    <string name="str_your_low_balance_limit">Your low balance limit is £%s</string>
+    <string name="str_your_top_amount_limit">Your top-up amount is £%s</string>
+    <string name="str_you_have_successfully_added_card">You have successfully added card:</string>
+    <string name="the_card_you_are_trying">The card you are trying to add is already registered to your account.</string>
+    <string name="str_do_you_want_to_another_card">Do you want to add another card?</string>
+    <string name="str_add_another_card">ADD ANOTHER CARD</string>
+    <string name="str_add_another_card_small">Add Another Card</string>
+    <string name="payg_delete_description">No payments will be made from your account for any crossings that you make and you will have to pay for crossings separately.\n\nIf you do not pay the Dart Charge on time, you may get a fine (Penalty Charge Notice).</string>
+    <string name="minimum_amount_five_pound">Minimum amount £5.00</string>
+    <string name="minimum_amount_ten_pound">Minimum amount £10.00</string>
+    <string name="your_direct_debit_has_been_removed">Your Direct Debit for %s\n has been removed.</string>
+    <string name="str_try_again">TRY AGAIN</string>
+    <string name="str_make_default"><u>Make\nDefault</u></string>
+    <string name="enter_the_primary_account_contact_first_name">Enter the primary account contact first name</string>
+    <string name="enter_the_primary_account_contact_last_name">Enter the primary account contact last name</string>
+    <string name="company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens">Company name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens</string>
+    <string name="enter_the_make_of_your_vehicle">Enter the make of your vehicle</string>
+    <string name="enter_your_vehicle_model">Enter your vehicle model</string>
+    <string name="you_can_pay_for_crossings_without_an_account_to">Pay for crossings without an account.</string>
+    <string name="str_pay_for_crossing_numberplate_point1">pay for crossings you’ve made since yesterday</string>
+    <string name="str_pay_for_crossing_numberplate_point2">pay for future crossings</string>
+    <string name="recent_crossings">Recent Crossings</string>
+    <string name="how_your_payment_gets_calculated">How your payment amount gets calculated?</string>
+    <string name="str_pay_for_crossing_point1">Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
+    <string name="str_pay_for_crossing_point2">It costs £%s per crossing for a %s.</string>
+    <string name="str_pay_for_crossing_point3">A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>
+    <string name="str_pay_for_crossing_point4">A return trip is 2 crossings</string>
+    <string name="str_pay_for_crossing_point5">Late payments will be used for future crossings - you may receive a PCN for any late payment</string>
+    <string name="str_additional_crossing_point1">A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>
+    <string name="str_additional_crossing_point2">A return trip is 2 crossings.</string>
+    <string name="str_additional_crossing_point3">These payments are valid up to 12 months or till they are used.</string>
+
+    <string name="additional_crossings">+ FUTURE CROSSINGS</string>
+    <string name="additional_crossings_txt">Future Crossings</string>
+    <string name="number_of_additional_crossings">Number of future crossings</string>
+    <string name="how_many_payments_do_you_need_to_pay_for">How many payments do you need to pay for?</string>
+    <string name="confirm_your_password">Confirm your password</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="transactions">Transactions</string>
+    <string name="check_for_previous_crossings">Check For Previous Crossings</string>
+    <string name="paid_for_please_note">After you’ve made a one-off payment, you can check which crossings you’ve paid for. Please note it can take up to one day for your payment to be matched to crossings</string>
+    <string name="for_example_hd542321725_or_1_898008009">For example, HD542321725 or 1–898008009</string>
+    <string name="paid_crossing_point1">If you paid by web or phone this is the \'HD or 1-\' number</string>
+    <string name="paid_crossing_point2">If you\'ve paid through Payzone his is the \'TXN\' number</string>
+    <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings\nplanned in the future.\n\nLate payments will be used for future\ncrossings - you may receive a fine (Penalty Charge Notice) for any late payment.</string>
+    <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>
+
+    <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We’ve sent a confirmation email to %s and a confirmation text message to %s.</string>
+    <string name="str_we_have_sent_confirmation_email">We’ve sent a confirmation email to %s.</string>
+    <string name="str_we_have_sent_confirmation_text_message">We’ve sent a confirmation text message to %s.</string>
+    <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\n\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
+    <string name="str_payment_successfully">Payment Successful</string>
+    <string name="str_amount_paid">Amount Paid</string>
+    <string name="str_time_date">Time and Date</string>
+
+
+    <string name="security_code_must_contain_correct_numbers">Security code must contain correct numbers</string>
+    <string name="incorrect_email_try_again">Incorrect email.  Try again.</string>
+    <string name="how_do_you_want_to_receive_your_payment_receipt">How do you want to receive your payment receipt?</string>
+    <string name="we_can_send_you_a_receipt_by_email_and_text_message">We can send you a receipt by email and text message.</string>
+    <string name="email_optional">Email (optional)</string>
+    <string name="text_message_optional">Text message (optional)</string>
+    <string name="text_we_have_sent_a_reciept_email_to">We\'ve sent a receipt email to\n<b>%s</b></string>
+    <string name="credit_for_additional_crossings">Credit for Future Crossings</string>
+    <string name="your_type_of_vehicle_does_not_match_what_we_have_on_record">Your type of vehicle does not match what we have on record.</string>
+    <string name="our_records_show_the_numberplate"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge of £%s.
+                    \n\nIf you pay the wrong Dart Charge for your type of vehicle, you could receive a Penalty Charge Notice.]]></string>
+    <string name="pay_new_amount">PAY NEW AMOUNT</string>
+    <string name="str_continue_with_selection">Continue with your selection</string>
+    <string name="purchase_no_crossings">Purchase No Crossings</string>
+    <string name="to_continue_you_must_pay_for_at_least_one_recent_additional_crossing">To continue, you must pay for at least one recent/future crossing.</string>
+    <string name="payment_method_deleted">Payment method deleted</string>
+
+
+    <string name="incorrect_email">Incorrect email. Try again.</string>
+    <string name="payment_failed">Payment failed</string>
+    <string name="payment_incorrect">Payment method is incorrect</string>
+    <string name="str_on">on</string>
+    <string name="back_to_main_menu">BACK TO MAIN MENU</string>
+
+
+    <string name="can_provide_more_detail">Can you provide more detail?</string>
+    <string name="str_dont_include_personal_text">Do not include personal or financial information, like your credit card details.</string>
+    <string name="str_500_characters_remaining">You have 500 characters remaining.</string>
+    <string name="str_upload_file_">Upload File</string>
+    <string name="str_allowed_file_types">The selected file type must be a JPG, PDF, BMP or TIF</string>
+    <string name="str_file_size_not_morethan_8mb">Also, the selected file type should be no more than 8MB.</string>
+
+    <string name="what_contact_details">What are your contact details?</string>
+    <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
+    <string name="vehicle_registration_number_plate_optional">Vehicle Registration (number plate) Optional</string>
+    <string name="country_code">Country Code</string>
+    <string name="str_country_code">Country code</string>
+    <string name="details_of_enquiry">Details of enquiry</string>
+    <string name="details_of_complaint">Details of complaint</string>
+    <string name="str_check_your_answer_before_enquiry">Check your answers before sending your enquiry.</string>
+    <string name="str_check_your_answer_before_complaint">Check your answers before sending your complaint.</string>
+    <string name="contact_message">Contact message</string>
+    <string name="str_name">Name</string>
+    <string name="str_choose_file">Choose file</string>
+    <string name="non_UK_number_invalid">The non-UK phone number entered is invalid, please try again</string>
+    <string name="reference_number">Reference Number</string>
+    <string name="str_reference_number">Reference number</string>
+    <string name="respond_enquiry_1day">We will respond to your enquiry within 1 day.</string>
+    <string name="respond_complaint_5days">We will respond to your complaint within 5 days.</string>
+    <string name="str_enquiry">Enquiry</string>
+    <string name="str_complaint">Complaint</string>
+    <string name="str_date_time_submitted">Date &amp; time submitted </string>
+    <string name="str_status_of_enquiry">Status of enquiry</string>
+    <string name="str_status_of_complaint">Status of complaint</string>
+    <string name="str_date_enquiry_closed">Date enquiry closed</string>
+    <string name="str_date_complaint_closed">Date complaint closed</string>
+    <string name="str_enquiry_reference_number">Enquiry Reference Number</string>
+    <string name="str_terms_conditions">Terms &amp; Conditions</string>
+    <string name="str_otherways_to_pay_your_charge">Other Ways to Pay Your Charge</string>
+    <string name="str_third_party_software">Third Party Software</string>
+    <string name="str_dart_charge_contact_centre">Dart Charge Contact Centre</string>
+    <string name="str_contact_dart_charge_team">Contact the Dart Charge team</string>
+    <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
+    <string name="str_get_in_touch_about">Get in touch about:</string>
+    <string name="str_charges">charges</string>
+    <string name="str_fines">fines (Penalty Charge Notice)</string>
+    <string name="str_refunds">refunds</string>
+    <string name="str_dart_charge_accounts">Dart Charge accounts</string>
+    <string name="str_complaints">complaints</string>
+    <string name="str_general_enquiries">general enquiries</string>
+    <string name="str_get_in_touch">Get in touch</string>
+    <string name="str_enquiry_status">Enquiry status</string>
+    <string name="str_incorrect_enquiry">Incorrect enquiry reference number or last name. Please try again.</string>
+    <string name="str_reference_3_charac">Enter an enquiry reference number that is 3 characters or more</string>
+    <string name="str_reference_validations">Enquiry reference number must only include letters a to z, and numbers 0 to 9.</string>
+
+
+    <string name="transfer_remaining_credit">Transfer Remaining Credit</string>
+    <string name="your_crossing_details">Your crossing details</string>
+    <string name="credit_remaining">Credit remaining</string>
+    <string name="credit_expiry_date">Credit expiry date</string>
+    <string name="previous_crossings_paid_for">Previous crossings paid for</string>
+    <string name="credit_will_expire_on">Credit will expire on</string>
+    <string name="error_check_paid_crossings">Your crossing data could not be retrieved. Check if your entries are correct or try again later.</string>
+    <string name="vehcile_type_mismatch"><![CDATA[Our records show the %s is a %s rather than a %s. This type of vehicle has a different charge for crossings and cannot be changed.\n\n You can get credits for your remaining crossings by contacting the Dart Charge contact centre.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm]]></string>
+    <string name="vehicle_number_plate_is_exempt_from_dart_ncharge_payment">Vehicle %s is exempt from\nDart Charge payment</string>
+    <string name="our_records_show_that_number_plate_is_exempt_from_dart_charge_payment">Our records show that %s is exempt\nfrom Dart Charge payment and your remaining\ncredit cannot be transferred.\n\nContact the Dart Charge contact centre for help.\n\nTelephone: 0300 300 0120\nTextphone: 18001 0300 300 0120\nEvery day: 8am to 8pm</string>
+    <string name="transfer_to_another_vehicle">TRANSFER TO ANOTHER VEHICLE</string>
+    <string name="what_is_the_vehicle_registration_number_plate_of_the_vehicle_you_would_like_to_transfer_any_remaining_crossings_to">What is the Vehicle Registration (number plate) of the vehicle you would like to transfer any remaining crossings to ?</string>
+    <string name="your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make">Your credit expired on %s You must pay for any further crossings you intend to make.</string>
+    <string name="you_have_no_credit_left_you_must_pay_for_any_further_crossings_you_intend_to_make">You have no credit left. You must pay for any further crossings you intend to make.</string>
+    <string name="no_crossings_have_been_made_against_this_payment_reference">No crossings have been made against this payment reference.</string>
+    <string name="str_terms_condition">Terms &amp; Conditions</string>
+    <string name="str_remove_payment_method">Remove Payment Method</string>
+    <string name="str_are_you_sure_you_want_to_remove_payment_method">Are you sure you want to remove\n payment method %s with expiry date %s?</string>
+    <string name="str_are_you_sure_you_want_to_remove_direct_payment_method">Are you sure you want to remove\npayment method %s?</string>
+    <string name="str_signed_out">Signed out</string>
+    <string name="str_you_have_signed_out">You\'ve signed out of your account</string>
+    <string name="str_timeout">Timeout</string>
+    <string name="str_for_your_security_account_holder">For your security, you\'ll be signed out in %s minutes</string>
+    <string name="str_for_your_security_non_account_holder">For your security, your session will expire and your answers will be deleted in %s minutes</string>
+    <string name="str_stay_on_the_app">Stay on the app</string>
+    <string name="str_delete_my_answers">Delete my answers</string>
+    <string name="str_for_your_security">For your security, you\'ll be signed out in %s minutes</string>
+    <string name="str_sign_out">Sign out</string>
+    <string name="str_stay_signed_in">Stay signed In</string>
+    <string name="str_no_enquiries_have_been_raised">No enquiries have been raised</string>
+    <string name="str_profile_two_factor_verification">Profile Two Factor Verification</string>
+
+
+    <string name="top_up_amount_must_be_80_000_or_less">Top-up amount must be £100,000 or less</string>
+    <string name="low_balance_amount_must_be_80_000_or_less">Low Balance amount must be £100,000 or less</string>
+    <string name="str_dummy_2fa_options_email">Email <b>h**@***o.**m</b></string>
+    <string name="str_dummy_text_2fa_options_sms">Mobile <b>+44-07777777</b>\n<i>Message and data rates may apply</i></string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="phone_number_change_successful">Phone number change successful</string>
+    <string name="file_not_more_than_8mb">The selected file must be smaller than 8MB</string>
+    <string name="str_contact_dart_charge_contact_centre">Contact the Dart Charge contact centre for help.</string>
+    <string name="str_contact_every_day">Every day: 8am to 8pm</string>
+    <string name="str_contact_telephone">Telephone: 0300 300 0120</string>
+    <string name="str_contact_textphone">Textphone: 18001 0300 300 0120</string>
+    <string name="str_able_to_use_service">You will be able to use the service from\n%1$s</string>
+    <string name="str_go_to_website">Go to website</string>
+    <string name="str_maskcardnumber">\u2022\u2022\u2022\u2022\u2022\u2022%1$s</string>
+    <string name="str_starmaskcardnumber">****%1$s</string>
+    <string name="str_local_resident_discount_scheme">You account contains a Local Resident Discount Scheme</string>
+    <string name="str_manage_local_resident_discount_scheme">Currently the app does not support accounts with a Local Resident Discount Scheme. To manage the account, please navigate to the website.</string>
+    <string name="click_here_to_search_using_your_number_plate"><i>Click here to search using your number plate</i></string>
+    <string name="click_here_to_register_your_number_plate_and_create_an_automatic_top_up_account"><i>Click here to register your number plate and create an automatic top up account</i></string>
+    <string name="click_here_to_receive_notifications_when_you_cross"><i>Click here to receive notifications when you cross</i></string>
+    <string name="str_register_reminders">Register to receive reminders from Dart Charge after you cross to help ensure you never miss another payment.</string>
+    <string name="str_geo_location_enabled">Geo location enabled</string>
+    <string name="str_register_to_receive_notifications">Register to Receive Notifications</string>
+    <string name="receive_notifications">Receive Notifications</string>
+    <string name="dart_charge_guidance_and_documents">DART CHARGE GUIDANCE AND\nDOCUMENTS</string>
+    <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossing in various ways.</string>
+    <string name="learn_more_about_dartford_crossing_amp_dart_charge"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></string>
+    <string name="vehicle__class">Vehicle\nClass</string>
+    <string name="one_off__payment">One off\npayment</string>
+    <string name="b_more_details"><b>More details</b>\nFor more details on Types of Vehicles and charge amounts visit <a href="https://www.gov.uk/pay-dartford-crossing-charge/charges-fines">understanding charges, discounts and penalties</a>.</string>
+    <string name="b_if_you_re_disabled"><b>If you’re disabled</b>\nYou do not need to pay the charge if you get free UK vehicle tax because of a disability.\n\nYour vehicle will be checked automatically when you cross - you do not need to do anything.\n\nFind out how to <a href="https://www.gov.uk/get-vehicle-tax-exemption-disability">get free vehicle tax if you’re a driver with a disability</a>.</string>
+    <string name="b_local_resident_discount"><b>Local Resident Discount</b>\nYou can apply for a discount if you pay Council Tax to Dartford borough council or Thurrock council. You can <a href="https://www.gov.uk/find-local-council">find out which is your local council</a>.\n\nYou can either\n\n<ul><li>pay £20 a year to use the Dartford Crossing as many times as you want</li>\n<li>pay £10 for 50 crossings, plus 20p for each additional crossing</li></ul>\n\nApply for a local resident discount online or by post.</string>
+    <string name="enablenow_lower_case">Enable Now</string>
+    <string name="enablelater_lower_case">Enable Later</string>
+    <string name="fines_you_can_get"><b>Fines</b>\nYou can get a £70 fine if you do not pay the charge. You must pay it within 28 days.\n\nThe fine will be:\n\n<ul><li>reduced to £35 if you pay within 14 days</li>\n<li>increased to £105 if you do not pay it - you’ll also have to pay the crossing charge</li></ul>\n\nYou can <a href="https://pay-dartford-crossing-fine.service.gov.uk/">pay or challenge the fine online</a> or call the Dart Charge contact centre.</string>
+    <string name="contact_dart_charge">Contact Dart Charge</string>
+    <string name="do_you_have_dart_charge_account">Do you have Dart Charge Account?</string>
+    <string name="sub_category">Sub-category</string>
+    <string name="str_sorry_service_unavailable">Sorry, the service is unavailable</string>
+    <string name="date_time_submitted"><![CDATA[Date & time submitted]]></string>
+    <string name="status_of_enquiry">Status of enquiry</string>
+    <string name="date_enquiry_closed">Date enquiry closed</string>
+    <string name="third_party_software_full_message">The following open source software components are used under the MIT License.\nSee <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a> for more details.\n\nAEPAnalytics\nAEPCore\nAEPIdentity\nRxJava\nEureka\nMBProgressHUD\nAlamofire\nUIFloatLabelTextView\nActiveLabel\n\nThe following open source software components are used under the 3 clause BSD License. See <a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>.\n\nCardScan\n\nThe following open source software components are used under a commercial license.\n\nFirebase/Core\nFirebase/Crashlytics\nFabric</string>
+    <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="str_other_ways_to_pay_1"><ul>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></ul></string>
+    <string name="str_other_ways_to_pay_2">pay or set up an account through <a href="https://www.gov.uk/pay-dartford-crossing-charge/">the Dart Charge website</a></string>
+    <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge.</string>
+    <string name="str_or_you_can">Or you can:</string>
+    <string name="about_this_service">About This Service</string>
+    <string name="str_other_ways_topay">Other Ways To Pay</string>
+    <string name="charges_and_fines">Charges and Fines</string>
+    <string name="str_privacy_policy">Privacy Policy</string>
+    <string name="str_payg_terms_conditions">PAYG Terms &amp; Conditions</string>
+    <string name="enquiry_status">Enquiry Status</string>
+    <string name="str_no_priority_notifications">There are no priority notifications to view</string>
+    <string name="str_no_standard_notifications">There are no standard notifications to view</string>
+    <string name="str_number_additional_crossings_btw_1_to_50">Number of future crossings must be between 1 and 50 inclusive</string>
+    <string name="vehicle_type_A">Motorcycle, moped or quad bike</string>
+    <string name="vehicle_type_B">Car, van or minibus less than 8 seats</string>
+    <string name="vehicle_type_C">Bus, coach or other goods vehicle with 2 axles</string>
+    <string name="vehicle_type_D">Vehicle with more than 2 axles</string>
+    <string name="str_payment_amount_for_recent_crossings">Payment Amount for recent crossings</string>
+    <string name="str_payment_amount_for_additional_crossings">Payment Amount for future crossings</string>
+    <string name="str_total_amount">Total Amount</string>
+    <string name="str_total_payment_amount">Total Payment Amount</string>
+
+    <string name="default_notification_channel_id" translatable="false">dartcharge_default_channel</string>
+    <string name="fcm_message">DartCharge Message</string>
+    <string name="str_vehicle_registration">Vehicle Registration (number plate) must only include letters a to z, numbers 0 to 9 and special characters such as hyphens and spaces</string>
+    <string name="balance">Balance</string>
+    <string name="northbound">Northbound</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="str_check_your_answer_paying">Check your answers before paying</string>
+    <string name="str_warning">Warning</string>
+    <string name="str_notification_title">"National Highways" Would Like to Send You Notifications</string>
+    <string name="str_notification_desc">Notifications may include alerts, sounds, and icon badges. These can be configured in Settings.</string>
+    <string name="str_allow">Allow</string>
+    <string name="str_dont_allow">Don\'t Allow</string>
+    <string name="payment_Amount">Payment Amount</string>
+    <string name="str_buy_crossings_for_vehicle">BUY CROSSINGS FOR THIS VEHICLE</string>
+    <string name="top_up_success">Top Up</string>
+    <string name="email_address_must_be_8_characters_or_more">Email address must be 8 characters or more</string>
+    <string name="profile_email_address">Profile Email Address</string>
+    <string name="crossing_details">Crossing Details</string>
+    <string name="profile_password">Profile Password</string>
+    <string name="mobile_app">Mobile App</string>
+    <string name="no_recent_crossings_nor_payments">No recent crossings\nor payments.</string>
+    <string name="str_rooted_device">This app can not run on a rooted device.</string>
+    <string name="str_alert">Alert</string>
+    <string name="str_password_match_current_password">Password must match current password</string>
+    <string name="str_did_you_cross_today">Did you cross today?</string>
+    <string name="str_responsible_paying">Click here if you are responsible for paying the charge. You have until midnight tomorrow to pay.</string>
+    <string name="submit_feedback">Submit</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
+    <string name="str_push_notifications">Push notifications</string>
+    <string name="str_receive_reminders_push_notification">To receive the reminders you will need to enable notifications in the Settings of your phone and also below.</string>
+    <string name="str_enjoying_dart_charge">Enjoying Dart Charge?</string>
+    <string name="str_enjoying_dart_charge_desc">Tap a star to rate it on the Play Store.</string>
+    <string name="market_prefix" translatable="false">market://details?id=</string>
+    <string name="error_no_google_play">Error! Couldn\'t find Google Play on this device.</string>
+    <string name="dart_charge_general_terms_and_conditions">Dart Charge General Terms and\nConditions</string>
+    <string name="dart_charge_privacy_policy">Dart Charge Privacy Policy</string>
+    <string name="terms_and_conditions_for_payg">Terms and Conditions for PAYG</string>
+    <string name="continue_with_your_selection">Continue With Your Selection</string>
+    <string name="enter_a_top_up_amount">Enter a top-up amount</string>
+    <string name="southbound">Southbound</string>
+    <string name="number_plate_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hypens_and_spaces">Number plate must only include letters a to z, numbers 0 to 9 and special characters such as hypens and spaces</string>
+    <string name="payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9">Payment reference number must only include letters a to z and numbers 0 to 9</string>
+    <string name="credit_transferred">Credit Transferred</string>
+    <string name="str_crossing_data">%1$s crossing</string>
+    <string name="str_crossings_data">%1$s crossings</string>
+    <string name="str_allow_location_title">Allow "\"Dart Charge\"" to use your location when you are not using the app?</string>
+    <string name="str_allow_location_desc">Change the setting to Always to ensure you receive the Dart Charge reminders.</string>
+    <string name="str_opt_out">Opt Out</string>
+    <string name="str_change_to_always_allow">Go To Settings</string>
+
+
+    <string name="str_disable_notifications">Click here to disable notifications when you cross</string>
+    <string name="str_enable_notifications">Click here to enable notifications when you cross</string>
+
+    <string name="str_max_payment_methods">Max Payment Methods</string>
+    <string name="str_max_payment_methods_desc">To add a new payment method you will need to delete one of the two already setup.</string>
+    <string name="str_signout_your_account">Sign Out Your Account</string>
+    <string name="str_number_of_crossings">Number of Crossings</string>
+    <string name="str_auto_pay">Auto-Pay</string>
+    <string name="str_signout_your_account_desc">Signing out of your account will disable your Biometrics. you will need to re-enter these next time you log in.</string>
+    <string name="str_youtube"><u>National Highways YouTube</u></string>
+    <string name="str_faq"><u>DartCharge FAQs</u></string>
+    <string name="unfortunately_at_this_time_we_do_not_support_your_mobile_number">Unfortunately at this time we do not support your mobile number\'s country code.  If you do not have an alternative mobile number, please go back and change your selection to not receive communications by text message, and not opting in to two-step verification.</string>
+    <string name="biometric_changed_successfully">Biometrics change successful</string>
+    <string name="change_country_code">Change Country Code</string>
+    <string name="sms_not_support_text">%s country is not supporting for sms.You can not enable 2fa</string>
+    <string name="the_card_already_exists_on_this_account">The card already exists on the account.</string>
+    <string name="str_profile_biometrics">Profile Biometrics</string>
+    <string name="str_service_is_unavailable">Service is unavailable</string>
+    <string name="str_send_security_code_by_text_message">We’ll use this to send you a security code by text message.</string>
+    <string name="str_phone_number_starts_countrycode">Your phone number starts with the country code %1$s. At this time you will be unable to use the following services.</string>
+    <string name="str_receving_communications">Receiving communications about your account by text message</string>
+    <string name="str_receving_payment_receipt">Receiving your payment receipt by text message.</string>
+    <string name="str_two_step_verification">Two-step verification</string>
+    <string name="str_may_change_mobile_number">You may change your mobile phone number or continue with your account creation</string>
+    <string name="str_may_change_mobile_number_two_step">You may change your mobile phone number or continue to opt out of two-step verification and SMS messages.</string>
+    <string name="str_may_change_mobile_number_pay_for_crossings">You may change your mobile phone number or select only email to receive your receipt. Or continue without a receipt.</string>
+    <string name="str_save_mobile_number">Save this mobile number to my account contact details</string>
+    <string name="str_provide_payment_card_details">You have to provide your payment card details</string>
+    <string name="text_we_have_sent_a_reciept_email_to_text">We\'ve sent a receipt email to</string>
+    <string name="str_provide_payment_card_details_desc">Payment could not be taken for your crossing and your account has been suspended.\n\nTo continue using your account you have to provide your payment card details.\n\nIf you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
+    <string name="dartcharge_v1_0">DartCharge v1.0</string>
+    <string name="str_copyright">©2024 Conduent, Inc. All Rights Reserved.</string>
+    <string name="str_credential_note">This will be the same as the credentials you use to login on the website</string>
+    <string name="str_you_can">You can:</string>
+    <string name="str_change_gps_settings_to_always">Change GPS settings to Always</string>
+    <string name="str_change_gps_settings_to_always_desc">Select Always to ensure we send the notifications to you. To change this setting go to settings.\n\nWe do not track your location we only detect if you cross Dart Charge.</string>
+    <string name="go_to_settings">Go to settings</string>
+    <string name="str_enable_location_services">Enable Location Services</string>
+    <string name="str_enable_push_notification">Enable Push Notifications</string>
+    <string name="str_enable_location_services_desc">Go to Settings on your device to enable Location Services for the Dart Charge app</string>
+    <string name="str_enable_push_notification_desc">Go to Settings on your device to enable notifications for the Dart Charge app</string>
+    <string name="str_no_transactions_to_view">There are no recent transactions to view</string>
+    <string name="str_cash">Cash</string>
 
 </resources>
-
-

@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'file:///android_assets/OpenSans-Regular';
+}
+
+#label {
+    font-family: 'file:///android_assets/OpenSans-Bold';
+    font-size: 14px;
+    color: #000000;
+}
+a:link {
+  color: blue;
+  background-color: transparent;
+      font-size: 14px;
+  text-decoration: none;
+}
+body {
+    font-family: 'file:///android_assets/OpenSans-Regular';
+    font-size: 14px;
+    color: #000000;
+}
+
+.larger-label {
+    font-size: 16px;
+}
+
+b {
+    font-family: 'file:///android_assets/OpenSans-Bold';
+    font-size: 16px; /* Adjust the font size as needed */
+}
+
+

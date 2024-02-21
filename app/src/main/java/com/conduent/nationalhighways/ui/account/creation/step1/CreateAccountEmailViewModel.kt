@@ -16,6 +16,8 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,6 +38,28 @@ class CreateAccountEmailViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _confirmEmailApiVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
     val confirmEmailApiVal: LiveData<Resource<EmptyApiResponse?>?> get() = _confirmEmailApiVal
+
+
+    val emailVerificationApi = MutableStateFlow<Resource<EmailVerificationResponse?>?>(null)
+    val emailVerificationApiValStateFlow: StateFlow<Resource<EmailVerificationResponse?>?> = emailVerificationApi
+
+    fun emailVerificationApiMutable(request: EmailVerificationRequest?) {
+        viewModelScope.launch {
+            try {
+                emailVerificationApi.emit(
+                    success(
+                        repository.emailVerificationApiCall(
+                            request
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
+                emailVerificationApi.emit(failure(e))
+            }
+        }
+    }
+
+
 
     fun emailVerificationApi(request: EmailVerificationRequest?) {
         viewModelScope.launch {

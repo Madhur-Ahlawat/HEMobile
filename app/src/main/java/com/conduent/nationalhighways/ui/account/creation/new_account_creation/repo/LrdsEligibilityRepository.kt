@@ -7,6 +7,6 @@ import javax.inject.Inject
 class LrdsEligibilityRepository @Inject constructor(private val apiService: ApiService) {
 
     suspend fun lrdsEligibiltyCheck(model: LrdsEligibiltyRequest) =
-        apiService.LrdsEligibityCheck(model)
+        apiService.lrdsEligibilityCheck(model)
 
 }

@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
+import android.text.Html
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentForgotChooseOptionchangesBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -36,9 +37,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     private var response: SecurityCodeResponseModel? = null
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
-
     private lateinit var navFlow: String// create account , forgot password
-
+    private var lrds_account: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -52,6 +52,11 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
 
     override fun initCtrl() {
+
+        if (arguments?.containsKey(Constants.LRDS_ACCOUNT)==true) {
+            lrds_account = arguments?.getBoolean(Constants.LRDS_ACCOUNT,false) ?: false
+        }
+
         model = RequestOTPModel(optionType = "", optionValue = "")
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         loader = LoaderDialog()
@@ -71,15 +76,22 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         } else {
-            if (responseModel?.phone != null) {
-                binding.radioSms.text = getString(R.string.str_radio_sms, responseModel?.phone)
+            if (!responseModel?.phone.isNullOrEmpty() && !responseModel?.phone.equals("null",true)) {
+                val htmlText =
+                    Html.fromHtml(getString(R.string.str_radio_sms, responseModel?.phone)
+                        )
+                binding.radioSms.text = htmlText
                 binding.radioSms.visibility = View.VISIBLE
+                binding.enterDetailsTxt.text=getString(R.string.str_choose_method_to_get_ur_link)
+
             } else {
                 binding.radioSms.visibility = View.GONE
+                binding.enterDetailsTxt.text=getString(R.string.str_choose_method_to_get_email_code)
             }
 
-
-            binding.radioEmail.text = getString(R.string.str_radio_email, responseModel?.email)
+            val htmlText =
+                Html.fromHtml(getString(R.string.str_radio_email, responseModel?.email))
+            binding.radioEmail.text =htmlText
         }
 
 
@@ -182,6 +194,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 bundle.putParcelable("response", response)
                 bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putBoolean(Constants.LRDS_ACCOUNT, lrds_account)
 
                 AdobeAnalytics.setActionTrack2(
                     "continue",
@@ -203,7 +217,11 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             }
 
             is Resource.DataError -> {
-                showError(binding.root, status.errorMsg)
+                if (checkSessionExpiredOrServerError(status.errorModel) ) {
+                    displaySessionExpireDialog(status.errorModel)
+                }else {
+                    showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
@@ -222,13 +240,21 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 } else {
                     responseModel = status.data
                     binding.root.post {
-                        binding.radioSms.text =
-                            getString(R.string.str_radio_sms, status.data?.phone)
+                        if (!status.data?.phone.isNullOrEmpty() && !status.data?.phone.equals("null",true)) {
+                            val htmlText =
+                                Html.fromHtml(getString(R.string.str_radio_sms, status.data?.phone)
+                                )
+                            binding.radioSms.text = htmlText
+                            binding.radioSms.visibility = View.VISIBLE
+                        } else {
+                            binding.radioSms.visibility = View.GONE
+                            binding.enterDetailsTxt.text=getString(R.string.str_choose_method_to_get_email_code)
 
+                        }
 
-
-                        binding.radioEmail.text =
-                            getString(R.string.str_radio_email, status.data?.email)
+                        val htmlText =
+                            Html.fromHtml(getString(R.string.str_radio_email, status.data?.email))
+                        binding.radioEmail.text =htmlText
 
                     }
                 }
@@ -245,17 +271,19 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             }
 
             is Resource.DataError -> {
-
-                AdobeAnalytics.setActionTrackError(
-                    "next",
-                    "login:forgot password",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )
-
+                if (checkSessionExpiredOrServerError(status.errorModel) ) {
+                    displaySessionExpireDialog(status.errorModel)
+                }else {
+                    AdobeAnalytics.setActionTrackError(
+                        "next",
+                        "login:forgot password",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                        sessionManager.getLoggedInUser()
+                    )
+                }
             }
 
             else -> {

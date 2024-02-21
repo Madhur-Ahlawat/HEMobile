@@ -25,7 +25,7 @@ class BootCompleteReceiver : BroadcastReceiver() {
                 }
                 // Get new FCM registration token
                 sessionManager.setFirebasePushToken(task.result)
-                Log.i("teja1234", "Receiver firebase token is : ${task.result}")
+                Log.i("PUSHTOKENTAG", "Receiver firebase token is : ${task.result}")
             })
         }
     }

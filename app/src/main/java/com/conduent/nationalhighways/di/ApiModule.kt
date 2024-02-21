@@ -3,6 +3,8 @@ package com.conduent.nationalhighways.di
 import android.content.Context
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.data.remote.*
+import com.conduent.nationalhighways.ui.loader.RetryCallback
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import dagger.Module
 import dagger.Provides
@@ -16,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
@@ -27,15 +30,33 @@ object ApiModule {
     }
 
     @Provides
-    @Singleton
-    fun provideHeaderInterceptor(@Singleton sessionManager: SessionManager): HeaderInterceptor {
-        return HeaderInterceptor(sessionManager)
+    fun provideRetryListener(): RetryCallback {
+        return RetryCallback.RetryListenerImpl()
     }
+
+    @Provides
+    @Singleton
+    fun provideHeaderInterceptor(
+        @Singleton sessionManager: SessionManager,
+        context: Context,
+        retryListener: RetryCallback,
+    ): HeaderInterceptor {
+        return HeaderInterceptor(sessionManager, context)
+    }
+
 
     @Provides
     @Singleton
     fun provideNetworkConnectionInterceptor(context: Context): NetworkConnectionInterceptor {
         return NetworkConnectionInterceptor(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkRetryInterceptor(
+        context: Context, retryListener: RetryCallback,
+    ): TimeoutRetryInterceptor {
+        return TimeoutRetryInterceptor(context, retryListener)
     }
 
     @Provides
@@ -53,23 +74,31 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
+        @ApplicationContext context: Context,
         logging: HttpLoggingInterceptor,
         headerInterceptor: HeaderInterceptor,
+        timeOutRetryInterceptor: TimeoutRetryInterceptor,
         networkConnectionInterceptor: NetworkConnectionInterceptor,
         responseInterceptor: ResponseInterceptor,
-        tokenAuthenticator: TokenAuthenticator
+        tokenAuthenticator: TokenAuthenticator,
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) builder.addInterceptor(logging)
         builder.addInterceptor(headerInterceptor)
-            .addInterceptor(networkConnectionInterceptor)
-//            .addInterceptor(responseInterceptor)
-//            .authenticator(tokenAuthenticator)
+            .addInterceptor(timeOutRetryInterceptor)
             .callTimeout(0, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(
+                Constants.TIME_OUT_SEC, TimeUnit.SECONDS
+            )
+            .readTimeout(
+                Constants.TIME_OUT_SEC, TimeUnit.SECONDS
+            )
+            .writeTimeout(
+
+                Constants.TIME_OUT_SEC, TimeUnit.SECONDS
+            )
         return builder.build()
+
     }
 
     @Provides

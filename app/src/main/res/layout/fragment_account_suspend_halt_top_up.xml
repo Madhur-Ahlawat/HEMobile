@@ -7,6 +7,7 @@
     <data>
 
     </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,10 +25,10 @@
 
             <ImageView
                 android:id="@+id/warningIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_marginTop="100dp"
-                android:src="@drawable/warningicon"
+                android:src="@drawable/ic_red_warning_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -41,57 +42,57 @@
                 android:gravity="center"
                 android:text="@string/str_your_account_has_been_suspended"
                 android:textColor="@color/new_btn_color"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/warningIcon" />
 
             <TextView
+                android:id="@+id/textMaximumVehicle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
-                android:text="@string/str_you_will_need_to_pay"
-                android:lineSpacingExtra="2dp"
-                android:gravity="center"
-                android:fontFamily="@font/open_sans"
-                android:textColor="@color/black"
                 android:layout_marginTop="17dp"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:lineSpacingExtra="2dp"
+                android:text="@string/str_you_will_need_to_pay"
+                android:textColor="@color/black"
                 android:textSize="14sp"
-                android:id="@+id/textMaximumVehicle" />
+                app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded" />
 
             <TextView
+                android:id="@+id/maximumVehicleAddedNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/str_you_crossing"
-                app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:visibility="gone"
-                android:fontFamily="@font/open_sans"
-                android:textSize="@dimen/font_14sp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:id="@+id/maximumVehicleAddedNote"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:text="@string/str_you_crossing"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14sp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
 
                 />
 
             <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnTopUpNow"
                 style="@style/PrimaryButton"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/str_top_up_now"
                 android:layout_marginTop="@dimen/margin_70dp"
-                app:layout_constraintBottom_toTopOf="@id/cancel_btn"
                 android:layout_marginBottom="@dimen/margin_30dp"
-                android:id="@+id/btnTopUpNow"/>
+                android:text="@string/str_top_up_now"
+                app:layout_constraintBottom_toTopOf="@id/cancel_btn"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.conduent.apollo.ui.CMButton
-                style="@style/secondaryButton"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/str_no_I_will_do_it_later"
                 android:id="@+id/cancel_btn"
+                style="@style/secondaryButton"
+                android:layout_marginBottom="@dimen/margin_30dp"
+                android:text="@string/str_no_I_will_do_it_later"
                 android:textColor="@color/doItLaterColour"
                 app:borderColor="@color/doItLaterColour"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="@dimen/_30dp"
+                app:layout_constraintStart_toStartOf="parent"
 
                 />
 

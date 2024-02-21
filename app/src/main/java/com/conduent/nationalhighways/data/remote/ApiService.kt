@@ -31,11 +31,15 @@ import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingC
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithNewCardModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.*
 import com.conduent.nationalhighways.data.model.nominatedcontacts.CreateAccountRequestModel
-import com.conduent.nationalhighways.data.model.nominatedcontacts.CreateAccountResponseModel
+import com.conduent.nationalhighways.data.model.nominatedcontacts.CreateProfileDetailModelModel
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.*
 import com.conduent.nationalhighways.data.model.profile.*
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryListResponseModel
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryStatusRequest
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.model.vehicle.*
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
@@ -46,6 +50,7 @@ import com.conduent.nationalhighways.utils.common.Constants.AGENCY_ID
 import com.conduent.nationalhighways.utils.common.Constants.PHONE_COUNTRY_CODE
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -61,15 +66,6 @@ interface ApiService {
         @Field("client_secret") client_secret: String = CLIENT_SECRET,
         @Field("refresh_token") refresh_token: String
     ): Response<LoginResponse?>?
-
-    @FormUrlEncoded
-    @POST(LOGIN)
-    fun refreshToken2(
-        @Field("grant_type") grant_type: String = REFRESH_TOKEN,
-        @Field("client_id") clientId: String = CLIENT_ID,
-        @Field("client_secret") client_secret: String = CLIENT_SECRET,
-        @Field("refresh_token") refresh_token: String
-    ): Call<LoginResponse>
 
     @FormUrlEncoded
     @POST(LOGIN)
@@ -111,7 +107,8 @@ interface ApiService {
     ): Response<VerifyRequestOtpResp?>?
 
     @POST(TWO_FA_CONFIRMATION_OPTION)
-    suspend fun twoFAConfirmOption(@Query("agencyId") agencyId: String?):Response<ConfirmOptionResponseModel>
+    suspend fun twoFAConfirmOption(@Query("agencyId") agencyId: String?): Response<ConfirmOptionResponseModel>
+
     @POST(TWO_FA_REQUEST_OTP)
     suspend fun twoFARequestCode(
         @Query("agencyId") agencyId: String?,
@@ -135,12 +132,18 @@ interface ApiService {
         @Query("startIndex") startIndex: String?,
         @Query("count") count: String?
     ): Response<List<VehicleResponse?>?>?
+  @GET(VEHICLELIST)
+    suspend fun getVehicleListData(
+        @Query("startIndex") startIndex: String?,
+        @Query("count") count: String?
+    ): Response<VehicleListResponse?>?
 
     @GET(VEHICLE_GROUP_UNALLOCATED)
     suspend fun getUnAllocatedVehicles(): Response<List<VehicleResponse?>?>?
 
     @POST(VEHICLE)
     suspend fun addVehicleApi(@Body model: VehicleResponse?): Response<EmptyApiResponse?>?
+
     @POST(VEHICLE)
     suspend fun addVehicleApiNew(@Body model: AddVehicleRequest?): Response<EmptyApiResponse?>?
 
@@ -164,7 +167,7 @@ interface ApiService {
     @POST(CREATE_SECONDARY_ACCOUNT)
     suspend fun createSecondaryAccount(
         @Body model: CreateAccountRequestModel?
-    ): Response<CreateAccountResponseModel?>?
+    ): Response<CreateProfileDetailModelModel?>?
 
     @GET(SECONDARY_ACCOUNT)
     suspend fun getSecondaryAccount(): Response<NominatedContactRes?>?
@@ -227,13 +230,13 @@ interface ApiService {
     suspend fun createAccount(
         @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Body model: com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel?
-    ): Response<com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel?>?
+    ): Response<com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel?>?
 
     @POST(CREATE_ACCOUNT)
     suspend fun createAccountNew(
         @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Body model: AccountCreationRequest?
-    ): Response<com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel?>?
+    ): Response<com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel?>?
 
     @GET(FETCH_ADDRESS_BASED_ON_POSTAL_CODE)
     suspend fun getAddressListBasedOnPostalCode(
@@ -246,6 +249,19 @@ interface ApiService {
         @Path("vehicleNumber") vehicleNumber: String?,
         @Query("agencyId") agencyId: Int?
     ): Response<VehicleInfoDetails?>?
+
+    @GET(FIND_VEHICLE_ACCOUNT)
+    suspend fun getOneOffAccountFindVehicle(
+        @Path("vehicleNumber") vehicleNumber: String?,
+        @Query("agencyId") agencyId: Int?
+    ): Response<ArrayList<NewVehicleInfoDetails>?>?
+
+    @GET(FIND_VEHICLE_ACCOUNT)
+    suspend fun getVehiclePlateInfo(
+        @Path("vehicleNumber") vehicleNumber: String?,
+        @Query("agencyId") agencyId: Int?
+    ): Response<GetPlateInfoResponseModel?>?
+
     @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getNewAccountFindVehicle(
         @Path("vehicleNumber") vehicleNumber: String?,
@@ -298,15 +314,26 @@ interface ApiService {
     suspend fun updatePassword(
         @Body model: ResetPasswordModel?,
         @Query("agencyId") agencyId: String? = AGENCY_ID
-        ): Response<ForgotPasswordResponseModel?>?
+    ): Response<ForgotPasswordResponseModel?>?
 
     @POST(PAYMENT_HISTORY_TRANSACTION_LIST)
     suspend fun getPaymentHistoryData(
         @Body request: AccountPaymentHistoryRequest?
     ): Response<AccountPaymentHistoryResponse?>?
 
+    @POST(PAYMENT_HISTORY_TRANSACTION_LIST_CHECK_CROSSINGS)
+    suspend fun getTransactionsListCheckCrossings(
+        @Body request: CheckedCrossingTransactionsRequestModel?
+    ): Response<CheckedCrossingRecentTransactionsResponseModel?>?
+
     @GET(ACCOUNT_DETAILS)
-    suspend fun getAccountDetailsData(): Response<AccountResponse?>?
+    suspend fun getAccountDetailsData(): Response<ProfileDetailModel?>?
+
+    @POST(Heart_Beat)
+    suspend fun getHeartBeat(
+        @Query("agencyId") agencyId: String? = AGENCY_ID,
+        @Query("referenceId") referenceId: String
+    ): Response<EmptyApiResponse?>?
 
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValue(): Response<ThresholdAmountApiResponse?>?
@@ -334,15 +361,22 @@ interface ApiService {
         @Body model: AddCardModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 
+    @GET(DELETE_PRIMARY_CARD)
+    suspend fun deletePrimaryCard(): Response<PaymentMethodDeleteResponseModel>
+
+    @POST(SAVED_CARD_LIST)
+    suspend fun saveDirectDebitNewCard(
+        @Body model: SaveNewCardRequest?
+    ): Response<PaymentMethodDeleteResponseModel?>?
+
+
     @POST(PAYMENT_WITH_NEW_CARD)
     suspend fun paymentWithNewCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Body model: PaymentWithNewCardModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 
     @POST(PAYMENT_WITH_EXISTING_CARD)
     suspend fun paymentWithExistingCard(
-        @Query("agencyId") agencyId: String? = AGENCY_ID,
         @Body model: PaymentWithExistingCardModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 
@@ -379,7 +413,7 @@ interface ApiService {
     ): Response<String?>?
 
     @POST(LRDS_ELIGIBILITY_CHECK)
-    suspend fun LrdsEligibityCheck(@Body request: LrdsEligibiltyRequest):Response<LrdsEligibilityResponse?>
+    suspend fun lrdsEligibilityCheck(@Body request: LrdsEligibiltyRequest): Response<LrdsEligibilityResponse?>
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
     suspend fun updateAccountSettingPrefs(
@@ -416,7 +450,7 @@ interface ApiService {
     ): Response<List<VehicleResponse?>?>?
 
     @GET(ACCOUNT_SETTINGS)
-    suspend fun getAccountSettings(): Response<AccountResponse?>?
+    suspend fun getAccountSettings(): Response<ProfileDetailModel?>?
 
     @PUT(UPDATE_COMMUNICATION_PREFS)
     suspend fun updateCommunicationPrefs(
@@ -448,7 +482,7 @@ interface ApiService {
     ): Response<String?>?
 
     @POST(VIEW_STATEMENTS)
-    suspend fun viewStatements(@Body request : ViewStatementsReqModel): Response<EmptyApiResponse?>?
+    suspend fun viewStatements(@Body request: ViewStatementsReqModel): Response<EmptyApiResponse?>?
 
     @GET(ACCOUNT_STATEMENT)
     suspend fun getAccountStatements(): Response<List<StatementListModel?>?>?
@@ -467,9 +501,8 @@ interface ApiService {
     @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
     suspend fun loginWithRefAndPlateNumber(
         @Body request: CheckPaidCrossingsRequest?,
-        @Query("Value") value: Boolean? = true,
-        @Query("agencyId") agencyId: String? = AGENCY_ID
-    ): Response<CheckPaidCrossingsResponse?>?
+        @Query("returnReferenceInformation") value: Boolean? = true,
+    ): Response<LoginWithPlateAndReferenceNumberResponseModel?>?
 
     @POST(GET_TOLL_TRANSACTIONS)
     suspend fun getTollTransactions(
@@ -499,6 +532,34 @@ interface ApiService {
         @Body request: PushNotificationRequest
     ): Response<EmptyApiResponse?>?
 
+
+    @GET(CATEGORY_LIST)
+    suspend fun getCategoryList(): Response<List<CaseCategoriesModel?>?>?
+
+
+    @GET(SUB_CATEGORY_LIST)
+    suspend fun getSubCategory(
+        @Path("Category") Category: String?
+    ): Response<List<CaseCategoriesModel?>?>?
+
+    @POST(RAISE_ENQUIRY)
+    suspend fun raiseEnquiry(
+        @Body request: EnquiryRequest
+    ): Response<EnquiryResponseModel?>?
+
+    @POST(GET_ACCOUNT_SR_LIST)
+    suspend fun GET_ACCOUNT_SR_LIST(
+        @Body body: JSONObject
+    ): Response<EnquiryListResponseModel?>?
+
+    @POST(GET_GENERAL_ACCOUNT_SR_DETAILS)
+    suspend fun GET_GENERAL_ACCOUNT_SR_DETAILS(
+        @Body request: EnquiryStatusRequest
+    ): Response<EnquiryListResponseModel?>?
+
+    @GET(LRDS_VERIFICATION_SR)
+    suspend fun getLrdsStatus(
+    ): Response<LRDSResponse?>?
 
 
 }

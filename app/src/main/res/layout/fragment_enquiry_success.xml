@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:padding="@dimen/margin_20dp"
+            tools:context=".ui.bottomnav.account.raiseEnquiry.EnquirySuccessFragment">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_30dp"
+                app:layout_constraintBottom_toTopOf="@id/btnNext"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/success_iv"
+                    android:layout_width="@dimen/margin_70dp"
+                    android:layout_height="@dimen/margin_70dp"
+                    android:src="@drawable/tick_mark"
+                    android:layout_marginTop="@dimen/margin_60dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/dark_blue_color" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/title_tv"
+                    style="@style/SemiBoldTextBlack"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="@dimen/margin_8dp"
+                    android:textSize="@dimen/font_18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/success_iv"
+                    tools:text="@string/str_Your_enquiry_submitted" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/desc_tv"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:gravity="center"
+                    android:text="@string/sent_email"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title_tv" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/reference_number_cv"
+                    style="@style/cardView_style"
+                    android:layout_marginLeft="@dimen/margin_2dp"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:layout_marginRight="@dimen/margin_2dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/desc_tv">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/category_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_15dp">
+
+
+                        <com.conduent.nationalhighways.utils.widgets.NHTextView
+                            android:id="@+id/category_tv"
+                            style="@style/SemiBoldTextBlack"
+                            android:layout_width="@dimen/margin_0dp"
+                            android:text="@string/reference_number"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.conduent.nationalhighways.utils.widgets.NHTextView
+                            android:id="@+id/reference_number_tv"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/category_tv" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/what_happens_next_tv"
+                    style="@style/SemiBoldTextBlack"
+                    android:layout_width="@dimen/margin_0dp"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:text="@string/what_happens_next"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/reference_number_cv" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/respond_enquiry_tv"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="@dimen/margin_0dp"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/what_happens_next_tv"
+                    tools:text="@string/respond_enquiry_1day" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/btnNext"
+                style="@style/PrimaryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:text="@string/back_to_main_menu"
+                app:layout_constraintBottom_toTopOf="@id/check_status_bt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:radius="@dimen/margin_5dp" />
+
+
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/check_status_bt"
+                style="@style/secondaryButton"
+                android:layout_width="0dp"
+                android:text="@string/check_enquiry_status"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                app:layout_constraintBottom_toTopOf="@id/feedback_bt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:radius="@dimen/margin_5dp" />
+
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/feedback_bt"
+                style="@style/secondaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_50dp"
+                android:text="@string/feed_back_to_improve_service"
+                android:textColor="@color/new_btn_color"
+                android:textColorLink="@color/new_btn_color"
+                app:borderColor="@color/new_btn_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:radius="@dimen/margin_5dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

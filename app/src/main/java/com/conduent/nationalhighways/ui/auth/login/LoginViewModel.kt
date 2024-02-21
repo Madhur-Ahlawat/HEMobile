@@ -13,7 +13,11 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.IOException
+import java.net.Socket
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,16 +31,6 @@ class LoginViewModel @Inject constructor(
     val login: LiveData<Resource<LoginResponse?>?> get() = _login
 
 
-//    /** Error handling as UI **/
-//    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-//    private val showSnackBarPrivate = MutableLiveData<SingleEvent<Any>>()
-//    val showSnackBar: LiveData<SingleEvent<Any>> get() = showSnackBarPrivate
-//
-//    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-//    private val showToastPrivate = MutableLiveData<SingleEvent<Any>>()
-//    val showToast: LiveData<SingleEvent<Any>> get() = showToastPrivate
-
-
     fun login(model: LoginModel?) {
         viewModelScope.launch {
             try {
@@ -46,5 +40,6 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
 
 }

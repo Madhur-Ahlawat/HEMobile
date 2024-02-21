@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.data.model.makeoneofpayment
 
 import android.os.Parcelable
+import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -30,7 +31,12 @@ data class PaymentTypeInfo(
     val state: String?,
     val country: String?,
     val zipcode: String?,
-    val zipCode2: String?
+    val zipCode2: String?,
+    val cardholderAuth:String?=null,
+    val cavv:String?=null,
+    val directoryServerID:String?=null,
+    val eci:String?=null,
+    val threeDsVer:String?=null,
 ):Parcelable
 
 @Parcelize
@@ -43,7 +49,7 @@ data class VehicleList(
     val pendingDues: String?,
     val futureTollCount: String?,
     val futureTollPayment: String?,
-    val vehicleColour: String?,
+    val vehicleColor: String?,
     val classRate: String?,
     val customerClass: String?,
     val customerClassRate: String?,

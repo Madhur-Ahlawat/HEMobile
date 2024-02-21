@@ -29,10 +29,10 @@ data class PaymentWithNewCardModel(
     var useAddressCheck: String?="N",
     var zipcode1: String?="",
     var zipcode2: String?="",
-    var directoryServerId:String="",
+    var directoryServerID:String="",
     var cavv:String="",
     var xid:String="",
-    var threeDsVersion:String="",
-    var cardHolderAuth:String="",
+    var threeDsVer:String="",
+    var cardholderAuth:String="",
     var eci:String=""
 ) : Parcelable

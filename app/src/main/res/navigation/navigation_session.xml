@@ -15,6 +15,6 @@
     <fragment
         android:id="@+id/signOutFragment"
         android:name="com.conduent.nationalhighways.ui.landing.LogoutFragment"
-        tools:layout="@layout/fragment_signout"
+        tools:layout="@layout/fragment_logout"
         android:label="SignoutFragment" />
 </navigation>

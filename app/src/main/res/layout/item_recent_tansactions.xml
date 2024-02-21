@@ -12,14 +12,14 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_62dp"
+        android:layout_height="@dimen/margin_62dp"
         android:elevation="@dimen/margin_1dp"
         app:cardCornerRadius="@dimen/margin_5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:id="@+id/cl_main"
-            android:layout_height="@dimen/_62dp">
+            android:layout_height="@dimen/margin_62dp">
 
             <View
                 android:id="@+id/vertical_strip_transaction_type"
@@ -30,28 +30,41 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <ImageView
                 android:id="@+id/indicator_icon_transaction_type"
-                android:layout_width="@dimen/_26dp"
-                android:layout_height="@dimen/_22dp"
-                android:layout_marginStart="@dimen/margin_15dp"
-                android:src="@drawable/ic_car_grey"
-                android:scaleType="centerCrop"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="@dimen/margin_12dp"
+                android:src="@drawable/ic_euro_circular_green"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/vertical_strip_transaction_type"
                 app:layout_constraintTop_toTopOf="parent" />
-
+            <TextView
+                android:id="@+id/indicator_icon_euro"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="£"
+                android:textColor="@color/white"
+                android:elevation="1dp"
+                android:textSize="@dimen/font_12sp"
+                android:gravity="center"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/indicator_icon_transaction_type"
+                app:layout_constraintBottom_toBottomOf="@id/indicator_icon_transaction_type"
+                app:layout_constraintEnd_toEndOf="@+id/indicator_icon_transaction_type"
+                app:layout_constraintTop_toTopOf="@id/indicator_icon_transaction_type" />
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_transaction_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
                 app:layout_constraintVertical_bias=".47"
-                android:layout_marginStart="@dimen/margin_14dp"
+                android:layout_marginStart="@dimen/margin_12dp"
                 android:gravity="center"
                 android:text="@string/top_up"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_14sp"
+                android:textSize="@dimen/font_14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/indicator_icon_transaction_type"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -59,8 +72,8 @@
 
             <ImageView
                 android:id="@+id/icon_arrow"
-                android:layout_width="@dimen/_16dp"
-                android:layout_height="@dimen/_16dp"
+                android:layout_width="@dimen/margin_16dp"
+                android:layout_height="@dimen/margin_16dp"
                 android:layout_marginStart="@dimen/margin_15dp"
                 android:src="@drawable/ic_right_purple"
                 android:layout_marginEnd="@dimen/margin_12dp"
@@ -73,7 +86,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/_14sp"
+                android:textSize="@dimen/font_14sp"
                 android:textColor="@color/black"
                 app:layout_constraintVertical_bias=".4"
                 app:layout_constraintTop_toTopOf="parent"
@@ -87,7 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/_12sp"
+                android:textSize="@dimen/font_12sp"
                 app:layout_constraintVertical_bias=".5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textColor="@color/label_color"

@@ -1,36 +1,42 @@
 package com.conduent.nationalhighways.ui.bottomnav.account
 
 import android.content.Context
-import android.content.Intent
+import android.content.DialogInterface
+import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
+import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
+import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
+import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.auth.logout.LogoutViewModel
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
+import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.nominatedcontacts.list.NominatedContactListViewModel
-import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.openActivityWithDataBack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,14 +44,17 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickListener,
-    OnLogOutListener {
+    OnLogOutListener, BackPressListener {
 
-    private val viewModel: NominatedContactListViewModel by viewModels()
+    private val raise_viewModel: RaiseNewEnquiryViewModel by viewModels()
     private val logOutViewModel: LogoutViewModel by viewModels()
+    private val dashboardViewModel: DashboardViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
+
     @Inject
     lateinit var sessionManager: SessionManager
+    private var title: TextView? = null
 
 
     override fun getFragmentBinding(
@@ -59,10 +68,21 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         isSecondaryUser = sessionManager.getSecondaryUser()
         setPaymentsVisibility()
         initUI()
+        binding.contactUs.visible()
+        setBackPressListener(this)
     }
 
     private fun initUI() {
-        binding?.run {
+        if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
+            navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY,"").toString()
+        }
+        title = requireActivity().findViewById(R.id.title_txt)
+        binding.run {
+            if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.EXEMPT_ACCOUNT)) {
+                paymentManagement.gone()
+            } else {
+                paymentManagement.visible()
+            }
             if (isSecondaryUser)
                 contactUs.gone()
 
@@ -80,13 +100,40 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             ) {
                 paymentManagement.gone()
             }
-            valueName.text = sessionManager.fetchName()
+
+            var firstNameChar: Char = ' '
+            var secondNameChar: Char = ' '
+            firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
+            secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
+
+            profilePic.text = "" + firstNameChar.toString() + secondNameChar.toString()
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
             DashboardUtils.setAccountStatusNew(
-                sessionManager.fetchAccountStatus()!!,
+                sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
-                binding.cardIndicatorAccountStatus
+                binding.cardIndicatorAccountStatus,4
             )
+            if (sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
+                leftIcon6.alpha = 0.5f
+                valueTitle6.alpha = 0.5f
+                iconArrow6.alpha = 0.5f
+            } else {
+                leftIcon6.alpha = 1f
+                valueTitle6.alpha = 1f
+                iconArrow6.alpha = 1f
+            }
+            valueName.text =
+                Utils.capitalizeString(sessionManager.fetchFirstName()) + " " + Utils.capitalizeString(
+                    sessionManager.fetchLastName()
+                )
+
+        }
+        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            var bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
+            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
+            findNavController()?.navigate(R.id.action_accountFragment_to_profileManagementFragment,bundle)
         }
     }
 
@@ -111,6 +158,15 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         }
     }
 
+    override fun onResume() {
+        title?.text = getString(R.string.txt_my_account)
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).refreshTokenApi()
+        }
+
+        super.onResume()
+    }
+
     override fun initCtrl() {
         binding.apply {
             profileManagement.setOnClickListener(this@AccountFragment)
@@ -129,7 +185,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun observer() {
         lifecycleScope.launch {
-            observe(viewModel.contactList, ::handleContactListResponse)
             observe(logOutViewModel.logout, ::handleLogout)
         }
     }
@@ -138,44 +193,53 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         when (v?.id) {
 
             R.id.profile_management -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_management)
                 findNavController().navigate(R.id.action_accountFragment_to_profileManagementFragment)
 
             }
 
             R.id.payment_management -> {
+
+                findNavController().navigate(R.id.action_accountFragment_to_paymentMethodFragment)
+                title?.text = getString(R.string.payment_management)
 //                requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
             }
 
             R.id.communication_preferences -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED)
-                findNavController().navigate(R.id.action_accountFragment_to_optForSmsFragment,bundle)
+                bundle.putString(
+                    Constants.NAV_FLOW_KEY,
+                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
+                )
+                findNavController().navigate(
+                    R.id.action_accountFragment_to_optForSmsFragment,
+                    bundle
+                )
             }
 
             R.id.vehicle_management -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.vehicle_management)
                 findNavController().navigate(R.id.action_accountFragment_to_vehicleManagementFragment)
 
             }
 
             R.id.close_acount -> {
-                val title: TextView? = requireActivity().findViewById(R.id.title_txt)
-                title?.text = getString(R.string.str_close_account)
-                findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
+                if (!sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
+                    title?.text = getString(R.string.str_close_account)
+                    findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
+                }
             }
 
             R.id.contact_us -> {
-                requireActivity().openActivityWithDataBack(ContactDartChargeActivity::class.java) {
-                    putInt(
-                        Constants.FROM_LOGIN_TO_CASES,
-                        Constants.FROM_LOGIN_TO_CASES_VALUE
-                    )
-                }
+
+                raise_viewModel.enquiryModel.value = EnquiryModel()
+                raise_viewModel.edit_enquiryModel.value = EnquiryModel()
+
+
+                val bundle: Bundle = Bundle()
+                bundle.putString(Constants.NAV_FLOW_FROM, Constants.ACCOUNT_CONTACT_US)
+                findNavController().navigate(R.id.caseEnquiryHistoryListFragment, bundle)
             }
 
 //            R.id.rl_account_statement -> {
@@ -191,34 +255,41 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 //            }
 
             R.id.sign_out -> {
-//                LogoutDialog.newInstance(
-//                    this
-//                ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
-                logOutViewModel.logout()
+
+                displayCustomMessage(resources.getString(R.string.str_signout_your_account),
+                    resources.getString(R.string.str_signout_your_account_desc),
+                    resources.getString(R.string.str_continue),
+                    resources.getString(R.string.str_cancel),
+                    object : DialogPositiveBtnListener {
+                        override fun positiveBtnClick(dialog: DialogInterface) {
+                            logOutViewModel.logout()
+                        }
+                    },
+                    object : DialogNegativeBtnListener {
+                        override fun negativeBtnClick(dialog: DialogInterface) {
+                        }
+                    },
+                    View.VISIBLE,
+                    cancelButtonColor = requireActivity().resources.getColor(R.color.hyperlink_blue2, null),
+                    typeFace = Typeface.createFromAsset(
+                        requireActivity().assets,
+                        "open_sans_semibold.ttf"
+                    )
+                )
 
             }
 
         }
     }
 
-    private fun handleContactListResponse(status: Resource<NominatedContactRes?>?) {
+    override fun onDestroy() {
+        super.onDestroy()
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
-        when (status) {
-            is Resource.Success -> {
 
-
-            }
-
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status.errorMsg)
-            }
-
-            else -> {
-            }
-        }
     }
+
 
     private fun handleLogout(status: Resource<AuthResponseModel?>?) {
         if (loader?.isVisible == true) {
@@ -230,7 +301,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, status?.errorMsg)
+                ErrorUtil.showError(binding.root, status.errorMsg)
             }
 
             else -> {
@@ -240,12 +311,15 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     private fun logOutOfAccount() {
         sessionManager.clearAll()
-        Intent(requireActivity(), LandingActivity::class.java).apply {
-            putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(this)
-        }
+        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD,false)
+        Utils.redirectToSignoutPage(requireActivity())
+
+//        Intent(requireActivity(), LoginActivity::class.java).apply {
+//            putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
+//            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            startActivity(this)
+//        }
     }
 
     override fun onLogOutClick() {
@@ -256,6 +330,15 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
+
+
     }
+
+    override fun onBackButtonPressed() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).backPressLogic()
+        }
+    }
+
 
 }

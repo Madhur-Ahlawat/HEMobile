@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="18dp"
+            tools:context=".ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment">
+
+
+            <TextView
+                style="@style/MediumTextBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/str_payment_successfully" />
+
+            <TextView
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:id="@+id/email_conformation_txt"
+                android:text="@string/str_we_have_sent_confirmation_email_and_confirmation_text_message" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="18dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="18dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        style="@style/MediumTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment_reference_number"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/accountNumber"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <TextView
+                style="@style/RegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:id="@+id/pay_as_go_text"
+                android:visibility="gone"
+                android:text="@string/we_sent_confirmation_email" />
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="@dimen/margin_5dp"
+                android:id="@+id/prePayCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="18dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="18dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        style="@style/MediumTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vehicle_registration_number_plate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/vechicleRegistration"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="@dimen/margin_5dp"
+                android:id="@+id/amountPaidCardView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="18dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="18dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        style="@style/MediumTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_amount_paid"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/amountPaid"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:elevation="3dp"
+                app:cardCornerRadius="@dimen/margin_5dp"
+                android:id="@+id/timeAndDateCardView">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="18dp"
+                    android:paddingTop="20dp"
+                    android:paddingEnd="18dp"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        style="@style/MediumTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_time_date"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/timeDate"
+                        style="@style/RegularTextBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+
+            <TextView
+                style="@style/RegularTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:lineSpacingExtra="2dp"
+                android:text="@string/str_make_one_off_crossing_description" />
+
+
+            <com.conduent.apollo.ui.CMButton
+                style="@style/PrimaryButton"
+                android:layout_marginTop="25dp"
+                android:text="@string/create_account"
+                android:id="@+id/createAccount"/>
+
+            <com.conduent.apollo.ui.CMButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="@style/secondaryButton"
+                android:layout_marginTop="@dimen/margin_15dp"
+                android:textColor="@color/new_btn_color"
+                android:fontFamily="@font/open_sans_semibold"
+                android:textSize="14sp"
+                android:text="@string/back_to_main_menu"
+                android:visibility="visible"
+                android:id="@+id/backToMainMenu"/>
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/feedback_bt"
+                style="@style/secondaryButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/margin_15dp"
+                android:textColor="@color/new_btn_color"
+                app:borderColor="@color/new_btn_color"
+                android:textColorLink="@color/new_btn_color"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:text="@string/feed_back_to_improve_service"
+                 />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>

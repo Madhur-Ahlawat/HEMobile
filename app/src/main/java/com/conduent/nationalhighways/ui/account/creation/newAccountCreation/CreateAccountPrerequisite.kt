@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountPrerequisiteBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.base.BaseApplication.Companion.setFlowNameAnalytics1
+import com.conduent.nationalhighways.ui.base.BaseApplication.Companion.setScreenNameAnalytics1
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
@@ -24,6 +27,8 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
         FragmentCreateAccountPrerequisiteBinding.inflate(inflater, container, false)
 
     override fun init() {
+        setFlowNameAnalytics1(Constants.CREATE_ACCOUNT)
+        setScreenNameAnalytics1("")
         val content = SpannableString(getString(R.string.sign_in))
         content.setSpan(UnderlineSpan(), 0, content.length, 0)
         binding.txtSignIn.text = content
@@ -42,7 +47,7 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
         when (v?.id) {
             binding.btnCreateAccount.id -> {
                 val bundle = Bundle()
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_MOBILE_FLOW)
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.ACCOUNT_CREATION_EMAIL_FLOW)
                 findNavController().navigate(
                     R.id.action_createAccountPrerequisite_to_fragment_choose_account_type,
                     bundle
@@ -51,7 +56,7 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
         }
     }
 
-    override fun onRetryClick() {
+    override fun onRetryClick(apiUrl: String){
 
     }
 }

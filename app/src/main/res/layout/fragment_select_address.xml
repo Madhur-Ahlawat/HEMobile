@@ -71,28 +71,39 @@
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btn_next"
                 style="@style/PrimaryButton"
-                android:layout_above="@id/enter_address_manually"
+                android:layout_above="@id/bottom_ll"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:text="@string/str_continue"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
+                app:isEnabled="false" />
 
-                app:isEnabled="false"
-
-                />
-
-            <com.conduent.apollo.ui.CMButton
-                android:id="@+id/enter_address_manually"
-                style="@style/secondaryButton"
+            <LinearLayout
+                android:id="@+id/bottom_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_30sdp"
-                android:gravity="center"
+                android:layout_marginBottom="@dimen/margin_30dp"
+                android:orientation="vertical">
 
-                android:text="@string/str_enter_address_manually" />
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/btnEnterAddressManually"
+                    style="@style/secondaryButton"
+                    android:layout_marginHorizontal="20dp"
+                    android:gravity="center"
+                    android:text="@string/str_enter_address_manually" />
+
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/btnUpdateAddressManually"
+                    style="@style/secondaryButton"
+                    android:layout_marginHorizontal="20dp"
+                    android:gravity="center"
+                    android:text="@string/update_address_manually"
+                     />
+            </LinearLayout>
+
         </RelativeLayout>
 
 

@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CommunicationPrefsRequestModel(
-    val categoryList: ArrayList<CommunicationPrefsRequestModelList?>?
+    var categoryList: ArrayList<CommunicationPrefsRequestModelList>
 ) : Parcelable

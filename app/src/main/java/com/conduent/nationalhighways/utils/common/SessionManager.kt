@@ -1,10 +1,11 @@
 package com.conduent.nationalhighways.utils.common
 
 import android.content.SharedPreferences
-import com.google.gson.Gson
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import java.security.PublicKey
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,6 +24,8 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val USER_TOKEN_TIME_OUT = "user_token_time_out"
         const val Refresh_TOKEN = "refresh_token"
         const val ACCOUNT_NUMBER = "account_number"
+        const val SMS_OPTION = "sms_option"
+        const val NOTIFICATION_OPTION = "notification_option"
         const val ACCOUNT_STATUS = "account_status"
         const val ACCOUNT_TYPE = "account_type"
         const val SUB_ACCOUNT_TYPE = "sub_account_type"
@@ -30,18 +33,36 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val SECURITY_CODE = "security_code"
         const val SESSION_TIME = "session_time"
         const val SECURITY_CODE_OBJ = "security_code_obj"
-        const val IS_USER_LOGIN = "is_user_login"
+        const val SendAuthTokenStatus = "SendAuthTokenStatus"
+        const val LOGGED_OUT_FROM_DASHBOARD = "loggedOutFromDashboard"
         const val IS_SECONDARY = "is_secondary_user"
         const val LOGGED_IN_USER = "logged_in_user"
         const val NC_ID = "nc_id"
         const val PUSH_TOKEN = "firebase_notification_token"
         const val USER_NAME = "username"
-        const val NAME = "name"
+        const val USER_COUNTRYCODE = "usercountrycode"
+        const val USER_MOBILENUMBER = "usermobilenumber"
+        const val FIRST_NAME = "first_name"
+        const val LAST_NAME = "last_name"
+        const val ZIPCODE = "zipcode"
+        const val PHONE_NUMBER = "phoneNumber"
 
         val BIOMETRICTOKEN: String = "ACSInrixTrafficApp"
         val TOUCH_ID_ENABLED: String = "touch_ID"
+        val TOUCH_ID_USER_ID: String = "TOUCH_ID_USER_ID"
         val PRIVATE_KEY: String = ""
         val PUBLIC_KEY: String = ""
+        val CATEGORIES_DATA = "categories_data"
+        val SUB_CATEGORIES_DATA = "sub_categories_data"
+        val LAST_TOKEN_TIME = "last_token_time"
+        val LAST_RATING_TIME = "last_rating_time"
+
+        val GEOFENCE_ENTER_TIME = "geofence_enter_time"
+        val COUNTRIES = "COUNTRIES"
+        val LOCATION_PERMISSION = "LOCATION_PERMISSION"
+        val FOREGROUND_LOCATION_SHOWN = "FOREGROUND_LOCATION_SHOWN"
+        val NOTIFICATION_PERMISSION = "NOTIFICATION_PERMISSION"
+        val SettingsClick = "SettingsClick"
     }
 
     /**
@@ -58,9 +79,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     /**
      * Function to fetch auth token
      */
-    fun fetchAuthTokenTimeout(): Int {
-        return prefs.getInt(USER_TOKEN_TIME_OUT, 0)
-    }
 
     /**
      * Function to save auth token
@@ -94,9 +112,19 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         return prefs.getString(Refresh_TOKEN, null)
     }
 
+    fun fetchSmsOption(): String? {
+        return prefs.getString(SMS_OPTION, null)
+    }
+
     fun saveAccountNumber(accountNumber: String) {
         prefs.edit().apply {
             putString(ACCOUNT_NUMBER, accountNumber)
+        }.apply()
+    }
+
+    fun saveSmsOption(sms_option: String) {
+        prefs.edit().apply {
+            putString(SMS_OPTION, sms_option)
         }.apply()
     }
 
@@ -106,14 +134,34 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         }.apply()
     }
 
-    fun saveName(name: String) {
+    fun saveNotificationOption(notificationOption: Boolean) {
         prefs.edit().apply {
-            putString(NAME, name)
+            putBoolean(NOTIFICATION_OPTION, notificationOption)
         }.apply()
     }
 
-    fun fetchName(): String? {
-        return prefs.getString(NAME, null)
+    fun saveFirstName(name: String) {
+        prefs.edit().apply {
+            putString(FIRST_NAME, name)
+        }.apply()
+    }
+
+    fun fetchFirstName(): String? {
+        return prefs.getString(FIRST_NAME, null)
+    }
+
+    fun fetchNotificationOption(): Boolean {
+        return prefs.getBoolean(NOTIFICATION_OPTION, false)
+    }
+
+    fun saveLastName(name: String) {
+        prefs.edit().apply {
+            putString(LAST_NAME, name)
+        }.apply()
+    }
+
+    fun fetchLastName(): String? {
+        return prefs.getString(LAST_NAME, null)
     }
 
     fun fetchAccountStatus(): String? {
@@ -163,11 +211,19 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     }
 
     fun clearAll() {
+        val lastRatingTime = fetchStringData(LAST_RATING_TIME)
+        val locationPermissiom = fetchBooleanData(LOCATION_PERMISSION)
+        val foregroundLocationShown = fetchBooleanData(FOREGROUND_LOCATION_SHOWN)
+        val notificationPermission = fetchBooleanData(NOTIFICATION_PERMISSION)
         prefs.edit().clear().apply()
         HomeActivityMain.accountDetailsData = null
         HomeActivityMain.crossing = null
         HomeActivityMain.dateRangeModel = null
         HomeActivityMain.paymentHistoryListData = mutableListOf()
+        saveStringData(LAST_RATING_TIME, lastRatingTime)
+        saveBooleanData(LOCATION_PERMISSION, locationPermissiom)
+        saveBooleanData(NOTIFICATION_PERMISSION, notificationPermission)
+        saveBooleanData(FOREGROUND_LOCATION_SHOWN, foregroundLocationShown)
     }
 
     fun setSessionTime(code: Long?) {
@@ -264,25 +320,26 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         return prefs.getString(USER_NAME, null)
     }
 
-    fun savePublicKey(publicKey: String?) {
+    fun saveUserCountryCode(countrycode: String?) {
         prefs.edit().apply {
-            putString(PUBLIC_KEY, publicKey)
+            putString(USER_COUNTRYCODE, countrycode)
         }.apply()
     }
 
-    fun fetchPublicKey(): String? {
-        return prefs.getString(PUBLIC_KEY, null)
+    fun fetchUserCountryCode(): String? {
+        return prefs.getString(USER_COUNTRYCODE, null)
     }
 
-    fun savePrivateKey(privateKey: String?) {
+    fun saveUserMobileNumber(mobilenumber: String?) {
         prefs.edit().apply {
-            putString(PRIVATE_KEY, privateKey)
+            putString(USER_MOBILENUMBER, mobilenumber)
         }.apply()
     }
 
-    fun fetchPrivateKey(): String? {
-        return prefs.getString(PRIVATE_KEY, null)
+    fun fetchUserMobileNUmber(): String? {
+        return prefs.getString(USER_MOBILENUMBER, null)
     }
+
 
     fun saveTouchIdEnabled(privateKey: Boolean) {
         prefs.edit().apply {
@@ -294,11 +351,93 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         return prefs.getBoolean(TOUCH_ID_ENABLED, false)
     }
 
-    /**
-     * Function to fetch bio metric token
-     */
-    fun fetchBiometricToken(): String? {
-        return prefs.getString(BIOMETRICTOKEN, "ACSInrixTrafficApp")
+    fun saveZipCode(privateKey: String) {
+        prefs.edit().apply {
+            putString(ZIPCODE, privateKey)
+        }.apply()
+    }
+
+    fun fetchZipCode(): Boolean {
+        return prefs.getBoolean(ZIPCODE, false)
+    }
+
+    fun savePhoneNumber(privateKey: String) {
+        prefs.edit().apply {
+            putString(PHONE_NUMBER, privateKey)
+        }.apply()
+    }
+
+
+    fun fetchPhoneNumber(): Boolean {
+        return prefs.getBoolean(PHONE_NUMBER, false)
+    }
+
+    fun fetchSubCategoriesData(): ArrayList<CaseCategoriesModel> {
+        val json = prefs.getString(SUB_CATEGORIES_DATA, null)
+        val type = object : TypeToken<ArrayList<CaseCategoriesModel>>() {}.type
+        return Gson().fromJson(json, type) ?: ArrayList()
+    }
+
+    fun saveSubCategoriesData(arrayList: List<CaseCategoriesModel?>?) {
+        val gson = Gson()
+        val json = gson.toJson(arrayList)
+
+        prefs.edit().apply {
+            putString(SUB_CATEGORIES_DATA, json)
+        }.apply()
+
+    }
+
+
+    fun saveBooleanData(key: String, privateKey: Boolean) {
+        prefs.edit().apply {
+            putBoolean(key, privateKey)
+        }.apply()
+    }
+
+    fun fetchBooleanData(key: String): Boolean {
+        return prefs.getBoolean(key, false)
+    }
+
+    fun saveStringData(key: String, privateKey: String) {
+        prefs.edit().apply {
+            putString(key, privateKey)
+        }.apply()
+    }
+
+    fun fetchStringData(key: String): String {
+        return prefs.getString(key, "") ?: ""
+    }
+
+    fun saveIntData(key: String, privateKey: Int) {
+        prefs.edit().apply {
+            putInt(key, privateKey)
+        }.apply()
+    }
+
+    fun fetchIntData(key: String): Int {
+        return prefs.getInt(key, 0)
+    }
+
+    fun saveTwoFAEnabled(b: Boolean) {
+        prefs.edit().apply {
+            putBoolean(Constants.TWOFA_ENABLED, b)
+        }.apply()
+    }
+
+    fun saveHasAskedForBiometric(b: Boolean) {
+        prefs.edit().apply {
+            putBoolean(Constants.HAS_ASKED_FOR_BIOMETRIC, b)
+        }.apply()
+    }
+
+    fun getTwoFAEnabled(): Boolean {
+        return prefs.getBoolean(Constants.TWOFA_ENABLED, false)
+
+    }
+
+    fun hasAskedForBiometric(): Boolean {
+        return prefs.getBoolean(Constants.HAS_ASKED_FOR_BIOMETRIC, false)
     }
 
 }

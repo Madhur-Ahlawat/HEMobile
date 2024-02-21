@@ -9,10 +9,11 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import com.conduent.nationalhighways.R
 
-fun <A : Activity> Activity.startNewActivityByClearingStack(activity: Class<A>) {
+fun <A : Activity> Activity.startNewActivityByClearingStack(activity: Class<A>, extras: Bundle.() -> Unit = {}) {
     Intent(this, activity).run {
         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        putExtras(Bundle().apply(extras))
         startActivity(this)
     }
 }
@@ -28,6 +29,12 @@ fun <A : Activity> Activity.openActivityWithData(it: Class<A>, extras: Bundle.()
 fun <A : Activity> Activity.openActivityWithDataBack(it: Class<A>, extras: Bundle.() -> Unit = {}) {
     Intent(this, it).run {
         putExtras(Bundle().apply(extras))
+        startActivity(this)
+    }
+}
+fun <A : Activity> Activity.openActivityWithData(it: Class<A>, extras: Bundle) {
+    Intent(this, it).run {
+        putExtras(extras)
         startActivity(this)
     }
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -11,16 +12,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_20dp"
+            android:layout_marginTop="@dimen/margin_5dp"
+            android:layout_marginBottom="@dimen/margin_20dp"
             android:gravity="start|top"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/_20sdp">
+            android:orientation="vertical">
 
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/margin_15dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/check_your_answers_before_making_a_payment"
                 android:textColor="@color/black"
@@ -29,7 +32,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/margin_15dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/personal_details"
                 android:textColor="@color/black"
@@ -43,39 +46,41 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layerFullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/layerFullName"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtFullName"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/full_name"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/fullName"
                         style="@style/RegularTextBlack"
-
+                        android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        app:layout_constraintEnd_toStartOf="@+id/editFullName"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtFullName" />
+
                     <ImageView
+                        android:id="@+id/editFullName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editFullName"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -84,29 +89,27 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/companyNameCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:id="@+id/companyNameCard"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                android:visibility="gone"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layerCompanyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/layerCompanyName"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtCompanyFullName"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/company_name"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -117,15 +120,16 @@
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtCompanyFullName" />
+
                     <ImageView
+                        android:id="@+id/editCompanyName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editCompanyName"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -141,8 +145,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -152,27 +155,30 @@
                     <TextView
                         android:id="@+id/txtAddress"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/address"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/address"
                         style="@style/RegularTextBlack"
-
+                        android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        app:layout_constraintEnd_toStartOf="@+id/editAddress"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtAddress" />
+
                     <ImageView
+                        android:id="@+id/editAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editAddress"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -189,10 +195,10 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/emailAddressSummary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
@@ -200,30 +206,31 @@
                     <TextView
                         android:id="@+id/txtEmailAddress"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/email_address"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:gravity="left|center"
-                        android:layout_height="wrap_content"
                         android:id="@+id/emailAddress"
                         style="@style/RegularTextBlack"
-                        app:layout_constraintEnd_toStartOf="@+id/editEmailAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        app:layout_constraintEnd_toStartOf="@+id/editEmailAddress"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtEmailAddress" />
+
                     <ImageView
+                        android:id="@+id/editEmailAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editEmailAddress"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -240,8 +247,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -251,8 +257,8 @@
                     <TextView
                         android:id="@+id/txtMobileNumber"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/telephone_number"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -260,19 +266,20 @@
                         android:id="@+id/mobileNumber"
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
-                        android:text="Not provided"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="Not provided"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />
+
                     <ImageView
+                        android:id="@+id/editMobileNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editMobileNumber"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -283,7 +290,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/margin_15dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/account_details"
                 android:textColor="@color/black"
@@ -298,8 +305,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -309,27 +315,28 @@
                     <TextView
                         android:id="@+id/txtAccountType"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/type_of_account"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/accountType"
                         style="@style/RegularTextBlack"
-                        android:text="Pre-pay"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="Pre-pay"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtAccountType" />
+
                     <ImageView
+                        android:id="@+id/editAccountType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editAccountType"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -338,6 +345,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/accountSubType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
@@ -345,37 +353,83 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                android:id="@+id/subType"
+                android:minHeight="@dimen/margin_77dp"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:minHeight="@dimen/margin_77dp"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
-                        android:id="@+id/txtSubAccountType"
+                        android:id="@+id/textAccountSubType"
                         style="@style/RegularTextBlack"
-                        android:textSize="15sp"
-                        android:text="@string/type_of_account"
+                        android:text="Pre-pay"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
+                        android:id="@+id/editAccountSubType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editSubAccountType"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="@id/textAccountSubType"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/textAccountSubType" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.cardview.widget.CardView>
+
+            <!--
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/accountTypeCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="@dimen/margin_15dp"
+                            android:layout_marginEnd="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:elevation="3dp"
+                            app:cardCornerRadius="5dp"
+                            >
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/margin_15dp">
+
+
+                                <TextView
+                                    android:id="@+id/typeofAccount"
+                                    style="@style/RegularTextBlack"
+                                    android:text="Pre-pay"
+                                    android:layout_marginTop="@dimen/margin_5dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/edit"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    android:layout_marginEnd="@dimen/margin_20dp"
+                                    android:id="@+id/editAccount"/>
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+            -->
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/communicationCard"
@@ -386,8 +440,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -397,27 +450,28 @@
                     <TextView
                         android:id="@+id/txtCommunications"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/text_message_communications"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/communications"
                         style="@style/RegularTextBlack"
-                        android:text="No"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="No"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtCommunications" />
+
                     <ImageView
+                        android:id="@+id/editCommunications"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editCommunications"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -429,16 +483,15 @@
                 android:id="@+id/emailCardProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/emailProfileManagement"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
@@ -446,26 +499,30 @@
                     <TextView
                         android:id="@+id/txtEmailAddressProfile"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/email_address"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/emailAddressProfile"
                         style="@style/RegularTextBlack"
+                        android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        app:layout_constraintEnd_toStartOf="@+id/editEmailAddressProfile"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtEmailAddressProfile" />
+
                     <ImageView
+                        android:id="@+id/editEmailAddressProfile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editEmailAddressProfile"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -482,8 +539,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -493,36 +549,38 @@
                     <TextView
                         android:id="@+id/txtPassword"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/password"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/password"
                         style="@style/RegularTextBlack"
-                        android:text="***********"
-                        android:inputType="textPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:gravity="left|center"
+                        app:layout_constraintEnd_toStartOf="@+id/editPassword"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtPassword" />
+                        app:layout_constraintTop_toBottomOf="@id/txtPassword"
+                        tools:text="********" />
+
                     <ImageView
+                        android:id="@+id/editPassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editPassword"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.cardview.widget.CardView>
-
-
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -532,8 +590,7 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -543,27 +600,27 @@
                     <TextView
                         android:id="@+id/txtTwoStepVerification"
                         style="@style/MediumTextBlack"
-                        android:textSize="15sp"
                         android:text="@string/two_step_verification"
+                        android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/twoStepVerification"
                         style="@style/RegularTextBlack"
-                        android:text="Yes"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="Yes"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtTwoStepVerification" />
                     <ImageView
+                        android:id="@+id/editTwoStepVerification"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editTwoStepVerification"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -572,6 +629,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/biometricsCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
@@ -580,9 +638,7 @@
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
                 android:visibility="gone"
-                android:id="@+id/biometricsCard"
-                app:cardCornerRadius="5dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -592,27 +648,27 @@
                     <TextView
                         android:id="@+id/txtBiometrics"
                         style="@style/MediumTextBlack"
+                        android:text="@string/biometrics"
                         android:textSize="15sp"
-                        android:text="@string/biometric"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/biometrics"
                         style="@style/RegularTextBlack"
-                        android:text="Yes"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="Yes"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtBiometrics" />
                     <ImageView
+                        android:id="@+id/editBiometrics"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:id="@+id/editBiometrics"/>
+                        android:src="@drawable/edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -621,12 +677,12 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/vehicleHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/vehicle_details"
-                android:id="@+id/vehicleHeading"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp" />
 
@@ -635,15 +691,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10dp"
-                android:nestedScrollingEnabled="true"/>
+                android:nestedScrollingEnabled="false" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkBoxTerms"
                 style="@style/CheckBoxStyle"
+                android:textColorLink="@color/black"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/margin_30dp"
                 android:checked="false"
-                android:text="@string/i_accept_the_terms_conditions"
                 android:gravity="center|left"
-                android:layout_marginTop="@dimen/margin_30dp"/>
+                android:text="@string/i_accept_the_terms_conditions" />
 
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
@@ -651,13 +709,13 @@
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_50sdp"
                 android:enabled="false"
                 android:text="@string/str_continue"
-                android:layout_marginBottom="@dimen/_50sdp"
                 app:radius="5dp" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

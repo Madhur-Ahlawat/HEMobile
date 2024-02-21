@@ -9,7 +9,7 @@ import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.VehiclelistlayoutBinding
 import com.conduent.nationalhighways.utils.common.Constants
 
-class VehicleListAdapter(private val context: Context, private val list: ArrayList<NewVehicleInfoDetails>,
+class VehicleListAdapter(private val context: Context, private val list: MutableList<NewVehicleInfoDetails>,
                          private val vehicleCallback:VehicleListCallBack, private val showRemoveButton: Boolean = true):
     RecyclerView.Adapter<VehicleListAdapter.VehicleListViewHolder>() {
 

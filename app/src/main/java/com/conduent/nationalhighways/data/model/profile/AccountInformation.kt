@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.data.model.profile
 
 import android.os.Parcelable
+import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsModel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -16,7 +17,7 @@ data class AccountInformation(
     val challengeQuestionThree: String?,
     val challengeQuestionTwo: String?,
     val closeAccount: String?,
-    val communicationPreferences: String?,
+    var communicationPreferences: ArrayList<CommunicationPrefsModel>?=null,
     val deliveryType: String?,
     val fee: String?,
     val languagePref: String?,
@@ -34,7 +35,7 @@ data class AccountInformation(
     val paymentTypeInfo: String?,
     val securityPin: String?,
     val showSuspendedInfo: String?,
-    val smsOption: String?,
+    var smsOption: String?,
     val status: String?,
     val stmtDelivaryInterval: String?,
     val stmtDelivaryMethod: String?,
@@ -50,7 +51,8 @@ data class AccountInformation(
     var fein: String?,  // company reg no.
     val accSubType: String?,
     var mfaEnabled: String?,
-    val ncId: String?=""
+    val ncId: String?="",
+    val correspDeliveryFrequency: String?="",
 ) : Parcelable
 
 

@@ -4,23 +4,36 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.auth.forgot.password.*
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Logg
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
+import com.conduent.nationalhighways.utils.common.Utils.splCharsPassword
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,7 +41,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBinding>(),
     View.OnClickListener {
+    private var isNewPasswordValid: Boolean = false
+    private var isConfirmPasswordValid: Boolean = false
     private val viewModel: ForgotPasswordViewModel by viewModels()
+
     private var data: SecurityCodeResponseModel? = null
     private var loader: LoaderDialog? = null
     private var passwordVisibile: Boolean = false
@@ -61,7 +77,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         )
 
         if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
-            binding.btnSubmit.text = getString(R.string.str_continue)
+//            binding.btnSubmit.text = getString(R.string.str_continue)
             /* AdobeAnalytics.setScreenTrack(
                  "createAccount:email_setPassword",
                  "set password",
@@ -72,7 +88,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                  sessionManager.getLoggedInUser()
              )*/
         } else if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-            binding.btnSubmit.text = getString(R.string.str_submit)
+//            binding.btnSubmit.text = getString(R.string.str_submit)
 
             /* AdobeAnalytics.setScreenTrack(
                  "login:forgot password:choose options:otp:new password set",
@@ -123,7 +139,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         passwordVisibile = true
                     }
                 }
-                var text = binding.edtConformPassword.editText.text.toString().trim()
+                var text = binding.edtConformPassword.editText.text.toString()
                 isEnable(text)
             }
 
@@ -154,7 +170,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         confirmPasswordVisibile = true
                     }
                 }
-                var text = binding.edtConformPassword.editText.text.toString().trim()
+                var text = binding.edtConformPassword.editText.text.toString()
                 isEnable1(text)
             }
 
@@ -166,6 +182,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
     override fun observer() {
         observe(viewModel.resetPassword, ::handleResetResponse)
+
         //observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
     }
 
@@ -176,6 +193,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 if (navFlow != Constants.FORGOT_PASSWORD_FLOW) {
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    emailHeartBeatApi()
                     NewCreateAccountRequestModel.password =
                         binding.edtNewPassword.getText().toString().trim()
                     findNavController().navigate(
@@ -216,9 +234,13 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             }
 
             is Resource.DataError -> {
-                Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
+                if (checkSessionExpiredOrServerError(status.errorModel)
+                ) {
+                    displaySessionExpireDialog(status.errorModel)
+                } else {
+                    Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
 
-                /* AdobeAnalytics.setActionTrack1(
+                    /* AdobeAnalytics.setActionTrack1(
                      "verify",
                      "login:forgot password:choose options:otp:new password set",
                      "forgot password",
@@ -230,7 +252,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                  )
  */
 
-                showError(binding.root, status.errorMsg)
+                    showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
@@ -257,7 +280,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                      )*/
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                     if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
                         findNavController().navigate(
                             R.id.action_createPasswordFragment_to_resetFragment,
                             bundle
@@ -274,7 +299,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             }
 
             is Resource.DataError -> {
-                /*AdobeAnalytics.setActionTrack1(
+                if (checkSessionExpiredOrServerError(status.errorModel)
+                ) {
+                    displaySessionExpireDialog(status.errorModel)
+                } else {
+                    /*AdobeAnalytics.setActionTrack1(
                     "submit",
                     "login:forgot password:choose options:otp:new password set",
                     "forgot password",
@@ -285,7 +314,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                     sessionManager.getLoggedInUser()
                 )*/
 
-                showError(binding.root, status.errorMsg)
+                    showError(binding.root, status.errorMsg)
+                }
             }
 
             else -> {
@@ -294,153 +324,128 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     }
 
     private fun isEnable1(text: String) {
-        if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
-            && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
-            && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
-            && ((binding.edtConformPassword.getText().toString()
-                .trim().length) > 7) && (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim())
-        ) {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = true
-            )
-            binding.btnSubmit.isEnabled = true
+        isConfirmPasswordValid = true
 
-        } else {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = false
-            )
-            binding.btnSubmit.isEnabled = false
-
-        }
-
-        if (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim()
-        ) {
+        if (binding.edtConformPassword.getText().toString().length == 0) {
+            isConfirmPasswordValid = false
             binding.edtConformPassword.removeError()
-        } else {
+        } else if (binding.edtConformPassword.getText().toString()
+                .isNotEmpty() && binding.edtNewPassword.getText()
+                .toString() != binding.edtConformPassword.getText().toString()
+        ) {
+            isConfirmPasswordValid = false
             binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
-        }
-        if (binding.edtConformPassword.getText().toString().trim().length < 3) {
 
-            binding.edtConformPassword.setErrorText(getString(R.string.password_must_be_8_characters))
-
-        } else if (!binding.edtConformPassword.getText().toString().trim().contains(Utils.NUMBER)) {
-
-            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
-
-        } else if (!binding.edtConformPassword.getText().toString().trim()
-                .contains(Utils.UPPERCASE)
-        ) {
-
-            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
-
-        } else if (!binding.edtConformPassword.getText().toString().trim()
-                .contains(Utils.LOWECASE)
-        ) {
-
-            binding.edtConformPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
-
-        } else if (hasSpecialCharacters(text)) {
-            binding.edtConformPassword.setErrorText(getString(R.string.password_must_not_have_special_characters))
         } else {
+//            isConfirmPasswordValid = true
+//            isNewPasswordValid = true
             binding.edtConformPassword.removeError()
+//            binding.edtNewPassword.removeError()
+            binding.edtNewPassword.editText.setText(binding.edtNewPassword.editText.text.toString())
+//            binding.model = ResetPasswordModel(
+//                code = data?.code,
+//                referenceId = data?.referenceId,
+//                newPassword = binding.edtNewPassword.getText().toString(),
+//                confirmPassword = binding.edtConformPassword.getText().toString(),
+//                enable = true
+//            )
         }
-
-
-
-
-
-        if (hasLowerCase(text)) {
-            binding.imgDot3.setImageResource(R.drawable.grin_tick)
-        } else {
-            binding.imgDot3.setImageResource(R.drawable.circle_5dp)
-        }
-
-        if (hasUpperCase(text)) {
-            binding.imgDot2.setImageResource(R.drawable.grin_tick)
-        } else {
-            binding.imgDot2.setImageResource(R.drawable.circle_5dp)
-        }
-
-        if (text.trim().length > 7) {
-            binding.imgDot1.setImageResource(R.drawable.grin_tick)
-        } else {
-            binding.imgDot1.setImageResource(R.drawable.circle_5dp)
-        }
-
-        if (hasDigits(text)) {
-            binding.imgDot4.setImageResource(R.drawable.grin_tick)
-        } else {
-            binding.imgDot4.setImageResource(R.drawable.circle_5dp)
-        }
-
+        binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
     private fun isEnable(text: String) {
-        if (binding.edtNewPassword.getText().toString().trim().isNotEmpty()
-            && binding.edtConformPassword.getText().toString().trim().isNotEmpty()
-            && ((binding.edtNewPassword.getText().toString().trim().length) > 7)
-            && ((binding.edtConformPassword.getText().toString()
-                .trim().length) > 7 && (binding.edtNewPassword.getText().toString()
-                .trim() == binding.edtConformPassword.getText().toString().trim()))
+        var filterTextForSpecialChars = ""
+        var commaSeperatedString = ""
+        isNewPasswordValid = true
+
+        if (binding.edtNewPassword.getText().toString().isEmpty()) {
+            isNewPasswordValid = false
+            binding.edtNewPassword.removeError()
+        } else if (hasSpecialCharacters(
+                binding.edtNewPassword.editText.text.toString(),
+                splCharsPassword
+            ) || binding.edtNewPassword.getText().toString().contains(" ")
         ) {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = true
+            isNewPasswordValid = false
+
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.LOWER_CASE,
+                binding.edtNewPassword.getText().toString()
             )
-            binding.btnSubmit.isEnabled = true
-
-        } else {
-            binding.model = ResetPasswordModel(
-                code = data?.code,
-                referenceId = data?.referenceId,
-                newPassword = binding.edtNewPassword.getText().toString(),
-                confirmPassword = binding.edtConformPassword.getText().toString(),
-                enable = false
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.UPPER_CASE,
+                binding.edtNewPassword.getText().toString()
             )
-            binding.btnSubmit.isEnabled = false
-
-
-        }
-
-
-        if (binding.edtNewPassword.getText().toString().trim().length < 3) {
-
-            binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
-
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.NUMBER)) {
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.DIGITS,
+                binding.edtNewPassword.getText().toString()
+            )
+            filterTextForSpecialChars = Utils.removeGivenStringCharactersFromString(
+                Utils.ALLOWED_CHARS_EMAIL,
+                binding.edtNewPassword.getText().toString()
+            )
+            filterTextForSpecialChars.replace(" ", "space ")
+            commaSeperatedString =
+                Utils.makeCommaSeperatedStringForPassword(
+                    Utils.removeAllCharacters(
+                        Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars
+                    )
+                )
+            if (filterTextForSpecialChars.isNotEmpty()) {
+                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
+                false
+            } else {
+                binding.edtNewPassword.removeError()
+                true
+            }
+        } else if (!binding.edtNewPassword.getText().toString().contains(Utils.NUMBER)) {
+            isNewPasswordValid = false
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_contain_at_least_one_character))
 
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.UPPERCASE)) {
+        } else if (!binding.edtNewPassword.getText().toString().contains(Utils.UPPERCASE)) {
+            isNewPasswordValid = false
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_upper_case))
 
-        } else if (!binding.edtNewPassword.getText().toString().trim().contains(Utils.LOWECASE)) {
+        } else if (!binding.edtNewPassword.getText().toString().contains(Utils.LOWECASE)) {
+            isNewPasswordValid = false
 
             binding.edtNewPassword.setErrorText(getString(R.string.str_password_must_least_contain_one_lower_case))
+        } else if (binding.edtNewPassword.getText().toString().length < 8) {
+            isNewPasswordValid = false
 
-        } else if (hasSpecialCharacters(text)) {
-            binding.edtNewPassword.setErrorText(getString(R.string.password_must_not_have_special_characters))
-        } else {
+            binding.edtNewPassword.setErrorText(getString(R.string.password_must_be_8_characters))
+
+        } else if (binding.edtConformPassword.getText().toString()
+                .isNotEmpty() && binding.edtNewPassword.getText().toString()
+            != binding.edtConformPassword.getText().toString()
+        ) {
+            isNewPasswordValid = false
             binding.edtNewPassword.removeError()
+            binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
+        } else {
+            isNewPasswordValid = true
+
+            binding.edtNewPassword.removeError()
+
+            if (binding.edtConformPassword.getText().toString().isEmpty()) {
+                isConfirmPasswordValid = false
+                binding.edtConformPassword.removeError()
+            } else {
+
+                binding.model = ResetPasswordModel(
+                    code = data?.code,
+                    referenceId = data?.referenceId,
+                    newPassword = binding.edtNewPassword.getText().toString(),
+                    confirmPassword = binding.edtConformPassword.getText().toString(),
+                    enable = true
+                )
+
+                isConfirmPasswordValid = true
+                binding.edtConformPassword.removeError()
+            }
         }
-
-
-
-
 
         if (hasLowerCase(text)) {
             binding.imgDot3.setImageResource(R.drawable.grin_tick)
@@ -454,7 +459,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.imgDot2.setImageResource(R.drawable.circle_5dp)
         }
 
-        if (text.trim().length > 7) {
+        if (text.length >= 8) {
             binding.imgDot1.setImageResource(R.drawable.grin_tick)
         } else {
             binding.imgDot1.setImageResource(R.drawable.circle_5dp)
@@ -465,7 +470,14 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         } else {
             binding.imgDot4.setImageResource(R.drawable.circle_5dp)
         }
+//new password
+
+        binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
+    }
+
+    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
 
     }
 
 }
+

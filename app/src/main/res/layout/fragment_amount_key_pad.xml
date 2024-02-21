@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/txt_payment_amount"
+                    android:textSize="56sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    style="@style/RegularText"
+                    tools:text="£0.00"
+                    android:fontFamily="@font/open_sans_light" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/txt_minimum_label"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    style="@style/RegularText"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <com.conduent.apollo.ui.CMKeypad
+                android:id="@+id/cm_keypad"
+                android:orientation="vertical"
+                android:layout_weight="2.5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:textColor="@color/black"
+                app:isRippleEnable="true"
+                app:maxValue="99999.99"
+                app:keyBackgroundColor="@android:color/transparent"
+                app:fontSize="20dp"/>
+
+
+            <LinearLayout
+                android:layout_weight="0.8"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/btn_continue_reload"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    style="@style/PrimaryButton"
+                    android:text="@string/str_continue"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

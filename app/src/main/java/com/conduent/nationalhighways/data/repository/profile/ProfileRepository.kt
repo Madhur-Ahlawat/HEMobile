@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.data.repository.profile
 
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
+import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
@@ -22,5 +23,6 @@ class ProfileRepository @Inject constructor(private val apiService: ApiService) 
     suspend fun twoFAVerifyOTP(model: VerifyRequestOtpReq) =
         apiService.twoFAVerifyRequestCode(BuildConfig.AGENCY_ID, model)
     suspend fun verifyRequestCode(model: VerifyRequestOtpReq?) = apiService.verifyRequestCode(model)
-
+    suspend fun userNameAvailabilityCheck(reqModel: UserNameCheckReq?) =
+        apiService.userNameAvailabilityCheck(reqModel)
 }

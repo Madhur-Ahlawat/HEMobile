@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.data.remote
 
 import android.app.Dialog
 import android.content.Context
+import android.util.Log
 import android.view.Window
 import android.widget.TextView
 import com.conduent.nationalhighways.R
@@ -17,16 +18,17 @@ class ResponseInterceptor @Inject constructor(private val mContext: Context) :
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
+        Log.e("TAG", "intercept: --Response> ", )
         val response = chain.proceed(chain.request())
-
         return try{
             if (!response.isSuccessful) {
-//                showDialog(mContext, chain)
+                showDialog(mContext, chain)
                 response
             } else {
                 response
             }
         } catch (e : Exception){
+            Log.e("TAG", "intercept excepion: "+e )
             response
         }
     }

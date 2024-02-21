@@ -5,21 +5,28 @@ import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
-import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentFailedRetryBinding
-import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.Locale
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>(), View.OnClickListener {
+class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>() {
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -27,34 +34,33 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>(), View.OnC
     ) = FragmentFailedRetryBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.desc3.movementMethod = LinkMovementMethod.getInstance()
-        makeLinksInLicenseAgreementDescription()
+        backButton = false
+        checkBackIcon()
+        showToolBar(true)
+//        binding.desc3.movementMethod = LinkMovementMethod.getInstance()
+//        makeLinksInLicenseAgreementDescription()
+        if (sessionManager.getLoggedInUser()) {
+            binding.decs1Tv.text = resources.getString(R.string.try_again_later_signin_account)
+            binding.btnNext.text = resources.getString(R.string.sign_in)
+        } else {
+            binding.decs1Tv.text = resources.getString(R.string.try_again_later)
+            binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
+        }
+
+        binding.btnNext.setOnClickListener {
+            if (sessionManager.getLoggedInUser()) {
+                requireActivity().startNewActivityByClearingStack(LoginActivity::class.java)
+            } else {
+                requireActivity().startNewActivityByClearingStack(LandingActivity::class.java)
+            }
+        }
+
     }
 
     override fun initCtrl() {
-        binding.apply {
-            btnSignIn.setOnClickListener(this@FailedRetryFragment)
-            btnClose.setOnClickListener(this@FailedRetryFragment)
-        }
     }
 
     override fun observer() {}
-
-    override fun onClick(v: View?) {
-        v?.let {
-            when (v.id) {
-                R.id.btnSignIn -> {
-                    Intent(requireActivity(), AuthActivity::class.java).run {
-                        startActivity(this)
-                    }
-                }
-
-                R.id.btnClose -> {
-                    requireActivity().finishAffinity()
-                }
-            }
-        }
-    }
 
     private fun makeLinksInLicenseAgreementDescription() {
         try {
@@ -83,7 +89,7 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>(), View.OnC
                             phrasePrivacyPolicyEnd,
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
                         )
-                        binding.desc3.text = it
+//                        binding.desc3.text = it
                     }
                 }
         } catch (e: Exception) {

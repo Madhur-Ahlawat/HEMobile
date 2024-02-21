@@ -4,10 +4,11 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CreateAccountResponseModel(
+data class CreateProfileDetailModelModel(
     val accountNumber: String?,
     val emailStatusCode: String?,
     val message: String?,
     val statusCode: String?,
-    var accountType : String?
+    var accountType : String?,
+    var referenceNumber:String?
 ) : Parcelable

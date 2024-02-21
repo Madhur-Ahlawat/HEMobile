@@ -4,8 +4,10 @@ package com.conduent.nationalhighways.data.model.account.payment
 class AccountCreationRequest {
     var eveningPhone: String? = null
     var lastName: String? = null
+    var postCode:String?=null
     var zipCode1: String? = null
     var billingAddressLine1: String? = null
+    var billingAddressLine2: String? = null
     var city: String? = null
     var stateType: String? = null
     var smsReferenceId: String? = null
@@ -36,6 +38,8 @@ class AccountCreationRequest {
     var thresholdAmount: String? = null
     var smsSecurityCd: String? = null
     var address1: String? = null
+    var address2: String? = null
+    var addressLine2:String?=null
     var accountType: String? = null
     var securityCode: String? = null
     var threeDsVer: String? = null
@@ -48,6 +52,11 @@ class AccountCreationRequest {
     var creditCardNumber: String? = null
     var directoryServerID: String? = null
     var mfaFlag: String? = null
+    var planType:String?=null
+    var companyName:String?=null
+    var cellPhoneCountryCode:String?=null
+    var cellPhone:String?=null
+
 }
 
 

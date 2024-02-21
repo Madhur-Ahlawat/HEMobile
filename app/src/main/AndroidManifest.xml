@@ -1,28 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.conduent.nationalhighways">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:name=".ui.base.BaseApplication"
         android:allowBackup="false"
-        android:debuggable="false"
         android:icon="@mipmap/appicon"
         android:label="@string/app_name"
         android:resizeableActivity="false"
         android:roundIcon="@mipmap/appicon_round"
         android:theme="@style/Theme.HEMobile"
-        android:usesCleartextTraffic="true"
-        tools:ignore="HardcodedDebugMode">
+        android:usesCleartextTraffic="false">
+        <activity
+            android:name=".ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bottomnav.account.close_account.CloseAccountSuccessActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.account.biometric.BiometricActivity"
             android:exported="false" />
@@ -37,15 +54,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.bottomnav.dashboard.topup.ManualTopUpActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileWhite" />
-        <activity
-            android:name=".ui.startNow.StartNowBaseActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.auth.controller.AuthActivity"
             android:screenOrientation="portrait"
@@ -63,13 +71,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.HEMobileDark" />
         <activity
-            android:name=".ui.vehicle.VehicleMgmtActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobile" />
-        <activity
             android:name=".ui.bottomnav.HomeActivityMain"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileDark" />
+            android:theme="@style/Theme.HEMobileDark"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.viewcharges.ViewChargesActivity"
             android:screenOrientation="portrait"
@@ -80,20 +85,15 @@
         <activity
             android:name=".ui.account.creation.controller.CreateAccountActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.CreateAccount" />
-        <activity
-            android:name=".ui.account.profile.ProfileActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.HEMobileWhite" />
+            android:theme="@style/Theme.CreateAccount"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.startNow.contactdartcharge.ContactDartChargeActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.startNow.guidancedocuments.GuidanceAndDocumentsActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.payment.MakeOffPaymentActivity"
             android:screenOrientation="portrait"
@@ -133,10 +133,31 @@
             </intent-filter>
         </service>
 
+        <!-- [START fcm_default_icon] -->
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+             See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_dart_charge_app_icon" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <!-- [END fcm_default_icon] -->
+        <!-- [START fcm_default_channel] -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        <!-- [END fcm_default_channel] -->
+
         <receiver
             android:name=".receiver.NotificationBroadcastReceiver"
             android:enabled="true"
             android:exported="false" />
+        <receiver
+            android:name=".receiver.GeofenceBroadcastReceiver"
+            android:exported="true" />
         <receiver
             android:name=".receiver.BootCompleteReceiver"
             android:exported="false"
@@ -146,6 +167,8 @@
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
+
+
     </application>
 
 </manifest>

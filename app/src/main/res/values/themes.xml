@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_background_new</item>
         <item name="android:statusBarColor">@color/splash_background</item>
     </style>
 
@@ -17,11 +16,15 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/blue_color</item>
+        <item name="colorAccent">@color/blue_color</item>
         <item name="android:colorAccent">@color/blue_color</item>
         <item name="backgroundColor">@color/white</item>
+
+
         <!-- Customize your theme here. -->
     </style>
-
+    <style name="CustomDialogTheme1" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>    <!-- Add other attributes as needed --></style>
     <style name="Theme.CreateAccount" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
@@ -47,7 +50,7 @@
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_color</item>
+        <item name="android:statusBarColor">@color/blue_color</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
@@ -61,7 +64,7 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorControlActivated">@color/black</item>
         <item name="colorControlNormal">@color/tool_bar_clr</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_color</item>
+        <item name="android:statusBarColor">@color/blue_color</item>
     </style>
 
     <style name="Theme.HEMobileLight" parent="Theme.AppCompat.Light.NoActionBar">
@@ -71,6 +74,7 @@
         <item name="colorPrimaryDark">@color/blue_color</item>
         <item name="colorOnPrimary">@color/blue_color</item>
         <item name="colorAccent">@color/blue_color</item>
+        <item name="android:colorAccent">@color/blue_color</item>
     </style>
 
     <style name="Theme.ToolBar" parent="Theme.MaterialComponents">
@@ -264,6 +268,13 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
+    <style name="RegularTextGrey">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_14sp</item>
+        <item name="android:textColor">@color/grayColorIcon</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+    </style>
     <style name="MediumText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -295,6 +306,13 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:fontFamily">@font/open_sans_semibold</item>
     </style>
+    <style name="SemiBoldTextBlack_14sp">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_14sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/open_sans_semibold</item>
+    </style>
 
     <style name="BoldText">
         <item name="android:layout_width">wrap_content</item>
@@ -304,11 +322,18 @@
         <item name="android:fontFamily">@font/sfbold</item>
     </style>
 
+    <style name="OpenSansBoldText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_15sp</item>
+        <item name="android:textColor">@color/dark_blue_color</item>
+        <item name="android:fontFamily">@font/open_sans_bold</item>
+    </style>
 
 
     <style name="PrimaryButton" parent="button">
         <item name="isPrimary">true</item>
-        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_20dp</item>
         <item name="backgroundColor">@color/new_btn_color</item>
         <item name="android:background">@color/new_btn_color</item>
         <item name="android:textColor">@color/white</item>
@@ -316,10 +341,11 @@
 
     <style name="secondaryButton" parent="button">
         <item name="isPrimary">false</item>
-        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_20dp</item>
         <item name="backgroundColor">@color/white</item>
         <item name="borderColor">@color/new_btn_color</item>
         <item name="borderWidth_">1dp</item>
+        <item name="radius">2dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/new_btn_color</item>
     </style>
@@ -378,5 +404,22 @@
         <item name="windowMinWidthMajor">0dp</item>
         <item name="windowMinWidthMinor">0dp</item>
     </style>
+
+
+
+    <style name="cardView_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_1dp</item>
+        <item name="android:layout_marginEnd">@dimen/margin_1dp</item>
+        <item name="android:layout_marginBottom">@dimen/margin_1dp</item>
+        <item name="android:elevation">@dimen/margin_3dp</item>
+        <item name="cornerRadius">@dimen/margin_5dp</item>
+    </style>
+    <style name="CustomLoaderDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 
 </resources>

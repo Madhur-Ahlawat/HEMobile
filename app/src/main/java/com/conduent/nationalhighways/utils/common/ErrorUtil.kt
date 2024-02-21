@@ -2,10 +2,12 @@ package com.conduent.nationalhighways.utils.common
 
 import android.content.ContextWrapper
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.ui.loader.ErrorDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -14,6 +16,7 @@ import com.conduent.nationalhighways.ui.loader.RetryDialog
 object ErrorUtil {
 
     fun showError(view: View?, message: String?) {
+        Log.e("TAG", "showError: message "+message )
         try {
             val dialog = ErrorDialog()
             val bundle = Bundle()
@@ -40,7 +43,7 @@ object ErrorUtil {
 
     fun showRetry(view: Fragment?) {
         try {
-            val dialog = RetryDialog()
+            val dialog = RetryDialog(BuildConfig.LOGIN)
             dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
             dialog.listener = view as OnRetryClickListener
 
