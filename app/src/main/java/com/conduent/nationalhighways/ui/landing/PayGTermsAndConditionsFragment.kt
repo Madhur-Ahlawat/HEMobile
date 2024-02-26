@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
@@ -58,6 +60,20 @@ class PayGTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCondi
             .addPathHandler("/res/", WebViewAssetLoader.ResourcesPathHandler(requireActivity()))
             .build()
         binding.webView.webViewClient = LocalContentWebViewClient(mAssetLoader)
+        binding.webView.setWebViewClient(object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                val url = request?.url.toString()
+                if (url.startsWith("tel:")) {
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse(url))
+                    startActivity(intent)
+                    return true
+                }
+                return super.shouldOverrideUrlLoading(view, request)            }
+
+        })
         binding.webView.loadUrl("file:///android_res/raw/paygtermsandcondition.html")
 
         AdobeAnalytics.setScreenTrack(
