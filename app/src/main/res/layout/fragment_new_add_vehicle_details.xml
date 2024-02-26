@@ -89,7 +89,7 @@
                         android:textAllCaps="true"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistrationPlate"
-                        tools:text="sdsdsd" />
+                        tools:text="@string/app_name" />
 
                     <ImageView
                         android:id="@+id/editVehicle"
