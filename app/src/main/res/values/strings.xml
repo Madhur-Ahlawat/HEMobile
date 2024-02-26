@@ -1702,4 +1702,9 @@
     <string name="str_no_transactions_to_view">There are no recent transactions to view</string>
     <string name="str_cash">Cash</string>
 
+
+
+    <string name="accessibility_edit">Edit</string>
+    <string name="accessibility_bullet">Bullet</string>
+
 </resources>
