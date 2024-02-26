@@ -83,7 +83,7 @@
                     <TextView
                         android:id="@+id/txtVehicleRegistrationNumber"
                         style="@style/MediumTextBlack"
-                        android:text="Vehicle Registration (number plate)"
+                        android:text="@string/vehicle_registration_number_plate"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -184,7 +184,7 @@
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:id="@+id/errorTxt"
-                android:text="ssssss"
+                tools:text="@string/app_name"
                 android:textColor="@color/red_color"
                 android:textSize="@dimen/font_16sp" />
             <androidx.appcompat.widget.AppCompatTextView
