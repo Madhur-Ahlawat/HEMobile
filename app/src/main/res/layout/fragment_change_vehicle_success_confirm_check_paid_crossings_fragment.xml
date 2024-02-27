@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -10,151 +11,159 @@
             android:background="@color/white"
             android:paddingBottom="@dimen/margin_30dp">
 
-            <LinearLayout
-                android:layout_above="@id/btnOk"
-                android:id="@+id/llCheckvehicleDetails"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_above="@id/btnOk"
                 android:layout_alignParentTop="true"
-                android:layout_marginHorizontal="@dimen/margin_2dp"
-                android:layout_marginTop="@dimen/margin_30dp"
-                android:layout_marginBottom="@dimen/margin_24dp"
-                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/tick_blue"
-                    android:layout_width="73.33dp"
-                    android:layout_height="73.33dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_tick_blue" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/title"
+                >
+                <LinearLayout
+                    android:id="@+id/llCheckvehicleDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_14_67dp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:text="@string/credit_transferred"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="@dimen/font_18sp" />
+                    android:layout_marginHorizontal="@dimen/margin_2dp"
+                    android:layout_marginTop="@dimen/margin_30dp"
+                    android:paddingBottom="@dimen/margin_24dp"
+                    android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginTop="@dimen/margin_36dp"
-                    android:layout_marginEnd="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:elevation="3dp"
-                    app:cardCornerRadius="5dp">
+                    <ImageView
+                        android:id="@+id/tick_blue"
+                        android:layout_width="73.33dp"
+                        android:layout_height="73.33dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_tick_blue" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/layoutVehicleRegistration"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/margin_15dp">
+                        android:layout_marginTop="@dimen/margin_14_67dp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:text="@string/credit_transferred"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:textSize="@dimen/font_18sp" />
 
-                        <TextView
-                            android:id="@+id/txtVehicleRegistration"
-                            style="@style/MediumTextBlack"
-                            android:text="@string/vehicle_registration_number_plate"
-                            android:textSize="15sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/vehicleRegisration"
-                            style="@style/RegularTextBlack"
-                            android:layout_marginTop="@dimen/margin_5dp"
-                            android:text="AJ66 MHA"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginTop="@dimen/margin_16_34dp"
-                    android:layout_marginEnd="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:elevation="3dp"
-                    app:cardCornerRadius="5dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cardRecentCrossings"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/margin_15dp">
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="@dimen/margin_36dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:elevation="3dp"
+                        app:cardCornerRadius="5dp">
 
-                        <TextView
-                            android:id="@+id/txtCreditRemaining"
-                            style="@style/MediumTextBlack"
-                            android:text="@string/credit_remaining"
-                            android:textSize="15sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/creditRemaining"
-                            style="@style/RegularTextBlack"
-                            android:layout_marginTop="@dimen/margin_5dp"
-                            android:text="3"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txtCreditRemaining" />
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/emailCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginTop="@dimen/margin_16_34dp"
-                    android:layout_marginEnd="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:elevation="3dp"
-                    app:cardCornerRadius="5dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/margin_15dp">
-
-                        <TextView
-                            android:id="@+id/txtCreditWillExpireOn"
-                            style="@style/MediumTextBlack"
-                            android:text="@string/expiry_date"
-                            android:textSize="15sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/creditWillExpireOn"
-                            style="@style/RegularTextBlack"
-                            android:layout_width="wrap_content"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/layoutVehicleRegistration"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5dp"
-                            android:gravity="left|center"
-                            android:text="Date"
-                            app:layout_constraintStart_toStartOf="@id/txtCreditWillExpireOn"
-                            app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn" />
+                            android:padding="@dimen/margin_15dp">
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:id="@+id/txtVehicleRegistration"
+                                style="@style/MediumTextBlack"
+                                android:text="@string/vehicle_registration_number_plate"
+                                android:textSize="15sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/vehicleRegisration"
+                                style="@style/RegularTextBlack"
+                                android:layout_marginTop="@dimen/margin_5dp"
+                                tools:text="@string/app_name"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                </androidx.cardview.widget.CardView>
+                    </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="@dimen/margin_16_34dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:elevation="3dp"
+                        app:cardCornerRadius="5dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/cardRecentCrossings"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/margin_15dp">
+
+                            <TextView
+                                android:id="@+id/txtCreditRemaining"
+                                style="@style/MediumTextBlack"
+                                android:text="@string/credit_remaining"
+                                android:textSize="15sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/creditRemaining"
+                                style="@style/RegularTextBlack"
+                                android:layout_marginTop="@dimen/margin_5dp"
+                                tools:text="@string/app_name"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txtCreditRemaining" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/emailCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="@dimen/margin_16_34dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:elevation="3dp"
+                        app:cardCornerRadius="5dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/margin_15dp">
+
+                            <TextView
+                                android:id="@+id/txtCreditWillExpireOn"
+                                style="@style/MediumTextBlack"
+                                android:text="@string/expiry_date"
+                                android:textSize="15sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/creditWillExpireOn"
+                                style="@style/RegularTextBlack"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_5dp"
+                                android:gravity="start|center"
+                                tools:text="@string/app_name"
+                                app:layout_constraintStart_toStartOf="@id/txtCreditWillExpireOn"
+                                app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </ScrollView>
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/btnOk"

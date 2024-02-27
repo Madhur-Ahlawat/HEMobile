@@ -70,11 +70,14 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
 
+
                         <ImageView
                             android:id="@+id/editVehicleRegistrationNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/margin_20dp"
+                            android:layout_width="@dimen/margin_48dp"
+                            android:layout_height="@dimen/margin_48dp"
+                            android:layout_marginEnd="@dimen/margin_5dp"
+                            android:padding="@dimen/margin_16dp"
+                            android:contentDescription="@string/accessibility_edit"
                             android:src="@drawable/edit"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

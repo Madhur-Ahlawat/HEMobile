@@ -15,7 +15,6 @@ import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 @AndroidEntryPoint
 class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), LogoutListener {
 

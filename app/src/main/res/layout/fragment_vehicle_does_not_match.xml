@@ -5,69 +5,87 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/margin_22dp"
-        android:layout_marginEnd="@dimen/margin_24dp">
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingEnd="@dimen/margin_20dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom_ll"
+            android:layout_alignParentTop="true"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/llCheckvehicleDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/margin_5dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tick_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/warningicon" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_36dp"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/your_type_of_vehicle_does_not_match_what_we_have_on_record"
+                    android:textColor="@color/new_btn_color"
+                    android:textSize="@dimen/font_16sp" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/desc_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_13dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text="@string/our_records_show_the_numberplate"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_14sp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
 
         <LinearLayout
-            android:id="@+id/llCheckvehicleDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/btnOk"
-            android:layout_alignParentTop="true"
-            android:layout_marginHorizontal="@dimen/margin_2dp"
-            android:layout_marginEnd="@dimen/margin_24dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/tick_blue"
-                android:layout_width="73.33dp"
-                android:layout_height="73.33dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/warningicon" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_36dp"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="center"
-                android:text="@string/your_type_of_vehicle_does_not_match_what_we_have_on_record"
-                android:textColor="@color/new_btn_color"
-                android:textSize="@dimen/font_16sp" />
-
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/desc_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_13dp"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="@string/our_records_show_the_numberplate"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_14sp" />
-        </LinearLayout>
-
-        <com.conduent.nationalhighways.utils.widgets.NHButton
-            android:id="@+id/btnOk"
-            style="@style/PrimaryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/btnFeedback"
-            android:text="@string/str_buy_crossings_for_vehicle"
-            app:radius="5dp" />
-
-        <com.conduent.nationalhighways.utils.widgets.NHButton
-            android:id="@+id/btnFeedback"
-            style="@style/secondaryButton"
+            android:id="@+id/bottom_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/margin_30dp"
-            android:layout_marginBottom="@dimen/margin_23dp"
-            android:text="@string/cancel"
-            app:radius="5dp" />
+            android:orientation="vertical">
+
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/btnOk"
+                style="@style/PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/str_buy_crossings_for_vehicle"
+                app:radius="5dp" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHButton
+                android:id="@+id/btnFeedback"
+                style="@style/secondaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:layout_marginBottom="@dimen/margin_23dp"
+                android:text="@string/cancel"
+                app:radius="5dp" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 
 </layout>

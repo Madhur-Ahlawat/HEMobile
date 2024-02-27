@@ -736,7 +736,6 @@
     <string name="vehicle_not_recognized">The vehicle registration number is not recognised. You have to self declare the details below</string>
     <string name="reg_no">Registration number -</string>
     <string name="appearance">Appearance</string>
-    1-99462371
     <string name="vehicle_class">Vehicle class</string>
     <string name="two_plus_axles">2+ Axle vehicles</string>
     <string name="group_name_field">The group name field can be used to help you distinguish different vehicles associated with your account</string>
@@ -1702,5 +1701,10 @@
     <string name="str_enable_push_notification_desc">Go to Settings on your device to enable notifications for the Dart Charge app</string>
     <string name="str_no_transactions_to_view">There are no recent transactions to view</string>
     <string name="str_cash">Cash</string>
+
+
+
+    <string name="accessibility_edit">Edit</string>
+    <string name="accessibility_bullet">Bullet</string>
 
 </resources>
