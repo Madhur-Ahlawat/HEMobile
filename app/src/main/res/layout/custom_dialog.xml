@@ -73,7 +73,7 @@
                 <LinearLayout
                     android:id="@+id/rebooking_back_button_ll"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -81,6 +81,8 @@
                         android:id="@+id/cancel_btn"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/margin_12dp"
+                        android:paddingBottom="@dimen/margin_12dp"
                         android:layout_weight=".49"
                         android:fontFamily="@font/open_sans"
                         android:gravity="center"
@@ -104,6 +106,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
+                        android:paddingTop="@dimen/margin_12dp"
+                        android:paddingBottom="@dimen/margin_12dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:text="@string/add"
