@@ -27,7 +27,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_5dp">
+            >
 
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -57,18 +57,21 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title_txt"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:ellipsize="end"
-                android:paddingEnd="@dimen/margin_48dp"
-                android:paddingStart="@dimen/margin_48dp"
+                android:layout_marginEnd="@dimen/margin_48dp"
+                android:layout_marginStart="@dimen/margin_48dp"
+                android:paddingLeft="@dimen/margin_3dp"
+                android:paddingRight="@dimen/margin_3dp"
                 android:gravity="center"
                 android:fontFamily="@font/open_sans_semibold"
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                tools:text="@string/app_name" />
+                tools:text="app_nameapp_nameapp_nameapp_name"
+                />
 
 
         </RelativeLayout>

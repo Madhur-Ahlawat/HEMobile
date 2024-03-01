@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -282,6 +281,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         if (navFlowCall == Constants.EDIT_SUMMARY) {
             binding.checkBoxTerms.isChecked = true
         }
+
     }
 
     private fun setPreSelectedVehicleType() {
