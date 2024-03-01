@@ -42,8 +42,8 @@ class GpsSettingsFragment : BaseFragment<FragmentGpsSettingsBinding>() {
             )
             val bundle=Bundle()
             bundle.putBoolean(Constants.GpsSettings,true)
-            findNavController().navigate(R.id.action_gpsSettingsFragment_to_registerReminderFragment,bundle)
             sessionManager.saveBooleanData(SessionManager.SettingsClick, true)
+            findNavController().navigate(R.id.action_gpsSettingsFragment_to_registerReminderFragment,bundle)
         }
     }
 
