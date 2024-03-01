@@ -23,14 +23,18 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/back_button"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="17dp"
-                android:layout_marginTop="@dimen/margin_25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="@dimen/margin_15dp"
+                android:minHeight="@dimen/margin_48dp"
+                android:minWidth="@dimen/margin_48dp"
+                android:padding="@dimen/_10sdp"
                 android:tint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_back_arrow_white" />
+                app:srcCompat="@drawable/ic_back_arrow_white"
+                android:contentDescription="@string/str_back"/>
 
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -134,7 +138,8 @@
                 android:id="@+id/tv_forgot_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_18dp"
+                android:paddingTop="@dimen/margin_18dp"
+                android:paddingBottom="@dimen/margin_18dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/str_forgot_password"
                 android:textColor="@color/forgotPasswordColor"
