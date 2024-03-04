@@ -122,7 +122,6 @@ android {
             applicationId envConfig.APPLICATION_ID.replace("\"", "")
             versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"", "")
-
         }
     }
 
