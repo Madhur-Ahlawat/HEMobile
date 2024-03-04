@@ -83,6 +83,8 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
                 tvChannelValue.text = Utils.capitalizeString(resources.getString(R.string.str_phone))
             }else if (paymentSource.equals("mail-in")) {
                 tvChannelValue.text = Utils.capitalizeString(resources.getString(R.string.str_post))
+            }else if (paymentSource.equals("mobileapp")) {
+                tvChannelValue.text = Utils.capitalizeString(resources.getString(R.string.mobile_app))
             } else {
                 tvChannelValue.text = Utils.capitalizeString(crossing?.paymentSource)
             }
