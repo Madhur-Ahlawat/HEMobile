@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="no_internet_connection">No internet connection</string>
     <string name="network_failure">Network Failure</string>
     <string name="conversion_error">Conversion Error</string>
@@ -1706,5 +1706,6 @@
 
     <string name="accessibility_edit">Edit</string>
     <string name="accessibility_bullet">Bullet</string>
+    <string name="powered_by" tools:ignore="ExtraTranslation">powered by</string>
 
 </resources>
