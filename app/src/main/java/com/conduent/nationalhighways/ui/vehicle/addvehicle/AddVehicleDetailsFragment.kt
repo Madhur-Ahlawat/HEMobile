@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -282,6 +282,37 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         if (navFlowCall == Constants.EDIT_SUMMARY) {
             binding.checkBoxTerms.isChecked = true
         }
+
+
+
+        binding.checkBoxTerms.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.checkBoxTerms.contentDescription = if (isChecked) {
+                "${resources.getString(R.string.accessibility_ticked)} ${binding.checkBoxTerms.text}"
+            } else {
+                "${resources.getString(R.string.accessibility_not_ticked)} ${binding.checkBoxTerms.text}"
+            }
+            binding.checkBoxTerms.contentDescription = binding.checkBoxTerms.text.toString()
+        }
+
+        binding.radioButtonYes.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.radioButtonYes.contentDescription = if (isChecked) {
+                "${binding.radioButtonYes.text}"
+            } else {
+                "${binding.radioButtonYes.text}"
+            }
+            binding.radioButtonYes.contentDescription = binding.radioButtonYes.text.toString()
+        }
+
+        binding.radioButtonNo.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.radioButtonNo.contentDescription = if (isChecked) {
+                "${binding.radioButtonNo.text}"
+            } else {
+                "${binding.radioButtonNo.text}"
+            }
+            binding.radioButtonNo.contentDescription = binding.radioButtonNo.text.toString()
+        }
+
+
     }
 
     private fun setPreSelectedVehicleType() {

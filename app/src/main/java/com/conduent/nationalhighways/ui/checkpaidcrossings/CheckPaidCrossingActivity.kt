@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), LogoutListener {
 
@@ -41,7 +42,6 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
             "check crossings",
             sessionManager.getLoggedInUser()
         )
-
     }
 
     private fun init() {
@@ -54,7 +54,7 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
         val graphInflater = navHostFragment.navController.navInflater
         val navGraph = graphInflater.inflate(R.navigation.nav_graph_account_creation)
         val navController = navHostFragment.navController
-        val destination = R.id.crossingCheck
+        val destination = R.id.addNewVehicleDetailsFragment
         navGraph.setStartDestination(destination)
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.TRANSFER_CROSSINGS)
@@ -122,10 +122,16 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
         sessionManager.clearAll()
         sessionManager.saveTouchIdEnabled(touchIdEnabled)
         if (touchIdEnabled) {
-            sessionManager.saveRefreshToken(refreshToken?:"")
+            sessionManager.saveRefreshToken(refreshToken ?: "")
             sessionManager.saveHasAskedForBiometric(hasAskedForBiometric)
         }
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
+    }
+
+    fun focusToolBar() {
+        binding.toolBarLyt.backButton.isFocusable = true
+        binding.toolBarLyt.backButton.isFocusableInTouchMode = true
+        binding.toolBarLyt.backButton.requestFocus()
     }
 }
