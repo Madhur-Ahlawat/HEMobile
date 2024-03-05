@@ -66,7 +66,6 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun init() {
 
-
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
@@ -108,6 +107,10 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         initLoaderDialog()
         initTransactionsRecyclerView()
         getPaymentHistoryList(startIndex)
+
+        if(requireActivity() is CheckPaidCrossingActivity){
+            (requireActivity() as CheckPaidCrossingActivity).focusToolBar()
+        }
     }
 
 
