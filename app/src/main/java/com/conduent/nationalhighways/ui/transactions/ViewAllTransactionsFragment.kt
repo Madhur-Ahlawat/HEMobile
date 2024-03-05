@@ -169,8 +169,8 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
             index,
             Constants.ALL_TRANSACTION,
             100,
-            enddate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
-            startdate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
+            endDate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
+            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }

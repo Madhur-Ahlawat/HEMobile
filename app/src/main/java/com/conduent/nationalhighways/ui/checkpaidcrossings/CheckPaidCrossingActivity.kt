@@ -113,11 +113,19 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
 //        sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {
+        val touchIdEnabled = sessionManager.fetchTouchIdEnabled()
+        val refreshToken = sessionManager.fetchRefreshToken()
+        val hasAskedForBiometric = sessionManager.hasAskedForBiometric()
         sessionManager.clearAll()
+        sessionManager.saveTouchIdEnabled(touchIdEnabled)
+        if (touchIdEnabled) {
+            sessionManager.saveRefreshToken(refreshToken?:"")
+            sessionManager.saveHasAskedForBiometric(hasAskedForBiometric)
+        }
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
     }

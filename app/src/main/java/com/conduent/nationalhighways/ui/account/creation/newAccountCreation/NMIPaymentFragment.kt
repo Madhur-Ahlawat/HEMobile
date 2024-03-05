@@ -14,6 +14,7 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.CreateAccountResponseModel
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
@@ -82,6 +83,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var isViewCreated: Boolean = false
 
     private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
     private var currentBalance: String = ""
     private var checkBox: Boolean = false
     private var paymentListSize: Int = 0
@@ -99,7 +101,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
+        }
 
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
 
         if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
@@ -395,6 +401,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount.toDouble())
                                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                                 bundle.putString(Constants.NAV_FLOW_KEY, flow)
                                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
@@ -954,6 +961,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         val bundle = Bundle()
         bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)

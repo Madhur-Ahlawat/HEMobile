@@ -133,6 +133,7 @@ class BaseApplication : Application() {
             )
             sessionManager.run {
                 saveAuthToken(response?.body()?.accessToken ?: "")
+                saveBooleanData(SessionManager.SendAuthTokenStatus,true)
                 saveRefreshToken(response?.body()?.refreshToken ?: "")
                 saveAuthTokenTimeOut(response?.body()?.expiresIn ?: 0)
             }

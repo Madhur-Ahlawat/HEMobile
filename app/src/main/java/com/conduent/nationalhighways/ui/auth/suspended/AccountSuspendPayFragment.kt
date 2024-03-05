@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.account.AccountInformation
 import com.conduent.nationalhighways.data.model.account.PersonalInformation
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
@@ -53,6 +54,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     private var loader: LoaderDialog? = null
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
     private var currentBalance: String = ""
     private var paymentSuccessResponse: PaymentSuccessResponse? = null
     private var navFlow: String = ""
@@ -93,6 +95,11 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
+
+        }
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
 
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
@@ -376,6 +383,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 bundle.putParcelable(Constants.DATA, responseModel)
                 bundle.putString(Constants.TOP_UP_AMOUNT, topUpAmount.toString())
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                 bundle.putString(Constants.TRANSACTIONID, status.data?.transactionId)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
@@ -417,6 +425,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                     bundle.putParcelable(Constants.DATA, responseModel)
                     bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                    bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                     bundle.putString(Constants.TRANSACTIONID, status.data.transactionId)
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
@@ -444,6 +453,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                                 val bundle = Bundle()
                                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
                                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
@@ -479,6 +489,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         val bundle = Bundle()
         bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)

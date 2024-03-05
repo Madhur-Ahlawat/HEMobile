@@ -33,7 +33,8 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         const val SECURITY_CODE = "security_code"
         const val SESSION_TIME = "session_time"
         const val SECURITY_CODE_OBJ = "security_code_obj"
-        const val IS_USER_LOGIN = "is_user_login"
+        const val SendAuthTokenStatus = "SendAuthTokenStatus"
+        const val LOGGED_OUT_FROM_DASHBOARD = "loggedOutFromDashboard"
         const val IS_SECONDARY = "is_secondary_user"
         const val LOGGED_IN_USER = "logged_in_user"
         const val NC_ID = "nc_id"
@@ -76,9 +77,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     /**
      * Function to fetch auth token
      */
-    fun fetchAuthTokenTimeout(): Int {
-        return prefs.getInt(USER_TOKEN_TIME_OUT, 0)
-    }
 
     /**
      * Function to save auth token

@@ -53,23 +53,17 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private val toggleDelay: Long = 200
+
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
-    private var hasFaceBiometric = false
-    private var hasTouchBiometric = false
-    private var biometricIsNotEnabled = false
     private var isScreenLaunchedBefore: Boolean = false
     private var isAuthenticaed: Boolean = false
-
     @Inject
     lateinit var sessionManager: SessionManager
-
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var navFlowFrom: String = ""
-
-
     @Inject
     lateinit var api: ApiService
 
@@ -85,7 +79,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
-        if(navFlowFrom.equals(Constants.TWOFA)){
+        if(navFlowFrom.equals(Constants.TWOFA) || navFlowFrom.equals(Constants.LOGIN)|| navFlowFrom.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
             binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
             binding.toolBarLyt.backButton.gone()
             binding.biometricCancel.visible()
@@ -94,6 +88,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_profile_biometrics)
             binding.toolBarLyt.backButton.visible()
             binding.biometricCancel.gone()
+
         }
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -415,10 +410,26 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     navFlowFrom
                 )
                 putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+            } else if(navFlowFrom.equals(Constants.LOGIN)){
+
+                    putString(
+                        Constants.NAV_FLOW_FROM,
+                        Constants.BIOMETRIC_CHANGE
+                    )
+                    putBoolean(
+                        Constants.GO_TO_SUCCESS_PAGE,
+                        false
+                    )
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+
             } else {
                 putString(
                     Constants.NAV_FLOW_FROM,
                     Constants.BIOMETRIC_CHANGE
+                )
+                putBoolean(
+                    Constants.GO_TO_SUCCESS_PAGE,
+                    true
                 )
                 putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
             }

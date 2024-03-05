@@ -1,0 +1,98 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.michaelrocks",
+    "module": "libphonenumber-android",
+    "version": "8.13.28",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.4"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "libphonenumber-android-8.13.28.aar",
+          "url": "libphonenumber-android-8.13.28.aar",
+          "size": 366852,
+          "sha512": "d1d96631f6e5f629fb24e3417a83989a8e6d346ecba4f84c10e765d0589b0497f724af4a67f988503e2857747a9ab91f277bccfacc41a870d1f51eed5b501a7d",
+          "sha256": "9118f48d1afa5b6e6647498f548cdd7e467dfaa301c3e0f71504f20e6f516b57",
+          "sha1": "2a74d1c0a0b0c75e3339c01f97d7a10ccacf9ec1",
+          "md5": "a53464a3b06f4e879f0c31362bd6a92c"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "libphonenumber-android-8.13.28.aar",
+          "url": "libphonenumber-android-8.13.28.aar",
+          "size": 366852,
+          "sha512": "d1d96631f6e5f629fb24e3417a83989a8e6d346ecba4f84c10e765d0589b0497f724af4a67f988503e2857747a9ab91f277bccfacc41a870d1f51eed5b501a7d",
+          "sha256": "9118f48d1afa5b6e6647498f548cdd7e467dfaa301c3e0f71504f20e6f516b57",
+          "sha1": "2a74d1c0a0b0c75e3339c01f97d7a10ccacf9ec1",
+          "md5": "a53464a3b06f4e879f0c31362bd6a92c"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "libphonenumber-android-8.13.28-sources.jar",
+          "url": "libphonenumber-android-8.13.28-sources.jar",
+          "size": 111888,
+          "sha512": "c1bca6cd367c2157f65f8d1ffdfbfb3bc3d5fb4561900b5c154cff6ca5562bfb0143b464f89e3f232c4a6f3c2fc5bdfbf27e8ea1140508ad9a4d8f7a0ebcadec",
+          "sha256": "3b5b40e320889b5279f677785d10e06ed2bfb62c1ced44b263d29eee3819be96",
+          "sha1": "afba708eb3dd6ea4bc812561563ad404a46b03c1",
+          "md5": "378e78d7ce2ef081a9e7e8d7b02c38ce"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "libphonenumber-android-8.13.28-javadoc.jar",
+          "url": "libphonenumber-android-8.13.28-javadoc.jar",
+          "size": 505326,
+          "sha512": "4fa9692a8ffd8e3cf36f11c5b7f0dc8ea2b5d1031bb1731c1c729708ad7ea21eb2dbb8981824b423fbd9d9ac0e6b3cf7ee66797c869df034ec82c01d59df4394",
+          "sha256": "87aae9b4c7f87ee5d673acdc1994bdea1ac71fa021e6174808ed0d868728cea8",
+          "sha1": "23ac531b7bcd4a6c7b32c100955abbbfe97ad0bf",
+          "md5": "1e9699d87fae4570083fdf6dfd8e5dcf"
+        }
+      ]
+    }
+  ]
+}

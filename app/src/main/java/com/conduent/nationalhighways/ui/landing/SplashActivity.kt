@@ -46,6 +46,7 @@ class SplashActivity : AppCompatActivity() {
         mIsRooted = checkIfRootConditionAndDisplayMessage()
 
         sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,Utils.areNotificationsEnabled(this))
+        Log.e("TAG", "initCtrl:fetchTouchIdEnabled "+sessionManager.fetchTouchIdEnabled() )
 
         if (!mIsRooted){
             if (!Utils.areNotificationsEnabled(this)) {

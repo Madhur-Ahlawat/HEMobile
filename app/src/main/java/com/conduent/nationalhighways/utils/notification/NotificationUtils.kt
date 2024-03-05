@@ -46,7 +46,7 @@ class NotificationUtils(val context: Context) {
             builder = Notification.Builder(context, channelId).apply {
                 setContentTitle(title)
                 setContentText(message)
-                setSmallIcon(R.drawable.ic_app_icon)
+                setSmallIcon(R.mipmap.ic_launcher_squircle)
                 setContentIntent(pendingIntent)
                 setColor(context.resources.getColor(R.color.black, null))
                 setAutoCancel(true)
@@ -56,7 +56,7 @@ class NotificationUtils(val context: Context) {
             builder = Notification.Builder(context).apply {
                 setContentTitle(title)
                 setContentText(message)
-                setSmallIcon(R.drawable.ic_app_icon)
+                setSmallIcon(R.mipmap.ic_launcher_squircle)
                 setContentIntent(pendingIntent)
                 setAutoCancel(true)
             }

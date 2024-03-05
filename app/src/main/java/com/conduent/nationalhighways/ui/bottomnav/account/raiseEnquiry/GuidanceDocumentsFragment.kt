@@ -8,15 +8,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentGuidanceDocumentsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.extn.startNormalActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>() {
+    val raise_viewModel: RaiseNewEnquiryViewModel by activityViewModels()
+
+@Inject
+lateinit var sessionManager:SessionManager
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -27,7 +40,19 @@ class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>
         binding.feedbackToImproveMb.setMovementMethod(LinkMovementMethod.getInstance())
 
         binding.contactDartChargeCv.setOnClickListener {
-            findNavController().navigate(R.id.action_guidanceDocumentsFragment_to_contactDartChargeFragment)
+            when (raise_viewModel.apiState.value) {
+                Constants.LIVE -> {
+                    findNavController().navigate(R.id.action_guidanceDocumentsFragment_to_contactDartChargeFragment)
+                }
+
+                else -> {
+                    findNavController().navigate(
+                        R.id.action_guidanceanddocumentsFragment_to_serviceUnavailableFragment,
+                        getBundleData(raise_viewModel.apiState.value, raise_viewModel.apiEndTime.value)
+                    )
+                }
+            }
+
         }
         binding.youtubeCl.setOnClickListener {
             val url = "https://www.youtube.com/c/nationalhighways?cbrd=1" // Replace with the desired URL
@@ -72,5 +97,16 @@ class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>
     override fun observer() {
 
     }
+
+    private fun getBundleData(state: String?, endTime: String? = null): Bundle {
+        val bundle: Bundle = Bundle()
+        bundle.putString(Constants.SERVICE_TYPE, state)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+        if (endTime != null && endTime.replace("null", "").isNotEmpty()) {
+            bundle.putString(Constants.END_TIME, endTime)
+        }
+        return bundle
+    }
+
 
 }

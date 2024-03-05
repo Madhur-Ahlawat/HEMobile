@@ -44,6 +44,7 @@ data class CrossingDetailsModelsResponse(
     var unsettledTripChange:Int=0,
     var fullCountryCode:String?="",
     var accountNumber:String?="",
+    var plateCountryToTransfer: String?="",
 
     ) : Parcelable
 

@@ -159,6 +159,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onResume() {
         title?.text = getString(R.string.txt_my_account)
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).refreshTokenApi()
+        }
 
         super.onResume()
     }
@@ -327,6 +330,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     private fun logOutOfAccount() {
         sessionManager.clearAll()
+        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD,false)
         Utils.redirectToSignoutPage(requireActivity())
 
 //        Intent(requireActivity(), LoginActivity::class.java).apply {

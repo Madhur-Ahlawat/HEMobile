@@ -110,6 +110,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             token = sessionmanager.fetchAuthToken() ?: ""
         } else {
             sessionmanager.saveAuthToken(token)
+            sessionmanager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
         }
     }
 
@@ -173,6 +174,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
                     )
 
                     sessionmanager.saveAuthToken("")
+                    sessionmanager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
                     findNavController().navigate(
                         R.id.action_vehicleDoesNotMatchCurrentVehicleFragment_to_findYourVehicleFragment,
                         bundle

@@ -295,6 +295,7 @@
                 android:layout_marginTop="@dimen/_25dp"
                 android:text="@string/feed_back_to_improve_service"
                 android:textColor="@color/new_btn_color"
+                android:visibility="gone"
                 app:borderColor="@color/new_btn_color"
                 android:textColorLink="@color/dark_blue_color"
                 app:layout_constraintEnd_toEndOf="parent"

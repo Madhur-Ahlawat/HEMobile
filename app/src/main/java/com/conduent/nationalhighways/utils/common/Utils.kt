@@ -25,6 +25,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -125,46 +126,43 @@ object Utils {
             .uppercase(Locale.getDefault()) + str.substring(1).lowercase(Locale.getDefault())
     }
 
-    fun smsSupportCountryList():ArrayList<String>{
-        val supportCountryList=ArrayList<String>()
+    fun smsSupportCountryList(): ArrayList<String> {
+        val supportCountryList = ArrayList<String>()
 
-        supportCountryList.add(	"Austria - (+43)")
-        supportCountryList.add(	"Bosnia and Herzegovina - (+387)")
-        supportCountryList.add(	"Bulgaria - (+359)")
-        supportCountryList.add(	"Croatia - (+385)")
-        supportCountryList.add(	"Cyprus - (+357)")
-        supportCountryList.add(	"Czech Republic - (+420)")
-        supportCountryList.add(	"Denmark - (+45)")
-        supportCountryList.add(	"Estonia - (+372)")
-        supportCountryList.add(	"Finland - (+358)")
-        supportCountryList.add(	"France - (+33)")
-        supportCountryList.add(	"Germany - (+49)")
-        supportCountryList.add(	"Gibraltar - (+350)")
-        supportCountryList.add(	"Greece - (+30)")
-        supportCountryList.add(	"Ireland - (+353)")
-        supportCountryList.add(	"Italy - (+39)")
-        supportCountryList.add(	"Latvia -  (+371)")
-        supportCountryList.add(	"Lithuania -  (+370)")
-        supportCountryList.add(	"Luxembourg -  (+352)")
+        supportCountryList.add("Austria - (+43)")
+        supportCountryList.add("Bosnia and Herzegovina - (+387)")
+        supportCountryList.add("Bulgaria - (+359)")
+        supportCountryList.add("Croatia - (+385)")
+        supportCountryList.add("Cyprus - (+357)")
+        supportCountryList.add("Czech Republic - (+420)")
+        supportCountryList.add("Denmark - (+45)")
+        supportCountryList.add("Estonia - (+372)")
+        supportCountryList.add("Finland - (+358)")
+        supportCountryList.add("France - (+33)")
+        supportCountryList.add("Germany - (+49)")
+        supportCountryList.add("Gibraltar - (+350)")
+        supportCountryList.add("Greece - (+30)")
+        supportCountryList.add("Ireland - (+353)")
+        supportCountryList.add("Italy - (+39)")
+        supportCountryList.add("Latvia -  (+371)")
+        supportCountryList.add("Lithuania -  (+370)")
+        supportCountryList.add("Luxembourg -  (+352)")
         supportCountryList.add("Macedonia, The Former Yuogoslav - (+389)")
-        supportCountryList.add(	"Malta -  (+356)")
-        supportCountryList.add(	"Moldova (Republic of) -  (+373)")
-        supportCountryList.add(	"Netherlands -  (+31)")
-        supportCountryList.add(	"Norway -  (+47)")
-        supportCountryList.add(	"Poland - (+48)")
-        supportCountryList.add(	"Portugal -  (+351)")
-        supportCountryList.add(	"Slovakia -  (+421)")
-        supportCountryList.add(	"Slovenia -  (+386)")
-        supportCountryList.add(	"Spain -  (+34)")
-        supportCountryList.add(	"Sweden -  (+46)")
+        supportCountryList.add("Malta -  (+356)")
+        supportCountryList.add("Moldova (Republic of) -  (+373)")
+        supportCountryList.add("Netherlands -  (+31)")
+        supportCountryList.add("Norway -  (+47)")
+        supportCountryList.add("Poland - (+48)")
+        supportCountryList.add("Portugal -  (+351)")
+        supportCountryList.add("Slovakia -  (+421)")
+        supportCountryList.add("Slovenia -  (+386)")
+        supportCountryList.add("Spain -  (+34)")
+        supportCountryList.add("Sweden -  (+46)")
         supportCountryList.add("Switzerland -  (+41)")
-        supportCountryList.add(	"Ukraine -  (+380)")
-        supportCountryList.add(	"United Kingdom -  (+44)")
+        supportCountryList.add("Ukraine -  (+380)")
+        supportCountryList.add("United Kingdom -  (+44)")
 
         return supportCountryList
-
-
-
 
 
     }
@@ -173,7 +171,7 @@ object Utils {
     fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
 
         transactions.sortWith(Comparator { o1, o2 ->
-            val dateFormat = SimpleDateFormat("dd MMM yyyy",Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
             var date1: Date? = null
             var date2: Date? = null
             try {
@@ -225,7 +223,7 @@ object Utils {
             mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
         Log.e("TOPUP", mText + "\n\n")
-        if (mText.isNotEmpty() ) {
+        if (mText.isNotEmpty()) {
             if (mText.length == 1 && mText.equals(".")) {
                 mText = "0"
             }
@@ -234,7 +232,7 @@ object Utils {
                 if (mText.toDouble() < minimumAmount) {
                     if (isTopUp) {
 
-                        if(minimumAmount ==10.00){
+                        if (minimumAmount == 10.00) {
                             nhTextInputCell.setErrorText(
                                 nhTextInputCell.context.getString(
                                     R.string.str_top_up_amount_must_be_more,
@@ -242,7 +240,7 @@ object Utils {
                                 )
                             )
 
-                        }else{
+                        } else {
                             nhTextInputCell.setErrorText(
                                 nhTextInputCell.context.getString(
                                     R.string.str_top_up_amount_must_be_more,
@@ -355,7 +353,7 @@ object Utils {
     fun convertDateForTransferCrossingsScreen(inputDate: String?): String {
         val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a")
         val date: Date = inputFormat.parse(inputDate)
-        val outputFormat = SimpleDateFormat("dd MMMM yyyy")
+        val outputFormat = SimpleDateFormat("dd MMM yyyy")
         return outputFormat.format(date)
     }
 
@@ -563,7 +561,7 @@ object Utils {
                 context.getString(R.string.str_stay_signed_in),
                 context.getString(R.string.str_sign_out),
                 listener,
-                sessionManager, apiService,true
+                sessionManager, apiService, true
             )
 
         } else {
@@ -575,14 +573,14 @@ object Utils {
                 context.getString(R.string.str_stay_on_the_app),
                 context.getString(R.string.str_delete_my_answers),
                 listener,
-                sessionManager, apiService,false
+                sessionManager, apiService, false
             )
 
         }
     }
 
     private fun countDownTimer(
-        activity: Activity, sessionManager: SessionManager, message: TextView,loggedInUser:Boolean
+        activity: Activity, sessionManager: SessionManager, message: TextView, loggedInUser: Boolean
     ): CountDownTimer {
 
         val countDownTimer = object : CountDownTimer(120000, 1000) {
@@ -592,13 +590,13 @@ object Utils {
                 val min = millisUntilFinished / 60000 % 60
                 val sec = millisUntilFinished / 1000 % 60
 
-                if(loggedInUser){
+                if (loggedInUser) {
                     message.text = activity.resources.getString(
                         R.string.str_for_your_security_account_holder,
                         f.format(min) + ":" + f.format(sec)
                     )
 
-                }else{
+                } else {
                     message.text = activity.resources.getString(
                         R.string.str_for_your_security_non_account_holder,
                         f.format(min) + ":" + f.format(sec)
@@ -634,7 +632,7 @@ object Utils {
         listener: LogoutListener? = null,
         sessionManager: SessionManager,
         apiService: ApiService,
-        loggedInUser:Boolean=false
+        loggedInUser: Boolean = false
     ) {
         Log.e(
             "TAG",
@@ -657,7 +655,7 @@ object Utils {
             WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT
         ) //Controlling width and height.
 
-        val countDownTimer = countDownTimer(activity, sessionManager, binding.message,loggedInUser)
+        val countDownTimer = countDownTimer(activity, sessionManager, binding.message, loggedInUser)
         binding.title.text = fTitle
         binding.message.text = message
         binding.cancelBtn.text = negativeBtnTxt
@@ -688,6 +686,7 @@ object Utils {
 
 
     }
+
     fun removeGivenStringCharactersFromString(characterString: String, input: String): String {
         characterString.forEach {
             input.replace(it.toString(), "")
@@ -904,7 +903,9 @@ object Utils {
     }
 
     fun maskEmail(email: String): String {
-
+        if (email.isEmpty()) {
+            return email
+        }
         val arrEmail = email.split("@")
         val mailbox = arrEmail[0].subSequence(0, 1).toString() + "*".repeat(arrEmail[0].length - 1)
 
@@ -945,8 +946,10 @@ object Utils {
 
     }
 
-    fun currentTime(): String {
-        return SimpleDateFormat("hh:mm", Locale.getDefault()).format(Date())
+    fun currentDateWithTimeTime(): String {
+        return SimpleDateFormat("hh:mma 'on' dd MMM yyyy", Locale.getDefault()).format(Date())
+            .replace("AM", "am")
+            .replace("PM", "pm")
 
     }
 
@@ -1075,18 +1078,87 @@ object Utils {
 
     }
 
+     fun checkLocationPermissionState(context:Context) {
 
-    fun setCardImage(cardType: String): Int {
-        return if (cardType.uppercase().equals(Constants.VISA, true)) {
-            R.drawable.visablue
-        } else if (cardType.uppercase().equals(Constants.MAESTRO, true)) {
-            R.drawable.maestro
-        } else if (cardType.uppercase().equals(Constants.MASTERCARD, true)) {
-            R.drawable.mastercard
-        } else if (cardType.uppercase().equals(Constants.CURRENT, true) || cardType.uppercase().equals(Constants.SAVINGS, true)) {
-            R.drawable.directdebit
+         var fineLocation =
+             ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
+         var coarseLocation =
+             ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
+
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+
+             var backgroundLocationPermissionApproved: Boolean = ActivityCompat.checkSelfPermission(context,
+                 Manifest.permission.ACCESS_BACKGROUND_LOCATION) > -1
+
+             var isAppLocationPermissionGranted =
+                 (backgroundLocationPermissionApproved) &&
+                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+
+             var preciseLocationAllowed = (fineLocation == PackageManager.PERMISSION_GRANTED)
+                     && (coarseLocation == PackageManager.PERMISSION_GRANTED);
+
+             if (preciseLocationAllowed) {
+                 Log.e("PERMISSION", "Precise location is enabled in Android 12");
+             } else {
+                 Log.e("PERMISSION", "Precise location is disabled in Android 12");
+             }
+
+             if (isAppLocationPermissionGranted) {
+                 Log.e("PERMISSION", "Location is allowed all the time");
+             } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
+                 Log.e("PERMISSION", "Location is allowed while using the app");
+             } else {
+                 Log.e("PERMISSION", "Location is not allowed.");
+             }
+
+         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+             var bgLocation = ContextCompat.checkSelfPermission(
+                 context,
+                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
+             );
+
+             var isAppLocationPermissionGranted =
+                 (bgLocation == PackageManager.PERMISSION_GRANTED) &&
+                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+
+             if (isAppLocationPermissionGranted) {
+                 Log.e("PERMISSION", "Location is allowed all the time");
+             } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
+                 Log.e("PERMISSION", "Location is allowed while using the app");
+             } else {
+                 Log.e("PERMISSION", "Location is not allowed.");
+             }
+
+         } else {
+
+             var isAppLocationPermissionGranted =
+                 (fineLocation == PackageManager.PERMISSION_GRANTED) &&
+                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+
+             if (isAppLocationPermissionGranted) {
+                 Log.e("PERMISSION", "Location permission is granted");
+             } else {
+                 Log.e("PERMISSION", "Location permission is not granted");
+             }
+         }
+     }
+
+
+
+            fun setCardImage(paymentTypeInfo: String): Int {
+        if (paymentTypeInfo.contains("CURRENT")) {
+            return R.drawable.directdebit
+        } else if (paymentTypeInfo.contains("SAVINGS")) {
+            return R.drawable.directdebit
+        } else if (paymentTypeInfo.contains("MASTERCARD")) {
+            return R.drawable.mastercard
+        } else if (paymentTypeInfo.contains(Constants.MAESTRO)) {
+            return R.drawable.maestro
+        } else if (paymentTypeInfo.contains("VISA")) {
+            return R.drawable.visablue
         } else {
-            R.color.white
+            return R.color.white
         }
     }
 
@@ -1161,23 +1233,30 @@ object Utils {
             val millisecondsInMonth =
                 1000L * 60 * 60 * 24 * 30 // Approximation of a month in milliseconds
             val months = differenceInMillis / millisecondsInMonth
-            Triple(hours, minutes, months)
+
+            val millisecondsInDay = 1000L * 60 * 60 * 24
+            val days = differenceInMillis / millisecondsInDay
+
+
+//            Triple(hours, minutes, months)
+            Triple(hours, minutes, days)
         } catch (e: Exception) {
             Triple(0, 0, 0)
         }
 
     }
 
-    fun hasFaceId(context: Context):Boolean{
+    fun hasFaceId(context: Context): Boolean {
         val hasFaceBiometric = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             context.packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)
         } else {
             false
         }
 
-       return hasFaceBiometric
+        return hasFaceBiometric
 
     }
+
     fun hasTouchId(context: Context): Boolean {
 
 
@@ -1190,15 +1269,14 @@ object Utils {
         if (sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME).isEmpty()) {
             showRatingDialog(activity, sessionManager)
         } else {
-            val lastTokenTime = Utils.convertStringToDate(
+            val lastTokenTime = convertStringToDate(
                 sessionManager.fetchStringData(SessionManager.LAST_RATING_TIME),
                 Constants.dd_mm_yyyy_hh_mm_ss
             )
             if (lastTokenTime != null) {
-                val diff = Utils.getTimeDifference(lastTokenTime, Date())
-                if (diff.third >= 4) {
+                val diff = getTimeDifference(lastTokenTime, Date())
+                if (diff.third >= 1) {
                     showRatingDialog(activity, sessionManager)
-
                 }
             }
         }
@@ -1235,7 +1313,12 @@ object Utils {
                     "onRatingChanged: $rating $thresholdCleared"
                 )
             }
-            .onRatingBarFormSubmit { feedback -> Log.e("TAG", "onRatingBarFormSubmit: $feedback") }
+            .onRatingBarFormSubmit { feedback ->
+                Log.e(
+                    "TAG",
+                    "onRatingBarFormSubmit: $feedback"
+                )
+            }
             .build()
         ratingDialog.window?.setBackgroundDrawableResource(android.R.color.white) // Change to your desired color
 
@@ -1337,7 +1420,10 @@ object Utils {
 
 
     fun removeLastExtension(input: String, extension: String): String {
-        Log.e("TAG", "removeLastExtension() called with: input = $input, extension = $extension")
+        Log.e(
+            "TAG",
+            "removeLastExtension() called with: input = $input, extension = $extension"
+        )
         val lastIndexOfExtension = input.lastIndexOf(extension)
         return if (lastIndexOfExtension != -1) {
             input.substring(
@@ -1388,14 +1474,14 @@ object Utils {
     ): UpdateProfileRequest {
         var correspDeliveryMode_ = correspDeliveryMode
         var correspDeliveryFrequency_ = correspDeliveryFrequency
-        var businessName_:String? = null
+        var businessName_: String? = null
 
         if (accountType.equals(
                 Constants.BUSINESS_ACCOUNT,
                 true
             )
         ) {
-            businessName_ = businessName?:""
+            businessName_ = businessName ?: ""
         }
         if (correspDeliveryMode == null) {
             correspDeliveryMode_ = ""
@@ -1434,12 +1520,13 @@ object Utils {
     }
 
     fun getCountryName(sessionManager: SessionManager, countryCode: String): String {
-        val countries=sessionManager.fetchStringData(SessionManager.COUNTRIES)
+        val countries = sessionManager.fetchStringData(SessionManager.COUNTRIES)
 
 
         val countriesList = ArrayList<CountriesModel>()
 
-        val pattern = """CountriesModel\(id=(\d+), countryCode=(\w+), countryName=([\w\s]+)\)""".toRegex()
+        val pattern =
+            """CountriesModel\(id=(\d+), countryCode=(\w+), countryName=([\w\s]+)\)""".toRegex()
         pattern.findAll(countries).forEach { matchResult ->
             val (id, countryCode, countryName) = matchResult.destructured
             countriesList.add(CountriesModel(id, countryCode, countryName))
@@ -1447,13 +1534,13 @@ object Utils {
 
         val filteredList = countriesList.filter { it.countryCode == countryCode }
         if (filteredList.size > 0) {
-            return filteredList.get(0).countryName?:""
+            return filteredList.get(0).countryName ?: ""
         } else {
             return ""
         }
     }
 
-    fun checkLocationpermission(context:Context):Boolean{
+    fun checkLocationpermission(context: Context): Boolean {
         return !((ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_BACKGROUND_LOCATION

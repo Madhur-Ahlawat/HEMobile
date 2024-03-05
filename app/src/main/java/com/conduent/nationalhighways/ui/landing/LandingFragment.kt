@@ -230,6 +230,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         binding.btnGuidanceAndDocuments.setOnClickListener {
             var bundle = Bundle()
             bundle.putString(Constants.API_STATE, apiState)
+            bundle.putString(Constants.API_END_TIME, apiEndTime)
             requireActivity().openActivityWithData(
                 RaiseEnquiryActivity::class.java, bundle
             )
@@ -415,7 +416,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             is Resource.Success -> {
                 apiState = resource.data?.state ?: Constants.UNAVAILABLE
                 apiEndTime = resource.data?.endTime ?: ""
-
                 if (resource.data?.state == Constants.LIVE) {
                 } else {
 //                    findNavController().navigate(

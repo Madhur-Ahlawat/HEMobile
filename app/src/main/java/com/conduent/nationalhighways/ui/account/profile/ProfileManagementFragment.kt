@@ -339,6 +339,10 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
                     )
+                    putString(
+                        Constants.NAV_FLOW_FROM,
+                        Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE.toString()
+                    )
                 }
             }
         }

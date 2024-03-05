@@ -1,24 +1,10 @@
 package com.conduent.nationalhighways.ui.landing
 
-import android.Manifest
-import android.app.Dialog
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -26,7 +12,6 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityLandingBinding
-import com.conduent.nationalhighways.databinding.LocationPermissionDialogBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -44,7 +29,6 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
-import org.bouncycastle.util.Pack
 import javax.inject.Inject
 
 
@@ -79,6 +63,9 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         fun setToolBarTitle(title: String) {
             binding.titleTxt.text = title
         }
+        fun setBackIcon(status: Int) {
+            binding.btnBack.visibility=status
+        }
 
     }
 
@@ -88,6 +75,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         navController = findNavController(this, R.id.nav_host_fragment_container)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
         Logg.logging("landingActivy", "test called $screenType")
+        Log.e("TAG", "initCtrl:fetchTouchIdEnabled "+sessionManager.fetchTouchIdEnabled() )
 
         if (intent?.hasExtra(Constants.NAV_FLOW_FROM) == true) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
@@ -109,21 +97,22 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         navControllerListener()
         if (screenType == LRDS_SCREEN) {
             binding.titleTxt.text = resources.getString(R.string.txt_my_account)
-            binding.btnBack.gone()
+            setBackIcon(View.GONE)
         } else if (screenType == LOGOUT_SCREEN || screenType == SESSION_TIME_OUT) {
             binding.titleTxt.text = resources.getString(R.string.str_signed_out)
-            binding.btnBack.gone()
+            setBackIcon(View.GONE)
         } else if (screenType == SERVER_ERROR || screenType == FAILED_RETRY_SCREEN) {
             binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
-            binding.btnBack.gone()
+            setBackIcon(View.GONE)
         } else {
             binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
-            binding.btnBack.visible()
+            setBackIcon(View.VISIBLE)
         }
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
         backClickListener()
+        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
 
     }
 

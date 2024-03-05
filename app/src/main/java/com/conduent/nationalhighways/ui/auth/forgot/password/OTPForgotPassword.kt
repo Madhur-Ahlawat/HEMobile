@@ -345,7 +345,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(Constants.NAV_DATA_KEY, data?.personalInformation)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                    if (navFlowCall == PROFILE_MANAGEMENT || navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE || navFlowCall == PROFILE_MANAGEMENT_2FA_CHANGE) {
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                    if (navFlowCall == PROFILE_MANAGEMENT ||
+                        navFlowCall == PROFILE_MANAGEMENT_MOBILE_CHANGE ||
+                        navFlowCall == PROFILE_MANAGEMENT_2FA_CHANGE) {
                         findNavController().navigate(
                             R.id.action_otpForgotFragment_to_resetForgotPassword,
                             bundle
@@ -1119,14 +1122,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(requireActivity(), BiometricActivity::class.java)
-                    intent.putExtra(Constants.TWOFA, sessionManager?.getTwoFAEnabled())
+                    intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
 
                     startActivity(intent)
 
 
                     //dialog.dismiss()
-
 
                 }
             },

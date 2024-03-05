@@ -152,6 +152,7 @@ object Constants {
     const val PAYMENT_METHOD = "payment_method"
     const val ADD_PAYMENT_METHOD = "add_payment_method"
     const val PAYMENT_TOP_UP = "payment_top_up"
+    const val DASHBOARD = "dashboard"
     const val TOP_UP_AMOUNT = "top_up_amount"
     const val PERSONAL_TYPE = "personal_type_pre_pay_or_pay_as_go"
     const val FROM_DART_CHARGE_FLOW = "from_dart_charge_flow"
@@ -363,6 +364,7 @@ object Constants {
     const val ADDRESS_LIST = "ADDRESS_LIST"
     const val SAVED_CARDS = "SAVED_CARDS"
     const val NAV_FLOW_FROM = "navFlowFrom"
+    const val GO_TO_SUCCESS_PAGE = "GO_TO_SUCCESS_PAGE"
     const val IS_BIOMETRIC_CHANGED = "IS_BIOMETRIC_CHANGED"
     const val FIRST_TYM_REDIRECTS = "FIRST_TYM_REDIRECTS"
     const val NAV_DATA_KEY = "navDataKey"
@@ -431,6 +433,7 @@ object Constants {
     const val INVALID_TOKEN = "invalid_token"
     const val SERVER_ERROR = "server_error"
     const val API_STATE = "API_STATE"
+    const val API_END_TIME = "API_END_TIME"
     const val READ_STORAGE_REQUEST_CODE: Int = 1001
     const val TIME_OUT_SEC = 60L
 
