@@ -27,7 +27,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_5dp">
+            >
 
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -61,8 +61,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:ellipsize="end"
-                android:paddingEnd="@dimen/margin_48dp"
-                android:paddingStart="@dimen/margin_48dp"
+                android:paddingLeft="@dimen/margin_5dp"
+                android:paddingRight="@dimen/margin_5dp"
+                android:layout_marginEnd="@dimen/margin_48dp"
+                android:layout_marginStart="@dimen/margin_48dp"
                 android:gravity="center"
                 android:fontFamily="@font/open_sans_semibold"
                 android:maxLines="1"

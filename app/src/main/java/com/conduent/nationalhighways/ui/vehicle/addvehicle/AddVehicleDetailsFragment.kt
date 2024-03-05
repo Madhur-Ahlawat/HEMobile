@@ -9,7 +9,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.RadioGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -148,7 +151,49 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
 
+
+        binding.radioButtonNo.accessibilityDelegate = object : View.AccessibilityDelegate() {
+
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                // Check if the RadioGroup has accessibility focus
+                if (info.isAccessibilityFocused) {
+                    binding.radioGroupYesNo.clearCheckedRadioButtonsContentDescriptions()
+                    binding.radioGroupYesNo.contentDescription=binding.radioButtonNo.text.toString()
+                }
+            }
+        }
+        binding.radioButtonYes.accessibilityDelegate = object : View.AccessibilityDelegate() {
+
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                if (info.isAccessibilityFocused) {
+                    binding.radioGroupYesNo.clearCheckedRadioButtonsContentDescriptions()
+                    binding.radioGroupYesNo.contentDescription=binding.radioButtonYes.text.toString()
+                }
+            }
+        }
+
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId ->
+            val radioButton: AppCompatRadioButton = requireActivity().findViewById(checkedId)
+            val selectedText = radioButton.text.toString()
+            binding.radioGroupYesNo.clearCheckedRadioButtonsContentDescriptions()
+
+            radioButton.let {
+                if (it.isChecked) {
+                    it.contentDescription =
+                        "${resources.getString(R.string.accessibility_selected)} $selectedText"
+                } else {
+                    it.contentDescription = "$selectedText"
+                }
+            }
+
             radioButtonChecked = R.id.radioButtonYes == checkedId || R.id.radioButtonNo == checkedId
 
             data?.veicleUKnonUK = radioButtonChecked
@@ -157,9 +202,19 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
         binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
+
+            binding.checkBoxTerms.contentDescription = if (isChecked) {
+                "${resources.getString(R.string.accessibility_ticked)} ${binding.checkBoxTerms.text}"
+            } else {
+                "${resources.getString(R.string.accessibility_not_ticked)} ${binding.checkBoxTerms.text}"
+            }
+            binding.checkBoxTerms.contentDescription = binding.checkBoxTerms.text.toString()
+
             checkBoxChecked = isChecked
             validateAllFields()
             checkButton()
+
+
         }
 
 
@@ -282,6 +337,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         if (navFlowCall == Constants.EDIT_SUMMARY) {
             binding.checkBoxTerms.isChecked = true
         }
+
     }
 
     private fun setPreSelectedVehicleType() {
@@ -1073,4 +1129,14 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         checkButton()
 
     }
+
+    fun RadioGroup.clearCheckedRadioButtonsContentDescriptions() {
+        for (i in 0 until childCount) {
+            val view = getChildAt(i)
+            if (view is AppCompatRadioButton) {
+                view.contentDescription = view.text.toString()
+            }
+        }
+    }
+
 }
