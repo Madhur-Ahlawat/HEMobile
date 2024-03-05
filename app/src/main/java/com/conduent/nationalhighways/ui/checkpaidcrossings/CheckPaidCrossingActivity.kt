@@ -54,7 +54,7 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
         val graphInflater = navHostFragment.navController.navInflater
         val navGraph = graphInflater.inflate(R.navigation.nav_graph_account_creation)
         val navController = navHostFragment.navController
-        val destination = R.id.addNewVehicleDetailsFragment
+        val destination = R.id.crossingCheck
         navGraph.setStartDestination(destination)
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.TRANSFER_CROSSINGS)
