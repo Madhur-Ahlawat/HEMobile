@@ -430,10 +430,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginActivity)
             backButton.setOnClickListener(this@LoginActivity)
-            edtEmail.editText.setText("madhur.ahslawat@conduent.com")
-            edtPwd.editText.setText("Welcome2")
-            btnLogin.isEnabled = true
-            btnLogin.isClickable = true
         }
     }
 
