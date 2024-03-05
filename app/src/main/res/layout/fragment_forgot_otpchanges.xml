@@ -5,7 +5,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
         android:scrollbars="none">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -13,8 +15,7 @@
             android:paddingTop="@dimen/margin_18dp"
             android:paddingEnd="@dimen/margin_20dp"
             android:paddingBottom="@dimen/margin_20dp"
-
-            >
+            android:importantForAccessibility="no">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/top_title"
@@ -47,6 +48,8 @@
                 android:autofillHints="smsOTPCode"
                 android:importantForAutofill="yes"
                 android:maxLength="6"
+                android:focusedByDefault="false"
+                android:focusableInTouchMode="true"
                 app:imeOptions="actionDone"
                 app:inputType="number"
                 app:labelText="@string/str_six_digit_security_code"

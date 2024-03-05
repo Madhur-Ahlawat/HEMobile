@@ -130,8 +130,6 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
     }
 
     fun focusToolBar() {
-        binding.toolBarLyt.backButton.isFocusable = true
-        binding.toolBarLyt.backButton.isFocusableInTouchMode = true
-        binding.toolBarLyt.backButton.requestFocus()
+//        binding.toolBarLyt.materialToolbar.requestFocus()
     }
 }
