@@ -39,7 +39,6 @@ class EmailRecieptSuccessFragment : BaseFragment<FragmentEmailRecieptSuccessBind
 //        binding.tvVehicleRegistrationValue.text=DashboardFragmentNew.dateRangeModel?.vehicleNumber
 //        binding.tvTimeValue.text=DashboardFragmentNew.crossing?.entryTime
 //        binding.tvLocationValue.text=DashboardFragmentNew.crossing?.entryPlaza
-
     }
 
     override fun initCtrl() {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -20,6 +21,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -61,6 +63,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         FragmentForgotCreateNewPasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
         loader = LoaderDialog()
@@ -282,7 +287,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                     bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                     if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                         findNavController().navigate(
                             R.id.action_createPasswordFragment_to_resetFragment,
                             bundle
@@ -448,36 +453,51 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
         if (hasLowerCase(text)) {
-            binding.imgDot3.setImageResource(R.drawable.grin_tick)
+            setTickBackground(binding.imgDot3)
         } else {
-            binding.imgDot3.setImageResource(R.drawable.circle_5dp)
+            setDotBackground(binding.imgDot3)
         }
 
         if (hasUpperCase(text)) {
-            binding.imgDot2.setImageResource(R.drawable.grin_tick)
+            setTickBackground(binding.imgDot2)
         } else {
-            binding.imgDot2.setImageResource(R.drawable.circle_5dp)
+            setDotBackground(binding.imgDot2)
         }
 
         if (text.length >= 8) {
-            binding.imgDot1.setImageResource(R.drawable.grin_tick)
+            setTickBackground(binding.imgDot1)
         } else {
-            binding.imgDot1.setImageResource(R.drawable.circle_5dp)
+            setDotBackground(binding.imgDot1)
         }
 
         if (hasDigits(text)) {
-            binding.imgDot4.setImageResource(R.drawable.grin_tick)
+            setTickBackground(binding.imgDot4)
         } else {
-            binding.imgDot4.setImageResource(R.drawable.circle_5dp)
+            setDotBackground(binding.imgDot4)
         }
 //new password
 
         binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
+    fun setDotBackground(view: View) {
+        view.contentDescription=resources.getString(R.string.accessibility_bullet)
+        view.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_5dp)
+    }
+
+    fun setTickBackground(view: View) {
+        view.contentDescription=resources.getString(R.string.accessibility_check_mark)
+        view.background = ContextCompat.getDrawable(requireContext(), R.drawable.grin_tick)
+    }
+
     private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
 
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
 
 }
 

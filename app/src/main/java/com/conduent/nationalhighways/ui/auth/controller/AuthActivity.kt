@@ -1,6 +1,9 @@
 package com.conduent.nationalhighways.ui.auth.controller
 
 import android.os.Bundle
+import android.util.Log
+import android.view.accessibility.AccessibilityEvent
+import android.widget.Button
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -21,7 +24,11 @@ import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class AuthActivity : BaseActivity<Any?>(),LogoutListener{
@@ -185,10 +192,8 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
                 } else {
                     onBackPressedDispatcher.onBackPressed()
                 }
-
             }
         }
-
     }
 
     override fun onUserInteraction() {
@@ -203,12 +208,22 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager,api)
     }
 
     override fun onDestroy() {
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
+    }
+
+    fun focusToolBar() {
+        binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+        binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+
+        val task = Runnable {
+            binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
     }
 }

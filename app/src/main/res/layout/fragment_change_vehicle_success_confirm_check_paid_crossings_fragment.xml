@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/margin_15dp"
+        android:paddingTop="@dimen/margin_30dp"
+        android:paddingRight="@dimen/margin_15dp"
+        android:paddingBottom="@dimen/margin_30dp">
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/margin_15dp"
-            android:paddingRight="@dimen/margin_15dp"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/margin_30dp">
+            android:layout_above="@id/bottom_ll"
+            android:layout_alignParentTop="true"
+            android:scrollbars="none"
+
+            >
 
             <LinearLayout
-                android:layout_above="@id/btnOk"
                 android:id="@+id/llCheckvehicleDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_marginHorizontal="@dimen/margin_2dp"
-                android:layout_marginTop="@dimen/margin_30dp"
-                android:layout_marginBottom="@dimen/margin_24dp"
                 android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/tick_blue"
-                    android:layout_width="73.33dp"
-                    android:layout_height="73.33dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_tick_blue" />
 
@@ -34,18 +41,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_14_67dp"
                     android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
                     android:text="@string/credit_transferred"
                     android:textColor="@color/black"
-                    android:gravity="center"
                     android:textSize="@dimen/font_18sp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
+                    android:layout_marginStart="@dimen/margin_1dp"
                     android:layout_marginTop="@dimen/margin_36dp"
-                    android:layout_marginEnd="1dp"
-                    android:layout_marginBottom="1dp"
+                    android:layout_marginEnd="@dimen/margin_1dp"
+                    android:layout_marginBottom="@dimen/margin_1dp"
                     android:elevation="3dp"
                     app:cardCornerRadius="5dp">
 
@@ -67,9 +74,9 @@
                             android:id="@+id/vehicleRegisration"
                             style="@style/RegularTextBlack"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:text="AJ66 MHA"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
+                            app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration"
+                            tools:text="@string/app_name" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -79,10 +86,10 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
+                    android:layout_marginStart="@dimen/margin_1dp"
                     android:layout_marginTop="@dimen/margin_16_34dp"
-                    android:layout_marginEnd="1dp"
-                    android:layout_marginBottom="1dp"
+                    android:layout_marginEnd="@dimen/margin_1dp"
+                    android:layout_marginBottom="@dimen/margin_1dp"
                     android:elevation="3dp"
                     app:cardCornerRadius="5dp">
 
@@ -104,9 +111,9 @@
                             android:id="@+id/creditRemaining"
                             style="@style/RegularTextBlack"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:text="3"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txtCreditRemaining" />
+                            app:layout_constraintTop_toBottomOf="@id/txtCreditRemaining"
+                            tools:text="@string/app_name" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -118,10 +125,10 @@
                     android:id="@+id/emailCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
+                    android:layout_marginStart="@dimen/margin_1dp"
                     android:layout_marginTop="@dimen/margin_16_34dp"
-                    android:layout_marginEnd="1dp"
-                    android:layout_marginBottom="1dp"
+                    android:layout_marginEnd="@dimen/margin_1dp"
+                    android:layout_marginBottom="@dimen/margin_1dp"
                     android:elevation="3dp"
                     app:cardCornerRadius="5dp">
 
@@ -144,10 +151,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:gravity="left|center"
-                            android:text="Date"
+                            android:gravity="start|center"
                             app:layout_constraintStart_toStartOf="@id/txtCreditWillExpireOn"
-                            app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn" />
+                            app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn"
+                            tools:text="@string/app_name" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -156,12 +163,20 @@
 
             </LinearLayout>
 
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/bottom_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/btnOk"
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/btnFeedback"
                 android:text="@string/back_to_main_menu"
                 app:radius="5dp" />
 
@@ -170,12 +185,13 @@
                 style="@style/secondaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:textColor="@color/new_btn_color"
-                app:borderColor="@color/new_btn_color"
-                android:textColorLink="@color/new_btn_color"
                 android:text="@string/feed_back_to_improve_service"
+                android:textColor="@color/new_btn_color"
+                android:textColorLink="@color/new_btn_color"
+                app:borderColor="@color/new_btn_color"
                 app:radius="5dp" />
-        </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </layout>
