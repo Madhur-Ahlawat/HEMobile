@@ -211,4 +211,12 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
     }
+
+    fun focusToolBar() {
+//        binding.toolBarLyt.backButton.isFocusable = true
+//        binding.toolBarLyt.backButton.isFocusableInTouchMode = true
+        binding.toolBarLyt.materialToolbar.requestFocus()
+        binding.toolBarLyt.backButton.requestFocus()
+    }
+
 }

@@ -10,6 +10,7 @@
         <include
             android:id="@+id/tool_bar_lyt"
             layout="@layout/tool_bar_with_title_back"
+            android:importantForAccessibility="yes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

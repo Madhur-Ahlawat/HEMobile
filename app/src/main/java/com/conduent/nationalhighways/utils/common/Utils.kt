@@ -23,8 +23,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
@@ -1642,6 +1644,49 @@ object Utils {
         activity.startActivity(appSettingsIntent)
     }
 
+    fun RadioGroup.clearCheckedRadioButtonsContentDescriptions() {
+        for (i in 0 until childCount) {
+            val view = getChildAt(i)
+            if (view is AppCompatRadioButton) {
+                view.contentDescription = view.text.toString()
+            }
+        }
+    }
+
+    fun setContentDescriptionForRadioGroup(checkedId: Int, radioGroup: RadioGroup, activity: Activity){
+        val radioButton: AppCompatRadioButton = activity.findViewById(checkedId)
+        val selectedText = radioButton.text.toString()
+        radioGroup.clearCheckedRadioButtonsContentDescriptions()
+
+        radioButton.let {
+            if (it.isChecked) {
+                it.contentDescription =
+                    "${activity.resources.getString(R.string.accessibility_selected)} $selectedText"
+            } else {
+                it.contentDescription = selectedText
+            }
+        }
+    }
+
+    fun replaceAsterisks(input: String): String {
+        var count = 0
+        val stringBuilder = StringBuilder()
+        var previousChar: Char? = null
+        input.forEach { char ->
+            if (char == '*' && previousChar != '*') {
+                count++
+                stringBuilder.append(count)
+                stringBuilder.append("asterisk")
+            } else if (char != '*') {
+                stringBuilder.append(char)
+            }
+            previousChar = char
+        }
+
+        Log.e("TAG", "replaceAsterisks: input-> "+input +" -output-> "+stringBuilder.toString())
+
+        return stringBuilder.toString()
+    }
 
 
 }

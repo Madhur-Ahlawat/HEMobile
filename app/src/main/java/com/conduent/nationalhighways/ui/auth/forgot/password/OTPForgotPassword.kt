@@ -1330,5 +1330,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         startActivity(intent)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
+    }
 
 }

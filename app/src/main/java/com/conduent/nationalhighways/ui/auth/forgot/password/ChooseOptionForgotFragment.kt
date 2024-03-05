@@ -22,6 +22,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.setupAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -98,11 +99,13 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     }
 
     override fun init() {
-
+        binding.radioSms.setupAccessibilityDelegate()
+        binding.radioEmail.setupAccessibilityDelegate()
 
         binding.radioGroup.setOnCheckedChangeListener(this)
 
         binding.btn.setOnClickListener(this)
+
 
 
         AdobeAnalytics.setScreenTrack(
@@ -131,11 +134,14 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+
+        Utils.setContentDescriptionForRadioGroup(checkedId,binding.radioGroup,requireActivity())
+
+
         when (group?.checkedRadioButtonId) {
 
 
             R.id.radio_sms -> {
-
                 model?.optionType = Constants.SMS
                 model?.optionValue = responseModel?.phone
                 binding.btn.isEnabled = true

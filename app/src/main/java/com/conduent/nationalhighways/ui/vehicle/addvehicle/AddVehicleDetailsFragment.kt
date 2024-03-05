@@ -32,12 +32,14 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.Utils.clearCheckedRadioButtonsContentDescriptions
 import com.conduent.nationalhighways.utils.common.Utils.hasDigits
 import com.conduent.nationalhighways.utils.common.Utils.hasSpecialCharacters
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.onTextChanged
+import com.conduent.nationalhighways.utils.setupAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -149,9 +151,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             mScreeType = it
         }
 
+        binding.radioButtonNo.setupAccessibilityDelegate()
+        binding.radioButtonYes.setupAccessibilityDelegate()
 
 
-        binding.radioButtonNo.accessibilityDelegate = object : View.AccessibilityDelegate() {
+     /*   binding.radioButtonNo.accessibilityDelegate = object : View.AccessibilityDelegate() {
 
             override fun onInitializeAccessibilityNodeInfo(
                 host: View,
@@ -178,20 +182,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 }
             }
         }
-
+*/
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId ->
-            val radioButton: AppCompatRadioButton = requireActivity().findViewById(checkedId)
-            val selectedText = radioButton.text.toString()
-            binding.radioGroupYesNo.clearCheckedRadioButtonsContentDescriptions()
 
-            radioButton.let {
-                if (it.isChecked) {
-                    it.contentDescription =
-                        "${resources.getString(R.string.accessibility_selected)} $selectedText"
-                } else {
-                    it.contentDescription = "$selectedText"
-                }
-            }
+            Utils.setContentDescriptionForRadioGroup(checkedId,binding.radioGroupYesNo,requireActivity())
 
             radioButtonChecked = R.id.radioButtonYes == checkedId || R.id.radioButtonNo == checkedId
 
@@ -1127,15 +1121,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         validateAllFields()
         checkButton()
 
-    }
-
-    fun RadioGroup.clearCheckedRadioButtonsContentDescriptions() {
-        for (i in 0 until childCount) {
-            val view = getChildAt(i)
-            if (view is AppCompatRadioButton) {
-                view.contentDescription = view.text.toString()
-            }
-        }
     }
 
 }
