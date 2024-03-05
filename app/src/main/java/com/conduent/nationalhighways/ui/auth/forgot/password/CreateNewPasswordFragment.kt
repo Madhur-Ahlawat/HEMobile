@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -62,6 +63,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         FragmentForgotCreateNewPasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
         loader = LoaderDialog()
@@ -489,6 +493,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
 
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
 
 }
 

@@ -99,6 +99,9 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     }
 
     override fun init() {
+        if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
         binding.radioSms.setupAccessibilityDelegate()
         binding.radioEmail.setupAccessibilityDelegate()
 
@@ -299,5 +302,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
 
 }

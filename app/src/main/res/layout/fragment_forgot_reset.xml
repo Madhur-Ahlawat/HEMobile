@@ -18,7 +18,9 @@
                 android:id="@+id/tick_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/checkicon" />
+                app:srcCompat="@drawable/checkicon"
+                android:importantForAccessibility="no"
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"

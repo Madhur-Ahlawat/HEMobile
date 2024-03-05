@@ -127,6 +127,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         FragmentForgotOtpchangesBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
         hasFaceBiometric = Utils.hasFaceId(requireContext())
         hasTouchBiometric = Utils.hasTouchId(requireContext())
         loader = LoaderDialog()
@@ -1328,13 +1331,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
         )
         startActivity(intent)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if(requireActivity() is AuthActivity){
-            (requireActivity() as AuthActivity).focusToolBar()
-        }
     }
 
 }

@@ -123,10 +123,11 @@ object Utils {
     fun capitalizeString(str: String?): String? {
         return if (str.isNullOrEmpty()) {
             str
-        }  else {
+        } else {
             str.split("\\s+".toRegex()).joinToString(" ") { word ->
                 word.split("-").joinToString("-") { part ->
-                    part.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+                    part.lowercase()
+                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
                 }
             }
         }
@@ -1087,75 +1088,76 @@ object Utils {
 
     }
 
-     fun checkLocationPermissionState(context:Context) {
+    fun checkLocationPermissionState(context: Context) {
 
-         var fineLocation =
-             ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
-         var coarseLocation =
-             ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
+        var fineLocation =
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
+        var coarseLocation =
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
 
-         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
 
-             var backgroundLocationPermissionApproved: Boolean = ActivityCompat.checkSelfPermission(context,
-                 Manifest.permission.ACCESS_BACKGROUND_LOCATION) > -1
+            var backgroundLocationPermissionApproved: Boolean = ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) > -1
 
-             var isAppLocationPermissionGranted =
-                 (backgroundLocationPermissionApproved) &&
-                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+            var isAppLocationPermissionGranted =
+                (backgroundLocationPermissionApproved) &&
+                        (coarseLocation == PackageManager.PERMISSION_GRANTED);
 
-             var preciseLocationAllowed = (fineLocation == PackageManager.PERMISSION_GRANTED)
-                     && (coarseLocation == PackageManager.PERMISSION_GRANTED);
+            var preciseLocationAllowed = (fineLocation == PackageManager.PERMISSION_GRANTED)
+                    && (coarseLocation == PackageManager.PERMISSION_GRANTED);
 
-             if (preciseLocationAllowed) {
-                 Log.e("PERMISSION", "Precise location is enabled in Android 12");
-             } else {
-                 Log.e("PERMISSION", "Precise location is disabled in Android 12");
-             }
+            if (preciseLocationAllowed) {
+                Log.e("PERMISSION", "Precise location is enabled in Android 12");
+            } else {
+                Log.e("PERMISSION", "Precise location is disabled in Android 12");
+            }
 
-             if (isAppLocationPermissionGranted) {
-                 Log.e("PERMISSION", "Location is allowed all the time");
-             } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
-                 Log.e("PERMISSION", "Location is allowed while using the app");
-             } else {
-                 Log.e("PERMISSION", "Location is not allowed.");
-             }
+            if (isAppLocationPermissionGranted) {
+                Log.e("PERMISSION", "Location is allowed all the time");
+            } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
+                Log.e("PERMISSION", "Location is allowed while using the app");
+            } else {
+                Log.e("PERMISSION", "Location is not allowed.");
+            }
 
-         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-             var bgLocation = ContextCompat.checkSelfPermission(
-                 context,
-                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
-             );
+            var bgLocation = ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            );
 
-             var isAppLocationPermissionGranted =
-                 (bgLocation == PackageManager.PERMISSION_GRANTED) &&
-                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+            var isAppLocationPermissionGranted =
+                (bgLocation == PackageManager.PERMISSION_GRANTED) &&
+                        (coarseLocation == PackageManager.PERMISSION_GRANTED);
 
-             if (isAppLocationPermissionGranted) {
-                 Log.e("PERMISSION", "Location is allowed all the time");
-             } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
-                 Log.e("PERMISSION", "Location is allowed while using the app");
-             } else {
-                 Log.e("PERMISSION", "Location is not allowed.");
-             }
+            if (isAppLocationPermissionGranted) {
+                Log.e("PERMISSION", "Location is allowed all the time");
+            } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
+                Log.e("PERMISSION", "Location is allowed while using the app");
+            } else {
+                Log.e("PERMISSION", "Location is not allowed.");
+            }
 
-         } else {
+        } else {
 
-             var isAppLocationPermissionGranted =
-                 (fineLocation == PackageManager.PERMISSION_GRANTED) &&
-                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+            var isAppLocationPermissionGranted =
+                (fineLocation == PackageManager.PERMISSION_GRANTED) &&
+                        (coarseLocation == PackageManager.PERMISSION_GRANTED);
 
-             if (isAppLocationPermissionGranted) {
-                 Log.e("PERMISSION", "Location permission is granted");
-             } else {
-                 Log.e("PERMISSION", "Location permission is not granted");
-             }
-         }
-     }
+            if (isAppLocationPermissionGranted) {
+                Log.e("PERMISSION", "Location permission is granted");
+            } else {
+                Log.e("PERMISSION", "Location permission is not granted");
+            }
+        }
+    }
 
 
-
-            fun setCardImage(paymentTypeInfo: String): Int {
+    fun setCardImage(paymentTypeInfo: String): Int {
         if (paymentTypeInfo.contains("CURRENT")) {
             return R.drawable.directdebit
         } else if (paymentTypeInfo.contains("SAVINGS")) {
@@ -1254,13 +1256,14 @@ object Utils {
         }
 
     }
+
     fun getMinSecTimeDifference(startTime: Date, endTime: Date): Pair<Long, Long> {
         return try {
             val differenceInMillis = endTime.time - startTime.time
             val minutes = differenceInMillis % (1000 * 60 * 60) / (1000 * 60)
             val seconds = differenceInMillis % (1000 * 60) / 1000
 
-            Pair( minutes,seconds)
+            Pair(minutes, seconds)
         } catch (e: Exception) {
             Pair(0, 0)
         }
@@ -1578,22 +1581,23 @@ object Utils {
                     ) == PackageManager.PERMISSION_DENIED))
         }
     }
+
     fun checkAccessFineLocationPermission(context: Context): Boolean {
         if (Build.VERSION.SDK_INT >= VERSION_CODES.Q) {
-          return  !((ContextCompat.checkSelfPermission(
+            return !((ContextCompat.checkSelfPermission(
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_DENIED) &&
                     (ContextCompat.checkSelfPermission(
                         context,
                         Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_DENIED)&&
+                    ) == PackageManager.PERMISSION_DENIED) &&
                     (ContextCompat.checkSelfPermission(
                         context,
                         Manifest.permission.ACCESS_BACKGROUND_LOCATION
                     ) == PackageManager.PERMISSION_DENIED))
-        }else{
-           return !((ContextCompat.checkSelfPermission(
+        } else {
+            return !((ContextCompat.checkSelfPermission(
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_DENIED) &&
@@ -1605,8 +1609,8 @@ object Utils {
 
     }
 
-    fun isSupportedCountry(country:String):Boolean{
-        if(country.isEmpty()==true){
+    fun isSupportedCountry(country: String): Boolean {
+        if (country.isEmpty() == true) {
             return true
         }
         val smsSupportCountryList = smsSupportCountryList().map {
@@ -1616,11 +1620,11 @@ object Utils {
             extractTextWithinBrackets(it)
         }
 
-        val isSupportedCoutry= smsSupportCountryList.contains(
+        val isSupportedCoutry = smsSupportCountryList.contains(
             extractTextWithinBrackets(country).toString().trim()
                 .replace(" ", "").replace("-", "").lowercase()
         )
-        Log.e("TAG", "country is "+country +" isSupportedCoutry-> "+country )
+        Log.e("TAG", "country is " + country + " isSupportedCoutry-> " + country)
 
         return isSupportedCoutry
     }
@@ -1653,7 +1657,11 @@ object Utils {
         }
     }
 
-    fun setContentDescriptionForRadioGroup(checkedId: Int, radioGroup: RadioGroup, activity: Activity){
+    fun setContentDescriptionForRadioGroup(
+        checkedId: Int,
+        radioGroup: RadioGroup,
+        activity: Activity
+    ) {
         val radioButton: AppCompatRadioButton = activity.findViewById(checkedId)
         val selectedText = radioButton.text.toString()
         radioGroup.clearCheckedRadioButtonsContentDescriptions()
@@ -1669,22 +1677,34 @@ object Utils {
     }
 
     fun replaceAsterisks(input: String): String {
+
         var count = 0
         val stringBuilder = StringBuilder()
         var previousChar: Char? = null
-        input.forEach { char ->
-            if (char == '*' && previousChar != '*') {
-                count++
-                stringBuilder.append(count)
-                stringBuilder.append("asterisk")
-            } else if (char != '*') {
+        input.forEachIndexed { index, char ->
+            var nextChar = ""
+            if (input.length > (index + 1)) {
+                nextChar = input.toString().get(index + 1).toString()
+            }
+
+            if (char == '*') {
+                if (previousChar == '*' && count != 0 && nextChar != "*") {
+                    count++
+                    stringBuilder.append("" + count.toString() + "asterisk")
+                    count = 0
+                } else {
+                    count++
+                }
+            } else {
+                if (count != 0) {
+                    stringBuilder.append("" + count.toString() + "asterisk")
+                    count = 0
+                }
                 stringBuilder.append(char)
             }
             previousChar = char
         }
-
-        Log.e("TAG", "replaceAsterisks: input-> "+input +" -output-> "+stringBuilder.toString())
-
+        Log.e("TAG", "replaceAsterisks: "+stringBuilder.toString() )
         return stringBuilder.toString()
     }
 
