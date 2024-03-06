@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="no_internet_connection">No internet connection</string>
     <string name="network_failure">Network Failure</string>
     <string name="conversion_error">Conversion Error</string>
@@ -87,7 +87,6 @@
     <string name="txt_create_pwd">Create password</string>
     <string name="txt_pwd_constraints_placeholder">Password constraints placeholder</string>
     <string name="txt_confirm_pwd">Confirm password</string>
-    <string name="txt_pwd_reset_msg">Password reset successful</string>
     <string name="txt_please_login_to_continue">Please log in to continue</string>
     <string name="txt_enter_pwd">Enter password</string>
     <string name="str_enter_confirm_pwd">Enter confirm password</string>
