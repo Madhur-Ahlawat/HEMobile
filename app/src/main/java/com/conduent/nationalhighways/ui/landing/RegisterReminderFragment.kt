@@ -118,6 +118,18 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             if (isChecked) {
                 GeofenceUtils.startGeofence(this.requireContext())
             }
+            binding.switchGeoLocation.contentDescription = if (isChecked) {
+                "${resources.getString(R.string.accessibility_on)} ${binding.switchGeoLocation.text}"
+            } else {
+                "${resources.getString(R.string.accessibility_off)} ${binding.switchGeoLocation.text}"
+            }
+        }
+        binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
+            binding.switchNotification.contentDescription = if (isChecked) {
+                "${resources.getString(R.string.accessibility_on)} ${binding.switchNotification.text}"
+            } else {
+                "${resources.getString(R.string.accessibility_off)} ${binding.switchNotification.text}"
+            }
         }
         binding.switchGeoLocation.setOnClickListener {
             if (Utils.checkLocationpermission(requireContext())) {
