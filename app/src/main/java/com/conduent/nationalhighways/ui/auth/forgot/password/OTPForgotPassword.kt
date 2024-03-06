@@ -40,6 +40,7 @@ import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.receiver.SmsBroadcastReceiver
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
@@ -129,6 +130,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     override fun init() {
         if(requireActivity() is AuthActivity){
             (requireActivity() as AuthActivity).focusToolBar()
+        }else if (requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBar()
         }
         hasFaceBiometric = Utils.hasFaceId(requireContext())
         hasTouchBiometric = Utils.hasTouchId(requireContext())
