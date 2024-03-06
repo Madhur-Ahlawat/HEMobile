@@ -68,10 +68,10 @@ class TransactionsInnerAdapter(
                 valueTopUpAmount.setTextColor(viewAllTransactionsFragment.resources.getColor(R.color.green_status))
             } else {
                 if(recentTransactionItem.exitDirection.equals("N")){
-                    tvTransactionType.text = "Northbound"
+                    tvTransactionType.text = viewAllTransactionsFragment.requireContext().getString(R.string.northbound)
                 }
                 else{
-                    tvTransactionType.text = "Southbound"
+                    tvTransactionType.text = viewAllTransactionsFragment.requireContext().getString(R.string.southbound)
                 }
                 verticalStripTransactionType.background.setTint(
                     viewAllTransactionsFragment.resources.getColor(

@@ -28,7 +28,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:tint="@color/white"
-                android:text="Back"
+                android:text="@string/str_back"
                 app:fontFamily="@font/sfbold"
                 android:visibility="gone"
                 android:textSize="17sp"

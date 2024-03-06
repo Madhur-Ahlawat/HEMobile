@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="no_internet_connection">No internet connection</string>
     <string name="network_failure">Network Failure</string>
     <string name="conversion_error">Conversion Error</string>
@@ -1702,13 +1702,31 @@
     <string name="str_cash">Cash</string>
 
 
-
     <string name="accessibility_edit">Edit</string>
     <string name="accessibility_bullet">Bullet</string>
     <string name="accessibility_check_mark">Check mark</string>
     <string name="accessibility_selected">Selected.</string>
     <string name="accessibility_not_selected">Not Selected.</string>
-  <string name="accessibility_ticked">Ticked.</string>
+    <string name="accessibility_ticked">Ticked.</string>
     <string name="accessibility_not_ticked">Not Ticked.</string>
+    <string name="accessibility_on">On.</string>
+    <string name="accessibility_off">Off.</string>
 
+    <string name="powered_by" tools:ignore="ExtraTranslation">powered by</string>
+    <string name="_50">50</string>
+    <string name="_15">15</string>
+    <string name="johndoe_gmail_com">johndoe@gmail.com</string>
+    <string name="hdj2123f">HDJ2123F</string>
+    <string name="_10_00">£10.00</string>
+    <string name="_28_jan_2020">28 Jan 2020</string>
+    <string name="_2165322131">2165322131</string>
+    <string name="uk">UK</string>
+    <string name="lo6nro">LO6NRO</string>
+    <string name="dart_charge">Dart Charge</string>
+    <string name="_paid">Paid</string>
+    <string name="payment_status">Payment Status</string>
+    <string name="_initial_payment">Initial payment</string>
+    <string name="mark_as_nread">Mark as\nread</string>
+    <string name="deselect_all">Deselect all</string>
+    <string name="aj66mha">AJ66MHA</string>
 </resources>
