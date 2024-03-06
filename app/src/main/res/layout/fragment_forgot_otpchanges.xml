@@ -48,8 +48,6 @@
                 android:autofillHints="smsOTPCode"
                 android:importantForAutofill="yes"
                 android:maxLength="6"
-                android:focusedByDefault="false"
-                android:focusableInTouchMode="true"
                 app:imeOptions="actionDone"
                 app:inputType="number"
                 app:labelText="@string/str_six_digit_security_code"
