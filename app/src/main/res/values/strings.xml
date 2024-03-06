@@ -1703,9 +1703,13 @@
     <string name="str_cash">Cash</string>
 
 
-
     <string name="accessibility_edit">Edit</string>
     <string name="accessibility_bullet">Bullet</string>
+    <string name="accessibility_check_mark">Check mark</string>
+    <string name="accessibility_selected">Selected.</string>
+    <string name="accessibility_not_selected">Not Selected.</string>
+    <string name="accessibility_ticked">Ticked.</string>
+    <string name="accessibility_not_ticked">Not Ticked.</string>
     <string name="powered_by" tools:ignore="ExtraTranslation">powered by</string>
     <string name="_50">50</string>
     <string name="_15">15</string>
@@ -1722,5 +1726,4 @@
     <string name="_initial_payment">Initial payment</string>
     <string name="mark_as_nread">Mark as\nread</string>
     <string name="deselect_all">Deselect all</string>
-
 </resources>

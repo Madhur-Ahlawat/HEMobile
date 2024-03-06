@@ -8,36 +8,38 @@
     </data>
 
     <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:elevation="3dp"
-        android:translationZ="2dp"
-        android:id="@+id/materialToolbar"
-        android:theme="@style/Theme.ToolBar"
+        android:importantForAccessibility="yes"
+        android:minHeight="@dimen/margin_48dp"
         android:contentInsetStart="@dimen/margin_0dp"
         android:contentInsetLeft="@dimen/margin_0dp"
-        android:contentInsetRight="@dimen/margin_0dp"
         android:contentInsetEnd="@dimen/margin_0dp"
+        android:contentInsetRight="@dimen/margin_0dp"
+        android:elevation="3dp"
+        android:theme="@style/Theme.ToolBar"
+        android:translationZ="2dp"
+        app:contentInsetEnd="@dimen/margin_0dp"
         app:contentInsetLeft="@dimen/margin_0dp"
-        app:contentInsetStart="@dimen/margin_0dp"
         app:contentInsetRight="@dimen/margin_0dp"
-        app:contentInsetEnd="@dimen/margin_0dp">
+        app:contentInsetStart="@dimen/margin_0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_5dp">
+            android:importantForAccessibility="yes">
 
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/back_button"
                 android:layout_width="@dimen/margin_48dp"
                 android:layout_height="@dimen/margin_48dp"
-                android:padding="@dimen/margin_11dp"
-                android:contentDescription="@string/str_back"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:contentDescription="@string/str_back"
+                android:padding="@dimen/margin_11dp"
                 android:tint="@color/black"
                 app:srcCompat="@drawable/ic_back_arrow_white" />
 
@@ -46,26 +48,28 @@
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:tint="@color/white"
-                android:text="@string/str_back"
-                app:fontFamily="@font/sfbold"
-                android:visibility="gone"
-                android:textSize="17sp"
+                android:drawableStart="@drawable/ic_back_arrow"
                 android:fontFamily="@font/sfregular"
+                android:text="@string/str_back"
                 android:textColor="@color/white"
-                android:drawableStart="@drawable/ic_back_arrow" />
+                android:textSize="17sp"
+                android:tint="@color/white"
+                android:visibility="gone"
+                app:fontFamily="@font/sfbold" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/margin_48dp"
+                android:layout_marginEnd="@dimen/margin_48dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:maxLines="1"
-                android:paddingStart="@dimen/margin_48dp"
-                android:paddingEnd="@dimen/margin_48dp"
+                android:paddingLeft="@dimen/margin_5dp"
+                android:paddingRight="@dimen/margin_5dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 tools:text="@string/app_name" />

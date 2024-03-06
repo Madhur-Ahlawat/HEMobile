@@ -177,13 +177,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     } else {
                         intent.putExtra(Constants.NAV_FLOW_FROM, Constants.LOGIN)
                     }
-
                     startActivity(intent)
-
-
-                    //dialog.dismiss()
-
-
                 }
             },
             object : DialogNegativeBtnListener {
