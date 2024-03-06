@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="@id/iv_mark_as_read"
             app:layout_constraintStart_toStartOf="@id/iv_mark_as_read"
             app:layout_constraintEnd_toEndOf="@id/iv_mark_as_read"
-            android:text="Mark as\nread"
+            android:text="@string/mark_as_nread"
             android:textSize="@dimen/font_20sp"
             android:gravity="center"
             android:textColor="@color/white"

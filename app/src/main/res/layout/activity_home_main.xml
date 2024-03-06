@@ -8,6 +8,14 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:contentInsetStart="@dimen/margin_0dp"
+            android:contentInsetLeft="@dimen/margin_0dp"
+            android:contentInsetRight="@dimen/margin_0dp"
+            android:contentInsetEnd="@dimen/margin_0dp"
+            app:contentInsetLeft="@dimen/margin_0dp"
+            app:contentInsetStart="@dimen/margin_0dp"
+            app:contentInsetRight="@dimen/margin_0dp"
+            app:contentInsetEnd="@dimen/margin_0dp"
             android:id="@+id/id_tool_bar_lyt"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
@@ -26,10 +34,12 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/back_button"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/margin_48dp"
+                    android:layout_height="@dimen/margin_48dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
+                    android:contentDescription="@string/str_back"
+                    android:padding="@dimen/margin_11dp"
                     android:tint="@color/black"
                     app:srcCompat="@drawable/ic_back_arrow_white" />
 
@@ -40,7 +50,7 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/ic_back_arrow"
                     android:fontFamily="@font/sfregular"
-                    android:text="Back"
+                    android:text="@string/str_back"
                     android:textColor="@color/white"
                     android:textSize="17sp"
                     android:tint="@color/white"

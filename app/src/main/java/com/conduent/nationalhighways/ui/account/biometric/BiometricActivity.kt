@@ -117,6 +117,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             binding.biometricCancel.gone()
         }
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
+            binding.switchFingerprintLogin.contentDescription = if (isChecked) {
+                "${binding.switchFingerprintLogin.text}"
+            } else {
+                "${binding.switchFingerprintLogin.text}"
+            }
+            binding.switchFingerprintLogin.contentDescription = binding.switchFingerprintLogin.getText().toString()
             if (isChecked) {
                 if (!sessionManager.fetchTouchIdEnabled()) {
                     val biometricManager = BiometricManager.from(this)
