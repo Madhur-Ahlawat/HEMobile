@@ -50,7 +50,7 @@
                     android:layout_centerVertical="true"
                     android:drawableLeft="@drawable/ic_back_arrow"
                     android:fontFamily="@font/sfregular"
-                    android:text="Back"
+                    android:text="@string/str_back"
                     android:textColor="@color/white"
                     android:textSize="17sp"
                     android:tint="@color/white"

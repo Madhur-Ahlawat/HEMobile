@@ -25,7 +25,7 @@
                 android:textSize="@dimen/font_48sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="£10.00" />
+                tools:text="@string/_10_00" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/label_crossing_amount"
@@ -67,7 +67,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_crossing_date"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_crossing_date"
-                tools:text="28 Jan 2020" />
+                tools:text="@string/_28_jan_2020" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -112,7 +112,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/barrier"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="2165322131" />
+                    tools:text="@string/_2165322131" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -125,7 +125,7 @@
                 android:layout_marginTop="@dimen/margin_22dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:text="Time"
+                android:text="@string/txt_time"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_14sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +142,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_time"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_time"
-                tools:text="Initial payment" />
+                tools:text="@string/_initial_payment" />
 
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -169,7 +169,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_location"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_location"
-                tools:text="Northbound" />
+                tools:text="@string/northbound" />
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_payment_status"
                 android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
                 android:layout_marginTop="@dimen/margin_22dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center_vertical"
-                android:text="Payment Status"
+                android:text="@string/payment_status"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_14sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -194,7 +194,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_payment_status"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_payment_status"
-                tools:text="Paid" />
+                tools:text="@string/_paid" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
