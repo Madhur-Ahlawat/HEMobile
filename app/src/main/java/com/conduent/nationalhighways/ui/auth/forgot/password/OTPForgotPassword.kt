@@ -134,6 +134,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         hasTouchBiometric = Utils.hasTouchId(requireContext())
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+//        binding.edtOtp.editText.setText("101010")
+//        binding.btnVerify.isEnabled = true
+//        binding.btnVerify.isClickable = true
         loadUI()
         /*AdobeAnalytics.setScreenTrack(
             "login:forgot password:choose options:otp",

@@ -58,10 +58,10 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
             tvTimeValue.text = crossing?.exitTime
             tvVrnValue.text= crossing?.plateNumber
             if(crossing?.exitDirection.equals("N")){
-                tvLocationValue.text = "Northbound"
+                tvLocationValue.text = getString(R.string.northbound)
             }
             else{
-                tvLocationValue.text = "Southbound"
+                tvLocationValue.text = getString(R.string.southbound)
             }
             if(crossing?.tranSettleStatus?.isEmpty() == true){
                 binding.tvPaymentStatusValue.gone()

@@ -2,38 +2,17 @@ package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ImageView
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.webkit.WebViewAssetLoader
-import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
-import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentGeneralTermsAndConditionsBinding
-import com.conduent.nationalhighways.databinding.FragmentTermsAndConditionsBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
-import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
-import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.LocalContentWebViewClient
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
-import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.ErrorUtil
-import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
-import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.startNormalActivity
-import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -60,6 +39,22 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
             .build()
         binding.webView.webViewClient = LocalContentWebViewClient(mAssetLoader)
 //        webView.loadUrl("https://appassets.androidplatform.net/assets/termsandconditions.html")
+
+        binding.webView.setWebViewClient(object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                val url = request?.url.toString()
+                if (url.startsWith("tel:")) {
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse(url))
+                    startActivity(intent)
+                    return true
+                }
+                return super.shouldOverrideUrlLoading(view, request)            }
+
+        })
+
 //        if (NewCreateAccountRequestModel.prePay) {
             binding.webView.loadUrl("file:///android_res/raw/termsandconditionspage.html")
 //        } else {

@@ -22,9 +22,7 @@
             android:paddingStart="@dimen/margin_20dp"
             android:paddingTop="@dimen/margin_16dp"
             android:paddingEnd="@dimen/margin_20dp"
-            android:paddingBottom="@dimen/margin_16dp"
-
-            >
+            android:paddingBottom="@dimen/margin_16dp">
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/what_type_of_account"
@@ -61,10 +59,10 @@
                         android:layout_marginStart="19dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:drawableEnd="@drawable/ic_right"
                         android:text="@string/str_prepay"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:drawableEndCompat="@drawable/ic_right" />
 
                     <LinearLayout
                         android:id="@+id/prePayLayout1"
@@ -77,12 +75,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/prePay">
 
-                        <ImageView
-                            android:id="@+id/prePayImg1"
+                        <View
                             android:layout_width="@dimen/margin_5dp"
                             android:layout_height="@dimen/margin_5dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/circle_5dp" />
+                            android:layout_marginTop="@dimen/margin_7dp"
+                            android:contentDescription="@string/accessibility_bullet"
+                            android:background="@drawable/circle_5dp" />
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/textView1"
@@ -105,14 +103,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/prePayLayout1">
 
-                        <ImageView
-                            android:id="@+id/prePayImg2"
+                        <View
                             android:layout_width="@dimen/margin_5dp"
                             android:layout_height="@dimen/margin_5dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/circle_5dp"
-
-                            />
+                            android:layout_marginTop="@dimen/margin_7dp"
+                            android:contentDescription="@string/accessibility_bullet"
+                            android:background="@drawable/circle_5dp" />
 
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -136,14 +132,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/prePayLayout2">
 
-                        <ImageView
-                            android:id="@+id/prePayImg3"
+                        <View
                             android:layout_width="@dimen/margin_5dp"
                             android:layout_height="@dimen/margin_5dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/circle_5dp"
-
-                            />
+                            android:layout_marginTop="@dimen/margin_7dp"
+                            android:contentDescription="@string/accessibility_bullet"
+                            android:background="@drawable/circle_5dp" />
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/textView3"
@@ -166,13 +160,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/prePayLayout3">
 
-                        <ImageView
+                        <View
                             android:layout_width="@dimen/margin_5dp"
                             android:layout_height="@dimen/margin_5dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/circle_5dp"
-
-                            />
+                            android:layout_marginTop="@dimen/margin_7dp"
+                            android:contentDescription="@string/accessibility_bullet"
+                            android:background="@drawable/circle_5dp" />
 
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -218,10 +211,10 @@
                         android:layout_marginStart="19dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="@dimen/margin_20dp"
-                        android:drawableEnd="@drawable/ic_right"
                         android:text="@string/str_payg_account"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:drawableEndCompat="@drawable/ic_right" />
 
                     <LinearLayout
                         android:id="@+id/payAsLayout1"
@@ -234,11 +227,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/payAsYouGo">
 
-                        <ImageView
+                        <View
                             android:layout_width="@dimen/margin_5dp"
                             android:layout_height="@dimen/margin_5dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/circle_5dp" />
+                            android:layout_marginTop="@dimen/margin_7dp"
+                            android:contentDescription="@string/accessibility_bullet"
+                            android:background="@drawable/circle_5dp" />
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/payTextView1"
@@ -262,12 +256,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/payAsLayout1">
 
-                        <ImageView
+                        <View
                             android:layout_width="@dimen/margin_5dp"
                             android:layout_height="@dimen/margin_5dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/circle_5dp" />
-
+                            android:layout_marginTop="@dimen/margin_7dp"
+                            android:contentDescription="@string/accessibility_bullet"
+                            android:background="@drawable/circle_5dp" />
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/payTextView2"
@@ -293,12 +287,12 @@
                         android:id="@+id/payAsLayout3"
                         app:layout_constraintTop_toBottomOf="@id/payAsLayout2">
 
-                        <ImageView
+                        <View
                             android:layout_width="@dimen/margin_5dp"
                             android:layout_height="@dimen/margin_5dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/circle_5dp" />
-
+                            android:layout_marginTop="@dimen/margin_7dp"
+                            android:contentDescription="@string/accessibility_bullet"
+                            android:background="@drawable/circle_5dp" />
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/payTextView3"
@@ -321,12 +315,12 @@
                         android:id="@+id/payAsLayout4"
                         app:layout_constraintTop_toBottomOf="@id/payAsLayout3">
 
-                    <ImageView
-                        android:layout_width="@dimen/margin_5dp"
-                        android:layout_height="@dimen/margin_5dp"
-                        android:layout_marginTop="8dp"
-                        android:src="@drawable/circle_5dp" />
-
+                        <View
+                            android:layout_width="@dimen/margin_5dp"
+                            android:layout_height="@dimen/margin_5dp"
+                            android:layout_marginTop="@dimen/margin_7dp"
+                            android:contentDescription="@string/accessibility_bullet"
+                            android:background="@drawable/circle_5dp" />
 
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView

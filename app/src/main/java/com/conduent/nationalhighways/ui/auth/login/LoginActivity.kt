@@ -424,7 +424,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginActivity)
             backButton.setOnClickListener(this@LoginActivity)
-
         }
     }
 

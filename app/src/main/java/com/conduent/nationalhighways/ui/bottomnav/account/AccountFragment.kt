@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
-import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.databinding.FragmentAccountNewBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
@@ -74,7 +72,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     private fun initUI() {
         if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
-            navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY,"").toString()
+            navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY, "").toString()
         }
         title = requireActivity().findViewById(R.id.title_txt)
         binding.run {
@@ -111,7 +109,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             DashboardUtils.setAccountStatusNew(
                 sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
-                binding.cardIndicatorAccountStatus,4
+                binding.cardIndicatorAccountStatus, 4
             )
             if (sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
                 leftIcon6.alpha = 0.5f
@@ -128,12 +126,18 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 )
 
         }
-        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+        if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
             HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
             var bundle = Bundle()
-            bundle.putString(Constants.NAV_FLOW_KEY,navFlowFrom)
-            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
-            findNavController()?.navigate(R.id.action_accountFragment_to_profileManagementFragment,bundle)
+            bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
+            bundle.putParcelable(
+                Constants.PERSONALDATA,
+                HomeActivityMain.accountDetailsData?.personalInformation
+            )
+            findNavController().navigate(
+                R.id.action_accountFragment_to_profileManagementFragment,
+                bundle
+            )
         }
     }
 
@@ -160,7 +164,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onResume() {
         title?.text = getString(R.string.txt_my_account)
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).refreshTokenApi()
         }
 
@@ -255,27 +259,35 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 //            }
 
             R.id.sign_out -> {
-
-                displayCustomMessage(resources.getString(R.string.str_signout_your_account),
-                    resources.getString(R.string.str_signout_your_account_desc),
-                    resources.getString(R.string.str_continue),
-                    resources.getString(R.string.str_cancel),
-                    object : DialogPositiveBtnListener {
-                        override fun positiveBtnClick(dialog: DialogInterface) {
-                            logOutViewModel.logout()
-                        }
-                    },
-                    object : DialogNegativeBtnListener {
-                        override fun negativeBtnClick(dialog: DialogInterface) {
-                        }
-                    },
-                    View.VISIBLE,
-                    cancelButtonColor = requireActivity().resources.getColor(R.color.hyperlink_blue2, null),
-                    typeFace = Typeface.createFromAsset(
-                        requireActivity().assets,
-                        "open_sans_semibold.ttf"
+                if (sessionManager.fetchTouchIdEnabled()) {
+                    displayCustomMessage(
+                        resources.getString(R.string.str_signout_your_account),
+                        resources.getString(R.string.str_signout_your_account_desc),
+                        resources.getString(R.string.str_continue),
+                        resources.getString(R.string.str_cancel),
+                        object : DialogPositiveBtnListener {
+                            override fun positiveBtnClick(dialog: DialogInterface) {
+                                logOutViewModel.logout()
+                            }
+                        },
+                        object : DialogNegativeBtnListener {
+                            override fun negativeBtnClick(dialog: DialogInterface) {
+                            }
+                        },
+                        View.VISIBLE,
+                        cancelButtonColor = requireActivity().resources.getColor(
+                            R.color.hyperlink_blue2,
+                            null
+                        ),
+                        typeFace = Typeface.createFromAsset(
+                            requireActivity().assets,
+                            "open_sans_semibold.ttf"
+                        )
                     )
-                )
+                } else {
+                    logOutViewModel.logout()
+                }
+
 
             }
 
@@ -311,7 +323,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     private fun logOutOfAccount() {
         sessionManager.clearAll()
-        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD,false)
+        sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD, false)
         Utils.redirectToSignoutPage(requireActivity())
 
 //        Intent(requireActivity(), LoginActivity::class.java).apply {

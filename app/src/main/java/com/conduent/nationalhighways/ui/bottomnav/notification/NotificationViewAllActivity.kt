@@ -49,7 +49,7 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
         binding.idToolBarLyt.backButton.setOnClickListener {
             onBackPressed()
         }
-        binding.idToolBarLyt.titleTxt.text = "Notifications"
+        binding.idToolBarLyt.titleTxt.text = getString(R.string.txt_notification)
     }
 
     private fun handleAlertDeleteResponse(resource: Resource<String?>?) {
@@ -92,10 +92,10 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
 
             if (binding.selectAll.text == "Deselect all") {
                 mAdapter.updateHighlight(mList, false)
-                binding.selectAll.text = "Select all"
+                binding.selectAll.text = getString(R.string.select_all)
             } else {
                 mAdapter.updateHighlight(mList, true)
-                binding.selectAll.text = "Deselect all"
+                binding.selectAll.text = getString(R.string.deselect_all)
             }
         }
 
