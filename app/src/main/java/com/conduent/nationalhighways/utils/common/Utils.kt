@@ -64,6 +64,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.math.min
 
 
 object Utils {
@@ -234,33 +235,28 @@ object Utils {
             if (mText.length == 1 && mText.equals(".")) {
                 mText = "0"
             }
+            var amount = ""
+            if (isDecimal(minimumAmount)) {
+                amount = minimumAmount.toString()
+            } else {
+                amount = minimumAmount.toInt().toString()
+            }
+
             isValid = if (mText.toDouble().toInt() <= 100000) {
 
                 if (mText.toDouble() < minimumAmount) {
                     if (isTopUp) {
-
-                        if (minimumAmount == 10.00) {
-                            nhTextInputCell.setErrorText(
-                                nhTextInputCell.context.getString(
-                                    R.string.str_top_up_amount_must_be_more,
-                                    minimumAmount.toInt().toString()
-                                )
+                        nhTextInputCell.setErrorText(
+                            nhTextInputCell.context.getString(
+                                R.string.str_top_up_amount_must_be_more,
+                                amount
                             )
-
-                        } else {
-                            nhTextInputCell.setErrorText(
-                                nhTextInputCell.context.getString(
-                                    R.string.str_top_up_amount_must_be_more,
-                                    minimumAmount.toString()
-                                )
-                            )
-
-                        }
+                        )
                     } else {
                         nhTextInputCell.setErrorText(
                             nhTextInputCell.context.getString(
                                 R.string.str_low_balance_must_be_more,
-                                minimumAmount.toString()
+                                amount
                             )
                         )
                     }
@@ -282,6 +278,10 @@ object Utils {
             nhTextInputCell.removeError()
         }
         return isValid
+    }
+
+    fun isDecimal(num: Double): Boolean {
+        return num % 1 != 0.0
     }
 
     val splCharEmailCode: String by lazy {

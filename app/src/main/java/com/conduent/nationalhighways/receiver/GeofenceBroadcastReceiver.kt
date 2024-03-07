@@ -69,12 +69,13 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 // Retrieve requestId and transition type
                 requestID = geofence.requestId
             }
+            val dateFormat =
+                SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
+            val dateString = dateFormat.format(Date())
 
             Log.e(TAG, "onReceive: requestID " + requestID)
             if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
-                val dateFormat =
-                    SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
-                val dateString = dateFormat.format(Date())
+
                 if (requestID == Constants.geofenceSouthBoundDartCharge) {
                     sessionManager.saveStringData(
                         SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME,
@@ -91,29 +92,32 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
             // Test that the reported transition was of interest.
             if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-                Log.e(
-                    TAG,
-                    "geofenceTransition- geofenceTransition -> " + sessionManager.fetchStringData(
-                        SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME
-                    )
-                )
-
                 var geofenceEnterTime: Date? = null
-                if (sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME)
-                        .isEmpty()
+
+                val geofenceNorthBoundEnterTime =
+                    sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME)
+                val geofenceSouthBoundEnterTime =
+                    sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME)
+
+
+                if (sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME)
+                        .isNotEmpty()
                 ) {
-                    geofenceEnterTime = Utils.convertStringToDate1(
-                        sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME),
-                        Constants.dd_mm_yyyy_hh_mm_ss
-                    )
-                } else {
+                    Log.e(TAG, "onReceive: " )
                     geofenceEnterTime = Utils.convertStringToDate1(
                         sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME),
                         Constants.dd_mm_yyyy_hh_mm_ss
                     )
+                } else {
+                    Log.e(TAG, "onReceive: 11 " )
+                    geofenceEnterTime = Utils.convertStringToDate1(
+                        sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME),
+                        Constants.dd_mm_yyyy_hh_mm_ss
+                    )
                 }
 
-                if (geofenceEnterTime != null) {
+                if (geofenceNorthBoundEnterTime.isNotEmpty() && geofenceSouthBoundEnterTime.isNotEmpty() && geofenceEnterTime != null) {
+
                     val diff = Utils.getMinSecTimeDifference(geofenceEnterTime, Date())
                     Log.e(TAG, "onReceive: diff $diff")
                     if (diff.first >= 30 && diff.second > 0) {
@@ -128,11 +132,33 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                             context.resources.getString(R.string.str_responsible_paying),
                             Constants.GEO_FENCE_NOTIFICATION
                         )
+
                         Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
                     }
 
-                    sessionManager.saveStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME, "")
+                    sessionManager.saveStringData(
+                        SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME,
+                        ""
+                    )
+                    sessionManager.saveStringData(
+                        SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME,
+                        ""
+                    )
+
                 }
+
+                if (requestID == Constants.geofenceNorthBoundDartCharge) {
+                    sessionManager.saveStringData(
+                        SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME,
+                        dateString
+                    )
+                } else {
+                    sessionManager.saveStringData(
+                        SessionManager.GEOFENCE_SOUTHBOUND_EXIT_TIME,
+                        dateString
+                    )
+                }
+
             } else {
                 // Log the error.
                 Log.e(TAG, "geofenceTransition- error -> $geofenceTransition")

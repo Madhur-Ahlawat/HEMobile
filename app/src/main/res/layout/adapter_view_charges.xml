@@ -31,16 +31,6 @@
                 app:layout_constraintTop_toTopOf="parent">
 
 
-                <!--
-                                <androidx.constraintlayout.widget.Guideline
-                                    android:id="@+id/guide_line_vertical2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical"
-                                    app:layout_constraintGuide_percent="0.50" />
-                -->
-
-
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/label_type_of_vehicle"
                     android:layout_width="0dp"
@@ -56,32 +46,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/label_pay_as_you_go" />
 
-                <!--
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/title2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="@dimen/_2sdp"
-                                    android:text="@string/str_one_of_payment"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp"
-                                    android:visibility="gone"
-                                    android:fontFamily="@font/open_sans_semibold"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@id/guide_line_vertical2"
-                                    app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
-                                    app:layout_constraintTop_toTopOf="parent" />
-                -->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/label_pay_as_you_go"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/margin_21dp"
                     android:text="@string/str_pay_g_service"
+                    tools:text="pay \n as \n go kk\n jj\njj"
+                    android:layout_marginTop="@dimen/margin_21dp"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
