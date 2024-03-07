@@ -84,12 +84,11 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 //                NewCreateAccountRequestModel.twoStepVerification = false
                 binding.btnNext.enable()
             }
-            binding.twoFactor.contentDescription = if (isChecked) {
-                "${binding.twoFactor.text}"
+            binding.twoFactor.contentDescription = if (binding.twoFactor.isChecked) {
+                "${resources.getString(R.string.accessibility_on)} ${binding.twoFactor.text}"
             } else {
-                "${binding.twoFactor.text}"
+                "${resources.getString(R.string.accessibility_off)} ${binding.twoFactor.text}"
             }
-            binding.twoFactor.contentDescription = binding.twoFactor.text.toString()
         }
 
         isViewCreated=true

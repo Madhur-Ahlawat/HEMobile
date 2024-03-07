@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
+            android:minHeight="@dimen/margin_48dp"
             style="@style/MediumTextBlack"
             android:textColor="@color/black"
             android:text="@string/would_you_like_to_receive_push"
