@@ -52,14 +52,6 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
         )
 
     }
-    override fun onPostResume() {
-        super.onPostResume()
-        val task = Runnable {
-            binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-        }
-        val worker = Executors.newSingleThreadScheduledExecutor()
-        worker.schedule(task, 1, TimeUnit.SECONDS)
-    }
     fun focusToolBar() {
         binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
         binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
