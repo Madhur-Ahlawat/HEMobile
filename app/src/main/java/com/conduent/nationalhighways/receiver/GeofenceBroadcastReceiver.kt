@@ -35,12 +35,13 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 ))
         }
 
-        checkNotificationPermission = if(Utils.areNotificationsEnabled(context)){
+        checkNotificationPermission = if (Utils.areNotificationsEnabled(context)) {
             sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)
-        }else{
+        } else {
             false
         }
-        Log.e(TAG,
+        Log.e(
+            TAG,
             "onReceive: checkLocationPermission-> $checkLocationPermission checkNotificationPermission-> $checkNotificationPermission"
         )
 
@@ -49,6 +50,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         if (checkLocationPermission && checkNotificationPermission) {
             notificationUtils = NotificationUtils(context)
             val geofencingEvent = GeofencingEvent.fromIntent(intent)
+            geofencingEvent?.geofenceTransition
             if (geofencingEvent?.hasError() == true) {
                 val errorMessage = GeofenceStatusCodes
                     .getStatusCodeString(geofencingEvent.errorCode)
@@ -60,11 +62,30 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             // Get the transition type.
             val geofenceTransition = geofencingEvent?.geofenceTransition
             Log.e(TAG, "geofenceTransition- geofenceTransition -> $geofenceTransition")
+            var requestID = ""
+
+            // Iterate over triggered geofences
+            for (geofence in geofencingEvent?.triggeringGeofences!!) {
+                // Retrieve requestId and transition type
+                requestID = geofence.requestId
+            }
+
+            Log.e(TAG, "onReceive: requestID " + requestID)
             if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
                 val dateFormat =
                     SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
                 val dateString = dateFormat.format(Date())
-                sessionManager.saveStringData(SessionManager.GEOFENCE_ENTER_TIME, dateString)
+                if (requestID == Constants.geofenceSouthBoundDartCharge) {
+                    sessionManager.saveStringData(
+                        SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME,
+                        dateString
+                    )
+                } else {
+                    sessionManager.saveStringData(
+                        SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME,
+                        dateString
+                    )
+                }
                 Toast.makeText(context, "Location entered", Toast.LENGTH_SHORT).show()
             }
 
@@ -73,59 +94,53 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 Log.e(
                     TAG,
                     "geofenceTransition- geofenceTransition -> " + sessionManager.fetchStringData(
-                        SessionManager.GEOFENCE_ENTER_TIME
+                        SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME
                     )
                 )
 
-                val geofenceEnterTime = Utils.convertStringToDate(
-                    sessionManager.fetchStringData(SessionManager.GEOFENCE_ENTER_TIME),
-                    Constants.dd_mm_yyyy_hh_mm_ss
-                )
+                var geofenceEnterTime: Date? = null
+                if (sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME)
+                        .isEmpty()
+                ) {
+                    geofenceEnterTime = Utils.convertStringToDate1(
+                        sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME),
+                        Constants.dd_mm_yyyy_hh_mm_ss
+                    )
+                } else {
+                    geofenceEnterTime = Utils.convertStringToDate1(
+                        sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME),
+                        Constants.dd_mm_yyyy_hh_mm_ss
+                    )
+                }
+
                 if (geofenceEnterTime != null) {
-                    if (sessionManager.fetchStringData(SessionManager.GEOFENCE_ENTER_TIME)
-                            .isEmpty()
-                    ) {
+                    val diff = Utils.getMinSecTimeDifference(geofenceEnterTime, Date())
+                    Log.e(TAG, "onReceive: diff $diff")
+                    if (diff.first >= 30 && diff.second > 0) {
+                        Toast.makeText(
+                            context,
+                            "Location time limited more than 30 minutes",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
                         notificationUtils.showNotification(
                             context.resources.getString(R.string.str_did_you_cross_today),
                             context.resources.getString(R.string.str_responsible_paying),
                             Constants.GEO_FENCE_NOTIFICATION
                         )
                         Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
-                    } else {
-                        val diff = Utils.getMinSecTimeDifference(geofenceEnterTime, Date())
-                        Log.e(TAG, "onReceive: diff $diff")
-                        if ( diff.first >= 5 && diff.second>0) {
-                            Toast.makeText(
-                                context,
-                                "Location time limited more than 5 minutes",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            notificationUtils.showNotification(
-                                context.resources.getString(R.string.str_did_you_cross_today),
-                                context.resources.getString(R.string.str_responsible_paying),
-                                Constants.GEO_FENCE_NOTIFICATION
-                            )
-                            Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
-                        }
                     }
-                    sessionManager.saveStringData(SessionManager.GEOFENCE_ENTER_TIME, "")
-                } else {
-                    notificationUtils.showNotification(
-                        context.resources.getString(R.string.str_did_you_cross_today),
-                        context.resources.getString(R.string.str_responsible_paying),
-                        Constants.GEO_FENCE_NOTIFICATION
-                    )
-                    Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
+
+                    sessionManager.saveStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME, "")
                 }
             } else {
                 // Log the error.
                 Log.e(TAG, "geofenceTransition- error -> $geofenceTransition")
             }
-        }else{
+        } else {
             Toast.makeText(
                 context,
-                "Location permission is " + checkLocationPermission +" Notification premission is "+checkNotificationPermission,
+                "Location permission is " + checkLocationPermission + " Notification premission is " + checkNotificationPermission,
                 Toast.LENGTH_SHORT
             ).show()
         }
