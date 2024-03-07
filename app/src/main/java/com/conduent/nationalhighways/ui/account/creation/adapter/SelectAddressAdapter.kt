@@ -40,7 +40,7 @@ class SelectAddressAdapter(private val context: Context?,
         }
         addressSring = addressSring +model?.street+", "+model?.town+", "+model?.postcode
 
-        holder.binding.address.text = addressSring
+        holder.binding.radioButton.text = addressSring
 
         holder.binding.radioButton.isChecked = list[position]?.isSelected==true
 

@@ -1,12 +1,11 @@
 package com.conduent.nationalhighways.ui.account.creation.controller
 
-import android.util.Log
 import android.view.accessibility.AccessibilityEvent
+import android.widget.Button
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -53,7 +52,14 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
         )
 
     }
-
+    override fun onPostResume() {
+        super.onPostResume()
+        val task = Runnable {
+            binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+        }
+        val worker = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+    }
     fun focusToolBar() {
         binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
         binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)

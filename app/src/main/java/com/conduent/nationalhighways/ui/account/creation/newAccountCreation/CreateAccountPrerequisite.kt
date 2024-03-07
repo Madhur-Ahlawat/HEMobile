@@ -38,15 +38,6 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
     }
 
     override fun initCtrl() {
-        binding.textView3.setupTextAccessibilityDelegate(binding.textView3,
-            "${getString(R.string.accessibility_bullet)}${getString(R.string.an_email_address_to_receive_a_code)}"
-        )
-        binding.textView6.setupTextAccessibilityDelegate(binding.textView6,
-            "${getString(R.string.accessibility_bullet)}${getString(R.string.a_phone_number)}"
-        )
-        binding.textView8.setupTextAccessibilityDelegate(binding.textView8,
-            "${getString(R.string.accessibility_bullet)}${getString(R.string.a_valid_debit_or_credit_card)}"
-        )
     }
 
     override fun observer() {
