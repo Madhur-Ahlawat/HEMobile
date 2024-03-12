@@ -103,13 +103,13 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 if (sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME)
                         .isNotEmpty()
                 ) {
-                    Log.e(TAG, "onReceive: " )
+                    Log.e(TAG, "onReceive: ")
                     geofenceEnterTime = Utils.convertStringToDate1(
                         sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME),
                         Constants.dd_mm_yyyy_hh_mm_ss
                     )
                 } else {
-                    Log.e(TAG, "onReceive: 11 " )
+                    Log.e(TAG, "onReceive: 11 ")
                     geofenceEnterTime = Utils.convertStringToDate1(
                         sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME),
                         Constants.dd_mm_yyyy_hh_mm_ss
@@ -142,6 +142,14 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                     )
                     sessionManager.saveStringData(
                         SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME,
+                        ""
+                    )
+                    sessionManager.saveStringData(
+                        SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME,
+                        ""
+                    )
+                    sessionManager.saveStringData(
+                        SessionManager.GEOFENCE_SOUTHBOUND_EXIT_TIME,
                         ""
                     )
 
