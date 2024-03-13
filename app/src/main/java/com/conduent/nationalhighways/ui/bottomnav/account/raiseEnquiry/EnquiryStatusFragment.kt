@@ -77,6 +77,9 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 LandingActivity::class.java
             )
         }
+        if(requireActivity() is RaiseEnquiryActivity){
+            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
+        }
     }
 
     override fun initCtrl() {

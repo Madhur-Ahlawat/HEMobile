@@ -58,6 +58,26 @@ class DartChargeAccountTypeEnquiryFragment :
         } else {
             binding.btnNext.disable()
         }
+        if(requireActivity() is RaiseEnquiryActivity){
+            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
+        }
+        binding.radioButtonYes.setOnCheckedChangeListener { _, isChecked ->
+            binding.radioButtonYes.contentDescription = if (isChecked) {
+                "${binding.radioButtonYes.text}"
+            } else {
+                "${binding.radioButtonYes.text}"
+            }
+            binding.radioButtonYes.contentDescription = binding.radioButtonYes.text.toString()
+        }
+
+        binding.radioButtonNo.setOnCheckedChangeListener { _, isChecked ->
+            binding.radioButtonNo.contentDescription = if (isChecked) {
+                "${binding.radioButtonNo.text}"
+            } else {
+                "${binding.radioButtonNo.text}"
+            }
+            binding.radioButtonNo.contentDescription = binding.radioButtonNo.text.toString()
+        }
     }
 
     private fun checkContinue() {

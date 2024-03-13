@@ -68,6 +68,7 @@
                 android:layout_width="@dimen/margin_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_31dp"
+                android:background="@color/white"
                 android:fontFamily="@font/open_sans_bold"
                 android:paddingLeft="@dimen/margin_30dp"
                 android:text="@string/str_contact_dart_charge_team"
