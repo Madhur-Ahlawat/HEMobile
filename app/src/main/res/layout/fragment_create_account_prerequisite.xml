@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -63,68 +62,111 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtBefore" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/textView3"
-            style="@style/RegularTextBlack"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="@dimen/margin_5dp"
-            android:drawableStart="@drawable/circle_5dp"
-            android:drawablePadding="20dp"
-            android:text="@string/an_email_address_to_receive_a_code"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/textView6"
-            style="@style/RegularTextBlack"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="@dimen/margin_5dp"
-            android:drawableStart="@drawable/circle_5dp"
-            android:drawablePadding="20dp"
-
-            android:text="@string/a_phone_number"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/createAccounPoint1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/circle_5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView7"
-            app:layout_constraintStart_toStartOf="@+id/textView6"
-            app:layout_constraintTop_toTopOf="@+id/textView7"
-            app:layout_constraintVertical_bias="0.30" />
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/textView7"
-            style="@style/RegularTextBlack"
-            android:layout_width="0dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/margin_5dp"
             android:layout_marginTop="@dimen/margin_5dp"
-
-            android:gravity="top"
-
-            android:text="@string/the_vehicle_registration_number_plate_you_want_to_add_to_the_account"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/textView8"
-            style="@style/RegularTextBlack"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="@dimen/margin_5dp"
-            android:drawableStart="@drawable/circle_5dp"
-            android:drawablePadding="20dp"
-
-            android:text="@string/a_valid_debit_or_credit_card"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <View
+                android:layout_width="@dimen/margin_5dp"
+                android:layout_height="@dimen/margin_5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_5dp"
+                android:contentDescription="@string/accessibility_bullet" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                style="@style/RegularTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:text="@string/an_email_address_to_receive_a_code" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/createAccounPoint2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createAccounPoint1">
+
+            <View
+                android:layout_width="@dimen/margin_5dp"
+                android:layout_height="@dimen/margin_5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_5dp"
+                android:contentDescription="@string/accessibility_bullet" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                style="@style/RegularTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:text="@string/a_phone_number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/createAccounPoint3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createAccounPoint2">
+
+            <View
+                android:layout_width="@dimen/margin_5dp"
+                android:layout_height="@dimen/margin_5dp"
+                android:layout_marginTop="@dimen/margin_7dp"
+                android:background="@drawable/circle_5dp"
+                android:contentDescription="@string/accessibility_bullet" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                style="@style/RegularTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:text="@string/the_vehicle_registration_number_plate_you_want_to_add_to_the_account" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/createAccounPoint4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_5dp"
+            android:layout_marginTop="@dimen/margin_5dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createAccounPoint3">
+
+            <View
+                android:layout_width="@dimen/margin_5dp"
+                android:layout_height="@dimen/margin_5dp"
+                android:layout_marginTop="@dimen/margin_7dp"
+                android:background="@drawable/circle_5dp"
+                android:contentDescription="@string/accessibility_bullet" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                style="@style/RegularTextBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:text="@string/a_valid_debit_or_credit_card" />
+
+        </LinearLayout>
+
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnCreateAccount"
@@ -133,7 +175,7 @@
             android:text="@string/create_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView8" />
+            app:layout_constraintTop_toBottomOf="@id/createAccounPoint4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

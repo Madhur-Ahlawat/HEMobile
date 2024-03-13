@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountTypesBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -31,6 +32,9 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
+        if (requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBar()
+        }
         binding.crossingCharges.setOnClickListener(this)
     }
 

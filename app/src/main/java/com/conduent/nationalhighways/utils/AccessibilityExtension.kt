@@ -6,6 +6,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.clearCheckedRadioButtonsContentDescriptions
+import com.conduent.nationalhighways.utils.widgets.NHTextView
 
 fun RadioButton.setupAccessibilityDelegate() {
     accessibilityDelegate = object : View.AccessibilityDelegate() {
@@ -19,4 +20,17 @@ fun RadioButton.setupAccessibilityDelegate() {
             }
         }
     }
+}
+fun NHTextView.setupTextAccessibilityDelegate(textview: NHTextView, text : String){
+    val accessibilityDelegate: View.AccessibilityDelegate =
+        object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.text = text
+            }
+        }
+    textview.accessibilityDelegate = accessibilityDelegate
 }

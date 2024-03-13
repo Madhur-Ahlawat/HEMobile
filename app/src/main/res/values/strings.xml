@@ -87,7 +87,6 @@
     <string name="txt_create_pwd">Create password</string>
     <string name="txt_pwd_constraints_placeholder">Password constraints placeholder</string>
     <string name="txt_confirm_pwd">Confirm password</string>
-    <string name="txt_pwd_reset_msg">Password reset successful</string>
     <string name="txt_please_login_to_continue">Please log in to continue</string>
     <string name="txt_enter_pwd">Enter password</string>
     <string name="str_enter_confirm_pwd">Enter confirm password</string>
@@ -1710,6 +1709,9 @@
     <string name="accessibility_not_selected">Not Selected.</string>
     <string name="accessibility_ticked">Ticked.</string>
     <string name="accessibility_not_ticked">Not Ticked.</string>
+    <string name="accessibility_on">On.</string>
+    <string name="accessibility_off">Off.</string>
+
     <string name="powered_by" tools:ignore="ExtraTranslation">powered by</string>
     <string name="_50">50</string>
     <string name="_15">15</string>
