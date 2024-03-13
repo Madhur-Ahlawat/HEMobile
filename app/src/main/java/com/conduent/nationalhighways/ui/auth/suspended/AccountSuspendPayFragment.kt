@@ -121,6 +121,13 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
             binding.tvSelectPaymentMethod.text = htmlText
 
+            binding.cardView.contentDescription =
+                responseModel?.card?.type?.uppercase() + "\n" + responseModel?.card?.number?.let {
+                    Utils.maskCardNumber(
+                        it
+                    )
+                }
+
 
         }
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
@@ -164,6 +171,13 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             )
 
             binding.tvSelectPaymentMethod.text = htmlText
+
+            binding.cardView.contentDescription =
+                responseModel?.card?.type?.uppercase() + "\n" + responseModel?.card?.number?.let {
+                    Utils.maskCardNumber(
+                        it
+                    )
+                }
 
         }
     }

@@ -1172,6 +1172,21 @@ object Utils {
             return R.color.white
         }
     }
+  fun returnCardText(paymentTypeInfo: String): String {
+        if (paymentTypeInfo.contains("CURRENT")) {
+            return "CURRENT"
+        } else if (paymentTypeInfo.contains("SAVINGS")) {
+            return "SAVINGS"
+        } else if (paymentTypeInfo.contains("MASTERCARD")) {
+            return "MASTERCARD"
+        } else if (paymentTypeInfo.contains(Constants.MAESTRO)) {
+            return "Constants.MAESTRO"
+        } else if (paymentTypeInfo.contains("VISA")) {
+            return "VISA"
+        } else {
+            return ""
+        }
+    }
 
     fun redirectToNotificationPermissionSettings(context: Context) {
         val intent = Intent().apply {

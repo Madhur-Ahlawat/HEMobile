@@ -9,9 +9,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_74dp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/margin_74dp"
         android:layout_marginHorizontal="2dp"
         android:layout_marginTop="5dp"
+        android:importantForAccessibility="no"
         android:layout_marginBottom="5dp"
         android:id="@+id/layout"
         android:background="@drawable/bg_card_type">
@@ -19,7 +21,8 @@
         <com.conduent.nationalhighways.utils.widgets.NHRadioButton
             android:id="@+id/radioButton_payment_method"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:minWidth="@dimen/margin_48dp"
             android:layout_marginStart="@dimen/margin_20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +33,7 @@
             android:id="@+id/ivCardType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_10dp"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/radioButton_payment_method"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8dp"
+            android:importantForAccessibility="no"
             android:textColor="@color/grayColorIcon"
             android:fontFamily="@font/open_sans"
             android:textSize="@dimen/font_16sp"

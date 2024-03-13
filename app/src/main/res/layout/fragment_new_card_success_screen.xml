@@ -68,7 +68,8 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_74dp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/margin_74dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginBottom="5dp"
                 app:cardCornerRadius="@dimen/margin_5dp"
@@ -81,7 +82,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
 
                     <ImageView
                         android:id="@+id/ivCardType"

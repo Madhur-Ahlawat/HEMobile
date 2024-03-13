@@ -71,7 +71,8 @@
                     android:id="@+id/fullName"
                     style="@style/RegularTextBlack"
                     android:layout_marginStart="20dp"
-                    android:text="John Doe"
+                    android:layout_width="0dp"
+                    android:text="John DoeeeeeeeeDoeeeeeeeeDoeeeeeeeeDoeeeeeeeeDoeeeeeeeeDoeeeeeeeeDoeeeeeeee"
                     app:layout_constraintStart_toEndOf="@+id/txtFullName"
                     app:layout_constraintTop_toTopOf="parent" />
 

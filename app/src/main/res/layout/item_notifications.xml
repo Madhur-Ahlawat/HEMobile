@@ -17,7 +17,7 @@
             android:id="@+id/selectNotification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_2dp"
+            android:layout_marginStart="@dimen/margin_2dp"
             android:background="@drawable/check_selector"
             android:button="@null"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
             android:fontFamily="@font/open_sans_semibold"
             android:minHeight="@dimen/margin_22dp"
             android:textColor="@color/black"
-            android:textSize="@dimen/margin_16dp"
+            android:textSize="@dimen/margin_16sp"
             app:layout_constraintStart_toEndOf="@+id/selectNotification"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="9 Jan 2023 11:00 AM" />
