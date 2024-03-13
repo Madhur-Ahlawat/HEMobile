@@ -24,6 +24,7 @@ import com.conduent.nationalhighways.databinding.FragmentTermsAndConditionsBindi
 import com.conduent.nationalhighways.databinding.FragmentViewChargesNewBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -88,6 +89,9 @@ class ViewChargesFragment : BaseFragment<FragmentViewChargesNewBinding>() {
                     TollRatesRespNew(4, "Truck", "D", "£6.00", "£5.19")
                 )
             adapter = TollRateAdapterNew(requireActivity(), mTollRatesList)
+        }
+        if(requireActivity() is RaiseEnquiryActivity){
+            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
         }
     }
 

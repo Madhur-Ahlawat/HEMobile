@@ -62,7 +62,9 @@ class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBindin
             "home",
             sessionManager.getLoggedInUser()
         )
-
+        if(requireActivity() is RaiseEnquiryActivity){
+            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
+        }
     }
 
     override fun initCtrl() {

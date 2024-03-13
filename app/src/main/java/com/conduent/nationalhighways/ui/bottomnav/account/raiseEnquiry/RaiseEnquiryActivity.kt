@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
+import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -7,6 +8,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityRaiseEnquiryBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
@@ -18,6 +20,9 @@ import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -184,6 +189,13 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
 //        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager,api)
     }
-
-
+    fun focusToolBar() {
+        binding.toolBarLyt.backButton.requestFocus()
+        binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+        val task = Runnable {
+            binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+    }
 }

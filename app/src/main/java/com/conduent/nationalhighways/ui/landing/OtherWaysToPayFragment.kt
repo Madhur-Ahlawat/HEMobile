@@ -62,7 +62,9 @@ class OtherWaysToPayFragment : BaseFragment<FragmentOtherWaysToPayBinding>() {
             "home",
             sessionManager.getLoggedInUser()
         )
-
+        if(requireActivity() is RaiseEnquiryActivity){
+            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
+        }
     }
     override fun initCtrl() {
         binding?.tvGuideline?.setMovementMethod(LinkMovementMethod.getInstance())
