@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,6 +49,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 
         binding.btnNext.setOnClickListener(this)
 
+        binding.twoFactor.setAccessibilityDelegate()
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
@@ -83,11 +85,6 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
             } else {
 //                NewCreateAccountRequestModel.twoStepVerification = false
                 binding.btnNext.enable()
-            }
-            binding.twoFactor.contentDescription = if (binding.twoFactor.isChecked) {
-                "${resources.getString(R.string.accessibility_on)} ${binding.twoFactor.text}"
-            } else {
-                "${resources.getString(R.string.accessibility_off)} ${binding.twoFactor.text}"
             }
         }
 

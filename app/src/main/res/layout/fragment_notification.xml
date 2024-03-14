@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerInParent="true"
-                    android:layout_marginStart="@dimen/margin_20dp"
+                    android:paddingStart="@dimen/margin_20dp"
                     android:button="@null"
                     android:drawableStart="@drawable/check_selector"
                     android:drawablePadding="@dimen/margin_19dp"

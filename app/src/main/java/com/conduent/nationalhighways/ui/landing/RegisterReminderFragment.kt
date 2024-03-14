@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +28,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -71,7 +71,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
         if (sessionManager.fetchBooleanData(SessionManager.SettingsClick) && ((arguments?.containsKey(
                 Constants.GpsSettings
-            )==false) == false)
+            ) == false) == false)
         ) {
             sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
             if (!Utils.checkLocationpermission(requireContext())) {
@@ -104,7 +104,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             if (binding.switchGeoLocation.isChecked) {
                 GeofenceUtils.startGeofence(this.requireContext())
             }
-        }else{
+        } else {
 
         }
 
@@ -118,19 +118,11 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             if (isChecked) {
                 GeofenceUtils.startGeofence(this.requireContext())
             }
-            binding.switchGeoLocation.contentDescription = if (isChecked) {
-                "${resources.getString(R.string.accessibility_on)} ${binding.switchGeoLocation.text}"
-            } else {
-                "${resources.getString(R.string.accessibility_off)} ${binding.switchGeoLocation.text}"
-            }
         }
-        binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
-            binding.switchNotification.contentDescription = if (isChecked) {
-                "${resources.getString(R.string.accessibility_on)} ${binding.switchNotification.text}"
-            } else {
-                "${resources.getString(R.string.accessibility_off)} ${binding.switchNotification.text}"
-            }
-        }
+
+        binding.switchGeoLocation.setAccessibilityDelegate()
+        binding.switchNotification.setAccessibilityDelegate()
+
         binding.switchGeoLocation.setOnClickListener {
             if (Utils.checkLocationpermission(requireContext())) {
                 sessionManager.saveBooleanData(

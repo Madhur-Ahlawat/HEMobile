@@ -42,6 +42,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -94,12 +95,10 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
         }
 
+        binding.switchCommunication.setAccessibilityDelegate()
+        binding.switchNotification.setAccessibilityDelegate()
+
         binding.switchCommunication.setOnClickListener {
-            binding.switchCommunication.contentDescription = if (binding.switchCommunication.isChecked) {
-                "${resources.getString(R.string.accessibility_on)} ${binding.switchCommunication.text}"
-            } else {
-                "${resources.getString(R.string.accessibility_off)} ${binding.switchCommunication.text}"
-            }
             if (binding.switchCommunication.isChecked) {
                 binding.btnNext.enable()
                 NewCreateAccountRequestModel.communicationTextMessage = true
@@ -110,11 +109,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         }
 
         binding.switchNotification.setOnClickListener {
-            binding.switchNotification.contentDescription = if (binding.switchNotification.isChecked) {
-                "${resources.getString(R.string.accessibility_on)} ${binding.switchNotification.text}"
-            } else {
-                "${resources.getString(R.string.accessibility_off)} ${binding.switchNotification.text}"
-            }
             if (!Utils.areNotificationsEnabled(requireContext())) {
                 displayCustomMessage(
                     resources.getString(R.string.str_notification_title),
