@@ -2,112 +2,126 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="18dp"
-        android:paddingTop="@dimen/margin_20dp"
-        android:paddingEnd="@dimen/margin_18dp"
-        android:paddingBottom="@dimen/margin_20dp">
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/tv_enter_amount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_12dp"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="@string/str_check_your_answer_before_payment"
-            android:textSize="@dimen/font_16sp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-            android:id="@+id/lowBalance"
-            style="@style/input_text"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_40dp"
-            android:maxLength="10"
-            android:textSize="@dimen/font_16sp"
-            app:imeOptions="actionDone"
-            app:inputType="numberDecimal"
-            app:labelText="@string/str_payment_amount"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_enter_amount"
-            app:maxLength="10" />
+            android:layout_height="match_parent"
+            android:paddingStart="18dp"
+            android:paddingTop="@dimen/margin_20dp"
+            android:paddingEnd="@dimen/margin_18dp"
+            android:paddingBottom="@dimen/margin_20dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_74dp"
-            android:layout_marginTop="30dp"
-            app:cardCornerRadius="@dimen/margin_5dp"
-            android:elevation="3dp"
-            android:layout_marginHorizontal="1dp"
-            android:layout_marginBottom="1dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lowBalance">
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/tv_enter_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/str_check_your_answer_before_payment"
+                android:textSize="@dimen/font_16sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                android:id="@+id/lowBalance"
+                style="@style/input_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_40dp"
+                android:maxLength="10"
+                android:textSize="@dimen/font_16sp"
+                app:imeOptions="actionDone"
+                app:inputType="numberDecimal"
+                app:labelText="@string/str_payment_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_enter_amount"
+                app:maxLength="10" />
 
-                <ImageView
-                    android:id="@+id/ivCardType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_18dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/margin_74dp"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="@dimen/margin_5dp"
+                android:elevation="3dp"
+                android:importantForAccessibility="yes"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginBottom="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lowBalance">
 
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/tv_select_payment_method"
-                    style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_18dp"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@color/grayColorIcon"
-                    android:textSize="@dimen/font_16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ivCardType"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    >
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/ivCardType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_18dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:importantForAccessibility="no" />
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/tv_select_payment_method"
+                        style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_18dp"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@color/grayColorIcon"
+                        android:textSize="@dimen/font_16sp"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ivCardType"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
 
-        <com.conduent.apollo.ui.CMButton
-            android:id="@+id/btnPay"
-            style="@style/PrimaryButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_30dp"
-            android:text="@string/str_pay"
-            android:textSize="@dimen/font_14sp"
-            app:isEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardView"/>
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnPay"
+                style="@style/PrimaryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:text="@string/str_pay"
+                android:textSize="@dimen/font_14sp"
+                app:isEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView"/>
 
 
-        <com.conduent.apollo.ui.CMButton
-            android:id="@+id/btnCancel"
-            style="@style/secondaryButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/str_cancel"
-            android:textSize="@dimen/font_14sp"
-            android:layout_marginTop="@dimen/margin_20dp"
-            app:isEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnPay" />
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnCancel"
+                style="@style/secondaryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/str_cancel"
+                android:textSize="@dimen/font_14sp"
+                android:layout_marginTop="@dimen/margin_20dp"
+                app:isEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnPay" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

@@ -566,13 +566,16 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     fun hideBackIcon() {
         dataBinding?.backButton?.gone()
     }
+
     fun focusToolBar() {
         dataBinding?.backButton?.requestFocus() // Focus on the backButton
         dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+
         val task = Runnable {
             dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
         }
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }
+
 }

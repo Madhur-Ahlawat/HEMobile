@@ -79,6 +79,16 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
             }
         }
         HomeActivityMain.setTitle(resources.getString(R.string.crossing_details))
+        setAccessibilityText()
+    }
+
+    private fun setAccessibilityText(){
+        binding.paymentAmountCl.contentDescription= binding.crossingAmount.text.toString()+"\n "+ binding.labelCrossingAmount.text.toString()
+        binding.crossingDateCl.contentDescription= binding.tvCrossingDate.text.toString()+"\n "+ binding.tvCrossingDateValue.text.toString()
+        binding.tvVrnCl.contentDescription=binding.tvVrn.text.toString() +"\n "+ binding.tvVrnValue.text.toString()
+        binding.timeCl.contentDescription=binding.tvTime.text.toString() +"\n "+ binding.tvTimeValue.text.toString()
+        binding.directionCl.contentDescription=binding.tvLocation.text.toString() +"\n "+ binding.tvLocationValue.text.toString()
+        binding.paymentMethodCl.contentDescription=binding.tvPaymentStatus.text.toString() +"\n "+ binding.tvPaymentStatusValue.text.toString()
     }
 
     override fun initCtrl() {

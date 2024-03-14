@@ -11,6 +11,7 @@
         android:id="@+id/no_data_cl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
         android:visibility="gone"
         tools:visibility="visible">
 
@@ -19,6 +20,7 @@
             android:id="@+id/warning_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
             android:src="@drawable/warningicon"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -29,6 +31,8 @@
             style="@style/BoldText"
             android:layout_marginTop="@dimen/margin_20dp"
             android:text="@string/no_vehicle_found"
+            android:gravity="center"
+            android:importantForAccessibility="yes"
             android:textColor="@color/dark_blue_color"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

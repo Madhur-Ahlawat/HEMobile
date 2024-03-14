@@ -73,7 +73,7 @@
                 <TextView
                     android:id="@+id/text_make_default"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/open_sans"
                     android:padding="3dp"
                     android:text="@string/str_make_default"
@@ -92,6 +92,7 @@
                 android:layout_marginEnd="@dimen/margin_12dp"
                 android:padding="12dp"
                 android:src="@drawable/delete"
+                android:contentDescription="@string/delete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/forward"
                 app:layout_constraintTop_toTopOf="parent" />

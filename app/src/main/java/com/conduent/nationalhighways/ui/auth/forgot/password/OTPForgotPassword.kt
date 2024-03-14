@@ -77,7 +77,6 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
-import com.google.firebase.crashlytics.internal.Logger
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -128,9 +127,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         FragmentForgotOtpchangesBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if(requireActivity() is AuthActivity){
+        if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBar()
-        }else if (requireActivity() is CreateAccountActivity){
+        } else if (requireActivity() is CreateAccountActivity) {
             (requireActivity() as CreateAccountActivity).focusToolBar()
         }
         hasFaceBiometric = Utils.hasFaceId(requireContext())
@@ -382,7 +381,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    showError(binding.root, resource.errorMsg)
                 }
 
             }
@@ -483,6 +482,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_verify -> {
+                binding.edtOtp.editText.isFocusable = false
+                binding.edtOtp.editText.isFocusableInTouchMode = false
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
@@ -952,10 +953,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             i
                         )
 
-                    val smsFlag = if(communicationModel?.category?.lowercase().equals("standard notification")) {
+                    val smsFlag = if (communicationModel?.category?.lowercase()
+                            .equals("standard notification")
+                    ) {
                         "Y"
-                    }else{
-                        communicationModel?.smsFlag ?:"Y"
+                    } else {
+                        communicationModel?.smsFlag ?: "Y"
                     }
 
                     communicationList.add(
@@ -973,7 +976,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             communicationModel?.pushNotFlag,
                             communicationModel?.defPushNot,
                             communicationModel?.defMail
-                            )
+                        )
                     )
 
                 }
@@ -1250,7 +1253,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(requireActivity(), BiometricActivity::class.java)
-                    intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
+                    intent.putExtra(TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
                     intent.putExtra(Constants.NAV_FLOW_KEY, navFlowFrom)
 
@@ -1263,7 +1266,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    requireActivity()?.startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                         putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                     }

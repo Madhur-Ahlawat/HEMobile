@@ -18,7 +18,9 @@ import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentThreeDSWebviewBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import com.google.gson.Gson
 import kotlinx.coroutines.MainScope
@@ -28,7 +30,7 @@ import kotlinx.coroutines.launch
 class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), View.OnClickListener {
 
 
-    private var topUpAmount:Double = 0.0
+    private var topUpAmount: Double = 0.0
     private var currentBalance: String = ""
     private var personalInformation: PersonalInformation? = null
     private var accountInformation: AccountInformation? = null
@@ -45,6 +47,12 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         FragmentThreeDSWebviewBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBar()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
+        
         WebView.setWebContentsDebuggingEnabled(true)
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
@@ -71,7 +79,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                 MainScope().launch {
                     when (data) {
                         "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt" -> hideLoader()
-                        "threeDSStarted"->showLoader()
+                        "threeDSStarted" -> showLoader()
                         "cancelClicked" -> {
                             hideLoader()
                             findNavController().popBackStack()
@@ -89,20 +97,23 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount)
                                 bundle.putInt(Constants.POSITION, position)
                                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                                bundle.putParcelable(
+                                    Constants.ACCOUNTINFORMATION,
+                                    accountInformation
+                                )
                                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                                 bundle.putString(Constants.NAV_FLOW_KEY, flow)
                                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                                bundle.putParcelableArrayList(Constants.DATA, paymentList as ArrayList)
+                                bundle.putParcelableArrayList(
+                                    Constants.DATA,
+                                    paymentList as ArrayList
+                                )
                                 findNavController().navigate(
                                     R.id.action_threeDSWebViewFragment_to_accountSuspendedFinalPayFragment,
                                     bundle
                                 )
+                            }
                         }
-                    }
-
-
-
 
 
                     }
@@ -121,7 +132,6 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
     private fun hideLoader() {
         binding.progressBar.visibility = View.GONE
     }
-
 
 
     override fun initCtrl() {
@@ -162,8 +172,8 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-               val amount: Double = topUpAmount
-               val doubleAmount = String.format("%.2f", amount)
+                val amount: Double = topUpAmount
+                val doubleAmount = String.format("%.2f", amount)
 
                 hideLoader()
                 view?.loadUrl(

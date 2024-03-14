@@ -203,6 +203,15 @@ class BottomNavigationView @JvmOverloads constructor(
      */
     @SuppressLint("ClickableViewAccessibility")
     private fun addListener(navigationItem: NavigationItem) {
+        navigationItem.view.setOnClickListener {
+            if (needsToScale) {
+                scaleNavigationItem(navigationItem, params.startScale, params.endScale)
+                colorAnim(navigationItem, true)
+                selectItem(navigationItem, true)
+                Log.w("POS", "DOWN")
+            }
+            needsToScale = true
+        }
         navigationItem.view.setOnTouchListener { _, event ->
 
             // If user touched to item and then moved finger to outside of the item, make view how it looks was before touching

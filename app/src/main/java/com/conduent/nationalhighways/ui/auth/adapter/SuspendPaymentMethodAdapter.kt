@@ -67,6 +67,9 @@ class SuspendPaymentMethodAdapter(
 
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
+        holder.binding.radioButtonPaymentMethod.contentDescription =
+            "${holder.binding.tvSelectPaymentMethod.text}"
+
 
         if (model?.bankAccount == false) {
             holder.binding.radioButtonPaymentMethod.isChecked =
@@ -87,12 +90,14 @@ class SuspendPaymentMethodAdapter(
             } else {
                 list?.get(pos)?.isSelected = true
                 holder.binding.radioButtonPaymentMethod.isChecked = true
-                holder.binding.radioButtonPaymentMethod.contentDescription = if (holder.binding.radioButtonPaymentMethod.isChecked) {
-                    "${holder.binding.radioButtonPaymentMethod.text}"
-                } else {
-                    "${holder.binding.radioButtonPaymentMethod.text}"
-                }
-                holder.binding.radioButtonPaymentMethod.contentDescription = holder.binding.radioButtonPaymentMethod.text.toString()
+                holder.binding.radioButtonPaymentMethod.contentDescription =
+                    if (holder.binding.radioButtonPaymentMethod.isChecked) {
+                        "${holder.binding.tvSelectPaymentMethod.text}"
+                    } else {
+                        "${holder.binding.tvSelectPaymentMethod.text}"
+                    }
+                holder.binding.radioButtonPaymentMethod.contentDescription =
+                    holder.binding.radioButtonPaymentMethod.text.toString()
 
             }
             notifyDataSetChanged()
