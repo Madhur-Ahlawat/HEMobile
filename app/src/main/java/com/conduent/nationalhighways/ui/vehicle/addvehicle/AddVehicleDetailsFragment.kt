@@ -35,7 +35,6 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.onTextChanged
-import com.conduent.nationalhighways.utils.setupAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -147,41 +146,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             mScreeType = it
         }
 
-        binding.radioButtonNo.setupAccessibilityDelegate()
-        binding.radioButtonYes.setupAccessibilityDelegate()
+        Utils.setupAccessibilityDelegatesForRadioButtons(binding.radioGroupYesNo)
 
-
-     /*   binding.radioButtonNo.accessibilityDelegate = object : View.AccessibilityDelegate() {
-
-            override fun onInitializeAccessibilityNodeInfo(
-                host: View,
-                info: AccessibilityNodeInfo
-            ) {
-                super.onInitializeAccessibilityNodeInfo(host, info)
-                // Check if the RadioGroup has accessibility focus
-                if (info.isAccessibilityFocused) {
-                    binding.radioGroupYesNo.clearCheckedRadioButtonsContentDescriptions()
-                    binding.radioGroupYesNo.contentDescription=binding.radioButtonNo.text.toString()
-                }
-            }
-        }
-        binding.radioButtonYes.accessibilityDelegate = object : View.AccessibilityDelegate() {
-
-            override fun onInitializeAccessibilityNodeInfo(
-                host: View,
-                info: AccessibilityNodeInfo
-            ) {
-                super.onInitializeAccessibilityNodeInfo(host, info)
-                if (info.isAccessibilityFocused) {
-                    binding.radioGroupYesNo.clearCheckedRadioButtonsContentDescriptions()
-                    binding.radioGroupYesNo.contentDescription=binding.radioButtonYes.text.toString()
-                }
-            }
-        }
-*/
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId ->
 
-            Utils.setContentDescriptionForRadioGroup(checkedId,binding.radioGroupYesNo,requireActivity())
 
             radioButtonChecked = R.id.radioButtonYes == checkedId || R.id.radioButtonNo == checkedId
 
