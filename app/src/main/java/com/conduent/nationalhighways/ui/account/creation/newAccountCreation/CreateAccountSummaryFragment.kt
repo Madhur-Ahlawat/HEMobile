@@ -82,20 +82,17 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             binding.twoStepVerification.text = getString(R.string.no)
         }
 
-        binding.address.text =
-            dataModel?.addressLine1 + "\n" + dataModel?.townCity + "\n" + dataModel?.zipCode
+        (dataModel?.addressLine1 + "\n" + dataModel?.townCity + "\n" + dataModel?.zipCode).also { binding.address.text = it }
         binding.emailAddress.text = dataModel?.emailAddress
         if ((NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) ||
             NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true
         ) {
             binding.phoneCard.visible()
-            binding.mobileNumber.text =
-                dataModel?.countryCode?.let { getRequiredText(it) } + " " + dataModel?.mobileNumber
+            (dataModel?.countryCode?.let { getRequiredText(it) } + " " + dataModel?.mobileNumber).also { binding.mobileNumber.text = it }
         } else {
             if (NewCreateAccountRequestModel.telephoneNumber?.isNotEmpty() == true) {
                 binding.phoneCard.visible()
-                binding.mobileNumber.text =
-                    dataModel?.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel?.telephoneNumber
+                (dataModel?.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel?.telephoneNumber).also { binding.mobileNumber.text = it }
             } else {
                 binding.phoneCard.gone()
             }

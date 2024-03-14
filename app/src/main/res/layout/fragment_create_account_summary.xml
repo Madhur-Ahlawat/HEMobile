@@ -46,6 +46,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,6 +62,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/full_name"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,7 +71,8 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:gravity="start|center"
+                        android:focusable="false"
                         app:layout_constraintEnd_toStartOf="@+id/editFullName"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtFullName" />
@@ -100,6 +105,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -113,12 +121,14 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/company_name"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/companyName"
                         style="@style/RegularTextBlack"
+                        android:focusable="false"
 
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -151,6 +161,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -163,6 +176,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/address"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -171,7 +185,8 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:gravity="start|center"
+                        android:focusable="false"
                         app:layout_constraintEnd_toStartOf="@+id/editAddress"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtAddress" />
@@ -204,6 +219,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -216,6 +234,7 @@
                         android:id="@+id/txtEmailAddress"
                         style="@style/MediumTextBlack"
                         android:text="@string/email_address"
+                        android:focusable="false"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -226,7 +245,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:focusable="false"
+                        android:gravity="start|center"
                         app:layout_constraintEnd_toStartOf="@+id/editEmailAddress"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtEmailAddress" />
@@ -259,6 +279,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -271,6 +294,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/telephone_number"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -279,7 +303,8 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:text="Not provided"
+                        android:focusable="false"
+                        android:text="@string/not_provided"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />
 
@@ -320,6 +345,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -332,6 +360,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/type_of_account"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -339,7 +368,8 @@
                         android:id="@+id/accountType"
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:text="Pre-pay"
+                        android:text="@string/pre_pay"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtAccountType" />
 
@@ -371,6 +401,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 android:minHeight="@dimen/margin_77dp"
                 app:cardCornerRadius="5dp">
 
@@ -383,7 +416,8 @@
                     <TextView
                         android:id="@+id/textAccountSubType"
                         style="@style/RegularTextBlack"
-                        android:text="Pre-pay"
+                        android:focusable="false"
+                        android:text="@string/pre_pay"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -461,6 +495,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -473,6 +510,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/text_message_communications"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -481,6 +519,7 @@
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:text="@string/no"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtCommunications" />
 
@@ -512,6 +551,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -524,6 +566,7 @@
                         android:id="@+id/txtEmailAddressProfile"
                         style="@style/MediumTextBlack"
                         android:text="@string/email_address"
+                        android:focusable="false"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -533,7 +576,8 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:focusable="false"
+                        android:gravity="start|center"
                         app:layout_constraintEnd_toStartOf="@+id/editEmailAddressProfile"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtEmailAddressProfile" />
@@ -566,6 +610,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -578,6 +625,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/password"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -587,7 +635,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:gravity="start|center"
+                        android:focusable="false"
                         app:layout_constraintEnd_toStartOf="@+id/editPassword"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtPassword"
@@ -620,6 +669,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -632,6 +684,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/two_step_verification"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -640,6 +693,7 @@
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:text="@string/yes"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtTwoStepVerification" />
                     <ImageView
@@ -670,6 +724,9 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:clickable="true"
                 android:visibility="gone"
                 app:cardCornerRadius="5dp">
 
@@ -682,6 +739,7 @@
                         android:id="@+id/txtBiometrics"
                         style="@style/MediumTextBlack"
                         android:text="@string/biometrics"
+                        android:focusable="false"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -691,6 +749,7 @@
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:text="@string/yes"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtBiometrics" />
                     <ImageView
@@ -736,7 +795,7 @@
                 android:textColor="@color/black"
                 android:layout_marginTop="@dimen/margin_30dp"
                 android:checked="false"
-                android:gravity="center|left"
+                android:gravity="center|start"
                 android:text="@string/i_accept_the_terms_conditions" />
 
 

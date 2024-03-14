@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
@@ -19,9 +20,11 @@ import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.announceDropDown
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.setupTextAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -67,7 +70,6 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             (navData as CrossingDetailsModelsResponse).additionalCrossingCount
         val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse).additionalCharge
         binding.apply {
-            inputTotalAmount.isEnabled = false
             val charge = data?.chargingRate?.toDouble()
             val unSettledTrips = data?.unsettledTripChange
             crossingsList = emptyList<String>().toMutableList()
@@ -102,12 +104,19 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
 
         data?.unsettledTripChange =
             binding.inputCountry.getSelectedValue()?.toInt() ?: 0
+
     }
+
 
     override fun initCtrl() {
         binding.inputCountry.dropDownItemSelectListener = this
+        binding.inputCountry.setupTextAccessibilityDelegate(binding.inputCountry,"dropdown")
         binding.btnAdditionalCrossing.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
+        binding.inputCountry.isLongClickable = false
+
+       // announceDropDown(binding.inputCountry,"dropdown")
+
     }
 
     override fun observer() {
