@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.databinding.FragmentTermsAndConditionsBindi
 import com.conduent.nationalhighways.databinding.FragmentThirdPartySoftwareBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -51,6 +52,9 @@ class ThirdPartySoftwareFragment : BaseFragment<FragmentThirdPartySoftwareBindin
 
     override fun init() {
      binding?.textTermsAndConditions?.setMovementMethod(LinkMovementMethod.getInstance())
+        if(requireActivity() is RaiseEnquiryActivity){
+            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
+        }
     }
 
     override fun initCtrl() {

@@ -22,6 +22,7 @@
             android:paddingStart="@dimen/margin_10dp"
             android:paddingEnd="@dimen/margin_10dp"
             android:maxLines="2"
+            android:minHeight="@dimen/margin_48dp"
             style="@style/RegularTextBlack"
             android:textColor="@color/color_1D70B8"
             android:textSize="@dimen/font_14sp"

@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentGeneralTermsAndConditionsBinding
 import com.conduent.nationalhighways.databinding.FragmentTermsAndConditionsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -85,7 +86,9 @@ class PayGTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCondi
             "home",
             sessionManager.getLoggedInUser()
         )
-
+        if(requireActivity() is RaiseEnquiryActivity){
+            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
+        }
     }
     override fun initCtrl() {
     }

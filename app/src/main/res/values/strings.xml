@@ -1729,4 +1729,6 @@
     <string name="mark_as_nread">Mark as\nread</string>
     <string name="deselect_all">Deselect all</string>
     <string name="aj66mha">AJ66MHA</string>
+    <string name="not_provided">Not provided</string>
+    <string name="pre_pay">Pre-pay</string>
 </resources>
