@@ -20,11 +20,9 @@ import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
-import com.conduent.nationalhighways.utils.announceDropDown
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
-import com.conduent.nationalhighways.utils.setupTextAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 
 
