@@ -30,7 +30,9 @@ import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
@@ -164,7 +166,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             )
 
             binding.tvSelectPaymentMethod.text = htmlText
-
+            if(requireActivity() is MakeOffPaymentActivity){
+                (requireActivity() as MakeOffPaymentActivity).focusToolBar()
+            }
         }
     }
 
