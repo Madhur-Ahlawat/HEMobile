@@ -13,7 +13,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.setupAccessibilityDelegate
 
 
 class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>(),
@@ -29,12 +28,9 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
 
 
     override fun init() {
-        binding.radioPersonalAccount.setupAccessibilityDelegate()
-        binding.radioBusinessAccount.setupAccessibilityDelegate()
+        Utils.setupAccessibilityDelegatesForRadioButtons(binding.radioGroup)
 
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            Utils.setContentDescriptionForRadioGroup(checkedId,binding.radioGroup,requireActivity())
-
             binding.btnAccountType.isEnabled =
                 R.id.radio_personal_account == checkedId || R.id.radio_business_account == checkedId
         }

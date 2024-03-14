@@ -1674,24 +1674,6 @@ object Utils {
         }
     }
 
-    fun setContentDescriptionForRadioGroup(
-        checkedId: Int,
-        radioGroup: RadioGroup,
-        activity: Activity
-    ) {
-        val radioButton: AppCompatRadioButton = activity.findViewById(checkedId)
-        val selectedText = radioButton.text.toString()
-        radioGroup.clearCheckedRadioButtonsContentDescriptions()
-
-        radioButton.let {
-            if (it.isChecked) {
-                it.contentDescription =
-                    "${activity.resources.getString(R.string.accessibility_selected)} $selectedText"
-            } else {
-                it.contentDescription = selectedText
-            }
-        }
-    }
 
     fun replaceAsterisks(input: String): String {
 
