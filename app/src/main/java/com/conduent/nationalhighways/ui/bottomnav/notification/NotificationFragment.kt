@@ -193,8 +193,10 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         }
         binding.selectAll.setOnClickListener {
             if (binding.selectAll.isChecked) {
+                binding.selectAll.contentDescription=resources.getString(R.string.accessibility_ticked)+"\n"+binding.selectAll.text.toString()
                 selectAllNotification()
             } else {
+                binding.selectAll.contentDescription=resources.getString(R.string.accessibility_not_ticked)+"\n"+binding.selectAll.text.toString()
                 unSelectAllNotifications()
             }
         }

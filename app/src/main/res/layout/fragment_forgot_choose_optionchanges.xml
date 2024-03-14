@@ -39,6 +39,7 @@
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:importantForAccessibility="yes"
             android:accessibilityTraversalAfter="@id/enter_details_txt"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"

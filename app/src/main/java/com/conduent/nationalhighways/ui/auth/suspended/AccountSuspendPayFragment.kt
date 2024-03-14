@@ -28,6 +28,7 @@ import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendPayBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -36,6 +37,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.google.android.gms.auth.api.Auth
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -71,12 +73,16 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initCtrl() {
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBar()
+        }else if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
         val receivedList = arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA)
 
 
         if (receivedList != null) {
-            paymentList = (receivedList as ArrayList<CardListResponseModel>)
+            paymentList = receivedList
         }
 
         if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
@@ -159,7 +165,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
             binding.ivCardType.setImageResource(
                 Utils.setCardImage(
-                    paymentList.get(position)?.cardType ?: ""
+                    paymentList.get(position).cardType
                 )
             )
 
@@ -347,12 +353,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             cardType = "",
             cardNumber = "",
             cvv = "",
-            rowId = paymentList.get(position)?.rowId,
+            rowId = paymentList.get(position).rowId,
             saveCard = "",
             useAddressCheck = "N",
-            firstName = paymentList.get(position)?.firstName,
-            middleName = paymentList.get(position)?.middleName,
-            lastName = paymentList.get(position)?.lastName,
+            firstName = paymentList.get(position).firstName,
+            middleName = paymentList.get(position).middleName,
+            lastName = paymentList.get(position).lastName,
             paymentType = "",
             primaryCard = "",
             maskedCardNumber = "",
@@ -434,7 +440,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         R.id.action_accountSuspendedFinalPayFragment_to_accountSuspendReOpenFragment,
                         bundle
                     )
-                } else if (status.data?.statusCode?.equals("1337") == true && status.data.transactionId!=null) {
+                } else if (status.data?.statusCode?.equals("1337") == true && status.data.transactionId != null) {
                     if (navFlowCall.equals(Constants.PAYMENT_TOP_UP) || navFlowCall.equals(Constants.SUSPENDED)) {
                         var bundle = Bundle()
                         bundle.putString(

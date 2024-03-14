@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.bottomnav
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -44,6 +45,9 @@ import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -561,6 +565,17 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     fun hideBackIcon() {
         dataBinding?.backButton?.gone()
+    }
+
+    fun focusToolBar() {
+        dataBinding?.backButton?.requestFocus() // Focus on the backButton
+        dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+
+        val task = Runnable {
+            dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
     }
 
 }

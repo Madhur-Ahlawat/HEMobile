@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -52,6 +53,7 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import com.conduent.nationalhighways.utils.rating.RatingDialog
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
 import java.io.File
@@ -1721,6 +1723,15 @@ object Utils {
         }
         Log.e("TAG", "replaceAsterisks: "+stringBuilder.toString() )
         return stringBuilder.toString()
+    }
+
+    fun setupAccessibilityDelegatesForRadioButtons(radioGroup: RadioGroup) {
+        for (i in 0 until radioGroup.childCount) {
+            val child = radioGroup.getChildAt(i)
+            if (child is RadioButton) {
+                child.setAccessibilityDelegate()
+            }
+        }
     }
 
 

@@ -10,6 +10,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentTryPaymentAgainBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
@@ -40,6 +41,11 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
         FragmentTryPaymentAgainBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBar()
+        }else if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
         if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
             paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         }
