@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -22,7 +23,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.setupAccessibilityDelegate
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -51,11 +52,10 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         FragmentForgotChooseOptionchangesBinding.inflate(inflater, container, false)
 
 
-
     override fun initCtrl() {
 
-        if (arguments?.containsKey(Constants.LRDS_ACCOUNT)==true) {
-            lrds_account = arguments?.getBoolean(Constants.LRDS_ACCOUNT,false) ?: false
+        if (arguments?.containsKey(Constants.LRDS_ACCOUNT) == true) {
+            lrds_account = arguments?.getBoolean(Constants.LRDS_ACCOUNT, false) ?: false
         }
 
         model = RequestOTPModel(optionType = "", optionValue = "")
@@ -77,34 +77,38 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
         } else {
-            if (!responseModel?.phone.isNullOrEmpty() && !responseModel?.phone.equals("null",true)) {
+            if (!responseModel?.phone.isNullOrEmpty() && !responseModel?.phone.equals(
+                    "null",
+                    true
+                )
+            ) {
                 val htmlText =
-                    Html.fromHtml(getString(R.string.str_radio_sms, responseModel?.phone)
-                        )
+                    Html.fromHtml(
+                        getString(R.string.str_radio_sms, responseModel?.phone)
+                    )
                 binding.radioSms.text = htmlText
                 binding.radioSms.visibility = View.VISIBLE
-                binding.enterDetailsTxt.text=getString(R.string.str_choose_method_to_get_ur_link)
+                binding.enterDetailsTxt.text = getString(R.string.str_choose_method_to_get_ur_link)
 
             } else {
                 binding.radioSms.visibility = View.GONE
-                binding.enterDetailsTxt.text=getString(R.string.str_choose_method_to_get_email_code)
+                binding.enterDetailsTxt.text =
+                    getString(R.string.str_choose_method_to_get_email_code)
             }
 
             val htmlText =
                 Html.fromHtml(getString(R.string.str_radio_email, responseModel?.email))
-            binding.radioEmail.text =htmlText
+            binding.radioEmail.text = htmlText
         }
 
 
     }
 
     override fun init() {
-        if(requireActivity() is AuthActivity){
+        if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBar()
         }
-        binding.radioSms.setupAccessibilityDelegate()
-        binding.radioEmail.setupAccessibilityDelegate()
-
+        Utils.setupAccessibilityDelegatesForRadioButtons(binding.radioGroup)
         binding.radioGroup.setOnCheckedChangeListener(this)
 
         binding.btn.setOnClickListener(this)
@@ -122,6 +126,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         )
 
     }
+
     override fun observer() {
         lifecycleScope.launch {
             observe(viewModel.confirmOption, ::handleConfirmOptionResponse)
@@ -137,9 +142,6 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
-
-        Utils.setContentDescriptionForRadioGroup(checkedId,binding.radioGroup,requireActivity())
-
 
         when (group?.checkedRadioButtonId) {
 
@@ -201,7 +203,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
                 response = status.data
                 bundle.putParcelable("response", response)
-                bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putBoolean(Constants.LRDS_ACCOUNT, lrds_account)
@@ -226,9 +228,9 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             }
 
             is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel) ) {
+                if (checkSessionExpiredOrServerError(status.errorModel)) {
                     displaySessionExpireDialog(status.errorModel)
-                }else {
+                } else {
                     showError(binding.root, status.errorMsg)
                 }
             }
@@ -249,21 +251,27 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 } else {
                     responseModel = status.data
                     binding.root.post {
-                        if (!status.data?.phone.isNullOrEmpty() && !status.data?.phone.equals("null",true)) {
+                        if (!status.data?.phone.isNullOrEmpty() && !status.data?.phone.equals(
+                                "null",
+                                true
+                            )
+                        ) {
                             val htmlText =
-                                Html.fromHtml(getString(R.string.str_radio_sms, status.data?.phone)
+                                Html.fromHtml(
+                                    getString(R.string.str_radio_sms, status.data?.phone)
                                 )
                             binding.radioSms.text = htmlText
                             binding.radioSms.visibility = View.VISIBLE
                         } else {
                             binding.radioSms.visibility = View.GONE
-                            binding.enterDetailsTxt.text=getString(R.string.str_choose_method_to_get_email_code)
+                            binding.enterDetailsTxt.text =
+                                getString(R.string.str_choose_method_to_get_email_code)
 
                         }
 
                         val htmlText =
                             Html.fromHtml(getString(R.string.str_radio_email, status.data?.email))
-                        binding.radioEmail.text =htmlText
+                        binding.radioEmail.text = htmlText
 
                     }
                 }
@@ -280,9 +288,9 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             }
 
             is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel) ) {
+                if (checkSessionExpiredOrServerError(status.errorModel)) {
                     displaySessionExpireDialog(status.errorModel)
-                }else {
+                } else {
                     AdobeAnalytics.setActionTrackError(
                         "next",
                         "login:forgot password",
@@ -300,10 +308,6 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         }
 
 
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
 }

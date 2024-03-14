@@ -18,7 +18,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
@@ -26,6 +25,7 @@ import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
@@ -101,7 +101,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun initTransactionsRecyclerView() {
         transactionsAdapter = TransactionsInnerAdapterDashboard(
             this@DashboardFragmentNew, paymentHistoryListData,
-            dashboardViewModel.accountInformationData.value?.accSubType?:""
+            dashboardViewModel.accountInformationData.value?.accSubType ?: ""
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
@@ -372,11 +372,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         HomeActivityMain.accountDetailsData = data
 
         binding.apply {
-            tvAvailableBalanceHeading.gone()
-            tvAvailableBalance.gone()
+            accountBalanceRl.gone()
 
-            tvAccountStatusHeading.visible()
-            cardIndicatorAccountStatus.visible()
+            accountStatusRl.visible()
 
             boxTopupAmount.gone()
             boxLowBalanceThreshold.gone()
@@ -386,8 +384,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             setGuideLinePercent(0.25F, R.dimen.margin_15dp)
 
-            tvAccountNumberHeading.visible()
+            accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            accountNumberRl.contentDescription =
+                resources.getString(R.string.txt_account_number) + "\n" + tvAccountNumberValue.text.toString()
 
             data.let {
                 it.accountInformation?.let {
@@ -406,10 +406,14 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         }
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
-
+                        boxCardType.contentDescription =
+                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"")+ "\n" + cardNumber.text.toString()
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 2
                         )
+                        binding.accountStatusRl.contentDescription =
+                            resources.getString(R.string.txt_account_status) + "\n" + indicatorAccountStatus.text.toString()
+
                     }
                     it.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
@@ -433,7 +437,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 )
             }
         }
-        getPaymentHistoryList(startIndex,Constants.TOLL_TRANSACTION)
+        getPaymentHistoryList(startIndex, Constants.TOLL_TRANSACTION)
     }
 
     private fun setGuideLinePercent(percent: Float, margin0dp: Int) {
@@ -460,8 +464,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         HomeActivityMain.accountDetailsData = data
 
         binding.apply {
-            tvAvailableBalanceHeading.visible()
-            tvAvailableBalance.visible()
+            accountBalanceRl.visible()
 
             tvAvailableBalance.apply {
                 visible()
@@ -470,27 +473,39 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
 
+            accountBalanceRl.contentDescription =
+                resources.getString(R.string.txt_account_balance) + "\n" + tvAvailableBalance.text.toString()
 
 
-            tvAccountStatusHeading.visible()
-            cardIndicatorAccountStatus.visible()
+
+            accountStatusRl.visible()
 
             boxLowBalanceThreshold.visible()
             valueLowBalanceThreshold.text = getString(R.string.str_zero_euro)
+            boxLowBalanceThreshold.contentDescription =
+                "" + valueLowBalanceThreshold.text.toString() + "" + resources.getString(R.string.txt_low_threshold_balance)
 
             boxTopupAmount.visible()
             valueTopupAmount.text = getString(R.string.str_zero_euro)
+            boxTopupAmount.contentDescription =
+                "" + valueTopupAmount.text.toString() + "\n" + resources.getString(R.string.txt_topup_amount)
 
             boxTopupMethod.visible()
             valueAutopay.text = getString(R.string.exempt)
+            boxTopupMethod.contentDescription =
+                "" + valueAutopay.text.toString() + "\n" + resources.getString(R.string.txt_topup_method)
 
             buttonTopup.gone()
             setGuideLinePercent(0.25F, R.dimen.margin_15dp)
 
-            tvAccountNumberHeading.visible()
+            accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            accountNumberRl.contentDescription =
+                resources.getString(R.string.txt_account_number) + "\n" + tvAccountNumberValue.text.toString()
+
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
+            boxCardType.contentDescription = cardNumber.text.toString()
             cardNumber.setTypeface(null, Typeface.BOLD)
             data.let {
                 it.accountInformation?.let {
@@ -500,6 +515,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         )
                     }
 
+                    binding.accountStatusRl.contentDescription =
+                        resources.getString(R.string.txt_account_status) + "\n" + indicatorAccountStatus.text.toString()
                     it.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
@@ -519,8 +536,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun showNonPayGUI(data: ProfileDetailModel) {
         binding.apply {
-            tvAvailableBalanceHeading.visible()
-            tvAvailableBalance.visible()
+            accountBalanceRl.visible()
             tvAvailableBalance.apply {
                 visible()
                 text = data.replenishmentInformation?.currentBalance?.run {
@@ -528,15 +544,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
 
+            accountBalanceRl.contentDescription =
+                resources.getString(R.string.txt_account_balance) + "\n" + tvAvailableBalance.text.toString()
 
-            tvAccountStatusHeading.visible()
-            cardIndicatorAccountStatus.visible()
+            accountStatusRl.visible()
 
             boxTopupAmount.visible()
             valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
-
+            boxTopupAmount.contentDescription =
+                "" + valueTopupAmount.text.toString() + "\n" + resources.getString(R.string.txt_topup_amount)
             boxLowBalanceThreshold.visible()
             valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
+            boxLowBalanceThreshold.contentDescription =
+                "" + valueLowBalanceThreshold.text.toString() + "\n" + resources.getString(R.string.txt_low_threshold_balance)
 
             boxTopupMethod.visible()
 
@@ -573,8 +593,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 )
             }
 
-            tvAccountNumberHeading.visible()
+            accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            accountNumberRl.contentDescription =
+                resources.getString(R.string.txt_account_number) + "\n" + tvAccountNumberValue.text.toString()
+
             val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
             data.let {
                 it.accountInformation?.let {
@@ -593,12 +616,20 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         }
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
+                        boxCardType.contentDescription =
+                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"") + "\n" + cardNumber.text.toString()
+
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 1
                         )
+                        binding.accountStatusRl.contentDescription =
+                            resources.getString(R.string.txt_account_status) + "\n" + indicatorAccountStatus.text.toString()
                     }
 
                     valueAutopay.text = resources.getString(R.string.str_auto_pay)
+                    boxTopupMethod.contentDescription =
+                        "" + valueAutopay.text.toString() + "\n" + resources.getString(R.string.txt_topup_method)
+
                     it.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
@@ -625,8 +656,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun getPaymentHistoryList(
-        index: Int?=0,
-        transactionType:String?=Constants.ALL_TRANSACTION
+        index: Int? = 0,
+        transactionType: String? = Constants.ALL_TRANSACTION
     ) {
         if (loader?.isVisible == false && loader?.isAdded == true) {
             loader?.showsDialog

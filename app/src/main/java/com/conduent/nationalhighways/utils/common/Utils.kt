@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -52,6 +53,7 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import com.conduent.nationalhighways.utils.rating.RatingDialog
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
 import java.io.File
@@ -1172,6 +1174,21 @@ object Utils {
             return R.color.white
         }
     }
+  fun returnCardText(paymentTypeInfo: String): String {
+        if (paymentTypeInfo.contains("CURRENT")) {
+            return "CURRENT"
+        } else if (paymentTypeInfo.contains("SAVINGS")) {
+            return "SAVINGS"
+        } else if (paymentTypeInfo.contains("MASTERCARD")) {
+            return "MASTERCARD"
+        } else if (paymentTypeInfo.contains(Constants.MAESTRO)) {
+            return "Constants.MAESTRO"
+        } else if (paymentTypeInfo.contains("VISA")) {
+            return "VISA"
+        } else {
+            return ""
+        }
+    }
 
     fun redirectToNotificationPermissionSettings(context: Context) {
         val intent = Intent().apply {
@@ -1657,24 +1674,6 @@ object Utils {
         }
     }
 
-    fun setContentDescriptionForRadioGroup(
-        checkedId: Int,
-        radioGroup: RadioGroup,
-        activity: Activity
-    ) {
-        val radioButton: AppCompatRadioButton = activity.findViewById(checkedId)
-        val selectedText = radioButton.text.toString()
-        radioGroup.clearCheckedRadioButtonsContentDescriptions()
-
-        radioButton.let {
-            if (it.isChecked) {
-                it.contentDescription =
-                    "${activity.resources.getString(R.string.accessibility_selected)} $selectedText"
-            } else {
-                it.contentDescription = selectedText
-            }
-        }
-    }
 
     fun replaceAsterisks(input: String): String {
 
@@ -1706,6 +1705,15 @@ object Utils {
         }
         Log.e("TAG", "replaceAsterisks: "+stringBuilder.toString() )
         return stringBuilder.toString()
+    }
+
+    fun setupAccessibilityDelegatesForRadioButtons(radioGroup: RadioGroup) {
+        for (i in 0 until radioGroup.childCount) {
+            val child = radioGroup.getChildAt(i)
+            if (child is RadioButton) {
+                child.setAccessibilityDelegate()
+            }
+        }
     }
 
 

@@ -17,7 +17,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
-import com.conduent.nationalhighways.utils.setupTextAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

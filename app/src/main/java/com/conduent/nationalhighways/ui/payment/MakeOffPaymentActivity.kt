@@ -53,7 +53,16 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
         )
 
     }
+    fun focusToolBar() {
+        binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+        binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
 
+        val task = Runnable {
+            binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+    }
     private fun init() {
         NewCreateAccountRequestModel.oneOffVehiclePlateNumber = ""
         NewCreateAccountRequestModel.plateNumber = ""
@@ -131,7 +140,17 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
 //        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager, api)
     }
+    override fun onPostResume() {
+        super.onPostResume()
+        binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+        binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
 
+        val task = Runnable {
+            binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+    }
     override fun onDestroy() {
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()

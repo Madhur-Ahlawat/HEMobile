@@ -52,6 +52,7 @@
                 android:padding="@dimen/margin_13dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/edit"
+                android:contentDescription="@string/str_edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtPlateNumber" />

@@ -46,8 +46,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_3dp"
                 android:layout_marginTop="@dimen/margin_10dp"
-                android:imeOptions="actionDone"
-                android:inputType="numberDecimal"
                 android:maxLength="15"
                 android:textColor="@color/black" />
 

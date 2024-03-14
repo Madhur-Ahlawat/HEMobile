@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
@@ -67,7 +68,6 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             (navData as CrossingDetailsModelsResponse).additionalCrossingCount
         val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse).additionalCharge
         binding.apply {
-            inputTotalAmount.isEnabled = false
             val charge = data?.chargingRate?.toDouble()
             val unSettledTrips = data?.unsettledTripChange
             crossingsList = emptyList<String>().toMutableList()
@@ -102,12 +102,15 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
 
         data?.unsettledTripChange =
             binding.inputCountry.getSelectedValue()?.toInt() ?: 0
+
     }
+
 
     override fun initCtrl() {
         binding.inputCountry.dropDownItemSelectListener = this
         binding.btnAdditionalCrossing.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
+
     }
 
     override fun observer() {
