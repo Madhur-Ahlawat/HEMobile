@@ -110,12 +110,8 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
 
     override fun initCtrl() {
         binding.inputCountry.dropDownItemSelectListener = this
-        binding.inputCountry.setupTextAccessibilityDelegate(binding.inputCountry,"dropdown")
         binding.btnAdditionalCrossing.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
-        binding.inputCountry.isLongClickable = false
-
-       // announceDropDown(binding.inputCountry,"dropdown")
 
     }
 
