@@ -8,7 +8,6 @@ import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
-import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import com.conduent.apollo.ui.CMDropDownView
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.clearCheckedRadioButtonsContentDescriptions
