@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentDeletePaymentMethodSuccessBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 
 class DeletePaymentMethodSuccessFragment :
@@ -28,6 +30,11 @@ class DeletePaymentMethodSuccessFragment :
         FragmentDeletePaymentMethodSuccessBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBar()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
     }
 

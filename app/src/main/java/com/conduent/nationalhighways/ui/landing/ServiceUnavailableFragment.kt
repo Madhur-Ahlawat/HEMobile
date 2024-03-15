@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -119,6 +118,12 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
             }
         }
 
+        binding.detailsCl.contentDescription =
+            binding.decs1Tv.text.toString() + "\n" +
+                    binding.decs2Tv.text.toString() + "\n" +
+                    binding.decs3Tv.text.toString() + "\n" +
+                    binding.decs4Tv.text.toString() + "\n" +
+                    binding.decs5Tv.text.toString()
         binding.btnGoToWebsite.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,

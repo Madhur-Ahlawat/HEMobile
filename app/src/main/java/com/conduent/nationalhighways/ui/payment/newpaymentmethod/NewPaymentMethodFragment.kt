@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
@@ -23,10 +21,12 @@ import com.conduent.nationalhighways.data.model.payment.PaymentMethodEditRespons
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
 import com.conduent.nationalhighways.databinding.FragmentPaymentMethod2Binding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
@@ -73,15 +73,19 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
 
     override fun initCtrl() {
-
-        if(arguments?.containsKey(Constants.PERSONALDATA) == true){
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBar()
+        }else  if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
+        if (arguments?.containsKey(Constants.PERSONALDATA) == true) {
             if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
                 personalInformation =
                     arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
             }
 
         }
-        if(arguments?.containsKey(Constants.ACCOUNTINFORMATION) == true){
+        if (arguments?.containsKey(Constants.ACCOUNTINFORMATION) == true) {
             if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
                 accountInformation =
                     arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
@@ -94,7 +98,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             title = HomeActivityMain.dataBinding?.titleTxt!!
         }
 
@@ -216,7 +220,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     paymentMethodAdapter.updateList(paymentList)
 
 
-
                 } else {
                     binding.paymentMethodInformation.gone()
                     binding.paymentRecycleView.gone()
@@ -247,7 +250,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
             R.id.addNewPaymentMethod -> {
 
-                if(paymentList.orEmpty().size==2){
+                if (paymentList.orEmpty().size == 2) {
 
                     displayCustomMessage(
                         resources.getString(R.string.str_max_payment_methods),
@@ -263,13 +266,12 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             override fun negativeBtnClick(dialog: DialogInterface) {
                                 dialog.dismiss()
                             }
-                        }
-                    ,cancelVisibility=View.GONE, lineView = true)
+                        }, cancelVisibility = View.GONE, lineView = true)
 
-                }else{
+                } else {
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
-                    if(navFlowCall.equals(Constants.SUSPENDED)){
+                    if (navFlowCall.equals(Constants.SUSPENDED)) {
                         bundle.putString(Constants.NAV_FLOW_FROM, Constants.PAYG_SUSPENDED)
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                         bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
@@ -314,14 +316,14 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             R.id.cardViewTopYourBalance -> {
-                if(requireActivity() is HomeActivityMain) {
+                if (requireActivity() is HomeActivityMain) {
                     title.text = getString(R.string.top_up)
                 }
 
                 val bundle = Bundle()
                 if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                }else{
+                } else {
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
                 }
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
@@ -336,7 +338,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             R.id.cardViewThresholdLimit -> {
-                if(requireActivity() is HomeActivityMain) {
+                if (requireActivity() is HomeActivityMain) {
                     title.text = getString(R.string.set_threshold_limit)
                 }
                 val bundle = Bundle()
@@ -379,7 +381,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             paymentList?.get(position)?.cardNumber
                         ),
 
-                    expMonth + "/" + if (paymentList?.get(
+                        expMonth + "/" + if (paymentList?.get(
                                 position
                             )?.expYear!!.length > 2
                         ) paymentList?.get(
@@ -598,7 +600,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     }
 
     override fun onResume() {
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             title.text = getString(R.string.payment_management)
         }
         super.onResume()
@@ -727,10 +729,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             (existingFragment as LoaderDialog).dismiss()
         }
 //        if (existingFragment == null) {
-            // Fragment is not added, add it now
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
-            loader?.show(fragmentManager, Constants.LOADER_DIALOG)
+        // Fragment is not added, add it now
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+        loader?.show(fragmentManager, Constants.LOADER_DIALOG)
 //        }
     }
 
