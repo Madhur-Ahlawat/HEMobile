@@ -38,49 +38,65 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/warning_icon_iv" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/decs1_tv"
-                style="@style/SemiBoldTextBlack_14sp"
-                android:layout_marginTop="@dimen/margin_20dp"
-                android:gravity="center_horizontal"
-                android:text="@string/try_again_later_did_not_save_changes"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/details_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:importantForAccessibility="yes"
+                android:paddingBottom="20dp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_tv" />
+                app:layout_constraintTop_toBottomOf="@id/title_tv">
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/decs1_tv"
+                    style="@style/SemiBoldTextBlack_14sp"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:gravity="center_horizontal"
+                    android:importantForAccessibility="no"
+                    android:text="@string/try_again_later_did_not_save_changes"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/decs2_tv"
-                style="@style/SemiBoldTextBlack_14sp"
-                android:layout_marginTop="@dimen/margin_20dp"
-                android:text="@string/str_contact_dart_charge_contact_centre"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/decs1_tv" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/decs2_tv"
+                    style="@style/SemiBoldTextBlack_14sp"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:text="@string/str_contact_dart_charge_contact_centre"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/decs1_tv" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/decs3_tv"
-                style="@style/SemiBoldTextBlack_14sp"
-                android:layout_marginTop="@dimen/margin_20dp"
-                android:text="@string/str_contact_telephone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/decs2_tv" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/decs3_tv"
+                    style="@style/SemiBoldTextBlack_14sp"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:text="@string/str_contact_telephone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/decs2_tv" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/decs4_tv"
-                style="@style/SemiBoldTextBlack_14sp"
-                android:text="@string/str_contact_textphone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/decs3_tv" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/decs4_tv"
+                    style="@style/SemiBoldTextBlack_14sp"
+                    android:text="@string/str_contact_textphone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/decs3_tv" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/decs5_tv"
-                style="@style/SemiBoldTextBlack_14sp"
-                android:text="@string/str_contact_every_day"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/decs4_tv" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/decs5_tv"
+                    style="@style/SemiBoldTextBlack_14sp"
+                    android:text="@string/str_contact_every_day"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/decs4_tv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

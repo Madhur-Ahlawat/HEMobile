@@ -8,7 +8,9 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentSelectPaymentMethodBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +30,11 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
 
 
     override fun initCtrl() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBar()
+        }else  if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBar()
+        }
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT,false)
 
