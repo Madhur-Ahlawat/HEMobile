@@ -67,7 +67,6 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
@@ -374,6 +373,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                binding.edtOtp.editText.isFocusable = true
+                binding.edtOtp.editText.isFocusableInTouchMode = true
                 if (loader?.isVisible == true) {
                     loader?.dismiss()
                 }
@@ -410,6 +411,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                binding.edtOtp.editText.isFocusable = true
+                binding.edtOtp.editText.isFocusableInTouchMode = true
                 dashboardViewModel.getAccountDetailsData()
             }
 
@@ -465,6 +468,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                binding.edtOtp.editText.isFocusable = true
+                binding.edtOtp.editText.isFocusableInTouchMode = true
                 if (checkSessionExpiredOrServerError(resource.errorModel)
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
@@ -753,6 +758,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                binding.edtOtp.editText.isFocusable = true
+                binding.edtOtp.editText.isFocusableInTouchMode = true
                 if (checkSessionExpiredOrServerError(status.errorModel)
                 ) {
                     displaySessionExpireDialog(status.errorModel)
@@ -824,6 +831,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 }
 
                 is Resource.DataError -> {
+                    binding.edtOtp.editText.isFocusable = true
+                    binding.edtOtp.editText.isFocusableInTouchMode = true
                     if (checkSessionExpiredOrServerError(status.errorModel)
                     ) {
                         displaySessionExpireDialog(status.errorModel)
@@ -840,6 +849,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun handleConfirmEmailResponse(resource: Resource<EmptyApiResponse?>?) {
+
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
@@ -850,11 +860,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                binding.edtOtp.editText.isFocusable = true
+                binding.edtOtp.editText.isFocusableInTouchMode = true
                 if (checkSessionExpiredOrServerError(resource.errorModel)
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
                     when (resource.errorModel?.errorCode) {
+
                         2051 -> {
                             binding.edtOtp.setErrorText(getString(R.string.security_code_must_contain_correct_numbers))
                         }
@@ -1220,6 +1233,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                binding.edtOtp.editText.isFocusable = true
+                binding.edtOtp.editText.isFocusableInTouchMode = true
                 if (checkSessionExpiredOrServerError(status.errorModel)
                 ) {
                     displaySessionExpireDialog(status.errorModel)
@@ -1308,6 +1323,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             is Resource.DataError -> {
+                binding.edtOtp.editText.isFocusable = true
+                binding.edtOtp.editText.isFocusableInTouchMode = true
                 if (checkSessionExpiredOrServerError(resource.errorModel)
                 ) {
                     displaySessionExpireDialog(resource.errorModel)

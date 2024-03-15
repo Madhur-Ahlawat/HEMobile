@@ -55,6 +55,13 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>() {
             }
         }
 
+        binding.detailsCl.contentDescription =
+            binding.decs1Tv.text.toString() + "\n" +
+                    binding.decs2Tv.text.toString() + "\n" +
+                    binding.decs3Tv.text.toString() + "\n" +
+                    binding.decs4Tv.text.toString() + "\n" +
+                    binding.decs5Tv.text.toString()
+
     }
 
     override fun initCtrl() {

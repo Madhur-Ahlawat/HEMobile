@@ -199,6 +199,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             } else {
                 unSelectAllNotifications()
             }
+
         }
     }
 
@@ -232,6 +233,9 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     private var mTotalList = ArrayList<NotificationModel>()
 
     override fun initCtrl() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBar()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

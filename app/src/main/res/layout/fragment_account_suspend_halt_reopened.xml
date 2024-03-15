@@ -32,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
+                android:importantForAccessibility="no"
                 android:src="@drawable/ic_check_blue"
                 android:textSize="@dimen/font_14sp" />
 
@@ -64,12 +65,15 @@
                 android:layout_marginLeft="@dimen/margin_2dp"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_marginRight="@dimen/margin_2dp"
+                android:importantForAccessibility="yes"
                 app:cardElevation="@dimen/margin_3dp"
                 android:layout_marginBottom="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/payment_reference_number_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
                     android:padding="@dimen/margin_15dp">
 
 
@@ -78,6 +82,7 @@
                         style="@style/SemiBoldTextBlack"
                         android:layout_width="@dimen/margin_0dp"
                         android:text="@string/str_payment_reference_number"
+                        android:importantForAccessibility="no"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,6 +90,7 @@
                         android:id="@+id/reference_number_tv"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
+                        android:importantForAccessibility="no"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/payment_ref_tv" />
 
@@ -167,6 +173,7 @@
                 android:layout_marginHorizontal="1dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
+                android:importantForAccessibility="yes"
                 android:elevation="3dp"
                 android:minHeight="@dimen/margin_74dp"
                 android:visibility="gone"
@@ -176,6 +183,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:importantForAccessibility="no"
                     android:layout_gravity="center">
 
                     <ImageView
@@ -184,6 +192,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_18dp"
                         android:src="@drawable/visablue"
+                        android:importantForAccessibility="no"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -196,6 +205,7 @@
                         android:layout_marginEnd="@dimen/margin_18dp"
                         android:fontFamily="@font/open_sans"
                         android:textColor="@color/black"
+                        android:importantForAccessibility="no"
                         android:textSize="@dimen/font_16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

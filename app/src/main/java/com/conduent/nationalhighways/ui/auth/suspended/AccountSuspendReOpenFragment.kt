@@ -49,7 +49,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBar()
-        }else if(requireActivity() is AuthActivity){
+        } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBar()
         }
         Utils.validationsToShowRatingDialog(requireActivity(), sessionManager)
@@ -103,7 +103,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                 }, Html.FROM_HTML_MODE_COMPACT)
 
             binding.tvSelectPaymentMethod.text = htmlText
-
+            binding.cardView.contentDescription = binding.tvSelectPaymentMethod.text.toString()
 
         } else {
             /* binding.succesfulCardAdded.gone()
@@ -143,6 +143,8 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
         binding.referenceNumberTv.text = transactionId
 
+        binding.layoutPaymentReferenceNumber.contentDescription =
+            resources.getString(R.string.str_payment_reference_number) + "\n" + transactionId
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             binding.tvAccountSuspended.text = getString(
                 R.string.str_balance_topped_up_with,
@@ -167,12 +169,13 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             }
         }
 
-        if(arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED).equals(Constants.CARD_IS_ALREADY_REGISTERED)){
+        if (arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED)
+                .equals(Constants.CARD_IS_ALREADY_REGISTERED)
+        ) {
             binding.layoutCardAlreadyExists.visible()
             binding.succesfulCardAdded.gone()
             binding.cardView.gone()
-        }
-        else{
+        } else {
             binding.layoutCardAlreadyExists.gone()
         }
     }
