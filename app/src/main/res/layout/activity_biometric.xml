@@ -55,13 +55,13 @@
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switch_fingerprint_login"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/margin_30dp"
                 android:checked="false"
                 android:fontFamily="@font/open_sans"
                 android:switchPadding="20dp"
                 android:text="@string/usefingerprinttologin"
                 android:textColor="@color/black"
-                android:textSize="14dp"
+                android:textSize="@dimen/font_14sp"
                 app:thumbTint="@color/switch_thumb"
                 app:trackTint="@color/switch_track" />
 
