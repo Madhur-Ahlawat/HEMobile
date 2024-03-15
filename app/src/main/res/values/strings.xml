@@ -1709,8 +1709,6 @@
     <string name="accessibility_not_selected">Not Selected.</string>
     <string name="accessibility_ticked">Ticked.</string>
     <string name="accessibility_not_ticked">Not Ticked.</string>
-    <string name="accessibility_on">On.</string>
-    <string name="accessibility_off">Off.</string>
 
     <string name="powered_by" tools:ignore="ExtraTranslation">powered by</string>
     <string name="_50">50</string>

@@ -35,6 +35,7 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.onTextChanged
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -159,22 +160,13 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
         binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
-
-            binding.checkBoxTerms.contentDescription = if (isChecked) {
-                "${resources.getString(R.string.accessibility_ticked)} ${binding.checkBoxTerms.text}"
-            } else {
-                "${resources.getString(R.string.accessibility_not_ticked)} ${binding.checkBoxTerms.text}"
-            }
-            binding.checkBoxTerms.contentDescription = binding.checkBoxTerms.text.toString()
-
             checkBoxChecked = isChecked
             validateAllFields()
             checkButton()
-
-
         }
 
 
+        binding.checkBoxTerms.setAccessibilityDelegate()
 
         AdobeAnalytics.setScreenTrack(
             "one of  payment:vehicle details manual entry",

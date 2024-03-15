@@ -33,6 +33,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import com.conduent.nationalhighways.utils.widgets.SwipeToDeleteCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -191,12 +192,11 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             selectStandard()
 //            setStandardNotifications()
         }
+        binding.selectAll.setAccessibilityDelegate()
         binding.selectAll.setOnClickListener {
             if (binding.selectAll.isChecked) {
-                binding.selectAll.contentDescription=resources.getString(R.string.accessibility_ticked)+"\n"+binding.selectAll.text.toString()
                 selectAllNotification()
             } else {
-                binding.selectAll.contentDescription=resources.getString(R.string.accessibility_not_ticked)+"\n"+binding.selectAll.text.toString()
                 unSelectAllNotifications()
             }
         }
