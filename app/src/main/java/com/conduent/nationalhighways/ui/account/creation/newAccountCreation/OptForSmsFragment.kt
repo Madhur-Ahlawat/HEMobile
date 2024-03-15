@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.data.model.pushnotification.PushNotificatio
 import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
@@ -71,7 +72,9 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
     override fun init() {
         binding.btnNext.setOnClickListener(this)
-
+        if (requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBar()
+        }
         when (navFlowCall) {
             EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
                 if (!isViewCreated) {
