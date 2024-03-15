@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.databinding.ItemNotificationsBinding
 import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment
 import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewModel
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import kotlinx.coroutines.launch
 
 class NotificationAdapterNew(
@@ -118,6 +119,8 @@ class NotificationAdapterNew(
             binding.message.setTextColor(context.resources.getColor(R.color.black))
 
         }
+        binding.selectNotification.setAccessibilityDelegate()
+
     }
 
     override fun getItemCount(): Int {
