@@ -953,8 +953,10 @@
     <string name="str_about_this_service_2">sign in or set up a Dart Charge account</string>
     <string name="str_about_this_service_3">check with crossings you\'ve paid for</string>
     <string name="str_about_this_service_4">register to receive notifications when you cross</string>
-
-
+    <string name="str_bullet_about_this_service_4">Bullet, register to receive notifications when you cross</string>
+    <string name="str_bullet_about_this_service_1">Bullet, pay for the crossing</string>
+    <string name="str_bullet_about_this_service_2">Bullet, sign in or set up a Dart Charge account</string>
+    <string name="str_bullet_about_this_service_3">Bullet, check with crossings you\'ve paid for</string>
     <string name="a_valid_debit_or_credit_card">a valid debit or credit card</string>
     <string name="create_account">Create account</string>
     <string name="the_vehicle_registration_number_plate_you_want_to_add_to_the_account">the vehicle registration (number plate) you want to add to the account</string>
