@@ -8,9 +8,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityRaiseEnquiryBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
-import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -189,7 +187,7 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
 //        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager,api)
     }
-    fun focusToolBar() {
+    fun focusToolBarRaiseEnquiry() {
         binding.toolBarLyt.backButton.requestFocus()
         binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
         val task = Runnable {

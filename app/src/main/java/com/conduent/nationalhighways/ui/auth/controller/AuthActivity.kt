@@ -1,9 +1,7 @@
 package com.conduent.nationalhighways.ui.auth.controller
 
 import android.os.Bundle
-import android.util.Log
 import android.view.accessibility.AccessibilityEvent
-import android.widget.Button
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -216,7 +214,7 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
         super.onDestroy()
     }
 
-    fun focusToolBar() {
+    fun focusToolBarAuth() {
         binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
         binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
 

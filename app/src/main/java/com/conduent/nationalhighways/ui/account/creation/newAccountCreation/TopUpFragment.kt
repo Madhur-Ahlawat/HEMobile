@@ -56,9 +56,9 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
 
     override fun init() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBar()
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         } else if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBar()
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)

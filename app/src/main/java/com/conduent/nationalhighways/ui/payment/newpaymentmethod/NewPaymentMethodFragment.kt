@@ -74,9 +74,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBar()
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         }else  if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBar()
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         if (arguments?.containsKey(Constants.PERSONALDATA) == true) {
             if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {

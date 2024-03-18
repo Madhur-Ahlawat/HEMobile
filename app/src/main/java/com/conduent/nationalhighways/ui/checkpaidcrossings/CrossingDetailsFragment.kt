@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -109,7 +108,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         getPaymentHistoryList(startIndex)
 
         if(requireActivity() is CheckPaidCrossingActivity){
-            (requireActivity() as CheckPaidCrossingActivity).focusToolBar()
+            (requireActivity() as CheckPaidCrossingActivity).focusToolBarCrossingDetails()
         }
     }
 

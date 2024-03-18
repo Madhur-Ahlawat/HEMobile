@@ -78,7 +78,7 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
             )
         }
         if(requireActivity() is RaiseEnquiryActivity){
-            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
 

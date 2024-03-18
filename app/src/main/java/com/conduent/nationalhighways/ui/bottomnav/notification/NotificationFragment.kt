@@ -234,7 +234,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBar()
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
     }
 

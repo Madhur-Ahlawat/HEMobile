@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -23,7 +22,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.*
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -106,7 +104,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
     override fun init() {
         if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBar()
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         Utils.setupAccessibilityDelegatesForRadioButtons(binding.radioGroup)
         binding.radioGroup.setOnCheckedChangeListener(this)

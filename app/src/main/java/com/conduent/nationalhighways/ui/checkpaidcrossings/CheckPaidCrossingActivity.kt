@@ -129,7 +129,7 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
         super.onDestroy()
     }
 
-    fun focusToolBar() {
+    fun focusToolBarCrossingDetails() {
 //        binding.toolBarLyt.materialToolbar.requestFocus()
     }
 }

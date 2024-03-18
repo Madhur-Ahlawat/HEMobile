@@ -52,12 +52,15 @@
             android:textSize="@dimen/font_14sp" />
 
         <LinearLayout
+            android:importantForAccessibility="yes"
             android:layout_width="match_parent"
+            android:contentDescription="@string/str_bullet_other_ways_to_pay_1"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_15dp"
             android:orientation="horizontal">
 
             <ImageView
+                android:importantForAccessibility="no"
                 android:layout_width="7dp"
                 android:layout_height="7dp"
                 android:layout_marginTop="@dimen/margin_7dp"
@@ -65,6 +68,7 @@
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_guideline"
+                android:importantForAccessibility="no"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_7dp"
@@ -80,16 +84,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_5dp"
+            android:contentDescription="@string/str_bullet_other_ways_to_pay_2"
+            android:importantForAccessibility="yes"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="7dp"
                 android:layout_height="7dp"
+                android:importantForAccessibility="no"
                 android:layout_marginTop="@dimen/margin_7dp"
                 android:src="@drawable/circle_5dp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:layout_width="wrap_content"
+                android:importantForAccessibility="no"
                 android:id="@+id/txt_pay_through_website"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_7dp"
@@ -105,6 +113,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:importantForAccessibility="yes"
             android:layout_marginTop="@dimen/margin_50dp">
 
             <ImageView
@@ -113,12 +122,14 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/margin_15dp"
                 android:scaleType="centerCrop"
+                android:importantForAccessibility="no"
                 android:src="@drawable/ic_exclaimation_black" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_18dp"
+                android:importantForAccessibility="no"
                 android:fontFamily="@font/open_sans_bold"
                 android:text="@string/str_you_must_pay"
                 android:textColor="@color/gray_707070"

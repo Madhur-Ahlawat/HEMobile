@@ -13,6 +13,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
+        android:id="@+id/root_view"
         android:layout_height="wrap_content"
         app:cardElevation="@dimen/margin_3dp">
 
@@ -108,7 +109,7 @@
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
                     android:padding="@dimen/_2sdp"
-                    android:text="If you have\nan account"
+                    android:text="@string/if_you_have_nan_account"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/label_vehicle_class"

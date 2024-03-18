@@ -127,9 +127,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     override fun init() {
         if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBar()
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         } else if (requireActivity() is CreateAccountActivity) {
-            (requireActivity() as CreateAccountActivity).focusToolBar()
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
         hasFaceBiometric = Utils.hasFaceId(requireContext())
         hasTouchBiometric = Utils.hasTouchId(requireContext())

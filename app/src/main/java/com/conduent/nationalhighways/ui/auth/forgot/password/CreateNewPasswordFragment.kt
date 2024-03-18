@@ -64,7 +64,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
     override fun init() {
         if(requireActivity() is AuthActivity){
-            (requireActivity() as AuthActivity).focusToolBar()
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
