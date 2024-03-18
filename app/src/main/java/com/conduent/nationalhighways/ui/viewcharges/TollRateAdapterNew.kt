@@ -34,7 +34,7 @@ class TollRateAdapterNew(private val context: Context?, var list: List<TollRates
         if(position==0){
             holder.binding?.run {
                 rootView.importantForAccessibility=IMPORTANT_FOR_ACCESSIBILITY_YES
-                rootView.contentDescription = context?.getString(R.string.str_type_of_vehicle) +
+                rootView.contentDescription = context?.getString(R.string.type_of_vehicle) +
                         context?.getString(R.string.str_comma) +" "+
                         data?.vehicleType + context?.getString(R.string.str_dot) +" "+
                         context?.getString(R.string.vehicle_class) + context?.getString(R.string.str_comma) +" "+
@@ -61,7 +61,7 @@ class TollRateAdapterNew(private val context: Context?, var list: List<TollRates
         else if(position>0 && position<list!!.size){
             holder.binding?.run {
                 rootView.importantForAccessibility=IMPORTANT_FOR_ACCESSIBILITY_YES
-                rootView.contentDescription = context?.getString(R.string.str_type_of_vehicle) +
+                rootView.contentDescription = context?.getString(R.string.type_of_vehicle) +
                         context?.getString(R.string.str_comma) +" "+
                         data?.vehicleType + context?.getString(R.string.str_dot) +" "+
                         context?.getString(R.string.vehicle_class) + context?.getString(R.string.str_comma) +" "+
