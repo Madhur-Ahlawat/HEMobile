@@ -1729,4 +1729,8 @@
     <string name="aj66mha">AJ66MHA</string>
     <string name="not_provided">Not provided</string>
     <string name="pre_pay">Pre-pay</string>
+    <string name="str_bullet_about_this_service_4">Bullet, register to receive notifications when you cross</string>
+    <string name="str_bullet_about_this_service_1">Bullet, pay for the crossing</string>
+    <string name="str_bullet_about_this_service_2">Bullet, sign in or set up a Dart Charge account</string>
+    <string name="str_bullet_about_this_service_3">Bullet, check with crossings you\'ve paid for</string>
 </resources>
