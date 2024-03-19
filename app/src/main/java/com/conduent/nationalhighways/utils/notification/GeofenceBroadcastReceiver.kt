@@ -122,21 +122,21 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                     sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME)
 
 
-                if (sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME)
-                        .isNotEmpty()
-                ) {
-                    Log.e(TAG, "onReceive: ")
-                    geofenceEnterTime = Utils.convertStringToDate1(
-                        sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME),
-                        Constants.dd_mm_yyyy_hh_mm_ss
-                    )
-                } else {
-                    Log.e(TAG, "onReceive: 11 ")
-                    geofenceEnterTime = Utils.convertStringToDate1(
-                        sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME),
-                        Constants.dd_mm_yyyy_hh_mm_ss
-                    )
-                }
+//                if (sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME)
+//                        .isNotEmpty()
+//                ) {
+//                    Log.e(TAG, "onReceive: ")
+//                    geofenceEnterTime = Utils.convertStringToDate1(
+//                        sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME),
+//                        Constants.dd_mm_yyyy_hh_mm_ss
+//                    )
+//                } else {
+//                    Log.e(TAG, "onReceive: 11 ")
+//                    geofenceEnterTime = Utils.convertStringToDate1(
+//                        sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME),
+//                        Constants.dd_mm_yyyy_hh_mm_ss
+//                    )
+//                }
 
                 if (geofenceNorthBoundEnterTime.isNotEmpty() && geofenceSouthBoundEnterTime.isNotEmpty() && geofenceEnterTime != null) {
 

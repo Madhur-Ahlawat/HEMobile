@@ -1468,7 +1468,9 @@
     <string name="str_500_characters_remaining">You have 500 characters remaining.</string>
     <string name="str_upload_file_">Upload File</string>
     <string name="str_allowed_file_types">The selected file type must be a JPG, PDF, BMP or TIF</string>
+    <string name="str_bullet_allowed_file_types">Bullet, The selected file type must be a JPG, PDF, BMP or TIF</string>
     <string name="str_file_size_not_morethan_8mb">Also, the selected file type should be no more than 8MB.</string>
+    <string name="str_bullet_file_size_not_morethan_8mb">Bullet, Also, the selected file type should be no more than 8MB.</string>
 
     <string name="what_contact_details">What are your contact details?</string>
     <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
@@ -1746,10 +1748,6 @@
     <string name="aj66mha">AJ66MHA</string>
     <string name="not_provided">Not provided</string>
     <string name="pre_pay">Pre-pay</string>
-    <string name="str_bullet_about_this_service_4">Bullet, register to receive notifications when you cross</string>
-    <string name="str_bullet_about_this_service_1">Bullet, pay for the crossing</string>
-    <string name="str_bullet_about_this_service_2">Bullet, sign in or set up a Dart Charge account</string>
-    <string name="str_bullet_about_this_service_3">Bullet, check with crossings you\'ve paid for</string>
     <string name="if_you_have_nan_account">If you have\nan account</string>
     <string name="if_you_have_an_account">If you have an account</string>
 </resources>
