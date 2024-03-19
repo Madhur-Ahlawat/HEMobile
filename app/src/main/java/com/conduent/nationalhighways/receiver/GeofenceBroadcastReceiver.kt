@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import com.conduent.nationalhighways.R
@@ -13,6 +14,9 @@ import com.conduent.nationalhighways.utils.notification.NotificationUtils
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.location.GeofencingEvent
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -23,7 +27,34 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
     lateinit var sessionManager: SessionManager
     override fun onReceive(context: Context, intent: Intent) {
         Log.e(TAG, "geofenceTransition- receiver -> ")
+
         sessionManager = SessionManager(Utils.returnSharedPreference(context))
+
+
+        val directory =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val file = File(directory, "dartlogs1.txt")
+        if (file.exists()) {
+            val fileWriter = FileWriter(file, true)
+            val bufferedWriter = BufferedWriter(fileWriter)
+
+            bufferedWriter.write("Geofence broadcast broadcast receiver triggered "+Date().toString()+"\n")
+            bufferedWriter.newLine()
+            checkNotification(sessionManager,context,intent,bufferedWriter)
+
+
+        } else {
+            checkNotification(sessionManager, context, intent, null)
+        }
+
+    }
+
+    private fun checkNotification(
+        sessionManager: SessionManager,
+        context: Context,
+        intent: Intent,
+        bufferedWriter: BufferedWriter?
+    ) {
         var checkLocationPermission = false
         var checkNotificationPermission = false
         if (sessionManager.fetchBooleanData(SessionManager.SettingsClick)) {
@@ -46,6 +77,8 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         )
 
 
+        bufferedWriter?.write("checkLocationPermission $checkLocationPermission and checkNotificationPermission $checkNotificationPermission \n")
+        bufferedWriter?.newLine()
 
         if (checkLocationPermission && checkNotificationPermission) {
             notificationUtils = NotificationUtils(context)
@@ -62,6 +95,8 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             // Get the transition type.
             val geofenceTransition = geofencingEvent?.geofenceTransition
             Log.e(TAG, "geofenceTransition- geofenceTransition -> $geofenceTransition")
+
+
             var requestID = ""
 
             // Iterate over triggered geofences
@@ -72,6 +107,10 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             val dateFormat =
                 SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
             val dateString = dateFormat.format(Date())
+
+            bufferedWriter?.write("geofenceTransition $geofenceTransition requestID $requestID \n")
+            bufferedWriter?.newLine()
+
 
             Log.e(TAG, "onReceive: requestID " + requestID)
             if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
@@ -92,6 +131,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
             // Test that the reported transition was of interest.
             if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+                Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
                 var geofenceEnterTime: Date? = null
 
                 val geofenceNorthBoundEnterTime =
@@ -178,5 +218,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        bufferedWriter?.close()
     }
 }

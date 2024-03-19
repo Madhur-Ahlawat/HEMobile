@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.utils.common
 
 import android.Manifest
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -39,6 +40,7 @@ import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogSessionexpiryBinding
+import com.conduent.nationalhighways.service.PlayLocationService
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -1655,5 +1657,35 @@ object Utils {
         activity.startActivity(appSettingsIntent)
     }
 
+
+    fun startLocationService(activity: Context) {
+        if (isLocationServiceRunning(activity)) {
+            Log.e("TAG", "startLocationService: Running ")
+        } else {
+            try {
+                val i = Intent(activity, PlayLocationService::class.java)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Log.e("TAG", "startForegroundService: Running ")
+//                    activity.startForegroundService(i)
+                } else {
+                    Log.e("TAG", "startService: Running ")
+//                    activity.startService(i)
+                }
+                activity.startService(i)
+            } catch (e: Exception) {
+            }
+        }
+    }
+
+    private fun isLocationServiceRunning(activity: Context): Boolean {
+        val manager = activity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            Log.e("TAG", "isLocationServiceRunning: " + service.service.className)
+            if ("com.conduent.nationalhighways.service.PlayLocationService" == service.service.className) {
+                return true
+            }
+        }
+        return false
+    }
 
 }
