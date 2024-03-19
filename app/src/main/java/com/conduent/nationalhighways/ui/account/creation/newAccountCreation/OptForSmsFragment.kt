@@ -73,7 +73,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     override fun init() {
         binding.btnNext.setOnClickListener(this)
         if (requireActivity() is CreateAccountActivity){
-            (requireActivity() as CreateAccountActivity).focusToolBar()
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
         when (navFlowCall) {
             EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
