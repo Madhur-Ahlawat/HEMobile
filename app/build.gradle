@@ -54,8 +54,7 @@ android {
     signingConfigs {
         conduentdev {
 
-            storeFile file("C:\\Users\\Madhur~1" +
-                    "\\StudioProjects\\HE-MAPP-Android\\app\\keystore.jks")
+            storeFile file("C:\\Users\\52357840\\StudioProjects\\HE-MAPP-Android\\app\\keystore.jks")
             storePassword "Conduent@123"
             keyAlias "conduent"
             keyPassword "Conduent@123"
@@ -123,6 +122,7 @@ android {
             applicationId envConfig.APPLICATION_ID.replace("\"", "")
             versionCode envConfig.VERSION_CODE.replace("\"", "").toInteger()
             versionName envConfig.VERSION_NAME.replace("\"", "")
+
         }
     }
 

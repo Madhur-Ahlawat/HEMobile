@@ -36,6 +36,8 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,6 +52,7 @@
                         android:layout_width="0dp"
                         android:text="@string/vehicle_registration_number_plate"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@id/barrier"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -59,6 +62,7 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:focusable="false"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@id/barrier"
                         app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration"
@@ -99,6 +103,8 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -112,6 +118,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/recent_crossings"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -120,6 +127,7 @@
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:text="3"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtRecentCrossings" />
 
@@ -151,6 +159,8 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -163,6 +173,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/credit_for_additional_crossings"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -172,7 +183,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:gravity="start|center"
+                        android:focusable="false"
                         android:text="1"
                         app:layout_constraintEnd_toStartOf="@+id/editCreditForAdditionalCrossings"
                         app:layout_constraintStart_toStartOf="parent"
@@ -206,6 +218,8 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -218,6 +232,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/str_total_payment_amount"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -227,7 +242,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:gravity="start|center"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtPaymentAmount" />
 
@@ -246,6 +262,8 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -257,6 +275,7 @@
                         android:id="@+id/txtEmail"
                         style="@style/MediumTextBlack"
                         android:text="@string/str_email"
+                        android:focusable="false"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -267,7 +286,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:gravity="start|center"
+                        android:focusable="false"
                         app:layout_constraintEnd_toStartOf="@+id/editEmail"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtEmail" />
@@ -300,6 +320,8 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -312,6 +334,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/mobile_number"
                         android:textSize="15sp"
+                        android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -321,7 +344,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:gravity="start|center"
+                        android:focusable="false"
                         app:layout_constraintEnd_toStartOf="@+id/editMobileNumber"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />

@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentSelectAddressBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.SelectAddressAdapter
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.request.LrdsEligibiltyRequest
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.lrds.response.LrdsEligibilityResponse
@@ -60,7 +61,9 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
 
         }
-
+        if (requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBar()
+        }
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)

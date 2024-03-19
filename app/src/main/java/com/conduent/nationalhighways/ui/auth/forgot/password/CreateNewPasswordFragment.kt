@@ -20,6 +20,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswo
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -65,6 +66,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     override fun init() {
         if(requireActivity() is AuthActivity){
             (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
+        if (requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBar()
         }
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 

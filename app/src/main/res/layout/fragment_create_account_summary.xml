@@ -48,7 +48,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -107,7 +106,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -163,7 +161,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -221,7 +218,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -281,7 +277,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -347,7 +342,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -403,7 +397,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 android:minHeight="@dimen/margin_77dp"
                 app:cardCornerRadius="5dp">
 
@@ -497,7 +490,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -553,7 +545,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -612,7 +603,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -671,7 +661,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -726,7 +715,6 @@
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                android:clickable="true"
                 android:visibility="gone"
                 app:cardCornerRadius="5dp">
 
