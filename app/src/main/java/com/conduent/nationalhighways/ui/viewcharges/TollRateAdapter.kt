@@ -34,9 +34,24 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
             holder.binding.title2.text=context?.getString(R.string.str_free)
 
         }
-*/
+*/      holder.binding.data = list?.get(position)
         if(position==0){
             holder.binding?.run {
+                rootView.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                rootView.contentDescription = context?.getString(R.string.type_of_vehicle) +
+                        context?.getString(R.string.str_comma) +" "+
+                        data?.vehicleType + context?.getString(R.string.str_dot) +" "+
+                        context?.getString(R.string.pay_as_you_go) + context?.getString(R.string.str_comma) +" "+
+                        context?.getString(R.string.currency_symbol)+ if (list?.get(position)?.videoRate!=0.0) String.format("%.2f", list?.get(position)?.videoRate) else "Free" +
+                        context?.getString(R.string.str_dot) +" "+
+                        context?.getString(R.string.pre_pay) + context?.getString(R.string.str_comma) +" "+
+                        if (list?.get(position)?.etcRate!=0.0) context?.getString(R.string.currency_symbol)+String.format("%.2f", list?.get(position)?.etcRate) else "Free"
+
+                lablePrepay.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                labelTypeOfVehicle.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                labelPayAsYouGo.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                viewFooter.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+
                 lablePrepay.visible()
                 labelTypeOfVehicle.visible()
                 labelPayAsYouGo.visible()
@@ -45,6 +60,22 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
         }
         else if(position>0 && position<list!!.size){
             holder.binding?.run {
+
+                rootView.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                rootView.contentDescription = context?.getString(R.string.type_of_vehicle) +
+                        context?.getString(R.string.str_comma) +" "+
+                        data?.vehicleType + context?.getString(R.string.str_dot) +" "+
+                        context?.getString(R.string.pay_as_you_go) + context?.getString(R.string.str_comma) +" "+
+                        context?.getString(R.string.currency_symbol)+ if (list?.get(position)?.videoRate!=0.0) String.format("%.2f", list?.get(position)?.videoRate) else "Free" +
+                        context?.getString(R.string.str_dot) +" "+
+                        context?.getString(R.string.pre_pay) + context?.getString(R.string.str_comma) +" "+
+                        if (list?.get(position)?.etcRate!=0.0) context?.getString(R.string.currency_symbol)+String.format("%.2f", list?.get(position)?.etcRate) else "Free"
+
+                lablePrepay.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                labelTypeOfVehicle.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                labelPayAsYouGo.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                viewFooter.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+
                 lablePrepay.gone()
                 labelTypeOfVehicle.gone()
                 labelPayAsYouGo.gone()
@@ -53,6 +84,22 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
         }
         else if(position==list!!.size){
             holder.binding?.run {
+
+                rootView.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                rootView.contentDescription = context?.getString(R.string.type_of_vehicle) +
+                        context?.getString(R.string.str_comma) +" "+
+                        data?.vehicleType + context?.getString(R.string.str_dot) +" "+
+                        context?.getString(R.string.pay_as_you_go) + context?.getString(R.string.str_comma) +" "+
+                        context?.getString(R.string.currency_symbol)+ if (list?.get(position)?.videoRate!=0.0) String.format("%.2f", list?.get(position)?.videoRate) else "Free" +
+                        context?.getString(R.string.str_dot) +" "+
+                        context?.getString(R.string.pre_pay) + context?.getString(R.string.str_comma) +" "+
+                         if (list?.get(position)?.etcRate!=0.0) context?.getString(R.string.currency_symbol)+String.format("%.2f", list?.get(position)?.etcRate) else "Free"
+
+                lablePrepay.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                labelTypeOfVehicle.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                labelPayAsYouGo.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                viewFooter.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_NO
+
                 lablePrepay.gone()
                 labelTypeOfVehicle.gone()
                 labelPayAsYouGo.gone()
@@ -61,8 +108,8 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
             }
         }
         if (list?.get(position)?.etcRate!=0.0){
-            holder.binding.valuePayAsYouGo.text="£"+String.format("%.2f", list?.get(position)?.videoRate)
-            holder.binding.valuePrepay.text="£"+String.format("%.2f", list?.get(position)?.etcRate)
+            holder.binding.valuePayAsYouGo.text = context?.getString(R.string.currency_symbol)+String.format("%.2f", list?.get(position)?.videoRate)
+            holder.binding.valuePrepay.text = context?.getString(R.string.currency_symbol)+String.format("%.2f", list?.get(position)?.etcRate)
 
         }else{
             holder.binding.valuePayAsYouGo.text=context?.getString(R.string.str_free)
@@ -78,7 +125,7 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
 
 
         holder.binding.apply {
-            data = list?.get(position)
+
             executePendingBindings()
         }
     }

@@ -48,7 +48,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         if (requireActivity() is CreateAccountActivity){
-            (requireActivity() as CreateAccountActivity).focusToolBar()
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
         binding.btnNext.setOnClickListener(this)
 

@@ -72,7 +72,7 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
             sessionManager.getLoggedInUser()
         )
         if(requireActivity() is RaiseEnquiryActivity){
-            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
     override fun initCtrl() {

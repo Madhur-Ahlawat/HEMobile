@@ -102,6 +102,7 @@
     <string name="str_resend_message">Please check your text message, if you have not received the text message, please click resend</string>
     <string name="str_make_one_of_payment">Pay for crossings without an account</string>
     <string name="one_of_payment">Pay For Crossings</string>
+    <string name="str_one_of_payment_">One off payment</string>
     <string name="str_make_one_of_payment_continue">Make a one off payment \nMake a payment for crossings without creating an account</string>
     <string name="str_charges_for_crossing">The charges for crossings</string>
     <string name="str_six_am_morning_txt">\u2022  You have made since 6 am yesterday morning</string>
@@ -234,6 +235,8 @@
     <string name="str_charge_and_fines">6am to 10pm, charges apply everyday.</string>
     <string name="str_charges_6am_10pm">Charges  and fines</string>
     <string name="str_type_of_vehicle">Type of\nvehicle</string>
+    <string name="str_dot">.</string>
+    <string name="str_comma">,</string>
     <string name="type_of_vehicle">Type of Vehicle</string>
     <string name="str_one_of_payment">One of \npayment</string>
     <string name="str_pay_g_service">Pay as \nyou go</string>
@@ -927,9 +930,13 @@
     <string name="dotunicode">\u25CF</string>
     <string name="tickunicode">\u2713</string>
     <string name="str_at_least_8_character">be at least 8 characters long</string>
+    <string name="str_bullet_at_least_8_character">Bullet, be at least 8 characters long</string>
     <string name="str_contain_at_least_one_upper_case">contain at least one upper case letter (A-Z)</string>
+    <string name="str_bullet_contain_at_least_one_upper_case">Bullet, contain at least one upper case letter (A-Z)</string>
     <string name="str_contain_at_least_one_lower_case">contain at least one lower case letter (a-z)</string>
+    <string name="str_bullet_contain_at_least_one_lower_case">Bullet, contain at least one lower case letter (a-z)</string>
     <string name="str_contain_at_least_one_number">contain at least one number (0–9)</string>
+    <string name="str_bullet_contain_at_least_one_number">Bullet, contain at least one number (0–9)</string>
     <string name="forgotPassword_email_screenHeading">Forgot your password</string>
     <string name="str_choose_verification_method">Choose a verification method</string>
     <string name="str_enter_six_digit_code">Enter 6-digit security code</string>
@@ -953,8 +960,10 @@
     <string name="str_about_this_service_2">sign in or set up a Dart Charge account</string>
     <string name="str_about_this_service_3">check with crossings you\'ve paid for</string>
     <string name="str_about_this_service_4">register to receive notifications when you cross</string>
-
-
+    <string name="str_bullet_about_this_service_4">Bullet, register to receive notifications when you cross</string>
+    <string name="str_bullet_about_this_service_1">Bullet, pay for the crossing</string>
+    <string name="str_bullet_about_this_service_2">Bullet, sign in or set up a Dart Charge account</string>
+    <string name="str_bullet_about_this_service_3">Bullet, check with crossings you\'ve paid for</string>
     <string name="a_valid_debit_or_credit_card">a valid debit or credit card</string>
     <string name="create_account">Create account</string>
     <string name="the_vehicle_registration_number_plate_you_want_to_add_to_the_account">the vehicle registration (number plate) you want to add to the account</string>
@@ -1459,7 +1468,9 @@
     <string name="str_500_characters_remaining">You have 500 characters remaining.</string>
     <string name="str_upload_file_">Upload File</string>
     <string name="str_allowed_file_types">The selected file type must be a JPG, PDF, BMP or TIF</string>
+    <string name="str_bullet_allowed_file_types">Bullet, The selected file type must be a JPG, PDF, BMP or TIF</string>
     <string name="str_file_size_not_morethan_8mb">Also, the selected file type should be no more than 8MB.</string>
+    <string name="str_bullet_file_size_not_morethan_8mb">Bullet, Also, the selected file type should be no more than 8MB.</string>
 
     <string name="what_contact_details">What are your contact details?</string>
     <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
@@ -1494,11 +1505,17 @@
     <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
     <string name="str_get_in_touch_about">Get in touch about:</string>
     <string name="str_charges">charges</string>
+    <string name="str_bullet_charges">Bullet, charges</string>
     <string name="str_fines">fines (Penalty Charge Notice)</string>
+    <string name="str_bullet_fines">Bullet, fines (Penalty Charge Notice)</string>
     <string name="str_refunds">refunds</string>
+    <string name="str_bullet_refunds">Bullet, refunds</string>
     <string name="str_dart_charge_accounts">Dart Charge accounts</string>
+    <string name="str_bullet_dart_charge_accounts">Bullet, Dart Charge accounts</string>
     <string name="str_complaints">complaints</string>
+    <string name="str_bullet_complaints">Bullet, complaints</string>
     <string name="str_general_enquiries">general enquiries</string>
+    <string name="str_bullet_general_enquiries">Bullet, general enquiries</string>
     <string name="str_get_in_touch">Get in touch</string>
     <string name="str_enquiry_status">Enquiry status</string>
     <string name="str_incorrect_enquiry">Incorrect enquiry reference number or last name. Please try again.</string>
@@ -1585,7 +1602,9 @@
     <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="str_other_ways_to_pay_1"><ul>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></ul></string>
+    <string name="str_bullet_other_ways_to_pay_1">Bullet, pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></string>
     <string name="str_other_ways_to_pay_2">pay or set up an account through <a href="https://www.gov.uk/pay-dartford-crossing-charge/">the Dart Charge website</a></string>
+    <string name="str_bullet_other_ways_to_pay_2">Bullet, pay or set up an account through <a href="https://www.gov.uk/pay-dartford-crossing-charge/">the Dart Charge website</a></string>
     <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge.</string>
     <string name="str_or_you_can">Or you can:</string>
     <string name="about_this_service">About This Service</string>
@@ -1729,4 +1748,6 @@
     <string name="aj66mha">AJ66MHA</string>
     <string name="not_provided">Not provided</string>
     <string name="pre_pay">Pre-pay</string>
+    <string name="if_you_have_nan_account">If you have\nan account</string>
+    <string name="if_you_have_an_account">If you have an account</string>
 </resources>

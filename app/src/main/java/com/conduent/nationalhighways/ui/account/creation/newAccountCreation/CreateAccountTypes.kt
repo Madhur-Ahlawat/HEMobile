@@ -33,7 +33,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
         if (requireActivity() is CreateAccountActivity){
-            (requireActivity() as CreateAccountActivity).focusToolBar()
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
         binding.crossingCharges.setOnClickListener(this)
     }
