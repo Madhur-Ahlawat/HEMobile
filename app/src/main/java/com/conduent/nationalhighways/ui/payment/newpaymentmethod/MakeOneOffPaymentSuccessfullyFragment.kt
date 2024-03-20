@@ -76,6 +76,11 @@ class MakeOneOffPaymentSuccessfullyFragment :
 
         }
 
+        binding.accountNumberCv.contentDescription=resources.getString(R.string.payment_reference_number)+"\n"+binding.accountNumber.text.toString()
+        binding.vehicleNumberCv.contentDescription=resources.getString(R.string.vehicle_registration_number_plate)+"\n"+binding.vechicleRegistration.text.toString()
+        binding.amountPaidCardView.contentDescription=resources.getString(R.string.str_amount_paid)+"\n"+binding.amountPaid.text.toString()
+        binding.timeAndDateCardView.contentDescription=resources.getString(R.string.str_time_date)+"\n"+binding.timeDate.text.toString()
+
 
     }
 
