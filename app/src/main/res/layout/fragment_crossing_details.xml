@@ -133,7 +133,7 @@
                         android:id="@+id/txtAddress"
                         style="@style/MediumTextBlack"
                         android:text="@string/credit_remaining"
-                        android:importantForAccessibility="yes"
+                        android:importantForAccessibility="no"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -141,7 +141,7 @@
                     <TextView
                         android:id="@+id/address"
                         style="@style/RegularTextBlack"
-                        android:importantForAccessibility="yes"
+                        android:importantForAccessibility="no"
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtAddress" />

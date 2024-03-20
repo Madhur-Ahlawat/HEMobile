@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.databinding.FragmentYourVehicleRegisteredBi
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 
 
 class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegisteredBinding>(),
@@ -39,6 +40,8 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
         if (data == null) {
             data = CrossingDetailsModelsResponse()
         }
+        Utils.setupAccessibilityDelegatesForRadioButtons(binding.radioGroupYesNo)
+
 //        data?.vehicleClass = nonUKVehicleModel?.vehicleClass
     }
 
