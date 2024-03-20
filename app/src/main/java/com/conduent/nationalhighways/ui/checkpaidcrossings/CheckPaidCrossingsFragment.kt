@@ -16,7 +16,12 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.databinding.FragmentPaidPreviousCrossingsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -62,7 +67,10 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
         binding.editReferenceNumber.editText.addTextChangedListener {
             isEnable()
         }
-//        isEnable()
+        binding.point1Ll.contentDescription =
+            resources.getString(R.string.accessibility_bullet) + "\n" + resources.getString(R.string.paid_crossing_point1)
+        binding.point2Ll.contentDescription =
+            resources.getString(R.string.accessibility_bullet) + "\n" + resources.getString(R.string.paid_crossing_point2)
     }
 
     override fun initCtrl() {
@@ -78,42 +86,38 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
     }
 
     private fun isEnable() {
-        var isReferenceNumberValid=true
-        var isPlateNumberValid=true
+        var isReferenceNumberValid = true
+        var isPlateNumberValid = true
         if (binding.editReferenceNumber.getText().toString().trim().isNullOrEmpty()) {
             binding.editReferenceNumber.removeError()
-            isReferenceNumberValid=false
-        }
-        else {
+            isReferenceNumberValid = false
+        } else {
             if (!Regex(paymentRefereceNumberRegex).matches(
                     binding.editReferenceNumber.getText().toString()
                 )
             ) {
-                isReferenceNumberValid=false
+                isReferenceNumberValid = false
                 binding.editReferenceNumber.setErrorText(getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9))
 
-            }
-            else{
+            } else {
                 binding.editReferenceNumber.removeError()
             }
         }
 
         if (binding.editNumberPlate.getText().toString().trim().isNullOrEmpty()) {
-            isPlateNumberValid=false
+            isPlateNumberValid = false
             binding.editNumberPlate.removeError()
         } else {
             if (!Regex(plateNumberREgex).matches(binding.editNumberPlate.getText().toString())) {
-                isPlateNumberValid=false
+                isPlateNumberValid = false
                 binding.editNumberPlate.setErrorText(getString(R.string.str_vehicle_registration))
-            }
-            else{
+            } else {
                 binding.editNumberPlate.removeError()
             }
         }
-        if(isPlateNumberValid && isReferenceNumberValid){
+        if (isPlateNumberValid && isReferenceNumberValid) {
             binding.findVehicle.isEnabled = true
-        }
-        else{
+        } else {
             binding.findVehicle.isEnabled = false
 
         }
@@ -165,15 +169,15 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                         putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         val crossingDetailsModelsResponse = CrossingDetailsModelsResponse().apply {
                             referenceNumber = binding.editReferenceNumber.getText().toString()
-                            accountActStatus = dataObj?.get(0)?.accountActStatus?:""
-                            accountBalance = dataObj?.get(0)?.accountBalance?:""
-                            accountNo = dataObj?.get(0)?.accountNo?:""
-                            accountTypeCd = dataObj?.get(0)?.accountStatusCd?:""
-                            expirationDate = dataObj?.get(0)?.expirationDate?:""
+                            accountActStatus = dataObj?.get(0)?.accountActStatus ?: ""
+                            accountBalance = dataObj?.get(0)?.accountBalance ?: ""
+                            accountNo = dataObj?.get(0)?.accountNo ?: ""
+                            accountTypeCd = dataObj?.get(0)?.accountStatusCd ?: ""
+                            expirationDate = dataObj?.get(0)?.expirationDate ?: ""
                             plateCountry = dataObj?.get(0)?.plateCountry
                             plateCountryToTransfer = dataObj?.get(0)?.plateCountry
-                            plateNumberToTransfer = dataObj?.get(0)?.plateNo?:""
-                            unusedTrip = dataObj?.get(0)?.unusedTrip?:""
+                            plateNumberToTransfer = dataObj?.get(0)?.plateNo ?: ""
+                            unusedTrip = dataObj?.get(0)?.unusedTrip ?: ""
                             vehicleClassBalanceTransfer = dataObj?.get(0)?.vehicleClass
                         }
                         putParcelable(Constants.NAV_DATA_KEY, crossingDetailsModelsResponse)

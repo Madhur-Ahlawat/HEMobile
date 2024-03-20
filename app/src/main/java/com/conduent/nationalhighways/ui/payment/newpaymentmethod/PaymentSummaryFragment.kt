@@ -49,12 +49,22 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         }
 
         setData()
+        setContentDes()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)
           i.data = Uri.parse(url)
           startActivity(i)*/
 
 
+    }
+
+    private fun setContentDes() {
+        binding.layoutVehicleRegistrationCv.contentDescription=binding.txtVehicleRegistration.text.toString()+"\n"+binding.vehicleRegisration.text.toString()
+        binding.recentCrossingsCv.contentDescription=binding.txtRecentCrossings.text.toString()+"\n"+binding.recentCrossings.text.toString()
+        binding.creditForAdditionalCrossings.contentDescription=binding.txtCreditAdditionalCrossings.text.toString()+"\n"+binding.creditAdditionalCrossings.text.toString()
+        binding.labelPaymentAmount.contentDescription=binding.txtPaymentAmount.text.toString()+"\n"+binding.paymentAmount.text.toString()
+        binding.labelEmail.contentDescription=binding.txtEmail.text.toString()+"\n"+binding.email.text.toString()
+        binding.labelMobileNumber.contentDescription=binding.txtMobileNumber.text.toString()+"\n"+binding.mobileNumber.text.toString()
     }
 
     private fun setData() {

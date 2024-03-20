@@ -29,6 +29,7 @@
                 android:textSize="@dimen/font_16sp" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/layoutVehicleRegistrationCv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
@@ -44,12 +45,14 @@
                     android:id="@+id/layoutVehicleRegistration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtVehicleRegistration"
                         style="@style/MediumTextBlack"
                         android:layout_width="0dp"
+                        android:importantForAccessibility="no"
                         android:text="@string/vehicle_registration_number_plate"
                         android:textSize="15sp"
                         android:focusable="false"
@@ -62,6 +65,7 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:importantForAccessibility="no"
                         android:focusable="false"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@id/barrier"
@@ -72,6 +76,7 @@
                         android:id="@+id/barrier"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
                         app:barrierDirection="left"
                         app:constraint_referenced_ids="editRegistrationNumber" />
 
@@ -84,6 +89,7 @@
                         android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -111,6 +117,7 @@
                     android:id="@+id/cardRecentCrossings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -119,6 +126,7 @@
                         android:text="@string/recent_crossings"
                         android:textSize="15sp"
                         android:focusable="false"
+                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -128,6 +136,7 @@
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:text="3"
                         android:focusable="false"
+                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtRecentCrossings" />
 
@@ -138,6 +147,7 @@
                         android:minHeight="@dimen/margin_48dp"
                         android:minWidth="@dimen/margin_48dp"
                         android:padding="@dimen/margin_20dp"
+                        android:importantForAccessibility="yes"
                         android:src="@drawable/edit"
                         android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -166,6 +176,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -174,6 +185,7 @@
                         android:text="@string/credit_for_additional_crossings"
                         android:textSize="15sp"
                         android:focusable="false"
+                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -185,7 +197,8 @@
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="start|center"
                         android:focusable="false"
-                        android:text="1"
+                        tools:text="1"
+                        android:importantForAccessibility="no"
                         app:layout_constraintEnd_toStartOf="@+id/editCreditForAdditionalCrossings"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtCreditAdditionalCrossings" />
@@ -198,6 +211,7 @@
                         android:minWidth="@dimen/margin_48dp"
                         android:padding="@dimen/margin_20dp"
                         android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -225,6 +239,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -233,6 +248,7 @@
                         android:text="@string/str_total_payment_amount"
                         android:textSize="15sp"
                         android:focusable="false"
+                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -244,6 +260,7 @@
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="start|center"
                         android:focusable="false"
+                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtPaymentAmount" />
 
@@ -269,6 +286,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -276,6 +294,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/str_email"
                         android:focusable="false"
+                        android:importantForAccessibility="no"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -287,6 +306,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="start|center"
+                        android:importantForAccessibility="no"
                         android:focusable="false"
                         app:layout_constraintEnd_toStartOf="@+id/editEmail"
                         app:layout_constraintStart_toStartOf="parent"
@@ -299,6 +319,7 @@
                         android:minHeight="@dimen/margin_48dp"
                         android:minWidth="@dimen/margin_48dp"
                         android:padding="@dimen/margin_20dp"
+                        android:importantForAccessibility="yes"
                         android:src="@drawable/edit"
                         android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -327,6 +348,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -334,6 +356,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/mobile_number"
                         android:textSize="15sp"
+                        android:importantForAccessibility="no"
                         android:focusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -346,6 +369,7 @@
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="start|center"
                         android:focusable="false"
+                        android:importantForAccessibility="no"
                         app:layout_constraintEnd_toStartOf="@+id/editMobileNumber"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />
@@ -358,6 +382,7 @@
                         android:minWidth="@dimen/margin_48dp"
                         android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
+                        android:importantForAccessibility="yes"
                         android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
