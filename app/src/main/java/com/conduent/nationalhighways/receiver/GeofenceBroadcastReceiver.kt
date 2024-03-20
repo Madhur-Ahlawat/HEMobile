@@ -6,6 +6,9 @@ import android.content.Intent
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -23,29 +26,26 @@ import java.util.Locale
 
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "GeofenceBroadcastReceiv"
-    lateinit var notificationUtils: NotificationUtils
     lateinit var sessionManager: SessionManager
     override fun onReceive(context: Context, intent: Intent) {
-        Log.e(TAG, "geofenceTransition- receiver -> ")
-
+        Log.e(TAG, "geofenceTransition - receiver -> ")
         sessionManager = SessionManager(Utils.returnSharedPreference(context))
-
 
         val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(directory, "dartlogs1.txt")
+        val file = File(directory, "dartlogs_20_1.txt")
         if (file.exists()) {
             val fileWriter = FileWriter(file, true)
             val bufferedWriter = BufferedWriter(fileWriter)
 
-            bufferedWriter.write("Geofence broadcast broadcast receiver triggered "+Date().toString()+"\n")
+            bufferedWriter.write("Geofence broadcast broadcast receiver triggered " + Date().toString() + "\n")
             bufferedWriter.newLine()
-            checkNotification(sessionManager,context,intent,bufferedWriter)
-
-
+            checkNotification(sessionManager, context, intent, bufferedWriter)
         } else {
             checkNotification(sessionManager, context, intent, null)
         }
+
+
 
     }
 
@@ -81,7 +81,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         bufferedWriter?.newLine()
 
         if (checkLocationPermission && checkNotificationPermission) {
-            notificationUtils = NotificationUtils(context)
             val geofencingEvent = GeofencingEvent.fromIntent(intent)
             geofencingEvent?.geofenceTransition
             if (geofencingEvent?.hasError() == true) {
@@ -104,113 +103,26 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 // Retrieve requestId and transition type
                 requestID = geofence.requestId
             }
-            val dateFormat =
-                SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
-            val dateString = dateFormat.format(Date())
 
             bufferedWriter?.write("geofenceTransition $geofenceTransition requestID $requestID \n")
             bufferedWriter?.newLine()
 
 
+            val inputData = Data.Builder()
+                .putInt("geofenceTransition", geofenceTransition?:-1)
+                .putString("geofenceId", requestID)
+                .build()
+
+            val workRequest = OneTimeWorkRequestBuilder<GeofenceWorker>()
+                .setInputData(inputData)
+                .build()
+
+            WorkManager.getInstance(context).enqueue(workRequest)
+
+
+
             Log.e(TAG, "onReceive: requestID " + requestID)
-            if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
 
-                if (requestID == Constants.geofenceSouthBoundDartCharge) {
-                    sessionManager.saveStringData(
-                        SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME,
-                        dateString
-                    )
-                } else {
-                    sessionManager.saveStringData(
-                        SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME,
-                        dateString
-                    )
-                }
-                Toast.makeText(context, "Location entered", Toast.LENGTH_SHORT).show()
-            }
-
-            // Test that the reported transition was of interest.
-            if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-                Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
-                var geofenceEnterTime: Date? = null
-
-                val geofenceNorthBoundEnterTime =
-                    sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME)
-                val geofenceSouthBoundEnterTime =
-                    sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME)
-
-
-                if (sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME)
-                        .isNotEmpty()
-                ) {
-                    Log.e(TAG, "onReceive: ")
-                    geofenceEnterTime = Utils.convertStringToDate1(
-                        sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME),
-                        Constants.dd_mm_yyyy_hh_mm_ss
-                    )
-                } else {
-                    Log.e(TAG, "onReceive: 11 ")
-                    geofenceEnterTime = Utils.convertStringToDate1(
-                        sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME),
-                        Constants.dd_mm_yyyy_hh_mm_ss
-                    )
-                }
-
-                if (geofenceNorthBoundEnterTime.isNotEmpty() && geofenceSouthBoundEnterTime.isNotEmpty() && geofenceEnterTime != null) {
-
-                    val diff = Utils.getMinSecTimeDifference(geofenceEnterTime, Date())
-                    Log.e(TAG, "onReceive: diff $diff")
-                    if (diff.first >= 30 && diff.second > 0) {
-                        Toast.makeText(
-                            context,
-                            "Location time limited more than 30 minutes",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        notificationUtils.showNotification(
-                            context.resources.getString(R.string.str_did_you_cross_today),
-                            context.resources.getString(R.string.str_responsible_paying),
-                            Constants.GEO_FENCE_NOTIFICATION
-                        )
-
-                        Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
-                    }
-
-                    sessionManager.saveStringData(
-                        SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME,
-                        ""
-                    )
-                    sessionManager.saveStringData(
-                        SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME,
-                        ""
-                    )
-                    sessionManager.saveStringData(
-                        SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME,
-                        ""
-                    )
-                    sessionManager.saveStringData(
-                        SessionManager.GEOFENCE_SOUTHBOUND_EXIT_TIME,
-                        ""
-                    )
-
-                }
-
-                if (requestID == Constants.geofenceNorthBoundDartCharge) {
-                    sessionManager.saveStringData(
-                        SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME,
-                        dateString
-                    )
-                } else {
-                    sessionManager.saveStringData(
-                        SessionManager.GEOFENCE_SOUTHBOUND_EXIT_TIME,
-                        dateString
-                    )
-                }
-
-            } else {
-                // Log the error.
-                Log.e(TAG, "geofenceTransition- error -> $geofenceTransition")
-            }
         } else {
             Toast.makeText(
                 context,

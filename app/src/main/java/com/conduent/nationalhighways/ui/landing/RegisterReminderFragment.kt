@@ -66,6 +66,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             startActivityForResult(intent, 1000)
         }
 
+
     }
 
     override fun onResume() {
@@ -105,8 +106,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 binding.switchGeoLocation.isChecked =
                     sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
                 if (binding.switchGeoLocation.isChecked) {
-                    Utils.startLocationService(requireActivity())
-                    GeofenceUtils.startGeofence(this.requireContext(),3)
+//                    Utils.startLocationService(requireActivity())
+                    GeofenceUtils.startGeofence(this.requireContext(), 3)
                 }
             }
         } else if (arguments?.containsKey(Constants.GpsSettings) == true) {
@@ -122,8 +123,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                     sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
             }
             if (binding.switchGeoLocation.isChecked) {
-                Utils.startLocationService(requireActivity())
-                GeofenceUtils.startGeofence(this.requireContext(),4)
+//                Utils.startLocationService(requireActivity())
+                GeofenceUtils.startGeofence(this.requireContext(), 4)
             }
         } else {
 
@@ -165,7 +166,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         } else if (requestCode == 1948) {
             val directory =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-            val file = File(directory, "dartlogs1.txt")
+            val file = File(directory, "dartlogs_20_1.txt")
             if (file.exists()) {
                 val fileWriter = FileWriter(file, true)
                 val bufferedWriter = BufferedWriter(fileWriter)
@@ -188,12 +189,13 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         }
         binding.switchGeoLocation.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                Utils.startLocationService(requireActivity())
-                GeofenceUtils.startGeofence(this.requireContext(),5)
+//                Utils.startLocationService(requireActivity())
+                GeofenceUtils.startGeofence(this.requireContext(), 5)
             }
         }
         binding.switchGeoLocation.setOnClickListener {
             if (Utils.checkLocationpermission(requireContext())) {
+                GeofenceUtils.startGeofence(requireContext(), 7)
                 sessionManager.saveBooleanData(
                     SessionManager.LOCATION_PERMISSION,
                     binding.switchGeoLocation.isChecked
@@ -300,8 +302,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         )
 
         if (fineLocation || coarseLocation) {
-            Utils.startLocationService(requireActivity())
-            GeofenceUtils.startGeofence(this.requireContext(),6)
+//            Utils.startLocationService(requireActivity())
+            GeofenceUtils.startGeofence(this.requireContext(), 6)
             requestBackgroundLocationPermission()
         }
     }

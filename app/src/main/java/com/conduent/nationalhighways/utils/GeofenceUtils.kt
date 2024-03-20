@@ -14,8 +14,12 @@ import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.conduent.nationalhighways.receiver.GeofenceBroadcastReceiver
+import com.conduent.nationalhighways.receiver.GeofenceWorker
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -41,11 +45,18 @@ object GeofenceUtils {
 
     lateinit var context: Context
 
+    fun enqueueGeofenceWorker(context: Context) {
+        val workRequest = OneTimeWorkRequestBuilder<GeofenceWorker>().build()
+        WorkManager.getInstance(context).enqueue(workRequest)
+    }
+
     //starting geofence
     fun startGeofence(context1: Context, from: Int = 0) {
+        Utils.startLocationService(context1)
+
         val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(directory, "dartlogs1.txt")
+        val file = File(directory, "dartlogs_20_1.txt")
         if (file.exists()) {
             val fileWriter = FileWriter(file, true)
             val bufferedWriter = BufferedWriter(fileWriter)
@@ -56,8 +67,11 @@ object GeofenceUtils {
             Log.e(TAG, "startGeofence: file not exists" )
         }
 
+        enqueueGeofenceWorker(context1)
 
-            context = context1
+
+
+        context = context1
         val geofenceIntent: PendingIntent by lazy {
             val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
             PendingIntent.getBroadcast(
@@ -76,7 +90,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceNorthBoundDartCharge)
                 setCircularRegion(
-                    17.456849, 78.563858,
+                    17.452599, 78.564737,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -87,7 +101,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceSouthBoundDartCharge)
                 setCircularRegion(
-                    17.451528, 78.568175,
+                    17.450777, 78.570260,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)

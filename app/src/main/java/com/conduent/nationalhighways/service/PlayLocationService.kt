@@ -8,20 +8,25 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
 import android.location.Location
 import android.location.LocationListener
-import android.os.*
+import android.os.Binder
+import android.os.Build
+import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.google.gson.*
 import com.conduent.nationalhighways.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.Priority
+import com.google.gson.Gson
 
 class PlayLocationService : Service(), LocationListener {
     private val binder: IBinder = LocalBinder()
@@ -51,12 +56,7 @@ class PlayLocationService : Service(), LocationListener {
                 }
             }
         }
-        try {
-            Log.e(TAG, "onCreate: foregroundservice" )
-//            foregroundService()
-        } catch (e: Exception) {
-            Log.e(TAG, "onCreate: e.message "+e.message )
-        }
+
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -64,9 +64,43 @@ class PlayLocationService : Service(), LocationListener {
         try {
             createLocationRequest()
             startLocationUpdates()
+            try {
+                Log.e(TAG, "onCreate: foregroundservice")
+//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+//                    startForeground(123, createNotification())
+//                } else {
+//                    startForeground(123, createNotification(),
+//                        FOREGROUND_SERVICE_TYPE_LOCATION)
+//                }
+            } catch (e: Exception) {
+                Log.e(TAG, "onCreate: e.message " + e.message)
+            }
         } catch (e: Exception) {
         }
         return START_STICKY
+    }
+
+    private fun createNotification(): Notification {
+        val CHANNEL_ID = "my_channel_01"
+        val channel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel(
+                CHANNEL_ID,
+                applicationContext.resources.getString(R.string.app_name),
+                NotificationManager.IMPORTANCE_LOW
+            )
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+        channel.setSound(null, null)
+        (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(
+            channel
+        )
+        return Notification.Builder(this, CHANNEL_ID)
+            .setContentTitle(applicationContext.resources.getString(R.string.dartcharge_running))
+            .setSmallIcon(R.drawable.push_notification)
+            .setColor(resources.getColor(R.color.blue, null))
+            .setContentText(applicationContext.resources.getString(R.string.tap_for_more_info))
+            .build()
     }
 
     private fun createLocationRequest() {
@@ -140,22 +174,28 @@ class PlayLocationService : Service(), LocationListener {
                 .setColor(resources.getColor(R.color.blue, null))
                 .setContentText(applicationContext.resources.getString(R.string.tap_for_more_info))
                 .build()
-            startForeground(123, notification)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                startForeground(123, notification)
+            } else {
+                startForeground(123, notification,
+                    FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+            }
         } else {
             val builder: NotificationCompat.Builder = NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.push_notification)
                 .setContentTitle(applicationContext.resources.getString(R.string.dartcharge_running))
                 .setContentText(applicationContext.resources.getString(R.string.tap_for_more_info))
-            startForeground(123, builder.build())
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                startForeground(123, builder.build())
+            } else {
+                startForeground(123, builder.build(),
+                    FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+            }
         }
     }
 
     override fun onTaskRemoved(rootIntent: Intent) {
         super.onTaskRemoved(rootIntent)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onBind(intent: Intent): IBinder {
