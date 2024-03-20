@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.utils
 
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -8,18 +9,20 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
-import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.conduent.nationalhighways.receiver.GeofenceBroadcastReceiver
+import com.conduent.nationalhighways.utils.common.Constants
 import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.*
-
-
-import java.io.Serializable
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.GeofencingRequest
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.Priority
 
 
 @SuppressLint("StaticFieldLeak")
@@ -53,9 +56,20 @@ object GeofenceUtils {
         geofenceList.clear()
         geofenceList.add(
             Geofence.Builder().apply {
-                setRequestId("geofenceDartCharge")
+                setRequestId(Constants.geofenceNorthBoundDartCharge)
                 setCircularRegion(
-                    12.9716881, 77.4942284,
+                    10.987400, 75.986028,
+                    300f
+                )
+                setExpirationDuration(Geofence.NEVER_EXPIRE)
+                setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            }.build()
+        )
+        geofenceList.add(
+            Geofence.Builder().apply {
+                setRequestId(Constants.geofenceSouthBoundDartCharge)
+                setCircularRegion(
+                    10.993615, 75.992738,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -104,7 +118,7 @@ object GeofenceUtils {
 
     private fun removeGeofenceByIds() {
         Log.e(TAG, "removeGeofenceByIds : $geofenceList")
-        val list=ArrayList<String>()
+        val list = ArrayList<String>()
         list.add("geofenceDartCharge")
         geoClient.removeGeofences(list).run {
             addOnSuccessListener {

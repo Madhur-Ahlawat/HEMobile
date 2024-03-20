@@ -64,6 +64,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.math.min
 
 
 object Utils {
@@ -121,10 +122,11 @@ object Utils {
     fun capitalizeString(str: String?): String? {
         return if (str.isNullOrEmpty()) {
             str
-        }  else {
+        } else {
             str.split("\\s+".toRegex()).joinToString(" ") { word ->
                 word.split("-").joinToString("-") { part ->
-                    part.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+                    part.lowercase()
+                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
                 }
             }
         }
@@ -233,33 +235,28 @@ object Utils {
             if (mText.length == 1 && mText.equals(".")) {
                 mText = "0"
             }
+            var amount = ""
+            if (isDecimal(minimumAmount)) {
+                amount = minimumAmount.toString()
+            } else {
+                amount = minimumAmount.toInt().toString()
+            }
+
             isValid = if (mText.toDouble().toInt() <= 100000) {
 
                 if (mText.toDouble() < minimumAmount) {
                     if (isTopUp) {
-
-                        if (minimumAmount == 10.00) {
-                            nhTextInputCell.setErrorText(
-                                nhTextInputCell.context.getString(
-                                    R.string.str_top_up_amount_must_be_more,
-                                    minimumAmount.toInt().toString()
-                                )
+                        nhTextInputCell.setErrorText(
+                            nhTextInputCell.context.getString(
+                                R.string.str_top_up_amount_must_be_more,
+                                amount
                             )
-
-                        } else {
-                            nhTextInputCell.setErrorText(
-                                nhTextInputCell.context.getString(
-                                    R.string.str_top_up_amount_must_be_more,
-                                    minimumAmount.toString()
-                                )
-                            )
-
-                        }
+                        )
                     } else {
                         nhTextInputCell.setErrorText(
                             nhTextInputCell.context.getString(
                                 R.string.str_low_balance_must_be_more,
-                                minimumAmount.toString()
+                                amount
                             )
                         )
                     }
@@ -281,6 +278,10 @@ object Utils {
             nhTextInputCell.removeError()
         }
         return isValid
+    }
+
+    fun isDecimal(num: Double): Boolean {
+        return num % 1 != 0.0
     }
 
     val splCharEmailCode: String by lazy {
@@ -1085,75 +1086,76 @@ object Utils {
 
     }
 
-     fun checkLocationPermissionState(context:Context) {
+    fun checkLocationPermissionState(context: Context) {
 
-         var fineLocation =
-             ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
-         var coarseLocation =
-             ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
+        var fineLocation =
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
+        var coarseLocation =
+            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
 
-         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
 
-             var backgroundLocationPermissionApproved: Boolean = ActivityCompat.checkSelfPermission(context,
-                 Manifest.permission.ACCESS_BACKGROUND_LOCATION) > -1
+            var backgroundLocationPermissionApproved: Boolean = ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) > -1
 
-             var isAppLocationPermissionGranted =
-                 (backgroundLocationPermissionApproved) &&
-                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+            var isAppLocationPermissionGranted =
+                (backgroundLocationPermissionApproved) &&
+                        (coarseLocation == PackageManager.PERMISSION_GRANTED);
 
-             var preciseLocationAllowed = (fineLocation == PackageManager.PERMISSION_GRANTED)
-                     && (coarseLocation == PackageManager.PERMISSION_GRANTED);
+            var preciseLocationAllowed = (fineLocation == PackageManager.PERMISSION_GRANTED)
+                    && (coarseLocation == PackageManager.PERMISSION_GRANTED);
 
-             if (preciseLocationAllowed) {
-                 Log.e("PERMISSION", "Precise location is enabled in Android 12");
-             } else {
-                 Log.e("PERMISSION", "Precise location is disabled in Android 12");
-             }
+            if (preciseLocationAllowed) {
+                Log.e("PERMISSION", "Precise location is enabled in Android 12");
+            } else {
+                Log.e("PERMISSION", "Precise location is disabled in Android 12");
+            }
 
-             if (isAppLocationPermissionGranted) {
-                 Log.e("PERMISSION", "Location is allowed all the time");
-             } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
-                 Log.e("PERMISSION", "Location is allowed while using the app");
-             } else {
-                 Log.e("PERMISSION", "Location is not allowed.");
-             }
+            if (isAppLocationPermissionGranted) {
+                Log.e("PERMISSION", "Location is allowed all the time");
+            } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
+                Log.e("PERMISSION", "Location is allowed while using the app");
+            } else {
+                Log.e("PERMISSION", "Location is not allowed.");
+            }
 
-         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-             var bgLocation = ContextCompat.checkSelfPermission(
-                 context,
-                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
-             );
+            var bgLocation = ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            );
 
-             var isAppLocationPermissionGranted =
-                 (bgLocation == PackageManager.PERMISSION_GRANTED) &&
-                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+            var isAppLocationPermissionGranted =
+                (bgLocation == PackageManager.PERMISSION_GRANTED) &&
+                        (coarseLocation == PackageManager.PERMISSION_GRANTED);
 
-             if (isAppLocationPermissionGranted) {
-                 Log.e("PERMISSION", "Location is allowed all the time");
-             } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
-                 Log.e("PERMISSION", "Location is allowed while using the app");
-             } else {
-                 Log.e("PERMISSION", "Location is not allowed.");
-             }
+            if (isAppLocationPermissionGranted) {
+                Log.e("PERMISSION", "Location is allowed all the time");
+            } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
+                Log.e("PERMISSION", "Location is allowed while using the app");
+            } else {
+                Log.e("PERMISSION", "Location is not allowed.");
+            }
 
-         } else {
+        } else {
 
-             var isAppLocationPermissionGranted =
-                 (fineLocation == PackageManager.PERMISSION_GRANTED) &&
-                         (coarseLocation == PackageManager.PERMISSION_GRANTED);
+            var isAppLocationPermissionGranted =
+                (fineLocation == PackageManager.PERMISSION_GRANTED) &&
+                        (coarseLocation == PackageManager.PERMISSION_GRANTED);
 
-             if (isAppLocationPermissionGranted) {
-                 Log.e("PERMISSION", "Location permission is granted");
-             } else {
-                 Log.e("PERMISSION", "Location permission is not granted");
-             }
-         }
-     }
+            if (isAppLocationPermissionGranted) {
+                Log.e("PERMISSION", "Location permission is granted");
+            } else {
+                Log.e("PERMISSION", "Location permission is not granted");
+            }
+        }
+    }
 
 
-
-            fun setCardImage(paymentTypeInfo: String): Int {
+    fun setCardImage(paymentTypeInfo: String): Int {
         if (paymentTypeInfo.contains("CURRENT")) {
             return R.drawable.directdebit
         } else if (paymentTypeInfo.contains("SAVINGS")) {
@@ -1230,6 +1232,15 @@ object Utils {
         }
     }
 
+    fun convertStringToDate1(dateString: String, dateFormat: String): Date? {
+        val dateFormat = SimpleDateFormat(dateFormat, Locale.getDefault())
+        return try {
+            dateFormat.parse(dateString)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     fun getTimeDifference(startTime: Date, endTime: Date): Triple<Long, Long, Long> {
         return try {
             val differenceInMillis = endTime.time - startTime.time
@@ -1252,13 +1263,14 @@ object Utils {
         }
 
     }
+
     fun getMinSecTimeDifference(startTime: Date, endTime: Date): Pair<Long, Long> {
         return try {
             val differenceInMillis = endTime.time - startTime.time
             val minutes = differenceInMillis % (1000 * 60 * 60) / (1000 * 60)
             val seconds = differenceInMillis % (1000 * 60) / 1000
 
-            Pair( minutes,seconds)
+            Pair(minutes, seconds)
         } catch (e: Exception) {
             Pair(0, 0)
         }
@@ -1576,22 +1588,23 @@ object Utils {
                     ) == PackageManager.PERMISSION_DENIED))
         }
     }
+
     fun checkAccessFineLocationPermission(context: Context): Boolean {
         if (Build.VERSION.SDK_INT >= VERSION_CODES.Q) {
-          return  !((ContextCompat.checkSelfPermission(
+            return !((ContextCompat.checkSelfPermission(
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_DENIED) &&
                     (ContextCompat.checkSelfPermission(
                         context,
                         Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_DENIED)&&
+                    ) == PackageManager.PERMISSION_DENIED) &&
                     (ContextCompat.checkSelfPermission(
                         context,
                         Manifest.permission.ACCESS_BACKGROUND_LOCATION
                     ) == PackageManager.PERMISSION_DENIED))
-        }else{
-           return !((ContextCompat.checkSelfPermission(
+        } else {
+            return !((ContextCompat.checkSelfPermission(
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_DENIED) &&
@@ -1603,8 +1616,8 @@ object Utils {
 
     }
 
-    fun isSupportedCountry(country:String):Boolean{
-        if(country.isEmpty()==true){
+    fun isSupportedCountry(country: String): Boolean {
+        if (country.isEmpty() == true) {
             return true
         }
         val smsSupportCountryList = smsSupportCountryList().map {
@@ -1614,11 +1627,11 @@ object Utils {
             extractTextWithinBrackets(it)
         }
 
-        val isSupportedCoutry= smsSupportCountryList.contains(
+        val isSupportedCoutry = smsSupportCountryList.contains(
             extractTextWithinBrackets(country).toString().trim()
                 .replace(" ", "").replace("-", "").lowercase()
         )
-        Log.e("TAG", "country is "+country +" isSupportedCoutry-> "+country )
+        Log.e("TAG", "country is " + country + " isSupportedCoutry-> " + country)
 
         return isSupportedCoutry
     }
@@ -1641,7 +1654,6 @@ object Utils {
         appSettingsIntent.data = appSettingsUri
         activity.startActivity(appSettingsIntent)
     }
-
 
 
 }
