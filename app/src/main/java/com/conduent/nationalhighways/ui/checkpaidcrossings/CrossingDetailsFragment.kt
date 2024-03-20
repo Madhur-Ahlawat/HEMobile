@@ -111,10 +111,10 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
             (requireActivity() as CheckPaidCrossingActivity).focusToolBarCrossingDetails()
         }
 
-        setContentDes()
+        setContentDescriptionForBullets()
     }
 
-    private fun setContentDes() {
+    private fun setContentDescriptionForBullets() {
         binding.layerFullName.contentDescription=binding.txtFullName.text.toString()+"\n"+binding.fullName.text.toString()
         binding.layerCompanyName.contentDescription=binding.txtVehicleRegistrationNumber.text.toString()+"\n"+binding.valueVehicleRegistrationNumber.text.toString()
         binding.creditRemainingCl.contentDescription=binding.txtAddress.text.toString()+"\n"+binding.address.text.toString()
