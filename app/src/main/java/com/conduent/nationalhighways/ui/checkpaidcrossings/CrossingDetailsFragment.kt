@@ -111,6 +111,15 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         if(requireActivity() is CheckPaidCrossingActivity){
             (requireActivity() as CheckPaidCrossingActivity).focusToolBar()
         }
+
+        setContentDes()
+    }
+
+    private fun setContentDes() {
+        binding.layerFullName.contentDescription=binding.txtFullName.text.toString()+"\n"+binding.fullName.text.toString()
+        binding.layerCompanyName.contentDescription=binding.txtVehicleRegistrationNumber.text.toString()+"\n"+binding.valueVehicleRegistrationNumber.text.toString()
+        binding.creditRemainingCl.contentDescription=binding.txtAddress.text.toString()+"\n"+binding.address.text.toString()
+        binding.creditExpiryDateCl.contentDescription=binding.txtEmailAddress.text.toString()+"\n"+binding.emailAddress.text.toString()
     }
 
 

@@ -53,7 +53,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
         )
 
     }
-    fun focusToolBar() {
+    fun focusMakeOffToolBar() {
         binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
         binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
 

@@ -58,8 +58,10 @@
 
 
             <LinearLayout
+                android:id="@+id/point1_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:importantForAccessibility="yes"
                 android:layout_marginTop="@dimen/margin_25dp"
                 android:orientation="horizontal">
 
@@ -67,14 +69,16 @@
                     android:layout_width="@dimen/margin_7dp"
                     android:layout_height="@dimen/margin_7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:contentDescription="@string/accessibility_bullet"
-                    android:background="@drawable/circle_5dp" />
+                    android:background="@drawable/circle_5dp"
+                    android:importantForAccessibility="no"
+                    />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
+                    android:importantForAccessibility="no"
                     android:text="@string/paid_crossing_point1"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
@@ -83,9 +87,11 @@
 
 
             <LinearLayout
+                android:id="@+id/point2_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_1dp"
+                android:importantForAccessibility="yes"
                 android:orientation="horizontal">
 
                 <View
@@ -93,6 +99,7 @@
                     android:layout_height="@dimen/margin_7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
                     android:contentDescription="@string/accessibility_bullet"
+                    android:importantForAccessibility="no"
                     android:background="@drawable/circle_5dp" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -100,6 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
+                    android:importantForAccessibility="no"
                     android:text="@string/paid_crossing_point2"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
