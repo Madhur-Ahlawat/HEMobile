@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
@@ -122,10 +123,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
         binding.edtConformPassword.editText.addTextChangedListener { isEnable1(it.toString()) }
 
-        binding.point1Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_at_least_8_character)
-        binding.point2Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_contain_at_least_one_upper_case)
-        binding.point3Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_contain_at_least_one_lower_case)
-        binding.point4Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_contain_at_least_one_number)
+        setContentDesForDot(resources.getString(R.string.accessibility_bullet))
 
 
         binding.edtNewPassword.setOnTouchListener { _, event ->
@@ -489,14 +487,20 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     }
 
     fun setDotBackground(view: View) {
-        view.contentDescription=resources.getString(R.string.accessibility_bullet)
+        setContentDesForDot(resources.getString(R.string.accessibility_bullet))
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_5dp)
     }
-
     fun setTickBackground(view: View) {
-        view.contentDescription=resources.getString(R.string.accessibility_check_mark)
+        setContentDesForDot(resources.getString(R.string.accessibility_check_mark))
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.grin_tick)
     }
+    private fun setContentDesForDot(content:String) {
+        binding.point1Ll.contentDescription=content+"\n"+resources.getString(R.string.str_at_least_8_character)
+        binding.point2Ll.contentDescription=content+"\n"+resources.getString(R.string.str_contain_at_least_one_upper_case)
+        binding.point3Ll.contentDescription=content+"\n"+resources.getString(R.string.str_contain_at_least_one_lower_case)
+        binding.point4Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_contain_at_least_one_number)
+    }
+
 
     private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
 
