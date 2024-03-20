@@ -471,7 +471,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
         if (hasUpperCase(text)) {
-            setTickBackground(binding.imgDot2,
+            setTickBackground(
+                binding.imgDot2,
                 binding.point2Ll,
                 resources.getString(R.string.str_contain_at_least_one_upper_case))
         } else {
