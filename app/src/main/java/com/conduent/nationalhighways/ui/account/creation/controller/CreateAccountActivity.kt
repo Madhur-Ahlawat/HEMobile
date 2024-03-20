@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.controller
 
 import android.view.accessibility.AccessibilityEvent
-import android.widget.Button
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
@@ -52,7 +51,7 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
         )
 
     }
-    fun focusToolBar() {
+    fun focusToolBarCreateAccount() {
         binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
         binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
 

@@ -59,7 +59,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp"
                 app:imeOptions="actionNext"
-                app:inputType="phone"
+                app:inputType="number"
                 app:labelText="@string/mobile_number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -48,9 +48,9 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBar()
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         } else if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBar()
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         Utils.validationsToShowRatingDialog(requireActivity(), sessionManager)
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()

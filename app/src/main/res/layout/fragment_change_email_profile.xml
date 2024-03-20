@@ -61,7 +61,7 @@
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/label_message"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_13dp"
                 android:gravity="center_vertical"
                 android:text="@string/this_will_be_your_username_when_you_log_in_to_your_account"

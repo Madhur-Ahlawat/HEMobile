@@ -59,7 +59,7 @@ class DartChargeAccountTypeEnquiryFragment :
             binding.btnNext.disable()
         }
         if(requireActivity() is RaiseEnquiryActivity){
-            (requireActivity() as RaiseEnquiryActivity).focusToolBar()
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
 //        binding.radioButtonYes.setOnCheckedChangeListener { _, isChecked ->
 //            binding.radioButtonYes.contentDescription = if (isChecked) {

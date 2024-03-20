@@ -31,9 +31,9 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
 
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBar()
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         }else  if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBar()
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT,false)

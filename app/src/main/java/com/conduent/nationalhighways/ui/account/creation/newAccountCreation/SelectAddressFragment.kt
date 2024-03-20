@@ -62,7 +62,7 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
 
         }
         if (requireActivity() is CreateAccountActivity){
-            (requireActivity() as CreateAccountActivity).focusToolBar()
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
 
         loader = LoaderDialog()
