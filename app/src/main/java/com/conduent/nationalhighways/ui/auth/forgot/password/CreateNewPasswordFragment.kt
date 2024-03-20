@@ -122,6 +122,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
         binding.edtConformPassword.editText.addTextChangedListener { isEnable1(it.toString()) }
 
+        binding.point1Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_at_least_8_character)
+        binding.point2Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_contain_at_least_one_upper_case)
+        binding.point3Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_contain_at_least_one_lower_case)
+        binding.point4Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_contain_at_least_one_number)
 
 
         binding.edtNewPassword.setOnTouchListener { _, event ->
