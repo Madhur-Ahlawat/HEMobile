@@ -13,7 +13,9 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.FragmentDeletePaymentMethodBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -42,6 +44,11 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         FragmentDeletePaymentMethodBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }else if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
     }
 
     override fun initCtrl() {

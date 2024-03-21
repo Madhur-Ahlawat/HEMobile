@@ -20,9 +20,10 @@
 
         <com.conduent.nationalhighways.utils.widgets.NHRadioButton
             android:id="@+id/radioButton_payment_method"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:minWidth="@dimen/margin_48dp"
+            android:textColor="@color/transparent"
             android:layout_marginStart="@dimen/margin_20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,9 +34,10 @@
             android:id="@+id/ivCardType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_80dp"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/radioButton_payment_method"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView

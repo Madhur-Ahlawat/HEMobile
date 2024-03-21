@@ -58,7 +58,6 @@ class TransactionsInnerAdapter(
             if (recentTransactionItem.activity?.lowercase()?.contains("toll") == false) {
                 indicatorIconEuro.visible()
                 indicatorIconTransactionType.invisible()
-                indicatorIconEuro.background= ResourcesCompat.getDrawable(indicatorIconEuro.context.resources, R.drawable.ic_euro_circular_green, null)
 
 //                Glide.with(indicatorIconTransactionType.context).load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_euro_circular_green)).into(indicatorIconTransactionType)
                 tvTransactionType.text =

@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
@@ -566,10 +567,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     fun focusToolBarHome() {
         dataBinding?.backButton?.requestFocus() // Focus on the backButton
-        dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-
         val task = Runnable {
-            dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+            if(dataBinding?.backButton?.isAccessibilityFocused==false){
+                dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+            }
         }
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
