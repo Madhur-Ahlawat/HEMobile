@@ -8,19 +8,23 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/paymentAmountLl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:importantForAccessibility="yes"
             android:padding="@dimen/_20sdp">
 
             <TextView
                 android:id="@+id/txtTitleTop"
                 style="@style/MediumTextBlack"
+                android:importantForAccessibility="no"
                 android:layout_width="match_parent"
                 android:text="@string/recent_crossings"
                 android:textColor="@color/black" />
 
             <com.conduent.apollo.ui.CMDropDownView
+                android:importantForAccessibility="no"
                 android:id="@+id/inputCountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
