@@ -17,9 +17,12 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.databinding.FragmentPayForCrossingsBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -98,11 +101,21 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                     data?.dvlaclass?.let { Utils.getVehicleType(requireActivity(), it) }),
                 Html.FROM_HTML_MODE_COMPACT
             )
+            binding.titleText2.text = Html.fromHtml(
+                getString(R.string.str_bullet_pay_for_crossing_point2,
+                    String.format("%.2f", data?.chargingRate?.toDouble()),
+                    data?.dvlaclass?.let { Utils.getVehicleType(requireActivity(), it) }),
+                Html.FROM_HTML_MODE_COMPACT
+            )
         }
 
         data?.unsettledTripChange =
             binding.inputCountry.getSelectedValue()?.toInt() ?: 0
-
+        if (requireActivity() is MakeOffPaymentActivity) {
+            (requireActivity() as MakeOffPaymentActivity).focusToolBar()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
     }
 
 

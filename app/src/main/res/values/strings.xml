@@ -1406,10 +1406,15 @@
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment amount gets calculated?</string>
     <string name="str_pay_for_crossing_point1">Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
+    <string name="str_bullet_pay_for_crossing_point1">Bullet, Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
     <string name="str_pay_for_crossing_point2">It costs £%s per crossing for a %s.</string>
+    <string name="str_bullet_pay_for_crossing_point2">Bullet, It costs £%s per crossing for a %s.</string>
     <string name="str_pay_for_crossing_point3">A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>
+    <string name="str_bullet_pay_for_crossing_point3">Bullet, A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>
     <string name="str_pay_for_crossing_point4">A return trip is 2 crossings</string>
+    <string name="str_bullet_pay_for_crossing_point4">Bullet, A return trip is 2 crossings</string>
     <string name="str_pay_for_crossing_point5">Late payments will be used for future crossings - you may receive a PCN for any late payment</string>
+    <string name="str_bullet_pay_for_crossing_point5">Late payments will be used for future crossings - you may receive a PCN for any late payment</string>
     <string name="str_additional_crossing_point1">A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>
     <string name="str_additional_crossing_point2">A return trip is 2 crossings.</string>
     <string name="str_additional_crossing_point3">These payments are valid up to 12 months or till they are used.</string>
@@ -1468,9 +1473,9 @@
     <string name="str_500_characters_remaining">You have 500 characters remaining.</string>
     <string name="str_upload_file_">Upload File</string>
     <string name="str_allowed_file_types">The selected file type must be a JPG, PDF, BMP or TIF</string>
-    <string name="str_bullet_allowed_file_types">Bullet, The selected file type must be a JPG, PDF, BMP or TIF</string>
+    <string name="str_bullet_allowed_file_types">Bullet point, The selected file type must be a JPG, PDF, BMP or TIF</string>
     <string name="str_file_size_not_morethan_8mb">Also, the selected file type should be no more than 8MB.</string>
-    <string name="str_bullet_file_size_not_morethan_8mb">Bullet, Also, the selected file type should be no more than 8MB.</string>
+    <string name="str_bullet_file_size_not_morethan_8mb">Bullet point, Also, the selected file type should be no more than 8MB.</string>
 
     <string name="what_contact_details">What are your contact details?</string>
     <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
@@ -1505,17 +1510,17 @@
     <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
     <string name="str_get_in_touch_about">Get in touch about:</string>
     <string name="str_charges">charges</string>
-    <string name="str_bullet_charges">Bullet, charges</string>
+    <string name="str_bullet_charges">Bullet point, charges</string>
     <string name="str_fines">fines (Penalty Charge Notice)</string>
-    <string name="str_bullet_fines">Bullet, fines (Penalty Charge Notice)</string>
+    <string name="str_bullet_fines">Bullet point, fines (Penalty Charge Notice)</string>
     <string name="str_refunds">refunds</string>
-    <string name="str_bullet_refunds">Bullet, refunds</string>
+    <string name="str_bullet_refunds">Bullet point, refunds</string>
     <string name="str_dart_charge_accounts">Dart Charge accounts</string>
-    <string name="str_bullet_dart_charge_accounts">Bullet, Dart Charge accounts</string>
+    <string name="str_bullet_dart_charge_accounts">Bullet point, Dart Charge accounts</string>
     <string name="str_complaints">complaints</string>
-    <string name="str_bullet_complaints">Bullet, complaints</string>
+    <string name="str_bullet_complaints">Bullet point, complaints</string>
     <string name="str_general_enquiries">general enquiries</string>
-    <string name="str_bullet_general_enquiries">Bullet, general enquiries</string>
+    <string name="str_bullet_general_enquiries">Bullet point, general enquiries</string>
     <string name="str_get_in_touch">Get in touch</string>
     <string name="str_enquiry_status">Enquiry status</string>
     <string name="str_incorrect_enquiry">Incorrect enquiry reference number or last name. Please try again.</string>
@@ -1602,9 +1607,9 @@
     <string name="push_notifications_allowed_successfully">Push notifications allowed successfully</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="str_other_ways_to_pay_1"><ul>pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></ul></string>
-    <string name="str_bullet_other_ways_to_pay_1">Bullet, pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></string>
+    <string name="str_bullet_other_ways_to_pay_1">Bullet point, pay with cash at a <a href="https://storelocator.payzone.co.uk/">Payzone store</a></string>
     <string name="str_other_ways_to_pay_2">pay or set up an account through <a href="https://www.gov.uk/pay-dartford-crossing-charge/">the Dart Charge website</a></string>
-    <string name="str_bullet_other_ways_to_pay_2">Bullet, pay or set up an account through <a href="https://www.gov.uk/pay-dartford-crossing-charge/">the Dart Charge website</a></string>
+    <string name="str_bullet_other_ways_to_pay_2">Bullet point, pay or set up an account through <a href="https://www.gov.uk/pay-dartford-crossing-charge/">the Dart Charge website</a></string>
     <string name="str_heading_other_ways_to_pay">Using the mobile app is the quickest way to pay your charge.</string>
     <string name="str_or_you_can">Or you can:</string>
     <string name="about_this_service">About This Service</string>
