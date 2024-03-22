@@ -1727,7 +1727,7 @@
 
 
     <string name="accessibility_edit">Edit</string>
-    <string name="accessibility_bullet">Bullet</string>
+    <string name="accessibility_bullet">Bullet Point</string>
     <string name="accessibility_check_mark">Check mark</string>
     <string name="accessibility_selected">Selected.</string>
     <string name="accessibility_not_selected">Not Selected.</string>

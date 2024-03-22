@@ -178,7 +178,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
             binding.tvSelectPaymentMethod.text = htmlText
             if(requireActivity() is MakeOffPaymentActivity){
-                (requireActivity() as MakeOffPaymentActivity).focusToolBar()
+                (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
             }
 
             binding.cardView.contentDescription =

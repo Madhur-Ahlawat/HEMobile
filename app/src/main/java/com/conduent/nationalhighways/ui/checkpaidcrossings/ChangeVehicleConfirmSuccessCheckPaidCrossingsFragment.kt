@@ -52,6 +52,7 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
         additionalCrossings = data?.additionalCrossingCount
         additionalCrossingsCharge = data?.additionalCharge
         setData()
+        setContentDescriptionForBullets()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)
           i.data = Uri.parse(url)
@@ -67,20 +68,15 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment : BaseFragment<Fragm
                 data?.unusedTrip.toString()
             creditWillExpireOn.text =
                 Utils.convertDateForTransferCrossingsScreen(data?.expirationDate.toString())
-//            val charge = data?.chargingRate?.toDouble()
-//            val unSettledTrips = data?.unSettledTrips
-//            crossingsList = emptyList<String>().toMutableList()
-//            if(unSettledTrips != null && charge != null){
-//                totalAmountOfUnsettledTrips = charge*unSettledTrips
-//            }
-
-//            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
-//                totalAmountOfAdditionalCrossings = totalAmountOfAdditionalCrossings?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
-//
-//            }
         }
     }
 
+    private fun setContentDescriptionForBullets() {
+        binding.layoutVehicleRegistrationCv.contentDescription=binding.txtVehicleRegistration.text.toString()+"\n"+binding.vehicleRegisration.text.toString()
+        binding.creditRemainingCv.contentDescription=binding.txtCreditRemaining.text.toString()+"\n"+binding.creditRemaining.text.toString()
+        binding.emailCard.contentDescription=binding.txtCreditWillExpireOn.text.toString()+"\n"+binding.creditWillExpireOn.text.toString()
+
+    }
     private fun setClickListeners() {
         binding?.apply {
             btnOk.setOnClickListener(this@ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment)

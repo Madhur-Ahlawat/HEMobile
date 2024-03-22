@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
@@ -122,6 +123,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
         binding.edtConformPassword.editText.addTextChangedListener { isEnable1(it.toString()) }
 
+        setContentDesForDot(resources.getString(R.string.accessibility_bullet))
 
 
         binding.edtNewPassword.setOnTouchListener { _, event ->
@@ -457,42 +459,72 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
         if (hasLowerCase(text)) {
-            setTickBackground(binding.imgDot3)
+            setTickBackground(binding.imgDot3,
+                binding.point3Ll,
+                resources.getString(R.string.str_contain_at_least_one_lower_case)
+            )
         } else {
-            setDotBackground(binding.imgDot3)
+            setDotBackground(binding.imgDot3,
+                binding.point3Ll,
+                resources.getString(R.string.str_contain_at_least_one_lower_case)
+            )
         }
 
         if (hasUpperCase(text)) {
-            setTickBackground(binding.imgDot2)
+            setTickBackground(
+                binding.imgDot2,
+                binding.point2Ll,
+                resources.getString(R.string.str_contain_at_least_one_upper_case))
         } else {
-            setDotBackground(binding.imgDot2)
+            setDotBackground(
+                binding.imgDot2,
+                binding.point2Ll,
+                resources.getString(R.string.str_contain_at_least_one_upper_case)
+            )
         }
 
         if (text.length >= 8) {
-            setTickBackground(binding.imgDot1)
+            setTickBackground(binding.imgDot1,
+                binding.point1Ll,
+                resources.getString(R.string.str_at_least_8_character))
         } else {
-            setDotBackground(binding.imgDot1)
+            setDotBackground(
+                binding.imgDot1,
+                binding.point1Ll,
+                resources.getString(R.string.str_at_least_8_character)
+            )
         }
 
         if (hasDigits(text)) {
-            setTickBackground(binding.imgDot4)
+            setTickBackground(binding.imgDot4,binding.point4Ll,
+                resources.getString(R.string.str_contain_at_least_one_number))
         } else {
-            setDotBackground(binding.imgDot4)
+            setDotBackground(
+                binding.imgDot4,
+                binding.point4Ll,
+                resources.getString(R.string.str_contain_at_least_one_number)
+            )
         }
 //new password
 
         binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
-    fun setDotBackground(view: View) {
-        view.contentDescription=resources.getString(R.string.accessibility_bullet)
+    fun setDotBackground(view: View, pointLl: LinearLayout, string: String) {
+        pointLl.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+string
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_5dp)
     }
-
-    fun setTickBackground(view: View) {
-        view.contentDescription=resources.getString(R.string.accessibility_check_mark)
+    fun setTickBackground(view: View, pointLl: LinearLayout, string: String) {
+        pointLl.contentDescription=resources.getString(R.string.accessibility_check_mark)+"\n"+string
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.grin_tick)
     }
+    private fun setContentDesForDot(content:String) {
+        binding.point1Ll.contentDescription=content+"\n"+resources.getString(R.string.str_at_least_8_character)
+        binding.point2Ll.contentDescription=content+"\n"+resources.getString(R.string.str_contain_at_least_one_upper_case)
+        binding.point3Ll.contentDescription=content+"\n"+resources.getString(R.string.str_contain_at_least_one_lower_case)
+        binding.point4Ll.contentDescription=content+"\n"+resources.getString(R.string.str_contain_at_least_one_number)
+    }
+
 
     private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
 

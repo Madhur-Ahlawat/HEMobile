@@ -44,14 +44,14 @@
                     android:id="@+id/layerFullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtFullName"
                         style="@style/MediumTextBlack"
                         android:text="@string/payment_reference_number"
-                        android:importantForAccessibility="yes"
+                        android:importantForAccessibility="no"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +59,7 @@
                     <TextView
                         android:id="@+id/fullName"
                         style="@style/RegularTextBlack"
-                        android:importantForAccessibility="yes"
+                        android:importantForAccessibility="no"
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtFullName" />
@@ -85,14 +85,14 @@
                     android:id="@+id/layerCompanyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtVehicleRegistrationNumber"
                         style="@style/MediumTextBlack"
                         android:text="@string/vehicle_registration_number_plate"
-                        android:importantForAccessibility="yes"
+                        android:importantForAccessibility="no"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -101,6 +101,7 @@
                         android:id="@+id/valueVehicleRegistrationNumber"
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
+                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistrationNumber" />
 
@@ -122,16 +123,17 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/credit_remaining_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtAddress"
                         style="@style/MediumTextBlack"
                         android:text="@string/credit_remaining"
-                        android:importantForAccessibility="yes"
+                        android:importantForAccessibility="no"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -139,7 +141,7 @@
                     <TextView
                         android:id="@+id/address"
                         style="@style/RegularTextBlack"
-                        android:importantForAccessibility="yes"
+                        android:importantForAccessibility="no"
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtAddress" />
@@ -163,16 +165,17 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/credit_expiry_date_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp"
-                    android:importantForAccessibility="no">
+                    android:importantForAccessibility="yes">
 
                     <TextView
                         android:id="@+id/txtEmailAddress"
                         style="@style/MediumTextBlack"
                         android:text="@string/credit_expiry_date"
-                        android:importantForAccessibility="yes"
+                        android:importantForAccessibility="no"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -182,7 +185,7 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="yes"
+                        android:importantForAccessibility="no"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="left|center"
                         app:layout_constraintStart_toStartOf="parent"

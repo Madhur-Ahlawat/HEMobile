@@ -42,6 +42,9 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         FragmentPayForCrossingsBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+       setContentDescriptionForBullets()
+
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -94,6 +97,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 totalAmountOfUnsettledTrips ?: 0
             )
 
+            binding.paymentAmountLl.contentDescription=resources.getString(R.string.payment_Amount)+"\n"+binding.inputTotalAmount.text.toString()
 
             binding.titleText2.text = Html.fromHtml(
                 getString(R.string.str_pay_for_crossing_point2,
@@ -116,6 +120,14 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
+    }
+
+    private fun setContentDescriptionForBullets() {
+        binding.point1Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point1)
+        binding.point2Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point2)
+        binding.point3Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point3)
+        binding.point4Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point4)
+        binding.point5Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point5)
     }
 
 
@@ -215,5 +227,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 total.toDouble()
             )
         }
+
+        binding.paymentAmountLl.contentDescription=resources.getString(R.string.payment_Amount)+"\n"+binding.inputTotalAmount.text.toString()
     }
 }
