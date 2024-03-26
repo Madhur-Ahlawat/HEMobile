@@ -213,7 +213,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     binding.paymentMethodInformation.visible()
                     binding.paymentRecycleView.visible()
 
-                    binding.warningIcon.gone()
                     binding.maximumVehicleAdded.gone()
                     binding.textMaximumVehicle.gone()
 
@@ -223,7 +222,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 } else {
                     binding.paymentMethodInformation.gone()
                     binding.paymentRecycleView.gone()
-                    binding.warningIcon.visible()
                     binding.maximumVehicleAdded.visible()
                     binding.textMaximumVehicle.visible()
                 }

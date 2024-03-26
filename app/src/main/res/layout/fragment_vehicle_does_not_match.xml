@@ -25,18 +25,14 @@
                 android:paddingTop="@dimen/margin_5dp"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/tick_blue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/warningicon" />
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_36dp"
+                    android:drawablePadding="@dimen/margin_36dp"
+                    android:drawableTop="@drawable/warningicon"
                     android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
                     android:text="@string/your_type_of_vehicle_does_not_match_what_we_have_on_record"

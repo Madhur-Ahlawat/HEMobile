@@ -193,6 +193,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 vehicleMgmtViewModel.getVehicleInformationApi("0", "20")
             }
         }
+
     }
 
     override fun initCtrl() {

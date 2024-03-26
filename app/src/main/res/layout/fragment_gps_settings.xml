@@ -31,30 +31,23 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                   android:layout_gravity="center">
+                    android:layout_gravity="center">
 
-                    <ImageView
-                        android:id="@+id/warningIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/warningicon"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/title_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="23dp"
+                        android:drawablePadding="@dimen/margin_23dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:gravity="center"
                         android:text="@string/str_change_gps_settings_to_always"
                         android:textColor="@color/new_btn_color"
                         android:textSize="16sp"
+                        app:drawableTopCompat="@drawable/warningicon"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                     <TextView

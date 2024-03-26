@@ -93,15 +93,6 @@
                     android:visibility="visible"
                     tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
-                    <ImageView
-                        android:id="@+id/warningIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/warningicon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <TextView
                         android:id="@+id/maximumVehicleAdded"
                         android:layout_width="match_parent"
@@ -109,12 +100,14 @@
                         android:layout_marginTop="23dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:gravity="center"
+                        android:drawablePadding="@dimen/margin_23dp"
                         android:text="@string/str_you_have_no_payment_method"
                         android:textColor="@color/new_btn_color"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:drawableTopCompat="@drawable/warningicon" />
 
                     <TextView
                         android:id="@+id/textMaximumVehicle"

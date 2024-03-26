@@ -575,5 +575,4 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }
-
 }
