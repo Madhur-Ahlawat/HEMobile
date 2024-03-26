@@ -26,24 +26,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/iv_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/checkicon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/title"
                 style="@style/OpenSansBoldText"
-                android:layout_marginTop="@dimen/margin_21dp"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/margin_20dp"
+                android:drawablePadding="@dimen/margin_21dp"
+                android:drawableTop="@drawable/checkicon"
                 android:gravity="center"
                 android:text="@string/str_we_are_closing_account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_check" />
+                app:layout_constraintTop_toTopOf="parent"  />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/message1"

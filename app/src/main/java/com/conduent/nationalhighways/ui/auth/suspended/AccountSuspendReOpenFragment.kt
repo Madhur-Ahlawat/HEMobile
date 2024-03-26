@@ -173,6 +173,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                 .equals(Constants.CARD_IS_ALREADY_REGISTERED)
         ) {
             binding.layoutCardAlreadyExists.visible()
+            binding.layoutCardAlreadyExists.contentDescription=binding.labelCardAlreadyExists.text.toString()
             binding.succesfulCardAdded.gone()
             binding.cardView.gone()
         } else {

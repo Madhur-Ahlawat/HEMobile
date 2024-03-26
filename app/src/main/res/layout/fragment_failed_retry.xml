@@ -18,25 +18,18 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/warning_icon_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/warningicon"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/title_tv"
                 style="@style/BoldText"
-                android:layout_marginTop="@dimen/margin_20dp"
                 android:gravity="center"
+                android:drawablePadding="@dimen/margin_20dp"
                 android:text="@string/failed_retry_title"
                 android:textColor="@color/dark_blue_color"
+                android:drawableTop="@drawable/warningicon"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/warning_icon_iv" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/details_cl"

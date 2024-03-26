@@ -44,32 +44,21 @@
                     android:tint="@color/black"
                     app:srcCompat="@drawable/ic_back_arrow_white" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btn_backText"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawableStart="@drawable/ic_back_arrow"
-                    android:fontFamily="@font/sfregular"
-                    android:text="@string/str_back"
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:tint="@color/white"
-                    android:visibility="gone"
-                    app:fontFamily="@font/sfbold" />
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title_txt"
-                    android:layout_toEndOf="@+id/back_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/margin_50dp"
+                    android:layout_marginEnd="@dimen/margin_50dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/open_sans_semibold"
                     android:maxLines="1"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    tools:text="@string/str_make_one_of_payment" />
+                    tools:text="@string/app_name" />
 
 
             </RelativeLayout>
