@@ -22,10 +22,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
     companion object {
         const val USER_TOKEN = "user_token"
         const val USER_TOKEN_TIME_OUT = "user_token_time_out"
-        const val GEOFENCE_SOUTHBOUND_ENTER_TIME = "GEOFENCE_SOUTHBOUND_ENTER_TIME"
-        const val GEOFENCE_NORTHBOUND_ENTER_TIME = "GEOFENCE_NORTHBOUND_ENTER_TIME"
-        const val GEOFENCE_NORTHBOUND_EXIT_TIME = "GEOFENCE_NORTHBOUND_EXIT_TIME"
-        const val GEOFENCE_SOUTHBOUND_EXIT_TIME = "GEOFENCE_SOUTHBOUND_EXIT_TIME"
         const val Refresh_TOKEN = "refresh_token"
         const val ACCOUNT_NUMBER = "account_number"
         const val SMS_OPTION = "sms_option"
@@ -61,7 +57,10 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val LAST_TOKEN_TIME = "last_token_time"
         val LAST_RATING_TIME = "last_rating_time"
 
-        val GEOFENCE_ENTER_TIME = "geofence_enter_time"
+        val GEOFENCE_NORTHBOUND_ENTER_TIME = "geofence_northbound_enter_time"
+        val GEOFENCE_NORTHBOUND_EXIT_TIME = "geofence_northbound_exit_time"
+        val GEOFENCE_SOUTHBOUND_ENTER_TIME = "geofence_southbound_enter_time"
+        val GEOFENCE_SOUTHBOUND_EXIT_TIME = "geofence_southbound_exit_time"
         val COUNTRIES = "COUNTRIES"
         val LOCATION_PERMISSION = "LOCATION_PERMISSION"
         val FOREGROUND_LOCATION_SHOWN = "FOREGROUND_LOCATION_SHOWN"

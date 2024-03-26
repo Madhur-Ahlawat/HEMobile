@@ -25,6 +25,7 @@ class NotificationUtils(val context: Context) {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (type == Constants.GEO_FENCE_NOTIFICATION) {
+
             intent = Intent(context, LandingActivity::class.java)
             intent.putExtra(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
             intent.putExtra(Constants.NAV_FLOW_FROM, Constants.CHECK_FOR_PAID_CROSSINGS_ONEOFF)
