@@ -6,23 +6,14 @@ import android.content.Intent
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.notification.NotificationUtils
-import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.location.GeofencingEvent
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "GeofenceBroadcastReceiv"
@@ -44,7 +35,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         } else {
             checkNotification(sessionManager, context, intent, null)
         }
-
 
 
     }
@@ -106,18 +96,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
             bufferedWriter?.write("geofenceTransition $geofenceTransition requestID $requestID \n")
             bufferedWriter?.newLine()
-
-
-            val inputData = Data.Builder()
-                .putInt("geofenceTransition", geofenceTransition?:-1)
-                .putString("geofenceId", requestID)
-                .build()
-
-            val workRequest = OneTimeWorkRequestBuilder<GeofenceWorker>()
-                .setInputData(inputData)
-                .build()
-
-            WorkManager.getInstance(context).enqueue(workRequest)
 
 
 

@@ -106,8 +106,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 binding.switchGeoLocation.isChecked =
                     sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
                 if (binding.switchGeoLocation.isChecked) {
-//                    Utils.startLocationService(requireActivity())
-                    GeofenceUtils.startGeofence(this.requireContext(), 3)
+                    startLocationServiceGeofence(3)
                 }
             }
         } else if (arguments?.containsKey(Constants.GpsSettings) == true) {
@@ -123,8 +122,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                     sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
             }
             if (binding.switchGeoLocation.isChecked) {
-//                Utils.startLocationService(requireActivity())
-                GeofenceUtils.startGeofence(this.requireContext(), 4)
+                startLocationServiceGeofence(4)
             }
         } else {
 
@@ -189,13 +187,13 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         }
         binding.switchGeoLocation.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-//                Utils.startLocationService(requireActivity())
-                GeofenceUtils.startGeofence(this.requireContext(), 5)
+                startLocationServiceGeofence(5)
             }
         }
         binding.switchGeoLocation.setOnClickListener {
             if (Utils.checkLocationpermission(requireContext())) {
-                GeofenceUtils.startGeofence(requireContext(), 7)
+                startLocationServiceGeofence(7)
+
                 sessionManager.saveBooleanData(
                     SessionManager.LOCATION_PERMISSION,
                     binding.switchGeoLocation.isChecked
@@ -243,6 +241,11 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         }
 
 
+    }
+
+    private fun startLocationServiceGeofence(i: Int) {
+        Utils.startLocationService(requireActivity())
+        GeofenceUtils.startGeofence(this.requireContext(), i)
     }
 
     private fun showLocationServicesPopup() {
@@ -302,8 +305,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         )
 
         if (fineLocation || coarseLocation) {
-//            Utils.startLocationService(requireActivity())
-            GeofenceUtils.startGeofence(this.requireContext(), 6)
+            startLocationServiceGeofence(6)
             requestBackgroundLocationPermission()
         }
     }

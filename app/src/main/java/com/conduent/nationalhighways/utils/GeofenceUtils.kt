@@ -14,10 +14,7 @@ import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.conduent.nationalhighways.receiver.GeofenceBroadcastReceiver
-import com.conduent.nationalhighways.receiver.GeofenceWorker
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.google.android.gms.common.api.ResolvableApiException
@@ -45,14 +42,8 @@ object GeofenceUtils {
 
     lateinit var context: Context
 
-    fun enqueueGeofenceWorker(context: Context) {
-        val workRequest = OneTimeWorkRequestBuilder<GeofenceWorker>().build()
-        WorkManager.getInstance(context).enqueue(workRequest)
-    }
-
     //starting geofence
     fun startGeofence(context1: Context, from: Int = 0) {
-        Utils.startLocationService(context1)
 
         val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
@@ -66,8 +57,6 @@ object GeofenceUtils {
         }else{
             Log.e(TAG, "startGeofence: file not exists" )
         }
-
-        enqueueGeofenceWorker(context1)
 
 
 

@@ -1667,14 +1667,14 @@ object Utils {
             Log.e("TAG", "startLocationService: Not Running ")
             try {
                 val i = Intent(activity, PlayLocationService::class.java)
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                    Log.e("TAG", "startForegroundService: Running-- ")
-//                    activity.startForegroundService(i)
-//                } else {
-//                    Log.e("TAG", "startForegroundService: Running--- ")
-//                    activity.startService(i)
-//                }
-                activity.startService(i)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Log.e("TAG", "startForegroundService: Running-- ")
+                    activity.startForegroundService(i)
+                } else {
+                    Log.e("TAG", "startForegroundService: Running--- ")
+                    activity.startService(i)
+                }
+//                activity.startService(i)
             } catch (e: Exception) {
             }
         }
