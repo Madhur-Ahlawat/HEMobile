@@ -1680,7 +1680,7 @@ object Utils {
         }
     }
 
-    private fun isLocationServiceRunning(activity: Context): Boolean {
+     fun isLocationServiceRunning(activity: Context): Boolean {
         val manager = activity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         for (service in manager.getRunningServices(Int.MAX_VALUE)) {
             Log.e("TAG", "isLocationServiceRunning: " + service.service.className)

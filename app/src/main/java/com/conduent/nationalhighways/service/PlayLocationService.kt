@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.service
 
 import android.Manifest
+import android.app.ForegroundServiceStartNotAllowedException
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -61,22 +62,39 @@ class PlayLocationService : Service(), LocationListener {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.e(TAG, "onStartCommand: playLocation")
-        try {
-            createLocationRequest()
-            startLocationUpdates()
+        if (intent != null) {
             try {
-                Log.e(TAG, "onCreate: foregroundservice")
-//                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-//                    startForeground(123, createNotification())
-//                } else {
-//                    startForeground(123, createNotification(),
-//                        FOREGROUND_SERVICE_TYPE_LOCATION)
-//                }
+                createLocationRequest()
+                startLocationUpdates()
+                try {
+                    Log.e(TAG, "onCreate: foregroundservice")
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                        startForeground(123, createNotification())
+                    } else {
+                        startForeground(
+                            123, createNotification(),
+                            FOREGROUND_SERVICE_TYPE_LOCATION
+                        )
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "onCreate: e.message " + e.message)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                        && e is ForegroundServiceStartNotAllowedException
+                    ) {
+                        // App not in a valid state to start foreground service
+                        // (e.g. started from bg)
+                    } else if (e is NullPointerException) {
+
+                    }
+
+                }
             } catch (e: Exception) {
-                Log.e(TAG, "onCreate: e.message " + e.message)
+                if (e is NullPointerException) {
+
+                }
             }
-        } catch (e: Exception) {
         }
+
         return START_STICKY
     }
 
@@ -96,10 +114,10 @@ class PlayLocationService : Service(), LocationListener {
             channel
         )
         return Notification.Builder(this, CHANNEL_ID)
-            .setContentTitle(applicationContext.resources.getString(R.string.dartcharge_running))
-            .setSmallIcon(R.drawable.push_notification)
-            .setColor(resources.getColor(R.color.blue, null))
-            .setContentText(applicationContext.resources.getString(R.string.tap_for_more_info))
+            .setContentTitle(applicationContext.resources.getString(R.string.app_name))
+            .setSmallIcon(R.drawable.notification_icon)
+            .setColor(resources.getColor(R.color.red, null))
+            .setContentText(applicationContext.resources.getString(R.string.dartcharge_running))
             .build()
     }
 
@@ -114,6 +132,7 @@ class PlayLocationService : Service(), LocationListener {
         } catch (e: Exception) {
         }
     }
+
 
     private fun startLocationUpdates() {
         try {
@@ -177,8 +196,10 @@ class PlayLocationService : Service(), LocationListener {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 startForeground(123, notification)
             } else {
-                startForeground(123, notification,
-                    FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+                startForeground(
+                    123, notification,
+                    FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+                )
             }
         } else {
             val builder: NotificationCompat.Builder = NotificationCompat.Builder(this)
@@ -188,8 +209,10 @@ class PlayLocationService : Service(), LocationListener {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 startForeground(123, builder.build())
             } else {
-                startForeground(123, builder.build(),
-                    FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+                startForeground(
+                    123, builder.build(),
+                    FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+                )
             }
         }
     }

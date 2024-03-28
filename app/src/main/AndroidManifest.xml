@@ -166,6 +166,7 @@
             android:name=".service.PlayLocationService"
             android:exported="false"
             android:stopWithTask="false"
+            android:enabled="true"
             android:foregroundServiceType="location"/>
 
         <receiver android:name=".receiver.BootReceiver"

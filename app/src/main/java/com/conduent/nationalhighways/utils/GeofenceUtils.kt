@@ -45,7 +45,7 @@ object GeofenceUtils {
     //starting geofence
     fun startGeofence(context1: Context, from: Int = 0) {
 
-        val directory =
+       /* val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val file = File(directory, "dartlogs_20_1.txt")
         if (file.exists()) {
@@ -57,7 +57,7 @@ object GeofenceUtils {
         }else{
             Log.e(TAG, "startGeofence: file not exists" )
         }
-
+*/
 
 
         context = context1
@@ -79,7 +79,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceNorthBoundDartCharge)
                 setCircularRegion(
-                    17.452599, 78.564737,
+                    17.463311, 78.561253,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -90,7 +90,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceSouthBoundDartCharge)
                 setCircularRegion(
-                    17.450777, 78.570260,
+                    17.473612, 78.570747,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
