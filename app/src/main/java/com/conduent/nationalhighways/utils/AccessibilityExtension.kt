@@ -8,6 +8,7 @@ import android.widget.RadioButton
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.SwitchCompat
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.widgets.NHRadioButton
 import com.google.android.material.checkbox.MaterialCheckBox
 
 fun RadioButton.setAccessibilityDelegate() {
@@ -49,6 +50,19 @@ fun SwitchCompat.setAccessibilityDelegate() {
 
 
 fun AppCompatCheckBox.setAccessibilityDelegate() {
+    accessibilityDelegate = object : View.AccessibilityDelegate() {
+        override fun sendAccessibilityEvent(host: View, eventType: Int) {
+            super.sendAccessibilityEvent(host, eventType)
+            if (isChecked && eventType == 1) {
+                announceForAccessibility(Utils.replaceAsterisks(text.toString()))
+            } else if (!isChecked && eventType == 1) {
+                announceForAccessibility(Utils.replaceAsterisks(text.toString()))
+            }
+        }
+    }
+}
+
+fun NHRadioButton.setAccessibilityDelegate() {
     accessibilityDelegate = object : View.AccessibilityDelegate() {
         override fun sendAccessibilityEvent(host: View, eventType: Int) {
             super.sendAccessibilityEvent(host, eventType)

@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
 import com.conduent.nationalhighways.databinding.FragmentNewCardSuccessScreenBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
@@ -59,7 +60,13 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
 
     override fun initCtrl() {
+
         Utils.validationsToShowRatingDialog(requireActivity(),sessionManager)
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
         flow = arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED) ?: ""
         if (!isViewCreated) {
             loader = LoaderDialog()
@@ -185,6 +192,12 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.cancelBtn.visibility = View.VISIBLE
             binding.feedbackBt.gone()
         }
+
+        setContentDescriptionForCard()
+    }
+
+    private fun setContentDescriptionForCard() {
+        binding.cardView.contentDescription=binding.tvSelectPaymentMethod.text.toString()+"\n"+binding.textDefault.text.toString()
     }
 
     override fun init() {
@@ -298,6 +311,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
                         )
 
                     binding.tvSelectPaymentMethod.text = htmlText
+                    setContentDescriptionForCard()
                 }
 
 
