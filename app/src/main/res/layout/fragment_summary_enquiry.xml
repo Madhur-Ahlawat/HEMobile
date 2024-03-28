@@ -76,12 +76,14 @@
                         android:layout_marginLeft="@dimen/margin_2dp"
                         android:layout_marginTop="@dimen/margin_15dp"
                         android:layout_marginRight="@dimen/margin_2dp"
+                        android:importantForAccessibility="yes"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/contact_details_tv">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/category_cl"
+                            android:importantForAccessibility="no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/margin_15dp">
@@ -92,6 +94,7 @@
                                 style="@style/SemiBoldTextBlack"
                                 android:layout_width="@dimen/margin_0dp"
                                 android:text="@string/str_category"
+                                android:importantForAccessibility="no"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/barrier"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -99,6 +102,7 @@
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
                                 android:id="@+id/category_data_tv"
                                 style="@style/RegularTextBlack"
+                                android:importantForAccessibility="no"
                                 android:layout_width="0dp"
                                 android:text="@{viewModel.enquiryModel.category.value}"
                                 app:layout_constraintLeft_toLeftOf="parent"
@@ -110,15 +114,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:barrierDirection="left"
+                                android:importantForAccessibility="no"
                                 app:constraint_referenced_ids="category_edit_iv" />
 
                             <ImageView
                                 android:id="@+id/category_edit_iv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
+                                android:importantForAccessibility="yes"
                                 android:onClick="@{categoryClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
-                                android:src="@drawable/edit"
+                                android:minHeight="@dimen/margin_48dp"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:padding="@dimen/margin_10dp"                                android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintLeft_toRightOf="@id/barrier"
@@ -128,6 +135,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:importantForAccessibility="yes"
                         android:id="@+id/sub_category_cv"
                         style="@style/cardView_style"
                         android:layout_marginLeft="@dimen/margin_2dp"
@@ -139,6 +147,7 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/sub_category_cl"
+                            android:importantForAccessibility="no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/margin_15dp">
@@ -148,6 +157,7 @@
                                 style="@style/SemiBoldTextBlack"
                                 android:layout_width="@dimen/margin_0dp"
                                 android:text="@string/str_sub_category"
+                                android:importantForAccessibility="no"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/sub_barrier"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -156,6 +166,7 @@
                                 android:id="@+id/sub_category_data_tv"
                                 style="@style/RegularTextBlack"
                                 android:layout_width="0dp"
+                                android:importantForAccessibility="no"
                                 android:text="@{viewModel.enquiryModel.subCategory.value}"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/sub_barrier"
@@ -163,18 +174,21 @@
 
                             <androidx.constraintlayout.widget.Barrier
                                 android:id="@+id/sub_barrier"
+                                android:importantForAccessibility="no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:barrierDirection="left"
                                 app:constraint_referenced_ids="subcategory_edit_iv" />
 
                             <ImageView
+                                android:importantForAccessibility="yes"
                                 android:id="@+id/subcategory_edit_iv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
                                 android:onClick="@{categoryClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
-                                android:src="@drawable/edit"
+                                android:minHeight="@dimen/margin_48dp"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:padding="@dimen/margin_10dp"                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintLeft_toRightOf="@id/sub_barrier"
@@ -234,8 +248,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
                                 android:onClick="@{commentsClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
-                                android:src="@drawable/edit"
+                                android:minHeight="@dimen/margin_48dp"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:padding="@dimen/margin_10dp"                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintLeft_toRightOf="@id/contact_barrier"
@@ -303,8 +318,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
                                 android:onClick="@{contactDetailsClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
-                                android:src="@drawable/edit"
+                                android:minHeight="@dimen/margin_48dp"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:padding="@dimen/margin_10dp"                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintLeft_toRightOf="@id/name_barrier"
@@ -417,8 +433,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
                                 android:onClick="@{contactDetailsClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
-                                android:src="@drawable/edit"
+                                android:minHeight="@dimen/margin_48dp"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:padding="@dimen/margin_10dp"                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintLeft_toRightOf="@id/email_barrier"
@@ -475,8 +492,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
                                 android:onClick="@{contactDetailsClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
-                                android:src="@drawable/edit"
+                                android:minHeight="@dimen/margin_48dp"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:padding="@dimen/margin_10dp"                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintLeft_toRightOf="@id/mobile_barrier"
