@@ -16,27 +16,21 @@
         tools:visibility="visible">
 
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/warning_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:importantForAccessibility="no"
-            android:src="@drawable/warningicon"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/message_tv"
             style="@style/BoldText"
-            android:layout_marginTop="@dimen/margin_20dp"
+            android:layout_width="match_parent"
             android:text="@string/no_vehicle_found"
             android:gravity="center"
+            android:drawablePadding="@dimen/margin_20dp"
+            app:drawableTopCompat="@drawable/warningicon"
             android:importantForAccessibility="yes"
             android:textColor="@color/dark_blue_color"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/warning_icon" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

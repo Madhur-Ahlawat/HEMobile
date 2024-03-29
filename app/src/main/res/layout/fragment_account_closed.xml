@@ -4,29 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_115dp"
-        android:src="@drawable/warningicon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.conduent.nationalhighways.utils.widgets.NHTextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="matchparent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_21dp"
+        android:drawablePadding="@dimen/margin_21dp"
+        android:layout_marginHorizontal="@dimen/margin_20dp"
+        android:layout_marginTop="@dimen/margin_115dp"
         android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
+        android:drawableTop="@drawable/warningicon"
         android:text="@string/your_account_is_now_closed"
         android:textSize="@dimen/font_15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_check" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.conduent.nationalhighways.utils.widgets.NHTextView
         android:id="@+id/message1"
@@ -35,7 +28,7 @@
         android:layout_marginTop="@dimen/margin_18dp"
         android:textAlignment="center"
         android:fontFamily="@font/open_sans"
-        android:text="You can no longer access this account.    "
+        android:text="You can no longer access this account."
         android:textSize="@dimen/font_14sp"
         android:layout_marginHorizontal="@dimen/margin_27dp"
         android:textStyle="bold"

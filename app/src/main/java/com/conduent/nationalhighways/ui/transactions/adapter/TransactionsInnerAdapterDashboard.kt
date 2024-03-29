@@ -60,7 +60,7 @@ class TransactionsInnerAdapterDashboard(
             if (recentTransactionItem.activity?.lowercase()?.contains("toll") == false) {
                 indicatorIconEuro.visible()
                 indicatorIconTransactionType.invisible()
-                indicatorIconEuro.background=ResourcesCompat.getDrawable(indicatorIconEuro.context.resources, R.drawable.ic_euro_circular_green, null)
+//                indicatorIconEuro.background=ResourcesCompat.getDrawable(indicatorIconEuro.context.resources, R.drawable.ic_euro_circular_green, null)
                 tvTransactionType.text =
                     viewAllTransactionsFragment.resources.getString(R.string.top_up)
                 verticalStripTransactionType.background.setTint(

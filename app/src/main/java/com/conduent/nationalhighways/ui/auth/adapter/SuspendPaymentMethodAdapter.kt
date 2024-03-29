@@ -10,6 +10,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.ItemPaymentMethodBinding
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 
 
 class SuspendPaymentMethodAdapter(
@@ -67,8 +68,10 @@ class SuspendPaymentMethodAdapter(
 
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
-        holder.binding.radioButtonPaymentMethod.contentDescription =
+        holder.binding.radioButtonPaymentMethod.text =
             "${holder.binding.tvSelectPaymentMethod.text}"
+
+        holder.binding.radioButtonPaymentMethod.setAccessibilityDelegate()
 
 
         if (model?.bankAccount == false) {

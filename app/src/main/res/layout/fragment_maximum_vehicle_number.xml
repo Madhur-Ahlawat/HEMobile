@@ -26,49 +26,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="@dimen/margin_5dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="@dimen/margin_5dp">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/warningIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/warningicon" />
 
-                <TextView
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/maximumVehicleAdded"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="23dp"
+                    android:drawableTop="@drawable/warningicon"
+                    android:drawablePadding="@dimen/margin_23dp"
                     android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
                     android:text="@string/str_your_account_has_been_suspended"
                     android:textColor="@color/new_btn_color"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/font_16sp" />
 
-                <TextView
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/textMaximumVehicle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="@dimen/margin_35dp"
                     android:fontFamily="@font/open_sans"
-                    android:lineSpacingExtra="2dp"
+                    android:lineSpacingExtra="@dimen/margin_2dp"
                     android:text="@string/str_you_have_reached_the_maximum_vehicle"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/font_14sp" />
 
-                <TextView
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/desc_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="@dimen/margin_35dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center"
-                    android:lineSpacingExtra="2dp"
+                    android:lineSpacingExtra="@dimen/margin_2dp"
                     android:text="@string/str_you_have_reached_the_maximum_vehicle"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_14sp"
                     android:visibility="visible" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -120,7 +117,7 @@
                 android:paddingBottom="@dimen/margin_15dp"
                 android:text="@string/str_incorrect_vehicle_registration"
                 android:textColor="@color/new_btn_color"
-                android:textSize="14sp"
+                android:textSize="@dimen/font_14sp"
                 android:visibility="visible" />
         </LinearLayout>
 
