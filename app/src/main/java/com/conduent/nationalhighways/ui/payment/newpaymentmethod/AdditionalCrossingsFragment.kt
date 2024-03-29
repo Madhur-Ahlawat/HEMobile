@@ -127,6 +127,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         checkButton()
 
         binding.numberAdditionalCrossings.editText.addTextChangedListener(GenericTextWatcher(1))
+        binding.numberAdditionalCrossings.editText.contentDescription = getString(R.string.editing_future_crossings,binding.numberAdditionalCrossings.editText.text.toString())
     }
 
     private fun setContentDescriptionForBullet() {
@@ -199,6 +200,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
 
                     setContentDescriptionForText()
                     binding.numberAdditionalCrossings.removeError()
+                    binding.numberAdditionalCrossings.editText.contentDescription = getString(R.string.editing_future_crossings,binding.numberAdditionalCrossings.editText.text.toString())
                     true
                 } else {
                     if (charSequence.toString().trim().isEmpty()) {

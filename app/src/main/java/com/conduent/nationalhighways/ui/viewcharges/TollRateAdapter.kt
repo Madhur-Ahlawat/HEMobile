@@ -40,7 +40,7 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
                 rootView.importantForAccessibility= View.IMPORTANT_FOR_ACCESSIBILITY_YES
                 rootView.contentDescription = context?.getString(R.string.type_of_vehicle) +
                         context?.getString(R.string.str_comma) +" "+
-                        data?.vehicleType + context?.getString(R.string.str_dot) +" "+
+                        data?.vehicleType?.replace("\n"," ") + context?.getString(R.string.str_dot) +" "+
                         context?.getString(R.string.pay_as_you_go) + context?.getString(R.string.str_comma) +" "+
                         context?.getString(R.string.currency_symbol)+ if (list?.get(position)?.videoRate!=0.0) String.format("%.2f", list?.get(position)?.videoRate) else "Free" +
                         context?.getString(R.string.str_dot) +" "+
