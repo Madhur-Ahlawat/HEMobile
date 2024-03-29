@@ -107,6 +107,8 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         data?.unsettledTripChange =
             binding.inputCountry.getSelectedValue()?.toInt() ?: 0
 
+        setContentDescriptionForBullets()
+
     }
 
     private fun setContentDescriptionForBullets() {
