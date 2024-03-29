@@ -51,6 +51,11 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
         transactionId = arguments?.getString(Constants.TRANSACTIONID).toString()
         topUpAmount = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
 
+        if(topUpAmount.isNotEmpty() && !Utils.isDecimal(topUpAmount.toDouble())){
+            topUpAmount=topUpAmount.toDouble().toInt().toString()
+        }
+
+
         if (arguments?.containsKey(Constants.NEW_CARD) == true) {
             newCard = arguments?.getBoolean(Constants.NEW_CARD, false) ?: false
         }
