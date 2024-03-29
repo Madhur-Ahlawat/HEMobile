@@ -66,7 +66,6 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
-import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
@@ -76,11 +75,9 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
-import com.google.firebase.crashlytics.internal.Logger
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.OnClickListener {
@@ -373,7 +370,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
-                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                    showError(binding.root, resource.errorMsg)
                 }
 
             }
@@ -943,10 +940,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             i
                         )
 
-                    val smsFlag = if(communicationModel?.category?.lowercase().equals("standard notification")) {
+                    val smsFlag = if (communicationModel?.category?.lowercase()
+                            .equals("standard notification")
+                    ) {
                         "Y"
-                    }else{
-                        communicationModel?.smsFlag ?:"Y"
+                    } else {
+                        communicationModel?.smsFlag ?: "Y"
                     }
 
                     communicationList.add(
@@ -964,7 +963,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             communicationModel?.pushNotFlag,
                             communicationModel?.defPushNot,
                             communicationModel?.defMail
-                            )
+                        )
                     )
 
                 }
@@ -1026,9 +1025,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     PROFILE_MANAGEMENT -> {
+
+                        val data = navData as ProfileDetailModel?
+
+
                         updateProfileEmail(
-                            HomeActivityMain.accountDetailsData?.personalInformation,
-                            HomeActivityMain.accountDetailsData?.accountInformation
+                            data?.personalInformation,
+                            data?.accountInformation,
+                            this.data?.optionValue.toString()
                         )
                     }
 
@@ -1090,7 +1094,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun updateProfileEmail(
         dataModel: PersonalInformation?,
-        accountInformation: AccountInformation?
+        accountInformation: AccountInformation?,
+        email: String
     ) {
 
 
@@ -1106,7 +1111,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             dataModel?.zipcode,
             dataModel?.zipCodePlus,
             dataModel?.country,
-            dataModel?.emailAddress,
+            email,
             Constants.PENDING_STATUS,
             dataModel?.pemailUniqueCode,
             dataModel?.phoneCell,
@@ -1241,7 +1246,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(requireActivity(), BiometricActivity::class.java)
-                    intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
+                    intent.putExtra(TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
                     intent.putExtra(Constants.NAV_FLOW_KEY, navFlowFrom)
 
@@ -1254,7 +1259,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    requireActivity()?.startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                         putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                     }
