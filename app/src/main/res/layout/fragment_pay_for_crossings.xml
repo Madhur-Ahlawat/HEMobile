@@ -63,11 +63,11 @@
                 android:textColor="@color/black" />
 
             <LinearLayout
+                android:id="@+id/point1Ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:importantForAccessibility="yes"
-                android:contentDescription="@string/str_bullet_pay_for_crossing_point1"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -90,6 +90,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/point2Ll"
                 android:contentDescription="@string/str_bullet_pay_for_crossing_point2"
                 android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
@@ -117,11 +118,11 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/point3Ll"
                 android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12dp"
-                android:contentDescription="str_bullet_pay_for_crossing_point3"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -143,7 +144,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:contentDescription="str_bullet_pay_for_crossing_point4"
+                android:id="@+id/point4Ll"
                 android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -169,7 +170,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:contentDescription="@string/str_bullet_pay_for_crossing_point5"
+                android:id="@+id/point5Ll"
                 android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

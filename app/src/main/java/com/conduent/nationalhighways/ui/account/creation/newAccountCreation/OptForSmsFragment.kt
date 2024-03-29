@@ -168,20 +168,13 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
         }
         isViewCreated = true
-        focusToolBarRaiseEnquiry()
+
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+
     }
 
-    fun focusToolBarRaiseEnquiry() {
-        HomeActivityMain.dataBinding?.backButton?.requestFocus()
-        val task = Runnable {
-            if(!HomeActivityMain.dataBinding?.backButton?.isAccessibilityFocused!!){
-                HomeActivityMain.dataBinding?.backButton?.sendAccessibilityEvent(
-                    AccessibilityEvent.TYPE_VIEW_FOCUSED)
-            }
-        }
-        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
-        worker.schedule(task, 1, TimeUnit.SECONDS)
-    }
 
     override fun onResume() {
         super.onResume()

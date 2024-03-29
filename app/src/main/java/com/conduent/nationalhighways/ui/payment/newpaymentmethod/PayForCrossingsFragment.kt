@@ -43,7 +43,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
 
     override fun init() {
 
-//       setContentDescriptionForBullets()
+       setContentDescriptionForBullets()
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -122,13 +122,13 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         }
     }
 
-//    private fun setContentDescriptionForBullets() {
-//        binding.point1Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point1)
-//        binding.point2Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point2)
-//        binding.point3Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point3)
-//        binding.point4Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point4)
-//        binding.point5Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point5)
-//    }
+    private fun setContentDescriptionForBullets() {
+        binding.point1Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point1)
+        binding.point2Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point2)
+        binding.point3Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point3)
+        binding.point4Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point4)
+        binding.point5Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point5)
+    }
 
 
     override fun initCtrl() {
