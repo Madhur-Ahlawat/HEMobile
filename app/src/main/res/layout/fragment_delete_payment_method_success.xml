@@ -22,30 +22,21 @@
             android:paddingBottom="18dp"
             tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
-            <ImageView
-                android:id="@+id/warningIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:src="@drawable/checkicon"
-                android:importantForAccessibility="no"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/maximumVehicleAdded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp"
+                android:drawablePadding="@dimen/margin_23dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
                 android:text="@string/str_payment_method_deleted"
                 android:textColor="@color/new_btn_color"
+                android:layout_marginTop="@dimen/margin_100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:drawableTopCompat="@drawable/checkicon" />
 
             <TextView
                 android:layout_width="match_parent"

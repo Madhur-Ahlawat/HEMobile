@@ -17,6 +17,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.util.Util
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
@@ -406,8 +407,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         }
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
+                        for(cardNumbers in cardNumber.text.toString()){
+
+                        }
                         boxCardType.contentDescription =
-                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"")+ "\n" + cardNumber.text.toString()
+                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"")+ "\n" + Utils.accessibilityForNumbers(cardNumber.text.toString())
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 2
                         )
@@ -505,7 +509,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
-            boxCardType.contentDescription = cardNumber.text.toString()
+            boxCardType.contentDescription = Utils.accessibilityForNumbers(cardNumber.text.toString())
             cardNumber.setTypeface(null, Typeface.BOLD)
             data.let {
                 it.accountInformation?.let {
@@ -617,7 +621,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
                         boxCardType.contentDescription =
-                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"") + "\n" + cardNumber.text.toString()
+                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"") + "\n" + Utils.accessibilityForNumbers(cardNumber.text.toString())
 
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 1
