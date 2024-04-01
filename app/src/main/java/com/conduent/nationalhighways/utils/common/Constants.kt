@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.utils.common
 
 object Constants {
+    const val geofenceSouthBoundDartCharge: String = "geofenceSouthBoundDartCharge"
     const val landingPageName: String = "Android Dart Charge: Landing Page"
     const val contactPageName: String = "Android Dart Charge: Contact Dart Charge"
     const val chargesAndFinesPageName: String = "Android Dart Charge: Charges and fines"
@@ -12,6 +13,7 @@ object Constants {
     const val HAS_ASKED_FOR_BIOMETRIC: String = "HAS_ASKED_FOR_BIOMETRIC"
     const val privacyPolicyPageName: String = "Android Dart Charge: Privacy Policy"
     const val BIOMETRIC_CHANGE: String = "BIOMETRIC_CHANGE"
+    const val geofenceNorthBoundDartCharge: String = "geofenceNorthBoundDartCharge"
     const val otherWaysToPayPageName: String = "Android Dart Charge: Other ways to pay your charge"
     const val doYouHaveDartAccountPageName: String = "Android Dart Charge Non-Account Holder: Have a Dart Charge account?"
 //    const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
@@ -450,6 +452,4 @@ object Constants {
     const val dd_mm_yyyy_hh_mm_ss = "dd/MM/yyyy HH:mm:ss"
 
     const val GpsSettings = "GpsSettings"
-    const val geofenceNorthBoundDartCharge = "geofenceNorthBoundDartCharge"
-    const val geofenceSouthBoundDartCharge = "geofenceSouthBoundDartCharge"
 }

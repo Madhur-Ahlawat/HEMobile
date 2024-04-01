@@ -76,6 +76,7 @@
                         android:layout_marginLeft="@dimen/margin_2dp"
                         android:layout_marginTop="@dimen/margin_15dp"
                         android:layout_marginRight="@dimen/margin_2dp"
+                        android:importantForAccessibility="yes"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/contact_details_tv">
@@ -84,6 +85,7 @@
                             android:id="@+id/category_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:importantForAccessibility="yes"
                             android:padding="@dimen/margin_15dp">
 
 
@@ -91,6 +93,7 @@
                                 android:id="@+id/category_tv"
                                 style="@style/SemiBoldTextBlack"
                                 android:layout_width="@dimen/margin_0dp"
+                                android:importantForAccessibility="no"
                                 android:text="@string/str_category"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/barrier"
@@ -100,6 +103,7 @@
                                 android:id="@+id/category_data_tv"
                                 style="@style/RegularTextBlack"
                                 android:layout_width="0dp"
+                                android:importantForAccessibility="no"
                                 android:text="@{viewModel.enquiryModel.category.value}"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/barrier"
@@ -109,15 +113,19 @@
                                 android:id="@+id/barrier"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:importantForAccessibility="no"
                                 app:barrierDirection="left"
                                 app:constraint_referenced_ids="category_edit_iv" />
 
                             <ImageView
                                 android:id="@+id/category_edit_iv"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/margin_0dp"
+                                android:layout_height="0dp"
+                                android:importantForAccessibility="yes"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:minHeight="@dimen/margin_48dp"
                                 android:onClick="@{categoryClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
+                                android:padding="@dimen/margin_13dp"
                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -133,6 +141,7 @@
                         android:layout_marginLeft="@dimen/margin_2dp"
                         android:layout_marginTop="@dimen/margin_2dp"
                         android:layout_marginRight="@dimen/margin_2dp"
+                        android:importantForAccessibility="yes"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/category_cv">
@@ -141,12 +150,14 @@
                             android:id="@+id/sub_category_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:importantForAccessibility="yes"
                             android:padding="@dimen/margin_15dp">
 
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
                                 android:id="@+id/sub_category_tv"
                                 style="@style/SemiBoldTextBlack"
                                 android:layout_width="@dimen/margin_0dp"
+                                android:importantForAccessibility="no"
                                 android:text="@string/str_sub_category"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/sub_barrier"
@@ -156,6 +167,7 @@
                                 android:id="@+id/sub_category_data_tv"
                                 style="@style/RegularTextBlack"
                                 android:layout_width="0dp"
+                                android:importantForAccessibility="no"
                                 android:text="@{viewModel.enquiryModel.subCategory.value}"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/sub_barrier"
@@ -165,15 +177,20 @@
                                 android:id="@+id/sub_barrier"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:importantForAccessibility="no"
                                 app:barrierDirection="left"
                                 app:constraint_referenced_ids="subcategory_edit_iv" />
 
                             <ImageView
                                 android:id="@+id/subcategory_edit_iv"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/margin_0dp"
+                                android:layout_height="0dp"
+
+                                android:importantForAccessibility="yes"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:minHeight="@dimen/margin_48dp"
                                 android:onClick="@{categoryClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
+                                android:padding="@dimen/margin_13dp"
                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -190,6 +207,7 @@
                         android:layout_marginLeft="@dimen/margin_2dp"
                         android:layout_marginTop="@dimen/margin_2dp"
                         android:layout_marginRight="@dimen/margin_2dp"
+                        android:importantForAccessibility="yes"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/sub_category_cv">
@@ -198,6 +216,7 @@
                             android:id="@+id/contact_message_cl"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:importantForAccessibility="yes"
                             android:padding="@dimen/margin_15dp">
 
 
@@ -215,9 +234,10 @@
                                 android:id="@+id/contact_message_data_tv"
                                 style="@style/RegularTextBlack"
                                 android:layout_width="0dp"
+                                android:ellipsize="end"
                                 android:maxLines="2"
-                                android:visibility="gone"                                android:ellipsize="end"
                                 android:text="@{viewModel.enquiryModel.comments}"
+                                android:visibility="gone"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toLeftOf="@id/contact_barrier"
                                 app:layout_constraintTop_toBottomOf="@id/contact_message_tv" />
@@ -233,8 +253,11 @@
                                 android:id="@+id/contact_message_edit_iv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
+                                android:importantForAccessibility="yes"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:minHeight="@dimen/margin_48dp"
                                 android:onClick="@{commentsClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
+                                android:padding="@dimen/margin_11dp"
                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -262,6 +285,7 @@
                         android:layout_marginLeft="@dimen/margin_2dp"
                         android:layout_marginTop="@dimen/margin_15dp"
                         android:layout_marginRight="@dimen/margin_2dp"
+                        android:importantForAccessibility="yes"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/personal_details_tv">
@@ -270,6 +294,7 @@
                             android:id="@+id/name_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:importantForAccessibility="yes"
                             android:padding="@dimen/margin_15dp">
 
 
@@ -302,8 +327,10 @@
                                 android:id="@+id/name_edit_iv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:minHeight="@dimen/margin_48dp"
                                 android:onClick="@{contactDetailsClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
+                                android:padding="@dimen/margin_13dp"
                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -376,6 +403,7 @@
                         android:layout_marginLeft="@dimen/margin_2dp"
                         android:layout_marginTop="@dimen/margin_2dp"
                         android:layout_marginRight="@dimen/margin_2dp"
+                        android:importantForAccessibility="yes"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/lastname_cv">
@@ -384,6 +412,7 @@
                             android:id="@+id/email_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:importantForAccessibility="yes"
                             android:padding="@dimen/margin_15dp">
 
 
@@ -416,8 +445,10 @@
                                 android:id="@+id/email_edit_iv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:minHeight="@dimen/margin_48dp"
                                 android:onClick="@{contactDetailsClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
+                                android:padding="@dimen/margin_13dp"
                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -433,6 +464,7 @@
                         android:layout_marginLeft="@dimen/margin_2dp"
                         android:layout_marginTop="@dimen/margin_2dp"
                         android:layout_marginRight="@dimen/margin_2dp"
+                        android:importantForAccessibility="yes"
                         android:visibility="@{viewModel.enquiryModel.mobileNumber.empty?View.GONE:View.VISIBLE}"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
@@ -442,6 +474,7 @@
                             android:id="@+id/mobile_cl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:importantForAccessibility="yes"
                             android:padding="@dimen/margin_15dp">
 
 
@@ -474,8 +507,10 @@
                                 android:id="@+id/mobile_edit_iv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/margin_0dp"
+                                android:minWidth="@dimen/margin_48dp"
+                                android:minHeight="@dimen/margin_48dp"
                                 android:onClick="@{contactDetailsClickListener}"
-                                android:paddingLeft="@dimen/margin_10dp"
+                                android:padding="@dimen/margin_13dp"
                                 android:src="@drawable/edit"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"

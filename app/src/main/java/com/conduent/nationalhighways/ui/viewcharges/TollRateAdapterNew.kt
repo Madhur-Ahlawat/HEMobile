@@ -36,7 +36,7 @@ class TollRateAdapterNew(private val context: Context?, var list: List<TollRates
                 rootView.importantForAccessibility=IMPORTANT_FOR_ACCESSIBILITY_YES
                 rootView.contentDescription = context?.getString(R.string.type_of_vehicle) +
                         context?.getString(R.string.str_comma) +" "+
-                        data?.vehicleType + context?.getString(R.string.str_dot) +" "+
+                        data?.vehicleType?.replace("\n"," ") + context?.getString(R.string.str_dot) +" "+
                         context?.getString(R.string.vehicle_class) + context?.getString(R.string.str_comma) +" "+
                         data?.vehicleClass + context?.getString(R.string.str_dot) +" "+
                         context?.getString(R.string.str_one_of_payment_)  + context?.getString(R.string.str_comma) +" " +
@@ -63,7 +63,7 @@ class TollRateAdapterNew(private val context: Context?, var list: List<TollRates
                 rootView.importantForAccessibility=IMPORTANT_FOR_ACCESSIBILITY_YES
                 rootView.contentDescription = context?.getString(R.string.type_of_vehicle) +
                         context?.getString(R.string.str_comma) +" "+
-                        data?.vehicleType + context?.getString(R.string.str_dot) +" "+
+                        data?.vehicleType?.replace("\n"," ") + context?.getString(R.string.str_dot) +" "+
                         context?.getString(R.string.vehicle_class) + context?.getString(R.string.str_comma) +" "+
                         data?.vehicleClass + context?.getString(R.string.str_dot) +" "+
                         context?.getString(R.string.str_one_of_payment_)  +
@@ -92,7 +92,7 @@ class TollRateAdapterNew(private val context: Context?, var list: List<TollRates
                 rootView.importantForAccessibility=IMPORTANT_FOR_ACCESSIBILITY_YES
                 rootView.contentDescription = context?.getString(R.string.str_type_of_vehicle) +
                         context?.getString(R.string.str_comma) +
-                        context?.getString(R.string.str_type_of_vehicle) + data?.vehicleType +
+                        context?.getString(R.string.str_type_of_vehicle) + data?.vehicleType?.replace("\n"," ") +
                         context?.getString(R.string.str_dot) +
                         context?.getString(R.string.vehicle_class) +
                         data?.vehicleClass + context?.getString(R.string.str_dot) +
