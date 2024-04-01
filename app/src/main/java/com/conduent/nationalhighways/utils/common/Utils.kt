@@ -20,9 +20,13 @@ import android.os.Vibrator
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -68,7 +72,6 @@ import java.util.Date
 import java.util.Locale
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.math.min
 
 
 object Utils {
@@ -177,6 +180,27 @@ object Utils {
         return supportCountryList
 
 
+    }
+
+    fun cardNumberDigitText(editText: EditText) {
+        editText.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                val originalText = editText.text.toString()
+                val modifiedText = originalText.replace("", " ")
+                info.text = modifiedText.trim { it <= ' ' }
+            }
+
+            override fun onPopulateAccessibilityEvent(host: View, event: AccessibilityEvent) {
+                super.onPopulateAccessibilityEvent(host, event)
+                val originalText = editText.text.toString()
+                val modifiedText = originalText.replace("", " ")
+                event.text.add(modifiedText.trim { it <= ' ' })
+            }
+        }
     }
 
     @RequiresApi(VERSION_CODES.O)

@@ -48,12 +48,14 @@
                     android:layout_marginLeft="@dimen/margin_2dp"
                     android:layout_marginTop="@dimen/margin_15dp"
                     android:layout_marginRight="@dimen/margin_2dp"
+                    android:importantForAccessibility="yes"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/enquiry_tv">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/reference_number_cl"
+                        android:importantForAccessibility="no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
@@ -61,6 +63,7 @@
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/reference_number_tv"
+                            android:importantForAccessibility="no"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@string/str_reference_number"
@@ -71,6 +74,7 @@
                             android:id="@+id/reference_numberdata_tv"
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
+                            android:importantForAccessibility="no"
                             android:text="@{viewModel.enquiryDetailsModel.id}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/reference_number_tv" />
@@ -84,6 +88,7 @@
                     style="@style/cardView_style"
                     android:layout_marginLeft="@dimen/margin_2dp"
                     android:layout_marginTop="@dimen/margin_2dp"
+                    android:importantForAccessibility="yes"
                     android:layout_marginRight="@dimen/margin_2dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -91,6 +96,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/category_cl"
+                        android:importantForAccessibility="no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
@@ -98,6 +104,7 @@
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/category_tv"
+                            android:importantForAccessibility="no"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@string/str_category"
@@ -107,6 +114,7 @@
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/category_data_tv"
                             style="@style/RegularTextBlack"
+                            android:importantForAccessibility="no"
                             android:layout_width="0dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/category_tv" />
@@ -119,6 +127,7 @@
                     android:id="@+id/subcategory_cv"
                     style="@style/cardView_style"
                     android:layout_marginLeft="@dimen/margin_2dp"
+                    android:importantForAccessibility="yes"
                     android:layout_marginTop="@dimen/margin_2dp"
                     android:layout_marginRight="@dimen/margin_2dp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -128,6 +137,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/subcategory_cl"
                         android:layout_width="match_parent"
+                        android:importantForAccessibility="no"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
 
@@ -135,6 +145,7 @@
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/subcategory_tv"
                             style="@style/SemiBoldTextBlack"
+                            android:importantForAccessibility="no"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@string/str_sub_category"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -144,6 +155,7 @@
                             android:id="@+id/subcategory_data_tv"
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
+                            android:importantForAccessibility="no"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/subcategory_tv" />
 
@@ -156,6 +168,7 @@
                     style="@style/cardView_style"
                     android:layout_marginLeft="@dimen/margin_2dp"
                     android:layout_marginTop="@dimen/margin_2dp"
+                    android:importantForAccessibility="yes"
                     android:layout_marginRight="@dimen/margin_2dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -163,6 +176,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/date_time_cl"
+                        android:importantForAccessibility="no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
@@ -171,6 +185,7 @@
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/date_time_tv"
                             style="@style/SemiBoldTextBlack"
+                            android:importantForAccessibility="no"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@string/str_date_time_submitted"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -179,6 +194,7 @@
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/date_time_data_tv"
                             style="@style/RegularTextBlack"
+                            android:importantForAccessibility="no"
                             android:layout_width="0dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/date_time_tv" />
@@ -190,6 +206,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/status_enquiry_cv"
                     style="@style/cardView_style"
+                    android:importantForAccessibility="yes"
                     android:layout_marginLeft="@dimen/margin_2dp"
                     android:layout_marginTop="@dimen/margin_2dp"
                     android:layout_marginRight="@dimen/margin_2dp"
@@ -199,6 +216,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/status_enquiry_cl"
+                        android:importantForAccessibility="no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
@@ -206,6 +224,7 @@
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/status_enquiry_tv"
+                            android:importantForAccessibility="no"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@{viewModel.enquiryDetailsModel.category.equals(&quot;COMPLAINT&quot;) ? @string/str_status_of_complaint : @string/str_status_of_enquiry}"
@@ -214,6 +233,7 @@
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/status_enquiry_data_tv"
+                            android:importantForAccessibility="no"
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
                             android:text="@{viewModel.enquiryDetailsModel.status}"
@@ -229,6 +249,7 @@
                     android:id="@+id/date_enquiry_closed_cv"
                     style="@style/cardView_style"
                     android:layout_marginLeft="@dimen/margin_2dp"
+                    android:importantForAccessibility="yes"
                     android:layout_marginTop="@dimen/margin_2dp"
                     android:layout_marginRight="@dimen/margin_2dp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -238,6 +259,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/date_enquiry_closed_cl"
                         android:layout_width="match_parent"
+                        android:importantForAccessibility="no"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
 
@@ -246,6 +268,7 @@
                             android:id="@+id/date_enquiry_closed_tv"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
+                            android:importantForAccessibility="no"
                             android:text="@{viewModel.enquiryDetailsModel.category.equals(&quot;COMPLAINT&quot;) ? @string/str_date_complaint_closed : @string/str_date_enquiry_closed}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -253,6 +276,7 @@
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/date_enquiry_closed_data_tv"
                             style="@style/RegularTextBlack"
+                            android:importantForAccessibility="no"
                             android:layout_width="0dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/date_enquiry_closed_tv" />
@@ -266,6 +290,7 @@
                     style="@style/cardView_style"
                     android:layout_marginLeft="@dimen/margin_2dp"
                     android:layout_marginTop="@dimen/margin_2dp"
+                    android:importantForAccessibility="no"
                     android:layout_marginRight="@dimen/margin_2dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -274,11 +299,13 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/details_enquiry_cl"
                         android:layout_width="match_parent"
+                        android:importantForAccessibility="yes"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/details_enquiry_tv"
+                            android:importantForAccessibility="no"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@{viewModel.enquiryDetailsModel.category.equals(&quot;COMPLAINT&quot;) ? @string/details_of_complaint : @string/details_of_enquiry}"
@@ -289,6 +316,7 @@
                             android:id="@+id/details_enquiry_data_tv"
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
+                            android:importantForAccessibility="no"
                             android:text="@{viewModel.enquiryDetailsModel.description}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/details_enquiry_tv" />

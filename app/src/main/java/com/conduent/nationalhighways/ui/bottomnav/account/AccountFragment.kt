@@ -125,6 +125,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                     sessionManager.fetchLastName()
                 )
 
+            if(requireActivity() is HomeActivityMain){
+                (requireActivity() as HomeActivityMain).focusToolBarHome()
+            }
+
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
             HomeActivityMain.changeBottomIconColors(requireActivity(), 3)

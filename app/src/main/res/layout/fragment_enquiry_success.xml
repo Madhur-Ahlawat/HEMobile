@@ -69,6 +69,7 @@
                     android:layout_marginLeft="@dimen/margin_2dp"
                     android:layout_marginTop="@dimen/margin_15dp"
                     android:layout_marginRight="@dimen/margin_2dp"
+                    android:importantForAccessibility="yes"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/desc_tv">
@@ -76,12 +77,14 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/category_cl"
                         android:layout_width="match_parent"
+                        android:importantForAccessibility="no"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
 
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/category_tv"
+                            android:importantForAccessibility="no"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@string/reference_number"
@@ -91,6 +94,7 @@
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/reference_number_tv"
                             style="@style/RegularTextBlack"
+                            android:importantForAccessibility="no"
                             android:layout_width="0dp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/category_tv" />

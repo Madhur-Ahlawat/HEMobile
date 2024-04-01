@@ -669,6 +669,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
                                 data?.optionValue.toString()
                             ) + "."
+                        binding.messageReceivedTxt.contentDescription =
+                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
+                                data?.optionValue.toString()
+                            )
 
                     }
 
@@ -678,6 +682,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                 data?.optionValue.toString()
                             ) + "."
 
+                        binding.messageReceivedTxt.contentDescription =
+                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
+                                data?.optionValue.toString()
+                            )
+
                     }
 
                     else -> {
@@ -685,6 +694,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
                                 data?.optionValue.toString()
                             ) + "."
+
+                        binding.messageReceivedTxt.contentDescription =
+                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
+                                data?.optionValue.toString()
+                            )
 
                     }
                 }

@@ -12,8 +12,8 @@ import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategories
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
 import com.conduent.nationalhighways.databinding.FragmentSummaryEnquiryBinding
-import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
@@ -107,7 +107,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
     private fun saveData() {
-
         viewModel.enquiryModel.value?.firstname = viewModel.edit_enquiryModel.value?.firstname ?: ""
         viewModel.enquiryModel.value?.lastname = viewModel.edit_enquiryModel.value?.lastname ?: ""
         viewModel.enquiryModel.value?.email = viewModel.edit_enquiryModel.value?.email ?: ""
@@ -126,9 +125,22 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         viewModel.enquiryModel.value?.comments = viewModel.edit_enquiryModel.value?.comments ?: ""
         viewModel.enquiryModel.value?.file = viewModel.edit_enquiryModel.value?.file ?: File("")
         viewModel.enquiryModel.value?.fileName = viewModel.edit_enquiryModel.value?.fileName ?: ""
-        viewModel.enquiryModel.value?.apiFileName = viewModel.edit_enquiryModel.value?.apiFileName ?: ""
-    }
+        viewModel.enquiryModel.value?.apiFileName =
+            viewModel.edit_enquiryModel.value?.apiFileName ?: ""
 
+        binding.mobileDataTv.setText(viewModel.enquiryModel.value!!.mobileNumber)
+        val builder = StringBuilder()
+        for (i in 0 until viewModel.enquiryModel.value!!.countryCode.length) {
+            builder.append(viewModel.enquiryModel.value!!.countryCode[i])
+            builder.append("\u00A0")
+
+        }
+        for (i in 0 until viewModel.enquiryModel.value!!.mobileNumber.length) {
+            builder.append(viewModel.enquiryModel.value!!.mobileNumber[i])
+            builder.append("\u00A0")
+        }
+        binding.mobileDataTv.setContentDescription(builder)
+    }
 
     private fun getBundleData(): Bundle {
         val bundle = Bundle()
@@ -149,7 +161,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             loader = LoaderDialog()
             loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-            observe(apiViewModel.enquiryResponseLiveData,::enquiryResponseModel)
+            observe(apiViewModel.enquiryResponseLiveData, ::enquiryResponseModel)
 
         }
         isViewCreated = true

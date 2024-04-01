@@ -8,19 +8,23 @@
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/paymentAmountLl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:importantForAccessibility="yes"
             android:padding="@dimen/_20sdp">
 
             <TextView
                 android:id="@+id/txtTitleTop"
                 style="@style/MediumTextBlack"
+                android:importantForAccessibility="no"
                 android:layout_width="match_parent"
                 android:text="@string/recent_crossings"
                 android:textColor="@color/black" />
 
             <com.conduent.apollo.ui.CMDropDownView
+                android:importantForAccessibility="no"
                 android:id="@+id/inputCountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,47 +34,36 @@
                 app:inputType="number"
                 app:labelText="@string/str_number_of_crossings" />
 
-            <LinearLayout
-                android:id="@+id/payment_amount_ll"
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/inputTotalAmount_helper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_3dp"
                 android:layout_marginTop="@dimen/margin_20dp"
-                android:importantForAccessibility="yes"
-                android:orientation="vertical">
+                android:text="@string/payment_Amount"
+                android:textColor="@color/label_color"
+                android:textSize="12sp" />
 
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/inputTotalAmount_helper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_3dp"
-                    android:importantForAccessibility="no"
-                    android:text="@string/payment_Amount"
-                    android:textColor="@color/label_color"
-                    android:textSize="12sp" />
 
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/inputTotalAmount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_3dp"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:importantForAccessibility="no"
-                    android:maxLength="15"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/inputTotalAmount"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_48dp"
+                android:text="2.50"
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_3dp"
+                android:maxLength="15"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/txtBottom"
                 style="@style/MediumTextBlack"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/margin_20dp"
                 android:text="@string/how_your_payment_gets_calculated"
                 android:textColor="@color/black" />
 
             <LinearLayout
-                android:id="@+id/point1_ll"
+                android:id="@+id/point1Ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20dp"
@@ -78,134 +71,132 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:importantForAccessibility="no"
                     android:id="@+id/img_dot1"
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:importantForAccessibility="no"
                     android:src="@drawable/circle_5dp" />
 
                 <TextView
+                    android:importantForAccessibility="no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_pay_for_crossing_point1"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
             <LinearLayout
-                android:id="@+id/point2_ll"
+                android:id="@+id/point2Ll"
+                android:contentDescription="@string/str_bullet_pay_for_crossing_point2"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12dp"
-                android:importantForAccessibility="yes"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:importantForAccessibility="no"
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:importantForAccessibility="no"
                     android:src="@drawable/circle_5dp" />
 
                 <TextView
+                    android:importantForAccessibility="no"
                     android:id="@+id/titleText2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_pay_for_crossing_point2"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
             <LinearLayout
-                android:id="@+id/point3_ll"
+                android:id="@+id/point3Ll"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12dp"
-                android:importantForAccessibility="yes"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:importantForAccessibility="no"
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:importantForAccessibility="no"
                     android:src="@drawable/circle_5dp" />
 
                 <TextView
+                    android:importantForAccessibility="no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_pay_for_crossing_point3"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
             <LinearLayout
-                android:id="@+id/point4_ll"
+                android:id="@+id/point4Ll"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12dp"
-                android:importantForAccessibility="yes"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:importantForAccessibility="no"
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:importantForAccessibility="no"
                     android:src="@drawable/circle_5dp" />
 
                 <TextView
+                    android:importantForAccessibility="no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_pay_for_crossing_point4"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
 
             </LinearLayout>
-
             <LinearLayout
-                android:id="@+id/point5_ll"
+                android:id="@+id/point5Ll"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12dp"
                 android:layout_marginBottom="@dimen/margin_15dp"
-                android:importantForAccessibility="yes"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:importantForAccessibility="no"
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:importantForAccessibility="no"
                     android:src="@drawable/circle_5dp" />
 
                 <TextView
+                    android:importantForAccessibility="no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_pay_for_crossing_point5"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
 
             </LinearLayout>
+
 
 
             <com.conduent.nationalhighways.utils.widgets.NHButton

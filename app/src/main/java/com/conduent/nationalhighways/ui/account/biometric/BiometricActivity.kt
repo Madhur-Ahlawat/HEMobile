@@ -49,6 +49,7 @@ import javax.inject.Inject
 class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClickListener,
     LogoutListener {
 
+    private var biometricToggleButtopnState: String?=null
     lateinit var binding: ActivityBiometricBinding
     private var twoFA: Boolean = false
     private val dashboardViewModel: DashboardViewModel by viewModels()
@@ -108,6 +109,8 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
+            biometricToggleButtopnState = if(switchFingerprintLogin.isChecked) "on" else "off"
+            switchFingerprintLogin.contentDescription=getString(R.string.usefingerprinttologin) + biometricToggleButtopnState + " Toggle to ${if(biometricToggleButtopnState.equals("yes")) "turn off" else "turn on"}"
         }
 
         initBiometric(this)
@@ -117,12 +120,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             binding.biometricCancel.gone()
         }
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
+            biometricToggleButtopnState = if(binding.switchFingerprintLogin.isChecked) "on" else "off"
             binding.switchFingerprintLogin.contentDescription = if (isChecked) {
-                "${binding.switchFingerprintLogin.text}"
+                biometricToggleButtopnState + " Toggle to ${if(biometricToggleButtopnState.equals("yes")) "turn off" else "turn on"}"
             } else {
-                "${binding.switchFingerprintLogin.text}"
+                biometricToggleButtopnState + " Toggle to ${if(biometricToggleButtopnState.equals("yes")) "turn on" else "turn off"}"
             }
-            binding.switchFingerprintLogin.contentDescription = binding.switchFingerprintLogin.getText().toString()
             if (isChecked) {
                 if (!sessionManager.fetchTouchIdEnabled()) {
                     val biometricManager = BiometricManager.from(this)
