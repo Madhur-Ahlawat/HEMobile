@@ -52,6 +52,7 @@
 
             <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                 android:id="@+id/firstname_et"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20dp"
