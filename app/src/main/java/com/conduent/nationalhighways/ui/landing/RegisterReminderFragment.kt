@@ -2,11 +2,16 @@ package com.conduent.nationalhighways.ui.landing
 
 import android.Manifest
 import android.app.Dialog
+import android.app.NotificationManager
+import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +25,7 @@ import com.conduent.nationalhighways.databinding.FragmentRegisterReminderBinding
 import com.conduent.nationalhighways.databinding.LocationPermissionDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.service.PlayLocationService
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.setToolBarTitle
 import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
@@ -31,6 +37,7 @@ import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>() {
@@ -47,11 +54,34 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
     override fun init() {
         showToolBar(true)
         setToolBarTitle(resources.getString(R.string.str_register_to_receive_notifications))
+
+
+        if (arguments?.containsKey("SERVICE_RUN") == true) {
+            if (arguments?.getBoolean("SERVICE_RUN") == true) {
+                Log.e("TAG", "init:SERVICE_RUN ")
+                if (Utils.checkLocationpermission(requireContext())) {
+                    Utils.startLocationService(requireContext())
+                }
+
+            }
+        } else {
+//            if (sessionManager.fetchStringData("SAVED_FILE").isEmpty()) {
+//                val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+//                intent.addCategory(Intent.CATEGORY_OPENABLE)
+//                intent.setType("text/plain")
+//                intent.putExtra(Intent.EXTRA_TITLE, ".txt")
+//                startActivityForResult(intent, 1000)
+//            }
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
 
+        if (Utils.isLocationServiceRunning(requireContext())) {
+            Log.e("TAG", "isLocationServiceRunning-->  ")
+        }
 
         if (!Utils.areNotificationsEnabled(requireContext())) {
             binding.switchNotification.isChecked = false
@@ -60,6 +90,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             binding.switchNotification.isChecked =
                 sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)
         }
+
 
         if (!Utils.checkLocationpermission(requireContext())) {
             binding.switchGeoLocation.isChecked = false
@@ -86,7 +117,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 binding.switchGeoLocation.isChecked =
                     sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
                 if (binding.switchGeoLocation.isChecked) {
-                    GeofenceUtils.startGeofence(this.requireContext())
+                    startLocationServiceGeofence(1)
                 }
             }
         } else if (arguments?.containsKey(Constants.GpsSettings) == true) {
@@ -102,10 +133,62 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                     sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
             }
             if (binding.switchGeoLocation.isChecked) {
-                GeofenceUtils.startGeofence(this.requireContext())
+                startLocationServiceGeofence(2)
             }
         } else {
 
+        }
+
+        if (sessionManager.fetchStringData("SAVED_FILE").isNotEmpty()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                if (Environment.isExternalStorageManager()) {
+//                    // All files access permission is granted
+//                    // Your code here
+//                } else {
+//                    val intent = Intent(
+//                        ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+//                        Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+//                    )
+//                    startActivityForResult(intent, 1948)
+//                }
+            } else {
+                // For versions lower than Android 11, handle permissions accordingly
+                // You may request WRITE_EXTERNAL_STORAGE permission or other relevant permissions
+
+        } else {
+
+            }
+        }
+
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, dataIntent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, dataIntent)
+        Log.e(
+            "TAG",
+            "onActivityResult() called with: requestCode = $requestCode, resultCode = $resultCode, data = $dataIntent"
+        )
+        if (requestCode == 1000 && dataIntent != null) {
+            Log.e("TAG", "onActivityResult: " + dataIntent.data)
+//            sessionManager.saveStringData("SAVED_FILE", dataIntent.data?.path ?: "")
+
+        } else if (requestCode == 1948) {
+//            val directory =
+//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+//            val file = File(directory, "dartlogs_20_1.txt")
+//            if (file.exists()) {
+//                val fileWriter = FileWriter(file, true)
+//                val bufferedWriter = BufferedWriter(fileWriter)
+//
+//                bufferedWriter.write("File created\n")
+//                bufferedWriter.newLine()
+//                bufferedWriter.close()
+//                Toast.makeText(requireContext(), "file exists", Toast.LENGTH_SHORT).show()
+//
+//            } else {
+//                Toast.makeText(requireContext(), "file not exists", Toast.LENGTH_SHORT).show()
+//            }
         }
 
     }
@@ -124,16 +207,21 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         binding.switchNotification.setAccessibilityDelegate()
 
         binding.switchGeoLocation.setOnClickListener {
-            if (Utils.checkLocationpermission(requireContext())) {
-                sessionManager.saveBooleanData(
-                    SessionManager.LOCATION_PERMISSION,
-                    binding.switchGeoLocation.isChecked
-                )
-            } else if (binding.switchGeoLocation.isChecked) {
-                if (sessionManager.fetchBooleanData(SessionManager.FOREGROUND_LOCATION_SHOWN)) {
-                    showLocationServicesPopup()
-                } else {
-                    requestLocationPermission()
+            if (!binding.switchGeoLocation.isChecked) {
+                stopForeGroundService()
+            } else {
+                if (Utils.checkLocationpermission(requireContext())) {
+                    sessionManager.saveBooleanData(
+                        SessionManager.LOCATION_PERMISSION,
+                        binding.switchGeoLocation.isChecked
+                    )
+                    startLocationServiceGeofence(3)
+                } else if (binding.switchGeoLocation.isChecked) {
+                    if (sessionManager.fetchBooleanData(SessionManager.FOREGROUND_LOCATION_SHOWN)) {
+                        showLocationServicesPopup()
+                    } else {
+                        requestLocationPermission()
+                    }
                 }
             }
         }
@@ -171,6 +259,29 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             }
         }
 
+
+    }
+
+    private fun stopForeGroundService() {
+        Log.e("TAG", "stopForeGroundService: ")
+        activity?.stopService(Intent(requireContext(), PlayLocationService::class.java))
+
+        val manager =
+            requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.cancel(123)
+
+    }
+
+    private fun startLocationServiceGeofence(from: Int) {
+        Log.e("TAG", "startLocationServiceGeofence: " + from)
+        GeofenceUtils.startGeofence(this.requireContext(), from)
+        if (from != 4) {
+            val fragmentId = findNavController().currentDestination?.id
+            findNavController().popBackStack(fragmentId!!, true)
+            val args = Bundle()
+            args.putBoolean("SERVICE_RUN", true)
+            findNavController().navigate(fragmentId, args)
+        }
 
     }
 
@@ -231,7 +342,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         )
 
         if (fineLocation || coarseLocation) {
-            GeofenceUtils.startGeofence(this.requireContext())
+            startLocationServiceGeofence(4)
             requestBackgroundLocationPermission()
         }
     }
