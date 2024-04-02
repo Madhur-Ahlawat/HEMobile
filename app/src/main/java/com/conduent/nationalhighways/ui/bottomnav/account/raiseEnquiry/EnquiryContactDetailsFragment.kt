@@ -509,7 +509,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 builder.append(fullPhoneNumber[i].toString())
                 builder.append("\u00A0")
             }
-            binding.mobileNumberEt.setContentDescription(builder)
+            binding.mobileNumberEt.binding.inputFirstName.setContentDescription(builder.toString())
 
         } else {
             if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
@@ -541,7 +541,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     builder.append(sm.fetchUserMobileNUmber()!![i])
                     builder.append("\u00A0")
                 }
-                binding.mobileNumberEt.setContentDescription(builder)
+                binding.mobileNumberEt.binding.inputFirstName.setContentDescription(builder.toString())
             }
 
         }

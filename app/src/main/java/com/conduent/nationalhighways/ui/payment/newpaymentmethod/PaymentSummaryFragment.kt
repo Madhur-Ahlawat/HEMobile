@@ -253,7 +253,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             findNavController().navigate(R.id.action_accountSummaryFragment_to_removeVehicleFragment)
         } else {
             val bundle = Bundle()
-
             if (isDblaAvailable == true) {
                 bundle.putString(PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)

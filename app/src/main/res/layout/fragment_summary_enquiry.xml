@@ -68,6 +68,7 @@
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
                 android:importantForAccessibility="yes"
+                android:screenReaderFocusable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,13 +76,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/category_tv"
                         style="@style/MediumTextBlack"
                         android:layout_width="0dp"
-                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         android:text="@string/str_category"
                         android:textSize="15sp"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -91,7 +93,7 @@
                         android:id="@+id/category_data_tv"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
-                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         android:text="@{viewModel.enquiryModel.category.value}"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@id/ll_edit_category"
@@ -108,6 +110,8 @@
                         <ImageView
                             android:id="@+id/category_edit_iv"
                             android:layout_width="wrap_content"
+                            android:screenReaderFocusable="true"
+                            android:importantForAccessibility="yes"
                             android:layout_height="wrap_content"
                             android:minHeight="@dimen/margin_48dp"
                             android:minWidth="@dimen/margin_48dp"

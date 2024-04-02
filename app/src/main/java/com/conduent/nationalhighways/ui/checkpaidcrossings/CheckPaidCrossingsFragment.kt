@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,20 +63,21 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 //        binding.editReferenceNumber.setText("1-99352459")
 //        binding.editNumberPlate.setText("ERR")
         binding.editNumberPlate.editText.addTextChangedListener {
-            isEnable()
+            isEnable(it)
         }
         binding.editReferenceNumber.editText.addTextChangedListener {
-            isEnable()
+            isEnable(it)
         }
         binding.point1Ll.contentDescription =
             resources.getString(R.string.accessibility_bullet) + "\n" + resources.getString(R.string.paid_crossing_point1)
         binding.point2Ll.contentDescription =
             resources.getString(R.string.accessibility_bullet) + "\n" + resources.getString(R.string.paid_crossing_point2)
+
     }
 
     override fun initCtrl() {
-        binding.editReferenceNumber.editText.addTextChangedListener { isEnable() }
-        binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
+        binding.editReferenceNumber.editText.addTextChangedListener { isEnable(it) }
+        binding.editNumberPlate.editText.addTextChangedListener { isEnable(it) }
         binding.findVehicle.setOnClickListener(this)
     }
 
@@ -85,7 +87,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
         }
     }
 
-    private fun isEnable() {
+    private fun isEnable(editable: Editable?) {
         var isReferenceNumberValid = true
         var isPlateNumberValid = true
         if (binding.editReferenceNumber.getText().toString().trim().isNullOrEmpty()) {
@@ -127,6 +129,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 //            binding.editReferenceNumber.removeError()
 //            binding.editNumberPlate.removeError()
 //        }
+        binding.editNumberPlate.binding.inputFirstName.contentDescription = editable?.toString()
     }
 
     override fun onClick(v: View?) {
