@@ -32,7 +32,7 @@
                 android:drawablePadding="@dimen/margin_23dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
-                android:importantForAccessibility="no"
+                android:importantForAccessibility="yes"
                 android:text="@string/str_you_are_removing_all_the_payments_method"
                 android:textColor="@color/new_btn_color"
                 android:textSize="16sp"
