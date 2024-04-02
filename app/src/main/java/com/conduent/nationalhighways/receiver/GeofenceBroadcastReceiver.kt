@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import com.conduent.nationalhighways.R
@@ -13,17 +14,46 @@ import com.conduent.nationalhighways.utils.notification.NotificationUtils
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.location.GeofencingEvent
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "GeofenceBroadcastReceiv"
-    lateinit var notificationUtils: NotificationUtils
     lateinit var sessionManager: SessionManager
+    lateinit var notificationUtils:NotificationUtils
     override fun onReceive(context: Context, intent: Intent) {
-        Log.e(TAG, "geofenceTransition- receiver -> ")
+        Log.e(TAG, "geofenceTransition - receiver -> ")
+        notificationUtils= NotificationUtils(context)
         sessionManager = SessionManager(Utils.returnSharedPreference(context))
+
+     /*   val directory =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val file = File(directory, "dartlogs_20_1.txt")
+        if (file.exists()) {
+            val fileWriter = FileWriter(file, true)
+            val bufferedWriter = BufferedWriter(fileWriter)
+
+            bufferedWriter.write("Geofence broadcast broadcast receiver triggered " + Date().toString() + "\n")
+            bufferedWriter.newLine()
+            checkNotification(sessionManager, context, intent, bufferedWriter)
+        } else {
+            checkNotification(sessionManager, context, intent, null)
+        }
+*/
+
+        checkNotification(sessionManager, context, intent, null)
+    }
+
+    private fun checkNotification(
+        sessionManager: SessionManager,
+        context: Context,
+        intent: Intent,
+        bufferedWriter: BufferedWriter?
+    ) {
         var checkLocationPermission = false
         var checkNotificationPermission = false
         if (sessionManager.fetchBooleanData(SessionManager.SettingsClick)) {
@@ -46,9 +76,10 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         )
 
 
+//        bufferedWriter?.write("checkLocationPermission $checkLocationPermission and checkNotificationPermission $checkNotificationPermission \n")
+//        bufferedWriter?.newLine()
 
         if (checkLocationPermission && checkNotificationPermission) {
-            notificationUtils = NotificationUtils(context)
             val geofencingEvent = GeofencingEvent.fromIntent(intent)
             geofencingEvent?.geofenceTransition
             if (geofencingEvent?.hasError() == true) {
@@ -62,6 +93,8 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             // Get the transition type.
             val geofenceTransition = geofencingEvent?.geofenceTransition
             Log.e(TAG, "geofenceTransition- geofenceTransition -> $geofenceTransition")
+
+
             var requestID = ""
 
             // Iterate over triggered geofences
@@ -69,14 +102,15 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 // Retrieve requestId and transition type
                 requestID = geofence.requestId
             }
+
+
             val dateFormat =
                 SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
             val dateString = dateFormat.format(Date())
 
-            Log.e(TAG, "onReceive: requestID " + requestID)
             if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
 
-                if (requestID == Constants.geofenceSouthBoundDartCharge) {
+                if (requestID == "geofenceSouthBoundDartCharge") {
                     sessionManager.saveStringData(
                         SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME,
                         dateString
@@ -108,7 +142,9 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                         sessionManager.fetchStringData(SessionManager.GEOFENCE_NORTHBOUND_ENTER_TIME),
                         Constants.dd_mm_yyyy_hh_mm_ss
                     )
-                } else {
+                } else if (sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_EXIT_TIME)
+                        .isNotEmpty()
+                ) {
                     Log.e(TAG, "onReceive: 11 ")
                     geofenceEnterTime = Utils.convertStringToDate1(
                         sessionManager.fetchStringData(SessionManager.GEOFENCE_SOUTHBOUND_ENTER_TIME),
@@ -153,9 +189,11 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                         ""
                     )
 
+                }else{
+                    Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
                 }
 
-                if (requestID == Constants.geofenceNorthBoundDartCharge) {
+                if (requestID == "geofenceNorthBoundDartCharge") {
                     sessionManager.saveStringData(
                         SessionManager.GEOFENCE_NORTHBOUND_EXIT_TIME,
                         dateString
@@ -171,6 +209,14 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 // Log the error.
                 Log.e(TAG, "geofenceTransition- error -> $geofenceTransition")
             }
+
+            bufferedWriter?.write("geofenceTransition $geofenceTransition requestID $requestID \n")
+            bufferedWriter?.newLine()
+
+
+
+            Log.e(TAG, "onReceive: requestID " + requestID)
+
         } else {
             Toast.makeText(
                 context,
@@ -178,5 +224,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        bufferedWriter?.close()
     }
 }
