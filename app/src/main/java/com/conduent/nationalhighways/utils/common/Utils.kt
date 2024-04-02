@@ -32,6 +32,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
@@ -40,6 +42,7 @@ import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogSessionexpiryBinding
+import com.conduent.nationalhighways.receiver.ForegroundServiceWorker
 import com.conduent.nationalhighways.service.PlayLocationService
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
@@ -64,6 +67,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.min
@@ -1660,12 +1664,20 @@ object Utils {
 
     fun startLocationService(activity: Context) {
         Log.e("TAG", "startLocationService:  ")
-
         if (isLocationServiceRunning(activity)) {
             Log.e("TAG", "startLocationService: Running ")
         } else {
             Log.e("TAG", "startLocationService: Not Running ")
             try {
+
+                // Schedule the periodic work (adjust interval as needed)
+                val periodicWorkRequest = PeriodicWorkRequest.Builder(
+                    ForegroundServiceWorker::class.java,
+                    12, TimeUnit.HOURS // Interval for starting the foreground service
+                ).build()
+
+                WorkManager.getInstance(activity).enqueue(periodicWorkRequest)
+
                 val i = Intent(activity, PlayLocationService::class.java)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     Log.e("TAG", "startForegroundService: Running-- ")
