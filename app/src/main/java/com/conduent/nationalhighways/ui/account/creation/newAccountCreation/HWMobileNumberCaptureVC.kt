@@ -756,11 +756,15 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         )
                     )
 
-                } else if ((!navFlowCall.equals(PROFILE_MANAGEMENT_2FA_CHANGE)) && phone.isNullOrEmpty()
+                } else if ((!navFlowCall.equals(PROFILE_MANAGEMENT_2FA_CHANGE)) && (phone.isNullOrEmpty()
                         .not() && phone.equals(
                         binding.inputMobileNumber.getText().toString()
                             .trim(), true
-                    )
+                    ) && (phoneCountryCode.isNullOrEmpty()
+                        .not() && phoneCountryCode.equals(
+                        getRequiredText(binding.inputCountry.getSelectedDescription())
+                    ))
+                            )
                 ) {
                     findNavController().popBackStack()
                 } else {

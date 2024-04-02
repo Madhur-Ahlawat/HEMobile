@@ -1749,4 +1749,16 @@ object Utils {
         }
     }
 
+
+    fun accessibilityForNumbers(value:String):StringBuilder{
+        val builder = StringBuilder()
+        for(data in value){
+            builder.append(data.toString())
+            if(data.isDigit()){
+                builder.append("\u00A0")
+            }
+        }
+        return builder
+    }
+
 }

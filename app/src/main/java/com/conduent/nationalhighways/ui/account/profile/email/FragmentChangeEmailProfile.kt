@@ -203,7 +203,8 @@ private var oldEmail=""
 
                 val bundle = Bundle()
                 binding.data?.referenceId = resource.data?.referenceId
-                bundle.putParcelable(NAV_DATA_KEY, binding.data)
+
+                bundle.putParcelable(NAV_DATA_KEY, data)
                 bundle.putString(NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(
                     REPLENISHMENTINFORMATION,

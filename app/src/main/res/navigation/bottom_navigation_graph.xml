@@ -116,6 +116,11 @@
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment"
         android:label="Maximum Vehicle Number"
         tools:layout="@layout/fragment_maximum_vehicle_number">
+
+        <action
+            android:id="@+id/action_maximumFragment_to_businessVehicleDetailFragment"
+            app:destination="@+id/businessVehicleDetailFragment"
+            />
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment"

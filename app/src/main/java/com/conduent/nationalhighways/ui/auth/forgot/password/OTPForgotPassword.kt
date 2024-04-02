@@ -80,7 +80,6 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.OnClickListener {
 
@@ -1065,9 +1064,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     PROFILE_MANAGEMENT -> {
+
+                        val data = navData as ProfileDetailModel?
+
+
                         updateProfileEmail(
-                            HomeActivityMain.accountDetailsData?.personalInformation,
-                            HomeActivityMain.accountDetailsData?.accountInformation
+                            data?.personalInformation,
+                            data?.accountInformation,
+                            this.data?.optionValue.toString()
                         )
                     }
 
@@ -1129,7 +1133,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun updateProfileEmail(
         dataModel: PersonalInformation?,
-        accountInformation: AccountInformation?
+        accountInformation: AccountInformation?,
+        email: String
     ) {
 
 
@@ -1145,7 +1150,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             dataModel?.zipcode,
             dataModel?.zipCodePlus,
             dataModel?.country,
-            dataModel?.emailAddress,
+            email,
             Constants.PENDING_STATUS,
             dataModel?.pemailUniqueCode,
             dataModel?.phoneCell,

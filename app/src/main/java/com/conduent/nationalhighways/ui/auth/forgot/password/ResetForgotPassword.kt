@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.auth.forgot.password
 import android.text.Html
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,8 +78,11 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.vehiclePlateNumber.text = data?.plateInfo?.number.toString()
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
+
             BIOMETRIC_CHANGE -> {
-                HomeActivityMain.dataBinding?.backButton?.gone()
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).hideBackIcon()
+                }
                 binding.feedbackBt.invisible()
                 binding.cardViewPlateNumber.gone()
                 binding.deleteTitle.gone()
@@ -97,6 +99,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                         .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                 ) {
                     removeBottomBar()
+                    if (requireActivity() is HomeActivityMain && !backButton) {
+                        (requireActivity() as HomeActivityMain).hideBackIcon()
+                    }
                     title?.text = getString(R.string.profile_email_address)
                     binding.feedbackBt.invisible()
                     binding.title.text = getString(R.string.email_address_change_successful)
@@ -146,6 +151,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
             }
 
             PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                if (requireActivity() is HomeActivityMain && !backButton) {
+                    (requireActivity() as HomeActivityMain).hideBackIcon()
+                }
                 title?.text = getString(R.string.communication_preferences)
                 binding.title.text = getString(R.string.communication_change_successful)
                 binding.subTitle.gone()
@@ -161,7 +169,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     binding.title.text = getString(R.string.phone_number_change_successful)
                     HomeActivityMain.setTitle(getString(R.string.profile_phone_number))
                 } else {
-                    HomeActivityMain.dataBinding?.backButton?.gone()
+                    if (requireActivity() is HomeActivityMain) {
+                        (requireActivity() as HomeActivityMain).hideBackIcon()
+                    }
                     binding.title.text = getString(R.string.mobile_change_successful)
                     HomeActivityMain.setTitle(getString(R.string.profile_mobile_number))
                 }
@@ -201,10 +211,11 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.signin_bt ->{
+            R.id.signin_bt -> {
                 requireActivity().startNormalActivity(LoginActivity::class.java)
                 requireActivity().finish()
             }
+
             R.id.btn_submit -> {
 
                 when (navFlowCall) {
@@ -212,6 +223,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     REMOVE_VEHICLE -> {
                         findNavController().popBackStack()
                     }
+
                     BIOMETRIC_CHANGE -> {
                         findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
                     }

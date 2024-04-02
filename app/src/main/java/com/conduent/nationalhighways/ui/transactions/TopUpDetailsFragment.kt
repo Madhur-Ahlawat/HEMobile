@@ -112,7 +112,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
         binding.typeOfPaymentCl.contentDescription=binding.tvTypeOfPayment.text.toString() +"\n "+ binding.tvTypeOfPaymentValue.text.toString()
         binding.paymentMethodCl.contentDescription=binding.tvPaymentMethod.text.toString() +"\n "+ binding.tvPaymentMethodValue.text.toString()
         binding.channelCl.contentDescription=binding.tvChannel.text.toString() +"\n "+ binding.tvChannelValue.text.toString()
-        binding.lastFourDigitsCl.contentDescription=binding.tvLastFourDigitsOfTheCard.text.toString() +"\n "+ binding.tvFourDigitsOfTheCardValue.text.toString()
+        binding.lastFourDigitsCl.contentDescription=binding.tvLastFourDigitsOfTheCard.text.toString() +"\n "+Utils.accessibilityForNumbers( binding.tvFourDigitsOfTheCardValue.text.toString())
     }
 
     override fun initCtrl() {

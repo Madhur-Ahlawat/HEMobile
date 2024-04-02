@@ -75,7 +75,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }else if(requireActivity() is AuthActivity){
+        } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         val receivedList = arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA)
@@ -177,16 +177,15 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             )
 
             binding.tvSelectPaymentMethod.text = htmlText
-            if(requireActivity() is MakeOffPaymentActivity){
+            if (requireActivity() is MakeOffPaymentActivity) {
                 (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
             }
 
             binding.cardView.contentDescription =
-                responseModel?.card?.type?.uppercase() + "\n" + responseModel?.card?.number?.let {
-                    Utils.maskCardNumber(
-                        it
-                    )
-                }
+                paymentList.get(position).cardType + "\n" + Utils.maskCardNumber(
+                    paymentList.get(position).cardNumber
+                )
+
 
         }
     }
