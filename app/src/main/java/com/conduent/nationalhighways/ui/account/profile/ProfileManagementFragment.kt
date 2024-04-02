@@ -179,13 +179,30 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             personalInformation?.phoneCell?.let {
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneCellCountryCode + " " + it
+                                var fullPhoneNumber = personalInformation?.phoneCellCountryCode?.replace("+", "plus") + " "+ it
+                                val builder = StringBuilder()
+                                for (i in 0 until
+                                        fullPhoneNumber.length) {
+                                    builder.append(fullPhoneNumber[i].toString())
+                                    builder.append("\u00A0")
+                                }
+                                binding.mobileNumber.setContentDescription(builder)
                             }
+
                         } else if (personalInformation?.phoneDay.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
 
                             personalInformation?.phoneDay?.let {
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneDayCountryCode + " " + it
+                                var fullPhoneNumber = personalInformation?.phoneCellCountryCode?.replace("+", "plus") + " "+ it
+                                val builder = StringBuilder()
+                                for (i in 0 until
+                                        fullPhoneNumber.length) {
+                                    builder.append(fullPhoneNumber[i].toString())
+                                    builder.append("\u00A0")
+                                }
+                                binding.mobileNumber.setContentDescription(builder)
                             }
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
@@ -299,7 +316,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
 
             R.id.editMobileNumber -> {
-
                 bundle.putString(NAV_FLOW_KEY, PROFILE_MANAGEMENT_MOBILE_CHANGE)
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_mobileNumberFragment,

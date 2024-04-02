@@ -103,6 +103,10 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
             }
         }
 
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+
     }
 
     private fun getBundleData(): Bundle {

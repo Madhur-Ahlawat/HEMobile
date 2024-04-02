@@ -78,9 +78,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
     override fun init() {
         binding.btnNext.setOnClickListener(this)
-        if (requireActivity() is CreateAccountActivity){
-            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
-        }
+
         when (navFlowCall) {
             EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
                 if (!isViewCreated) {
@@ -171,6 +169,9 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
         if(requireActivity() is HomeActivityMain){
             (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+        if (requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
 
     }

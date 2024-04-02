@@ -1759,4 +1759,6 @@
     <string name="if_you_have_nan_account">If you have\nan account</string>
     <string name="if_you_have_an_account">If you have an account</string>
     <string name="editing_future_crossings">Editing, number of future crossings, current value %s</string>
+    <string name="category">Category</string>
+    <string name="name">Name</string>
 </resources>

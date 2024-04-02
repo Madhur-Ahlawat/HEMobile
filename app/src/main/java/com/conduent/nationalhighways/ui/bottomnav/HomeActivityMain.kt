@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -568,8 +569,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     fun focusToolBarHome() {
         dataBinding?.backButton?.requestFocus() // Focus on the backButton
         val task = Runnable {
-            if(dataBinding?.backButton?.isAccessibilityFocused==false){
+            if(dataBinding?.backButton?.isVisible == true && dataBinding?.backButton?.isAccessibilityFocused==false){
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+            }
+            else if(dataBinding?.backButton?.isVisible == false){
+                dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
             }
         }
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
