@@ -65,6 +65,11 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun init() {
 
+        if(requireActivity() is CheckPaidCrossingActivity){
+            (requireActivity() as CheckPaidCrossingActivity).focusToolBarCrossingDetails()
+        }
+
+
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
@@ -107,9 +112,6 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         initTransactionsRecyclerView()
         getPaymentHistoryList(startIndex)
 
-        if(requireActivity() is CheckPaidCrossingActivity){
-            (requireActivity() as CheckPaidCrossingActivity).focusToolBarCrossingDetails()
-        }
 
         setContentDescriptionForBullets()
     }

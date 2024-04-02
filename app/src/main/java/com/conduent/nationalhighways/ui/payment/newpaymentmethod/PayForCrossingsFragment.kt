@@ -83,7 +83,6 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
 
             if (additionalCrossingsCharge != null) {
                 totalAmountOfAdditionalCrossings = additionalCrossingsCharge
-
             }
             crossingsList.clear()
             for (i in 1..additionalCrossings.plus(unSettledTrips!!)) {
@@ -105,16 +104,13 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                     data?.dvlaclass?.let { Utils.getVehicleType(requireActivity(), it) }),
                 Html.FROM_HTML_MODE_COMPACT
             )
-            binding.titleText2.text = Html.fromHtml(
-                getString(R.string.str_bullet_pay_for_crossing_point2,
-                    String.format("%.2f", data?.chargingRate?.toDouble()),
-                    data?.dvlaclass?.let { Utils.getVehicleType(requireActivity(), it) }),
-                Html.FROM_HTML_MODE_COMPACT
-            )
         }
 
         data?.unsettledTripChange =
             binding.inputCountry.getSelectedValue()?.toInt() ?: 0
+
+        setContentDescriptionForBullets()
+
         if (requireActivity() is MakeOffPaymentActivity) {
             (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
         } else if (requireActivity() is AuthActivity) {
@@ -124,7 +120,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
 
     private fun setContentDescriptionForBullets() {
         binding.point1Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point1)
-        binding.point2Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point2)
+        binding.point2Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+binding.titleText2.text.toString()
         binding.point3Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point3)
         binding.point4Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point4)
         binding.point5Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.str_pay_for_crossing_point5)

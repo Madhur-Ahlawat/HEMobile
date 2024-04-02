@@ -28,6 +28,7 @@ import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -74,6 +75,12 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         if (arguments?.containsKey(SHOW_BACK_BUTTON) == true) {
             backButton = arguments?.getBoolean(SHOW_BACK_BUTTON, true) ?: true
         }
+
+        if((requireActivity() is HomeActivityMain) && !backButton){
+            (requireActivity() as HomeActivityMain).hideBackIcon()
+        }
+        Log.e("TAG", "onCreateView: navFlowCall --> "+navFlowCall )
+        Log.e("TAG", "onCreateView: navFlowFrom --> "+navFlowFrom )
         return binding.root
     }
 
