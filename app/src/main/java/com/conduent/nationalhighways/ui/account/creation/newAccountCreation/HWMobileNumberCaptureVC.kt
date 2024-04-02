@@ -142,22 +142,52 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         binding.inputMobileNumber.editText.setText(
                             it
                         )
+                        val builder = StringBuilder()
+                        for (i in 0 until
+                                it.length) {
+                            builder.append(it[i].toString())
+                            builder.append("\u00A0")
+                        }
+                        binding.inputMobileNumber.editText.setContentDescription(builder)
                     }
                     NewCreateAccountRequestModel.countryCode?.let {
                         binding.inputCountry.setSelectedValue(
                             it
                         )
+                        var fullPhoneNumber = it?.replace("+", "plus")
+                        val builder = StringBuilder()
+                        for (i in 0 until
+                                fullPhoneNumber!!.length) {
+                            builder.append(fullPhoneNumber[i].toString())
+                            builder.append("\u00A0")
+                        }
+                        binding.inputCountry.setContentDescription(builder)
                     }
                 } else {
                     NewCreateAccountRequestModel.telephoneNumber?.let {
                         binding.inputMobileNumber.editText.setText(
                             it
                         )
+                        val builder = StringBuilder()
+                        for (i in 0 until
+                                it.length) {
+                            builder.append(it[i].toString())
+                            builder.append("\u00A0")
+                        }
+                        binding.inputMobileNumber.editText.setContentDescription(builder)
                     }
                     NewCreateAccountRequestModel.telephone_countryCode?.let {
                         binding.inputCountry.setSelectedValue(
                             it
                         )
+                        var fullPhoneNumber = it?.replace("+", "plus")
+                        val builder = StringBuilder()
+                        for (i in 0 until
+                                fullPhoneNumber!!.length) {
+                            builder.append(fullPhoneNumber[i].toString())
+                            builder.append("\u00A0")
+                        }
+                        binding.inputCountry.setContentDescription(builder)
                     }
                 }
                 checkIncompatibleCountry(binding.inputCountry.selectedItemDescription.toString(), 1)

@@ -199,7 +199,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
         }
-
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
 
     }
 
