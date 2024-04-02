@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Bundle
+import android.view.accessibility.AccessibilityEvent
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -14,6 +15,9 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -130,6 +134,16 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
     }
 
     fun focusToolBarCrossingDetails() {
+
+        binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+        val task = Runnable {
+            if(!binding.toolBarLyt.backButton.isAccessibilityFocused){
+                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+            }
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+
 //        binding.toolBarLyt.materialToolbar.requestFocus()
     }
 }

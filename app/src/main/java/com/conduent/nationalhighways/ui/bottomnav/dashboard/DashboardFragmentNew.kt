@@ -388,7 +388,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
             accountNumberRl.contentDescription =
-                resources.getString(R.string.txt_account_number) + "\n" + tvAccountNumberValue.text.toString()
+                resources.getString(R.string.txt_account_number) + "\n" + Utils.accessibilityForNumbers(tvAccountNumberValue.text.toString())
 
             data.let {
                 it.accountInformation?.let {
@@ -505,7 +505,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
             accountNumberRl.contentDescription =
-                resources.getString(R.string.txt_account_number) + "\n" + tvAccountNumberValue.text.toString()
+                resources.getString(R.string.txt_account_number) + "\n" + Utils.accessibilityForNumbers(tvAccountNumberValue.text.toString())
 
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
@@ -600,7 +600,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
             accountNumberRl.contentDescription =
-                resources.getString(R.string.txt_account_number) + "\n" + tvAccountNumberValue.text.toString()
+                resources.getString(R.string.txt_account_number) + "\n" +Utils.accessibilityForNumbers( tvAccountNumberValue.text.toString())
 
             val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
             data.let {
