@@ -10,11 +10,13 @@ import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.conduent.nationalhighways.receiver.GeofenceBroadcastReceiver
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
@@ -23,6 +25,9 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.Priority
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 
 
 @SuppressLint("StaticFieldLeak")
@@ -38,7 +43,23 @@ object GeofenceUtils {
     lateinit var context: Context
 
     //starting geofence
-    fun startGeofence(context1: Context) {
+    fun startGeofence(context1: Context, from: Int = 0) {
+
+       /* val directory =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val file = File(directory, "dartlogs_20_1.txt")
+        if (file.exists()) {
+            val fileWriter = FileWriter(file, true)
+            val bufferedWriter = BufferedWriter(fileWriter)
+            bufferedWriter.write("startgeofence from $from\n")
+            bufferedWriter.newLine()
+            bufferedWriter.close()
+        }else{
+            Log.e(TAG, "startGeofence: file not exists" )
+        }
+*/
+
+
         context = context1
         val geofenceIntent: PendingIntent by lazy {
             val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
@@ -58,7 +79,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceNorthBoundDartCharge)
                 setCircularRegion(
-                    10.987400, 75.986028,
+                    17.463311, 78.561253,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -69,7 +90,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceSouthBoundDartCharge)
                 setCircularRegion(
-                    10.993615, 75.992738,
+                    17.473612, 78.570747,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -112,6 +133,7 @@ object GeofenceUtils {
     private fun seekGeofencing(list: ArrayList<Geofence>): GeofencingRequest {
         Log.e(TAG, "seekGeofencing: list:$list")
         return GeofencingRequest.Builder().apply {
+//            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
             addGeofences(list)
         }.build()
     }
@@ -119,7 +141,8 @@ object GeofenceUtils {
     private fun removeGeofenceByIds() {
         Log.e(TAG, "removeGeofenceByIds : $geofenceList")
         val list = ArrayList<String>()
-        list.add("geofenceDartCharge")
+        list.add(Constants.geofenceSouthBoundDartCharge)
+        list.add(Constants.geofenceNorthBoundDartCharge)
         geoClient.removeGeofences(list).run {
             addOnSuccessListener {
                 Log.e(TAG, "removeGeofenceByIds : Circular fences removed ")

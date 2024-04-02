@@ -2,12 +2,15 @@ package com.conduent.nationalhighways.ui.base
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.util.Log
 import com.adobe.marketing.mobile.*
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
 import com.conduent.nationalhighways.data.remote.ApiService
+import com.conduent.nationalhighways.receiver.BootReceiver
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -33,7 +36,6 @@ class BaseApplication : Application() {
     lateinit var api: ApiService //ms
 
 
-
     private var ProfileDetailModel: ProfileDetailModel? = null
     fun getAccountSavedData(): ProfileDetailModel {
         return ProfileDetailModel!!
@@ -44,25 +46,27 @@ class BaseApplication : Application() {
     }
 
     companion object {
-        var flowNameAnalytics:String?=""
-        var screenNameAnalytics:String?=""
+        var flowNameAnalytics: String? = ""
+        var screenNameAnalytics: String? = ""
         var CurrentContext: Context? = null
 
 
         var INSTANCE: BaseApplication? = null
         var logoutListener: LogoutListener? = null
         var timer: Timer? = null
-        public fun setFlowNameAnalytics1(flowName:String){
-            flowNameAnalytics=flowName
+        fun setFlowNameAnalytics1(flowName: String) {
+            flowNameAnalytics = flowName
         }
-        public fun getFlowNameAnalytics1(): String? {
+
+        fun getFlowNameAnalytics1(): String? {
             return flowNameAnalytics
         }
 
-        public fun setScreenNameAnalytics1(screenName:String){
-            screenNameAnalytics=screenName
+        fun setScreenNameAnalytics1(screenName: String) {
+            screenNameAnalytics = screenName
         }
-        public fun getScreenNameAnalytics1(): String? {
+
+        fun getScreenNameAnalytics1(): String? {
             return screenNameAnalytics
         }
 
@@ -74,20 +78,19 @@ class BaseApplication : Application() {
 
                 saveDateinSession(sessionManager)
 
-                    try {
-                        response = runBlocking {
-                            api.refreshToken(refresh_token = refresh)
-                        }
-                        responseOK = response?.isSuccessful == true
-                    } catch (e: Exception) {
-                        responseOK = false
+                try {
+                    response = runBlocking {
+                        api.refreshToken(refresh_token = refresh)
                     }
+                    responseOK = response?.isSuccessful == true
+                } catch (e: Exception) {
+                    responseOK = false
+                }
                 if (responseOK) {
                     saveToken(sessionManager, response)
-                    if(response?.body()?.mfaEnabled!=null && response.body()?.mfaEnabled?.lowercase() == "true"){
+                    if (response?.body()?.mfaEnabled != null && response.body()?.mfaEnabled?.lowercase() == "true") {
                         sessionManager.saveTwoFAEnabled(true)
-                    }
-                    else{
+                    } else {
                         sessionManager.saveTwoFAEnabled(false)
                     }
                     delegate.invoke()
@@ -129,7 +132,7 @@ class BaseApplication : Application() {
         fun saveToken(sessionManager: SessionManager, response: Response<LoginResponse?>?) {
             sessionManager.run {
                 saveAuthToken(response?.body()?.accessToken ?: "")
-                saveBooleanData(SessionManager.SendAuthTokenStatus,true)
+                saveBooleanData(SessionManager.SendAuthTokenStatus, true)
                 saveRefreshToken(response?.body()?.refreshToken ?: "")
                 saveAuthTokenTimeOut(response?.body()?.expiresIn ?: 0)
             }
@@ -142,6 +145,18 @@ class BaseApplication : Application() {
         super.onCreate()
         getFireBaseToken()
         setAdobeAnalytics()
+
+        registerBootReceiver()
+    }
+
+    private fun registerBootReceiver() {
+        val receiver = BootReceiver()
+        val filter = IntentFilter().apply {
+            addAction(Intent.ACTION_BOOT_COMPLETED)
+            addAction(Intent.ACTION_PACKAGE_ADDED)
+            addDataScheme("com.conduent.nationalhighways")
+        }
+        INSTANCE?.registerReceiver(receiver, filter)
     }
 
     private fun setAdobeAnalytics() {

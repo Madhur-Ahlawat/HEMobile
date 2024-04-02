@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.landing
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -28,6 +29,8 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -117,7 +120,20 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 Utils.checkLocationpermission(this)
             )
         }
+        Log.e("TAG", "initViewBinding: isGeofencingAvailable "+isGeofencingAvailable() )
+        Log.e("TAG", "initViewBinding: isLocationServicesEnabled "+isLocationServicesEnabled() )
+    }
 
+    fun isGeofencingAvailable(): Boolean {
+        val apiAvailability = GoogleApiAvailability.getInstance()
+        val resultCode = apiAvailability.isGooglePlayServicesAvailable(this)
+        return resultCode == ConnectionResult.SUCCESS
+    }
+
+    fun isLocationServicesEnabled(): Boolean {
+        val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as android.location.LocationManager
+        return locationManager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER) ||
+                locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)
     }
 
     private fun backClickListener() {

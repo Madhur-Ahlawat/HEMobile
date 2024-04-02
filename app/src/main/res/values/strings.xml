@@ -1702,5 +1702,7 @@
     <string name="str_enable_push_notification_desc">Go to Settings on your device to enable notifications for the Dart Charge app</string>
     <string name="str_no_transactions_to_view">There are no recent transactions to view</string>
     <string name="str_cash">Cash</string>
+    <string name="dartcharge_running">DartCharge is running</string>
+    <string name="tap_for_more_info">Tap for more info or to stop the app</string>
 
 </resources>
