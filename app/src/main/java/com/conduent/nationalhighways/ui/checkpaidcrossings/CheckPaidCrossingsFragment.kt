@@ -69,9 +69,9 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             isEnable(it)
         }
         binding.point1Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "\n" + resources.getString(R.string.paid_crossing_point1)
+            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.paid_crossing_point1)
         binding.point2Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "\n" + resources.getString(R.string.paid_crossing_point2)
+            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.paid_crossing_point2)
 
     }
 

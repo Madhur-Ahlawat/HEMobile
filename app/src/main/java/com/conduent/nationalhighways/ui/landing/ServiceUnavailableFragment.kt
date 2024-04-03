@@ -119,10 +119,10 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
         }
 
         binding.detailsCl.contentDescription =
-            binding.decs1Tv.text.toString() + "\n" +
-                    binding.decs2Tv.text.toString() + "\n" +
-                    binding.decs3Tv.text.toString() + "\n" +
-                    binding.decs4Tv.text.toString() + "\n" +
+            binding.decs1Tv.text.toString() +"."+
+                    binding.decs2Tv.text.toString() +"."+
+                    binding.decs3Tv.text.toString() +"."+
+                    binding.decs4Tv.text.toString() +"."+
                     binding.decs5Tv.text.toString()
         binding.btnGoToWebsite.setOnClickListener {
             val browserIntent = Intent(

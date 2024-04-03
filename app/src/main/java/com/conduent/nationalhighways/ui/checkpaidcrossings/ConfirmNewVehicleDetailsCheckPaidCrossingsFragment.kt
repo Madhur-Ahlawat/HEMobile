@@ -95,9 +95,9 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
     }
 
     private fun setContentDescriptionForBullets() {
-        binding.layoutVehicleRegistrationCv.contentDescription=binding.txtVehicleRegistration.text.toString()+"\n"+binding.vehicleRegisration.text.toString()
-        binding.creditRemainingCv.contentDescription=binding.txtCreditRemaining.text.toString()+"\n"+binding.creditRemaining.text.toString()
-        binding.emailCard.contentDescription=binding.txtCreditWillExpireOn.text.toString()+"\n"+binding.creditAdditionalCrossings.text.toString()
+        binding.layoutVehicleRegistrationCv.contentDescription=binding.txtVehicleRegistration.text.toString()+"."+binding.vehicleRegisration.text.toString()
+        binding.creditRemainingCv.contentDescription=binding.txtCreditRemaining.text.toString()+"."+binding.creditRemaining.text.toString()
+        binding.emailCard.contentDescription=binding.txtCreditWillExpireOn.text.toString()+"."+binding.creditAdditionalCrossings.text.toString()
 
     }
 

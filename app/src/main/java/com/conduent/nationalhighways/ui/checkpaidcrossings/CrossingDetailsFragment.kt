@@ -117,10 +117,10 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     }
 
     private fun setContentDescriptionForBullets() {
-        binding.layerFullName.contentDescription=binding.txtFullName.text.toString()+"\n"+binding.fullName.text.toString()
-        binding.layerCompanyName.contentDescription=binding.txtVehicleRegistrationNumber.text.toString()+"\n"+binding.valueVehicleRegistrationNumber.text.toString()
-        binding.creditRemainingCl.contentDescription=binding.txtAddress.text.toString()+"\n"+binding.address.text.toString()
-        binding.creditExpiryDateCl.contentDescription=binding.txtEmailAddress.text.toString()+"\n"+binding.emailAddress.text.toString()
+        binding.layerFullName.contentDescription=binding.txtFullName.text.toString()+"."+binding.fullName.text.toString()
+        binding.layerCompanyName.contentDescription=binding.txtVehicleRegistrationNumber.text.toString()+"."+binding.valueVehicleRegistrationNumber.text.toString()
+        binding.creditRemainingCl.contentDescription=binding.txtAddress.text.toString()+"."+binding.address.text.toString()
+        binding.creditExpiryDateCl.contentDescription=binding.txtEmailAddress.text.toString()+"."+binding.emailAddress.text.toString()
     }
 
 

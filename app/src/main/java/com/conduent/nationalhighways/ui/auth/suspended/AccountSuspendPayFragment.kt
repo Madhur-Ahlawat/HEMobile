@@ -128,7 +128,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             binding.tvSelectPaymentMethod.text = htmlText
 
             binding.cardView.contentDescription =
-                responseModel?.card?.type?.uppercase() + "\n" + responseModel?.card?.number?.let {
+                responseModel?.card?.type?.uppercase() +"."+ responseModel?.card?.number?.let {
                     Utils.maskCardNumber(
                         it
                     )
@@ -182,7 +182,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
 
             binding.cardView.contentDescription =
-                paymentList.get(position).cardType + "\n" + Utils.maskCardNumber(
+                paymentList.get(position).cardType +"."+ Utils.maskCardNumber(
                     paymentList.get(position).cardNumber
                 )
 

@@ -149,7 +149,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
         binding.referenceNumberTv.text = transactionId
 
         binding.layoutPaymentReferenceNumber.contentDescription =
-            resources.getString(R.string.str_payment_reference_number) + "\n" + transactionId
+            resources.getString(R.string.str_payment_reference_number) +"."+ transactionId
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             binding.tvAccountSuspended.text = getString(
                 R.string.str_balance_topped_up_with,

@@ -197,7 +197,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     }
 
     private fun setContentDescriptionForCard() {
-        binding.cardView.contentDescription=binding.tvSelectPaymentMethod.text.toString()+"\n"+binding.textDefault.text.toString()
+        binding.cardView.contentDescription=binding.tvSelectPaymentMethod.text.toString()+"."+binding.textDefault.text.toString()
     }
 
     override fun init() {

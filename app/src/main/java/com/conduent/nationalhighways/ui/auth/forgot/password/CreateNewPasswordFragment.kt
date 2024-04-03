@@ -511,18 +511,18 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     }
 
     fun setDotBackground(view: View, pointLl: LinearLayout, string: String) {
-        pointLl.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+string
+        pointLl.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+string
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_5dp)
     }
     fun setTickBackground(view: View, pointLl: LinearLayout, string: String) {
-        pointLl.contentDescription=resources.getString(R.string.accessibility_check_mark)+"\n"+string
+        pointLl.contentDescription=resources.getString(R.string.accessibility_check_mark)+"."+string
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.grin_tick)
     }
     private fun setContentDesForDot(content:String) {
-        binding.point1Ll.contentDescription=content+"\n"+resources.getString(R.string.str_at_least_8_character)
-        binding.point2Ll.contentDescription=content+"\n"+resources.getString(R.string.str_contain_at_least_one_upper_case)
-        binding.point3Ll.contentDescription=content+"\n"+resources.getString(R.string.str_contain_at_least_one_lower_case)
-        binding.point4Ll.contentDescription=content+"\n"+resources.getString(R.string.str_contain_at_least_one_number)
+        binding.point1Ll.contentDescription=content+"."+resources.getString(R.string.str_at_least_8_character)
+        binding.point2Ll.contentDescription=content+"."+resources.getString(R.string.str_contain_at_least_one_upper_case)
+        binding.point3Ll.contentDescription=content+"."+resources.getString(R.string.str_contain_at_least_one_lower_case)
+        binding.point4Ll.contentDescription=content+"."+resources.getString(R.string.str_contain_at_least_one_number)
     }
 
 

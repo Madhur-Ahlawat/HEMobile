@@ -154,9 +154,6 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             } else {
                 // For versions lower than Android 11, handle permissions accordingly
                 // You may request WRITE_EXTERNAL_STORAGE permission or other relevant permissions
-
-        } else {
-
             }
         }
 

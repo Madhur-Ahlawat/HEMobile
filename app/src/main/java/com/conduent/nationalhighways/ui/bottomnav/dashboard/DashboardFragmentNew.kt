@@ -388,7 +388,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
             accountNumberRl.contentDescription =
-                resources.getString(R.string.txt_account_number) + "\n" + Utils.accessibilityForNumbers(tvAccountNumberValue.text.toString())
+                resources.getString(R.string.txt_account_number) +"."+ Utils.accessibilityForNumbers(tvAccountNumberValue.text.toString())
 
             data.let {
                 it.accountInformation?.let {
@@ -411,12 +411,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                         }
                         boxCardType.contentDescription =
-                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"")+ "\n" + Utils.accessibilityForNumbers(cardNumber.text.toString())
+                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"")+"."+ Utils.accessibilityForNumbers(cardNumber.text.toString())
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 2
                         )
                         binding.accountStatusRl.contentDescription =
-                            resources.getString(R.string.txt_account_status) + "\n" + indicatorAccountStatus.text.toString()
+                            resources.getString(R.string.txt_account_status) +"."+ indicatorAccountStatus.text.toString()
 
                     }
                     it.type?.let {
@@ -478,7 +478,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
 
             accountBalanceRl.contentDescription =
-                resources.getString(R.string.txt_account_balance) + "\n" + tvAvailableBalance.text.toString()
+                resources.getString(R.string.txt_account_balance) +"."+ tvAvailableBalance.text.toString()
 
 
 
@@ -492,12 +492,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupAmount.visible()
             valueTopupAmount.text = getString(R.string.str_zero_euro)
             boxTopupAmount.contentDescription =
-                "" + valueTopupAmount.text.toString() + "\n" + resources.getString(R.string.txt_topup_amount)
+                "" + valueTopupAmount.text.toString() +"."+ resources.getString(R.string.txt_topup_amount)
 
             boxTopupMethod.visible()
             valueAutopay.text = getString(R.string.exempt)
             boxTopupMethod.contentDescription =
-                "" + valueAutopay.text.toString() + "\n" + resources.getString(R.string.txt_topup_method)
+                "" + valueAutopay.text.toString() +"."+ resources.getString(R.string.txt_topup_method)
 
             buttonTopup.gone()
             setGuideLinePercent(0.25F, R.dimen.margin_15dp)
@@ -505,7 +505,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
             accountNumberRl.contentDescription =
-                resources.getString(R.string.txt_account_number) + "\n" + Utils.accessibilityForNumbers(tvAccountNumberValue.text.toString())
+                resources.getString(R.string.txt_account_number) +"."+ Utils.accessibilityForNumbers(tvAccountNumberValue.text.toString())
 
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
@@ -520,7 +520,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     }
 
                     binding.accountStatusRl.contentDescription =
-                        resources.getString(R.string.txt_account_status) + "\n" + indicatorAccountStatus.text.toString()
+                        resources.getString(R.string.txt_account_status) +"."+ indicatorAccountStatus.text.toString()
                     it.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
@@ -549,18 +549,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
 
             accountBalanceRl.contentDescription =
-                resources.getString(R.string.txt_account_balance) + "\n" + tvAvailableBalance.text.toString()
+                resources.getString(R.string.txt_account_balance) +"."+ tvAvailableBalance.text.toString()
 
             accountStatusRl.visible()
 
             boxTopupAmount.visible()
             valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
             boxTopupAmount.contentDescription =
-                "" + valueTopupAmount.text.toString() + "\n" + resources.getString(R.string.txt_topup_amount)
+                "" + valueTopupAmount.text.toString() +"."+ resources.getString(R.string.txt_topup_amount)
             boxLowBalanceThreshold.visible()
             valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
             boxLowBalanceThreshold.contentDescription =
-                "" + valueLowBalanceThreshold.text.toString() + "\n" + resources.getString(R.string.txt_low_threshold_balance)
+                "" + valueLowBalanceThreshold.text.toString() +"."+ resources.getString(R.string.txt_low_threshold_balance)
 
             boxTopupMethod.visible()
 
@@ -600,7 +600,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
             accountNumberRl.contentDescription =
-                resources.getString(R.string.txt_account_number) + "\n" +Utils.accessibilityForNumbers( tvAccountNumberValue.text.toString())
+                resources.getString(R.string.txt_account_number) +"."+Utils.accessibilityForNumbers( tvAccountNumberValue.text.toString())
 
             val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
             data.let {
@@ -621,18 +621,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
                         boxCardType.contentDescription =
-                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"") + "\n" + Utils.accessibilityForNumbers(cardNumber.text.toString())
+                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"") +"."+ Utils.accessibilityForNumbers(cardNumber.text.toString())
 
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 1
                         )
                         binding.accountStatusRl.contentDescription =
-                            resources.getString(R.string.txt_account_status) + "\n" + indicatorAccountStatus.text.toString()
+                            resources.getString(R.string.txt_account_status) +"."+ indicatorAccountStatus.text.toString()
                     }
 
                     valueAutopay.text = resources.getString(R.string.str_auto_pay)
                     boxTopupMethod.contentDescription =
-                        "" + valueAutopay.text.toString() + "\n" + resources.getString(R.string.txt_topup_method)
+                        "" + valueAutopay.text.toString() +"."+ resources.getString(R.string.txt_topup_method)
 
                     it.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)

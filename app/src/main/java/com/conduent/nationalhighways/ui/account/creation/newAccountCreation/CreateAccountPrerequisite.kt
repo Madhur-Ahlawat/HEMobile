@@ -37,10 +37,10 @@ class CreateAccountPrerequisite : BaseFragment<FragmentCreateAccountPrerequisite
     }
 
     override fun initCtrl() {
-        binding.createAccounPoint1.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.an_email_address_to_receive_a_code)
-        binding.createAccounPoint2.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.a_phone_number)
-        binding.createAccounPoint3.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.the_vehicle_registration_number_plate_you_want_to_add_to_the_account)
-        binding.createAccounPoint4.contentDescription=resources.getString(R.string.accessibility_bullet)+"\n"+resources.getString(R.string.a_valid_debit_or_credit_card)
+        binding.createAccounPoint1.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.an_email_address_to_receive_a_code)
+        binding.createAccounPoint2.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.a_phone_number)
+        binding.createAccounPoint3.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.the_vehicle_registration_number_plate_you_want_to_add_to_the_account)
+        binding.createAccounPoint4.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.a_valid_debit_or_credit_card)
     }
 
     override fun observer() {

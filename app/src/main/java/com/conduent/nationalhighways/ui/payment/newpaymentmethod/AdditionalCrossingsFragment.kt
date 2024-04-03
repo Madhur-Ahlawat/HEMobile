@@ -132,11 +132,11 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
 
     private fun setContentDescriptionForBullet() {
         binding.point1Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "\n" + resources.getString(R.string.str_additional_crossing_point1)
+            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.str_additional_crossing_point1)
         binding.point2Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "\n" + resources.getString(R.string.str_additional_crossing_point2)
+            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.str_additional_crossing_point2)
         binding.point3Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "\n" + resources.getString(R.string.str_additional_crossing_point3)
+            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.str_additional_crossing_point3)
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
@@ -223,9 +223,9 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     }
 
     private fun setContentDescriptionForText() {
-        binding.paymentAmountFutureLl.contentDescription=resources.getString(R.string.str_payment_amount_for_additional_crossings)+"\n"+binding.paymentCrossing.text.toString()
-        binding.paymentAmountRecentLl.contentDescription=resources.getString(R.string.str_payment_amount_for_recent_crossings)+"\n"+binding.recentCrossing.text.toString()
-        binding.paymentAmountLl.contentDescription=resources.getString(R.string.str_total_amount)+"\n"+binding.totalAmount.text.toString()
+        binding.paymentAmountFutureLl.contentDescription=resources.getString(R.string.str_payment_amount_for_additional_crossings)+"."+binding.paymentCrossing.text.toString()
+        binding.paymentAmountRecentLl.contentDescription=resources.getString(R.string.str_payment_amount_for_recent_crossings)+"."+binding.recentCrossing.text.toString()
+        binding.paymentAmountLl.contentDescription=resources.getString(R.string.str_total_amount)+"."+binding.totalAmount.text.toString()
     }
 
     private fun checkButton() {

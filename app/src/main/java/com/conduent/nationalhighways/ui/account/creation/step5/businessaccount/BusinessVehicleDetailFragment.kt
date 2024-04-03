@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.step5.businessaccount
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,7 +72,21 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
         }
 
+        setContentDescriptionForTexts()
 
+    }
+
+    private fun setContentDescriptionForTexts() {
+        binding.vehicleRegNumLl.contentDescription =
+            binding.vehicleRegNum.text.toString() + "." + binding.regNum.text.toString()
+        binding.typeOfVehLl.contentDescription =
+            binding.typeOfVeh.text.toString() + "." + binding.typeOfVehicle.text.toString()
+        binding.makeLl.contentDescription =
+            binding.strMake.text.toString() + "." + binding.vehicleMake.text.toString()
+        binding.modelLl.contentDescription =
+            binding.strModel.text.toString() + "." + binding.vehicleModel.text.toString()
+        binding.colorLl.contentDescription =
+            binding.strColor.text.toString() + "." + binding.vehicleColor.text.toString()
     }
 
     override fun initCtrl() {
@@ -102,12 +115,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                             it.vehicleModel = data?.vehicleModel
                             it.vehicleMake = data?.vehicleMake
                             it.vehicleColor = data?.vehicleColor
-                            it.accountNo=it.accountNumber?:""
+                            it.accountNo = it.accountNumber ?: ""
                         } else {
                             it.vehicleModel = nonUKVehicleModel?.vehicleModel
                             it.vehicleMake = nonUKVehicleModel?.vehicleMake
                             it.vehicleColor = nonUKVehicleModel?.vehicleColor
-                            it.accountNo=it.accountNumber?:""
+                            it.accountNo = it.accountNumber ?: ""
                         }
 
                         resource.data.plateNo = data?.plateNo ?: ""
@@ -197,12 +210,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                                 R.id.action_businessVehicleDetailFragment_to_vehicleIsExemptFromDartChargesFragment,
                                 bundle
                             )
-                        } else if(!data?.vehicleClassBalanceTransfer.equals(data?.vehicleClass)){
+                        } else if (!data?.vehicleClassBalanceTransfer.equals(data?.vehicleClass)) {
                             findNavController().navigate(
                                 R.id.action_businessVehicleDetailFragment_to_vehicleDoesNotMatchCurrentVehicleFragment,
                                 bundle
                             )
-                        }else {
+                        } else {
                             findNavController().navigate(
                                 R.id.action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,
                                 bundle
@@ -214,32 +227,32 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     else -> {
 
 
-                            val oldPlateNumber =
-                                arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
-                            if (oldPlateNumber.isNotEmpty()) {
-                                val index = arguments?.getInt(Constants.VEHICLE_INDEX)
-                                if (index != null) {
-                                    vehicleList.removeAt(index)
-                                }
-                            }
-                            nonUKVehicleModel?.let {
-
-                                vehicleList.add(it)
-                                val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
-                                if (editCall) {
-                                    findNavController().navigate(
-                                        R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment,
-                                        bundle
-                                    )
-                                } else {
-                                    findNavController().navigate(
-                                        R.id.action_businessVehicleDetailFragment_to_vehicleListFragment,
-                                        bundle
-                                    )
-                                }
-
+                        val oldPlateNumber =
+                            arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
+                        if (oldPlateNumber.isNotEmpty()) {
+                            val index = arguments?.getInt(Constants.VEHICLE_INDEX)
+                            if (index != null) {
+                                vehicleList.removeAt(index)
                             }
                         }
+                        nonUKVehicleModel?.let {
+
+                            vehicleList.add(it)
+                            val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
+                            if (editCall) {
+                                findNavController().navigate(
+                                    R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment,
+                                    bundle
+                                )
+                            } else {
+                                findNavController().navigate(
+                                    R.id.action_businessVehicleDetailFragment_to_vehicleListFragment,
+                                    bundle
+                                )
+                            }
+
+                        }
+                    }
 
 
                 }
@@ -252,7 +265,8 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     bundle.putParcelable(
                         Constants.NAV_DATA_KEY,
-                      data)
+                        data
+                    )
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
                     findNavController().navigate(
