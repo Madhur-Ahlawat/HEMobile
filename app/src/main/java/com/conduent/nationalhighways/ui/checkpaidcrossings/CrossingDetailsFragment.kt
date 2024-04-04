@@ -114,6 +114,10 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
 
 
         setContentDescriptionForBullets()
+
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     private fun setContentDescriptionForBullets() {

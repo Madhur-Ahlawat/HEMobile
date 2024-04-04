@@ -48,6 +48,9 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
         if(requireActivity() is HomeActivityMain){
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     override fun onResume() {

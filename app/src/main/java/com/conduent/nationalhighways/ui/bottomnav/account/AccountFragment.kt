@@ -68,6 +68,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         initUI()
         binding.contactUs.visible()
         setBackPressListener(this)
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     private fun initUI() {

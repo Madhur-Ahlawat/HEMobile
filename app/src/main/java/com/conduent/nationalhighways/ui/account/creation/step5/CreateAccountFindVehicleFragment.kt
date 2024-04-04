@@ -28,6 +28,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -129,6 +130,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
         binding.titleText2.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.str_pay_for_crossing_numberplate_point1)
         binding.titleText3.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.str_pay_for_crossing_numberplate_point2)
+        if(requireActivity() is MakeOffPaymentActivity){
+            (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
+        }
     }
 
     override fun initCtrl() {
