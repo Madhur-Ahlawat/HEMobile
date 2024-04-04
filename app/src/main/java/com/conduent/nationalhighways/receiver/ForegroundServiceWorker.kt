@@ -14,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.utils.common.Utils
 
 class ForegroundServiceWorker(val context: Context, params: WorkerParameters) : Worker(context, params) {
 
@@ -26,7 +27,9 @@ class ForegroundServiceWorker(val context: Context, params: WorkerParameters) : 
 //            Log.e("TAG", "doWork:--> " )
 //        }
 //        // Start the foreground service from the Worker
-//        startForegroundService()
+        if(!Utils.isLocationServiceRunning(context)){
+            startForegroundService()
+        }
         Log.e("TAG", "doWork:--@@> " )
         return Result.success()
     }
