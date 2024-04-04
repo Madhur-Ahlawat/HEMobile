@@ -22,6 +22,7 @@ import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,6 +36,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
     private var navFlow: String = ""
     private var topUpAmount: String = ""
     private var newCard: Boolean = false
+    private val formatter = DecimalFormat("#,###.00")
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -56,10 +58,6 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
         transactionId = arguments?.getString(Constants.TRANSACTIONID).toString()
         topUpAmount = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
-
-        if(topUpAmount.isNotEmpty() && !Utils.isDecimal(topUpAmount.toDouble())){
-            topUpAmount=topUpAmount.toDouble().toInt().toString()
-        }
 
 
         if (arguments?.containsKey(Constants.NEW_CARD) == true) {
@@ -153,7 +151,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             binding.tvAccountSuspended.text = getString(
                 R.string.str_balance_topped_up_with,
-                getString(R.string.pound_symbol) + topUpAmount
+                    "£" + formatter.format(topUpAmount)
             )
             binding.tvYouWillNeedToPay.gone()
             binding.tvYouWillAlsoNeed.gone()
