@@ -411,7 +411,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                         }
                         boxCardType.contentDescription =
-                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"")+"."+ Utils.accessibilityForNumbers(cardNumber.text.toString())
+                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"")+" "+ Utils.accessibilityForNumbers(cardNumber.text.toString())
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 2
                         )
@@ -621,7 +621,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
                         boxCardType.contentDescription =
-                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"") +"."+ Utils.accessibilityForNumbers(cardNumber.text.toString())
+                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"") +" "+ Utils.accessibilityForNumbers(cardNumber.text.toString())
 
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 1

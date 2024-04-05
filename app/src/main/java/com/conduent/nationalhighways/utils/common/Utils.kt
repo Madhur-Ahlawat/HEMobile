@@ -1778,7 +1778,7 @@ object Utils {
                 // Schedule the periodic work (adjust interval as needed)
                 val periodicWorkRequest = PeriodicWorkRequest.Builder(
                     ForegroundServiceWorker::class.java,
-                    12, TimeUnit.HOURS // Interval for starting the foreground service
+                    1, TimeUnit.HOURS // Interval for starting the foreground service
                 ).build()
 
                 WorkManager.getInstance(activity).enqueue(periodicWorkRequest)
@@ -1791,7 +1791,6 @@ object Utils {
                     Log.e("TAG", "startForegroundService: Running--- ")
                     activity.startService(i)
                 }
-//                activity.startService(i)
             } catch (e: Exception) {
             }
         }

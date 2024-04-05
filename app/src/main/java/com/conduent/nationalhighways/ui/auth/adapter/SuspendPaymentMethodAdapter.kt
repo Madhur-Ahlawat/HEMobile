@@ -69,7 +69,7 @@ class SuspendPaymentMethodAdapter(
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
         holder.binding.radioButtonPaymentMethod.text =
-            "${holder.binding.tvSelectPaymentMethod.text}"
+            "${Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())}"
 
         holder.binding.radioButtonPaymentMethod.setAccessibilityDelegate()
 
@@ -95,12 +95,12 @@ class SuspendPaymentMethodAdapter(
                 holder.binding.radioButtonPaymentMethod.isChecked = true
                 holder.binding.radioButtonPaymentMethod.contentDescription =
                     if (holder.binding.radioButtonPaymentMethod.isChecked) {
-                        "${holder.binding.tvSelectPaymentMethod.text}"
+                        "${Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())}"
                     } else {
-                        "${holder.binding.tvSelectPaymentMethod.text}"
+                        "${Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())}"
                     }
                 holder.binding.radioButtonPaymentMethod.contentDescription =
-                    holder.binding.radioButtonPaymentMethod.text.toString()
+                    Utils.accessibilityForNumbers(holder.binding.radioButtonPaymentMethod.text.toString())
 
             }
             notifyDataSetChanged()

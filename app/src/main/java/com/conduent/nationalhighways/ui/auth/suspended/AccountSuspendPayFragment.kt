@@ -128,13 +128,13 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             binding.tvSelectPaymentMethod.text = htmlText
 
             binding.cardView.contentDescription =
-                responseModel?.card?.type?.uppercase() +"."+ responseModel?.card?.number?.let {
-                    Utils.maskCardNumber(
-                        it
-                    )
-                }
-
-
+                responseModel?.card?.type?.uppercase() +" "+ Utils.accessibilityForNumbers(
+                    responseModel?.card?.number?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    }.toString()
+                )
         }
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             HomeActivityMain.setTitle(resources.getString(R.string.str_top_up))
@@ -182,9 +182,9 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
 
             binding.cardView.contentDescription =
-                paymentList.get(position).cardType +"."+ Utils.maskCardNumber(
+                paymentList.get(position).cardType +" "+ Utils.accessibilityForNumbers( Utils.maskCardNumber(
                     paymentList.get(position).cardNumber
-                )
+                ))
 
 
         }
