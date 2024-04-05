@@ -49,13 +49,13 @@
                     android:text="@string/str_status"
                     android:layout_marginTop="@dimen/margin_3dp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/category_tv" />
+                    app:layout_constraintTop_toBottomOf="@id/reference_number_tv" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/reference_number_tv"
                     style="@style/RegularTextBlack"
                     android:layout_width="0dp"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:text="@{viewModel.id}"
                     app:layout_constraintLeft_toRightOf="@id/barrier1"
                     app:layout_constraintRight_toLeftOf="@id/barrier"
@@ -65,13 +65,14 @@
                     android:id="@+id/status_tv"
                     style="@style/RegularTextBlack"
                     android:layout_width="0dp"
-                    android:gravity="right"
+                    android:gravity="end"
                     app:textAllCaps="true"
                     android:layout_marginTop="@dimen/margin_3dp"
                     android:text="@{viewModel.status}"
                     app:layout_constraintLeft_toRightOf="@id/barrier1"
                     app:layout_constraintRight_toLeftOf="@id/barrier"
-                    app:layout_constraintTop_toBottomOf="@id/category_tv" />
+                    app:layout_constraintTop_toTopOf="@id/category_data_tv"
+                    app:layout_constraintBottom_toBottomOf="@+id/category_data_tv"/>
 
 
                 <androidx.constraintlayout.widget.Barrier

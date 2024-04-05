@@ -23,6 +23,7 @@ import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
@@ -235,6 +236,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             navController.navigate(R.id.dashBoardFragment, bundle)
             getDashBoardAllData()
             changeBottomIconColors(this@HomeActivityMain, 0)
+            focusToolBarHome()
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment) {
@@ -571,9 +573,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         val task = Runnable {
             if(dataBinding?.backButton?.isVisible == true && dataBinding?.backButton?.isAccessibilityFocused==false){
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             }
             else if(dataBinding?.backButton?.isVisible == false){
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             }
         }
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()

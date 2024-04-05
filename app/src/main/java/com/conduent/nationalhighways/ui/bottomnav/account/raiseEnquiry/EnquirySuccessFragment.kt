@@ -66,6 +66,15 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
             }
         }
 
+        val builder = StringBuilder()
+
+        for (i in 0 until enquiryModel?.srNumber!!.length) {
+            builder.append(enquiryModel?.srNumber!![i])
+            builder.append("\u00A0")
+        }
+
+        binding.referenceNumberCv.contentDescription = getString(R.string.reference_number) + " " + builder.toString()
+
     }
 
 

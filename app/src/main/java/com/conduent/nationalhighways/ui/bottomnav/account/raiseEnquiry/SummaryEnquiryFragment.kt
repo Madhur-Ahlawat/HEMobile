@@ -139,7 +139,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             builder.append(viewModel.enquiryModel.value!!.mobileNumber[i])
             builder.append("\u00A0")
         }
-        binding.mobileDataTv.setContentDescription(builder.toString())
+        binding.mobileCv.contentDescription = getString(R.string.mobile_number) + " " + builder.toString()
+
     }
 
     private fun getBundleData(): Bundle {

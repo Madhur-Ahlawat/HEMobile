@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <androidx.core.widget.NestedScrollView
@@ -28,7 +29,6 @@
                 android:id="@+id/inputCountry_helper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_3dp"
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:text="@string/country_code"
                 android:textColor="@color/label_color"
@@ -50,32 +50,56 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputCountry_helper" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
-                android:id="@+id/inputMobileNumber"
-                android:layout_width="0dp"
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/label_mobile_number"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_26dp"
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:text="@string/mobile_number"
+                android:textColor="@color/label_color"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputCountry" />
+
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/mobileNumber_et"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_40dp"
                 android:maxLength="15"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_16sp"
                 app:imeOptions="actionNext"
-                app:inputType="number"
-                app:labelText="@string/mobile_number"
+                app:inputType="phone"
+                android:gravity="center_vertical"
+                app:labelText=""
+                tools:text="1212121212"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputCountry"
+                app:layout_constraintTop_toBottomOf="@+id/label_mobile_number"
                 app:maxLength="15" />
+            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                android:id="@+id/errorMobileNumber"
+                style="@style/MediumText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red_color"
+                android:paddingTop="5dp"
+                android:visibility="gone"
+                android:fontFamily="@font/open_sans_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mobileNumber_et"
+                tools:text="TextView" />
 
             <TextView
                 android:id="@+id/txtBottom"
                 style="@style/RegularTextBlack"
                 android:layout_width="0dp"
-                android:layout_marginTop="@dimen/margin_18dp"
+                android:layout_marginTop="@dimen/margin_12dp"
                 android:text="@string/str_send_security_code_by_text_message"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputMobileNumber" />
+                app:layout_constraintTop_toBottomOf="@+id/errorMobileNumber" />
 
             <LinearLayout
                 android:id="@+id/incompatible_ll"

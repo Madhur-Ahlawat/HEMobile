@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityEvent
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -107,9 +106,13 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
         binding.switchCommunication.setOnClickListener {
             if (binding.switchCommunication.isChecked) {
+                binding.switchCommunication.contentDescription  = "checked, " +
+                        " tap to " + "uncheck"
                 binding.btnNext.enable()
                 NewCreateAccountRequestModel.communicationTextMessage = true
             } else {
+                binding.switchCommunication.contentDescription  = "unchecked, " +
+                        " tap to " + "check"
                 NewCreateAccountRequestModel.communicationTextMessage = false
                 binding.btnNext.enable()
             }
@@ -173,7 +176,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         if (requireActivity() is CreateAccountActivity){
             (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
-
+        binding.switchCommunication.contentDescription  = getString(R.string.would_you_like_to_receive) + " switch, " + if(binding.switchCommunication.isChecked) "checked" else "unchecked"
     }
 
 

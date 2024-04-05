@@ -109,7 +109,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         }
         viewModel.getCountries()
-        binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
+        binding.mobileNumberEt.inputType = InputType.TYPE_CLASS_NUMBER
 
         if (arguments?.containsKey(Constants.IS_IT_MOBILE_NUMBER) == true) {
             if (arguments?.getBoolean(Constants.IS_IT_MOBILE_NUMBER) == true) {
@@ -139,16 +139,16 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 }
                 if (isItMobileNumber) {
                     NewCreateAccountRequestModel.mobileNumber?.let {
-                        binding.inputMobileNumber.editText.setText(
+                        binding.mobileNumberEt.setText(
                             it
                         )
                         val builder = StringBuilder()
                         for (i in 0 until
                                 it.length) {
-                            builder.append(it[i].toString())
+                            builder.append(it[i])
                             builder.append("\u00A0")
                         }
-                        binding.inputMobileNumber.editText.setContentDescription(builder)
+                        binding.mobileNumberEt.setContentDescription(builder.toString())
                     }
                     NewCreateAccountRequestModel.countryCode?.let {
                         binding.inputCountry.setSelectedValue(
@@ -158,23 +158,23 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         val builder = StringBuilder()
                         for (i in 0 until
                                 fullPhoneNumber!!.length) {
-                            builder.append(fullPhoneNumber[i].toString())
+                            builder.append(fullPhoneNumber[i])
                             builder.append("\u00A0")
                         }
-                        binding.inputCountry.setContentDescription(builder)
+                        binding.inputCountry.setContentDescription(builder.toString())
                     }
                 } else {
                     NewCreateAccountRequestModel.telephoneNumber?.let {
-                        binding.inputMobileNumber.editText.setText(
+                        binding.mobileNumberEt.setText(
                             it
                         )
                         val builder = StringBuilder()
                         for (i in 0 until
                                 it.length) {
-                            builder.append(it[i].toString())
+                            builder.append(it[i])
                             builder.append("\u00A0")
                         }
-                        binding.inputMobileNumber.editText.setContentDescription(builder)
+                        binding.mobileNumberEt.setContentDescription(builder.toString())
                     }
                     NewCreateAccountRequestModel.telephone_countryCode?.let {
                         binding.inputCountry.setSelectedValue(
@@ -184,10 +184,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         val builder = StringBuilder()
                         for (i in 0 until
                                 fullPhoneNumber!!.length) {
-                            builder.append(fullPhoneNumber[i].toString())
+                            builder.append(fullPhoneNumber[i])
                             builder.append("\u00A0")
                         }
-                        binding.inputCountry.setContentDescription(builder)
+                        binding.inputCountry.setContentDescription(builder.toString())
                     }
                 }
                 checkIncompatibleCountry(binding.inputCountry.selectedItemDescription.toString(), 1)
@@ -237,7 +237,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             }
 
             else -> {
-                binding.inputMobileNumber.editText.setText(
+                binding.mobileNumberEt.setText(
                     NewCreateAccountRequestModel.mobileNumber ?: ""
                 )
             }
@@ -299,8 +299,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     }
                     if (matchedCountry.isNullOrEmpty()) {
                         binding.inputCountry.setSelectedValue(UNITED_KINGDOM)
-                        binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
-                        binding.inputMobileNumber.setErrorText(
+                        binding.mobileNumberEt.setText(phoneNumberStringFinal.toString())
+                        binding.errorMobileNumber.visible()
+                        binding.errorMobileNumber.setText(
                             getString(
                                 R.string.unfortunately_at_this_time_we_do_not_support_your_mobile_number
                             )
@@ -309,7 +310,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         binding.inputCountry.setSelectedValue(
                             matchedCountry ?: UNITED_KINGDOM
                         )
-                        binding.inputMobileNumber.setText(phoneNumberStringFinal.toString())
+                        binding.mobileNumberEt.setText(phoneNumberStringFinal.toString())
                     }
 
                     if (binding.inputCountry.selectedItemDescription == UNITED_KINGDOM) {
@@ -323,14 +324,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     )
                 }
                 if (NewCreateAccountRequestModel.prePay) {
-                    binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+                    binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
                 } else if (data != null && data?.accountInformation?.accSubType.equals
                         (Constants.PAYG)
                         .not()
                 ) {
-                    binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+                    binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
                 } else {
-                    binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
+                    binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(0))
                 }
             }
         Identity.getSignInClient(requireActivity())
@@ -356,14 +357,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             if (data?.personalInformation?.phoneCell.isNullOrEmpty().not()) {
                 setMobileView()
                 data?.personalInformation?.phoneCell?.let {
-                    binding.inputMobileNumber.editText.setText(
+                    binding.mobileNumberEt.setText(
                         it
                     )
                 }
             } else if (data?.personalInformation?.phoneDay.isNullOrEmpty().not()) {
                 setTelephoneView()
                 data?.personalInformation?.phoneDay?.let {
-                    binding.inputMobileNumber.editText.setText(
+                    binding.mobileNumberEt.setText(
                         it
                     )
                 }
@@ -388,7 +389,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             if (data?.personalInformation?.phoneCell.isNullOrEmpty().not()) {
                 setMobileView()
                 data?.personalInformation?.phoneCell?.let {
-                    binding.inputMobileNumber.editText.setText(
+                    binding.mobileNumberEt.setText(
                         it
                     )
                 }
@@ -416,18 +417,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (requireActivity() !is CreateAccountActivity && requireActivity() !is MakeOffPaymentActivity) {
             title?.text = getString(R.string.profile_phone_number)
         }
-        binding.inputMobileNumber.setLabel(getString(R.string.phone_number))
+        binding.labelMobileNumber.setText(getString(R.string.phone_number))
         binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
         binding.txtBottom.visibility = View.GONE
         if (NewCreateAccountRequestModel.prePay) {
-            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+            binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
         } else if (data != null && data?.accountInformation?.accSubType.equals(Constants.PAYG)
                 .not()
         ) {
-            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+            binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
 
         } else {
-            binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(0))
+            binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(0))
         }
     }
 
@@ -436,10 +437,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (requireActivity() !is CreateAccountActivity && navFlowCall != PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
             title?.text = getString(R.string.profile_mobile_number)
         }
-        binding.inputMobileNumber.setLabel(getString(R.string.mobile_number))
+        binding.labelMobileNumber.setText(getString(R.string.mobile_number))
         binding.txtTitleTop.text = getString(R.string.str_what_mobile_number)
         binding.txtBottom.visibility = View.VISIBLE
-        binding.inputMobileNumber.editText.addTextChangedListener(GenericTextWatcher(1))
+        binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
     }
 
     override fun initCtrl() {
@@ -576,7 +577,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     checkButton()
                 }
 
-                if (binding.inputMobileNumber.editText.text?.isNotEmpty() == true) {
+                if (binding.mobileNumberEt.text?.isNotEmpty() == true) {
                     checkButton()
                 }
 
@@ -629,7 +630,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         when (v?.id) {
             binding.btnNext.id -> {
-                val mobileNumber = binding.inputMobileNumber.getText().toString().trim()
+                val mobileNumber = binding.mobileNumberEt.getText().toString().trim()
                 val countryCode = binding.inputCountry.selectedItemDescription
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -788,7 +789,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                 } else if ((!navFlowCall.equals(PROFILE_MANAGEMENT_2FA_CHANGE)) && (phone.isNullOrEmpty()
                         .not() && phone.equals(
-                        binding.inputMobileNumber.getText().toString()
+                        binding.mobileNumberEt.getText().toString()
                             .trim(), true
                     ) && (phoneCountryCode.isNullOrEmpty()
                         .not() && phoneCountryCode.equals(
@@ -811,7 +812,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             } else {
                 val landline = data?.personalInformation?.phoneDay
                 if (landline.isNullOrEmpty().not() && landline.equals(
-                        binding.inputMobileNumber.getText().toString()
+                        binding.mobileNumberEt.getText().toString()
                             .trim(), true
                     )
                 ) {
@@ -908,17 +909,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             if (charSequence.toString().isEmpty()) {
                 requiredMobileNumber = index == 0
             } else {
-                val phoneNumber = binding.inputMobileNumber.getText().toString().trim()
+                val phoneNumber = binding.mobileNumberEt.getText().toString().trim()
                 if (isItMobileNumber && (binding.inputCountry.getSelectedDescription()
                         .equals("UK +44", true) || binding.inputCountry.getSelectedDescription()
                         .equals(UNITED_KINGDOM, true))
                 ) {
                     requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
                         if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
-                            binding.inputMobileNumber.removeError()
+                            binding.errorMobileNumber.gone()
                             true
                         } else {
-                            binding.inputMobileNumber.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
+                            binding.errorMobileNumber.visible()
+                            binding.errorMobileNumber.setText(getString(R.string.str_uk_phoneNumber_error_message))
                             false
                         }
                     } else {
@@ -928,13 +930,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
                     requiredMobileNumber = if (phoneNumber.isNotEmpty()) {
                         if (phoneNumber.matches(Utils.PHONENUMBER)) {
-                            binding.inputMobileNumber.removeError()
+                            binding.errorMobileNumber.gone()
                             true
                         } else {
+                            binding.errorMobileNumber.visible()
                             if (isItMobileNumber) {
-                                binding.inputMobileNumber.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                                binding.mobileNumberEt.setText(getString(R.string.str_non_uk_phoneNumber_error_message))
                             } else {
-                                binding.inputMobileNumber.setErrorText(getString(R.string.telephone_error_message))
+                                binding.mobileNumberEt.setText(getString(R.string.telephone_error_message))
                             }
                             false
                         }
@@ -964,7 +967,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
         val request = EmailVerificationRequest(
             Constants.SMS,
-            getRequiredText(binding.inputCountry.getSelectedDescription()) + binding.inputMobileNumber.getText()
+            getRequiredText(binding.inputCountry.getSelectedDescription()) + binding.mobileNumberEt.getText()
                 .toString().trim()
         )
         createAccountViewModel.emailVerificationApiMutable(request)
@@ -982,7 +985,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                 bundle.putParcelable(
                     "data", RequestOTPModel(
                         Constants.SMS,
-                        binding.inputMobileNumber.getText().toString().trim()
+                        binding.mobileNumberEt.getText().toString().trim()
                     )
                 )
                 bundle.putString(Constants.PHONE_COUNTRY_CODE,
@@ -1006,14 +1009,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         data = navData as ProfileDetailModel?
                         if (isItMobileNumber) {
                             data?.personalInformation?.phoneCell =
-                                binding.inputMobileNumber.getText().toString()
+                                binding.mobileNumberEt.getText().toString()
                             data?.personalInformation?.phoneCellCountryCode =
                                 binding.inputCountry.selectedItemDescription.let {
                                     getCountryCodeRequiredText(it)
                                 }
                         } else {
                             data?.personalInformation?.phoneDay =
-                                binding.inputMobileNumber.getText().toString()
+                                binding.mobileNumberEt.getText().toString()
                             data?.personalInformation?.phoneDayCountryCode =
                                 binding.inputCountry.selectedItemDescription.let {
                                     getCountryCodeRequiredText(it)
@@ -1062,10 +1065,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
         if (selected) {
-//            binding.inputMobileNumber.editText.setText("")
-            binding.inputMobileNumber.removeError()
+//            binding.mobileNumberEt.editText.setText("")
+            binding.errorMobileNumber.gone()
             checkIncompatibleCountry(item, 5)
-            binding.inputMobileNumber.editText.setText(binding.inputMobileNumber.editText.text.toString())
+            binding.mobileNumberEt.setText(binding.mobileNumberEt.text.toString())
 
         } else {
             if (fullCountryNameWithCode.size > 0) {
@@ -1168,11 +1171,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         var phoneDayCountryCode = dataModel?.personalInformation?.phoneDayCountryCode
 
         if (!isItMobileNumber) {
-            phoneDay = binding.inputMobileNumber.getText().toString().trim()
+            phoneDay = binding.mobileNumberEt.getText().toString().trim()
             phoneDayCountryCode =
                 binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         } else {
-            phoneCell = binding.inputMobileNumber.getText().toString().trim()
+            phoneCell = binding.mobileNumberEt.getText().toString().trim()
             phoneCellCountryCode =
                 binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         }
@@ -1229,11 +1232,11 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         var phoneDayCountryCode = personalInformation?.phoneDayCountryCode
 
         if (!isItMobileNumber) {
-            phoneDay = binding.inputMobileNumber.getText().toString().trim()
+            phoneDay = binding.mobileNumberEt.getText().toString().trim()
             phoneDayCountryCode =
                 binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         } else {
-            phoneCell = binding.inputMobileNumber.getText().toString().trim()
+            phoneCell = binding.mobileNumberEt.getText().toString().trim()
             phoneCellCountryCode =
                 binding.inputCountry.selectedItemDescription.let { getCountryCodeRequiredText(it) }
         }

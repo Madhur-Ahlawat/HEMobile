@@ -48,7 +48,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
+            <TextView
                 android:id="@+id/contact_details_tv"
                 style="@style/RegularTextBlack"
                 android:layout_marginTop="@dimen/margin_5dp"
@@ -89,7 +89,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    <TextView
                         android:id="@+id/category_data_tv"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
@@ -111,7 +111,9 @@
                             android:id="@+id/category_edit_iv"
                             android:layout_width="wrap_content"
                             android:screenReaderFocusable="true"
+                            android:onClick="@{categoryClickListener}"
                             android:importantForAccessibility="yes"
+                            android:contentDescription="@string/str_edit"
                             android:layout_height="wrap_content"
                             android:minHeight="@dimen/margin_48dp"
                             android:minWidth="@dimen/margin_48dp"
@@ -159,6 +161,7 @@
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:focusable="false"
                         android:layout_width="0dp"
+                        android:text="@{viewModel.enquiryModel.subCategory.value}"
                         android:importantForAccessibility="no"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toLeftOf="@id/subcategory_edit_iv"
@@ -173,6 +176,7 @@
                         android:padding="@dimen/margin_20dp"
                         android:importantForAccessibility="yes"
                         android:src="@drawable/edit"
+                        android:onClick="@{categoryClickListener}"
                         android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -225,6 +229,7 @@
                         android:contentDescription="@string/str_edit"
                         android:importantForAccessibility="yes"
                         android:src="@drawable/edit"
+                        android:onClick="@{commentsClickListener}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -235,7 +240,7 @@
 
             </androidx.cardview.widget.CardView>
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
+            <TextView
                 android:id="@+id/personal_details_tv"
                 style="@style/SemiBoldTextBlack"
                 android:layout_width="wrap_content"
@@ -283,6 +288,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="start|center"
+                        android:text="@{viewModel.enquiryModel.firstname+' '+viewModel.enquiryModel.lastname}"
+
                         android:importantForAccessibility="no"
                         android:focusable="false"
                         app:layout_constraintEnd_toStartOf="@+id/name_edit_iv"
@@ -298,6 +305,7 @@
                         android:padding="@dimen/margin_20dp"
                         android:importantForAccessibility="yes"
                         android:src="@drawable/edit"
+                        android:onClick="@{contactDetailsClickListener}"
                         android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -347,6 +355,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="start|center"
+                        android:text="@{viewModel.enquiryModel.email}"
                         android:focusable="false"
                         android:importantForAccessibility="no"
                         app:layout_constraintEnd_toStartOf="@+id/email_edit_iv"
@@ -361,6 +370,7 @@
                         android:minWidth="@dimen/margin_48dp"
                         android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
+                        android:onClick="@{contactDetailsClickListener}"
                         android:importantForAccessibility="yes"
                         android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -378,6 +388,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
+                android:visibility="@{viewModel.enquiryModel.mobileNumber.empty?View.GONE:View.VISIBLE}"
                 android:layout_marginTop="@dimen/margin_2dp"
                 android:contentDescription="@string/mobile_number"
                 android:layout_marginEnd="1dp"
@@ -410,6 +421,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="start|center"
+                        android:text="@{viewModel.enquiryModel.countryCode+' ' +viewModel.enquiryModel.mobileNumber}"
                         android:focusable="false"
                         android:importantForAccessibility="no"
                         app:layout_constraintEnd_toStartOf="@+id/mobile_edit_iv"
@@ -425,6 +437,7 @@
                         android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         android:importantForAccessibility="yes"
+                        android:onClick="@{contactDetailsClickListener}"
                         android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -437,7 +450,7 @@
             </androidx.cardview.widget.CardView>
 
 
-            <com.conduent.nationalhighways.utils.widgets.NHButton
+            <Button
                 android:id="@+id/btnNext"
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"

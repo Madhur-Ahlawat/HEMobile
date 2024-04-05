@@ -68,6 +68,16 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         initUI()
         binding.contactUs.visible()
         setBackPressListener(this)
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+        binding.profileManagement.contentDescription = getString(R.string.profile_management)
+        binding.communicationPreferences.contentDescription = getString(R.string.communication_preferences)
+        binding.paymentManagement.contentDescription = getString(R.string.payment_management)
+        binding.vehicleManagement.contentDescription = getString(R.string.vehicle_management)
+        binding.contactUs.contentDescription = getString(R.string.contact_us)
+        binding.closeAcount.contentDescription = getString(R.string.str_close_account)
+        binding.signOut.contentDescription = getString(R.string.sign_out)
     }
 
     private fun initUI() {

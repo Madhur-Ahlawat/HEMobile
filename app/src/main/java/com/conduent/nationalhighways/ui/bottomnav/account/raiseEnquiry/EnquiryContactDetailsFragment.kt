@@ -28,6 +28,8 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -140,7 +142,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         binding.firstnameEt.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.lastnameEt.editText.addTextChangedListener(GenericTextWatcher(3))
         binding.emailEt.editText.addTextChangedListener(GenericTextWatcher(1))
-        binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(2))
+        binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(2))
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
@@ -325,27 +327,29 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     ) {
                         requiredMobileNumber =
                             if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
-                                binding.mobileNumberEt.removeError()
+                                binding.errorMobileNumber.gone()
                                 true
                             } else {
-                                binding.mobileNumberEt.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
+                                binding.errorMobileNumber.visible()
+
+                                binding.mobileNumberEt.setText(getString(R.string.str_uk_phoneNumber_error_message))
                                 false
                             }
 
                     } else {
                         requiredMobileNumber =
                             if (phoneNumber.matches(Utils.PHONENUMBER)) {
-                                binding.mobileNumberEt.removeError()
+                                binding.errorMobileNumber.gone()
                                 true
                             } else {
-                                binding.mobileNumberEt.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                                binding.mobileNumberEt.setText(getString(R.string.str_non_uk_phoneNumber_error_message))
                                 false
                             }
 
                     }
 
                 }else{
-                    binding.mobileNumberEt.removeError()
+                    binding.mobileNumberEt.gone()
                     requiredCountryCode=true
                     requiredMobileNumber=true
                 }
@@ -509,7 +513,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 builder.append(fullPhoneNumber[i].toString())
                 builder.append("\u00A0")
             }
-            binding.mobileNumberEt.binding.inputFirstName.setContentDescription(builder.toString())
+            binding.mobileNumberEt.setContentDescription(builder.toString())
 
         } else {
             if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
@@ -541,7 +545,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     builder.append(sm.fetchUserMobileNUmber()!![i])
                     builder.append("\u00A0")
                 }
-                binding.mobileNumberEt.binding.inputFirstName.setContentDescription(builder.toString())
+                binding.mobileNumberEt.setContentDescription(builder.toString())
             }
 
         }
@@ -602,7 +606,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             viewModel.edit_enquiryModel.value?.fullcountryCode = item
 
             binding.mobileNumberEt.setText("")
-            binding.mobileNumberEt.removeError()
+            binding.mobileNumberEt.gone()
         } else {
             if (binding.mobileNumberEt.getText().toString().trim().isNotEmpty()) {
                 if (fullCountryNameWithCode.size > 0) {

@@ -179,7 +179,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             personalInformation?.phoneCell?.let {
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneCellCountryCode + " " + it
-                                var fullPhoneNumber = personalInformation?.phoneCellCountryCode?.replace("+", "plus") + " "+ it
+                                var fullPhoneNumber = personalInformation?.phoneCellCountryCode + " "+ it
                                 val builder = StringBuilder()
                                 for (i in 0 until
                                         fullPhoneNumber.length) {
@@ -195,7 +195,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             personalInformation?.phoneDay?.let {
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneDayCountryCode + " " + it
-                                var fullPhoneNumber = personalInformation?.phoneCellCountryCode?.replace("+", "plus") + " "+ it
+                                var fullPhoneNumber = personalInformation?.phoneCellCountryCode + " "+ it
                                 val builder = StringBuilder()
                                 for (i in 0 until
                                         fullPhoneNumber.length) {
