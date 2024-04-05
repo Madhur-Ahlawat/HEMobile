@@ -108,7 +108,7 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
         binding.paymentAmountCl.contentDescription= binding.crossingAmount.text.toString()+"\n "+ binding.labelCrossingAmount.text.toString()
         binding.paymentDateCl.contentDescription= binding.tvPaymentDateHeading.text.toString()+"\n "+ binding.tvPaymentDateValue.text.toString()
         binding.paymentTimeCl.contentDescription=binding.tvPaymentTimeHeading.text.toString() +"\n "+ binding.tvPaymentTimeValue.text.toString()
-        binding.paymentReferenceCl.contentDescription=binding.tvPaymentReference.text.toString() +"\n "+ binding.tvPaymentReferenceValue.text.toString()
+        binding.paymentReferenceCl.contentDescription=binding.tvPaymentReference.text.toString() +"\n "+ Utils.accessibilityForNumbers(binding.tvPaymentReferenceValue.text.toString())
         binding.typeOfPaymentCl.contentDescription=binding.tvTypeOfPayment.text.toString() +"\n "+ binding.tvTypeOfPaymentValue.text.toString()
         binding.paymentMethodCl.contentDescription=binding.tvPaymentMethod.text.toString() +"\n "+ binding.tvPaymentMethodValue.text.toString()
         binding.channelCl.contentDescription=binding.tvChannel.text.toString() +"\n "+ binding.tvChannelValue.text.toString()

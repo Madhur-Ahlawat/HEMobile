@@ -70,7 +70,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
-
+        Log.e("TAG", "init:isLocationServiceRunning--> "+Utils.isLocationServiceRunning(requireContext()) )
         BaseApplication.screenNameAnalytics = ""
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
             plateNumber = arguments?.getString(Constants.PLATE_NUMBER) ?: ""

@@ -197,7 +197,13 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     }
 
     private fun setContentDescriptionForCard() {
-        binding.cardView.contentDescription=binding.tvSelectPaymentMethod.text.toString()+"."+binding.textDefault.text.toString()
+        binding.titleLl.contentDescription=binding.maximumVehicleAdded.text.toString()
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(Utils.accessibilityForNumbers(binding.tvSelectPaymentMethod.text.toString()))
+        if(binding.textDefault.visibility==View.VISIBLE){
+            stringBuilder.append(Utils.accessibilityForNumbers(binding.textDefault.text.toString()))
+        }
+        binding.cardView.contentDescription=stringBuilder
     }
 
     override fun init() {

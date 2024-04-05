@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.PaymentmethodadapterlayoutBinding
-import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewPaymentMethodFragment
 import com.conduent.nationalhighways.ui.payment.newpaymentmethod.NewPaymentMethodFragment.Companion.isDirectDebit
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
@@ -31,22 +30,23 @@ class PaymentMethodAdapter(
     )
 
     class PaymentMethodViewHolder(val binding: PaymentmethodadapterlayoutBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onBindViewHolder(
         holder: PaymentMethodViewHolder,
         position: Int
     ) {
 
-        holder.binding.ivCardType.setImageResource(Utils.setCardImage(paymentList?.get(position)?.cardType?:""))
+        holder.binding.ivCardType.setImageResource(
+            Utils.setCardImage(
+                paymentList?.get(position)?.cardType ?: ""
+            )
+        )
 
         if (paymentList?.get(position)?.emandateStatus == "PENDING" && paymentList?.get(position)?.bankAccount == true) {
             holder.binding.tvSelectPaymentMethod.text = context.getString(
                 R.string.str_your_direct_debit_for,
-                paymentList?.get(position)?.bankAccountNumber
+                paymentList?.get(position)?.bankAccountNumber.toString()
             )
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             holder.binding.delete.visibility = View.GONE
@@ -58,28 +58,34 @@ class PaymentMethodAdapter(
         ) {
             val htmlText =
                 Html.fromHtml(
-                    "Direct Debit" + "<br>" + paymentList?.get(
-                        position
-                    )?.bankAccountNumber?.let {
-                        Utils.maskCardNumber(
-                            it
-                        )
-                    })
+                    "Direct Debit" + "<br>" +
+                            paymentList?.get(
+                                position
+                            )?.bankAccountNumber?.let {
+                                Utils.maskCardNumber(
+                                    it
+                                )
+                            }.toString()
+
+                )
 
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             holder.binding.delete.visibility = View.VISIBLE
-            NewPaymentMethodFragment.isDirectDebit=true
+            isDirectDebit = true
         } else {
             val htmlText =
                 Html.fromHtml(
-                    paymentList?.get(position)?.cardType + "<br>" + paymentList?.get(
-                        position
-                    )?.cardNumber?.let {
-                        Utils.maskCardNumber(
-                            it
-                        )
-                    })
+                    paymentList?.get(position)?.cardType + "<br>" +
+                            paymentList?.get(
+                                position
+                            )?.cardNumber?.let {
+                                Utils.maskCardNumber(
+                                    it
+                                )
+                            }.toString()
+
+                )
 
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.delete.visibility = View.VISIBLE
@@ -94,10 +100,9 @@ class PaymentMethodAdapter(
 
         } else {
             holder.binding.textDefault.visibility = View.GONE
-            if(isDirectDebit){
+            if (isDirectDebit) {
                 holder.binding.textMakeDefault.visibility = View.GONE
-            }
-            else{
+            } else {
                 holder.binding.textMakeDefault.visibility = View.VISIBLE
             }
 
@@ -127,6 +132,8 @@ class PaymentMethodAdapter(
 
             notifyDataSetChanged()
         }
+        holder.binding.tvSelectPaymentMethod.contentDescription =
+            Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())
     }
 
     override fun getItemCount(): Int {
