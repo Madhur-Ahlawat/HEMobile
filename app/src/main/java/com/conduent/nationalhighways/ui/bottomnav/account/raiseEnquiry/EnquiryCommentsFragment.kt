@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
 import com.conduent.nationalhighways.data.model.contactdartcharge.UploadFileResponseModel
 import com.conduent.nationalhighways.databinding.FragmentEnquiryCommentsBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -127,6 +128,11 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
             } else if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).hideBackIcon()
             }
+        }
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
 
     }

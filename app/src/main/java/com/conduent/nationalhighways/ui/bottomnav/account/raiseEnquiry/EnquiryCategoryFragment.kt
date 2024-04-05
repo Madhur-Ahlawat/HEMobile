@@ -106,7 +106,8 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         if(requireActivity() is HomeActivityMain){
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
-
+        binding.categoryDropdown.contentDescription = getString(R.string.category_accessibility)
+        binding.subcategoryDropdown.contentDescription = getString(R.string.sub_category_accessibility)
     }
 
     private fun getBundleData(): Bundle {

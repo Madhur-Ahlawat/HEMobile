@@ -113,6 +113,7 @@
                             android:screenReaderFocusable="true"
                             android:onClick="@{categoryClickListener}"
                             android:importantForAccessibility="yes"
+                            android:contentDescription="@string/str_edit"
                             android:layout_height="wrap_content"
                             android:minHeight="@dimen/margin_48dp"
                             android:minWidth="@dimen/margin_48dp"
