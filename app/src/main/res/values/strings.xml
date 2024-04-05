@@ -1737,6 +1737,7 @@
     <string name="accessibility_ticked">Ticked.</string>
     <string name="accessibility_not_ticked">Not Ticked.</string>
 
+
     <string name="powered_by" tools:ignore="ExtraTranslation">powered by</string>
     <string name="_50">50</string>
     <string name="_15">15</string>
@@ -1759,6 +1760,7 @@
     <string name="if_you_have_nan_account">If you have\nan account</string>
     <string name="if_you_have_an_account">If you have an account</string>
     <string name="editing_future_crossings">Editing, number of future crossings, current value %s</string>
+    <string name="acc_pi_data">This screen contains personal information data. Headphones recommended</string>
     <string name="category">Category</string>
     <string name="name">Name</string>
     <string name="category_accessibility">Category dropdown, Double tap to select category</string>
