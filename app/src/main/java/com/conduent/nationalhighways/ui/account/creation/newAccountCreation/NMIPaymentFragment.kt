@@ -45,6 +45,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.setPersonalInfoAnnouncement
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
@@ -119,6 +120,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
 
 
+        setPersonalInfoAnnouncement(binding.rootLayout,requireActivity())
 
         setupWebView()
         if (navFlowCall == Constants.PAYMENT_TOP_UP && paymentListSize == 0) {

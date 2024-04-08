@@ -1,12 +1,12 @@
 package com.conduent.nationalhighways.utils
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.RadioButton
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.SwitchCompat
+import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.widgets.NHRadioButton
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -81,4 +81,8 @@ fun announceStateChange(checkBox: MaterialCheckBox, isChecked: Boolean, context:
 
     checkBox.contentDescription = announcement
     checkBox.announceForAccessibility(announcement)
+}
+fun setPersonalInfoAnnouncement(view: View, context: Context) {
+    view.isClickable = false
+    view.contentDescription = context.getString(R.string.acc_pi_data)
 }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.view.ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -179,8 +180,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         )
 
         binding.editVehicle.setOnClickListener(this)
-
-
         if (NewCreateAccountRequestModel.plateNumberIsNotInDVLA && NewCreateAccountRequestModel.plateNumber.isNotEmpty()) {
             binding.vehiclePlateNumber.text = NewCreateAccountRequestModel.plateNumber.uppercase()
             binding.vehicleRegisteredLayout.visible()
@@ -286,6 +285,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         if (navFlowCall == Constants.EDIT_SUMMARY) {
             binding.checkBoxTerms.isChecked = true
         }
+        binding.cardLayout.contentDescription = binding.txtVehicleRegistrationPlate.text.toString() + binding.vehiclePlateNumber.text.toString()
 
     }
 
@@ -446,6 +446,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
         checkValidation()
+        binding.cardLayout.contentDescription = binding.txtVehicleRegistrationPlate.text.toString() + binding.vehiclePlateNumber.text.toString()
+
     }
 
     override fun initCtrl() {

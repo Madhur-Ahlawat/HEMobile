@@ -39,6 +39,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.common.Utils.splCharsPassword
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.setPersonalInfoAnnouncement
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -65,6 +66,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         FragmentForgotCreateNewPasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
+        setPersonalInfoAnnouncement(binding.rootLayout,requireActivity())
         if(requireActivity() is AuthActivity){
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
@@ -75,7 +77,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
 
         data = arguments?.getParcelable("data")
         binding.model = ResetPasswordModel(
