@@ -28,7 +28,7 @@ class ForegroundServiceWorker(val context: Context, params: WorkerParameters) : 
 //        }
 //        // Start the foreground service from the Worker
         if(!Utils.isLocationServiceRunning(context)){
-            startForegroundService()
+            Utils.startLocationService(context)
         }
         Log.e("TAG", "doWork:--@@> " )
         return Result.success()

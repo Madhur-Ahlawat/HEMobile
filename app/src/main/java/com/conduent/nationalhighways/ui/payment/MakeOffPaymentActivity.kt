@@ -57,9 +57,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
         binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
 
         val task = Runnable {
-            if(!binding.toolBarLyt.backButton.isAccessibilityFocused){
-                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-            }
+            binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
         }
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)

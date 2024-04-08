@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.setPersonalInfoAnnouncement
 
 
 class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListener {
@@ -38,6 +39,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
     }
 
     override fun initCtrl() {
+        setPersonalInfoAnnouncement(binding.rootLayout,requireActivity())
         binding.proceddWithPayment.setOnClickListener(this)
         binding.paymentAmount.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.expiryDate.editText.addTextChangedListener(GenericTextWatcher(1))

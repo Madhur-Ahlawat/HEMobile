@@ -31,6 +31,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.setPersonalInfoAnnouncement
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import javax.inject.Inject
@@ -73,6 +74,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     override fun initCtrl() {
+        setPersonalInfoAnnouncement(binding.rootLayout,requireActivity())
         binding.btnSubmit.setOnClickListener(this)
         binding.edtCurrentPassword.editText.addTextChangedListener { currentPasswordListener() }
         binding.edtNewPassword.editText.addTextChangedListener { isEnable(it.toString()) }
