@@ -79,6 +79,7 @@
     <string name="str_letter_not_received">If you do not receive the letter within 5 days, please contact :</string>
     <string name="str_dart_change_contact">Dart Change contact centre</string>
     <string name="str_contact_address">Telephone: 0300 300 0120\nTextPhone: 18001 0300 300 0120\nEveryday, 8am to 8pm</string>
+    <string name="str_content_description_contact_address">Telephone: 0 3 0 0 3 0 0 0 1 2 0\nTextPhone: 1 8 0 0 1 0 3 0 0 3 0 0 0 1 2 0\nEveryday, 8am to 8pm</string>
     <string name="str_accept">Accept</string>
     <string name="txt_email_address">Email address</string>
     <string name="txt_enter_security_code">Enter security code</string>
