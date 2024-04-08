@@ -1479,7 +1479,7 @@
     <string name="str_file_size_not_morethan_8mb">Also, the selected file type should be no more than 8MB.</string>
     <string name="str_bullet_file_size_not_morethan_8mb">Bullet point, Also, the selected file type should be no more than 8MB.</string>
 
-    <string name="what_contact_details">What are your contact details?</string>
+    <string name="what_contact_details">What are <you>  </you>r contact details?</string>
     <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
     <string name="vehicle_registration_number_plate_optional">Vehicle Registration (number plate) Optional</string>
     <string name="country_code">Country Code</string>
