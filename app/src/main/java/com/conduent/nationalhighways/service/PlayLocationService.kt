@@ -22,6 +22,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.utils.common.Constants
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -69,10 +70,10 @@ class PlayLocationService : Service(), LocationListener {
                 try {
                     Log.e(TAG, "onCreate: foregroundservice")
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                        startForeground(123, createNotification())
+                        startForeground(Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification())
                     } else {
                         startForeground(
-                            123, createNotification(),
+                            Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(),
                             FOREGROUND_SERVICE_TYPE_LOCATION
                         )
                     }

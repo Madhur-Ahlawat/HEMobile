@@ -16,6 +16,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.CountDownTimer
+import android.os.Environment
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
@@ -39,7 +40,10 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
@@ -65,7 +69,9 @@ import com.conduent.nationalhighways.utils.rating.RatingDialog
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
+import java.io.BufferedWriter
 import java.io.File
+import java.io.FileWriter
 import java.lang.reflect.Field
 import java.text.DateFormat
 import java.text.DecimalFormat
@@ -1204,7 +1210,8 @@ object Utils {
             return R.color.white
         }
     }
-  fun returnCardText(paymentTypeInfo: String): String {
+
+    fun returnCardText(paymentTypeInfo: String): String {
         if (paymentTypeInfo.contains("CURRENT")) {
             return "CURRENT"
         } else if (paymentTypeInfo.contains("SAVINGS")) {
@@ -1756,15 +1763,33 @@ object Utils {
     }
 
 
-    fun accessibilityForNumbers(value:String):StringBuilder{
+    fun accessibilityForNumbers(value: String): StringBuilder {
         val builder = StringBuilder()
-        for(data in value){
+        for (data in value) {
             builder.append(data.toString())
-            if(data.isDigit()){
+            if (data.isDigit()) {
                 builder.append("\u00A0")
             }
         }
         return builder
+    }
+
+    fun writeInFile(context: Context, message: String) {
+        try {
+            val directory =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val file = File(directory, "dartlogs.txt")
+            if (file.exists()) {
+                val fileWriter = FileWriter(file, true)
+                val bufferedWriter = BufferedWriter(fileWriter)
+
+                bufferedWriter.write(message + "\n")
+                bufferedWriter.newLine()
+                bufferedWriter.close()
+            }
+        } catch (e: Exception) {
+
+        }
     }
 
     fun startLocationService(activity: Context) {
@@ -1774,11 +1799,9 @@ object Utils {
         } else {
             Log.e("TAG", "startLocationService: Not Running ")
             try {
-
-                // Schedule the periodic work (adjust interval as needed)
                 val periodicWorkRequest = PeriodicWorkRequest.Builder(
                     ForegroundServiceWorker::class.java,
-                    12, TimeUnit.HOURS // Interval for starting the foreground service
+                    1, TimeUnit.HOURS // Interval for starting the foreground service
                 ).build()
 
                 WorkManager.getInstance(activity).enqueue(periodicWorkRequest)
@@ -1791,13 +1814,16 @@ object Utils {
                     Log.e("TAG", "startForegroundService: Running--- ")
                     activity.startService(i)
                 }
-//                activity.startService(i)
             } catch (e: Exception) {
+                writeInFile(
+                    activity,
+                    "-------- StartLocation Service exception --------${e.message} "
+                )
             }
         }
     }
 
-     fun isLocationServiceRunning(activity: Context): Boolean {
+    fun isLocationServiceRunning(activity: Context): Boolean {
         val manager = activity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         for (service in manager.getRunningServices(Int.MAX_VALUE)) {
             Log.e("TAG", "isLocationServiceRunning: " + service.service.className)
