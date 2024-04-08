@@ -70,6 +70,7 @@
                 app:imeOptions="actionNext"
                 app:inputType="phone"
                 android:gravity="center_vertical"
+                android:backgroundTint="@color/label_color"
                 android:hint=""
                 tools:text="1212121212"
                 app:layout_constraintEnd_toEndOf="parent"
