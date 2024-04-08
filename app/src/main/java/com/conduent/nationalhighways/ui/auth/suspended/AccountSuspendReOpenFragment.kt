@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.text.Html
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -106,7 +107,14 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                 }, Html.FROM_HTML_MODE_COMPACT)
 
             binding.tvSelectPaymentMethod.text = htmlText
-            binding.cardView.contentDescription = binding.tvSelectPaymentMethod.text.toString()
+            binding.cardView.contentDescription =
+                responseModel?.card?.type?.uppercase() + "." + Utils.accessibilityForNumbers(
+                    responseModel?.card?.number?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    }.toString()
+                )
 
         } else {
             /* binding.succesfulCardAdded.gone()
@@ -147,12 +155,17 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
         binding.referenceNumberTv.text = transactionId
 
         binding.layoutPaymentReferenceNumber.contentDescription =
-            resources.getString(R.string.str_payment_reference_number) +"."+ transactionId
+            resources.getString(R.string.str_payment_reference_number) + "." + Utils.accessibilityForNumbers(
+                transactionId
+            )
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
+            Log.e("TAG", "initCtrl: topUpAmount " + topUpAmount.toDouble())
+
             binding.tvAccountSuspended.text = getString(
                 R.string.str_balance_topped_up_with,
-                    "£" + formatter.format(topUpAmount)
+                "£" + formatter.format(topUpAmount.toDouble())
             )
+
             binding.tvYouWillNeedToPay.gone()
             binding.tvYouWillAlsoNeed.gone()
             binding.btnTopUpNow.text = getString(R.string.str_continue)
@@ -176,7 +189,8 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                 .equals(Constants.CARD_IS_ALREADY_REGISTERED)
         ) {
             binding.layoutCardAlreadyExists.visible()
-            binding.layoutCardAlreadyExists.contentDescription=binding.labelCardAlreadyExists.text.toString()
+            binding.layoutCardAlreadyExists.contentDescription =
+                binding.labelCardAlreadyExists.text.toString()
             binding.succesfulCardAdded.gone()
             binding.cardView.gone()
         } else {
