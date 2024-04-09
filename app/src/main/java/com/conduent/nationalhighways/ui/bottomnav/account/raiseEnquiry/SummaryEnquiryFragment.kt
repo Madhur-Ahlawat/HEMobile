@@ -38,10 +38,10 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         FragmentSummaryEnquiryBinding.inflate(inflater, container, false)
 
     override fun init() {
+        setEnquiryContentDescription()
         if (arguments?.containsKey(Constants.Edit_REQUEST_KEY) == true) {
             editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         }
-
         saveData()
         if (viewModel.enquiryModel.value?.category.toString().contains("enquiry")) {
             binding.contactDetailsTv.text =
@@ -52,8 +52,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 resources.getString(R.string.str_check_your_answer_before_complaint)
             binding.detailsEnquiryTv.text = resources.getString(R.string.details_of_complaint)
         }
-
-
         binding.btnNext.setOnClickListener {
             loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
 
@@ -87,7 +85,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 enquiryRequestModel
             )
         }
-
         binding.setCategoryClickListener {
             findNavController().navigate(
                 R.id.action_enquirySummaryFragment_to_enquiryCategoryFragment, getBundleData()
@@ -104,6 +101,31 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 getBundleData()
             )
         }
+        setEnquiryContentDescription()
+    }
+
+    private fun setEnquiryContentDescription() {
+        binding.cvCategory.contentDescription = getString(R.string.category) + ", " + viewModel.enquiryModel.value!!.category.value
+        binding.layoutCategory.contentDescription = getString(R.string.category) + ", " + viewModel.enquiryModel.value!!.category.value
+        binding.cvSubCategory.contentDescription = getString(R.string.sub_category) + ", " + viewModel.enquiryModel.value!!.subCategory.value
+        binding.layoutSubCategory.contentDescription = getString(R.string.sub_category) + ", " + viewModel.enquiryModel.value!!.subCategory.value
+        binding.nameCv.contentDescription = getString(R.string.name) + ", " + viewModel.enquiryModel.value!!.firstname + " " + viewModel.enquiryModel.value!!.lastname
+        binding.layoutName.contentDescription = getString(R.string.name) + ", " + viewModel.enquiryModel.value!!.firstname + " " + viewModel.enquiryModel.value!!.lastname
+        binding.emailCv.contentDescription = getString(R.string.email_address) + ", " + viewModel.enquiryModel.value!!.email
+        binding.layoutEmail.contentDescription = getString(R.string.email_address) + ", " + viewModel.enquiryModel.value!!.email
+        val builder = StringBuilder()
+        for (i in 0 until
+                viewModel.enquiryModel.value!!.countryCode.length) {
+            builder.append(viewModel.enquiryModel.value!!.countryCode[i])
+            builder.append("\u00A0")
+        }
+        for (i in 0 until
+                viewModel.enquiryModel.value!!.mobileNumber.length) {
+            builder.append(viewModel.enquiryModel.value!!.mobileNumber[i])
+            builder.append("\u00A0")
+        }
+        binding.mobileCv.contentDescription = getString(R.string.mobile_number) + ", " + builder.toString()
+        binding.layoutMobileNumber.contentDescription = getString(R.string.mobile_number) + ", " + builder.toString()
     }
 
     private fun saveData() {
@@ -152,7 +174,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
     override fun initCtrl() {
-
+        setEnquiryContentDescription()
     }
 
     override fun observer() {
