@@ -75,7 +75,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                 mBuilder!!.append(it.toString()[i])
                 mBuilder!!.append("\u00A0")
             }
-            binding.editReferenceNumber.contentDescription = mBuilder.toString()
+            binding.editReferenceNumber.hint = mBuilder.toString()
             isEnable(it)
         }
         binding.point1Ll.contentDescription =
