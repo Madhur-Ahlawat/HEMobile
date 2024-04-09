@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryListResponse
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.ServiceRequest
 import com.conduent.nationalhighways.databinding.FragmentCasesEnquiryHistoryListBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
@@ -63,6 +64,11 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
             )
         }
         apiViewModel.getAccountSRList()
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
     }
 
     private fun getBundleData(): Bundle {

@@ -25,16 +25,22 @@ class CasesEnquiryListAdapter(val listener:ItemClickListener,val caseEnquiryList
 
     override fun onBindViewHolder(holder: CasesEnquiryListViewHolder, position: Int) {
         holder.binding.viewModel = caseEnquiryList[position]
+        val itemData = caseEnquiryList[position]
         holder.itemView.setOnClickListener {
             listener.onItemClick(caseEnquiryList[position], holder.absoluteAdapterPosition)
         }
+        val builder = StringBuilder()
+        for (i in 0 until
+                itemData.id!!.length) {
+            builder.append(itemData.id[i])
+            builder.append("\u00A0")
+        }
+        holder.binding.referenceNumberTv.contentDescription = builder.toString()
     }
 
     class CasesEnquiryListViewHolder(var binding: AdapterCasesEnquiryListBinding) :
         RecyclerView.ViewHolder(binding.root) {
     }
-
-
 }
 
 

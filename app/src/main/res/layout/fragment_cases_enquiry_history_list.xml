@@ -39,9 +39,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/enquiry_history_tv"
-            tools:itemCount="1"
-            android:visibility="visible"
-            tools:listitem="@layout/adapter_cases_enquiry_list" />
+            android:visibility="visible"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/no_data_cl"
