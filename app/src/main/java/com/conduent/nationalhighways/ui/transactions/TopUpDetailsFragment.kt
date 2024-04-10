@@ -51,6 +51,9 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
         }
         HomeActivityMain.setTitle(getString(R.string.payment_details))
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     override fun onResume() {

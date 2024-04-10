@@ -5,7 +5,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -23,7 +23,9 @@ import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,6 +34,7 @@ import javax.inject.Inject
 class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBinding>(),
     View.OnClickListener {
 
+    private var mBuilder: StringBuilder? = null
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     private var isCalled = false
@@ -62,22 +65,27 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 //        binding.editReferenceNumber.setText("1-99352459")
 //        binding.editNumberPlate.setText("ERR")
-        binding.editNumberPlate.editText.addTextChangedListener {
+        binding.editNumberPlate.editText.doAfterTextChanged {
             isEnable(it)
         }
-        binding.editReferenceNumber.editText.addTextChangedListener {
+        binding.editReferenceNumber.doAfterTextChanged {
+            mBuilder = StringBuilder()
+            for (i in 0 until
+                    it.toString().length) {
+                mBuilder!!.append(it.toString()[i])
+                mBuilder!!.append("\u00A0")
+            }
+            binding.editReferenceNumber.hint = mBuilder.toString()
             isEnable(it)
         }
         binding.point1Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.paid_crossing_point1)
+            resources.getString(R.string.accessibility_bullet) + "." + resources.getString(R.string.paid_crossing_point1)
         binding.point2Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.paid_crossing_point2)
-
+            resources.getString(R.string.accessibility_bullet) + "." + resources.getString(R.string.paid_crossing_point2)
     }
 
     override fun initCtrl() {
-        binding.editReferenceNumber.editText.addTextChangedListener { isEnable(it) }
-        binding.editNumberPlate.editText.addTextChangedListener { isEnable(it) }
+        binding.editNumberPlate.editText.doAfterTextChanged { isEnable(it) }
         binding.findVehicle.setOnClickListener(this)
     }
 
@@ -90,8 +98,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
     private fun isEnable(editable: Editable?) {
         var isReferenceNumberValid = true
         var isPlateNumberValid = true
-        if (binding.editReferenceNumber.getText().toString().trim().isNullOrEmpty()) {
-            binding.editReferenceNumber.removeError()
+        if (binding.editReferenceNumber.getText().toString().trim().isEmpty()) {
+            binding.errorMobileNumber.gone()
             isReferenceNumberValid = false
         } else {
             if (!Regex(paymentRefereceNumberRegex).matches(
@@ -99,14 +107,15 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                 )
             ) {
                 isReferenceNumberValid = false
-                binding.editReferenceNumber.setErrorText(getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9))
+                binding.errorMobileNumber.visible()
+                binding.errorMobileNumber.setText(getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9))
 
             } else {
-                binding.editReferenceNumber.removeError()
+                binding.errorMobileNumber.gone()
             }
         }
 
-        if (binding.editNumberPlate.getText().toString().trim().isNullOrEmpty()) {
+        if (binding.editNumberPlate.getText().toString().trim().isEmpty()) {
             isPlateNumberValid = false
             binding.editNumberPlate.removeError()
         } else {
@@ -193,9 +202,10 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 
                 is Resource.DataError -> {
                     if (status.errorMsg.contains("401")) {
-                        binding.editReferenceNumber.setErrorText(getString(R.string.error_check_paid_crossings))
+                        binding.errorMobileNumber.visible()
+                        binding.errorMobileNumber.setText(getString(R.string.error_check_paid_crossings))
                     } else {
-                        binding.editReferenceNumber.removeError()
+                        binding.errorMobileNumber.gone()
                         ErrorUtil.showError(binding.root, status.errorMsg)
                     }
                 }
