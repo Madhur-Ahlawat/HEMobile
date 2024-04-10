@@ -9,17 +9,22 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentRegisterReminderBinding
 import com.conduent.nationalhighways.databinding.LocationPermissionDialogBinding
@@ -36,6 +41,9 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 import javax.inject.Inject
 
 
@@ -65,13 +73,13 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
             }
         } else {
-//            if (sessionManager.fetchStringData("SAVED_FILE").isEmpty()) {
-//                val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-//                intent.addCategory(Intent.CATEGORY_OPENABLE)
-//                intent.setType("text/plain")
-//                intent.putExtra(Intent.EXTRA_TITLE, ".txt")
-//                startActivityForResult(intent, 1000)
-//            }
+          /*  if (sessionManager.fetchStringData("SAVED_FILE").isEmpty()) {
+                val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                intent.setType("text/plain")
+                intent.putExtra(Intent.EXTRA_TITLE, ".txt")
+                startActivityForResult(intent, 1000)
+            }*/
         }
 
     }
@@ -139,23 +147,23 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
         }
 
-        if (sessionManager.fetchStringData("SAVED_FILE").isNotEmpty()) {
+     /*   if (sessionManager.fetchStringData("SAVED_FILE").isNotEmpty()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//                if (Environment.isExternalStorageManager()) {
-//                    // All files access permission is granted
-//                    // Your code here
-//                } else {
-//                    val intent = Intent(
-//                        ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
-//                        Uri.parse("package:" + BuildConfig.APPLICATION_ID)
-//                    )
-//                    startActivityForResult(intent, 1948)
-//                }
+                if (Environment.isExternalStorageManager()) {
+                    // All files access permission is granted
+                    // Your code here
+                } else {
+                    val intent = Intent(
+                        ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                        Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+                    )
+                    startActivityForResult(intent, 1948)
+                }
             } else {
                 // For versions lower than Android 11, handle permissions accordingly
                 // You may request WRITE_EXTERNAL_STORAGE permission or other relevant permissions
             }
-        }
+        }*/
 
 
     }
@@ -166,28 +174,28 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             "TAG",
             "onActivityResult() called with: requestCode = $requestCode, resultCode = $resultCode, data = $dataIntent"
         )
-        if (requestCode == 1000 && dataIntent != null) {
+      /*  if (requestCode == 1000 && dataIntent != null) {
             Log.e("TAG", "onActivityResult: " + dataIntent.data)
-//            sessionManager.saveStringData("SAVED_FILE", dataIntent.data?.path ?: "")
+            sessionManager.saveStringData("SAVED_FILE", dataIntent.data?.path ?: "")
 
         } else if (requestCode == 1948) {
-//            val directory =
-//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-//            val file = File(directory, "dartlogs_20_1.txt")
-//            if (file.exists()) {
-//                val fileWriter = FileWriter(file, true)
-//                val bufferedWriter = BufferedWriter(fileWriter)
-//
-//                bufferedWriter.write("File created\n")
-//                bufferedWriter.newLine()
-//                bufferedWriter.close()
-//                Toast.makeText(requireContext(), "file exists", Toast.LENGTH_SHORT).show()
-//
-//            } else {
-//                Toast.makeText(requireContext(), "file not exists", Toast.LENGTH_SHORT).show()
-//            }
-        }
+            val directory =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val file = File(directory, "dartlogs.txt")
+            if (file.exists()) {
+                val fileWriter = FileWriter(file, true)
+                val bufferedWriter = BufferedWriter(fileWriter)
 
+                bufferedWriter.write("File created\n")
+                bufferedWriter.newLine()
+                bufferedWriter.close()
+                Toast.makeText(requireContext(), "file exists", Toast.LENGTH_SHORT).show()
+
+            } else {
+                Toast.makeText(requireContext(), "file not exists", Toast.LENGTH_SHORT).show()
+            }
+        }
+*/
     }
 
     override fun initCtrl() {

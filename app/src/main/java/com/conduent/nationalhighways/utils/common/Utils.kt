@@ -1775,7 +1775,7 @@ object Utils {
     }
 
     fun writeInFile(context: Context, message: String) {
-        try {
+      /*  try {
             val directory =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
             val file = File(directory, "dartlogs.txt")
@@ -1789,7 +1789,7 @@ object Utils {
             }
         } catch (e: Exception) {
 
-        }
+        }*/
     }
 
     fun startLocationService(activity: Context) {
