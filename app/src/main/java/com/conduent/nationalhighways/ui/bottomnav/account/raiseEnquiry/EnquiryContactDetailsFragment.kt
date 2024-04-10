@@ -507,7 +507,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
             )
             binding.mobileNumberEt.setText(viewModel.edit_enquiryModel.value?.mobileNumber ?: "")
-            var fullPhoneNumber = viewModel.enquiryModel.value!!.countryCode.replace("+","plus") + " " + viewModel.enquiryModel.value!!.mobileNumber
+            var fullPhoneNumber = viewModel.enquiryModel.value!!.mobileNumber
             val builder = StringBuilder()
             for (i in 0 until fullPhoneNumber.length) {
                 builder.append(fullPhoneNumber[i].toString())
@@ -537,10 +537,10 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 }
                 binding.mobileNumberEt.setText(sm.fetchUserMobileNUmber() ?: "")
                 val builder = StringBuilder()
-                for (i in 0 until sm.fetchUserCountryCode()!!.length) {
-                    builder.append(sm.fetchUserCountryCode()!![i])
-                    builder.append("\u00A0")
-                }
+//                for (i in 0 until sm.fetchUserCountryCode()!!.length) {
+//                    builder.append(sm.fetchUserCountryCode()!![i])
+//                    builder.append("\u00A0")
+//                }
                 for (i in 0 until sm.fetchUserMobileNUmber()!!.length) {
                     builder.append(sm.fetchUserMobileNUmber()!![i])
                     builder.append("\u00A0")

@@ -55,7 +55,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/reference_number_cl"
-                        android:importantForAccessibility="no"
+                        android:importantForAccessibility="yes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
@@ -63,7 +63,7 @@
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/reference_number_tv"
-                            android:importantForAccessibility="no"
+                            android:importantForAccessibility="yes"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@string/str_reference_number"
@@ -96,7 +96,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/category_cl"
-                        android:importantForAccessibility="no"
+                        android:importantForAccessibility="yes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
@@ -104,7 +104,7 @@
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/category_tv"
-                            android:importantForAccessibility="no"
+                            android:importantForAccessibility="yes"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@string/str_category"
@@ -137,7 +137,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/subcategory_cl"
                         android:layout_width="match_parent"
-                        android:importantForAccessibility="no"
+                        android:importantForAccessibility="yes"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
 
@@ -176,7 +176,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/date_time_cl"
-                        android:importantForAccessibility="no"
+                        android:importantForAccessibility="yes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
@@ -216,7 +216,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/status_enquiry_cl"
-                        android:importantForAccessibility="no"
+                        android:importantForAccessibility="yes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
@@ -259,7 +259,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/date_enquiry_closed_cl"
                         android:layout_width="match_parent"
-                        android:importantForAccessibility="no"
+                        android:importantForAccessibility="yes"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
 

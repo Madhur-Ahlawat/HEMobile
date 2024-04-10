@@ -28,6 +28,7 @@
                 android:textSize="@dimen/font_16sp" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_reference_number"
                 android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +40,7 @@
                 app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:id="@+id/layoutVehicleRegistration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -70,6 +71,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_category"
                 android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,7 +83,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardRecentCrossings"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
@@ -112,7 +114,7 @@
 
             <androidx.cardview.widget.CardView
                 android:importantForAccessibility="yes"
-                android:id="@+id/emailCard"
+                android:id="@+id/cv_sub_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
@@ -123,7 +125,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
@@ -155,6 +157,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_date_and_time_submitted"
                 android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,7 +169,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
@@ -198,6 +201,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_status_of_enquiry"
                 android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -209,7 +213,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
@@ -242,7 +246,7 @@
 
             <androidx.cardview.widget.CardView
                 android:importantForAccessibility="yes"
-                android:id="@+id/labelPaymentAmount"
+                android:id="@+id/cv_date_enquiry_closed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
@@ -253,7 +257,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
@@ -285,6 +289,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_details_of_enquiry"
                 android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -295,7 +300,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 

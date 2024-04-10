@@ -34,7 +34,7 @@
             android:lineSpacingExtra="@dimen/margin_5dp"
             android:paddingLeft="@dimen/margin_10dp"
             android:text="@string/str_heading_other_ways_to_pay"
-            android:textColor="@color/grayColorIcon"
+            android:textColor="@color/black"
             android:textColorLink="@color/btn_color"
             android:textSize="@dimen/font_14sp" />
 
@@ -47,7 +47,7 @@
             android:lineSpacingExtra="@dimen/margin_5dp"
             android:paddingLeft="@dimen/margin_10dp"
             android:text="@string/str_or_you_can"
-            android:textColor="@color/grayColorIcon"
+            android:textColor="@color/black"
             android:textColorLink="@color/btn_color"
             android:textSize="@dimen/font_14sp" />
 

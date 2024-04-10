@@ -16,6 +16,11 @@
             type="android.view.View.OnClickListener" />
 
         <variable
+            name="sub_category"
+            android:value="Sub category"
+            type="String" />
+
+        <variable
             name="commentsClickListener"
             type="android.view.View.OnClickListener" />
 
@@ -64,7 +69,6 @@
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_marginEnd="1dp"
-                android:contentDescription="@string/category"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
                 android:importantForAccessibility="yes"
@@ -72,7 +76,7 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layoutVehicleRegistration"
+                    android:id="@+id/layoutCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="yes"
@@ -125,7 +129,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/recent_crossings_cv"
+                android:id="@+id/cv_sub_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
@@ -134,15 +138,16 @@
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
                 android:focusable="true"
-                android:contentDescription="@string/sub_category"
                 android:importantForAccessibility="yes"
+                android:screenReaderFocusable="true"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cardRecentCrossings"
+                    android:id="@+id/layout_sub_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -150,8 +155,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/str_sub_category"
                         android:textSize="15sp"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -205,7 +209,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -213,8 +218,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/contact_message"
                         android:textSize="15sp"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"  />
@@ -257,7 +261,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="@dimen/margin_24dp"
-                android:contentDescription="@string/name"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
@@ -266,17 +269,18 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/name_tv"
                         style="@style/MediumTextBlack"
                         android:text="@string/str_name"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         android:textSize="15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -289,7 +293,6 @@
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="start|center"
                         android:text="@{viewModel.enquiryModel.firstname+' '+viewModel.enquiryModel.lastname}"
-
                         android:importantForAccessibility="no"
                         android:focusable="false"
                         app:layout_constraintEnd_toStartOf="@+id/name_edit_iv"
@@ -311,9 +314,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             </androidx.cardview.widget.CardView>
 
@@ -326,16 +327,17 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                android:contentDescription="@string/email_address"
+                android:contentDescription="Email Address @{viewModel.enquiryModel.email}"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/email_cl"
+                    android:id="@+id/layout_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -343,8 +345,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/email_address"
                         android:textSize="15sp"
-                        android:importantForAccessibility="no"
-                        android:focusable="false"
+                        android:screenReaderFocusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -390,7 +391,7 @@
                 android:layout_marginStart="1dp"
                 android:visibility="@{viewModel.enquiryModel.mobileNumber.empty?View.GONE:View.VISIBLE}"
                 android:layout_marginTop="@dimen/margin_2dp"
-                android:contentDescription="@string/mobile_number"
+                android:contentDescription="Mobile Number @{viewModel.enquiryModel.countryCode+' ' +viewModel.enquiryModel.mobileNumber}"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
@@ -399,9 +400,11 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_mobile_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -409,8 +412,7 @@
                         style="@style/MediumTextBlack"
                         android:text="@string/str_mobile_number"
                         android:textSize="15sp"
-                        android:importantForAccessibility="no"
-                        android:focusable="false"
+                        android:screenReaderFocusable="false"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -443,12 +445,9 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             </androidx.cardview.widget.CardView>
-
 
             <Button
                 android:id="@+id/btnNext"
