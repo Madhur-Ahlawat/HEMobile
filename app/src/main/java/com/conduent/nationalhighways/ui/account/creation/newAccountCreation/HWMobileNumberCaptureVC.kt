@@ -935,9 +935,9 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         } else {
                             binding.errorMobileNumber.visible()
                             if (isItMobileNumber) {
-                                binding.mobileNumberEt.setText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                                binding.errorMobileNumber.setText(getString(R.string.str_non_uk_phoneNumber_error_message))
                             } else {
-                                binding.mobileNumberEt.setText(getString(R.string.telephone_error_message))
+                                binding.errorMobileNumber.setText(getString(R.string.telephone_error_message))
                             }
                             false
                         }
