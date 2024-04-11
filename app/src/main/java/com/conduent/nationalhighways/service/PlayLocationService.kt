@@ -61,8 +61,8 @@ class PlayLocationService : Service(), LocationListener {
 
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        Log.e(TAG, "onStartCommand: playLocation")
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+//        Log.e(TAG, "onStartCommand: playLocation "+intent?.data)
         if (intent != null) {
             try {
                 createLocationRequest()
