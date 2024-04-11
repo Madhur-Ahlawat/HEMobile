@@ -42,8 +42,8 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             checkNotification(sessionManager, context, intent, bufferedWriter)
         } else {
             checkNotification(sessionManager, context, intent, null)
-        }*/
-
+        }
+*/
         checkNotification(sessionManager, context, intent, null)
     }
 
@@ -224,6 +224,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             ).show()
         }
 
-        bufferedWriter?.close()
+//        bufferedWriter?.close()
     }
 }

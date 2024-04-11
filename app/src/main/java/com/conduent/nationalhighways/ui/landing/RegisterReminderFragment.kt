@@ -73,7 +73,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
             }
         } else {
-          /*  if (sessionManager.fetchStringData("SAVED_FILE").isEmpty()) {
+         /*   if (sessionManager.fetchStringData("SAVED_FILE").isEmpty()) {
                 val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
                 intent.addCategory(Intent.CATEGORY_OPENABLE)
                 intent.setType("text/plain")
@@ -147,8 +147,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
         }
 
-     /*   if (sessionManager.fetchStringData("SAVED_FILE").isNotEmpty()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (sessionManager.fetchStringData("SAVED_FILE").isNotEmpty()) {
+           /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 if (Environment.isExternalStorageManager()) {
                     // All files access permission is granted
                     // Your code here
@@ -162,8 +162,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             } else {
                 // For versions lower than Android 11, handle permissions accordingly
                 // You may request WRITE_EXTERNAL_STORAGE permission or other relevant permissions
-            }
-        }*/
+            }*/
+        }
 
 
     }
@@ -174,7 +174,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             "TAG",
             "onActivityResult() called with: requestCode = $requestCode, resultCode = $resultCode, data = $dataIntent"
         )
-      /*  if (requestCode == 1000 && dataIntent != null) {
+     /*   if (requestCode == 1000 && dataIntent != null) {
             Log.e("TAG", "onActivityResult: " + dataIntent.data)
             sessionManager.saveStringData("SAVED_FILE", dataIntent.data?.path ?: "")
 
@@ -195,8 +195,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 Toast.makeText(requireContext(), "file not exists", Toast.LENGTH_SHORT).show()
             }
         }
-*/
-    }
+*/    }
 
     override fun initCtrl() {
         binding.gotoStartMenuBt.setOnClickListener {

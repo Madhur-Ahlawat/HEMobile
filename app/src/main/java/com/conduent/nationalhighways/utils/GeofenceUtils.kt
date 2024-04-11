@@ -78,7 +78,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceNorthBoundDartCharge)
                 setCircularRegion(
-                    16.965100, 82.200171,
+                    12.974161, 77.497427,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -89,7 +89,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceSouthBoundDartCharge)
                 setCircularRegion(
-                    16.961331, 82.209425,
+                    12.970568, 77.490127,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)

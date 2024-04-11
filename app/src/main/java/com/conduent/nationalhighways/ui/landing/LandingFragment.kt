@@ -71,7 +71,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
-      /*  Toast.makeText(
+    /*    Toast.makeText(
             requireContext(),
             "Location is ${Utils.isLocationServiceRunning(requireContext())}", Toast.LENGTH_SHORT
         ).show()*/
