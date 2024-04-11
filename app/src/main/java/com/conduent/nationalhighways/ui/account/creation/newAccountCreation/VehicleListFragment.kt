@@ -290,7 +290,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         data.plateInfo?.state = "HE"
         data.plateInfo?.type = "STANDARD"
 
-        data.vehicleInfo?.year = 2023
+        data.vehicleInfo?.year = Utils.getCurrentYear()
         data.vehicleInfo?.effectiveStartDate = ""
         if (obj.vehicleModel.isNullOrEmpty()) {
             data.vehicleInfo?.model = "Not Provided"

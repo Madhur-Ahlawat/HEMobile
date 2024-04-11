@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.conduent.nationalhighways">
 
     <uses-feature
@@ -167,7 +168,8 @@
             android:exported="false"
             android:stopWithTask="false"
             android:enabled="true"
-            android:foregroundServiceType="location"/>
+            android:foregroundServiceType="location"
+            tools:node="merge"/>
 
         <receiver android:name=".receiver.BootReceiver"
             android:exported="true">

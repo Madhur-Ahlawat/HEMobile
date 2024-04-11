@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -70,7 +71,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
-        Log.e("TAG", "init:isLocationServiceRunning--> "+Utils.isLocationServiceRunning(requireContext()) )
+    /*    Toast.makeText(
+            requireContext(),
+            "Location is ${Utils.isLocationServiceRunning(requireContext())}", Toast.LENGTH_SHORT
+        ).show()*/
+
         BaseApplication.screenNameAnalytics = ""
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
             plateNumber = arguments?.getString(Constants.PLATE_NUMBER) ?: ""

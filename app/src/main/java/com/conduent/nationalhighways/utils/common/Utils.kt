@@ -1749,7 +1749,7 @@ object Utils {
             }
             previousChar = char
         }
-        Log.e("TAG", "replaceAsterisks: "+stringBuilder.toString() )
+        Log.e("TAG", "replaceAsterisks: " + stringBuilder.toString())
         return stringBuilder.toString()
     }
 
@@ -1776,17 +1776,17 @@ object Utils {
 
     fun writeInFile(context: Context, message: String) {
         try {
-            val directory =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-            val file = File(directory, "dartlogs.txt")
-            if (file.exists()) {
-                val fileWriter = FileWriter(file, true)
-                val bufferedWriter = BufferedWriter(fileWriter)
+            /*   val directory =
+                   Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+               val file = File(directory, "dartlogs.txt")
+               if (file.exists()) {
+                   val fileWriter = FileWriter(file, true)
+                   val bufferedWriter = BufferedWriter(fileWriter)
 
-                bufferedWriter.write(message + "\n")
-                bufferedWriter.newLine()
-                bufferedWriter.close()
-            }
+                   bufferedWriter.write(message + "\n")
+                   bufferedWriter.newLine()
+                   bufferedWriter.close()
+               }*/
         } catch (e: Exception) {
 
         }
@@ -1834,4 +1834,7 @@ object Utils {
         return false
     }
 
+    fun getCurrentYear(): Int {
+        return Calendar.getInstance().get(Calendar.YEAR)
+    }
 }

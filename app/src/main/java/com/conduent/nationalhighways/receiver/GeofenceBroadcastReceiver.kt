@@ -30,9 +30,9 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         notificationUtils= NotificationUtils(context)
         sessionManager = SessionManager(Utils.returnSharedPreference(context))
 
-     /*   val directory =
+      /*  val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(directory, "dartlogs_20_1.txt")
+        val file = File(directory, "dartlogs.txt")
         if (file.exists()) {
             val fileWriter = FileWriter(file, true)
             val bufferedWriter = BufferedWriter(fileWriter)
@@ -44,7 +44,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             checkNotification(sessionManager, context, intent, null)
         }
 */
-
         checkNotification(sessionManager, context, intent, null)
     }
 
@@ -210,8 +209,8 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 Log.e(TAG, "geofenceTransition- error -> $geofenceTransition")
             }
 
-            bufferedWriter?.write("geofenceTransition $geofenceTransition requestID $requestID \n")
-            bufferedWriter?.newLine()
+//            bufferedWriter?.write("geofenceTransition $geofenceTransition requestID $requestID \n")
+//            bufferedWriter?.newLine()
 
 
 
@@ -225,6 +224,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             ).show()
         }
 
-        bufferedWriter?.close()
+//        bufferedWriter?.close()
     }
 }
