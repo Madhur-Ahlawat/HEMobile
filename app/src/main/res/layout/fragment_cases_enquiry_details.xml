@@ -49,6 +49,7 @@
                     android:layout_marginTop="@dimen/margin_15dp"
                     android:layout_marginRight="@dimen/margin_2dp"
                     android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/enquiry_tv">
@@ -56,6 +57,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/reference_number_cl"
                         android:importantForAccessibility="yes"
+                        android:screenReaderFocusable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/margin_15dp">
@@ -63,7 +65,8 @@
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/reference_number_tv"
-                            android:importantForAccessibility="yes"
+                            android:importantForAccessibility="no"
+                            android:screenReaderFocusable="false"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             android:text="@string/str_reference_number"
@@ -75,6 +78,7 @@
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
                             android:importantForAccessibility="no"
+                            android:screenReaderFocusable="false"
                             android:text="@{viewModel.enquiryDetailsModel.id}"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/reference_number_tv" />
