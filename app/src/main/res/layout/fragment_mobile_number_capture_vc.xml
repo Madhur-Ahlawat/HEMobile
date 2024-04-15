@@ -69,6 +69,7 @@
                 android:textColor="@color/black"
                 app:imeOptions="actionNext"
                 app:inputType="phone"
+                android:minHeight="@dimen/_48dp"
                 android:gravity="center_vertical"
                 android:backgroundTint="@color/label_color"
                 android:hint=""

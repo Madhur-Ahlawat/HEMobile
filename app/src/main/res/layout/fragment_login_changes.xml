@@ -128,20 +128,41 @@
                 android:paddingEnd="@dimen/margin_20dp"
                 android:paddingBottom="@dimen/margin_18dp">
 
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                <EditText
                     android:id="@+id/edt_email"
                     style="@style/input_text"
                     android:autofillHints="emailAddress"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     android:singleLine="true"
-                    app:labelText="@string/email_address"
+                    android:minHeight="@dimen/_48dp"
+                    android:hint="@string/email_address"
+                    app:hint="@string/email_address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/errorMobileNumber"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
+                    style="@style/MediumText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red_color"
+                    android:paddingTop="5dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/open_sans_bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_email"
+                    tools:text="TextView" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/txt_credential_note"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -156,6 +177,8 @@
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                     android:id="@+id/edt_pwd"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     style="@style/input_text"
                     android:autofillHints="password"
                     android:imeOptions="actionDone"

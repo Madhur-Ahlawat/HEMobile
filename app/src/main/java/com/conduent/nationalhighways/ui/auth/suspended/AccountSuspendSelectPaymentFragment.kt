@@ -86,7 +86,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
         binding.btnContinue.setOnClickListener(this)
         binding.btnMainAddNewPayment.setOnClickListener(this)
-        binding.btnAddNewPayment.setOnClickListener(this)
         binding.topBalance.editText.setOnFocusChangeListener { _, b -> topBalanceDecimal(b) }
 
         // Assuming editText is your EditText view
@@ -198,7 +197,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     private fun checkNewPaymentMethodButton() {
-        binding.btnAddNewPayment.isEnabled = lowBalance
+        binding.btnMainAddNewPayment.isEnabled = lowBalance
     }
 
     override fun onClick(v: View?) {
@@ -224,10 +223,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     bundle
                 )
 
-            }
-
-            R.id.btnAddNewPayment -> {
-                addPayment()
             }
 
             R.id.btnMainAddNewPayment -> {
@@ -295,12 +290,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     binding.rvPaymentMethods.visible()
                     binding.btnContinue.visible()
                     binding.noCardFoundLayout.gone()
-                    binding.btnAddNewPayment.visible()
+                    binding.btnMainAddNewPayment.visible()
                     binding.btnMainAddNewPayment.gone()
 
                 } else {
                     binding.btnMainAddNewPayment.visible()
-                    binding.btnAddNewPayment.gone()
+                    binding.btnMainAddNewPayment.gone()
                     binding.noCardFoundLayout.visible()
                     binding.rvPaymentMethods.gone()
                     binding.btnContinue.gone()

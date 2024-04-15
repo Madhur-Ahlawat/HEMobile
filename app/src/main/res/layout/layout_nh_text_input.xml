@@ -39,6 +39,8 @@
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/txtError"
+            android:importantForAccessibility="yes"
+            android:screenReaderFocusable="true"
             style="@style/MediumText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
