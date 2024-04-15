@@ -37,7 +37,6 @@
                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    tools:text="12"
                     android:gravity="center"
                     android:textSize="40sp"
                     android:textColor="@color/white"

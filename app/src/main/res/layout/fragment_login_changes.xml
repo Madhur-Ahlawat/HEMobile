@@ -139,7 +139,6 @@
                     android:singleLine="true"
                     android:minHeight="@dimen/_48dp"
                     android:hint="@string/email_address"
-                    app:hint="@string/email_address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
