@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -113,18 +114,11 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         binding.layoutName.contentDescription = getString(R.string.name) + ", " + viewModel.enquiryModel.value!!.firstname + " " + viewModel.enquiryModel.value!!.lastname
         binding.emailCv.contentDescription = getString(R.string.email_address) + ", " + viewModel.enquiryModel.value!!.email
         binding.layoutEmail.contentDescription = getString(R.string.email_address) + ", " + viewModel.enquiryModel.value!!.email
-        val builder = StringBuilder()
-        for (i in 0 until
-                viewModel.enquiryModel.value!!.countryCode.length) {
-            builder.append(viewModel.enquiryModel.value!!.countryCode[i])
-            builder.append("\u00A0")
-        }
-        for (i in 0 until
-                viewModel.enquiryModel.value!!.mobileNumber.length) {
-            builder.append(viewModel.enquiryModel.value!!.mobileNumber[i])
-            builder.append("\u00A0")
-        }
-        binding.mobileCv.contentDescription = getString(R.string.mobile_number) + ", " + builder.toString()
+        val builder =  Utils.accessibilityForNumbers(
+            viewModel.enquiryModel.value?.countryCode.toString()+viewModel.enquiryModel.value?.mobileNumber.toString()
+        )
+
+        binding.mobileCv.contentDescription = getString(R.string.mobile_number) + ", " +builder.toString()
         binding.layoutMobileNumber.contentDescription = getString(R.string.mobile_number) + ", " + builder.toString()
     }
 
@@ -151,16 +145,10 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             viewModel.edit_enquiryModel.value?.apiFileName ?: ""
 
         binding.mobileDataTv.setText(viewModel.enquiryModel.value!!.mobileNumber)
-        val builder = StringBuilder()
-        for (i in 0 until viewModel.enquiryModel.value!!.countryCode.length) {
-            builder.append(viewModel.enquiryModel.value!!.countryCode[i])
-            builder.append("\u00A0")
 
-        }
-        for (i in 0 until viewModel.enquiryModel.value!!.mobileNumber.length) {
-            builder.append(viewModel.enquiryModel.value!!.mobileNumber[i])
-            builder.append("\u00A0")
-        }
+        val builder =  Utils.accessibilityForNumbers(
+            viewModel.enquiryModel.value?.countryCode.toString()+viewModel.enquiryModel.value?.mobileNumber.toString()
+        )
         binding.mobileCv.contentDescription = getString(R.string.mobile_number) + " " + builder.toString()
 
     }

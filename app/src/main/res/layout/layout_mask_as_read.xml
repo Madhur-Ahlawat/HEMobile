@@ -4,31 +4,31 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:background="@color/blue_color"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/blue_color">
 
         <ImageView
-            android:layout_marginTop="@dimen/margin_6dp"
             android:id="@+id/iv_mark_as_read"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:src="@drawable/ic_mark_as_read"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:src="@drawable/ic_mark_as_read"
-            android:layout_height="wrap_content" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            app:layout_constraintTop_toTopOf="@id/iv_mark_as_read"
-            app:layout_constraintStart_toStartOf="@id/iv_mark_as_read"
-            app:layout_constraintEnd_toEndOf="@id/iv_mark_as_read"
-            android:text="@string/mark_as_nread"
-            android:textSize="@dimen/font_20sp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:fontFamily="@font/open_sans_semibold"
-            android:layout_marginTop="@dimen/margin_10dp"
+        <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:text="@string/mark_as_nread"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_20sp"
+            app:layout_constraintEnd_toEndOf="@id/iv_mark_as_read"
+            app:layout_constraintStart_toStartOf="@id/iv_mark_as_read"
+            app:layout_constraintTop_toTopOf="@id/iv_mark_as_read" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

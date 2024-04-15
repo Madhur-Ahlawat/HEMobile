@@ -37,6 +37,7 @@ import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
@@ -1765,10 +1766,17 @@ object Utils {
 
     fun accessibilityForNumbers(value: String): StringBuilder {
         val builder = StringBuilder()
+        var isFirstDigit = true
+
         for (data in value) {
-            builder.append(data.toString())
             if (data.isDigit()) {
-                builder.append("\u00A0")
+                if (!isFirstDigit) {
+                    builder.append("\u202F") // Use a narrow no-break space
+                }
+                builder.append(data)
+                isFirstDigit = false
+            } else {
+                builder.append(data)
             }
         }
         return builder

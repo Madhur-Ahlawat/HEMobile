@@ -507,13 +507,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
             )
             binding.mobileNumberEt.setText(viewModel.edit_enquiryModel.value?.mobileNumber ?: "")
-            var fullPhoneNumber = viewModel.enquiryModel.value!!.mobileNumber
-            val builder = StringBuilder()
-            for (i in 0 until fullPhoneNumber.length) {
-                builder.append(fullPhoneNumber[i].toString())
-                builder.append("\u00A0")
-            }
-            binding.mobileNumberEt.setContentDescription(builder.toString())
+            binding.mobileNumberEt.setContentDescription(Utils.accessibilityForNumbers(viewModel.enquiryModel.value?.mobileNumber.toString()))
 
         } else {
             if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
@@ -536,16 +530,8 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     viewModel.edit_enquiryModel.value?.fullcountryCode = fullCountryNameToSave
                 }
                 binding.mobileNumberEt.setText(sm.fetchUserMobileNUmber() ?: "")
-                val builder = StringBuilder()
-//                for (i in 0 until sm.fetchUserCountryCode()!!.length) {
-//                    builder.append(sm.fetchUserCountryCode()!![i])
-//                    builder.append("\u00A0")
-//                }
-                for (i in 0 until sm.fetchUserMobileNUmber()!!.length) {
-                    builder.append(sm.fetchUserMobileNUmber()!![i])
-                    builder.append("\u00A0")
-                }
-                binding.mobileNumberEt.setContentDescription(builder.toString())
+
+                binding.mobileNumberEt.setContentDescription(Utils.accessibilityForNumbers(sm.fetchUserMobileNUmber().toString()))
             }
 
         }

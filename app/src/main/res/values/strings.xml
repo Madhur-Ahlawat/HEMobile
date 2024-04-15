@@ -1431,7 +1431,7 @@
     <string name="check_for_previous_crossings">Check For Previous Crossings</string>
     <string name="paid_for_please_note">After you’ve made a one-off payment, you can check which crossings you’ve paid for. Please note it can take up to one day for your payment to be matched to crossings</string>
     <string name="for_example_hd542321725_or_1_898008009">For example, HD542321725 or 1–898008009</string>
-    <string name="paid_crossing_point1">If you paid by web or phone this is the \'HD or 1-\' number</string>
+    <string name="paid_crossing_point1">If you paid by web, mobile app or phone this is the \'HD or 1-\' number</string>
     <string name="paid_crossing_point2">If you\'ve paid through Payzone his is the \'TXN\' number</string>
     <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings\nplanned in the future.\n\nLate payments will be used for future\ncrossings - you may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>

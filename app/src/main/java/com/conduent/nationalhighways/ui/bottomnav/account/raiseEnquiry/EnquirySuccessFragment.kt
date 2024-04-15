@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
@@ -66,14 +67,10 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
             }
         }
 
-        val builder = StringBuilder()
 
-        for (i in 0 until enquiryModel?.srNumber!!.length) {
-            builder.append(enquiryModel?.srNumber!![i])
-            builder.append("\u00A0")
-        }
-
-        binding.referenceNumberCv.contentDescription = getString(R.string.reference_number) + " " + builder.toString()
+        binding.referenceNumberCv.contentDescription = getString(R.string.reference_number) + " " + Utils.accessibilityForNumbers(
+            enquiryModel?.srNumber.toString()
+        )
 
     }
 
