@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.raiseEnquiry.ServiceRequest
 import com.conduent.nationalhighways.databinding.AdapterCasesEnquiryListBinding
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.listener.ItemClickListener
+import com.conduent.nationalhighways.utils.common.Utils
 
 class CasesEnquiryListAdapter(val listener:ItemClickListener,val caseEnquiryList: ArrayList<ServiceRequest>) :
     RecyclerView.Adapter<CasesEnquiryListAdapter.CasesEnquiryListViewHolder>() {
@@ -35,7 +36,7 @@ class CasesEnquiryListAdapter(val listener:ItemClickListener,val caseEnquiryList
             builder.append(itemData.id[i])
             builder.append("\u00A0")
         }
-        holder.binding.referenceNumberTv.contentDescription = builder.toString()
+        holder.binding.referenceNumberTv.contentDescription = Utils.accessibilityForNumbers(itemData.id.toString())
     }
 
     class CasesEnquiryListViewHolder(var binding: AdapterCasesEnquiryListBinding) :
