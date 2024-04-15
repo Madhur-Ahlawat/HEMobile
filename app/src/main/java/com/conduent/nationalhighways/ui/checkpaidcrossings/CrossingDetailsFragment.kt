@@ -123,7 +123,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
 
     private fun setContentDescriptionForBullets() {
         binding.layerFullName.contentDescription=binding.txtFullName.text.toString()+"."+ Utils.accessibilityForNumbers(binding.fullName.text.toString())
-        binding.layerCompanyName.contentDescription=binding.txtVehicleRegistrationNumber.text.toString()+"."+binding.valueVehicleRegistrationNumber.text.toString()
+        binding.layerCompanyName.contentDescription=binding.txtVehicleRegistrationNumber.text.toString()+"."+ Utils.accessibilityForNumbers(binding.valueVehicleRegistrationNumber.text.toString())
         binding.creditRemainingCl.contentDescription=binding.txtAddress.text.toString()+"."+binding.address.text.toString()
         binding.creditExpiryDateCl.contentDescription=binding.txtEmailAddress.text.toString()+"."+binding.emailAddress.text.toString()
     }

@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -69,13 +71,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             isEnable(it)
         }
         binding.editReferenceNumber.doAfterTextChanged {
-            mBuilder = StringBuilder()
-            for (i in 0 until
-                    it.toString().length) {
-                mBuilder!!.append(it.toString()[i])
-                mBuilder!!.append("\u00A0")
-            }
-            binding.editReferenceNumber.hint = mBuilder.toString()
+            binding.editReferenceNumber.hint = Utils.accessibilityForNumbers(it.toString())
             isEnable(it)
         }
         binding.point1Ll.contentDescription =

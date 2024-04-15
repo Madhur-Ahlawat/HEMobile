@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white" tools:override="true">#FFFFFFFF</color>
+    <color name="white_color">#FFFFFF</color>
     <color name="green">#00703C</color>
     <color name="blue">#5A97F8</color>
     <color name="light_grey">#F2F2F2</color>
@@ -79,7 +80,7 @@
     <color name="dialog_title">#444251</color>
 
     <color name="color_C93E28">#C93E28</color>
-    <color name="color_942514">#942514</color>
+    <color name="color_942514">#942515</color>
     <color name="color_383f43">#383f43</color>
     <color name="color_144e81">#144e81</color>
     <color name="color_DDE8E3">#DDE8E3</color>

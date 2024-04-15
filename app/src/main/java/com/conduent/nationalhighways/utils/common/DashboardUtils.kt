@@ -36,31 +36,33 @@ object DashboardUtils {
     fun setAccountStatusNew(status: String, tvTitle: AppCompatTextView, viewGroup: MaterialCardView,type:Int) {
         if (status.uppercase().equals("OPEN", true) || status.uppercase().equals("ACTIVE", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.open)
+            tvTitle.run {
+                setTextColor(viewGroup.context.resources.getColor(R.color.dark_blue_color,null))
+            }
             viewGroup.run{
                 setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.green_status))
             }
         } else if (status.uppercase().equals("SUSPENDED", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.suspended)
-            viewGroup.run{
-                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_C93E28))
+            tvTitle.run {
+                setTextColor(viewGroup.context.resources.getColor(R.color.white_color,null))
             }
-        } else if (status.uppercase().equals("DORMANT", true)) {
-            tvTitle.text = tvTitle.context.getString(R.string.dormant)
             viewGroup.run{
                 setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514))
             }
-        } else if (status.uppercase().equals("CLOSED", true)) {
-            tvTitle.text = tvTitle.context.getString(R.string.closed)
-            viewGroup.run{
-                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_383f43))
+        } else if (status.uppercase().equals("DORMANT", true)) {
+            tvTitle.text = tvTitle.context.getString(R.string.dormant)
+            tvTitle.run {
+                setTextColor(viewGroup.context.resources.getColor(R.color.white_color,null))
             }
-        } else if (status.uppercase().equals("CLOSE PEND", true)) {
-            tvTitle.text = tvTitle.context.getString(R.string.close_Pending)
             viewGroup.run{
-                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_144e81))
+                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514))
             }
         } else {
             tvTitle.text = status
+            tvTitle.run {
+                setTextColor(viewGroup.context.resources.getColor(R.color.dark_blue_color,null))
+            }
             viewGroup.run{
                 setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.FFF7BF))
             }

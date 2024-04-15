@@ -142,52 +142,27 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                         binding.mobileNumberEt.setText(
                             it
                         )
-                        val builder = StringBuilder()
-                        for (i in 0 until
-                                it.length) {
-                            builder.append(it[i])
-                            builder.append("\u00A0")
-                        }
-                        binding.mobileNumberEt.setContentDescription(builder.toString())
+                        binding.mobileNumberEt.setContentDescription(Utils.accessibilityForNumbers(it.toString()))
                     }
                     NewCreateAccountRequestModel.countryCode?.let {
                         binding.inputCountry.setSelectedValue(
                             it
                         )
-                        var fullPhoneNumber = it?.replace("+", "plus")
-                        val builder = StringBuilder()
-                        for (i in 0 until
-                                fullPhoneNumber!!.length) {
-                            builder.append(fullPhoneNumber[i])
-                            builder.append("\u00A0")
-                        }
-                        binding.inputCountry.setContentDescription(builder.toString())
+                        binding.inputCountry.setContentDescription(
+                            Utils.accessibilityForNumbers( it.replace("+", "plus").toString()))
                     }
                 } else {
                     NewCreateAccountRequestModel.telephoneNumber?.let {
                         binding.mobileNumberEt.setText(
                             it
                         )
-                        val builder = StringBuilder()
-                        for (i in 0 until
-                                it.length) {
-                            builder.append(it[i])
-                            builder.append("\u00A0")
-                        }
-                        binding.mobileNumberEt.setContentDescription(builder.toString())
+                        binding.mobileNumberEt.setContentDescription(Utils.accessibilityForNumbers(it.toString()))
                     }
                     NewCreateAccountRequestModel.telephone_countryCode?.let {
                         binding.inputCountry.setSelectedValue(
                             it
                         )
-                        var fullPhoneNumber = it?.replace("+", "plus")
-                        val builder = StringBuilder()
-                        for (i in 0 until
-                                fullPhoneNumber!!.length) {
-                            builder.append(fullPhoneNumber[i])
-                            builder.append("\u00A0")
-                        }
-                        binding.inputCountry.setContentDescription(builder.toString())
+                        binding.inputCountry.setContentDescription(Utils.accessibilityForNumbers( it.replace("+", "plus").toString()))
                     }
                 }
                 checkIncompatibleCountry(binding.inputCountry.selectedItemDescription.toString(), 1)

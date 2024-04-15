@@ -19,6 +19,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.conduent.nationalhighways.R
@@ -62,23 +63,23 @@ class PlayLocationService : Service(), LocationListener {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-//        Log.e(TAG, "onStartCommand: playLocation "+intent?.data)
         if (intent != null) {
             try {
                 createLocationRequest()
                 startLocationUpdates()
                 try {
                     Log.e(TAG, "onCreate: foregroundservice")
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                        startForeground(Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification())
-                    } else {
-                        startForeground(
-                            Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(),
+                    ServiceCompat.startForeground(
+                        this,  Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(),
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                             FOREGROUND_SERVICE_TYPE_LOCATION
-                        )
-                    }
+                        } else {
+                            0
+                        },
+                    )
                 } catch (e: Exception) {
                     Log.e(TAG, "onCreate: e.message " + e.message)
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
                         && e is ForegroundServiceStartNotAllowedException
                     ) {
