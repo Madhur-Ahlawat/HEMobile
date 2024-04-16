@@ -452,4 +452,7 @@ object Constants {
     const val GpsSettings = "GpsSettings"
     const val geofenceNorthBoundDartCharge = "geofenceNorthBoundDartCharge"
     const val geofenceSouthBoundDartCharge = "geofenceSouthBoundDartCharge"
+
+    const val FOREGROUND_SERVICE_NOTIFICATIONID=12334
+
 }
