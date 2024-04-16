@@ -1220,7 +1220,7 @@ object Utils {
         } else if (paymentTypeInfo.contains("MASTERCARD")) {
             return "MASTERCARD"
         } else if (paymentTypeInfo.contains(Constants.MAESTRO)) {
-            return "Constants.MAESTRO"
+            return "MAESTRO"
         } else if (paymentTypeInfo.contains("VISA")) {
             return "VISA"
         } else {
