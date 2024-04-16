@@ -174,16 +174,9 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         } else if (requestCode == 1948) {
 //            val directory =
 //                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-//            val file = File(directory, "dartlogs_20_1.txt")
+//            val file = File(directory, "dartlogs.txt")
 //            if (file.exists()) {
-//                val fileWriter = FileWriter(file, true)
-//                val bufferedWriter = BufferedWriter(fileWriter)
-//
-//                bufferedWriter.write("File created\n")
-//                bufferedWriter.newLine()
-//                bufferedWriter.close()
-//                Toast.makeText(requireContext(), "file exists", Toast.LENGTH_SHORT).show()
-//
+//                Utils.writeInFile(requireContext(), "File Created")
 //            } else {
 //                Toast.makeText(requireContext(), "file not exists", Toast.LENGTH_SHORT).show()
 //            }
