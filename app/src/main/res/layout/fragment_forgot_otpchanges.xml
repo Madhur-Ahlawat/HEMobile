@@ -41,18 +41,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top_title" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/label_mobile_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20dp"
-                android:text="@string/str_six_digit_security_code"
-                android:textColor="@color/label_color"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/message_received_txt" />
-
-            <EditText
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                 android:id="@+id/edt_otp"
                 style="@style/input_text"
                 android:layout_width="0dp"
@@ -62,24 +51,12 @@
                 android:maxLength="6"
                 app:imeOptions="actionDone"
                 app:inputType="number"
+                app:labelText="@string/str_six_digit_security_code"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/label_mobile_number"
+                app:layout_constraintTop_toBottomOf="@id/message_received_txt"
                 app:maxLength="6" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/errorMobileNumber"
-                style="@style/MediumText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/red_color"
-                android:paddingTop="5dp"
-                android:visibility="gone"
-                android:fontFamily="@font/open_sans_bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_otp"
-                tools:text="TextView" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/not_received_txt"
@@ -91,7 +68,7 @@
                 android:lineSpacingExtra="@dimen/_4sdp"
                 android:text="@string/str_not_received_otp_txt"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/errorMobileNumber" />
+                app:layout_constraintTop_toBottomOf="@+id/edt_otp" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
