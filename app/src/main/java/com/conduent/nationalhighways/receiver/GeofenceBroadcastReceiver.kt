@@ -32,7 +32,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
      /*   val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(directory, "dartlogs_20_1.txt")
+        val file = File(directory, "dartlogs.txt")
         if (file.exists()) {
             val fileWriter = FileWriter(file, true)
             val bufferedWriter = BufferedWriter(fileWriter)

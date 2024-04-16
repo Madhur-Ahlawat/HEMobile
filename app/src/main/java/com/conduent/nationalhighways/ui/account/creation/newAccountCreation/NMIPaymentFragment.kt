@@ -683,7 +683,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             } else {
                 item.plateCountry = "NON-UK"
             }
-            item.vehicleYear = "2023"
+            item.vehicleYear = Utils.getCurrentYear().toString()
             listVehicle.add(item)
 
         }

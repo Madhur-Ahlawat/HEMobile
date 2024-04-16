@@ -19,9 +19,11 @@ import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.utils.common.Constants
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -60,7 +62,7 @@ class PlayLocationService : Service(), LocationListener {
 
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.e(TAG, "onStartCommand: playLocation")
         if (intent != null) {
             try {
@@ -68,14 +70,16 @@ class PlayLocationService : Service(), LocationListener {
                 startLocationUpdates()
                 try {
                     Log.e(TAG, "onCreate: foregroundservice")
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                        startForeground(123, createNotification())
-                    } else {
-                        startForeground(
-                            123, createNotification(),
+
+                    ServiceCompat.startForeground(
+                        this,  Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(),
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                             FOREGROUND_SERVICE_TYPE_LOCATION
-                        )
-                    }
+                        } else {
+                            0
+                        },
+                    )
+
                 } catch (e: Exception) {
                     Log.e(TAG, "onCreate: e.message " + e.message)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
