@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -179,49 +180,10 @@ class PlayLocationService : Service(), LocationListener {
     }
 
     //running a foregroundService for continuously getting latLongs and app working in all states.
-    private fun foregroundService() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            val CHANNEL_ID = "my_channel_01"
-            var channel = NotificationChannel(
-                CHANNEL_ID,
-                applicationContext.resources.getString(R.string.app_name),
-                NotificationManager.IMPORTANCE_LOW
-            )
-            channel.setSound(null, null)
-            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(
-                channel
-            )
-            val notification = Notification.Builder(this, CHANNEL_ID)
-                .setContentTitle(applicationContext.resources.getString(R.string.dartcharge_running))
-                .setSmallIcon(R.drawable.push_notification)
-                .setColor(resources.getColor(R.color.blue, null))
-                .setContentText(applicationContext.resources.getString(R.string.tap_for_more_info))
-                .build()
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                startForeground(123, notification)
-            } else {
-                startForeground(
-                    123, notification,
-                    FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
-                )
-            }
-        } else {
-            val builder: NotificationCompat.Builder = NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.push_notification)
-                .setContentTitle(applicationContext.resources.getString(R.string.dartcharge_running))
-                .setContentText(applicationContext.resources.getString(R.string.tap_for_more_info))
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                startForeground(123, builder.build())
-            } else {
-                startForeground(
-                    123, builder.build(),
-                    FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
-                )
-            }
-        }
-    }
+
 
     override fun onTaskRemoved(rootIntent: Intent) {
+        Utils.writeInFile(null,"PlayLocation Task Removed")
         super.onTaskRemoved(rootIntent)
     }
 
@@ -251,7 +213,7 @@ class PlayLocationService : Service(), LocationListener {
             val ii = Intent("update")
             ii.putExtra("lat", lat)
             ii.putExtra("lng", lng)
-            broadcaster!!.sendBroadcast(ii)
+            broadcaster?.sendBroadcast(ii)
         }
     }
 

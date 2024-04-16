@@ -1661,7 +1661,7 @@ object Utils {
         activity.startActivity(appSettingsIntent)
     }
 
-    fun writeInFile(context: Context, message: String) {
+    fun writeInFile(context: Context?, message: String) {
         try {
             /*   val directory =
                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
