@@ -3,11 +3,14 @@ package com.conduent.nationalhighways.ui.bottomnav.account
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -60,6 +63,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         container: ViewGroup?
     ): FragmentAccountNewBinding = FragmentAccountNewBinding.inflate(inflater, container, false)
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -78,8 +82,12 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         binding.contactUs.contentDescription = getString(R.string.contact_us)
         binding.closeAcount.contentDescription = getString(R.string.str_close_account)
         binding.signOut.contentDescription = getString(R.string.sign_out)
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     private fun initUI() {
         if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
             navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY, "").toString()
@@ -115,6 +123,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
 
             profilePic.text = "" + firstNameChar.toString() + secondNameChar.toString()
+            profilePic.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+            profilePic.isScreenReaderFocusable = false
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
             DashboardUtils.setAccountStatusNew(
                 sessionManager.fetchAccountStatus() ?: "",
