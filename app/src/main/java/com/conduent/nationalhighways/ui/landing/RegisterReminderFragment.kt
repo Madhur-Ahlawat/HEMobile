@@ -174,28 +174,22 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             "TAG",
             "onActivityResult() called with: requestCode = $requestCode, resultCode = $resultCode, data = $dataIntent"
         )
-     /*   if (requestCode == 1000 && dataIntent != null) {
+     if (requestCode == 1000 && dataIntent != null) {
             Log.e("TAG", "onActivityResult: " + dataIntent.data)
-            sessionManager.saveStringData("SAVED_FILE", dataIntent.data?.path ?: "")
+//            sessionManager.saveStringData("SAVED_FILE", dataIntent.data?.path ?: "")
 
         } else if (requestCode == 1948) {
-            val directory =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-            val file = File(directory, "dartlogs.txt")
-            if (file.exists()) {
-                val fileWriter = FileWriter(file, true)
-                val bufferedWriter = BufferedWriter(fileWriter)
-
-                bufferedWriter.write("File created\n")
-                bufferedWriter.newLine()
-                bufferedWriter.close()
-                Toast.makeText(requireContext(), "file exists", Toast.LENGTH_SHORT).show()
-
-            } else {
-                Toast.makeText(requireContext(), "file not exists", Toast.LENGTH_SHORT).show()
-            }
+//            val directory =
+//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+//            val file = File(directory, "dartlogs.txt")
+//            if (file.exists()) {
+//                Utils.writeInFile(requireContext(), "File Created")
+//            } else {
+//                Toast.makeText(requireContext(), "file not exists", Toast.LENGTH_SHORT).show()
+//            }
         }
-*/    }
+
+    }
 
     override fun initCtrl() {
         binding.gotoStartMenuBt.setOnClickListener {

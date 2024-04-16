@@ -44,21 +44,7 @@ object GeofenceUtils {
 
     //starting geofence
     fun startGeofence(context1: Context, from: Int = 0) {
-
-     /*   val directory =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(directory, "dartlogs.txt")
-        if (file.exists()) {
-            val fileWriter = FileWriter(file, true)
-            val bufferedWriter = BufferedWriter(fileWriter)
-            bufferedWriter.write("startgeofence from $from\n")
-            bufferedWriter.newLine()
-            bufferedWriter.close()
-        }else{
-            Log.e(TAG, "startGeofence: file not exists" )
-        }*/
-
-
+        Utils.writeInFile(context1,"startgeofence from $from")
         context = context1
         val geofenceIntent: PendingIntent by lazy {
             val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
