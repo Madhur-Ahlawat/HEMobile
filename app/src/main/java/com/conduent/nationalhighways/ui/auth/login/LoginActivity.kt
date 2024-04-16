@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -332,32 +333,31 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     private fun isEnable(b: Boolean) {
         if (!b) {
-            emailCheck = if (binding.edtEmail.text.toString().trim().isNotEmpty()) {
+            emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
                 if (!Utils.isLastCharOfStringACharacter(
-                        binding.edtEmail.text.toString().trim()
+                        binding.edtEmail.editText.text.toString().trim()
                     ) || Utils.countOccurenceOfChar(
-                        binding.edtEmail.text.toString().trim(), '@'
-                    ) > 1 || binding.edtEmail.text.toString().trim().contains(
+                        binding.edtEmail.editText.text.toString().trim(), '@'
+                    ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
                         Utils.TWO_OR_MORE_DOTS
-                    ) || (binding.edtEmail.text.toString().trim().last()
-                        .toString() == "." || binding.edtEmail.text
+                    ) || (binding.edtEmail.editText.text.toString().trim().last()
+                        .toString() == "." || binding.edtEmail.editText.text
                         .toString().first().toString() == ".")
-                    || (binding.edtEmail.text.toString().trim().last()
-                        .toString() == "-" || binding.edtEmail.text.toString()
+                    || (binding.edtEmail.editText.text.toString().trim().last()
+                        .toString() == "-" || binding.edtEmail.editText.text.toString()
                         .first()
                         .toString() == "-")
                     || (Utils.countOccurenceOfChar(
-                        binding.edtEmail.text.toString().trim(), '.'
+                        binding.edtEmail.editText.text.toString().trim(), '.'
                     ) < 1) || (Utils.countOccurenceOfChar(
-                        binding.edtEmail.text.toString().trim(), '@'
+                        binding.edtEmail.editText.text.toString().trim(), '@'
                     ) < 1)
                 ) {
-                    binding.errorMobileNumber.visible()
-                    binding.errorMobileNumber.setText(R.string.str_email_format_error_message)
+                    binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                     false
                 } else {
                     if (Utils.hasSpecialCharacters(
-                            binding.edtEmail.text.toString().trim(),
+                            binding.edtEmail.editText.text.toString().trim(),
                             Utils.splCharEmailCode
                         )
                     ) {
@@ -387,28 +387,26 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                                 binding.edtEmail.getText().toString()
                             ).matches()
                         ) {
-                            binding.errorMobileNumber.visible()
-                            binding.errorMobileNumber.setText(R.string.str_email_format_error_message)
+                            binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                             false
                         } else {
-                            binding.errorMobileNumber.gone()
+                            binding.edtEmail.removeError()
                             true
                         }
                     } else if (Utils.countOccurenceOfChar(
-                            binding.edtEmail.text.toString().trim(), '@'
+                            binding.edtEmail.editText.text.toString().trim(), '@'
                         ) !in (1..1)
                     ) {
-                        binding.errorMobileNumber.visible()
-                        binding.errorMobileNumber.setText(R.string.str_email_format_error_message)
+                        binding.edtEmail.setErrorText(getString(R.string.str_email_format_error_message))
                         false
                     } else {
-                        binding.errorMobileNumber.gone()
+                        binding.edtEmail.removeError()
                         true
                     }
                 }
 
             } else {
-                binding.errorMobileNumber.gone()
+                binding.edtEmail.removeError()
                 false
             }
         }
@@ -421,8 +419,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         hasTouchBiometric = Utils.hasTouchId(this)
         binding.apply {
             tvForgotPassword.setOnClickListener(this@LoginActivity)
-            edtEmail.addTextChangedListener { removeError() }
-            binding.edtEmail.setOnFocusChangeListener { _, b -> isEnable(b) }
+            edtEmail.editText.addTextChangedListener { removeError() }
+            binding.edtEmail.editText.setOnFocusChangeListener { _, b -> isEnable(b) }
 
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginActivity)
@@ -433,7 +431,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun removeError() {
-        binding.errorMobileNumber.gone()
+        binding.edtEmail.removeError()
     }
 
     private fun displayFingerPrintPopup(): Boolean {
@@ -462,16 +460,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     binding.btnLogin.isEnabled = true
 
                     if (status.errorModel?.errorCode == 5260) {
-                        binding.errorMobileNumber.visible()
-                        binding.errorMobileNumber.setText(R.string.str_for_your_security_we_have_locked)
+                        binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                     } else if (status.errorModel?.error.equals("unauthorized", true)) {
-                        binding.errorMobileNumber.visible()
-                        binding.errorMobileNumber.setText(R.string.str_incorrect_email_or_password)
+                        binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
 
                     } else {
-                        status.errorModel?.message?.let {
-                            binding.errorMobileNumber.visible()
-                            binding.errorMobileNumber.setText(it) }
+                        status.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
 
                     }
 
@@ -492,9 +486,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
             else -> {
                 hideLoader()
-                status?.errorModel?.message?.let {
-                    binding.errorMobileNumber.visible()
-                    binding.errorMobileNumber.setText(it)}
+                status?.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
                 binding.btnLogin.isEnabled = true
             }
         }
