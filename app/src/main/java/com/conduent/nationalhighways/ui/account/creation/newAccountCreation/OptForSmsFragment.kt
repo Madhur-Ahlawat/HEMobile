@@ -204,7 +204,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 dashboardViewmodel.accountInformationData.value?.communicationPreferences =
                     resource.data?.accountInformation?.communicationPreferences ?: ArrayList()
 
-                for (i in 0 until resource.data?.accountInformation?.communicationPreferences.orEmpty().size) {
+                /*for (i in 0 until resource.data?.accountInformation?.communicationPreferences.orEmpty().size) {
                     val communicationModel =
                         resource.data?.accountInformation?.communicationPreferences?.get(i)
 
@@ -213,7 +213,11 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                         binding.switchCommunication.isChecked = oldSmsOption
                         break
                     }
-                }
+                }*/
+
+
+                oldSmsOption = resource.data?.accountInformation?.smsOption?.uppercase().equals("Y")
+                binding.switchCommunication.isChecked = oldSmsOption
 
 
             }

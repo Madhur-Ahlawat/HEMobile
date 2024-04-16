@@ -1661,7 +1661,23 @@ object Utils {
         activity.startActivity(appSettingsIntent)
     }
 
+    fun writeInFile(context: Context, message: String) {
+        try {
+            /*   val directory =
+                   Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+               val file = File(directory, "dartlogs.txt")
+               if (file.exists()) {
+                   val fileWriter = FileWriter(file, true)
+                   val bufferedWriter = BufferedWriter(fileWriter)
 
+                   bufferedWriter.write(message + "\n")
+                   bufferedWriter.newLine()
+                   bufferedWriter.close()
+               }*/
+        } catch (e: Exception) {
+
+        }
+    }
     fun startLocationService(activity: Context) {
         Log.e("TAG", "startLocationService:  ")
         if (isLocationServiceRunning(activity)) {
@@ -1673,7 +1689,7 @@ object Utils {
                 // Schedule the periodic work (adjust interval as needed)
                 val periodicWorkRequest = PeriodicWorkRequest.Builder(
                     ForegroundServiceWorker::class.java,
-                    12, TimeUnit.HOURS // Interval for starting the foreground service
+                    1, TimeUnit.HOURS // Interval for starting the foreground service
                 ).build()
 
                 WorkManager.getInstance(activity).enqueue(periodicWorkRequest)
@@ -1688,6 +1704,10 @@ object Utils {
                 }
 //                activity.startService(i)
             } catch (e: Exception) {
+                writeInFile(
+                    activity,
+                    "-------- StartLocation Service exception --------${e.message} "
+                )
             }
         }
     }
@@ -1701,6 +1721,10 @@ object Utils {
             }
         }
         return false
+    }
+
+    fun getCurrentYear(): Int {
+        return Calendar.getInstance().get(Calendar.YEAR)
     }
 
 }
