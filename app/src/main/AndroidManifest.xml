@@ -153,15 +153,6 @@
         <receiver
             android:name=".receiver.GeofenceBroadcastReceiver"
             android:exported="true" />
-        <receiver
-            android:name=".receiver.BootCompleteReceiver"
-            android:exported="false"
-            android:protectionLevel="signature">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name=".service.PlayLocationService"
@@ -172,10 +163,12 @@
             tools:node="merge"/>
 
         <receiver android:name=".receiver.BootReceiver"
-            android:exported="true">
+            android:exported="true"
+            android:protectionLevel="signature">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
