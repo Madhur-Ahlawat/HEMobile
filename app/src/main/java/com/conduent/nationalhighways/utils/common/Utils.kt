@@ -1220,7 +1220,7 @@ object Utils {
         } else if (paymentTypeInfo.contains("MASTERCARD")) {
             return "MASTERCARD"
         } else if (paymentTypeInfo.contains(Constants.MAESTRO)) {
-            return "Constants.MAESTRO"
+            return "MAESTRO"
         } else if (paymentTypeInfo.contains("VISA")) {
             return "VISA"
         } else {
@@ -1782,7 +1782,7 @@ object Utils {
         return builder
     }
 
-    fun writeInFile(context: Context, message: String) {
+    fun writeInFile(context: Context?, message: String) {
         try {
             /*   val directory =
                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)

@@ -7,7 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white" tools:override="true">#FFFFFFFF</color>
-    <color name="white_color">#FFFFFF</color>
     <color name="green">#00703C</color>
     <color name="blue">#5A97F8</color>
     <color name="light_grey">#F2F2F2</color>
@@ -86,6 +85,7 @@
     <color name="color_DDE8E3">#DDE8E3</color>
     <color name="newViewLineColour">#7D7D7D</color>
     <color name="blue_vehicle_charge_heading">#1E78BE</color>
+    <color name="white_color">#FFFFFF</color>
 
 
     <!--  rebranding colors  -->

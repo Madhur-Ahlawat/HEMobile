@@ -58,7 +58,7 @@ object DashboardUtils {
             viewGroup.run{
                 setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514))
             }
-        } else {
+        }  else {
             tvTitle.text = status
             tvTitle.run {
                 setTextColor(viewGroup.context.resources.getColor(R.color.dark_blue_color,null))
