@@ -117,11 +117,11 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         binding.dateTimeCv.contentDescription = getString(R.string.date_time_submitted) + ", " + DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created ?: "")
         binding.dateTimeCl.contentDescription = getString(R.string.date_time_submitted) + ", " + DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created ?: "")
 
-        binding.statusEnquiryCv.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.str_status_of_complaint) else getString(R.string.str_status_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.status
-        binding.statusEnquiryCl.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.str_status_of_complaint) else getString(R.string.str_status_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.status
+        binding.statusEnquiryCv.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.str_status_of_complaint) else getString(R.string.str_status_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.status!!
+        binding.statusEnquiryCl.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.str_status_of_complaint) else getString(R.string.str_status_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.status!!
 
-        binding.detailsEnquiryCv.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.details_of_complaint) else getString(R.string.details_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.description
-        binding.detailsEnquiryCl.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.details_of_complaint) else getString(R.string.details_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.description
+        binding.detailsEnquiryCv.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.details_of_complaint) else getString(R.string.details_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.description!!
+        binding.detailsEnquiryCl.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.details_of_complaint) else getString(R.string.details_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.description!!
 
         binding.dateEnquiryClosedCv.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.str_date_complaint_closed) else getString(R.string.str_date_enquiry_closed) + ", " + DateUtils.convertDateToFullDate(
             viewModel.enquiryDetailsModel.value?.closedDate ?: ""

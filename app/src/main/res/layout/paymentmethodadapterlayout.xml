@@ -1,13 +1,16 @@
 <layout xmlns:tools="http://schemas.android.com/tools">
 
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="1dp"
         android:layout_marginTop="5dp"
+        android:importantForAccessibility="yes"
+        android:screenReaderFocusable="true"
         android:layout_marginBottom="5dp"
         android:elevation="3dp"
         android:minHeight="@dimen/margin_74dp"
@@ -22,6 +25,8 @@
 
             <ImageView
                 android:id="@+id/ivCardType"
+                android:importantForAccessibility="no"
+                android:screenReaderFocusable="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_18dp"
@@ -30,15 +35,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
+            <TextView
                 android:id="@+id/tv_select_payment_method"
+                android:importantForAccessibility="no"
+                android:screenReaderFocusable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_18dp"
                 android:layout_marginEnd="@dimen/margin_18dp"
-                tools:text="MASTER CARDDDDD\n****3456"
-                android:screenReaderFocusable="true"
-                android:importantForAccessibility="yes"
+                tools:text="MASTER CARD\n****3456"
                 android:fontFamily="@font/open_sans"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp"
@@ -52,6 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_8dp"
+                android:importantForAccessibility="no"
+                android:screenReaderFocusable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/delete"
                 app:layout_constraintStart_toEndOf="@id/tv_select_payment_method"
@@ -64,8 +71,8 @@
                     android:fontFamily="@font/open_sans"
                     android:padding="3dp"
                     android:text="@string/str_default"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
+                    android:importantForAccessibility="no"
+                    android:screenReaderFocusable="false"
                     android:textColor="@color/label_color"
                     android:textSize="@dimen/font_14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -86,8 +93,8 @@
                     android:text="@string/str_make_default"
                     android:textColor="@color/radioButtonIconColor"
                     android:textSize="14sp"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
+                    android:importantForAccessibility="no"
+                    android:screenReaderFocusable="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

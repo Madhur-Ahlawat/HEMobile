@@ -20,6 +20,9 @@ class PaymentMethodAdapter(
 ) :
     RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder>() {
 
+    private var cardType: String?=null
+    private var defaultDescriptionText: String?=null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -36,7 +39,16 @@ class PaymentMethodAdapter(
         holder: PaymentMethodViewHolder,
         position: Int
     ) {
-
+        val builder = StringBuilder()
+        for (i in 0 until
+                paymentList?.get(
+                    position
+                )?.cardNumber!!.replace("*","").length) {
+            builder.append(paymentList?.get(
+                position
+            )?.cardNumber!!.replace("*","")!![i])
+            builder.append("\u00A0")
+        }
         holder.binding.ivCardType.setImageResource(
             Utils.setCardImage(
                 paymentList?.get(position)?.cardType ?: ""
@@ -50,15 +62,13 @@ class PaymentMethodAdapter(
             )
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             holder.binding.delete.visibility = View.GONE
-
-
         } else if (paymentList?.get(position)?.emandateStatus == "ACTIVE" && paymentList?.get(
                 position
             )?.bankAccount == true
         ) {
             val htmlText =
                 Html.fromHtml(
-                    "Direct Debit" + "<br>" +
+                    context.getString(R.string.direct_debit) + "<br>" +
                             paymentList?.get(
                                 position
                             )?.bankAccountNumber?.let {
@@ -68,7 +78,8 @@ class PaymentMethodAdapter(
                             }.toString()
 
                 )
-
+            cardType = context.getString(R.string.direct_debit)
+//            holder.binding.tvSelectPaymentMethod.contentDescription = context.getString(R.string.direct_debit) + "<br>" + builder.toString()
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             holder.binding.delete.visibility = View.VISIBLE
@@ -89,7 +100,9 @@ class PaymentMethodAdapter(
 
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.delete.visibility = View.VISIBLE
-
+            cardType = paymentList?.get(position)?.cardType
+//            holder.binding.tvSelectPaymentMethod.contentDescription  = paymentList?.get(position)?.cardType + "<br>" +
+//                    builder?.toString()
         }
 
 
@@ -97,13 +110,16 @@ class PaymentMethodAdapter(
         if (paymentList?.get(position)?.primaryCard == true) {
             holder.binding.textDefault.visibility = View.VISIBLE
             holder.binding.textMakeDefault.visibility = View.GONE
-
+            defaultDescriptionText = context.getString(R.string.str_default)
         } else {
             holder.binding.textDefault.visibility = View.GONE
+            defaultDescriptionText = context.getString(R.string.str_default)
             if (isDirectDebit) {
                 holder.binding.textMakeDefault.visibility = View.GONE
+                defaultDescriptionText = ""
             } else {
                 holder.binding.textMakeDefault.visibility = View.VISIBLE
+                defaultDescriptionText = context.getString(R.string.str_make_default)
             }
 
 
@@ -115,7 +131,6 @@ class PaymentMethodAdapter(
                 Constants.MAKE_DEFAULT
             )
         }
-
         holder.binding.delete.setOnClickListener {
             if (paymentList?.get(position)?.bankAccount == true && paymentList?.get(position)?.emandateStatus == "ACTIVE") {
                 paymentMethodCallback.paymentMethodCallback(
@@ -132,8 +147,8 @@ class PaymentMethodAdapter(
 
             notifyDataSetChanged()
         }
-        holder.binding.tvSelectPaymentMethod.contentDescription =
-            Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())
+        holder.binding.cardView.contentDescription = cardType + "<br>" +
+                builder?.toString() + defaultDescriptionText
     }
 
     override fun getItemCount(): Int {
