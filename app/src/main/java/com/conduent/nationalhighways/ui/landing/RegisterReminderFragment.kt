@@ -176,6 +176,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 //                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 //            val file = File(directory, "dartlogs.txt")
 //            if (file.exists()) {
+//                  Toast.makeText(requireContext(), "file exists", Toast.LENGTH_SHORT).show()
 //                Utils.writeInFile(requireContext(), "File Created")
 //            } else {
 //                Toast.makeText(requireContext(), "file not exists", Toast.LENGTH_SHORT).show()

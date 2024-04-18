@@ -64,14 +64,13 @@ class PlayLocationService : Service(), LocationListener {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.e(TAG, "onStartCommand: playLocation")
+        Utils.writeInFile(context = null,"onStartCommand Called")
         if (intent != null) {
             try {
                 createLocationRequest()
                 startLocationUpdates()
                 try {
-                    Log.e(TAG, "onCreate: foregroundservice")
-
+                    Utils.writeInFile(context = null,"onStartCommand Foreground Called")
                     ServiceCompat.startForeground(
                         this,  Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(),
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -82,16 +81,18 @@ class PlayLocationService : Service(), LocationListener {
                     )
 
                 } catch (e: Exception) {
-                    Log.e(TAG, "onCreate: e.message " + e.message)
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
                         && e is ForegroundServiceStartNotAllowedException
                     ) {
-                        // App not in a valid state to start foreground service
-                        // (e.g. started from bg)
+                        Utils.writeInFile(context = null,"onStartCommand Foreground ForegroundServiceStartNotAllowedException Called ${e.message}")
+                    }else  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                        && e is SecurityException
+                    ) {
+                        Utils.writeInFile(context = null,"onStartCommand Foreground SecurityException Called ${e.message}")
                     } else if (e is NullPointerException) {
 
                     }
-
                 }
             } catch (e: Exception) {
                 if (e is NullPointerException) {
