@@ -123,7 +123,7 @@
                     android:layout_height="3dp"
                     android:layout_marginTop="@dimen/margin_17dp"
                     android:background="@color/blue_vehicle_charge_heading"
-                    app:layout_constraintTop_toBottomOf="@id/label_vehicle_class" />
+                    app:layout_constraintTop_toBottomOf="@id/label_if_you_have_accoun" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guide_line_vertical1"

@@ -421,12 +421,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             tvForgotPassword.setOnClickListener(this@LoginActivity)
             edtEmail.editText.addTextChangedListener { removeError() }
             binding.edtEmail.editText.setOnFocusChangeListener { _, b -> isEnable(b) }
-
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginActivity)
             backButton.setOnClickListener(this@LoginActivity)
         }
-        setPersonalInfoAnnouncement(binding.rootLayout,this)
 
     }
 

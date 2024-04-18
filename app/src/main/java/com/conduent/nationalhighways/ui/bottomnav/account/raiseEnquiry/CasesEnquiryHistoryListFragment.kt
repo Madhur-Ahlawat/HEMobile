@@ -66,6 +66,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
         apiViewModel.getAccountSRList()
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
+            HomeActivityMain.dataBinding?.titleTxt!!.contentDescription = getString(R.string.contact_us_upper_case)
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
@@ -85,7 +86,12 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
     }
 
     override fun initCtrl() {
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+            HomeActivityMain.dataBinding?.titleTxt!!.contentDescription = getString(R.string.contact_us_upper_case)
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
     }
 
     override fun observer() {
@@ -153,7 +159,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
         if (details?.closedDate == null) {
             details?.closedDate = ""
         }
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         bundle.putParcelable(Constants.EnquiryResponseModel, details)
         bundle.putString(Constants.NAV_FLOW_FROM, Constants.HISTORY_LIST)
         findNavController().navigate(
