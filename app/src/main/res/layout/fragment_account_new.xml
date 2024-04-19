@@ -3,16 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/headerParent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white">
@@ -20,8 +17,8 @@
                 android:id="@+id/header"
                 android:importantForAccessibility="yes"
                 android:screenReaderFocusable="true"
-                android:layout_marginStart="@dimen/margin_29dp"
                 android:layout_marginTop="@dimen/margin_25dp"
+                android:layout_marginStart="@dimen/margin_20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +43,6 @@
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:layout_marginBottom="@dimen/margin_1dp"
                     android:importantForAccessibility="no"
-
                     android:id="@+id/value_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -79,20 +75,21 @@
                     android:layout_width="0dp"
                     android:importantForAccessibility="no"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_20dp"
                     android:layout_marginStart="@dimen/margin_5dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center"
-                    android:text="154367845"
+                    tools:text="1543678433333333435"
                     android:textColor="@color/label_color"
                     android:textSize="@dimen/font_14sp"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_pic"
                     app:layout_constraintStart_toEndOf="@id/tv_account_number_heading"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/profile_pic" />
+                    app:layout_constraintTop_toTopOf="@id/tv_account_number_heading" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/tv_account_status_heading"
                     android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center_vertical"
@@ -100,9 +97,8 @@
                     android:importantForAccessibility="no"
                     android:textColor="@color/label_color"
                     android:textSize="@dimen/font_14sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/card_indicator_account_status"
                     app:layout_constraintStart_toStartOf="@id/tv_account_number_heading"
-                    app:layout_constraintTop_toTopOf="@+id/card_indicator_account_status" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_account_number_value"/>
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_indicator_account_status"
@@ -114,7 +110,8 @@
                     app:cardElevation="@dimen/margin_5dp"
                     app:layout_constraintEnd_toEndOf="@id/tv_account_number_value"
                     app:layout_constraintStart_toStartOf="@id/tv_account_number_value"
-                    app:layout_constraintTop_toBottomOf="@id/tv_account_number_value">
+                    app:layout_constraintTop_toTopOf="@id/tv_account_status_heading"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_account_status_heading">
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/indicator_account_status"
@@ -168,13 +165,14 @@
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/value_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_15sp"
+                        app:layout_constraintEnd_toStartOf="@+id/icon_arrow"
                         app:layout_constraintBottom_toBottomOf="@+id/left_icon"
                         app:layout_constraintStart_toEndOf="@+id/left_icon"
                         app:layout_constraintTop_toTopOf="@+id/left_icon"
@@ -226,13 +224,14 @@
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/value_title2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_15sp"
+                        app:layout_constraintEnd_toStartOf="@+id/icon_arrow2"
                         app:layout_constraintBottom_toBottomOf="@+id/left_icon2"
                         app:layout_constraintStart_toEndOf="@+id/left_icon2"
                         app:layout_constraintTop_toTopOf="@+id/left_icon2"
@@ -284,12 +283,13 @@
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/value_title3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:textColor="@color/black"
+                        app:layout_constraintEnd_toStartOf="@+id/icon_arrow3"
                         android:textSize="@dimen/font_15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/left_icon3"
                         app:layout_constraintStart_toEndOf="@+id/left_icon3"
@@ -342,11 +342,12 @@
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/value_title4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:gravity="center"
+                        android:gravity="left"
+                        app:layout_constraintEnd_toStartOf="@+id/icon_arrow4"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/left_icon4"
@@ -403,7 +404,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/left_icon5"
@@ -459,7 +460,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_22dp"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/left_icon6"
@@ -487,6 +488,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/margin_55dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
                 android:background="@color/white"
                 android:layout_marginHorizontal="@dimen/margin_20dp"
                 android:layout_marginTop="@dimen/margin_8dp"
@@ -516,7 +518,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_28dp"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_15sp"
                         app:layout_constraintBottom_toBottomOf="@+id/left_icon7"

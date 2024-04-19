@@ -112,7 +112,6 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
                 getString(R.string.str_you_have_successfully_added_card)
             binding.cancelBtn.visibility = View.GONE
             binding.feedbackBt.visible()
-
         }
 
         if (flow == Constants.CARD_IS_ALREADY_REGISTERED) {

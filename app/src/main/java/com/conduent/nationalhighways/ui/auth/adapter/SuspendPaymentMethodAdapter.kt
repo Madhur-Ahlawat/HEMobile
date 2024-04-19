@@ -63,7 +63,8 @@ class SuspendPaymentMethodAdapter(
                 }
             holder.binding.radioButtonPaymentMethod.contentDescription =
                 model.cardType + ", " + "${Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())}"
-        } else {
+        }
+        else {
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             htmlText =
                 Html.fromHtml(
@@ -86,16 +87,11 @@ class SuspendPaymentMethodAdapter(
 
         holder.binding.radioButtonPaymentMethod.setAccessibilityDelegate()
 
-
         if (model?.bankAccount == false) {
             holder.binding.radioButtonPaymentMethod.isChecked =
                 model.primaryCard == true
             model.isSelected = true
         }
-
-
-
-
 
         holder.binding.layout.setOnClickListener {
             pos = position
@@ -134,6 +130,7 @@ class SuspendPaymentMethodAdapter(
             notifyDataSetChanged()
             paymentMethod.paymentMethodCallback(pos)
         }
+        holder.binding.radioButtonPaymentMethod.contentDescription = "Radio Button, " + holder.binding.tvSelectPaymentMethod.text
     }
 
     override fun getItemCount(): Int {
@@ -144,7 +141,6 @@ class SuspendPaymentMethodAdapter(
         this.list = paymentList
         this.navFlow = navFlow
         notifyDataSetChanged()
-
     }
 
     class SuspendedViewHolder(val binding: ItemPaymentMethodBinding) :

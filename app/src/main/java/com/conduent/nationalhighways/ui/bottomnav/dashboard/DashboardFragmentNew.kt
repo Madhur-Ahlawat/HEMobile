@@ -120,6 +120,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun onResume() {
         super.onResume()
         (requireActivity() as HomeActivityMain).showHideToolbar(false)
+        (requireActivity() as HomeActivityMain).getNotificationApi()
         dashboardViewModel.getLRDSResponse()
     }
 

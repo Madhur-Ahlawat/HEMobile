@@ -71,7 +71,14 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             isEnable(it)
         }
         binding.editReferenceNumber.editText.doAfterTextChanged {
-            binding.editReferenceNumber.hint = Utils.accessibilityForNumbers(it.toString()).toString()
+            val builder = StringBuilder()
+            for (i in 0 until
+                    it.toString().length) {
+                builder.append(it.toString()[i].toString())
+                builder.append("\u00A0")
+            }
+            binding.editReferenceNumber.contentDescription = builder.toString()
+            binding.editReferenceNumber.setHint(builder.toString())
             isEnable(it)
         }
         binding.point1Ll.contentDescription =
@@ -105,7 +112,6 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                 isReferenceNumberValid = false
                 binding.errorMobileNumber.visible()
                 binding.errorMobileNumber.setText(getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9))
-
             } else {
                 binding.errorMobileNumber.gone()
             }
@@ -126,7 +132,6 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             binding.findVehicle.isEnabled = true
         } else {
             binding.findVehicle.isEnabled = false
-
         }
 
 //        else if(Regex(paymentRefereceNumberRegex).matches(binding.editReferenceNumber.getText().toString()) && Regex(plateNumberREgex).matches(binding.editNumberPlate.getText().toString())){

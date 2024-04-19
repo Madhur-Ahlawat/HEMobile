@@ -112,11 +112,23 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         if (!backButton) {
             if (requireActivity() is RaiseEnquiryActivity) {
                 (requireActivity() as RaiseEnquiryActivity).hideBackIcon()
-            } else if (requireActivity() is HomeActivityMain) {
+            }
+            else if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).hideBackIcon()
             }
         }
-
+        val builder = StringBuilder()
+        for (i in 0 until
+                sm.fetchUserCountryCode().toString().length) {
+            builder.append(sm.fetchUserCountryCode().toString()[i].toString())
+            builder.append("\u00A0")
+        }
+        for (i in 0 until
+                sm.fetchUserMobileNUmber().toString().length) {
+            builder.append(sm.fetchUserMobileNUmber().toString()[i].toString())
+            builder.append("\u00A0")
+        }
+        binding.mobileNumberEt.contentDescription = builder.toString()
     }
 
     private fun saveData() {
@@ -348,10 +360,10 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
                     }
 
-                }else{
+                } else {
                     binding.mobileNumberEt.gone()
-                    requiredCountryCode=true
-                    requiredMobileNumber=true
+                    requiredCountryCode = true
+                    requiredMobileNumber = true
                 }
 
                 checkButton()
@@ -369,7 +381,18 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     override fun initCtrl() {
-
+        val builder = StringBuilder()
+        for (i in 0 until
+                sm.fetchUserCountryCode().toString().length) {
+            builder.append(sm.fetchUserCountryCode().toString()[i].toString())
+            builder.append("\u00A0")
+        }
+        for (i in 0 until
+                sm.fetchUserMobileNUmber().toString().length) {
+            builder.append(sm.fetchUserMobileNUmber().toString()[i].toString())
+            builder.append("\u00A0")
+        }
+        binding.mobileNumberEt.setContentDescription(builder.toString())
     }
 
     override fun observer() {
@@ -504,17 +527,25 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             binding.emailEt.setText(viewModel.edit_enquiryModel.value?.email ?: "")
             binding.countrycodeEt.setSelectedValue(
                 viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
-
             )
             binding.mobileNumberEt.setText(viewModel.edit_enquiryModel.value?.mobileNumber ?: "")
-            binding.mobileNumberEt.setContentDescription(Utils.accessibilityForNumbers(viewModel.enquiryModel.value?.mobileNumber.toString()))
-
+            var fullPhoneNumber = viewModel.enquiryModel.value!!.mobileNumber
+            val builder = StringBuilder()
+            for (i in 0 until fullPhoneNumber.length) {
+                builder.append(fullPhoneNumber[i].toString())
+                builder.append("\u00A0")
+            }
+            for (i in 0 until
+                    sm.fetchUserCountryCode().toString().length) {
+                builder.append(sm.fetchUserCountryCode().toString()[i].toString())
+                builder.append("\u00A0")
+            }
+            binding.mobileNumberEt.setContentDescription(builder)
         } else {
             if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                 binding.firstnameEt.setText(Utils.capitalizeString(sm.fetchFirstName()) ?: "")
                 binding.lastnameEt.setText(Utils.capitalizeString(sm.fetchLastName()) ?: "")
                 binding.emailEt.setText(sm.fetchAccountEmailId() ?: "")
-
                 val userCountryCode = sm.fetchUserCountryCode()
                 var fullCountryNameToSave = ""
                 fullCountryNameWithCode.forEachIndexed { _, fullCountryName ->
@@ -531,7 +562,12 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 }
                 binding.mobileNumberEt.setText(sm.fetchUserMobileNUmber() ?: "")
 
-                binding.mobileNumberEt.setContentDescription(Utils.accessibilityForNumbers(sm.fetchUserMobileNUmber().toString()))
+                val builder = StringBuilder()
+                for (i in 0 until sm.fetchUserMobileNUmber()!!.length) {
+                    builder.append(sm.fetchUserMobileNUmber()!![i])
+                    builder.append("\u00A0")
+                }
+                binding.mobileNumberEt.setContentDescription(builder)
             }
 
         }

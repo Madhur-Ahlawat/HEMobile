@@ -19,6 +19,8 @@ import androidx.appcompat.widget.AppCompatButton
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
 import com.conduent.nationalhighways.utils.BottomNavParams
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 
 //ui/customview
 class BottomNavigationView @JvmOverloads constructor(
@@ -197,6 +199,21 @@ class BottomNavigationView @JvmOverloads constructor(
 
         }
     }
+
+    fun updateBadgeCount(index: Int, badgeCount: Int) {
+        if (index >= 0 && index < navigationItems.size) {
+            val navigationItem = navigationItems[index]
+            val badgeCountBtn = navigationItem.view.findViewById<AppCompatButton>(R.id.badge_btn)
+            if (badgeCount > 0) {
+                badgeCountBtn.text = badgeCount.toString()
+                badgeCountBtn.visible() // Show the badge button if there's a count
+            } else {
+                badgeCountBtn.text = ""
+                badgeCountBtn.gone() // Hide the badge button if the count is zero or less
+            }
+        }
+    }
+
 
     /**
      * Listener to handle click and release events for navigation item
