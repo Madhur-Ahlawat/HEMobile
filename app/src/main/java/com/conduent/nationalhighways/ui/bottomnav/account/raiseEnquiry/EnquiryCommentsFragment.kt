@@ -305,23 +305,30 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                             if (fileInMb <= 8.0) { //checking file size which should be less than 8mb
                                 isApiCalled = true
                                 this.file = file
+                                binding.errorFileTv.gone()
                                 uploadFileApi()
                             } else {
-                                ErrorUtil.showError(
-                                    binding.root,
-                                    resources.getString(R.string.file_not_more_than_8mb)
-                                )
+                                binding.errorFileTv.text=resources.getString(R.string.file_not_more_than_8mb)
+                                binding.errorFileTv.visible()
+//                                ErrorUtil.showError(
+//                                    binding.root,
+//                                    resources.getString(R.string.file_not_more_than_8mb)
+//                                )
                             }
                         } else {
                             this.file = null
-                            ErrorUtil.showError(
-                                binding.root,
-                                resources.getString(R.string.str_allowed_file_types)
-                            )
+                            binding.errorFileTv.text=resources.getString(R.string.str_allowed_file_types)
+                            binding.errorFileTv.visible()
+//                            ErrorUtil.showError(
+//                                binding.root,
+//                                resources.getString(R.string.str_allowed_file_types)
+//                            )
                         }
 
                     } ?: run {
-                        ErrorUtil.showError(binding.root, "Unable to upload the selected file")
+                        binding.errorFileTv.text=resources.getString(R.string.str_allowed_file_types)
+                        binding.errorFileTv.visible()
+//                        ErrorUtil.showError(binding.root, "Unable to upload the selected file")
                     }
                 }
             }
