@@ -72,17 +72,38 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         initUI()
         binding.contactUs.visible()
         setBackPressListener(this)
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
         binding.profileManagement.contentDescription = getString(R.string.profile_management)
-        binding.communicationPreferences.contentDescription = getString(R.string.communication_preferences)
+        binding.communicationPreferences.contentDescription =
+            getString(R.string.communication_preferences)
         binding.paymentManagement.contentDescription = getString(R.string.payment_management)
         binding.vehicleManagement.contentDescription = getString(R.string.vehicle_management)
         binding.contactUs.contentDescription = getString(R.string.contact_us)
         binding.closeAcount.contentDescription = getString(R.string.str_close_account)
         binding.signOut.contentDescription = getString(R.string.sign_out)
-        if(requireActivity() is HomeActivityMain){
+        val builder = StringBuilder()
+        for (i in 0 until
+                sessionManager.fetchAccountNumber().toString().length) {
+            builder.append(sessionManager.fetchAccountNumber().toString()[i].toString())
+            builder.append("\u00A0") }
+
+        binding.headerParent.contentDescription =
+            getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
+                sessionManager.fetchLastName()
+            ) + ", " + getString(R.string.account_number) + ", " + builder.toString() + ", " + getString(
+                R.string.account_status
+            ) + ", " + binding.indicatorAccountStatus.text.toString()
+
+        binding.header.contentDescription =
+            getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
+                sessionManager.fetchLastName()
+            ) + ", " + getString(R.string.account_number) + ", " + builder.toString() + ", " + getString(
+                R.string.account_status
+            ) + ", " + binding.indicatorAccountStatus.text.toString()
+
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
     }
@@ -145,7 +166,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                     sessionManager.fetchLastName()
                 )
 
-            if(requireActivity() is HomeActivityMain){
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).focusToolBarHome()
             }
 

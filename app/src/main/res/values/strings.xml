@@ -1767,4 +1767,6 @@
     <string name="name">Name</string>
     <string name="category_accessibility">Category dropdown, Double tap to select category</string>
     <string name="sub_category_accessibility">Sub category dropdown, Double tap to select sub category</string>
+    <string name="radio_button">Radio Button</string>
+    <string name="radio_button">Radio Button</string>
 </resources>
