@@ -2,10 +2,8 @@ package com.conduent.nationalhighways.ui.bottomnav
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -14,6 +12,7 @@ import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -25,9 +24,9 @@ import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
-import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
+import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewModel
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
@@ -181,8 +180,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     fun hitAPIs(): () -> Unit? {
         getDashBoardAllData()
-        dashboardViewModel.getAlertsApi()
+        getNotificationApi()
         return {}
+    }
+
+    fun getNotificationApi() {
+        dashboardViewModel.getAlertsApi()
     }
 
     private fun setView() {
@@ -368,7 +371,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     override fun observeViewModel() {
         observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetailsResponse)
-
+        observe(dashboardViewModel.getAlertsVal, ::handleAlertResponse)
         if (intent.hasExtra(Constants.FIRST_TYM_REDIRECTS) && intent.getBooleanExtra(
                 Constants.FIRST_TYM_REDIRECTS,
                 false
@@ -386,6 +389,33 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     }
 
+    private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
+        loader?.dismiss()
+        when (resource) {
+            is Resource.Success -> {
+                if (resource.data?.messageList.isNullOrEmpty() == false) {
+                    val countOfY = resource.data?.messageList?.count { it?.isViewed == "Y" }
+                    val countOfN = (resource.data?.messageList?.size ?: 0).minus(countOfY ?: 0)
+                    if (countOfN != 0) {
+                        dataBinding?.bottomNavigationView?.updateBadgeCount(2, countOfN)
+                    }
+                }
+            }
+
+            is Resource.DataError -> {
+
+            }
+
+            else -> {
+                // do nothing
+            }
+        }
+    }
+
+    fun setbagdeCount(countOfN: Int) {
+        dataBinding?.bottomNavigationView?.updateBadgeCount(2, countOfN ?: 0)
+
+    }
 
     private fun getCommunicationSettingsPref(resource: Resource<ProfileDetailModel?>?) {
         if (loader?.isVisible == true) {
@@ -399,14 +429,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                         resource.data?.accountInformation?.communicationPreferences?.get(i)
 
                     if (communicationModel?.category?.lowercase().equals("standard notification")) {
-                       val oldSmsOption = communicationModel?.smsFlag?.uppercase()
+                        val oldSmsOption = communicationModel?.smsFlag?.uppercase()
                         dashboardViewModel.accountInformationData.value?.smsOption = oldSmsOption
                         break
                     }
                 }
 
 
-                dashboardViewModel.communicationPreferenceData.value = resource.data?.accountInformation?.communicationPreferences
+                dashboardViewModel.communicationPreferenceData.value =
+                    resource.data?.accountInformation?.communicationPreferences
 
             }
 
