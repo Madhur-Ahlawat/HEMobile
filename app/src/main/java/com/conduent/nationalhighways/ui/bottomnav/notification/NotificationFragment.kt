@@ -310,8 +310,19 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                         initAdapter(standard_notifications)
                     }
 
+                    val countOfY = resource.data?.messageList?.count { it?.isViewed == "Y" }
+                    val countOfN = (resource.data?.messageList?.size ?: 0).minus(countOfY ?: 0)
+                    if(requireActivity() is HomeActivityMain){
+                        (requireActivity() as HomeActivityMain).setbagdeCount(countOfN)
+                    }
 
+                }else{
+                    if(requireActivity() is HomeActivityMain){
+                        (requireActivity() as HomeActivityMain).setbagdeCount(0)
+                    }
                 }
+
+
             }
 
             is Resource.DataError -> {

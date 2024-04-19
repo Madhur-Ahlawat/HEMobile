@@ -32,7 +32,7 @@
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/navigation_item_image"
         android:layout_marginBottom="@dimen/_12sdp"
-        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginStart="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="@id/navigation_item_image"
         app:layout_constraintBottom_toTopOf="@+id/navigation_item_image" />
 
