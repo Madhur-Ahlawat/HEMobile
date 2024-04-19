@@ -70,8 +70,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
         binding.editNumberPlate.editText.doAfterTextChanged {
             isEnable(it)
         }
-        binding.editReferenceNumber.doAfterTextChanged {
-            binding.editReferenceNumber.hint = Utils.accessibilityForNumbers(it.toString())
+        binding.editReferenceNumber.editText.doAfterTextChanged {
+            binding.editReferenceNumber.hint = Utils.accessibilityForNumbers(it.toString()).toString()
             isEnable(it)
         }
         binding.point1Ll.contentDescription =
