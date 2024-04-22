@@ -112,6 +112,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
+
     }
 
     override fun init() {

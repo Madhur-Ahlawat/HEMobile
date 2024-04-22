@@ -5,6 +5,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
@@ -20,6 +21,7 @@ class PaymentMethodAdapter(
 ) :
     RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder>() {
 
+    private var cardStatus: String?=null
     private var cardType: String?=null
     private var defaultDescriptionText: String?=null
 
@@ -40,15 +42,7 @@ class PaymentMethodAdapter(
         position: Int
     ) {
         val builder = StringBuilder()
-        for (i in 0 until
-                paymentList?.get(
-                    position
-                )?.cardNumber!!.replace("*","").length) {
-            builder.append(paymentList?.get(
-                position
-            )?.cardNumber!!.replace("*","")!![i])
-            builder.append("\u00A0")
-        }
+
         holder.binding.ivCardType.setImageResource(
             Utils.setCardImage(
                 paymentList?.get(position)?.cardType ?: ""
@@ -66,6 +60,7 @@ class PaymentMethodAdapter(
                 position
             )?.bankAccount == true
         ) {
+            cardStatus = context.getString(R.string.str_default)
             val htmlText =
                 Html.fromHtml(
                     context.getString(R.string.direct_debit) + "<br>" +
@@ -79,12 +74,26 @@ class PaymentMethodAdapter(
 
                 )
             cardType = context.getString(R.string.direct_debit)
-//            holder.binding.tvSelectPaymentMethod.contentDescription = context.getString(R.string.direct_debit) + "<br>" + builder.toString()
+            for (i in 0 until
+                    paymentList?.get(
+                        position
+                    )?.cardNumber!!.replace("*","").length) {
+                builder.append(paymentList?.get(
+                    position
+                )?.cardNumber!!.replace("*","")[i])
+                builder.append("\u00A0")
+            }
+            builder.append(cardStatus)
+            holder.binding.cardView.contentDescription  = cardType + ", " +
+                    builder.toString()
+            holder.binding.clCardStatus.contentDescription  = cardType + ", " +
+                    builder.toString()
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             holder.binding.delete.visibility = View.VISIBLE
             isDirectDebit = true
         } else {
+            cardStatus = if(holder.binding.textDefault.isVisible) context.getString(R.string.str_default) else context.getString(R.string.str_make_default)
             val htmlText =
                 Html.fromHtml(
                     paymentList?.get(position)?.cardType + "<br>" +
@@ -101,8 +110,20 @@ class PaymentMethodAdapter(
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.delete.visibility = View.VISIBLE
             cardType = paymentList?.get(position)?.cardType
-//            holder.binding.tvSelectPaymentMethod.contentDescription  = paymentList?.get(position)?.cardType + "<br>" +
-//                    builder?.toString()
+            for (i in 0 until
+                    paymentList?.get(
+                        position
+                    )?.cardNumber!!.replace("*","").length) {
+                builder.append(paymentList?.get(
+                    position
+                )?.cardNumber!!.replace("*","")[i])
+                builder.append("\u00A0")
+            }
+            builder.append(cardStatus)
+            holder.binding.cardView.contentDescription  = cardType + ", " +
+                    builder.toString()
+            holder.binding.clCardStatus.contentDescription  = paymentList?.get(position)?.cardType + ", " +
+                    builder.toString()
         }
 
 
@@ -147,8 +168,8 @@ class PaymentMethodAdapter(
 
             notifyDataSetChanged()
         }
-        holder.binding.cardView.contentDescription = cardType + "<br>" +
-                builder?.toString() + defaultDescriptionText
+//        holder.binding.cardView.contentDescription = cardType + ", " +
+//                builder.toString() + defaultDescriptionText
     }
 
     override fun getItemCount(): Int {
