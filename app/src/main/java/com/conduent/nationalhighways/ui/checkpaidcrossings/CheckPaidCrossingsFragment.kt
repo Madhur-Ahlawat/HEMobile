@@ -70,7 +70,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
         binding.editNumberPlate.editText.doAfterTextChanged {
             isEnable(it)
         }
-        binding.editReferenceNumber.doAfterTextChanged {
+        binding.editReferenceNumber.editText.doAfterTextChanged {
             val builder = StringBuilder()
             for (i in 0 until
                     it.toString().length) {

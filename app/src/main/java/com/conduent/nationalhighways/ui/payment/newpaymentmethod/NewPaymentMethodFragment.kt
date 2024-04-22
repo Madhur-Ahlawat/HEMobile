@@ -75,7 +75,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }else  if (requireActivity() is AuthActivity) {
+        } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         if (arguments?.containsKey(Constants.PERSONALDATA) == true) {
@@ -264,7 +264,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             override fun negativeBtnClick(dialog: DialogInterface) {
                                 dialog.dismiss()
                             }
-                        }, cancelVisibility = View.GONE, lineView = true)
+                        }, cancelVisibility = View.GONE, lineView = true
+                    )
 
                 } else {
                     val bundle = Bundle()
@@ -384,10 +385,30 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             )?.expYear!!.length > 2
                         ) paymentList?.get(
                             position
-                        )?.expYear!!.substring(
+                        )?.expYear?.substring(
                             2,
-                            paymentList?.get(position)?.expYear!!.length
-                        ) else paymentList?.get(position)?.expYear!!
+                            paymentList?.get(position)?.expYear?.length?:0
+                        ) else paymentList?.get(position)?.expYear?:0
+                    ),
+
+                    getString(
+                        R.string.str_are_you_sure_you_want_to_remove_payment_method,
+                        Utils.accessibilityForNumbers(
+                            Utils.setStarmaskcardnumber(
+                                requireActivity(),
+                                paymentList?.get(position)?.cardNumber
+                            )
+                        ),
+
+                        expMonth + "/" + if (paymentList?.get(
+                                position
+                            )?.expYear!!.length > 2
+                        ) paymentList?.get(
+                            position
+                        )?.expYear?.substring(
+                            2,
+                            paymentList?.get(position)?.expYear?.length?:0
+                        ) else paymentList?.get(position)?.expYear?:0
                     )
                 )
             } else {
@@ -462,6 +483,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             getString(
                                 R.string.str_are_you_sure_you_want_to_remove_direct_payment_method,
                                 paymentList?.get(position)?.bankAccountNumber
+                            ),
+                            getString(
+                                R.string.str_are_you_sure_you_want_to_remove_direct_payment_method,
+                                Utils.accessibilityForNumbers(paymentList?.get(position)?.bankAccountNumber.toString())
                             )
                         )
 
@@ -480,6 +505,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     getString(
                         R.string.str_are_you_sure_you_want_to_remove_direct_payment_method,
                         paymentList?.get(position)?.cardNumber
+                    ),
+                    getString(
+                        R.string.str_are_you_sure_you_want_to_remove_direct_payment_method,
+                        Utils.accessibilityForNumbers(paymentList?.get(position)?.cardNumber.toString())
                     )
                 )
 
@@ -698,8 +727,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         title: String,
         rowId_: String?,
         message: String,
+        messageContentDesc: String = ""
 
-        ) {
+    ) {
 
         displayCustomMessage(title,
             message,
@@ -716,7 +746,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     showLoader()
                     viewModel.deleteCardState(PaymentMethodDeleteModel(rowId_))
                 }
-            })
+            }, messageContentDesc = messageContentDesc)
     }
 
     fun showLoader() {
