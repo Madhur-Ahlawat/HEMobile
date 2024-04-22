@@ -30,7 +30,8 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/top_title"
-            android:layout_marginStart="@dimen/margin_23dp"
+            android:paddingStart="@dimen/margin_23dp"
+            android:paddingEnd="@dimen/margin_23dp"
             android:layout_marginTop="@dimen/_50sdp"
             android:text="@string/str_charge_and_fines"
             style="@style/MediumTextBlack"
