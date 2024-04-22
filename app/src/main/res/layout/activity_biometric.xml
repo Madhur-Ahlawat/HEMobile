@@ -55,8 +55,9 @@
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switch_fingerprint_login"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_30dp"
+                android:layout_height="wrap_content"
                 android:checked="false"
+                android:minHeight="@dimen/_48dp"
                 android:fontFamily="@font/open_sans"
                 android:switchPadding="20dp"
                 android:text="@string/usefingerprinttologin"

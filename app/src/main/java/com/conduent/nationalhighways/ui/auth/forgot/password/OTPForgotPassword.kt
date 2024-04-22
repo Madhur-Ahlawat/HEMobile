@@ -240,6 +240,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             edtOtp.editText.addTextChangedListener {
                 verifyCodeErrorMessage()
             }
+            edtOtp.getInputFirstName().editText.contentDescription = "1 2 3 4"
         }
     }
 

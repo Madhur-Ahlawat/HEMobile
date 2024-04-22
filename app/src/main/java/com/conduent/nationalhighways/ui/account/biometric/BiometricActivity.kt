@@ -110,7 +110,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
             biometricToggleButtopnState = if(switchFingerprintLogin.isChecked) "on" else "off"
-            switchFingerprintLogin.contentDescription=getString(R.string.usefingerprinttologin) + biometricToggleButtopnState + " Toggle to ${if(biometricToggleButtopnState.equals("yes")) "turn off" else "turn on"}"
+//            switchFingerprintLogin.contentDescription=getString(R.string.usefingerprinttologin) + biometricToggleButtopnState + " Toggle to ${if(biometricToggleButtopnState.equals("yes")) "turn off" else "turn on"}"
         }
 
         initBiometric(this)
