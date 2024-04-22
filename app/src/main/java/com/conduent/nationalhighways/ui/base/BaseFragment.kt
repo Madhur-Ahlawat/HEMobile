@@ -242,7 +242,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         cancelVisibility: Int = View.VISIBLE,
         cancelButtonColor: Int = 0,
         typeFace: Typeface? = null,
-        lineView: Boolean? = false
+        lineView: Boolean? = false,
+        messageContentDesc:String=""
     ) {
 
         val dialog = Dialog(requireActivity(), R.style.CustomDialogTheme1)
@@ -270,6 +271,10 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         cancel.text = negativeBtnTxt
         ok.text = positiveBtnTxt
         cancel.visibility = cancelVisibility
+
+        if(messageContentDesc.isNotEmpty()){
+            textMessage.contentDescription=messageContentDesc
+        }
 
         if (lineView == true) {
             firstView.visibility = View.VISIBLE

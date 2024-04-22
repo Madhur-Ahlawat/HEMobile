@@ -39,7 +39,6 @@
             android:importantForAccessibility="no"
             android:layout_marginBottom="@dimen/margin_5dp"
             android:fontFamily="@font/open_sans_semibold"
-            android:minHeight="@dimen/margin_22dp"
             android:textColor="@color/black"
             android:textSize="@dimen/font_16sp"
             app:layout_constraintTop_toTopOf="parent"
