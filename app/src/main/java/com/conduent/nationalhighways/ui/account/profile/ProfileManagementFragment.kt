@@ -84,6 +84,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         }
         val title: TextView? = requireActivity().findViewById(R.id.title_txt)
         title?.text = getString(R.string.profile_management)
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     override fun initCtrl() {

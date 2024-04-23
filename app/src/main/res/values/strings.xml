@@ -238,6 +238,7 @@
     <string name="str_type_of_vehicle">Type of\nvehicle</string>
     <string name="str_dot">.</string>
     <string name="str_comma">,</string>
+    <string name="str_space"> </string>
     <string name="type_of_vehicle">Type of Vehicle</string>
     <string name="str_one_of_payment">One of \npayment</string>
     <string name="str_pay_g_service">Pay as \nyou go</string>

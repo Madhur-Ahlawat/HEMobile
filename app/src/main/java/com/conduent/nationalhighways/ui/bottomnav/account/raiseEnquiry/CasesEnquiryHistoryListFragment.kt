@@ -66,7 +66,12 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
         apiViewModel.getAccountSRList()
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
-            HomeActivityMain.dataBinding?.titleTxt!!.contentDescription = getString(R.string.contact_us_upper_case)
+            if(HomeActivityMain.dataBinding?.titleTxt!!.getText().toString().toLowerCase().contains("contact")){
+                HomeActivityMain.dataBinding?.titleTxt!!.contentDescription = getString(R.string.contact_us_upper_case)
+            }
+            else if(HomeActivityMain.dataBinding?.titleTxt!!.getText().toString().toLowerCase().contains("enquiry")){
+                HomeActivityMain.dataBinding?.titleTxt!!.contentDescription = getString(R.string.enquiry_status)
+            }
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
