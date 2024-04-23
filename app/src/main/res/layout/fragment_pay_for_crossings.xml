@@ -57,7 +57,8 @@
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/inputTotalAmount"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_48dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_48dp"
                     android:layout_marginStart="@dimen/margin_3dp"
                     android:gravity="center_vertical"
                     android:importantForAccessibility="no"

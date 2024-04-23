@@ -17,8 +17,9 @@
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/top_title"
                 style="@style/MediumTextBlack"
-                android:layout_marginStart="@dimen/margin_23dp"
+                android:paddingStart="@dimen/margin_23dp"
                 android:layout_marginTop="24dp"
+                android:paddingEnd="@dimen/margin_23dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/str_charge_and_fines"
                 android:textColor="@color/black"
