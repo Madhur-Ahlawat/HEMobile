@@ -30,12 +30,6 @@ class CasesEnquiryListAdapter(val listener:ItemClickListener,val caseEnquiryList
         holder.itemView.setOnClickListener {
             listener.onItemClick(caseEnquiryList[position], holder.absoluteAdapterPosition)
         }
-        val builder = StringBuilder()
-        for (i in 0 until
-                itemData.id!!.length) {
-            builder.append(itemData.id[i])
-            builder.append("\u00A0")
-        }
         holder.binding.referenceNumberTv.contentDescription = Utils.accessibilityForNumbers(itemData.id.toString())
     }
 

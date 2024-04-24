@@ -1399,6 +1399,7 @@
     <string name="your_direct_debit_has_been_removed">Your Direct Debit for %s\n has been removed.</string>
     <string name="str_try_again">TRY AGAIN</string>
     <string name="str_make_default"><u>Make\nDefault</u></string>
+    <string name="str_make_default_"><u>Make Default</u></string>
     <string name="enter_the_primary_account_contact_first_name">Enter the primary account contact first name</string>
     <string name="enter_the_primary_account_contact_last_name">Enter the primary account contact last name</string>
     <string name="company_name_must_only_include_letters_a_to_z_numbers_0_to_9_and_special_characters_such_as_hyphens">Company name must only include letters a to z, numbers 0 to 9 and special characters such as hyphens</string>

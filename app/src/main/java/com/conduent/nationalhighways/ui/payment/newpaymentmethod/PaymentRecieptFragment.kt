@@ -37,6 +37,7 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -118,6 +119,8 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
         else if (requireActivity() is MakeOffPaymentActivity){
             (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
         }
+        binding.edtEmail.editText.setAccessibilityDelegateForDigits()
+        binding.inputMobileNumber.editText.setAccessibilityDelegateForDigits()
     }
 
     override fun initCtrl() {

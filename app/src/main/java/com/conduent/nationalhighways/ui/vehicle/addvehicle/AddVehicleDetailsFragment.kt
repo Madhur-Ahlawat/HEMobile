@@ -37,6 +37,7 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.onTextChanged
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -314,6 +315,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             }
 
         }
+
+        binding.makeInputLayout.editText.setAccessibilityDelegateForDigits()
+        binding.colorInputLayout.editText.setAccessibilityDelegateForDigits()
+        binding.modelInputLayout.editText.setAccessibilityDelegateForDigits()
     }
 
     private fun getUnSettledCrossings(resource: Resource<CrossingDetailsModelsResponse?>?) {

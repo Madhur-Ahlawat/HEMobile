@@ -103,6 +103,7 @@
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:text="@string/str_country_code"
                 android:textColor="@color/label_color"
+                android:importantForAccessibility="no"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/email_et" />
@@ -125,6 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:text="@string/mobile_number"
+                android:importantForAccessibility="no"
                 android:textColor="@color/label_color"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
