@@ -109,5 +109,6 @@
     <dimen name="margin_32_32dp">32.32dp</dimen>
     <dimen name="margin_34_5dp">34.5dp</dimen>
     <dimen name="_48dp">48dp</dimen>
+    <dimen name="margin_49dp">49dp</dimen>
     />
 </resources>
