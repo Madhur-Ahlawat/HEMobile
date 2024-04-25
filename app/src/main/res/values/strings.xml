@@ -1627,8 +1627,8 @@
     <string name="str_no_standard_notifications">There are no standard notifications to view</string>
     <string name="str_number_additional_crossings_btw_1_to_50">Number of future crossings must be between 1 and 50 inclusive</string>
     <string name="vehicle_type_A">Motorcycle, moped or quad bike</string>
-    <string name="vehicle_type_B">Car, van or minibus less than 8 seats</string>
-    <string name="vehicle_type_C">Bus, coach or other goods vehicle with 2 axles</string>
+    <string name="vehicle_type_B">Car, motorhome or minibus with 9 or less seats</string>
+    <string name="vehicle_type_C">Bus, coach, van or other goods vehicle with 2 axles</string>
     <string name="vehicle_type_D">Vehicle with more than 2 axles</string>
     <string name="str_payment_amount_for_recent_crossings">Payment Amount for recent crossings</string>
     <string name="str_payment_amount_for_additional_crossings">Payment Amount for future crossings</string>
