@@ -83,23 +83,20 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         binding.contactUs.contentDescription = getString(R.string.contact_us)
         binding.closeAcount.contentDescription = getString(R.string.str_close_account)
         binding.signOut.contentDescription = getString(R.string.sign_out)
-        val builder = StringBuilder()
-        for (i in 0 until
-                sessionManager.fetchAccountNumber().toString().length) {
-            builder.append(sessionManager.fetchAccountNumber().toString()[i].toString())
-            builder.append("\u00A0") }
+        val builder = Utils.accessibilityForNumbers(sessionManager.fetchAccountNumber().toString())
+
 
         binding.headerParent.contentDescription =
             getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
                 sessionManager.fetchLastName()
-            ) + ", " + getString(R.string.account_number) + ", " + builder.toString() + ", " + getString(
+            ) + ", " + getString(R.string.account_number) + ", " + builder + ", " + getString(
                 R.string.account_status
             ) + ", " + binding.indicatorAccountStatus.text.toString()
 
         binding.header.contentDescription =
             getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
                 sessionManager.fetchLastName()
-            ) + ", " + getString(R.string.account_number) + ", " + builder.toString() + ", " + getString(
+            ) + ", " + getString(R.string.account_number) + ", " + builder + ", " + getString(
                 R.string.account_status
             ) + ", " + binding.indicatorAccountStatus.text.toString()
 

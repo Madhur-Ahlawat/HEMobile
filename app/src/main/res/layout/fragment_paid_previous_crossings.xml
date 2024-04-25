@@ -41,6 +41,7 @@
                 app:labelText="@string/payment_reference_number"
                 style="@style/input_text"
                 app:inputType="text"
+                android:accessibilityLiveRegion="polite"
                 app:maxLength="12"
                 android:maxLength="12"
                 app:imeOptions="actionDone" />

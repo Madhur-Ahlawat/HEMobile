@@ -300,4 +300,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:20.0.0'
     implementation 'io.michaelrocks:libphonenumber-android:8.13.28'
     implementation 'androidx.work:work-runtime-ktx:2.9.0'
+    implementation 'androidx.activity:activity:1.8.0'
 }

@@ -74,6 +74,7 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
 import com.google.gson.Gson
@@ -148,6 +149,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             sessionManager.getLoggedInUser()
         )*/
 
+        binding.edtOtp.editText.setAccessibilityDelegateForDigits()
 
     }
 
@@ -670,8 +672,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                                 data?.optionValue.toString()
                             ) + "."
                         binding.messageReceivedTxt.contentDescription =
-                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
-                                data?.optionValue.toString()
+                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.accessibilityForNumbers(
+                                Utils.maskPhoneNumber(
+                                    data?.optionValue.toString()
+                                )
                             )
 
                     }
@@ -683,10 +687,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             ) + "."
 
                         binding.messageReceivedTxt.contentDescription =
-                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
-                                data?.optionValue.toString()
+                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.accessibilityForNumbers(
+                                Utils.maskPhoneNumber(
+                                    data?.optionValue.toString()
+                                )
                             )
-
                     }
 
                     else -> {
@@ -696,10 +701,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                             ) + "."
 
                         binding.messageReceivedTxt.contentDescription =
-                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
+                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.accessibilityForNumbers( Utils.maskPhoneNumber(
                                 data?.optionValue.toString()
                             )
-
+                            )
                     }
                 }
             }

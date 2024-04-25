@@ -37,6 +37,7 @@ import com.conduent.nationalhighways.utils.common.Utils.splCharsVehicleRegistrat
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -133,6 +134,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if(requireActivity() is MakeOffPaymentActivity){
             (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
         }
+        binding.editNumberPlate.editText.setAccessibilityDelegateForDigits()
     }
 
     override fun initCtrl() {

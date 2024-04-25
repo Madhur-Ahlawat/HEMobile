@@ -2,10 +2,10 @@ package com.conduent.nationalhighways.ui.payment.adapter
 
 import android.content.Context
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
@@ -21,9 +21,7 @@ class PaymentMethodAdapter(
 ) :
     RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder>() {
 
-    private var cardStatus: String?=null
-    private var cardType: String?=null
-    private var defaultDescriptionText: String?=null
+    private var defaultDescriptionText: String? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -41,13 +39,32 @@ class PaymentMethodAdapter(
         holder: PaymentMethodViewHolder,
         position: Int
     ) {
-        val builder = StringBuilder()
 
         holder.binding.ivCardType.setImageResource(
             Utils.setCardImage(
                 paymentList?.get(position)?.cardType ?: ""
             )
         )
+
+        if (paymentList?.get(position)?.primaryCard == true) {
+            holder.binding.textDefault.visibility = View.VISIBLE
+            holder.binding.textMakeDefault.visibility = View.GONE
+            defaultDescriptionText = context.getString(R.string.str_default)
+        } else {
+            holder.binding.textDefault.visibility = View.GONE
+            defaultDescriptionText = context.getString(R.string.str_default)
+            if (paymentList?.get(position)?.emandateStatus == "ACTIVE" && paymentList?.get(
+                    position
+                )?.bankAccount == true
+            )  {
+                holder.binding.textMakeDefault.visibility = View.GONE
+                defaultDescriptionText = ""
+            } else {
+                holder.binding.textMakeDefault.visibility = View.VISIBLE
+                defaultDescriptionText = context.getString(R.string.str_make_default_)
+            }
+        }
+
 
         if (paymentList?.get(position)?.emandateStatus == "PENDING" && paymentList?.get(position)?.bankAccount == true) {
             holder.binding.tvSelectPaymentMethod.text = context.getString(
@@ -56,11 +73,16 @@ class PaymentMethodAdapter(
             )
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             holder.binding.delete.visibility = View.GONE
+            Log.e("TAG", "onBindViewHolder:defaultDescriptionText---> "+defaultDescriptionText )
+
+            holder.binding.cardView.contentDescription = context.getString(
+                R.string.str_your_direct_debit_for,
+                Utils.accessibilityForNumbers(paymentList?.get(position)?.bankAccountNumber.toString())
+            ) + " " + defaultDescriptionText
         } else if (paymentList?.get(position)?.emandateStatus == "ACTIVE" && paymentList?.get(
                 position
             )?.bankAccount == true
         ) {
-            cardStatus = context.getString(R.string.str_default)
             val htmlText =
                 Html.fromHtml(
                     context.getString(R.string.direct_debit) + "<br>" +
@@ -73,27 +95,23 @@ class PaymentMethodAdapter(
                             }.toString()
 
                 )
-            cardType = context.getString(R.string.direct_debit)
-            for (i in 0 until
-                    paymentList?.get(
-                        position
-                    )?.cardNumber!!.replace("*","").length) {
-                builder.append(paymentList?.get(
-                    position
-                )?.cardNumber!!.replace("*","")[i])
-                builder.append("\u00A0")
-            }
-            builder.append(cardStatus)
-            holder.binding.cardView.contentDescription  = cardType + ", " +
-                    builder.toString()
-            holder.binding.clCardStatus.contentDescription  = cardType + ", " +
-                    builder.toString()
+
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             holder.binding.delete.visibility = View.VISIBLE
             isDirectDebit = true
+            Log.e("TAG", "onBindViewHolder:defaultDescriptionText--> "+defaultDescriptionText )
+
+            holder.binding.cardView.contentDescription =context.getString(R.string.direct_debit) + " " +
+                    Utils.accessibilityForNumbers(paymentList?.get(
+                        position
+                    )?.bankAccountNumber?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    }.toString()) + " " + defaultDescriptionText
+
         } else {
-            cardStatus = if(holder.binding.textDefault.isVisible) context.getString(R.string.str_default) else context.getString(R.string.str_make_default)
             val htmlText =
                 Html.fromHtml(
                     paymentList?.get(position)?.cardType + "<br>" +
@@ -109,42 +127,22 @@ class PaymentMethodAdapter(
 
             holder.binding.tvSelectPaymentMethod.text = htmlText
             holder.binding.delete.visibility = View.VISIBLE
-            cardType = paymentList?.get(position)?.cardType
-            for (i in 0 until
-                    paymentList?.get(
+
+            Log.e("TAG", "onBindViewHolder:defaultDescriptionText "+defaultDescriptionText )
+
+            holder.binding.cardView.contentDescription =paymentList?.get(position)?.cardType + " " +
+                    Utils.accessibilityForNumbers(paymentList?.get(
                         position
-                    )?.cardNumber!!.replace("*","").length) {
-                builder.append(paymentList?.get(
-                    position
-                )?.cardNumber!!.replace("*","")[i])
-                builder.append("\u00A0")
-            }
-            builder.append(cardStatus)
-            holder.binding.cardView.contentDescription  = cardType + ", " +
-                    builder.toString()
-            holder.binding.clCardStatus.contentDescription  = paymentList?.get(position)?.cardType + ", " +
-                    builder.toString()
-        }
-
-
-
-        if (paymentList?.get(position)?.primaryCard == true) {
-            holder.binding.textDefault.visibility = View.VISIBLE
-            holder.binding.textMakeDefault.visibility = View.GONE
-            defaultDescriptionText = context.getString(R.string.str_default)
-        } else {
-            holder.binding.textDefault.visibility = View.GONE
-            defaultDescriptionText = context.getString(R.string.str_default)
-            if (isDirectDebit) {
-                holder.binding.textMakeDefault.visibility = View.GONE
-                defaultDescriptionText = ""
-            } else {
-                holder.binding.textMakeDefault.visibility = View.VISIBLE
-                defaultDescriptionText = context.getString(R.string.str_make_default)
-            }
-
+                    )?.cardNumber?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    }.toString()) + " " + defaultDescriptionText
 
         }
+
+
+
 
         holder.binding.textMakeDefault.setOnClickListener {
             paymentMethodCallback.paymentMethodCallback(
@@ -168,8 +166,6 @@ class PaymentMethodAdapter(
 
             notifyDataSetChanged()
         }
-//        holder.binding.cardView.contentDescription = cardType + ", " +
-//                builder.toString() + defaultDescriptionText
     }
 
     override fun getItemCount(): Int {

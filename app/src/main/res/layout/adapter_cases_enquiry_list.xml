@@ -36,6 +36,7 @@
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/category_tv"
                     style="@style/SemiBoldTextBlack"
+                    android:layout_width="@dimen/margin_0dp"
                     android:gravity="start"
                     android:text="@string/reference_number"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -45,11 +46,13 @@
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/category_data_tv"
                     style="@style/SemiBoldTextBlack"
+                    android:layout_width="@dimen/margin_0dp"
                     android:gravity="start"
                     android:text="@string/str_status"
                     android:layout_marginTop="@dimen/margin_3dp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/reference_number_tv" />
+                    app:layout_constraintRight_toLeftOf="@id/barrier1"
+                    app:layout_constraintTop_toBottomOf="@id/category_tv" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/reference_number_tv"
@@ -75,12 +78,19 @@
                     app:layout_constraintBottom_toBottomOf="@+id/category_data_tv"/>
 
 
-                <androidx.constraintlayout.widget.Barrier
+                <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/barrier1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:barrierDirection="right"
-                    app:constraint_referenced_ids="category_data_tv,category_tv" />
+                    android:importantForAccessibility="no"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+<!--                <androidx.constraintlayout.widget.Barrier-->
+<!--                    android:id="@+id/barrier1"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:barrierDirection="right"-->
+<!--                    app:constraint_referenced_ids="category_data_tv,category_tv" />-->
 
                 <androidx.constraintlayout.widget.Barrier
                     android:id="@+id/barrier"
