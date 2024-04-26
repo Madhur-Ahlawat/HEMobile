@@ -413,7 +413,10 @@ interface ApiService {
     ): Response<String?>?
 
     @POST(LRDS_ELIGIBILITY_CHECK)
-    suspend fun lrdsEligibilityCheck(@Body request: LrdsEligibiltyRequest): Response<LrdsEligibilityResponse?>
+    suspend fun lrdsEligibilityCheck(
+        @Body request: LrdsEligibiltyRequest,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+    ): Response<LrdsEligibilityResponse?>
 
     @PUT(UPDATE_ACCOUNT_SETTINGS)
     suspend fun updateAccountSettingPrefs(
@@ -462,7 +465,8 @@ interface ApiService {
 
     @POST(GET_CROSSING_DETAILS)
     suspend fun getCrossingDetails(
-        @Body model: CrossingDetailsModelsRequest?
+        @Body model: CrossingDetailsModelsRequest?,
+        @Path("agencyId") agencyId: String=AGENCY_ID
     ): Response<CrossingDetailsModelsResponse?>?
 
     @POST(ONE_OF_PAYMENTS_PAY)
@@ -489,7 +493,8 @@ interface ApiService {
 
     @POST(BALANCE_TRANSFER)
     suspend fun balanceTransfer(
-        @Body request: BalanceTransferRequest?
+        @Body request: BalanceTransferRequest?,
+        @Path("agencyId") agencyId: String=AGENCY_ID
     ): Response<BalanceTransferResponse?>?
 
     @POST(SEARCH_PROCESS_PARAMETERS)
@@ -501,6 +506,7 @@ interface ApiService {
     @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
     suspend fun loginWithRefAndPlateNumber(
         @Body request: CheckPaidCrossingsRequest?,
+        @Path("agencyId") agencyId: String=AGENCY_ID,
         @Query("returnReferenceInformation") value: Boolean? = true,
     ): Response<LoginWithPlateAndReferenceNumberResponseModel?>?
 
@@ -529,22 +535,27 @@ interface ApiService {
 
     @POST(PUSH_NOTIFICATION)
     suspend fun allowPushNotification(
-        @Body request: PushNotificationRequest
-    ): Response<EmptyApiResponse?>?
+        @Body request: PushNotificationRequest,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+        ): Response<EmptyApiResponse?>?
 
 
     @GET(CATEGORY_LIST)
-    suspend fun getCategoryList(): Response<List<CaseCategoriesModel?>?>?
+    suspend fun getCategoryList(
+        @Query("agencyId") agencyId: String? = AGENCY_ID
+    ): Response<List<CaseCategoriesModel?>?>?
 
 
     @GET(SUB_CATEGORY_LIST)
     suspend fun getSubCategory(
-        @Path("Category") Category: String?
+        @Path("Category") Category: String?,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
     ): Response<List<CaseCategoriesModel?>?>?
 
     @POST(RAISE_ENQUIRY)
     suspend fun raiseEnquiry(
-        @Body request: EnquiryRequest
+        @Body request: EnquiryRequest,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
     ): Response<EnquiryResponseModel?>?
 
     @POST(GET_ACCOUNT_SR_LIST)
@@ -554,7 +565,8 @@ interface ApiService {
 
     @POST(GET_GENERAL_ACCOUNT_SR_DETAILS)
     suspend fun GET_GENERAL_ACCOUNT_SR_DETAILS(
-        @Body request: EnquiryStatusRequest
+        @Body request: EnquiryStatusRequest,
+        @Query("agencyId") agencyId: String? = AGENCY_ID
     ): Response<EnquiryListResponseModel?>?
 
     @GET(LRDS_VERIFICATION_SR)
