@@ -40,7 +40,8 @@
         android:roundIcon="@mipmap/appicon_round"
         android:theme="@style/Theme.HEMobile"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:requestLegacyExternalStorage="true">
+        android:requestLegacyExternalStorage="true"
+        >
         <activity
             android:name=".ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity"
             android:exported="false"
