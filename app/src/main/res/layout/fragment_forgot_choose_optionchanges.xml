@@ -3,90 +3,96 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:importantForAccessibility="no"
-        android:paddingStart="20dp"
-        android:paddingTop="18dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="18dp">
+        android:scrollbars="none">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/choose_verification_method"
-            style="@style/MediumTextBlack"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:importantForAccessibility="yes"
-            android:text="@string/str_choose_verification_method"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:importantForAccessibility="no"
+            android:paddingStart="20dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="18dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/enter_details_txt"
-            style="@style/RegularTextBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sfregular"
-            android:accessibilityTraversalAfter="@id/choose_verification_method"
-            android:text="@string/str_choose_method_to_get_ur_link"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/choose_verification_method" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/choose_verification_method"
+                style="@style/MediumTextBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:importantForAccessibility="yes"
+                android:text="@string/str_choose_verification_method"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:importantForAccessibility="yes"
-            android:accessibilityTraversalAfter="@id/enter_details_txt"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/enter_details_txt">
-
-            <RadioButton
-                android:id="@+id/radio_sms"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/enter_details_txt"
                 style="@style/RegularTextBlack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:accessibilityTraversalAfter="@id/choose_verification_method"
+                android:fontFamily="@font/sfregular"
+                android:text="@string/str_choose_method_to_get_ur_link"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/choose_verification_method" />
+
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:accessibilityTraversalAfter="@id/enter_details_txt"
+                android:importantForAccessibility="yes"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/enter_details_txt">
+
+                <RadioButton
+                    android:id="@+id/radio_sms"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_30dp"
+                    android:buttonTint="@color/new_btn_color"
+                    android:gravity="top"
+                    android:paddingStart="5dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="5dp"
+                    tools:text="@string/str_dummy_text_2fa_options_sms" />
+
+                <RadioButton
+                    android:id="@+id/radio_email"
+                    style="@style/RegularTextBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:buttonTint="@color/new_btn_color"
+                    android:gravity="top"
+                    android:minHeight="@dimen/margin_48dp"
+                    android:paddingStart="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="5dp"
+                    tools:text="@string/str_dummy_2fa_options_email" />
+
+
+            </RadioGroup>
+
+            <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btn"
+                style="@style/PrimaryButton"
                 android:layout_marginTop="@dimen/margin_30dp"
-                android:buttonTint="@color/new_btn_color"
-                android:gravity="top"
-                android:paddingStart="5dp"
-                android:paddingTop="3dp"
-                android:paddingEnd="5dp"
-                android:paddingBottom="5dp"
-                tools:text="@string/str_dummy_text_2fa_options_sms" />
-
-            <RadioButton
-                android:id="@+id/radio_email"
-                style="@style/RegularTextBlack"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:buttonTint="@color/new_btn_color"
-                android:gravity="top"
-                android:minHeight="@dimen/margin_48dp"
-                android:paddingStart="5dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="5dp"
-                android:paddingBottom="5dp"
-                tools:text="@string/str_dummy_2fa_options_email" />
+                android:accessibilityTraversalAfter="@id/radioGroup"
+                android:enabled="false"
+                android:text="@string/str_continue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
 
-        </RadioGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <com.conduent.apollo.ui.CMButton
-            android:id="@+id/btn"
-            style="@style/PrimaryButton"
-            android:layout_marginTop="@dimen/margin_30dp"
-            android:enabled="false"
-            android:text="@string/str_continue"
-            android:accessibilityTraversalAfter="@id/radioGroup"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

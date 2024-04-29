@@ -35,6 +35,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -100,6 +101,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         validatePostCode()
         binding.inputPostCode.editText
             .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
+        binding.inputPostCode.editText.setAccessibilityDelegateForDigits()
     }
 
     private fun validatePostCode() {

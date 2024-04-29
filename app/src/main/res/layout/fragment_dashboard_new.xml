@@ -643,18 +643,21 @@
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/box_recentTransactions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="bottom"
                     android:minHeight="@dimen/margin_48dp"
                     android:text="@string/txt_recent_transacions"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_14sp"
+                    android:layout_marginEnd="@dimen/margin_5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/label_viewAll"
+                    app:layout_constraintRight_toLeftOf="@id/label_viewAll"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/label_viewAll"
                     android:layout_width="wrap_content"

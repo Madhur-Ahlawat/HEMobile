@@ -105,14 +105,10 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         setEnquiryContentDescription()
     }
     private fun setEnquiryContentDescription() {
-        val builder = StringBuilder()
-        for (i in 0 until
-                viewModel.enquiryDetailsModel.value!!.id!!.length) {
-            builder.append(viewModel.enquiryDetailsModel.value!!.id!![i])
-            builder.append("\u00A0")
-        }
-        binding.referenceNumberCv.contentDescription = getString(R.string.reference_number) + ", " + builder.toString().trim()
-        binding.referenceNumberCl.contentDescription = getString(R.string.reference_number) + ", " + builder.toString().trim()
+        val builder =Utils.accessibilityForNumbers(viewModel.enquiryDetailsModel.value.toString().trim())
+
+        binding.referenceNumberCv.contentDescription = getString(R.string.reference_number) + ", " + builder.toString()
+        binding.referenceNumberCl.contentDescription = getString(R.string.reference_number) + ", " + builder.toString()
 
         binding.dateTimeCv.contentDescription = getString(R.string.date_time_submitted) + ", " + DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created ?: "")
         binding.dateTimeCl.contentDescription = getString(R.string.date_time_submitted) + ", " + DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created ?: "")

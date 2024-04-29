@@ -58,6 +58,7 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
@@ -99,6 +100,8 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
     override fun init() {
+        binding.mobileNumberEt.setAccessibilityDelegateForDigits()
+
 //        val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
 //        registerReceiver(requireContext(),smsVerificationReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED)
         title = requireActivity().findViewById(R.id.title_txt)

@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.account.profile
 
+import android.icu.text.LocaleDisplayNames.UiListItem
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -183,13 +184,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneCellCountryCode + " " + it
                                 var fullPhoneNumber = personalInformation?.phoneCellCountryCode + " "+ it
-                                val builder = StringBuilder()
-                                for (i in 0 until
-                                        fullPhoneNumber.length) {
-                                    builder.append(fullPhoneNumber[i].toString())
-                                    builder.append("\u00A0")
-                                }
-                                binding.mobileNumber.setContentDescription(builder)
+                                binding.mobileNumber.setContentDescription(Utils.accessibilityForNumbers(fullPhoneNumber.toString()))
                             }
 
                         } else if (personalInformation?.phoneDay.isNullOrEmpty().not()) {
@@ -199,13 +194,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneDayCountryCode + " " + it
                                 var fullPhoneNumber = personalInformation?.phoneCellCountryCode + " "+ it
-                                val builder = StringBuilder()
-                                for (i in 0 until
-                                        fullPhoneNumber.length) {
-                                    builder.append(fullPhoneNumber[i].toString())
-                                    builder.append("\u00A0")
-                                }
-                                binding.mobileNumber.setContentDescription(builder)
+                                binding.mobileNumber.setContentDescription(Utils.accessibilityForNumbers(fullPhoneNumber))
                             }
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)

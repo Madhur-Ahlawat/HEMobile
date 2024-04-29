@@ -1,11 +1,15 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityManager
+import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -28,6 +32,8 @@ import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
+import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -70,21 +76,18 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
         binding.editNumberPlate.editText.doAfterTextChanged {
             isEnable(it)
         }
+
+        binding.editReferenceNumber.editText.setAccessibilityDelegateForDigits()
+
         binding.editReferenceNumber.editText.doAfterTextChanged {
-            val builder = StringBuilder()
-            for (i in 0 until
-                    it.toString().length) {
-                builder.append(it.toString()[i].toString())
-                builder.append("\u00A0")
-            }
-            binding.editReferenceNumber.contentDescription = builder.toString()
-            binding.editReferenceNumber.setHint(builder.toString())
             isEnable(it)
         }
         binding.point1Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "." + resources.getString(R.string.paid_crossing_point1)
+            resources.getString(R.string.accessibility_bullet) + "\u202F" + resources.getString(R.string.paid_crossing_point1)
         binding.point2Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "." + resources.getString(R.string.paid_crossing_point2)
+            resources.getString(R.string.accessibility_bullet) + "\u202F" + resources.getString(R.string.paid_crossing_point2)
+
+        binding.referenceNumberHint.contentDescription = Utils.accessibilityForNumbers(resources.getString(R.string.for_example_hd542321725_or_1_898008009))
     }
 
     override fun initCtrl() {
