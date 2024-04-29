@@ -354,7 +354,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     }
 
                 } else {
-                    binding.mobileNumberEt.gone()
+                    binding.errorMobileNumber.gone()
                     requiredCountryCode = true
                     requiredMobileNumber = true
                 }
@@ -598,7 +598,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             viewModel.edit_enquiryModel.value?.fullcountryCode = item
 
             binding.mobileNumberEt.setText("")
-            binding.mobileNumberEt.gone()
+            binding.errorMobileNumber.gone()
         } else {
             if (binding.mobileNumberEt.getText().toString().trim().isNotEmpty()) {
                 if (fullCountryNameWithCode.size > 0) {
