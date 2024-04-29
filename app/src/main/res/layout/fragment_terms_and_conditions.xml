@@ -24,7 +24,8 @@
         <RelativeLayout
             android:id="@+id/layout_dart_charge_general"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_62dp"
+            android:minHeight="@dimen/margin_62dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_22dp"
             android:layout_marginLeft="@dimen/margin_2dp"
             android:layout_marginRight="@dimen/margin_2dp"
@@ -45,7 +46,7 @@
             <ImageView
                 android:id="@+id/btnAboutThisService"
                 android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:padding="@dimen/margin_19dp"
                 android:src="@drawable/ic_right_arrow" />
@@ -54,7 +55,8 @@
         <RelativeLayout
             android:id="@+id/privacy_policy"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_62dp"
+            android:minHeight="@dimen/margin_62dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_9dp"
             android:layout_marginLeft="@dimen/margin_2dp"
             android:layout_marginRight="@dimen/margin_2dp"
@@ -75,7 +77,7 @@
             <ImageView
                 android:id="@+id/btnContactDartCharge"
                 android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:padding="@dimen/margin_19dp"
                 android:src="@drawable/ic_right_arrow" />
@@ -84,7 +86,8 @@
         <RelativeLayout
             android:id="@+id/termsandconditions"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_62dp"
+            android:minHeight="@dimen/margin_62dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_9dp"
             android:layout_marginLeft="@dimen/margin_2dp"
             android:layout_marginRight="@dimen/margin_2dp"
@@ -105,7 +108,7 @@
             <ImageView
                 android:id="@+id/btnUnderstandingChargesAndFines"
                 android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:padding="@dimen/margin_19dp"
                 android:src="@drawable/ic_right_arrow" />

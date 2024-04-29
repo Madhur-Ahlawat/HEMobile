@@ -1705,6 +1705,7 @@
     <string name="str_service_is_unavailable">Service is unavailable</string>
     <string name="str_send_security_code_by_text_message">We’ll use this to send you a security code by text message.</string>
     <string name="str_phone_number_starts_countrycode">Your phone number starts with the country code %1$s. At this time you will be unable to use the following services.</string>
+    <string name="str_description_error_message_number">Your phone number starts with the country code %1$s. At this time you will be unable to use the following services, Receiving communications about your account by text message, Two-step verification, %s</string>
     <string name="str_receving_communications">Receiving communications about your account by text message</string>
     <string name="str_receving_payment_receipt">Receiving your payment receipt by text message.</string>
     <string name="str_two_step_verification">Two-step verification</string>

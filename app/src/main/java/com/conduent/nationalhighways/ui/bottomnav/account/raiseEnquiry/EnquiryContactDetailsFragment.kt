@@ -40,6 +40,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     BackPressListener, NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
 
     @Inject
+
     lateinit var sm: SessionManager
     private val createaccountViewmodel: CreateAccountPostCodeViewModel by viewModels()
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()

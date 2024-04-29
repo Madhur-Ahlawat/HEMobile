@@ -130,6 +130,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY, EDIT_MOBILE -> {
                 binding.incompatiblePoint3Tv.text =
                     resources.getString(R.string.str_may_change_mobile_number)
+
                 if (!isViewCreated) {
                     oldMobileNumber = NewCreateAccountRequestModel.mobileNumber ?: ""
                     oldMobileCountryCode = NewCreateAccountRequestModel.countryCode ?: ""
