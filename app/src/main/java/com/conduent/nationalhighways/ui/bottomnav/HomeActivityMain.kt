@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.bottomnav
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -24,13 +23,11 @@ import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityHomeMainBinding
 import com.conduent.nationalhighways.listener.OnNavigationItemChangeListener
-import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewModel
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
@@ -86,6 +83,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         fun setTitle(title: String) {
             dataBinding?.titleTxt?.text = title
+            dataBinding?.titleTxt?.contentDescription = title
         }
 
         fun removeBottomBar() {
@@ -280,6 +278,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             } else {
                 dataBinding?.backButton?.visible()
             }
+            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
+
         }
         dataBinding?.bottomNavigationView?.setOnNavigationItemChangedListener(
             object : OnNavigationItemChangeListener {
@@ -293,6 +293,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
                                 dashboardClick()
                             }
+                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
                         }
 
                         1 -> {
@@ -305,6 +306,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                                 dataBinding?.fragmentContainerView?.findNavController()
                                     ?.navigate(R.id.crossingHistoryFragment)
                             }
+                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
                         }
 
                         2 -> {
@@ -316,7 +318,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding?.fragmentContainerView?.findNavController()
                                     ?.navigate(R.id.notificationFragment)
+
                             }
+                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
+
                         }
 
                         3 -> {
@@ -324,11 +329,15 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             if (navController.currentDestination?.id != R.id.accountFragment) {
                                 accountFragmentClick()
                             }
+                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
                         }
+
                     }
                 }
             }
         )
+
+        dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
 
     }
 
@@ -421,7 +430,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     fun setbagdeCount(countOfN: Int) {
-        dataBinding?.bottomNavigationView?.updateBadgeCount(2, countOfN ?: 0)
+        dataBinding?.bottomNavigationView?.updateBadgeCount(2, countOfN)
 
     }
 
@@ -444,7 +453,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                 }
 
 
-                dashboardViewModel.communicationPreferenceData.value = resource.data?.accountInformation?.communicationPreferences
+                dashboardViewModel.communicationPreferenceData.value =
+                    resource.data?.accountInformation?.communicationPreferences
 
             }
 
@@ -604,11 +614,10 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     fun focusToolBarHome() {
         dataBinding?.backButton?.requestFocus() // Focus on the backButton
         val task = Runnable {
-            if(dataBinding?.backButton?.isVisible == true && dataBinding?.backButton?.isAccessibilityFocused==false){
+            if (dataBinding?.backButton?.isVisible == true && dataBinding?.backButton?.isAccessibilityFocused == false) {
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
-            }
-            else if(dataBinding?.backButton?.isVisible == false){
+            } else if (dataBinding?.backButton?.isVisible == false) {
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             }
