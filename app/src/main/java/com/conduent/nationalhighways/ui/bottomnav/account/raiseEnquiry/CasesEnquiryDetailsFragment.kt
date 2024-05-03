@@ -105,7 +105,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         setEnquiryContentDescription()
     }
     private fun setEnquiryContentDescription() {
-        val builder =Utils.accessibilityForNumbers(viewModel.enquiryDetailsModel.value.toString().trim())
+        val builder =Utils.accessibilityForNumbers(viewModel.enquiryDetailsModel.value!!.id.toString().trim())
 
         binding.referenceNumberCv.contentDescription = getString(R.string.reference_number) + ", " + builder.toString()
         binding.referenceNumberCl.contentDescription = getString(R.string.reference_number) + ", " + builder.toString()

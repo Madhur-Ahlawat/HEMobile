@@ -183,7 +183,6 @@
                     android:layout_marginTop="@dimen/margin_20dp"
                     android:layout_marginRight="@dimen/margin_2dp"
                     android:layout_marginBottom="@dimen/margin_20dp"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/filesize_ll">
@@ -198,6 +197,9 @@
                             android:id="@+id/file_name_tv"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
+                            tools:text="1.5MB.pdf (1.66 MB)"
+                            android:layout_height="@dimen/_48dp"
+                            android:gravity="center_vertical"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@id/barrier"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -211,10 +213,11 @@
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/file_delete_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/margin_0dp"
-                            android:paddingStart="@dimen/margin_10dp"
+                            android:layout_width="@dimen/_48dp"
+                            android:layout_height="@dimen/_48dp"
+                            android:padding="@dimen/margin_10dp"
                             android:src="@drawable/delete"
+                            android:contentDescription="@string/delete"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintLeft_toRightOf="@id/barrier"
