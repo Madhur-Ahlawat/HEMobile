@@ -1710,8 +1710,10 @@
     <string name="str_phone_number_starts_countrycode">Your phone number starts with the country code %1$s. At this time you will be unable to use the following services.</string>
     <string name="str_description_error_message_number">Your phone number starts with the country code %1$s. At this time you will be unable to use the following services, Receiving communications about your account by text message, Two-step verification, %s</string>
     <string name="str_receving_communications">Receiving communications about your account by text message</string>
+    <string name="str_bullet_receving_communications">Bullet point, Receiving communications about your account by text message</string>
     <string name="str_receving_payment_receipt">Receiving your payment receipt by text message.</string>
     <string name="str_two_step_verification">Two-step verification</string>
+    <string name="str_bullet_two_step_verification">Bullet point, Two-step verification</string>
     <string name="str_may_change_mobile_number">You may change your mobile phone number or continue with your account creation</string>
     <string name="str_may_change_mobile_number_two_step">You may change your mobile phone number or continue to opt out of two-step verification and SMS messages.</string>
     <string name="str_may_change_mobile_number_pay_for_crossings">You may change your mobile phone number or select only email to receive your receipt. Or continue without a receipt.</string>

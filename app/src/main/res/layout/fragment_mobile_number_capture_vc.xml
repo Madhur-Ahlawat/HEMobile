@@ -109,7 +109,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtBottom">
@@ -127,11 +126,16 @@
                 <LinearLayout
                     android:id="@+id/incompatible_point1_tv"
                     android:layout_width="match_parent"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
+                    android:contentDescription="@string/str_bullet_receving_communications"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_15dp"
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         android:layout_width="6dp"
                         android:layout_height="6dp"
                         android:layout_marginTop="@dimen/_6sdp"
@@ -139,6 +143,8 @@
 
 
                     <TextView
+                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -154,11 +160,16 @@
                 <LinearLayout
                     android:id="@+id/incompatible_point2_tv"
                     android:layout_width="match_parent"
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/str_bullet_two_step_verification"
                     android:layout_marginTop="@dimen/margin_5dp"
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         android:layout_width="6dp"
                         android:layout_height="6dp"
                         android:layout_marginTop="@dimen/_6sdp"
@@ -166,6 +177,8 @@
 
 
                     <TextView
+                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
