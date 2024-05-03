@@ -198,7 +198,7 @@
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             tools:text="1.5MB.pdf (1.66 MB)"
-                            android:layout_height="@dimen/_48dp"
+                            android:layout_height="@dimen/margin_48dp"
                             android:gravity="center_vertical"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@id/barrier"
@@ -213,8 +213,8 @@
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/file_delete_iv"
-                            android:layout_width="@dimen/_48dp"
-                            android:layout_height="@dimen/_48dp"
+                            android:layout_width="@dimen/margin_48dp"
+                            android:layout_height="@dimen/margin_48dp"
                             android:padding="@dimen/margin_10dp"
                             android:src="@drawable/delete"
                             android:contentDescription="@string/delete"
