@@ -34,7 +34,7 @@
                 android:id="@+id/txt_fingerprint_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/_48dp"
+                android:minHeight="@dimen/margin_48dp"
                 android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:fontFamily="@font/open_sans"
