@@ -4,6 +4,7 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesRespNew
 import com.conduent.nationalhighways.databinding.FragmentViewChargesNewBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -71,6 +72,9 @@ class ViewChargesFragment : BaseFragment<FragmentViewChargesNewBinding>() {
             textIfYouHaveDisabled?.setMovementMethod(LinkMovementMethod.getInstance())
             textLocalResidentDiscount?.setMovementMethod(LinkMovementMethod.getInstance())
         }
+
+        binding.textLocalResidentDiscount.contentDescription=resources.getString(R.string.b_local_resident_discount_desc)
+        binding.textFines.contentDescription=resources.getString(R.string.fines_you_can_get_desc)
     }
 
     override fun observer() {
