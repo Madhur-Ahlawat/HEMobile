@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.utils
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.accessibility.AccessibilityNodeInfo
@@ -11,7 +12,6 @@ import androidx.appcompat.widget.SwitchCompat
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.widgets.NHRadioButton
-import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.textfield.TextInputEditText
 
@@ -103,14 +103,25 @@ fun TextInputEditText.setAccessibilityDelegateForDigits() {
 
         override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfo) {
             super.onInitializeAccessibilityNodeInfo(host, info)
-            Log.e("TAG", "sendAccessibilityEvent: eventType =")
+            Log.e("TAG", "sendAccessibilityEvent: eventType = " + hint)
 
-            if (info?.isFocusable == true) {
-                info?.text = Utils.accessibilityForNumbers(text.toString())
+            if (info.isFocusable == true) {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    info.text = Utils.accessibilityForNumbers(text.toString())
+                    info.hintText = hint.toString()
+                } else {
+                    val builder = StringBuilder()
+                    builder.append(Utils.accessibilityForNumbers(text.toString()))
+                    builder.append(hint.toString())
+                    info.text = builder
+
+                }
             }
         }
     }
 }
+
 fun EditText.setAccessibilityDelegateForDigits() {
     accessibilityDelegate = object : View.AccessibilityDelegate() {
         override fun sendAccessibilityEvent(host: View, eventType: Int) {
@@ -123,8 +134,8 @@ fun EditText.setAccessibilityDelegateForDigits() {
             super.onInitializeAccessibilityNodeInfo(host, info)
             Log.e("TAG", "sendAccessibilityEvent: eventType =")
 
-            if (info?.isFocusable == true) {
-                info?.text = Utils.accessibilityForNumbers(text.toString())
+            if (info.isFocusable == true) {
+                info.text = Utils.accessibilityForNumbers(text.toString())
             }
         }
     }

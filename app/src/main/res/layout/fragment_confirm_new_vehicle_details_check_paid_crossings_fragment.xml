@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:importantForAccessibility="no"
-        android:overScrollMode="never">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15dp"
+        android:layout_marginEnd="@dimen/margin_15dp"
+        android:paddingBottom="@dimen/margin_30dp"
+        android:importantForAccessibility="no">
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_15dp"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
             android:importantForAccessibility="no"
-            android:layout_marginEnd="@dimen/margin_15dp">
+            android:layout_above="@+id/btnContinue"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:id="@+id/llCheckvehicleDetails"
@@ -24,11 +26,11 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginHorizontal="@dimen/margin_2dp"
                 android:layout_marginStart="@dimen/margin_24dp"
-                android:importantForAccessibility="no"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:layout_marginEnd="@dimen/margin_24dp"
                 android:layout_marginBottom="@dimen/margin_24dp"
                 android:gravity="start|top"
+                android:importantForAccessibility="no"
                 android:orientation="vertical">
 
 
@@ -48,10 +50,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="@dimen/margin_24dp"
-                    android:importantForAccessibility="yes"
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
                     android:elevation="3dp"
+                    android:importantForAccessibility="yes"
                     app:cardCornerRadius="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,9 +66,9 @@
                         <TextView
                             android:id="@+id/txtVehicleRegistration"
                             style="@style/MediumTextBlack"
+                            android:importantForAccessibility="no"
                             android:text="@string/vehicle_registration_number_plate"
                             android:textSize="15sp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,10 +86,10 @@
                             android:layout_width="@dimen/margin_48dp"
                             android:layout_height="@dimen/margin_48dp"
                             android:layout_marginEnd="@dimen/margin_5dp"
-                            android:padding="@dimen/margin_16dp"
                             android:contentDescription="@string/accessibility_edit"
-                            android:src="@drawable/edit"
                             android:importantForAccessibility="yes"
+                            android:padding="@dimen/margin_16dp"
+                            android:src="@drawable/edit"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -103,11 +105,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="1dp"
-                    android:importantForAccessibility="yes"
                     android:layout_marginTop="@dimen/margin_24dp"
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
                     android:elevation="3dp"
+                    android:importantForAccessibility="yes"
                     app:cardCornerRadius="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -120,9 +122,9 @@
                         <TextView
                             android:id="@+id/txtCreditRemaining"
                             style="@style/MediumTextBlack"
+                            android:importantForAccessibility="no"
                             android:text="@string/credit_remaining"
                             android:textSize="15sp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -147,9 +149,9 @@
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="@dimen/margin_24dp"
                     android:layout_marginEnd="1dp"
-                    android:importantForAccessibility="yes"
                     android:layout_marginBottom="1dp"
                     android:elevation="3dp"
+                    android:importantForAccessibility="yes"
                     app:cardCornerRadius="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -173,8 +175,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:importantForAccessibility="no"
                             android:gravity="start|center"
+                            android:importantForAccessibility="no"
                             app:layout_constraintEnd_toEndOf="@+id/txtCreditWillExpireOn"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn" />
@@ -186,27 +188,26 @@
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-            <com.conduent.nationalhighways.utils.widgets.NHButton
-                android:id="@+id/btnContinue"
-                style="@style/PrimaryButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/btnCancel"
-                android:text="@string/str_continue"
-                app:radius="5dp" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHButton
-                android:id="@+id/btnCancel"
-                style="@style/secondaryButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/margin_53dp"
-                android:text="@string/cancel"
-                app:radius="5dp" />
-        </RelativeLayout>
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnContinue"
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnCancel"
+            android:text="@string/str_continue"
+            app:radius="5dp" />
 
-    </ScrollView>
+        <com.conduent.nationalhighways.utils.widgets.NHButton
+            android:id="@+id/btnCancel"
+            style="@style/secondaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="@string/cancel"
+            app:radius="5dp" />
+    </RelativeLayout>
 
 </layout>
