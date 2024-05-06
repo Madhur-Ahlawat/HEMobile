@@ -34,6 +34,8 @@
                 android:id="@+id/txt_fingerprint_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="@dimen/margin_48dp"
+                android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:fontFamily="@font/open_sans"
                 android:text="@string/biometriclogin"
@@ -65,7 +67,6 @@
                 android:textSize="@dimen/font_14sp"
                 app:thumbTint="@color/switch_thumb"
                 app:trackTint="@color/switch_track" />
-
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btn_save"

@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/str_country_code"
-                android:minHeight="@dimen/_48dp"
+                android:minHeight="@dimen/margin_48dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
