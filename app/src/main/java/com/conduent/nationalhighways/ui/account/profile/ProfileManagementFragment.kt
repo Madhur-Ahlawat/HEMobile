@@ -109,6 +109,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editCompanyName.setOnClickListener(this)
         binding.editPassword.setOnClickListener(this)
 
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
 
     }
 
