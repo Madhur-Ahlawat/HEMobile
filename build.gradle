@@ -6,7 +6,7 @@ buildscript {
     ext.kotlin_version = "1.8.22"
     ext.daggerHiltVersion = '2.42'
     ext.nav_version = '2.4.1'
-    ext.jacocoVersion = '0.8.7'
+//    ext.jacocoVersion = '0.8.7'
 
     repositories {
         google()
@@ -17,9 +17,9 @@ buildscript {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20'
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
         classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltVersion"
-        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
+//        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
-        classpath 'com.google.gms:google-services:4.4.0'
+        classpath 'com.google.gms:google-services:4.4.1'
     }
 }
 
