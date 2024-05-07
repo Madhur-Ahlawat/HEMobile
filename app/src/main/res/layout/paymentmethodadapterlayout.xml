@@ -90,7 +90,7 @@
                     android:gravity="center"
                     android:importantForAccessibility="yes"
                     android:minWidth="@dimen/_48dp"
-                    android:minHeight="@dimen/_48dp"
+                    android:minHeight="@dimen/margin_48dp"
                     android:paddingHorizontal="@dimen/margin_3dp"
                     android:screenReaderFocusable="true"
                     android:text="@string/str_make_default"

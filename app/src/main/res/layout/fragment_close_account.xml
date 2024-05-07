@@ -10,47 +10,59 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/title"
-            style="@style/OpenSansBoldText"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:drawablePadding="@dimen/margin_20dp"
-            android:drawableTop="@drawable/warningicon"
-            android:layout_marginTop="@dimen/margin_115dp"
-            android:layout_marginHorizontal="@dimen/margin_25dp"
-            android:gravity="center"
-            android:text="@string/are_you_sure_you_want_to_close_your_dart_charge_account"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_close_account"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/message1"
-            style="@style/RegularTextBlack"
-            android:layout_marginTop="@dimen/margin_18dp"
-            android:textAlignment="center"
-            android:text="@string/any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method"
-            android:textSize="@dimen/font_14sp"
-            android:layout_marginHorizontal="@dimen/margin_27dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            android:id="@+id/message2"
-            style="@style/RegularTextBlack"
-            android:layout_marginTop="@dimen/margin_18dp"
-            android:textAlignment="center"
-            android:text="@string/you_will_have_to_pay_for_any_future_crossings_nseparately"
-            android:textSize="@dimen/font_14sp"
-            android:layout_marginHorizontal="@dimen/margin_27dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/message1" />
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/title"
+                    style="@style/OpenSansBoldText"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="@dimen/margin_25dp"
+                    android:layout_marginTop="@dimen/margin_115dp"
+                    android:drawableTop="@drawable/warningicon"
+                    android:drawablePadding="@dimen/margin_20dp"
+                    android:gravity="center"
+                    android:text="@string/are_you_sure_you_want_to_close_your_dart_charge_account"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/message1"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginHorizontal="@dimen/margin_27dp"
+                    android:layout_marginTop="@dimen/margin_18dp"
+                    android:gravity="center"
+                    android:text="@string/any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/message2"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginHorizontal="@dimen/margin_27dp"
+                    android:layout_marginTop="@dimen/margin_18dp"
+                    android:gravity="center"
+                    android:text="@string/you_will_have_to_pay_for_any_future_crossings_nseparately"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/message1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btn_close_account"
             style="@style/PrimaryButton"
