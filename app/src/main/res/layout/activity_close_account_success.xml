@@ -15,16 +15,19 @@
         <include
             android:id="@+id/toolbar"
             layout="@layout/tool_bar_with_title_back" />
-
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toTopOf="@id/gotoStartMenuBt"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toTopOf="@id/gotoStartMenuBt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="10dp">
 
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -47,6 +50,7 @@
                 android:layout_marginTop="@dimen/margin_18dp"
                 android:text="@string/str_you_can_no_longer_access_account"
                 android:textAlignment="center"
+                android:gravity="center"
                 android:textSize="@dimen/font_14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,6 +123,7 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/gotoStartMenuBt"
             style="@style/PrimaryButton"

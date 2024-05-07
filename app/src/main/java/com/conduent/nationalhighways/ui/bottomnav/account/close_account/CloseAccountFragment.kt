@@ -40,6 +40,9 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
     ) = FragmentCloseAccountBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }

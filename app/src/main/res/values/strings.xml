@@ -1775,4 +1775,8 @@
     <string name="category_accessibility">Category dropdown, Double tap to select category</string>
     <string name="sub_category_accessibility">Sub category dropdown, Double tap to select sub category</string>
     <string name="radio_button">Radio Button</string>
+    <string name="checked">checked</string>
+    <string name="you_can_no_longer_access_this_account">You can no longer access this account.</string>
+    <string name="we_will_send_an_email_to_johndoe_email_com_nwhen_the_account_has_been_closed">We will send an email to johndoe@email.com\nwhen the account has been closed.</string>
+    <string name="if_you_do_not_pay_the_dart_charge_when_ncrossing_you_could_get_a_fine_penalty_charge_nnotice">If you do not pay the Dart Charge when\ncrossing, you could get a fine (Penalty Charge\nNotice)</string>
 </resources>
