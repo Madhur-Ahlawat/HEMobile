@@ -154,10 +154,10 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
         binding.referenceNumberTv.text = transactionId
 
-        binding.layoutPaymentReferenceNumber.contentDescription =
-            resources.getString(R.string.str_payment_reference_number) + "." + Utils.accessibilityForNumbers(
-                transactionId
-            )
+//        binding.layoutPaymentReferenceNumber.contentDescription =
+//            resources.getString(R.string.str_payment_reference_number) + "," + Utils.accessibilityForNumbers(
+//                transactionId
+//            )
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             Log.e("TAG", "initCtrl: topUpAmount " + topUpAmount.toDouble())
 

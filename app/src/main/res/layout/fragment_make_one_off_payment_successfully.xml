@@ -67,7 +67,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/payment_reference_number"
-                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,7 +75,6 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
                         android:layout_marginTop="2dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -120,7 +118,6 @@
                         style="@style/MediumTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
                         android:text="@string/vehicle_registration_number_plate"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -130,7 +127,6 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
                         android:layout_marginTop="2dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -166,7 +162,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/str_amount_paid"
-                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,7 +171,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -211,7 +205,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/str_time_date"
-                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -220,7 +213,6 @@
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
                         android:layout_marginTop="2dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

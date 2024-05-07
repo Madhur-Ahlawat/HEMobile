@@ -1,10 +1,13 @@
 package com.conduent.nationalhighways.ui.bottomnav.notification.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Rect
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
+import android.view.TouchDelegate
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
@@ -13,6 +16,7 @@ import com.conduent.nationalhighways.databinding.ItemNotificationsBinding
 import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment
 import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewModel
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
+import com.conduent.nationalhighways.utils.widgets.NHTextView
 import kotlinx.coroutines.launch
 
 class NotificationAdapterNew(
@@ -120,6 +124,22 @@ class NotificationAdapterNew(
 
         }
         binding.selectNotification.setAccessibilityDelegate()
+
+
+
+        binding.notificationDate.post {
+            val delegateArea = Rect()
+            binding.notificationDate.getHitRect(delegateArea)
+            // Increase the height of the hit rectangle by 48dp (adjust as needed)
+            val heightIncrease = context.resources.getDimensionPixelSize(R.dimen.margin_48dp)
+            delegateArea.top -= heightIncrease
+            delegateArea.bottom += heightIncrease
+
+            // Create a TouchDelegate and set it on the parent layout of binding.notificationDate
+            val parentLayout = binding.notificationDate.parent as ConstraintLayout
+            parentLayout.touchDelegate = TouchDelegate(delegateArea, binding.notificationDate)
+        }
+
 
     }
 

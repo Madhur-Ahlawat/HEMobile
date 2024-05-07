@@ -344,7 +344,6 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     override fun onResume() {
         if (requireActivity() is CreateAccountActivity) {
             title.text = getString(R.string.str_create_an_account)
-
         }
         super.onResume()
     }

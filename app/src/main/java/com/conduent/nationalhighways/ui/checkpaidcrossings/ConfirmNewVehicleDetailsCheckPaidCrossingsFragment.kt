@@ -57,7 +57,6 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         additionalCrossings = data?.additionalCrossingCount
         additionalCrossingsCharge = data?.additionalCharge
         setData()
-        setContentDescriptionForBullets()
         setClickListeners()
         initLoader()
     }
@@ -84,22 +83,9 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
             }
 
             creditAdditionalCrossings.text = convertDateForTransferCrossingsScreen(data?.expirationDate)
-
-//            val charge = data?.chargingRate?.toDouble()
-//            val unSettledTrips = data?.unSettledTrips
-//            crossingsList = emptyList<String>().toMutableList()
-//            if(unSettledTrips != null && charge != null){
-//                totalAmountOfUnsettledTrips = charge*unSettledTrips
-//            }
         }
     }
 
-    private fun setContentDescriptionForBullets() {
-        binding.layoutVehicleRegistrationCv.contentDescription=binding.txtVehicleRegistration.text.toString()+"."+binding.vehicleRegisration.text.toString()
-        binding.creditRemainingCv.contentDescription=binding.txtCreditRemaining.text.toString()+"."+binding.creditRemaining.text.toString()
-        binding.emailCard.contentDescription=binding.txtCreditWillExpireOn.text.toString()+"."+binding.creditAdditionalCrossings.text.toString()
-
-    }
 
     private fun setClickListeners() {
         binding.apply {

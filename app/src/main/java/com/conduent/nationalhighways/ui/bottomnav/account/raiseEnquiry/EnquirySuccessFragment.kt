@@ -67,11 +67,6 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
             }
         }
 
-
-        binding.referenceNumberCv.contentDescription = getString(R.string.reference_number) + " " + Utils.accessibilityForNumbers(
-            enquiryModel?.srNumber.toString()
-        )
-
     }
 
 

@@ -50,15 +50,15 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     private var mLayoutManager: LinearLayoutManager? = null
     private val viewModel: NotificationViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var priority_notifications: MutableList<AlertMessage> = mutableListOf()
-    private var standard_notifications: MutableList<AlertMessage> = mutableListOf()
+    private var priorityNotifications: MutableList<AlertMessage> = mutableListOf()
+    private var standardNotifications: MutableList<AlertMessage> = mutableListOf()
     private var numberOfAlertsTOBeCleared = 0
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentNotificationBinding = FragmentNotificationBinding.inflate(inflater, container, false)
 
-    fun selectPriority() {
+    private fun selectPriority() {
         isPrioritySelected = true
         isStandardSelected = false
 
@@ -78,12 +78,12 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                 R.color.white
             )
         )
-        initAdapter(priority_notifications)
-        enableSwipeToDeleteAndUndo(priority_notifications)
+        initAdapter(priorityNotifications)
+        enableSwipeToDeleteAndUndo(priorityNotifications)
 //        viewModel.getAlertsApi(Constants.LANGUAGE)
     }
 
-    fun selectStandard() {
+    private fun selectStandard() {
         isPrioritySelected = false
         isStandardSelected = true
         binding.priority.background =
@@ -102,8 +102,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                 R.color.hyperlink_blue2
             )
         )
-        initAdapter(standard_notifications)
-        enableSwipeToDeleteAndUndo(standard_notifications)
+        initAdapter(standardNotifications)
+        enableSwipeToDeleteAndUndo(standardNotifications)
 //        viewModel.getAlertsApi(Constants.LANGUAGE)
     }
 
@@ -117,18 +117,21 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         viewModel.getAlertsApi(Constants.LANGUAGE)
         selectPriority()
         setClickListeners()
-        initAdapter(priority_notifications)
+        initAdapter(priorityNotifications)
         setBackPressListener(this)
 
     }
+
     private fun enableSwipeToDeleteAndUndo(notifications: MutableList<AlertMessage>) {
         selectedNotificationsList = notifications
-        val swipeToDeleteCallback: SwipeToDeleteCallback = object : SwipeToDeleteCallback(requireContext()) {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) {
-                val position = viewHolder.adapterPosition
-                val item: AlertMessage = selectedNotificationsList.get(position)
-                viewModel.readAlertItem(item.cscLookUpKey ?: "")            }
-        }
+        val swipeToDeleteCallback: SwipeToDeleteCallback =
+            object : SwipeToDeleteCallback(requireContext()) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) {
+                    val position = viewHolder.adapterPosition
+                    val item: AlertMessage = selectedNotificationsList[position]
+                    viewModel.readAlertItem(item.cscLookUpKey ?: "")
+                }
+            }
         val itemTouchhelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchhelper.attachToRecyclerView(binding.notificationsRecyclerview)
     }
@@ -150,8 +153,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         binding.btnClearNotification.setOnClickListener {
             numberOfAlertsTOBeCleared = 0
             if (isPrioritySelected) {
-                priority_notifications.forEach {
-                    if (it.isSelectListItem == true) {
+                priorityNotifications.forEach {
+                    if (it.isSelectListItem) {
                         binding.btnClearNotification.isEnabled = false
                         binding.btnClearNotification.isFocusable = false
                         numberOfAlertsTOBeCleared++
@@ -167,8 +170,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                     }
                 }
             } else {
-                standard_notifications.forEach {
-                    if (it.isSelectListItem == true) {
+                standardNotifications.forEach {
+                    if (it.isSelectListItem) {
                         numberOfAlertsTOBeCleared++
                         binding.btnClearNotification.isEnabled = false
                         binding.btnClearNotification.isFocusable = false
@@ -203,34 +206,25 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         }
     }
 
-    fun selectAllNotification() {
+    private fun selectAllNotification() {
         if (isPrioritySelected) {
-            priority_notifications.forEach { it.isSelectListItem = true }
+            priorityNotifications.forEach { it.isSelectListItem = true }
         } else {
-            standard_notifications.forEach { it.isSelectListItem = true }
+            standardNotifications.forEach { it.isSelectListItem = true }
         }
         mAdapter?.notifyDataSetChanged()
     }
 
-    fun unSelectAllNotifications() {
+    private fun unSelectAllNotifications() {
         if (isPrioritySelected) {
-            priority_notifications.forEach { it.isSelectListItem = false }
+            priorityNotifications.forEach { it.isSelectListItem = false }
         } else {
-            standard_notifications.forEach { it.isSelectListItem = false }
+            standardNotifications.forEach { it.isSelectListItem = false }
 
         }
         mAdapter?.notifyDataSetChanged()
     }
 
-
-    private fun handleVisibility() {
-//        binding.clearSelectAllLyt.gone()
-//        binding.clearFilterLyt.visible()
-//        binding.filterTxt.gone()
-
-    }
-
-    private var mTotalList = ArrayList<NotificationModel>()
 
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
@@ -259,15 +253,15 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         } else {
             var areAllItemsSelected = true
             if (isPrioritySelected) {
-                for (i in 0..(priority_notifications.size - 1)) {
-                    if (!priority_notifications.get(i).isSelectListItem) {
+                for (i in 0 until priorityNotifications.size) {
+                    if (!priorityNotifications[i].isSelectListItem) {
                         areAllItemsSelected = false
                         break
                     }
                 }
             } else {
-                for (i in 0..(standard_notifications.size - 1)) {
-                    if (!standard_notifications.get(i).isSelectListItem) {
+                for (i in 0 until standardNotifications.size) {
+                    if (!standardNotifications[i].isSelectListItem) {
                         areAllItemsSelected = false
                         break
                     }
@@ -275,11 +269,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             }
 
 
-            if (!areAllItemsSelected) {
-                binding.selectAll.isChecked = areAllItemsSelected
-            } else {
-                binding.selectAll.isChecked = areAllItemsSelected
-            }
+            binding.selectAll.isChecked = areAllItemsSelected
+
         }
 
     }
@@ -289,42 +280,42 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
-                if (resource.data?.messageList.isNullOrEmpty() == false) {
-                    priority_notifications.clear()
-                    standard_notifications.clear()
+                if (!resource.data?.messageList.isNullOrEmpty()) {
+                    priorityNotifications.clear()
+                    standardNotifications.clear()
                     resource.data?.messageList?.forEach {
                         if (it?.isDeleted.equals("Y")) {
 
                         } else {
                             if (it?.category.equals(Constants.PRIORITY)) {
-                                priority_notifications.add(it!!)
+                                priorityNotifications.add(it!!)
                             }
                             if (it?.category.equals(Constants.STANDARD)) {
-                                standard_notifications.add(it!!)
+                                standardNotifications.add(it!!)
                             }
                         }
                     }
 
-                    priority_notifications =
-                        Utils.sortAlertsDateWiseDescending(priority_notifications)
-                    standard_notifications =
-                        Utils.sortAlertsDateWiseDescending(standard_notifications)
+                    priorityNotifications =
+                        Utils.sortAlertsDateWiseDescending(priorityNotifications)
+                    standardNotifications =
+                        Utils.sortAlertsDateWiseDescending(standardNotifications)
 
                     if (isPrioritySelected) {
-                        initAdapter(priority_notifications)
+                        initAdapter(priorityNotifications)
                     } else {
-                        initAdapter(standard_notifications)
+                        initAdapter(standardNotifications)
                     }
 
                     val countOfY = resource.data?.messageList?.count { it?.isViewed == "Y" }
                     val countOfN = (resource.data?.messageList?.size ?: 0).minus(countOfY ?: 0)
-                    if(requireActivity() is HomeActivityMain){
-                        (requireActivity() as HomeActivityMain).setbagdeCount(countOfN)
+                    if (requireActivity() is HomeActivityMain) {
+                        (requireActivity() as HomeActivityMain).setbadgeCount(countOfN)
                     }
 
-                }else{
-                    if(requireActivity() is HomeActivityMain){
-                        (requireActivity() as HomeActivityMain).setbagdeCount(0)
+                } else {
+                    if (requireActivity() is HomeActivityMain) {
+                        (requireActivity() as HomeActivityMain).setbadgeCount(0)
                     }
                 }
 
@@ -335,9 +326,9 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                 if (checkSessionExpiredOrServerError(resource.errorModel)
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
-                } else if(resource.errorModel?.errorCode.toString().equals("1220")){
+                } else if (resource.errorModel?.errorCode.toString() == "1220") {
                     checkData()
-                }else{
+                } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
@@ -356,11 +347,11 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             binding.includeNoData.messageTv.text =
                 resources.getString(R.string.str_no_standard_notifications)
         }
-        if (isPrioritySelected && priority_notifications.orEmpty().size > 0) {
+        if (isPrioritySelected && priorityNotifications.size > 0) {
             binding.dataRl.visible()
             binding.noDataRl.gone()
             binding.includeNoData.noDataCl.gone()
-        } else if (isStandardSelected && standard_notifications.orEmpty().size > 0) {
+        } else if (isStandardSelected && standardNotifications.size > 0) {
             binding.dataRl.visible()
             binding.noDataRl.gone()
             binding.includeNoData.noDataCl.gone()
@@ -399,6 +390,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             }
         }
     }
+
     private fun handleReadAlertResponse(resource: Resource<String?>?) {
         if (numberOfAlertsTOBeCleared > 0) {
             numberOfAlertsTOBeCleared--
@@ -430,8 +422,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-        }
+
     }
 
     override fun onAttach(context: Context) {
