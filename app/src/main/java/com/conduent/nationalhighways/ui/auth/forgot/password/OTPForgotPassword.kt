@@ -38,7 +38,6 @@ import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
 import com.conduent.nationalhighways.databinding.FragmentForgotOtpchangesBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
-import com.conduent.nationalhighways.receiver.SmsBroadcastReceiver
 import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CommunicationPrefsViewModel
@@ -112,9 +111,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var phoneDayCountryCode: String = ""
     private val dashboardViewmodel: DashboardViewModel by activityViewModels()
     private var accountStatus: String = ""
-    private var smsBroadcastReceiver: SmsBroadcastReceiver? = null
-    var hasFaceBiometric = false
-    var hasTouchBiometric = false
+    private var hasFaceBiometric = false
+    private var hasTouchBiometric = false
 
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
 
@@ -636,7 +634,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun confirmEmailCode() {
         loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-        if (phoneCountryCode.isNotEmpty() && phoneCountryCode != null) {
+        if (phoneCountryCode.isNotEmpty()) {
             val request = ConfirmEmailRequest(
                 response?.referenceId ?: "",
                 phoneCountryCode + data?.optionValue,
@@ -667,28 +665,17 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 when (navFlowCall) {
                     ACCOUNT_CREATION_MOBILE_FLOW -> {
-                        binding.messageReceivedTxt.text =
-                            getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
+                        binding.messageReceivedTxt.text = resources.getString(
+                            R.string.wehavesentatextmessageto, Utils.maskPhoneNumber(
                                 data?.optionValue.toString()
-                            ) + "."
-                        binding.messageReceivedTxt.contentDescription =
-                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.accessibilityForNumbers(
-                                Utils.maskPhoneNumber(
-                                    data?.optionValue.toString()
-                                )
                             )
-
+                        )
                     }
 
                     PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
                         binding.messageReceivedTxt.text =
-                            getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
-                                data?.optionValue.toString()
-                            ) + "."
-
-                        binding.messageReceivedTxt.contentDescription =
-                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.accessibilityForNumbers(
-                                Utils.maskPhoneNumber(
+                            resources.getString(
+                                R.string.wehavesentatextmessageto, Utils.maskPhoneNumber(
                                     data?.optionValue.toString()
                                 )
                             )
@@ -696,14 +683,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                     else -> {
                         binding.messageReceivedTxt.text =
-                            getString(R.string.wehavesentatextmessageto) + " " + Utils.maskPhoneNumber(
-                                data?.optionValue.toString()
-                            ) + "."
-
-                        binding.messageReceivedTxt.contentDescription =
-                            getString(R.string.content_description_wehavesentatextmessageto) + " " + Utils.accessibilityForNumbers( Utils.maskPhoneNumber(
-                                data?.optionValue.toString()
-                            )
+                            resources.getString(
+                                R.string.wehavesentatextmessageto, Utils.maskPhoneNumber(
+                                    data?.optionValue.toString()
+                                )
                             )
                     }
                 }
@@ -715,11 +698,17 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                 if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
                     binding.messageReceivedTxt.text =
-                        getString(R.string.wehavesentanemail) + " " + Utils.maskEmail(data?.optionValue.toString())
+                        resources.getString(
+                            R.string.wehavesentanemail,
+                            Utils.maskEmail(data?.optionValue.toString())
+                        )
 
                 } else {
                     binding.messageReceivedTxt.text =
-                        getString(R.string.wehavesentanemail) + " " + Utils.maskEmail(data?.optionValue.toString())
+                        resources.getString(
+                            R.string.wehavesentanemail,
+                            Utils.maskEmail(data?.optionValue.toString())
+                        )
 
                 }
             }
@@ -1100,7 +1089,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         accountInformation: AccountInformation?
     ) {
         var mfaEnabled = Utils.returnMfaStatus(accountInformation?.mfaEnabled ?: "")
-        var smsOption = accountInformation?.smsOption
+        val smsOption = accountInformation?.smsOption
         if (navFlowCall == PROFILE_MANAGEMENT_2FA_CHANGE) {
             mfaEnabled = "Y"
         }
