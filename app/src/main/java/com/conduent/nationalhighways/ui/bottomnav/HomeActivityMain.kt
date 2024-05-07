@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -83,7 +84,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         fun setTitle(title: String) {
             dataBinding?.titleTxt?.text = title
-            dataBinding?.titleTxt?.contentDescription = title
         }
 
         fun removeBottomBar() {
@@ -278,7 +278,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             } else {
                 dataBinding?.backButton?.visible()
             }
-            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
 
         }
         dataBinding?.bottomNavigationView?.setOnNavigationItemChangedListener(
@@ -293,7 +292,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
                                 dashboardClick()
                             }
-                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
                         }
 
                         1 -> {
@@ -306,7 +304,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                                 dataBinding?.fragmentContainerView?.findNavController()
                                     ?.navigate(R.id.crossingHistoryFragment)
                             }
-                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
                         }
 
                         2 -> {
@@ -320,7 +317,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                                     ?.navigate(R.id.notificationFragment)
 
                             }
-                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
 
                         }
 
@@ -329,16 +325,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             if (navController.currentDestination?.id != R.id.accountFragment) {
                                 accountFragmentClick()
                             }
-                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
                         }
 
                     }
                 }
             }
         )
-
-        dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
-
     }
 
 
@@ -612,16 +604,20 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     fun focusToolBarHome() {
+        Log.e("TAG", "focusToolBarHome: " )
         dataBinding?.backButton?.requestFocus() // Focus on the backButton
         val task = Runnable {
             if (dataBinding?.backButton?.isVisible == true && dataBinding?.backButton?.isAccessibilityFocused == false) {
+                Log.e("TAG", "focusToolBarHome:--> " )
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             } else if (dataBinding?.backButton?.isVisible == false) {
+                Log.e("TAG", "focusToolBarHome:**> " )
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             }
         }
+        Log.e("TAG", "focusToolBarHome:(()) " )
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }

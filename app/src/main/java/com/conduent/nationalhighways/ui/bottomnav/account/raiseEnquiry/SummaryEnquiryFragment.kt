@@ -39,7 +39,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         FragmentSummaryEnquiryBinding.inflate(inflater, container, false)
 
     override fun init() {
-        setEnquiryContentDescription()
         if (arguments?.containsKey(Constants.Edit_REQUEST_KEY) == true) {
             editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         }
@@ -102,25 +101,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 getBundleData()
             )
         }
-        setEnquiryContentDescription()
     }
 
-    private fun setEnquiryContentDescription() {
-        binding.cvCategory.contentDescription = getString(R.string.category) + ", " + viewModel.enquiryModel.value!!.category.value
-        binding.layoutCategory.contentDescription = getString(R.string.category) + ", " + viewModel.enquiryModel.value!!.category.value
-        binding.cvSubCategory.contentDescription = getString(R.string.sub_category) + ", " + viewModel.enquiryModel.value!!.subCategory.value
-        binding.layoutSubCategory.contentDescription = getString(R.string.sub_category) + ", " + viewModel.enquiryModel.value!!.subCategory.value
-        binding.nameCv.contentDescription = getString(R.string.name) + ", " + viewModel.enquiryModel.value!!.firstname + " " + viewModel.enquiryModel.value!!.lastname
-        binding.layoutName.contentDescription = getString(R.string.name) + ", " + viewModel.enquiryModel.value!!.firstname + " " + viewModel.enquiryModel.value!!.lastname
-        binding.emailCv.contentDescription = getString(R.string.email_address) + ", " + viewModel.enquiryModel.value!!.email
-        binding.layoutEmail.contentDescription = getString(R.string.email_address) + ", " + viewModel.enquiryModel.value!!.email
-        val builder =  Utils.accessibilityForNumbers(
-            viewModel.enquiryModel.value?.countryCode.toString()+viewModel.enquiryModel.value?.mobileNumber.toString()
-        )
-
-        binding.mobileCv.contentDescription = getString(R.string.mobile_number) + ", " +builder.toString()
-        binding.layoutMobileNumber.contentDescription = getString(R.string.mobile_number) + ", " + builder.toString()
-    }
 
     private fun saveData() {
         viewModel.enquiryModel.value?.firstname = viewModel.edit_enquiryModel.value?.firstname ?: ""
@@ -144,12 +126,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         viewModel.enquiryModel.value?.apiFileName =
             viewModel.edit_enquiryModel.value?.apiFileName ?: ""
 
-        binding.mobileDataTv.setText(viewModel.enquiryModel.value!!.mobileNumber)
-
-        val builder =  Utils.accessibilityForNumbers(
-            viewModel.enquiryModel.value?.countryCode.toString()+viewModel.enquiryModel.value?.mobileNumber.toString()
-        )
-        binding.mobileCv.contentDescription = getString(R.string.mobile_number) + " " + builder.toString()
+        binding.mobileDataTv.setText(viewModel.enquiryModel.value?.mobileNumber)
 
     }
 
@@ -162,7 +139,6 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     }
 
     override fun initCtrl() {
-        setEnquiryContentDescription()
     }
 
     override fun observer() {

@@ -95,8 +95,6 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 totalAmountOfUnsettledTrips ?: 0
             )
 
-            binding.paymentAmountLl.contentDescription=resources.getString(R.string.payment_Amount)+"."+binding.inputTotalAmount.text.toString()
-
             binding.titleText2.text = Html.fromHtml(
                 getString(R.string.str_pay_for_crossing_point2,
                     String.format("%.2f", data?.chargingRate?.toDouble()),
@@ -224,7 +222,5 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 total.toDouble()
             )
         }
-
-        binding.paymentAmountLl.contentDescription=resources.getString(R.string.payment_Amount)+"."+binding.inputTotalAmount.text.toString()
     }
 }

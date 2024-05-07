@@ -51,7 +51,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
         }
 
         setData()
-        setContentDescriptionForBullets()
         setClickListeners()
         /*  val i = Intent(Intent.ACTION_VIEW)
           i.data = Uri.parse(url)
@@ -65,14 +64,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     }
 
-    private fun setContentDescriptionForBullets() {
-        binding.layoutVehicleRegistrationCv.contentDescription=binding.txtVehicleRegistration.text.toString()+"."+binding.vehicleRegisration.text.toString()
-        binding.recentCrossingsCv.contentDescription=binding.txtRecentCrossings.text.toString()+"."+binding.recentCrossings.text.toString()
-        binding.creditForAdditionalCrossings.contentDescription=binding.txtCreditAdditionalCrossings.text.toString()+"."+binding.creditAdditionalCrossings.text.toString()
-        binding.labelPaymentAmount.contentDescription=binding.txtPaymentAmount.text.toString()+"."+binding.paymentAmount.text.toString()
-        binding.labelEmail.contentDescription=binding.txtEmail.text.toString()+"."+binding.email.text.toString()
-        binding.labelMobileNumber.contentDescription=binding.txtMobileNumber.text.toString()+"."+binding.mobileNumber.text.toString()
-    }
 
     private fun setData() {
         binding.apply {

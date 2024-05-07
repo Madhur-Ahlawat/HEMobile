@@ -286,7 +286,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         if (navFlowCall == Constants.EDIT_SUMMARY) {
             binding.checkBoxTerms.isChecked = true
         }
-        binding.cardLayout.contentDescription = binding.txtVehicleRegistrationPlate.text.toString() + binding.vehiclePlateNumber.text.toString()
 
     }
 
@@ -451,7 +450,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         }
 
         checkValidation()
-        binding.cardLayout.contentDescription = binding.txtVehicleRegistrationPlate.text.toString() + binding.vehiclePlateNumber.text.toString()
 
     }
 

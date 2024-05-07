@@ -72,22 +72,9 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
         }
 
-        setContentDescriptionForTexts()
-
     }
 
-    private fun setContentDescriptionForTexts() {
-        binding.vehicleRegNumLl.contentDescription =
-            binding.vehicleRegNum.text.toString() + "." + binding.regNum.text.toString()
-        binding.typeOfVehLl.contentDescription =
-            binding.typeOfVeh.text.toString() + "." + binding.typeOfVehicle.text.toString()
-        binding.makeLl.contentDescription =
-            binding.strMake.text.toString() + "." + binding.vehicleMake.text.toString()
-        binding.modelLl.contentDescription =
-            binding.strModel.text.toString() + "." + binding.vehicleModel.text.toString()
-        binding.colorLl.contentDescription =
-            binding.strColor.text.toString() + "." + binding.vehicleColor.text.toString()
-    }
+
 
     override fun initCtrl() {
         binding.confirmBtn.setOnClickListener(this@BusinessVehicleDetailFragment)

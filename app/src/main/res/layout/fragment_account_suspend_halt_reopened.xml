@@ -56,6 +56,7 @@
                 style="@style/cardView_style"
                 android:layout_marginLeft="@dimen/margin_2dp"
                 android:layout_marginTop="@dimen/margin_15dp"
+                android:focusable="true"
                 android:layout_marginRight="@dimen/margin_2dp"
                 android:layout_marginBottom="5dp"
                 android:importantForAccessibility="yes"
@@ -65,7 +66,6 @@
                     android:id="@+id/payment_reference_number_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
                     android:padding="@dimen/margin_15dp">
 
 
@@ -73,7 +73,6 @@
                         android:id="@+id/payment_ref_tv"
                         style="@style/SemiBoldTextBlack"
                         android:layout_width="@dimen/margin_0dp"
-                        android:importantForAccessibility="no"
                         android:text="@string/str_payment_reference_number"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -82,7 +81,6 @@
                         android:id="@+id/reference_number_tv"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
-                        android:importantForAccessibility="no"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/payment_ref_tv" />
 
