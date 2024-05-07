@@ -10,14 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.util.Util
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
@@ -39,7 +36,6 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsInnerAdapterDashboard
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.DateUtils.compareDates
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -52,8 +48,6 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -64,10 +58,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
         hashMapOf()
     private var transactionsAdapter: TransactionsInnerAdapterDashboard? = null
-    val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
-    private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
-    private var ProfileDetailModel: ProfileDetailModel? = null
     private var loader: LoaderDialog? = null
     private val countPerPage = 20
     private var startIndex = 1
@@ -153,13 +144,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         observe(dashboardViewModel.logout, ::handleLogout)
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
         observe(dashboardViewModel.alertLivData, ::handleAlertResponse)
-        observe(dashboardViewModel.lrdsVal, ::handleLrdsResposne)
-        dashboardViewModel.accountType.observe(this@DashboardFragmentNew, Observer { it ->
+        observe(dashboardViewModel.lrdsVal, ::handleLrdsResponse)
+        dashboardViewModel.accountType.observe(this@DashboardFragmentNew) {
             handleAccountType(it)
-        })
+        }
     }
 
-    private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
+    private fun handleLrdsResponse(resource: Resource<LRDSResponse?>?) {
         when (resource) {
             is Resource.Success -> {
                 if (resource.data?.srApprovalStatus?.uppercase().equals("APPROVED")) {
@@ -179,11 +170,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
-                if (resource.data?.messageList?.isNullOrEmpty() == false) {
-//                    setPriorityNotifications()
-//                    setNotificationAlert(resource.data?.messageList)
-
-                }
             }
 
             is Resource.DataError -> {
@@ -199,11 +185,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    private fun handleAccountType(ProfileDetailModel: ProfileDetailModel) {
+    private fun handleAccountType(profileDetailModel: ProfileDetailModel) {
         HomeActivityMain.accountDetailsData?.personalInformation =
-            ProfileDetailModel.personalInformation
-        HomeActivityMain.accountDetailsData = ProfileDetailModel
-        ProfileDetailModel.apply {
+            profileDetailModel.personalInformation
+        HomeActivityMain.accountDetailsData = profileDetailModel
+        profileDetailModel.apply {
             if (accountInformation?.accountType.equals(
                     "BUSINESS",
                     true
@@ -221,7 +207,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage) {
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
             bundle.putParcelable(
                 Constants.PERSONALDATA,
@@ -297,76 +283,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    fun getDatesList(transactionsList: MutableList<TransactionData>) {
-        var tempDate: String? = null
-
-        var limitedList = 2
-        if (ProfileDetailModel?.accountInformation?.accSubType.equals(Constants.PAYG)) {
-            limitedList = 5
-        }
-        var transactionSize = transactionsList.size
-        if (transactionsList.size > limitedList) {
-            transactionSize = limitedList
-        }
-        for (i in 0 until transactionSize) {
-            val model = transactionsList.get(i)
-            if (tempDate == null) {
-                tempDate = model.transactionDate
-                paymentHistoryDatesList.clear()
-                paymentHistoryDatesList.add(model.transactionDate!!)
-
-            } else {
-                if (!dfDate.parse(tempDate).equals(dfDate.parse(model.transactionDate))) {
-                    paymentHistoryDatesList.add(model.transactionDate!!)
-                    tempDate = model.transactionDate
-                }
-            }
-            var transactionsListTemp =
-                paymentHistoryHashMap.get(model.transactionDate) ?: mutableListOf()
-            var transactionExistesInTempList = false
-            transactionsListTemp.forEach { it2 ->
-                if (it2.transactionNumber.equals(model.transactionNumber)) {
-                    transactionExistesInTempList = true
-                }
-            }
-            if (transactionExistesInTempList == false) {
-                transactionsListTemp.add(model)
-            }
-            paymentHistoryHashMap.remove(model.transactionDate!!)
-            paymentHistoryHashMap.put(model.transactionDate, transactionsListTemp)
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData?>): MutableList<TransactionData> {
-        var transactionListSorted: MutableList<TransactionData> = mutableListOf()
-        for (transaction in transactions) {
-            if (transactionListSorted.isEmpty() == true) {
-                transactionListSorted.add(transaction!!)
-            } else {
-                if (compareDates(
-                        transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
-                        transaction?.transactionDate + " " + transaction?.exitTime
-                    )
-                ) {
-                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
-
-                } else {
-                    transactionListSorted.add(transaction!!)
-                }
-            }
-        }
-        return transactionListSorted
-    }
-
-    private fun hideNotification() {
-        if (requireActivity() is HomeActivityMain) {
-            HomeActivityMain.dataBinding!!.bottomNavigationView.navigationItems.let { list ->
-                val badgeCountBtn = list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
-                badgeCountBtn.gone()
-            }
-        }
-    }
 
     private fun showPayGUI(data: ProfileDetailModel) {
         HomeActivityMain.accountDetailsData = data
@@ -386,12 +302,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-//            accountNumberRl.contentDescription =
-//                resources.getString(R.string.txt_account_number) +"."+ Utils.accessibilityForNumbers(tvAccountNumberValue.text.toString())
 
-            data.let {
-                it.accountInformation?.let {
-                    it.accountStatus?.let {
+            data.let { itData ->
+                itData.accountInformation?.let { itAccount ->
+                    itAccount.accountStatus?.let {
                         boxCardType.visible()
                         if (data.accountInformation?.paymentTypeInfo.toString().takeLast(4)
                                 .lowercase() == "cash"
@@ -406,24 +320,22 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         }
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
-                        for(cardNumbers in cardNumber.text.toString()){
 
-                        }
                         boxCardType.contentDescription =
-                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"")+" "+ Utils.accessibilityForNumbers(cardNumber.text.toString())
+                            Utils.returnCardText(
+                                data.accountInformation?.paymentTypeInfo ?: ""
+                            ) + " " + Utils.accessibilityForNumbers(cardNumber.text.toString())
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 2
                         )
-//                        binding.accountStatusRl.contentDescription =
-//                            resources.getString(R.string.txt_account_status) +"."+ indicatorAccountStatus.text.toString()
 
                     }
-                    it.type?.let {
+                    itAccount.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
                 }
-                it.personalInformation?.emailAddress?.let { email ->
+                itData.personalInformation?.emailAddress?.let { email ->
                     sessionManager.saveAccountEmailId(email)
                 }
             }
@@ -476,56 +388,42 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
 
-//            accountBalanceRl.contentDescription =
-//                resources.getString(R.string.txt_account_balance) +"."+ tvAvailableBalance.text.toString()
-
-
-
             accountStatusRl.visible()
 
             boxLowBalanceThreshold.visible()
             valueLowBalanceThreshold.text = getString(R.string.str_zero_euro)
-//            boxLowBalanceThreshold.contentDescription =
-//                "" + valueLowBalanceThreshold.text.toString() + "" + resources.getString(R.string.txt_low_threshold_balance)
 
             boxTopupAmount.visible()
             valueTopupAmount.text = getString(R.string.str_zero_euro)
-//            boxTopupAmount.contentDescription =
-//                "" + valueTopupAmount.text.toString() +"."+ resources.getString(R.string.txt_topup_amount)
 
             boxTopupMethod.visible()
             valueAutopay.text = getString(R.string.exempt)
-//            boxTopupMethod.contentDescription =
-//                "" + valueAutopay.text.toString() +"."+ resources.getString(R.string.txt_topup_method)
 
             buttonTopup.gone()
             setGuideLinePercent(0.25F, R.dimen.margin_15dp)
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-//            accountNumberRl.contentDescription =
-//                resources.getString(R.string.txt_account_number) +"."+ Utils.accessibilityForNumbers(tvAccountNumberValue.text.toString())
 
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
-            boxCardType.contentDescription = Utils.accessibilityForNumbers(cardNumber.text.toString())
+            boxCardType.contentDescription =
+                Utils.accessibilityForNumbers(cardNumber.text.toString())
             cardNumber.setTypeface(null, Typeface.BOLD)
-            data.let {
-                it.accountInformation?.let {
-                    it.accountStatus?.let {
+            data.let { itData ->
+                itData.accountInformation?.let { itAccount ->
+                    itAccount.accountStatus?.let {
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 3
                         )
                     }
 
-//                    binding.accountStatusRl.contentDescription =
-//                        resources.getString(R.string.txt_account_status) +"."+ indicatorAccountStatus.text.toString()
-                    it.type?.let {
+                    itAccount.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
                 }
-                it.personalInformation?.emailAddress?.let { email ->
+                itData.personalInformation?.emailAddress?.let { email ->
                     sessionManager.saveAccountEmailId(email)
                 }
             }
@@ -547,19 +445,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
 
-//            accountBalanceRl.contentDescription =
-//                resources.getString(R.string.txt_account_balance) +"."+ tvAvailableBalance.text.toString()
 
             accountStatusRl.visible()
 
             boxTopupAmount.visible()
             valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
-//            boxTopupAmount.contentDescription =
-//                "" + valueTopupAmount.text.toString() +"."+ resources.getString(R.string.txt_topup_amount)
             boxLowBalanceThreshold.visible()
             valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
-//            boxLowBalanceThreshold.contentDescription =
-//                "" + valueLowBalanceThreshold.text.toString() +"."+ resources.getString(R.string.txt_low_threshold_balance)
 
             boxTopupMethod.visible()
 
@@ -598,13 +490,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-//            accountNumberRl.contentDescription =
-//                resources.getString(R.string.txt_account_number) +"."+Utils.accessibilityForNumbers( tvAccountNumberValue.text.toString())
 
             val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
-            data.let {
-                it.accountInformation?.let {
-                    it.accountStatus?.let {
+            data.let { itData ->
+                itData.accountInformation?.let { itAccount ->
+                    itAccount.accountStatus?.let {
                         boxCardType.visible()
                         if (data.accountInformation?.paymentTypeInfo.toString().takeLast(4)
                                 .lowercase() == "cash"
@@ -620,25 +510,23 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
                         boxCardType.contentDescription =
-                            Utils.returnCardText(data.accountInformation?.paymentTypeInfo?:"") +" "+ Utils.accessibilityForNumbers(cardNumber.text.toString())
+                            Utils.returnCardText(
+                                data.accountInformation?.paymentTypeInfo ?: ""
+                            ) + " " + Utils.accessibilityForNumbers(cardNumber.text.toString())
 
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 1
                         )
-//                        binding.accountStatusRl.contentDescription =
-//                            resources.getString(R.string.txt_account_status) +"."+ indicatorAccountStatus.text.toString()
                     }
 
                     valueAutopay.text = resources.getString(R.string.str_auto_pay)
-//                    boxTopupMethod.contentDescription =
-//                        "" + valueAutopay.text.toString() +"."+ resources.getString(R.string.txt_topup_method)
 
-                    it.type?.let {
+                    itAccount.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
                 }
-                it.personalInformation?.emailAddress?.let { email ->
+                itData.personalInformation?.emailAddress?.let { email ->
                     sessionManager.saveAccountEmailId(email)
                 }
             }

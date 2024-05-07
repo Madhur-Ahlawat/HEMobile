@@ -87,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:importantForAccessibility="yes"
+                android:focusable="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -94,15 +95,14 @@
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/circle_5dp" />
+                    android:src="@drawable/circle_5dp"
+                    android:contentDescription="@string/accessibility_bullet"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_pay_for_crossing_point1"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />

@@ -78,7 +78,6 @@
                     android:paddingRight="@dimen/margin_15dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/modelLl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_50dp"

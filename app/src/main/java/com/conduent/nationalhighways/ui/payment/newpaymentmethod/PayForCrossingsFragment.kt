@@ -4,11 +4,9 @@ import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
@@ -19,7 +17,6 @@ import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
@@ -36,7 +33,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     private var crossingsList: MutableList<String> = mutableListOf()
     private var totalAmountOfAdditionalCrossings: Double? = 0.00
     private var loader: LoaderDialog? = null
-    private var unsettled_trip_api = 0
+    private var unsettledTripApi = 0
     private var data: CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentPayForCrossingsBinding.inflate(inflater, container, false)
@@ -65,7 +62,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             }
         }
         data = navData as CrossingDetailsModelsResponse?
-        unsettled_trip_api = data?.unSettledTrips ?: 0
+        unsettledTripApi = data?.unSettledTrips ?: 0
         if (!edit_summary) {
             data?.unsettledTripChange = data?.unSettledTrips ?: 0
         }
@@ -80,9 +77,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 totalAmountOfUnsettledTrips = charge * unSettledTrips
             }
 
-            if (additionalCrossingsCharge != null) {
-                totalAmountOfAdditionalCrossings = additionalCrossingsCharge
-            }
+            totalAmountOfAdditionalCrossings = additionalCrossingsCharge
             crossingsList.clear()
             for (i in 1..additionalCrossings.plus(unSettledTrips!!)) {
                 crossingsList.add(i.toString())
@@ -90,10 +85,10 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             inputCountry.dataSet.clear()
             inputCountry.dataSet.addAll(crossingsList)
             inputCountry.setSelectedValue(unSettledTrips.toString())
-            inputTotalAmount.text = getString(R.string.currency_symbol) + String.format(
+            inputTotalAmount.text = getString(R.string.price,""+ String.format(
                 "%.2f",
                 totalAmountOfUnsettledTrips ?: 0
-            )
+            ))
 
             binding.titleText2.text = Html.fromHtml(
                 getString(R.string.str_pay_for_crossing_point2,
@@ -118,11 +113,15 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     }
 
     private fun setContentDescriptionForBullets() {
-        binding.point1Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.str_pay_for_crossing_point1)
-        binding.point2Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+binding.titleText2.text.toString()
-        binding.point3Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.str_pay_for_crossing_point3)
-        binding.point4Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.str_pay_for_crossing_point4)
-        binding.point5Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.str_pay_for_crossing_point5)
+//        binding.point1Ll.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+resources.getString(R.string.str_pay_for_crossing_point1)
+        binding.point2Ll.contentDescription =
+            resources.getString(R.string.accessibility_bullet) + "." + binding.titleText2.text.toString()
+        binding.point3Ll.contentDescription =
+            resources.getString(R.string.accessibility_bullet) + "." + resources.getString(R.string.str_pay_for_crossing_point3)
+        binding.point4Ll.contentDescription =
+            resources.getString(R.string.accessibility_bullet) + "." + resources.getString(R.string.str_pay_for_crossing_point4)
+        binding.point5Ll.contentDescription =
+            resources.getString(R.string.accessibility_bullet) + "." + resources.getString(R.string.str_pay_for_crossing_point5)
     }
 
 
@@ -217,10 +216,10 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         val charge = data?.chargingRate?.toDouble()
         if (charge != null) {
             val total = (data?.unsettledTripChange ?: 0) * charge
-            binding.inputTotalAmount.text = getString(R.string.currency_symbol) + String.format(
+            binding.inputTotalAmount.text = getString(R.string.price,""+ String.format(
                 "%.2f",
-                total.toDouble()
-            )
+                total
+            ))
         }
     }
 }

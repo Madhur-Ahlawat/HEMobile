@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,14 +81,14 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             }
             if (Utils.isStringOnlyInt(NewCreateAccountRequestModel.mobileNumber ?: "")) {
                 labelMobileNumber.visible()
-                mobileNumber.text = "" + data?.countryCode + " " + NewCreateAccountRequestModel.mobileNumber
+                mobileNumber.text = resources.getString(R.string.concatenate_two_strings_with_space,""+ data?.countryCode , NewCreateAccountRequestModel.mobileNumber)
             } else {
                 labelMobileNumber.gone()
             }
 
             if (!NewCreateAccountRequestModel.emailAddress.isNullOrEmpty()) {
                 labelEmail.visible()
-                email.text = "" + NewCreateAccountRequestModel.emailAddress
+                email.text = NewCreateAccountRequestModel.emailAddress
             } else {
                 labelEmail.gone()
             }
@@ -125,10 +124,10 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             for (i in 0..(totalAdditional ?: 0)) {
                 crossingsList!!.add(i.toString())
             }
-            paymentAmount.text = getString(R.string.currency_symbol) + String.format(
+            paymentAmount.text = getString(R.string.price,""+ String.format(
                 "%.2f",
                 total
-            )
+            ))
 
 
         }
@@ -144,8 +143,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             editMobileNumber.setOnClickListener(this@PaymentSummaryFragment)
         }
     }
-
-    fun getRequiredText(text: String) = text.substringAfter(' ')
 
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)

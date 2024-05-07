@@ -11,7 +11,6 @@ import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,7 +26,6 @@ import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
-import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
@@ -46,9 +44,8 @@ import javax.inject.Inject
 class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickListener,
     OnLogOutListener, BackPressListener {
 
-    private val raise_viewModel: RaiseNewEnquiryViewModel by viewModels()
+    private val raiseViewmodel: RaiseNewEnquiryViewModel by viewModels()
     private val logOutViewModel: LogoutViewModel by viewModels()
-    private val dashboardViewModel: DashboardViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
 
@@ -132,12 +129,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 paymentManagement.gone()
             }
 
-            var firstNameChar: Char = ' '
-            var secondNameChar: Char = ' '
-            firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
-            secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
+           val firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
+           val secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
 
-            profilePic.text = "" + firstNameChar.toString() + secondNameChar.toString()
+            profilePic.text = resources.getString(R.string.concatenate_two_strings, firstNameChar.toString() ,secondNameChar.toString())
             profilePic.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
             profilePic.isScreenReaderFocusable = false
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
@@ -156,9 +151,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 iconArrow6.alpha = 1f
             }
             valueName.text =
-                Utils.capitalizeString(sessionManager.fetchFirstName()) + " " + Utils.capitalizeString(
+                resources.getString(R.string.concatenate_two_strings_with_space,
+                Utils.capitalizeString(sessionManager.fetchFirstName()) , Utils.capitalizeString(
                     sessionManager.fetchLastName()
-                )
+                ))
 
             if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).focusToolBarHome()
@@ -167,7 +163,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
             HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
             bundle.putParcelable(
                 Constants.PERSONALDATA,
@@ -282,11 +278,11 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
             R.id.contact_us -> {
 
-                raise_viewModel.enquiryModel.value = EnquiryModel()
-                raise_viewModel.edit_enquiryModel.value = EnquiryModel()
+                raiseViewmodel.enquiryModel.value = EnquiryModel()
+                raiseViewmodel.edit_enquiryModel.value = EnquiryModel()
 
 
-                val bundle: Bundle = Bundle()
+                val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_FROM, Constants.ACCOUNT_CONTACT_US)
                 findNavController().navigate(R.id.caseEnquiryHistoryListFragment, bundle)
             }

@@ -35,8 +35,8 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
     var requiredNoAdditionalCrossings: Boolean = false
-    var viewCreated: Boolean = false
-    var haveRecentCrossings: Boolean = false
+    private var viewCreated: Boolean = false
+    private var haveRecentCrossings: Boolean = false
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -104,29 +104,26 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                     additionalCrossingsAmount = charge * additionalCrossingsCount
                 }
                 val total = recentCrossingsAmount + additionalCrossingsAmount
-                recentCrossing.text = getString(R.string.currency_symbol) + String.format(
+                recentCrossing.text = getString(R.string.price, ""+String.format(
                     "%.2f",
                     recentCrossingsAmount
-                )
-                paymentCrossing.text = getString(R.string.currency_symbol) + String.format(
+                ))
+                paymentCrossing.text = getString(R.string.price,""+ String.format(
                     "%.2f",
                     additionalCrossingsAmount
-                )
-                totalAmount.text = getString(R.string.currency_symbol) + String.format(
+                ))
+                totalAmount.text = getString(R.string.price,""+String.format(
                     "%.2f",
                     total
-                )
+                ))
                 data?.totalAmount = total
             }
-            setContentDescriptionForText()
-
-
 
         }
 
         checkButton()
 
-        binding.numberAdditionalCrossings.editText.addTextChangedListener(GenericTextWatcher(1))
+        binding.numberAdditionalCrossings.editText.addTextChangedListener(GenericTextWatcher())
         binding.numberAdditionalCrossings.editText.contentDescription = getString(R.string.editing_future_crossings,binding.numberAdditionalCrossings.editText.text.toString())
     }
 
@@ -139,7 +136,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
             resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.str_additional_crossing_point3)
     }
 
-    inner class GenericTextWatcher(private val index: Int) : TextWatcher {
+    inner class GenericTextWatcher : TextWatcher {
         override fun beforeTextChanged(
             charSequence: CharSequence?,
             start: Int,
@@ -177,28 +174,26 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                         val total = recentCrossingsAmount + additionalCrossingsAmount
 
                         binding.recentCrossing.text =
-                            getString(R.string.currency_symbol) + String.format(
+                            getString(R.string.price,""+ String.format(
                                 "%.2f",
                                 recentCrossingsAmount
-                            )
+                            ))
                         data?.totalAmount = total
                         data?.additionalCharge = additionalCrossingsAmount
 
                         binding.paymentCrossing.text =
-                            getString(R.string.currency_symbol) + String.format(
+                            getString(R.string.price,""+ String.format(
                                 "%.2f",
                                 data?.additionalCharge
-                            )
+                            ))
 
                         binding.totalAmount.text =
-                            getString(R.string.currency_symbol) + String.format(
+                            getString(R.string.price,""+ String.format(
                                 "%.2f",
                                 data?.totalAmount
-                            )
+                            ))
 
                     }
-
-                    setContentDescriptionForText()
                     binding.numberAdditionalCrossings.removeError()
                     binding.numberAdditionalCrossings.editText.contentDescription = getString(R.string.editing_future_crossings,binding.numberAdditionalCrossings.editText.text.toString())
                     true
@@ -220,12 +215,6 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         override fun afterTextChanged(editable: Editable?) {
 
         }
-    }
-
-    private fun setContentDescriptionForText() {
-        binding.paymentAmountFutureLl.contentDescription=resources.getString(R.string.str_payment_amount_for_additional_crossings)+"."+binding.paymentCrossing.text.toString()
-        binding.paymentAmountRecentLl.contentDescription=resources.getString(R.string.str_payment_amount_for_recent_crossings)+"."+binding.recentCrossing.text.toString()
-        binding.paymentAmountLl.contentDescription=resources.getString(R.string.str_total_amount)+"."+binding.totalAmount.text.toString()
     }
 
     private fun checkButton() {
@@ -316,7 +305,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                 )
             }
 
-        } catch (e: Exception) {
+        } catch (_: Exception) {
 
         }
     }
