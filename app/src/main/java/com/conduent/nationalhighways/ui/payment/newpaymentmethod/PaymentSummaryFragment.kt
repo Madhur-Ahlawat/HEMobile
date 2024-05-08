@@ -70,10 +70,11 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             val charge = data?.chargingRate?.toDouble()
             val unSettledTrips = data?.unsettledTripChange
             vehicleRegisration.text = data?.plateNo
-            recentCrossings.text =
-                unSettledTrips.toString()
-            creditAdditionalCrossings.text =
-                additionalCrossingsCount.toString()
+            vehicleRegisration.contentDescription = Utils.accessibilityForNumbers(data?.plateNo?:"")
+            recentCrossings.text = unSettledTrips.toString()
+            recentCrossings.contentDescription = Utils.accessibilityForNumbers(unSettledTrips.toString())
+            creditAdditionalCrossings.text = additionalCrossingsCount.toString()
+            creditAdditionalCrossings.contentDescription = Utils.accessibilityForNumbers(additionalCrossingsCount.toString())
             if (additionalCrossingsCount == 0) {
                 creditForAdditionalCrossings.gone()
             } else {
@@ -86,6 +87,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                 labelMobileNumber.gone()
             }
 
+            mobileNumber.contentDescription = Utils.accessibilityForNumbers(mobileNumber.text.toString())
             if (!NewCreateAccountRequestModel.emailAddress.isNullOrEmpty()) {
                 labelEmail.visible()
                 email.text = NewCreateAccountRequestModel.emailAddress

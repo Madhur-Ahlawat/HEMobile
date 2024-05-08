@@ -72,6 +72,8 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
         }
 
+        binding.regNum.contentDescription=Utils.accessibilityForNumbers(binding.regNum.text.toString())
+
     }
 
 

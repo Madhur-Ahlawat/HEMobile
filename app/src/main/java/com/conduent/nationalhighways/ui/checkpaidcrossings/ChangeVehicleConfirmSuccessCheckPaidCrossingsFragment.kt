@@ -61,6 +61,7 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment :
     private fun setData() {
         binding.apply {
             vehicleRegisration.text = data?.plateNo?.uppercase(Locale.getDefault())
+            vehicleRegisration.contentDescription = Utils.accessibilityForNumbers(data?.plateNo?.uppercase(Locale.getDefault())?:"")
             creditRemaining.text =
                 data?.unusedTrip.toString()
             creditWillExpireOn.text =

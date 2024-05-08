@@ -302,6 +302,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            tvAccountNumberValue.contentDescription = Utils.accessibilityForNumbers(data.personalInformation?.accountNumber?:"")
 
             data.let { itData ->
                 itData.accountInformation?.let { itAccount ->
@@ -404,6 +405,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            tvAccountNumberValue.contentDescription = Utils.accessibilityForNumbers(data.personalInformation?.accountNumber?:"")
 
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
@@ -490,6 +492,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            tvAccountNumberValue.contentDescription = Utils.accessibilityForNumbers(data.personalInformation?.accountNumber?:"")
 
             val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
             data.let { itData ->

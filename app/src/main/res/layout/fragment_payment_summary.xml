@@ -43,15 +43,13 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutVehicleRegistration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
                         android:importantForAccessibility="yes"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editRegistrationNumber"
@@ -122,15 +120,13 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardRecentCrossings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
                         android:importantForAccessibility="yes"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editRecentCrossings"
@@ -190,15 +186,13 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
                         android:importantForAccessibility="yes"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editCreditForAdditionalCrossings"
@@ -264,7 +258,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:importantForAccessibility="yes"
+                    android:importantForAccessibility="no"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
@@ -307,15 +301,13 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
                         android:importantForAccessibility="yes"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editEmail"
@@ -378,15 +370,13 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
                         android:importantForAccessibility="yes"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editMobileNumber"

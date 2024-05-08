@@ -58,16 +58,14 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutVehicleRegistration"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
-                        android:padding="@dimen/margin_15dp">
+                        style="@style/account_summary_layer_cl_style">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_50dp"
                             android:focusable="true"
+                            android:padding="@dimen/margin_5dp"
                             android:importantForAccessibility="yes"
                             android:orientation="vertical"
                             app:layout_constraintStart_toStartOf="parent"

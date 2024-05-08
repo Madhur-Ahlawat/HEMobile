@@ -29,6 +29,7 @@ import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
@@ -72,6 +73,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         data.let {
             val crossings = it?.unusedTrip?.toInt()
             binding.fullName.text = it?.referenceNumber
+            binding.fullName.contentDescription = Utils.accessibilityForNumbers(it?.referenceNumber?:"")
             if (crossings == 1) {
                 binding.address.text =
                     resources.getString(R.string.str_crossing_data, crossings.toString())
@@ -85,6 +87,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                 )
             }
             binding.valueVehicleRegistrationNumber.text = it?.plateNumberToTransfer
+            binding.valueVehicleRegistrationNumber.contentDescription = Utils.accessibilityForNumbers(it?.plateNumberToTransfer?:"")
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH)
             val date = LocalDateTime.parse(it?.expirationDate, formatter)

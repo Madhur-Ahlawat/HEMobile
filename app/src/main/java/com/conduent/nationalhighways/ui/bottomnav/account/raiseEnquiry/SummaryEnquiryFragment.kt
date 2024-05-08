@@ -126,8 +126,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         viewModel.enquiryModel.value?.apiFileName =
             viewModel.edit_enquiryModel.value?.apiFileName ?: ""
 
-        binding.mobileDataTv.setText(viewModel.enquiryModel.value?.mobileNumber)
-
+        binding.mobileDataTv.text = viewModel.enquiryModel.value?.mobileNumber
+        binding.mobileDataTv.contentDescription = Utils.accessibilityForNumbers(viewModel.enquiryModel.value?.mobileNumber?:"")
     }
 
     private fun getBundleData(): Bundle {
