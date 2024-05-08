@@ -97,7 +97,6 @@
                             android:id="@+id/category_tv"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
-                            android:importantForAccessibility="no"
                             android:text="@string/reference_number"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -106,7 +105,6 @@
                             android:id="@+id/reference_number_tv"
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/category_tv" />
 

@@ -28,18 +28,13 @@
                 android:layout_marginHorizontal="@dimen/margin_2dp"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/tick_blue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_tick_blue" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_14_67dp"
+                    android:drawableTop="@drawable/ic_tick_blue"
+                    android:drawablePadding="@dimen/margin_14_67dp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
                     android:text="@string/credit_transferred"
@@ -51,27 +46,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_1dp"
-                    android:importantForAccessibility="yes"
                     android:layout_marginTop="@dimen/margin_36dp"
                     android:layout_marginEnd="@dimen/margin_1dp"
                     android:layout_marginBottom="@dimen/margin_1dp"
                     android:elevation="3dp"
+                    android:importantForAccessibility="no"
                     app:cardCornerRadius="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutVehicleRegistration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/margin_15dp"
-                        android:importantForAccessibility="no"
-                        >
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_15dp">
 
                         <TextView
                             android:id="@+id/txtVehicleRegistration"
                             style="@style/MediumTextBlack"
                             android:text="@string/vehicle_registration_number_plate"
                             android:textSize="15sp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,7 +73,6 @@
                             android:id="@+id/vehicleRegisration"
                             style="@style/RegularTextBlack"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration"
                             tools:text="@string/app_name" />
@@ -95,17 +88,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_1dp"
                     android:layout_marginTop="@dimen/margin_16_34dp"
-                    android:importantForAccessibility="yes"
                     android:layout_marginEnd="@dimen/margin_1dp"
                     android:layout_marginBottom="@dimen/margin_1dp"
                     android:elevation="3dp"
+                    android:importantForAccessibility="no"
                     app:cardCornerRadius="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cardRecentCrossings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
+                        android:importantForAccessibility="yes"
+                        android:focusable="true"
                         android:padding="@dimen/margin_15dp">
 
                         <TextView
@@ -113,7 +107,6 @@
                             style="@style/MediumTextBlack"
                             android:text="@string/credit_remaining"
                             android:textSize="15sp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -121,7 +114,6 @@
                             android:id="@+id/creditRemaining"
                             style="@style/RegularTextBlack"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtCreditRemaining"
                             tools:text="@string/app_name" />
@@ -137,17 +129,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_1dp"
-                    android:importantForAccessibility="yes"
                     android:layout_marginTop="@dimen/margin_16_34dp"
                     android:layout_marginEnd="@dimen/margin_1dp"
                     android:layout_marginBottom="@dimen/margin_1dp"
                     android:elevation="3dp"
+                    android:importantForAccessibility="no"
                     app:cardCornerRadius="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
+                        android:importantForAccessibility="yes"
+                        android:focusable="true"
                         android:padding="@dimen/margin_15dp">
 
                         <TextView
@@ -155,7 +148,6 @@
                             style="@style/MediumTextBlack"
                             android:text="@string/expiry_date"
                             android:textSize="15sp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -165,7 +157,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:importantForAccessibility="no"
                             android:gravity="start|center"
                             app:layout_constraintStart_toStartOf="@id/txtCreditWillExpireOn"
                             app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn"

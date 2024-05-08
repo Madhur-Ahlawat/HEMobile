@@ -14,8 +14,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:importantForAccessibility="yes"
-                android:screenReaderFocusable="true"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
@@ -26,7 +24,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/checkicon"
-                    android:importantForAccessibility="no"
+                    android:contentDescription="@string/checked"
                     />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -34,7 +32,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:importantForAccessibility="no"
                     android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
                     android:text="@string/str_password_reset_successfull"
@@ -71,7 +68,7 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_bold"
-                android:gravity="start"
+                android:gravity="center"
                 android:text="@string/vehicle_deleted"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -99,6 +96,7 @@
                         android:layout_marginStart="@dimen/_8sdp"
                         android:text="@string/vehicle_registration_number_plate"
                         android:textSize="14sp"
+                        android:gravity="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

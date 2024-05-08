@@ -9,10 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -28,7 +26,6 @@ import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
-import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
@@ -47,15 +44,13 @@ import javax.inject.Inject
 class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickListener,
     OnLogOutListener, BackPressListener {
 
-    private val raise_viewModel: RaiseNewEnquiryViewModel by viewModels()
+    private val raiseViewmodel: RaiseNewEnquiryViewModel by viewModels()
     private val logOutViewModel: LogoutViewModel by viewModels()
-    private val dashboardViewModel: DashboardViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
-    private var title: TextView? = null
 
 
     override fun getFragmentBinding(
@@ -110,7 +105,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
             navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY, "").toString()
         }
-        title = requireActivity().findViewById(R.id.title_txt)
         binding.run {
             if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.EXEMPT_ACCOUNT)) {
                 paymentManagement.gone()
@@ -135,12 +129,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 paymentManagement.gone()
             }
 
-            var firstNameChar: Char = ' '
-            var secondNameChar: Char = ' '
-            firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
-            secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
+           val firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
+           val secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
 
-            profilePic.text = "" + firstNameChar.toString() + secondNameChar.toString()
+            profilePic.text = resources.getString(R.string.concatenate_two_strings, firstNameChar.toString() ,secondNameChar.toString())
             profilePic.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
             profilePic.isScreenReaderFocusable = false
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
@@ -159,9 +151,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 iconArrow6.alpha = 1f
             }
             valueName.text =
-                Utils.capitalizeString(sessionManager.fetchFirstName()) + " " + Utils.capitalizeString(
+                resources.getString(R.string.concatenate_two_strings_with_space,
+                Utils.capitalizeString(sessionManager.fetchFirstName()) , Utils.capitalizeString(
                     sessionManager.fetchLastName()
-                )
+                ))
 
             if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).focusToolBarHome()
@@ -170,7 +163,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
             HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
             bundle.putParcelable(
                 Constants.PERSONALDATA,
@@ -205,8 +198,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     override fun onResume() {
-        title?.text = getString(R.string.txt_my_account)
         if (requireActivity() is HomeActivityMain) {
+            HomeActivityMain.setTitle(getString(R.string.txt_my_account))
             (requireActivity() as HomeActivityMain).refreshTokenApi()
         }
 
@@ -239,20 +232,23 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         when (v?.id) {
 
             R.id.profile_management -> {
-                title?.text = getString(R.string.profile_management)
+                if (requireActivity() is HomeActivityMain) {
+                    HomeActivityMain.setTitle(getString(R.string.profile_management))
+                }
                 findNavController().navigate(R.id.action_accountFragment_to_profileManagementFragment)
-
             }
 
             R.id.payment_management -> {
-
                 findNavController().navigate(R.id.action_accountFragment_to_paymentMethodFragment)
-                title?.text = getString(R.string.payment_management)
-//                requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
+                if (requireActivity() is HomeActivityMain) {
+                    HomeActivityMain.setTitle(getString(R.string.payment_management))
+                }
             }
 
             R.id.communication_preferences -> {
-                title?.text = getString(R.string.communication_preferences)
+                if (requireActivity() is HomeActivityMain) {
+                    HomeActivityMain.setTitle(getString(R.string.communication_preferences))
+                }
                 val bundle = Bundle()
                 bundle.putString(
                     Constants.NAV_FLOW_KEY,
@@ -265,40 +261,31 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.vehicle_management -> {
-                title?.text = getString(R.string.vehicle_management)
+                if (requireActivity() is HomeActivityMain) {
+                    HomeActivityMain.setTitle(getString(R.string.vehicle_management))
+                }
                 findNavController().navigate(R.id.action_accountFragment_to_vehicleManagementFragment)
-
             }
 
             R.id.close_acount -> {
                 if (!sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
-                    title?.text = getString(R.string.str_close_account)
+                    if (requireActivity() is HomeActivityMain) {
+                        HomeActivityMain.setTitle(getString(R.string.str_close_account))
+                    }
                     findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
                 }
             }
 
             R.id.contact_us -> {
 
-                raise_viewModel.enquiryModel.value = EnquiryModel()
-                raise_viewModel.edit_enquiryModel.value = EnquiryModel()
+                raiseViewmodel.enquiryModel.value = EnquiryModel()
+                raiseViewmodel.edit_enquiryModel.value = EnquiryModel()
 
 
-                val bundle: Bundle = Bundle()
+                val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_FROM, Constants.ACCOUNT_CONTACT_US)
                 findNavController().navigate(R.id.caseEnquiryHistoryListFragment, bundle)
             }
-
-//            R.id.rl_account_statement -> {
-//                requireActivity().startNormalActivity(AccountStatementActivity::class.java)
-//            }
-//            R.id.rl_biometrics->{
-//                requireActivity().openActivityWithDataBack(BiometricActivity::class.java) {
-//                    putInt(
-//                        Constants.FROM_LOGIN_TO_BIOMETRIC,
-//                        Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
-//                    )
-//                }
-//            }
 
             R.id.sign_out -> {
                 if (sessionManager.fetchTouchIdEnabled()) {
@@ -367,13 +354,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         sessionManager.clearAll()
         sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD, false)
         Utils.redirectToSignoutPage(requireActivity())
-
-//        Intent(requireActivity(), LoginActivity::class.java).apply {
-//            putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
-//            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//            startActivity(this)
-//        }
     }
 
     override fun onLogOutClick() {
