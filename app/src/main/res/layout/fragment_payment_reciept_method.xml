@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,10 +12,11 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="none"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:scrollbars="none">
+            app:layout_constraintTop_toTopOf="parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -49,6 +49,7 @@
                     android:id="@+id/ll_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/lable_header2">
@@ -57,9 +58,9 @@
                         android:id="@+id/selectEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
-                        android:minWidth="@dimen/margin_48dp"
                         android:buttonTint="@color/color_E0E0E0"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,6 +101,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ll_email">
+
                     <LinearLayout
                         android:id="@+id/messageLL"
                         android:layout_width="match_parent"
@@ -108,6 +110,7 @@
                         app:layout_constraintStart_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
+
                         <CheckBox
                             android:id="@+id/selectTextMessage"
                             android:layout_width="wrap_content"
