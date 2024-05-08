@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.VehiclelistlayoutBinding
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 
 class VehicleListAdapter(private val context: Context, private val list: MutableList<NewVehicleInfoDetails>,
                          private val vehicleCallback:VehicleListCallBack, private val showRemoveButton: Boolean = true):
@@ -21,9 +22,10 @@ class VehicleListAdapter(private val context: Context, private val list: Mutable
         )
 
     override fun onBindViewHolder(holder: VehicleListViewHolder, position: Int) {
-        val plateNumber = list.get(position).plateNumber
-        val isDblaAvailable = list.get(position).isDblaAvailable
+        val plateNumber = list[position].plateNumber
+        val isDblaAvailable = list[position].isDblaAvailable
         holder.binding.vehiclePlateNumber.text = plateNumber
+        holder.binding.vehiclePlateNumber.contentDescription = Utils.accessibilityForNumbers(plateNumber?:"")
         holder.binding.deleteVehicle.setOnClickListener{
             vehicleCallback.vehicleListCallBack(position,Constants.REMOVE_VEHICLE,plateNumber,isDblaAvailable)
 

@@ -154,18 +154,13 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
         binding.referenceNumberTv.text = transactionId
 
-        binding.layoutPaymentReferenceNumber.contentDescription =
-            resources.getString(R.string.str_payment_reference_number) + "." + Utils.accessibilityForNumbers(
-                transactionId
-            )
-        if (navFlowCall == Constants.PAYMENT_TOP_UP) {
-            Log.e("TAG", "initCtrl: topUpAmount " + topUpAmount.toDouble())
+        binding.referenceNumberTv.contentDescription = Utils.accessibilityForNumbers(transactionId)
 
+        if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             binding.tvAccountSuspended.text = getString(
                 R.string.str_balance_topped_up_with,
                 "£" + formatter.format(topUpAmount.toDouble())
             )
-
             binding.tvYouWillNeedToPay.gone()
             binding.tvYouWillAlsoNeed.gone()
             binding.btnTopUpNow.text = getString(R.string.str_continue)

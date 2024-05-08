@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -40,15 +39,20 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.extn.*
-import com.conduent.nationalhighways.utils.setPersonalInfoAnnouncement
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
-import java.util.*
 import javax.inject.Inject
 
 
@@ -86,14 +90,14 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             observe(viewModel.login, ::handleLoginResponse)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
-            observe(dashboardViewModel.lrdsVal, ::handleLrdsResposne)
+            observe(dashboardViewModel.lrdsVal, ::handleLrdsResponse)
 
         }
 
 
     }
 
-    private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
+    private fun handleLrdsResponse(resource: Resource<LRDSResponse?>?) {
 
         when (resource) {
 
@@ -126,7 +130,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     sessionManager.saveUserName(binding.edtEmail.getText().toString())
                 }
             }
-            is Resource.DataError ->{
+
+            is Resource.DataError -> {
                 hideLoader()
             }
 
@@ -144,10 +149,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             (existingFragment as LoaderDialog).dismiss()
         }
 //        if (existingFragment == null) {
-            // Fragment is not added, add it now
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
-            loader?.show(fragmentManager, Constants.LOADER_DIALOG)
+        // Fragment is not added, add it now
+        loader = LoaderDialog()
+        loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+        loader?.show(fragmentManager, Constants.LOADER_DIALOG)
 //        }
     }
 
@@ -170,7 +175,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                     )
-                    if (from.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+                    if (from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                         intent.putExtra(
                             Constants.NAV_FLOW_FROM,
                             Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
@@ -660,10 +665,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         return {}
     }
 
-    fun getNewToken(api: ApiService, sessionManager: SessionManager) {
+    private fun getNewToken(api: ApiService, sessionManager: SessionManager) {
         sessionManager.fetchRefreshToken()?.let { refresh ->
-            var responseOK = false
-            var tryCount = 0
+            var responseOK: Boolean
             var response: Response<LoginResponse?>? = null
 
             BaseApplication.saveDateinSession(sessionManager)

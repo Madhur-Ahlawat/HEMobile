@@ -54,15 +54,14 @@ class SuspendPaymentMethodAdapter(
                         it
                     )
                 }, Html.FROM_HTML_MODE_COMPACT)
-            holder.binding.tvSelectPaymentMethod.contentDescription =
-                model.cardType + ", " + model?.cardNumber?.let {
+
+            holder.binding.radioButtonPaymentMethod.contentDescription =
+                model.cardType + ", " + "${Utils.accessibilityForNumbers(model?.cardNumber?.let {
                     Utils.setStarmaskcardnumber(
                         context,
                         it
                     )
-                }
-            holder.binding.radioButtonPaymentMethod.contentDescription =
-                model.cardType + ", " + "${Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())}"
+                }.toString())}"
         }
         else {
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
@@ -73,14 +72,14 @@ class SuspendPaymentMethodAdapter(
                             it
                         )
                     })
-            holder.binding.tvSelectPaymentMethod.contentDescription =
-                context.getString(R.string.direct_debit) + ", " + model?.bankAccountNumber?.let {
-                    Utils.maskCardNumber(
-                        it
-                    )
-                }
             holder.binding.radioButtonPaymentMethod.contentDescription =
-                context.getString(R.string.direct_debit) + ", " + "${Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())}"
+                context.getString(R.string.direct_debit) + ", " + "${Utils.accessibilityForNumbers(
+                    model?.bankAccountNumber?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    }.toString()
+                )}"
         }
 
         holder.binding.tvSelectPaymentMethod.text = htmlText
@@ -102,15 +101,6 @@ class SuspendPaymentMethodAdapter(
             } else {
                 list?.get(pos)?.isSelected = true
                 holder.binding.radioButtonPaymentMethod.isChecked = true
-                holder.binding.radioButtonPaymentMethod.contentDescription =
-                    if (holder.binding.radioButtonPaymentMethod.isChecked) {
-                        "${Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())}"
-                    } else {
-                        "${Utils.accessibilityForNumbers(holder.binding.tvSelectPaymentMethod.text.toString())}"
-                    }
-                holder.binding.radioButtonPaymentMethod.contentDescription =
-                    Utils.accessibilityForNumbers(holder.binding.radioButtonPaymentMethod.text.toString())
-
             }
             notifyDataSetChanged()
             paymentMethod.paymentMethodCallback(pos)
@@ -130,7 +120,6 @@ class SuspendPaymentMethodAdapter(
             notifyDataSetChanged()
             paymentMethod.paymentMethodCallback(pos)
         }
-        holder.binding.radioButtonPaymentMethod.contentDescription = "Radio Button, " + holder.binding.tvSelectPaymentMethod.text
     }
 
     override fun getItemCount(): Int {

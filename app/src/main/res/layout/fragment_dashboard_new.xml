@@ -102,139 +102,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--                android:id="@+id/box_accountInformation"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginHorizontal="@dimen/margin_25dp"-->
-            <!--                android:background="@drawable/bg_rounded_corner_10dp"-->
-            <!--                android:backgroundTint="@color/white"-->
-            <!--                android:elevation="@dimen/margin_3dp"-->
-            <!--                android:paddingLeft="@dimen/margin_16dp"-->
-            <!--                android:paddingBottom="@dimen/margin_15dp"-->
-            <!--                app:layout_constraintLeft_toLeftOf="parent"-->
-            <!--                app:layout_constraintRight_toRightOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent">-->
-
-            <!--                <androidx.constraintlayout.widget.Guideline-->
-            <!--                    android:id="@+id/guideline3"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:orientation="vertical"-->
-            <!--                    app:layout_constraintGuide_percent="0.4" />-->
-            <!--                -->
-
-            <!--                <com.conduent.nationalhighways.utils.widgets.NHTextView-->
-            <!--                    android:id="@+id/tv_available_balance_heading"-->
-            <!--                    android:layout_width="0dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:fontFamily="@font/open_sans"-->
-            <!--                    android:gravity="center_vertical"-->
-            <!--                    android:text="@string/txt_account_balance"-->
-            <!--                    tools:text="dvsdbvdbhshhshshhshs"-->
-            <!--                    android:textColor="@color/label_color"-->
-            <!--                    android:textSize="@dimen/font_14sp"-->
-            <!--                    app:layout_constraintRight_toLeftOf="@id/guideline3"-->
-            <!--                    app:layout_constraintBottom_toBottomOf="@id/tv_available_balance"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toTopOf="@id/tv_available_balance"-->
-            <!--                    app:layout_constraintVertical_bias=".6" />-->
-
-            <!--                <androidx.appcompat.widget.AppCompatTextView-->
-            <!--                    android:id="@+id/tv_available_balance"-->
-            <!--                    android:layout_width="0dp"-->
-            <!--                    android:layout_height="60dp"-->
-            <!--                    android:fontFamily="@font/open_sans"-->
-            <!--                    android:gravity="center_vertical|end"-->
-            <!--                    android:maxLines="1"-->
-            <!--                    android:padding="0dp"-->
-            <!--                    android:paddingVertical="0dp"-->
-            <!--                    android:textColor="@color/color_00837B"-->
-            <!--                    android:textSize="@dimen/font_38sp"-->
-            <!--                    app:autoSizePresetSizes="@array/button_text_auto_size"-->
-            <!--                    app:autoSizeTextType="uniform"-->
-            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                    app:layout_constraintStart_toEndOf="@id/guideline3"-->
-            <!--                    app:layout_constraintTop_toTopOf="parent"-->
-            <!--                    tools:text="£190999009999989093.00" />-->
-
-
-            <!--                <com.conduent.nationalhighways.utils.widgets.NHTextView-->
-            <!--                    android:id="@+id/tv_account_number_heading"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:fontFamily="@font/open_sans"-->
-            <!--                    android:gravity="center_vertical"-->
-            <!--                    android:text="@string/txt_account_number"-->
-            <!--                    android:textColor="@color/label_color"-->
-            <!--                    android:textSize="@dimen/font_14sp"-->
-            <!--                    app:layout_constraintBottom_toBottomOf="@+id/tv_account_number_value"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toTopOf="@id/tv_account_number_value" />-->
-
-            <!--                <com.conduent.nationalhighways.utils.widgets.NHTextView-->
-            <!--                    android:id="@+id/tv_account_number_value"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:fontFamily="@font/open_sans"-->
-            <!--                    android:gravity="center_vertical"-->
-            <!--                    android:textColor="@color/label_color"-->
-            <!--                    android:textSize="@dimen/font_20sp"-->
-            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                    app:layout_constraintTop_toBottomOf="@id/tv_available_balance"-->
-            <!--                    tools:text="118324408" />-->
-
-            <!--                <com.conduent.nationalhighways.utils.widgets.NHTextView-->
-            <!--                    android:id="@+id/tv_account_status_heading"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:fontFamily="@font/open_sans"-->
-            <!--                    android:gravity="center_vertical"-->
-            <!--                    android:text="@string/txt_account_status"-->
-            <!--                    android:textColor="@color/black"-->
-            <!--                    android:textSize="@dimen/font_14sp"-->
-            <!--                    app:layout_constraintBottom_toBottomOf="@+id/card_indicator_account_status"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toTopOf="@id/card_indicator_account_status" />-->
-
-            <!--                <com.google.android.material.card.MaterialCardView-->
-            <!--                    android:id="@+id/card_indicator_account_status"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginTop="@dimen/margin_12dp"-->
-            <!--                    app:cardCornerRadius="@dimen/margin_5dp"-->
-            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                    app:layout_constraintTop_toBottomOf="@id/tv_account_number_value">-->
-
-            <!--                    <com.conduent.nationalhighways.utils.widgets.NHTextView-->
-            <!--                        android:id="@+id/indicator_account_status"-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:background="@color/transparent"-->
-            <!--                        android:fontFamily="@font/open_sans_semibold"-->
-            <!--                        android:paddingHorizontal="@dimen/margin_12dp"-->
-            <!--                        android:paddingVertical="@dimen/margin_1dp"-->
-            <!--                        android:paddingBottom="@dimen/margin_1_5dp"-->
-            <!--                        android:textSize="@dimen/font_14sp"-->
-            <!--                        android:textStyle="bold"-->
-            <!--                        tools:text="@string/open" />-->
-
-            <!--                </com.google.android.material.card.MaterialCardView>-->
-
-            <!--                <com.conduent.apollo.ui.CMButton-->
-            <!--                    android:id="@+id/button_topup"-->
-            <!--                    style="@style/PrimaryButton"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginTop="@dimen/margin_12dp"-->
-            <!--                    android:text="@string/plus_top_up"-->
-            <!--                    android:textSize="@dimen/font_14sp"-->
-            <!--                    app:isEnabled="true"-->
-            <!--                    app:layout_constraintTop_toBottomOf="@id/card_indicator_account_status"-->
-            <!--                    app:radius="@dimen/margin_5dp" />-->
-
-            <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
 
             <LinearLayout
                 android:id="@+id/box_accountInformation"
@@ -258,19 +125,16 @@
                     android:orientation="horizontal"
                     android:weightSum="1"
                     android:focusableInTouchMode="true"
-                    android:importantForAccessibility="yes"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
-                        android:id="@+id/tv_available_balance_heading"
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_weight="0.4"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/open_sans"
                         android:gravity="start|center"
-                        android:importantForAccessibility="no"
                         android:text="@string/txt_account_balance"
                         android:textColor="@color/label_color"
                         android:textSize="@dimen/font_14sp" />
@@ -283,13 +147,12 @@
                         android:minHeight="@dimen/margin_48dp"
                         android:fontFamily="@font/open_sans"
                         android:gravity="end|center"
-                        android:importantForAccessibility="no"
                         android:maxLines="1"
                         android:textColor="@color/color_00837B"
                         android:textSize="@dimen/font_38sp"
                         app:autoSizePresetSizes="@array/button_text_auto_size"
                         app:autoSizeTextType="uniform"
-                        tools:text="£19900000000008789.00" />
+                        tools:text="£19900008789.00" />
 
                 </LinearLayout>
 
@@ -301,7 +164,7 @@
                     android:orientation="horizontal"
                     android:weightSum="1"
                     android:focusableInTouchMode="true"
-                    android:importantForAccessibility="yes">
+                    >
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/tv_account_number_heading"
@@ -309,7 +172,6 @@
                         android:layout_weight="0.4"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:importantForAccessibility="no"
                         android:text="@string/txt_account_number"
                         android:layout_gravity="start|center"
                         android:textColor="@color/label_color"
@@ -322,7 +184,6 @@
                         android:layout_height="wrap_content"
                         android:gravity="end"
                         android:fontFamily="@font/open_sans"
-                        android:importantForAccessibility="no"
                         android:textColor="@color/label_color"
                         android:textSize="@dimen/font_20sp"
                         tools:text="1183244089" />
@@ -338,7 +199,7 @@
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:focusableInTouchMode="true"
-                    android:importantForAccessibility="yes">
+                    >
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/tv_account_status_heading"
@@ -347,7 +208,6 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
                         android:gravity="center_vertical"
-                        android:importantForAccessibility="no"
                         android:text="@string/txt_account_status"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_14sp" />
@@ -363,7 +223,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="end|center"
-                            android:importantForAccessibility="no"
                             app:cardCornerRadius="@dimen/margin_5dp">
 
                             <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -373,7 +232,6 @@
                                 android:background="@color/transparent"
                                 android:layout_gravity="right"
                                 android:fontFamily="@font/open_sans_semibold"
-                                android:importantForAccessibility="no"
                                 android:paddingHorizontal="@dimen/margin_12dp"
                                 android:paddingVertical="@dimen/margin_1dp"
                                 android:paddingBottom="@dimen/margin_1_5dp"
@@ -396,7 +254,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_12dp"
                     android:text="@string/plus_top_up"
-                    android:contentDescription="Top-up"
+                    android:contentDescription="+top-up"
                     android:textSize="@dimen/font_14sp"
                     app:isEnabled="true"
                     app:layout_constraintTop_toBottomOf="@id/card_indicator_account_status"
@@ -427,7 +285,6 @@
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
                     android:textColor="@color/black"
-                    android:importantForAccessibility="no"
                     android:textSize="@dimen/font_24sp"
                     app:layout_constraintBottom_toTopOf="@+id/v_account_numner"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -439,7 +296,6 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_18dp"
                     android:layout_centerInParent="true"
-                    android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -450,12 +306,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/v_account_numner"
-                    android:importantForAccessibility="no"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center"
                     android:text="@string/txt_topup_amount"
                     android:textColor="@color/label_color"
                     android:textSize="@dimen/font_12sp"
+                    android:contentDescription="@string/top_up_amount"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -483,7 +339,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/v_low_balance_threshold"
-                    android:importantForAccessibility="no"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
                     android:textColor="@color/black"
@@ -498,7 +353,6 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_18dp"
                     android:layout_centerInParent="true"
-                    android:importantForAccessibility="no"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -509,7 +363,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/v_low_balance_threshold"
-                    android:importantForAccessibility="no"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center"
                     android:text="@string/txt_low_threshold_balance"
@@ -530,7 +383,6 @@
                 android:paddingVertical="8dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:importantForAccessibility="yes"
                 app:layout_constraintBottom_toBottomOf="@+id/box_low_balance_threshold"
                 app:layout_constraintEnd_toEndOf="@id/box_accountInformation"
                 app:layout_constraintStart_toEndOf="@id/box_low_balance_threshold"
@@ -542,7 +394,6 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/v_autopay"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_14sp"
@@ -555,7 +406,6 @@
                     android:id="@+id/v_autopay"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_18dp"
-                    android:importantForAccessibility="no"
                     android:layout_centerInParent="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -567,7 +417,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:gravity="center"
                     android:text="@string/txt_topup_method"
                     android:textColor="@color/label_color"

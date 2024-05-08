@@ -35,6 +35,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     private val apiViewModel: RaiseAPIViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var isViewCreated: Boolean = false
+
     @Inject
     lateinit var sm: SessionManager
     private var categoryList: ArrayList<CaseCategoriesModel> = ArrayList()
@@ -53,7 +54,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         } else {
             binding.btnNext.text = resources.getString(R.string.str_continue)
         }
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(requireActivity().resources.getString(R.string.enquiry_status))
         }
         if (arguments?.containsKey(Constants.EnquiryResponseModel) == true) {
@@ -77,9 +78,12 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         }
 
         viewModel.enquiryDetailsModel.value = serviceRequest
-
-        binding.categoryDataTv.text = Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.category)
-        binding.subcategoryDataTv.text = Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.subcategory)
+        binding.referenceNumberdataTv.contentDescription =
+            Utils.accessibilityForNumbers(viewModel.enquiryDetailsModel.value?.id ?: "")
+        binding.categoryDataTv.text =
+            Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.category)
+        binding.subcategoryDataTv.text =
+            Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.subcategory)
 
         binding.btnNext.setOnClickListener {
             if (requireActivity() is RaiseEnquiryActivity) {
@@ -102,29 +106,6 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
             DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created ?: "")
 
         setCategoryData()
-        setEnquiryContentDescription()
-    }
-    private fun setEnquiryContentDescription() {
-        val builder =Utils.accessibilityForNumbers(viewModel.enquiryDetailsModel.value!!.id.toString().trim())
-
-        binding.referenceNumberCv.contentDescription = getString(R.string.reference_number) + ", " + builder.toString()
-        binding.referenceNumberCl.contentDescription = getString(R.string.reference_number) + ", " + builder.toString()
-
-        binding.dateTimeCv.contentDescription = getString(R.string.date_time_submitted) + ", " + DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created ?: "")
-        binding.dateTimeCl.contentDescription = getString(R.string.date_time_submitted) + ", " + DateUtils.convertDateToFullDate(viewModel.enquiryDetailsModel.value?.created ?: "")
-
-        binding.statusEnquiryCv.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.str_status_of_complaint) else getString(R.string.str_status_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.status!!
-        binding.statusEnquiryCl.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.str_status_of_complaint) else getString(R.string.str_status_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.status!!
-
-        binding.detailsEnquiryCv.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.details_of_complaint) else getString(R.string.details_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.description!!
-        binding.detailsEnquiryCl.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.details_of_complaint) else getString(R.string.details_of_enquiry) + ", " + viewModel.enquiryDetailsModel.value!!.description!!
-
-        binding.dateEnquiryClosedCv.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.str_date_complaint_closed) else getString(R.string.str_date_enquiry_closed) + ", " + DateUtils.convertDateToFullDate(
-            viewModel.enquiryDetailsModel.value?.closedDate ?: ""
-        )
-        binding.dateEnquiryClosedCl.contentDescription = if(viewModel.enquiryDetailsModel.value!!.category.equals("COMPLAINT"))  getString(R.string.str_date_complaint_closed) else getString(R.string.str_date_enquiry_closed) + ", " + DateUtils.convertDateToFullDate(
-            viewModel.enquiryDetailsModel.value?.closedDate ?: ""
-        )
     }
 
     private fun setCategoryData() {
@@ -139,7 +120,6 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     }
 
     override fun initCtrl() {
-//        setEnquiryContentDescription()
     }
 
     override fun observer() {
@@ -165,7 +145,6 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
                     categoryList.clear()
                     categoryList = resource.data as ArrayList<CaseCategoriesModel>
                     callSubCategoryApi()
-                    setEnquiryContentDescription()
                 }
             }
 
@@ -211,10 +190,14 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
             ) {
                 binding.categoryDataTv.text = Utils.capitalizeString(subCategories[i].category)
                 binding.subcategoryDataTv.text = Utils.capitalizeString(subCategories[i].value)
-                binding.categoryCv.contentDescription = getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
-                binding.categoryCl.contentDescription = getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
-                binding.subcategoryCv.contentDescription = getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
-                binding.subcategoryCl.contentDescription = getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
+                binding.categoryCv.contentDescription =
+                    getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
+                binding.categoryCl.contentDescription =
+                    getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
+                binding.subcategoryCv.contentDescription =
+                    getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
+                binding.subcategoryCl.contentDescription =
+                    getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
                 break
             }
         }
@@ -247,7 +230,6 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
                         sm.saveSubCategoriesData(subcategoryList)
                     }
                 }
-                setEnquiryContentDescription()
             }
 
             is Resource.DataError -> {

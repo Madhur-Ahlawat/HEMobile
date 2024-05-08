@@ -60,7 +60,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
-    private lateinit var title: AppCompatTextView
     private var position: Int = 0
     private var accountNumber: String = ""
 
@@ -97,10 +96,6 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         cardPaymentList = ArrayList()
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-        if (requireActivity() is HomeActivityMain) {
-            title = HomeActivityMain.dataBinding?.titleTxt!!
-        }
 
         if (!isViewCreated) {
             showLoader()
@@ -316,7 +311,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
             R.id.cardViewTopYourBalance -> {
                 if (requireActivity() is HomeActivityMain) {
-                    title.text = getString(R.string.top_up)
+                    HomeActivityMain.setTitle(getString(R.string.top_up))
                 }
 
                 val bundle = Bundle()
@@ -338,7 +333,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
             R.id.cardViewThresholdLimit -> {
                 if (requireActivity() is HomeActivityMain) {
-                    title.text = getString(R.string.set_threshold_limit)
+                    HomeActivityMain.setTitle(getString(R.string.set_threshold_limit))
                 }
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.THRESHOLD)
@@ -628,7 +623,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     override fun onResume() {
         if (requireActivity() is HomeActivityMain) {
-            title.text = getString(R.string.payment_management)
+            HomeActivityMain.setTitle(getString(R.string.payment_management))
         }
         super.onResume()
     }

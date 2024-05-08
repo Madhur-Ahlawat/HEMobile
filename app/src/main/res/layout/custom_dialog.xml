@@ -74,6 +74,7 @@
                     android:id="@+id/rebooking_back_button_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="@dimen/margin_50dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -87,7 +88,7 @@
                         android:fontFamily="@font/open_sans"
                         android:gravity="center"
                         android:text="@string/cancel"
-                        android:paddingLeft="@dimen/margin_2dp"
+                        android:paddingStart="@dimen/margin_2dp"
                         android:textAlignment="center"
                         android:textColor="@color/red_color"
                         android:textSize="17sp" />
@@ -111,7 +112,7 @@
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:text="@string/add"
-                        android:paddingRight="@dimen/margin_2dp"
+                        android:paddingEnd="@dimen/margin_2dp"
                         android:textAlignment="center"
                         android:textColor="@color/hyperlink_blue2"
                         android:textSize="17sp"

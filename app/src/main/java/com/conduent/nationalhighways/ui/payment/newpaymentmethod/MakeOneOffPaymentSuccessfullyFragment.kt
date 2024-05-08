@@ -13,7 +13,6 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.common.Utils.currentTimeWithAMPM
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,7 +33,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
         FragmentMakeOneOffPaymentSuccessfullyBinding.inflate(inflater, container, false)
 
     override fun init() {
-        Utils.validationsToShowRatingDialog(requireActivity(),sessionManager)
+        Utils.validationsToShowRatingDialog(requireActivity(), sessionManager)
         binding.createAccount.setOnClickListener(this)
         binding.backToMainMenu.setOnClickListener(this)
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
@@ -52,13 +51,23 @@ class MakeOneOffPaymentSuccessfullyFragment :
         }
 
         binding.accountNumber.text = oneOfPaymentResponse?.referenceNumber
+        binding.accountNumber.contentDescription =
+            Utils.accessibilityForNumbers(oneOfPaymentResponse?.referenceNumber ?: "")
         binding.vechicleRegistration.text = NewCreateAccountRequestModel.plateNumber.uppercase()
-        binding.amountPaid.text = amount
+        binding.vechicleRegistration.contentDescription =
+            Utils.accessibilityForNumbers(NewCreateAccountRequestModel.plateNumber.uppercase())
+        binding.amountPaid.text = resources.getString(R.string.price, "" + amount)
         binding.timeDate.text = Utils.currentDateWithTimeTime()
         if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty() == true && NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true) {
             binding.emailConformationTxt.text = getString(
                 R.string.str_we_have_sent_confirmation_email,
                 NewCreateAccountRequestModel.emailAddress
+            )
+            binding.emailConformationTxt.contentDescription = getString(
+                R.string.str_we_have_sent_confirmation_email,
+                Utils.accessibilityForNumbers(
+                    NewCreateAccountRequestModel.emailAddress ?: ""
+                )
             )
 
         } else if (NewCreateAccountRequestModel.emailAddress?.isEmpty() == true && NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true) {
@@ -66,20 +75,27 @@ class MakeOneOffPaymentSuccessfullyFragment :
                 R.string.str_we_have_sent_confirmation_text_message,
                 NewCreateAccountRequestModel.mobileNumber
             )
-
+            binding.emailConformationTxt.contentDescription = getString(
+                R.string.str_we_have_sent_confirmation_text_message, Utils.accessibilityForNumbers(
+                    NewCreateAccountRequestModel.mobileNumber ?: ""
+                )
+            )
         } else {
             binding.emailConformationTxt.text = getString(
                 R.string.str_we_have_sent_confirmation_email_and_confirmation_text_message,
                 NewCreateAccountRequestModel.emailAddress,
                 NewCreateAccountRequestModel.mobileNumber
             )
-
+            binding.emailConformationTxt.contentDescription = getString(
+                R.string.str_we_have_sent_confirmation_email_and_confirmation_text_message,
+                Utils.accessibilityForNumbers(
+                    NewCreateAccountRequestModel.emailAddress ?: ""
+                ),
+                Utils.accessibilityForNumbers(
+                    NewCreateAccountRequestModel.mobileNumber ?: ""
+                )
+            )
         }
-
-        binding.accountNumberCv.contentDescription=resources.getString(R.string.payment_reference_number)+"."+binding.accountNumber.text.toString()
-        binding.vehicleNumberCv.contentDescription=resources.getString(R.string.vehicle_registration_number_plate)+"."+binding.vechicleRegistration.text.toString()
-        binding.amountPaidCardView.contentDescription=resources.getString(R.string.str_amount_paid)+"."+binding.amountPaid.text.toString()
-        binding.timeAndDateCardView.contentDescription=resources.getString(R.string.str_time_date)+"."+binding.timeDate.text.toString()
 
 
     }
@@ -94,7 +110,8 @@ class MakeOneOffPaymentSuccessfullyFragment :
 
 
                 NewCreateAccountRequestModel.vehicleList = ArrayList()
-                NewCreateAccountRequestModel.oneOffVehiclePlateNumber = NewCreateAccountRequestModel.plateNumber
+                NewCreateAccountRequestModel.oneOffVehiclePlateNumber =
+                    NewCreateAccountRequestModel.plateNumber
 
                 requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
                     putString(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)

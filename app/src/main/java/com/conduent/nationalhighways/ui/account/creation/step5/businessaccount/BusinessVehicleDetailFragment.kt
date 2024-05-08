@@ -72,22 +72,11 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
         }
 
-        setContentDescriptionForTexts()
+        binding.regNum.contentDescription=Utils.accessibilityForNumbers(binding.regNum.text.toString())
 
     }
 
-    private fun setContentDescriptionForTexts() {
-        binding.vehicleRegNumLl.contentDescription =
-            binding.vehicleRegNum.text.toString() + "." + binding.regNum.text.toString()
-        binding.typeOfVehLl.contentDescription =
-            binding.typeOfVeh.text.toString() + "." + binding.typeOfVehicle.text.toString()
-        binding.makeLl.contentDescription =
-            binding.strMake.text.toString() + "." + binding.vehicleMake.text.toString()
-        binding.modelLl.contentDescription =
-            binding.strModel.text.toString() + "." + binding.vehicleModel.text.toString()
-        binding.colorLl.contentDescription =
-            binding.strColor.text.toString() + "." + binding.vehicleColor.text.toString()
-    }
+
 
     override fun initCtrl() {
         binding.confirmBtn.setOnClickListener(this@BusinessVehicleDetailFragment)
@@ -261,31 +250,35 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
 
             R.id.notVehicle -> {
-                if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putParcelable(
-                        Constants.NAV_DATA_KEY,
-                        data
-                    )
-                    arguments?.getInt(Constants.VEHICLE_INDEX)
-                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    findNavController().navigate(
-                        R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
-                        bundle
-                    )
+                when (navFlowCall) {
+                    Constants.TRANSFER_CROSSINGS -> {
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(
+                            Constants.NAV_DATA_KEY,
+                            data
+                        )
+                        arguments?.getInt(Constants.VEHICLE_INDEX)
+                            ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                        findNavController().navigate(
+                            R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
+                            bundle
+                        )
 
-                } else if (navFlowCall == Constants.PAY_FOR_CROSSINGS) {
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
-                    findNavController().navigate(
-                        R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
-                        bundle
-                    )
-                } else {
-                    bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
-                    findNavController().navigate(
-                        R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
-                        bundle
-                    )
+                    }
+                    Constants.PAY_FOR_CROSSINGS -> {
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                        findNavController().navigate(
+                            R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
+                            bundle
+                        )
+                    }
+                    else -> {
+                        bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
+                        findNavController().navigate(
+                            R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
+                            bundle
+                        )
+                    }
                 }
             }
 

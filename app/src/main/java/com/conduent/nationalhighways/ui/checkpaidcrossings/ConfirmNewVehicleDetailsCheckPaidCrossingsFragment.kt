@@ -26,6 +26,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.convertDateForTransferCrossingsScreen
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +58,6 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         additionalCrossings = data?.additionalCrossingCount
         additionalCrossingsCharge = data?.additionalCharge
         setData()
-        setContentDescriptionForBullets()
         setClickListeners()
         initLoader()
     }
@@ -73,6 +73,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         Log.d("date",data?.expirationDate.toString())
         binding.apply {
             vehicleRegisration.text = data?.plateNo?.uppercase()
+            vehicleRegisration.contentDescription = Utils.accessibilityForNumbers(data?.plateNo?.uppercase()?:"")
 
             if (data?.unusedTrip?.toInt()==1){
                 creditRemaining.text =
@@ -84,22 +85,9 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
             }
 
             creditAdditionalCrossings.text = convertDateForTransferCrossingsScreen(data?.expirationDate)
-
-//            val charge = data?.chargingRate?.toDouble()
-//            val unSettledTrips = data?.unSettledTrips
-//            crossingsList = emptyList<String>().toMutableList()
-//            if(unSettledTrips != null && charge != null){
-//                totalAmountOfUnsettledTrips = charge*unSettledTrips
-//            }
         }
     }
 
-    private fun setContentDescriptionForBullets() {
-        binding.layoutVehicleRegistrationCv.contentDescription=binding.txtVehicleRegistration.text.toString()+"."+binding.vehicleRegisration.text.toString()
-        binding.creditRemainingCv.contentDescription=binding.txtCreditRemaining.text.toString()+"."+binding.creditRemaining.text.toString()
-        binding.emailCard.contentDescription=binding.txtCreditWillExpireOn.text.toString()+"."+binding.creditAdditionalCrossings.text.toString()
-
-    }
 
     private fun setClickListeners() {
         binding.apply {
