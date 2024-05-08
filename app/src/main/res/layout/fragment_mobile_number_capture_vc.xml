@@ -70,7 +70,7 @@
                 app:imeOptions="actionNext"
                 android:textSize="@dimen/font_16sp"
                 app:inputType="phone"
-                android:minHeight="@dimen/margin_55dp"
+                android:minHeight="@dimen/margin_49dp"
                 android:gravity="center_vertical"
                 android:backgroundTint="@color/label_color"
                 android:hint=""

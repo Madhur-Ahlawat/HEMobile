@@ -71,7 +71,6 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
-                android:maxLines="1"
                 android:paddingLeft="@dimen/margin_5dp"
                 android:paddingRight="@dimen/margin_5dp"
                 android:textColor="@color/black"

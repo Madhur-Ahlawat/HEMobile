@@ -129,6 +129,12 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         binding.btnNext.setOnClickListener(this)
+        if(requireActivity() is HomeActivityMain){
+            HomeActivityMain.dataBinding?.titleTxt?.contentDescription = HomeActivityMain.dataBinding?.titleTxt?.text
+        }
+        if(requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).binding?.toolBarLyt?.titleTxt?.contentDescription = (requireActivity() as CreateAccountActivity).binding?.toolBarLyt?.titleTxt?.text
+        }
         when (navFlowCall) {
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY, EDIT_MOBILE -> {
                 binding.incompatiblePoint3Tv.text =

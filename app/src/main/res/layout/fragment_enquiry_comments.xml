@@ -70,7 +70,8 @@
                 <com.conduent.nationalhighways.utils.widgets.NHTextInput
                     android:id="@+id/comments_et"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_230dp"
+                    android:minHeight="@dimen/margin_230dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:background="@drawable/edittext_box"
                     android:gravity="start"
@@ -183,7 +184,6 @@
                     android:layout_marginTop="@dimen/margin_20dp"
                     android:layout_marginRight="@dimen/margin_2dp"
                     android:layout_marginBottom="@dimen/margin_20dp"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/filesize_ll">
@@ -199,7 +199,8 @@
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             tools:text="1.5MB.pdf (1.66 MB)"
-                            android:layout_height="@dimen/margin_48dp"
+                            android:minHeight="@dimen/margin_48dp"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@id/barrier"
