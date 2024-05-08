@@ -74,6 +74,7 @@
                 android:paddingLeft="@dimen/margin_5dp"
                 android:paddingRight="@dimen/margin_5dp"
                 android:textColor="@color/black"
+                android:maxLines="1"
                 android:textSize="18sp"
                 app:autoSizePresetSizes="@array/button_text_auto_size"
                 app:autoSizeTextType="uniform"
