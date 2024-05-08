@@ -13,36 +13,18 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:importantForAccessibility="yes"
-                android:screenReaderFocusable="true"
-                android:gravity="center"
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title"
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/tick_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/checkicon"
-                    android:contentDescription="@string/checked"
-                    android:importantForAccessibility="no"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:importantForAccessibility="no"
-                    android:fontFamily="@font/open_sans_bold"
-                    android:gravity="center"
-                    android:text="@string/str_password_reset_successfull"
-                    android:textColor="@color/re_send_color"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/checkicon"
+                android:drawablePadding="@dimen/margin_20dp"
+                android:fontFamily="@font/open_sans_bold"
+                android:gravity="center"
+                android:text="@string/str_password_reset_successfull"
+                android:textColor="@color/re_send_color"
+                android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/subTitle"
@@ -61,8 +43,8 @@
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/margin_30dp"
                 android:gravity="center"
-                android:visibility="gone"
-                android:text="@string/str_continue_login" />
+                android:text="@string/str_continue_login"
+                android:visibility="gone" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -98,9 +80,9 @@
                         android:id="@+id/txtPlateNumber"
                         style="@style/MediumTextBlack"
                         android:layout_marginStart="@dimen/_8sdp"
+                        android:gravity="center"
                         android:text="@string/vehicle_registration_number_plate"
                         android:textSize="14sp"
-                        android:gravity="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -136,11 +118,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_15sdp"
-            android:textColor="@color/new_btn_color"
-            app:borderColor="@color/new_btn_color"
-            android:textColorLink="@color/new_btn_color"
             android:layout_marginBottom="@dimen/margin_50dp"
             android:text="@string/feed_back_to_improve_service"
+            android:textColor="@color/new_btn_color"
+            android:textColorLink="@color/new_btn_color"
+            app:borderColor="@color/new_btn_color"
             app:radius="@dimen/margin_5dp" />
     </RelativeLayout>
 

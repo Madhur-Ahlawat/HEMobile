@@ -45,8 +45,6 @@
                 android:layout_marginRight="@dimen/margin_48dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_18sp"
-                app:autoSizePresetSizes="@array/button_text_auto_size"
-                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

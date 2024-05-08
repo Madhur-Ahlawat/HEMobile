@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
-
-
+<layout>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -12,13 +10,15 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="none"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:scrollbars="none">
+            app:layout_constraintTop_toTopOf="parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/lable_header"
                     android:layout_width="wrap_content"
@@ -55,9 +55,9 @@
                         android:id="@+id/selectEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
-                        android:minWidth="@dimen/margin_48dp"
                         android:buttonTint="@color/color_E0E0E0"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,9 +102,9 @@
                         android:id="@+id/selectTextMessage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/color_E0E0E0"
                         android:minWidth="@dimen/margin_48dp"
                         android:minHeight="@dimen/margin_48dp"
-                        android:buttonTint="@color/color_E0E0E0"
                         app:layout_constraintStart_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -141,8 +141,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="-5dp"
-                        android:minHeight="@dimen/margin_48dp"
                         android:hint="@string/country_code"
+                        android:minHeight="@dimen/margin_48dp"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_16sp"

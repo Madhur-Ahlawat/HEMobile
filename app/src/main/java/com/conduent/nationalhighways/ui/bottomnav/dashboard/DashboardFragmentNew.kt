@@ -289,13 +289,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
         binding.apply {
             accountBalanceRl.gone()
-
             accountStatusRl.visible()
+            threeBoxCl.gone()
 
-            boxTopupAmount.gone()
-            boxLowBalanceThreshold.gone()
-
-            boxTopupMethod.gone()
             buttonTopup.gone()
 
             setGuideLinePercent(0.25F, R.dimen.margin_15dp)
@@ -390,14 +386,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
 
             accountStatusRl.visible()
-
-            boxLowBalanceThreshold.visible()
+            threeBoxCl.visible()
             valueLowBalanceThreshold.text = getString(R.string.str_zero_euro)
-
-            boxTopupAmount.visible()
             valueTopupAmount.text = getString(R.string.str_zero_euro)
-
-            boxTopupMethod.visible()
             valueAutopay.text = getString(R.string.exempt)
 
             buttonTopup.gone()
@@ -452,12 +443,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             boxTopupAmount.visible()
             valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
-            boxLowBalanceThreshold.visible()
             valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
-
-            boxTopupMethod.visible()
-
-            buttonTopup.visible()
+            threeBoxCl.visible()
             setGuideLinePercent(0.2F, R.dimen.margin_0dp)
 
             binding.buttonTopup.setOnClickListener {
