@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/margin_26dp"
@@ -10,11 +13,10 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
+            android:scrollbars="none">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -55,9 +57,9 @@
                         android:id="@+id/selectEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/color_E0E0E0"
-                        android:minWidth="@dimen/margin_48dp"
                         android:minHeight="@dimen/margin_48dp"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:buttonTint="@color/color_E0E0E0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -95,45 +97,55 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/margin_25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ll_email">
-
-                    <CheckBox
-                        android:id="@+id/selectTextMessage"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/messageLL"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/color_E0E0E0"
-                        android:minWidth="@dimen/margin_48dp"
-                        android:minHeight="@dimen/margin_48dp"
+                        android:orientation="horizontal"
                         app:layout_constraintStart_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
+                        <CheckBox
+                            android:id="@+id/selectTextMessage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/color_E0E0E0"
+                            android:minWidth="@dimen/margin_48dp"
+                            android:minHeight="@dimen/margin_48dp"
+                            app:layout_constraintStart_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.conduent.nationalhighways.utils.widgets.NHTextView
-                        android:id="@+id/label_text_message"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/text_message_optional"
-                        android:textColor="@color/color_000000"
-                        android:textSize="@dimen/font_14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/selectTextMessage"
-                        app:layout_constraintStart_toEndOf="@+id/selectTextMessage"
-                        app:layout_constraintTop_toTopOf="@id/selectTextMessage" />
+                        <com.conduent.nationalhighways.utils.widgets.NHTextView
+                            android:id="@+id/label_text_message"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/text_message_optional"
+                            android:textColor="@color/color_000000"
+                            android:textSize="@dimen/font_14sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/selectTextMessage"
+                            app:layout_constraintStart_toEndOf="@+id/selectTextMessage"
+                            app:layout_constraintTop_toTopOf="@id/selectTextMessage" />
+
+                    </LinearLayout>
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/inputCountry_helper"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_3dp"
+                        android:layout_marginStart="@dimen/margin_50dp"
                         android:layout_marginTop="@dimen/margin_20dp"
                         android:text="@string/country_code"
                         android:textColor="@color/label_color"
                         android:textSize="12sp"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/label_text_message"
-                        app:layout_constraintTop_toBottomOf="@id/label_text_message" />
+                        app:layout_constraintStart_toStartOf="@id/messageLL"
+                        app:layout_constraintTop_toBottomOf="@id/messageLL" />
 
 
                     <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview

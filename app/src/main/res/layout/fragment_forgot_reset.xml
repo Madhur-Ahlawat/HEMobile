@@ -43,8 +43,8 @@
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/margin_30dp"
                 android:gravity="center"
-                android:text="@string/str_continue_login"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:text="@string/str_continue_login" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -80,9 +80,9 @@
                         android:id="@+id/txtPlateNumber"
                         style="@style/MediumTextBlack"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:gravity="center"
                         android:text="@string/vehicle_registration_number_plate"
                         android:textSize="14sp"
+                        android:gravity="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,11 +118,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_15sdp"
+            android:textColor="@color/new_btn_color"
+            app:borderColor="@color/new_btn_color"
+            android:textColorLink="@color/new_btn_color"
             android:layout_marginBottom="@dimen/margin_50dp"
             android:text="@string/feed_back_to_improve_service"
-            android:textColor="@color/new_btn_color"
-            android:textColorLink="@color/new_btn_color"
-            app:borderColor="@color/new_btn_color"
             app:radius="@dimen/margin_5dp" />
     </RelativeLayout>
 

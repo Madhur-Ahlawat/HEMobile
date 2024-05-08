@@ -932,7 +932,7 @@
     <string name="ifyoudidnotreceivethecode">If you did not get a code, or it has expired, select resend security code.</string>
     <string name="resendcode">Resend Security Code</string>
     <string name="wehavesentanemail">We\'ve sent an email to %1$s</string>
-    <string name="wehavesentatextmessageto">We’ve sent a text message to %1$s.</string>
+    <string name="wehavesentatextmessageto">We\'ve sent a text message to %1$s.</string>
     <string name="content_description_wehavesentatextmessageto">We have sent a text message to</string>
     <string name="ifyoudidnot">If you did not get a code, or it has expired, select Resend code.</string>
     <string name="str_your_password_must">Your password must:</string>
@@ -1710,7 +1710,7 @@
     <string name="str_card_number_must_16_digit_more">Card number must be 16 digits or more</string>
 
     <string name="str_application_complete">Application Complete</string>
-    <string name="we_sent_confirmation_email">We’ve sent a confirmation email with your account details to %s.</string>
+    <string name="we_sent_confirmation_email">We\'ve sent a confirmation email with your account details to %s.</string>
     <string name="your_account_number">Your account number</string>
     <string name="what_happens_text">What happens next</string>
     <string name="you_can_now_make_crossing">You can now make a crossing. If you’ve already crossed since 6 am yesterday, this crossing will be settled against your account.</string>
@@ -1743,7 +1743,7 @@
     <string name="str_select_payment_method">Select payment method</string>
     <string name="str_Mastercard">Mastercard ****4563</string>
     <string name="str_account_reopened">Account reopened</string>
-    <string name="str_we_have_sent_confirmation">We’ve sent a confirmation email to\n<Data><![CDATA[<b><br>%s</b>]]></Data></string>
+    <string name="str_we_have_sent_confirmation">We\'ve sent a confirmation email to\n<Data><![CDATA[<b><br>%s</b>]]></Data></string>
     <string name="str_go_to_dashboard">GO TO DASHBOARD</string>
     <string name="str_check_your_answers_before_making_payment">Check your answers before making a payment.</string>
     <string name="str_personal_details">Personal Details</string>
@@ -1810,7 +1810,7 @@
     <string name="profile_address">Profile Address</string>
     <string name="email_receipt_send_successful">Email receipt send successful</string>
     <string name="are_you_sure_you_want_to_close_your_dart_charge_account">Are you sure you want to close your Dart\nCharge account?</string>
-    <string name="we_ve_sent_a_receipt_email_to_njohndoe_email_com">We’ve sent a receipt email to\njohndoe@email.com</string>
+    <string name="we_ve_sent_a_receipt_email_to_njohndoe_email_com">We\'ve sent a receipt email to\njohndoe@email.com</string>
     <string name="any_remaining_credit_will_be_refunded_to_your_ndefault_payment_method">Any remaining credit will be refunded to your\ndefault payment method.</string>
     <string name="you_will_have_to_pay_for_any_future_crossings_nseparately">You will have to pay for any future crossings\nseparately.</string>
     <string name="your_account_is_now_closed">Your account is now closed</string>
@@ -1848,7 +1848,7 @@
     <string name="str_email_address">Email address</string>
     <string name="this_will_be_your_username_when_you_log_in_to_your_account">This will be your username when you log in to your account.</string>
     <string name="check_your_email_for_a_security_code">Check your email for a security code.</string>
-    <string name="we_ve_sent_an_email_to_j_e_com">We’ve sent an email to</string>
+    <string name="we_ve_sent_an_email_to_j_e_com">We\'ve sent an email to</string>
     <string name="str_code">Code</string>
     <string name="check_the_email_for_6_digit_security_code_this_code_will_expire_after_15_minutes_your_email_might_take_a_few_minutes_to_arrive_if_you_do_not_get_an_email_check_your_spam_folder">Check the email for 6-digit security code. This code will expire after 15 minutes.\n\nYour email might take a few minutes to arrive. If you do not get an email check your spam folder.</string>
     <string name="if_you_did_not_get_a_code_or_it_has_expired_select_resend_security_code">If you did not get a code, or it has expired, select resend security code.</string>
@@ -1942,9 +1942,9 @@
     <string name="only_use_this_option_for_crossings_planned">Only use this option for crossings\nplanned in the future.\n\nLate payments will be used for future\ncrossings - you may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="vehicle_no_longer_exempt">Vehicle No Longer Exempt</string>
 
-    <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We’ve sent a confirmation email to %s and a confirmation text message to %s.</string>
-    <string name="str_we_have_sent_confirmation_email">We’ve sent a confirmation email to %s.</string>
-    <string name="str_we_have_sent_confirmation_text_message">We’ve sent a confirmation text message to %s.</string>
+    <string name="str_we_have_sent_confirmation_email_and_confirmation_text_message">We\'ve sent a confirmation email to %s and a confirmation text message to %s.</string>
+    <string name="str_we_have_sent_confirmation_email">We\'ve sent a confirmation email to %s.</string>
+    <string name="str_we_have_sent_confirmation_text_message">We\'ve sent a confirmation text message to %s.</string>
     <string name="str_make_one_off_crossing_description">If you make regular crossings, you might benefit from creating an account. Payments for crossings are then taken automatically. With a pre-pay account you’ll also get a discount of up to 20% on all crossings.\n\nIf you live in Dartford or Thurrock you may qualify for the local resident discount.</string>
     <string name="str_payment_successfully">Payment Successful</string>
     <string name="str_amount_paid">Amount Paid</string>

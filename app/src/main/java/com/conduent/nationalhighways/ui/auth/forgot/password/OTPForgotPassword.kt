@@ -713,6 +713,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 }
             }
         }
+
+        binding.messageReceivedTxt.contentDescription= Utils.accessibilityForNumbers(binding.messageReceivedTxt.text.toString())
         binding.edtOtp.editText.requestFocus()
     }
 
