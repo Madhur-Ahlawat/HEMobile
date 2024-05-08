@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,6 +31,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20dp"
+                android:importantForAccessibility="no"
                 android:text="@string/country_code"
                 android:textColor="@color/label_color"
                 android:textSize="12sp"
@@ -42,52 +44,54 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/country_code"
+                android:minHeight="@dimen/margin_48dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp"
                 app:inputType="number"
-                android:minHeight="@dimen/margin_48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputCountry_helper" />
 
-            <com.conduent.nationalhighways.utils.widgets.NHTextView
-                android:id="@+id/label_mobile_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20dp"
-                android:text="@string/mobile_number"
-                android:textColor="@color/label_color"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inputCountry" />
+            <!--            <com.conduent.nationalhighways.utils.widgets.NHTextView-->
+            <!--                android:id="@+id/label_mobile_number"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/margin_20dp"-->
+            <!--                android:text="@string/mobile_number"-->
+            <!--                android:importantForAccessibility="no"-->
+            <!--                android:textColor="@color/label_color"-->
+            <!--                android:textSize="12sp"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/inputCountry" />-->
 
-            <EditText
+            <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                 android:id="@+id/mobileNumber_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/label_color"
+                android:gravity="center_vertical"
+android:layout_marginTop="@dimen/margin_20dp"
                 android:maxLength="15"
                 android:textColor="@color/black"
-                app:imeOptions="actionNext"
                 android:textSize="@dimen/font_16sp"
+                app:imeOptions="actionDone"
                 app:inputType="phone"
-                android:minHeight="@dimen/margin_49dp"
-                android:gravity="center_vertical"
-                android:backgroundTint="@color/label_color"
-                android:hint=""
-                tools:text="1212121212"
+                app:labelText="@string/mobile_number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/label_mobile_number"
-                app:maxLength="15" />
+                app:layout_constraintTop_toBottomOf="@+id/inputCountry"
+                app:maxLength="15"
+                tools:text="1212121212" />
+
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/errorMobileNumber"
                 style="@style/MediumText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/red_color"
-                android:paddingTop="5dp"
-                android:visibility="gone"
                 android:fontFamily="@font/open_sans_bold"
+                android:paddingTop="5dp"
+                android:textColor="@color/red_color"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mobileNumber_et"
@@ -106,10 +110,10 @@
 
             <LinearLayout
                 android:id="@+id/incompatible_ll"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtBottom">
@@ -127,29 +131,29 @@
                 <LinearLayout
                     android:id="@+id/incompatible_point1_tv"
                     android:layout_width="match_parent"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
-                    android:contentDescription="@string/str_bullet_receving_communications"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_15dp"
-                    android:orientation="horizontal">
+                    android:contentDescription="@string/str_bullet_receving_communications"
+                    android:importantForAccessibility="yes"
+                    android:orientation="horizontal"
+                    android:screenReaderFocusable="true">
 
                     <ImageView
-                        android:importantForAccessibility="no"
-                        android:screenReaderFocusable="false"
                         android:layout_width="6dp"
                         android:layout_height="6dp"
                         android:layout_marginTop="@dimen/_6sdp"
+                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         android:src="@drawable/circle_red_5dp" />
 
 
                     <TextView
-                        android:importantForAccessibility="no"
-                        android:screenReaderFocusable="false"
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
+                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         android:text="@string/str_receving_communications"
                         android:textColor="@color/red_error_color"
                         android:textSize="@dimen/font_16sp"
@@ -161,29 +165,29 @@
                 <LinearLayout
                     android:id="@+id/incompatible_point2_tv"
                     android:layout_width="match_parent"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/str_bullet_two_step_verification"
                     android:layout_marginTop="@dimen/margin_5dp"
-                    android:orientation="horizontal">
+                    android:contentDescription="@string/str_bullet_two_step_verification"
+                    android:importantForAccessibility="yes"
+                    android:orientation="horizontal"
+                    android:screenReaderFocusable="true">
 
                     <ImageView
-                        android:importantForAccessibility="no"
-                        android:screenReaderFocusable="false"
                         android:layout_width="6dp"
                         android:layout_height="6dp"
                         android:layout_marginTop="@dimen/_6sdp"
+                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         android:src="@drawable/circle_red_5dp" />
 
 
                     <TextView
-                        android:importantForAccessibility="no"
-                        android:screenReaderFocusable="false"
                         style="@style/RegularTextBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
+                        android:importantForAccessibility="no"
+                        android:screenReaderFocusable="false"
                         android:text="@string/str_two_step_verification"
                         android:textColor="@color/red_error_color"
                         android:textSize="@dimen/font_16sp"
@@ -206,8 +210,8 @@
                     style="@style/CheckBoxStyle"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:gravity="top"
-                    android:visibility="gone"
-                    android:text="@string/str_save_mobile_number" />
+                    android:text="@string/str_save_mobile_number"
+                    android:visibility="gone" />
 
 
             </LinearLayout>
