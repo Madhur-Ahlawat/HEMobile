@@ -51,7 +51,11 @@ class MakeOneOffPaymentSuccessfullyFragment :
         }
 
         binding.accountNumber.text = oneOfPaymentResponse?.referenceNumber
+        binding.accountNumber.contentDescription =
+            Utils.accessibilityForNumbers(oneOfPaymentResponse?.referenceNumber ?: "")
         binding.vechicleRegistration.text = NewCreateAccountRequestModel.plateNumber.uppercase()
+        binding.vechicleRegistration.contentDescription =
+            Utils.accessibilityForNumbers(NewCreateAccountRequestModel.plateNumber.uppercase())
         binding.amountPaid.text = resources.getString(R.string.price, "" + amount)
         binding.timeDate.text = Utils.currentDateWithTimeTime()
         if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty() == true && NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true) {
@@ -59,20 +63,38 @@ class MakeOneOffPaymentSuccessfullyFragment :
                 R.string.str_we_have_sent_confirmation_email,
                 NewCreateAccountRequestModel.emailAddress
             )
+            binding.emailConformationTxt.contentDescription = getString(
+                R.string.str_we_have_sent_confirmation_email,
+                Utils.accessibilityForNumbers(
+                    NewCreateAccountRequestModel.emailAddress ?: ""
+                )
+            )
 
         } else if (NewCreateAccountRequestModel.emailAddress?.isEmpty() == true && NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true) {
             binding.emailConformationTxt.text = getString(
                 R.string.str_we_have_sent_confirmation_text_message,
                 NewCreateAccountRequestModel.mobileNumber
             )
-
+            binding.emailConformationTxt.contentDescription = getString(
+                R.string.str_we_have_sent_confirmation_text_message, Utils.accessibilityForNumbers(
+                    NewCreateAccountRequestModel.mobileNumber ?: ""
+                )
+            )
         } else {
             binding.emailConformationTxt.text = getString(
                 R.string.str_we_have_sent_confirmation_email_and_confirmation_text_message,
                 NewCreateAccountRequestModel.emailAddress,
                 NewCreateAccountRequestModel.mobileNumber
             )
-
+            binding.emailConformationTxt.contentDescription = getString(
+                R.string.str_we_have_sent_confirmation_email_and_confirmation_text_message,
+                Utils.accessibilityForNumbers(
+                    NewCreateAccountRequestModel.emailAddress ?: ""
+                ),
+                Utils.accessibilityForNumbers(
+                    NewCreateAccountRequestModel.mobileNumber ?: ""
+                )
+            )
         }
 
 

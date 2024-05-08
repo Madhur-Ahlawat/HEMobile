@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.view.ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -64,7 +63,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private var vehcileRegRequired: Boolean = true
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
     private var loader: LoaderDialog? = null
-    private var data_type: String = ""
+    private var dataType: String = ""
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -86,7 +85,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     override fun init() {
 
         if (arguments?.containsKey(Constants.data_type) == true) {
-            data_type = arguments?.getString(Constants.data_type).toString()
+            dataType = arguments?.getString(Constants.data_type).toString()
         }
         typeOfVehicle.clear()
         typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_A))
@@ -138,7 +137,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             }
         }
 
-        if (edit_summary == true && navFlowCall == Constants.PAY_FOR_CROSSINGS) {
+        if (edit_summary && navFlowCall == Constants.PAY_FOR_CROSSINGS) {
 
         } else {
             setPreSelectedVehicleType()
@@ -221,6 +220,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 }
             }
 
+            binding.vehiclePlateNumber.contentDescription=Utils.accessibilityForNumbers(binding.vehiclePlateNumber.text.toString())
+
             if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
                 if (data?.vehicleClass == "D") {
                     binding.typeVehicle.visible()
@@ -279,6 +280,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                     typeVehicle.dataSet.clear()
                     typeVehicle.dataSet.addAll(typeOfVehicle)
                     vehiclePlateNumber.text = data?.plateNo.toString()
+                    vehiclePlateNumber.contentDescription = Utils.accessibilityForNumbers(data?.plateNo.toString())
                 }
             }
         }
@@ -397,10 +399,12 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         isUK: Boolean = false,
         type: Int
     ) {
-        if (edit_summary == true && navFlowCall.equals(Constants.PAY_FOR_CROSSINGS)) {
+        if (edit_summary && navFlowCall == Constants.PAY_FOR_CROSSINGS) {
 
         } else {
             binding.vehiclePlateNumber.text = plateNumber
+            binding.vehiclePlateNumber.contentDescription = Utils.accessibilityForNumbers(plateNumber)
+
             binding.makeInputLayout.setText(vehicleMake)
             binding.colorInputLayout.setText(vehicleColor)
             binding.typeVehicle.setSelectedValue(
@@ -425,9 +429,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             modelInputCheck = true
             colourInputCheck = true
         }
-        if (vehicleClass.equals("D", true) && NewCreateAccountRequestModel.plateCountry.equals(
-                Constants.COUNTRY_TYPE_UK
-            )
+        if (vehicleClass.equals("D", true) && NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK
         ) {
             typeOfVehicle.clear()
             typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_C))
@@ -458,7 +460,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         navData?.let {
             if (it is CrossingDetailsModelsResponse) {
                 it.apply {
-                    if (edit_summary == true && navFlowCall.equals(Constants.PAY_FOR_CROSSINGS)) {
+                    if (edit_summary && navFlowCall == Constants.PAY_FOR_CROSSINGS) {
 
                     } else {
                         binding.makeInputLayout.editText.setText(vehicleMake)
@@ -1063,7 +1065,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             newVehicleInfoDetails.vehicleModel,
             newVehicleInfoDetails.vehicleColor ?: "",
             newVehicleInfoDetails.vehicleClass ?: "",
-            data_type
+            dataType
         )
 
         viewModel.getCrossingDetails(model)

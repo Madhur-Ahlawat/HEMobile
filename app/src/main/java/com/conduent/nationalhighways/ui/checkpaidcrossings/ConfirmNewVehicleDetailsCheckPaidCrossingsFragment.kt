@@ -26,6 +26,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.Utils.convertDateForTransferCrossingsScreen
 import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,6 +73,7 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
         Log.d("date",data?.expirationDate.toString())
         binding.apply {
             vehicleRegisration.text = data?.plateNo?.uppercase()
+            vehicleRegisration.contentDescription = Utils.accessibilityForNumbers(data?.plateNo?.uppercase()?:"")
 
             if (data?.unusedTrip?.toInt()==1){
                 creditRemaining.text =

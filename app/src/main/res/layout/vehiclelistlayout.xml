@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -30,7 +31,7 @@
                 style="@style/MediumTextBlack"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:text="@string/vehicle_registration_number_plate"
-                android:textSize="14sp"
+                android:textSize="@dimen/font_14sp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +40,7 @@
                 android:id="@+id/vehiclePlateNumber"
                 style="@style/RegularTextBlack"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="AJ66MHA"
+                tools:text="AJ66MHA"
                 app:layout_constraintBottom_toBottomOf="@+id/update_vehicle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/update_vehicle" />

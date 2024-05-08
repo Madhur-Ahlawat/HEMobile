@@ -77,16 +77,14 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
                         android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/category_edit_iv"
                         app:layout_constraintStart_toStartOf="parent"
@@ -144,16 +142,14 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_sub_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
                         android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/subcategory_edit_iv"
                         app:layout_constraintStart_toStartOf="parent"
@@ -214,22 +210,29 @@
                 android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="yes"
-                    android:padding="@dimen/margin_15dp"
-                    android:screenReaderFocusable="true">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/contact_message_tv"
-                        style="@style/MediumTextBlack"
-                        android:screenReaderFocusable="false"
-                        android:text="@string/contact_message"
-                        android:textSize="15sp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintEnd_toStartOf="@+id/contact_message_edit_iv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/contact_message_tv"
+                            style="@style/MediumTextBlack"
+                            android:text="@string/contact_message"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <ImageView
                         android:id="@+id/contact_message_edit_iv"
@@ -278,16 +281,14 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
                         android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/name_edit_iv"
                         app:layout_constraintStart_toStartOf="parent"
@@ -349,16 +350,14 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
                         android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/email_edit_iv"
                         app:layout_constraintStart_toStartOf="parent"
@@ -422,16 +421,14 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_mobile_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
                         android:focusable="true"
                         android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/mobile_edit_iv"
                         app:layout_constraintStart_toStartOf="parent"

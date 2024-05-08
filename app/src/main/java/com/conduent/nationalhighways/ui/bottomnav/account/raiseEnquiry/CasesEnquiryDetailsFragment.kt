@@ -35,6 +35,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     private val apiViewModel: RaiseAPIViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var isViewCreated: Boolean = false
+
     @Inject
     lateinit var sm: SessionManager
     private var categoryList: ArrayList<CaseCategoriesModel> = ArrayList()
@@ -53,7 +54,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         } else {
             binding.btnNext.text = resources.getString(R.string.str_continue)
         }
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(requireActivity().resources.getString(R.string.enquiry_status))
         }
         if (arguments?.containsKey(Constants.EnquiryResponseModel) == true) {
@@ -77,9 +78,12 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         }
 
         viewModel.enquiryDetailsModel.value = serviceRequest
-
-        binding.categoryDataTv.text = Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.category)
-        binding.subcategoryDataTv.text = Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.subcategory)
+        binding.referenceNumberdataTv.contentDescription =
+            Utils.accessibilityForNumbers(viewModel.enquiryDetailsModel.value?.id ?: "")
+        binding.categoryDataTv.text =
+            Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.category)
+        binding.subcategoryDataTv.text =
+            Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.subcategory)
 
         binding.btnNext.setOnClickListener {
             if (requireActivity() is RaiseEnquiryActivity) {
@@ -186,10 +190,14 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
             ) {
                 binding.categoryDataTv.text = Utils.capitalizeString(subCategories[i].category)
                 binding.subcategoryDataTv.text = Utils.capitalizeString(subCategories[i].value)
-                binding.categoryCv.contentDescription = getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
-                binding.categoryCl.contentDescription = getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
-                binding.subcategoryCv.contentDescription = getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
-                binding.subcategoryCl.contentDescription = getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
+                binding.categoryCv.contentDescription =
+                    getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
+                binding.categoryCl.contentDescription =
+                    getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
+                binding.subcategoryCv.contentDescription =
+                    getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
+                binding.subcategoryCl.contentDescription =
+                    getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
                 break
             }
         }
