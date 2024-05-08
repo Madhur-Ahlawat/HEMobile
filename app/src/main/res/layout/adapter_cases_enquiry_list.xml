@@ -85,12 +85,6 @@
                     android:importantForAccessibility="no"
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.5" />
-<!--                <androidx.constraintlayout.widget.Barrier-->
-<!--                    android:id="@+id/barrier1"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:barrierDirection="right"-->
-<!--                    app:constraint_referenced_ids="category_data_tv,category_tv" />-->
 
                 <androidx.constraintlayout.widget.Barrier
                     android:id="@+id/barrier"

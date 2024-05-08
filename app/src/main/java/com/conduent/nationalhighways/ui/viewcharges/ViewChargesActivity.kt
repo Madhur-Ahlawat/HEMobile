@@ -74,49 +74,58 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
 
                     val mTollRatesList = ArrayList<TollRatesResp>()
                     status.data?.forEach {
-                        if (it?.vehicleType == "A") {
-
-                            mTollRatesList.add(
-                                TollRatesResp(
-                                    it?.vehicleId,
-                                    "Motorcycle,\nmopeds,\nquad bikes",
-                                    it?.videoRate,
-                                    it?.etcRate
+                        when (it?.vehicleType) {
+                            "A" -> {
+                                mTollRatesList.add(
+                                    TollRatesResp(
+                                        it.vehicleId,
+                                        resources.getString(R.string.str_motor_cycles),
+                                        it.videoRate,
+                                        it.etcRate,
+                                        resources.getString(R.string.str_motor_cycles_)
+                                    )
                                 )
-                            )
 
-                        } else if (it?.vehicleType == "B") {
-                            mTollRatesList.add(
-                                TollRatesResp(
-                                    it?.vehicleId,
-                                    "Cars,\nmotorhomes,\nminibuses",
-                                    it?.videoRate,
-                                    it?.etcRate
+                            }
+                            "B" -> {
+                                mTollRatesList.add(
+                                    TollRatesResp(
+                                        it.vehicleId,
+                                        resources.getString(R.string.str_cars_motor_homes),
+                                        it.videoRate,
+                                        it.etcRate,
+                                        resources.getString(R.string.str_cars_motor_homes_)
+                                    )
                                 )
-                            )
 
-                        } else if (it?.vehicleType == "C") {
-                            mTollRatesList.add(
-                                TollRatesResp(
-                                    it?.vehicleId,
-                                    "Vehicles\nwith 2 axles",
-                                    it?.videoRate,
-                                    it?.etcRate
+                            }
+                            "C" -> {
+                                mTollRatesList.add(
+                                    TollRatesResp(
+                                        it.vehicleId,
+                                        resources.getString(R.string.str_vehicles_with_axles),
+                                        it.videoRate,
+                                        it.etcRate,
+                                        resources.getString(R.string.str_vehicles_with_axles_)
+                                    )
                                 )
-                            )
 
-                        } else if (it?.vehicleType == "D") {
-                            mTollRatesList.add(
-                                TollRatesResp(
-                                    it?.vehicleId,
-                                    "Vehicles\nwith more than 2 axles",
-                                    it?.videoRate,
-                                    it?.etcRate
+                            }
+                            "D" -> {
+                                mTollRatesList.add(
+                                    TollRatesResp(
+                                        it.vehicleId,
+                                        resources.getString(R.string.str_vehicle_with_more_axles),
+                                        it.videoRate,
+                                        it.etcRate,
+                                        resources.getString(R.string.str_vehicle_with_more_axles_)
+                                    )
                                 )
-                            )
 
-                        } else {
+                            }
+                            else -> {
 
+                            }
                         }
 
                     }
@@ -148,7 +157,6 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager,api)
     }
 
