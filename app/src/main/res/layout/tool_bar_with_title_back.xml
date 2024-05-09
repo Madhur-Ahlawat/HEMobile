@@ -75,9 +75,7 @@
                 android:paddingLeft="@dimen/margin_5dp"
                 android:paddingRight="@dimen/margin_5dp"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                app:autoSizePresetSizes="@array/button_text_auto_size"
-                app:autoSizeTextType="uniform"
+                android:textSize="@dimen/font_18sp"
                 tools:text="@string/app_name" />
 
 
