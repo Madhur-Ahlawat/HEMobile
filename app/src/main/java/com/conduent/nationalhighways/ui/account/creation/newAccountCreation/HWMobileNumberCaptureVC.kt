@@ -129,6 +129,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         binding.btnNext.setOnClickListener(this)
+
         when (navFlowCall) {
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY, EDIT_MOBILE -> {
                 binding.incompatiblePoint3Tv.text =
