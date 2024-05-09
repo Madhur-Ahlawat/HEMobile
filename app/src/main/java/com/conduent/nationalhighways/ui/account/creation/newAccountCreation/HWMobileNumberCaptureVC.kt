@@ -100,7 +100,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         FragmentMobileNumberCaptureVcBinding.inflate(inflater, container, false)
 
     override fun init() {
-        binding.mobileNumberEt.setAccessibilityDelegateForDigits()
+        binding.mobileNumberEt.editText.setAccessibilityDelegateForDigits()
 
 //        val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
 //        registerReceiver(requireContext(),smsVerificationReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED)
@@ -112,7 +112,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
         }
         viewModel.getCountries()
-        binding.mobileNumberEt.inputType = InputType.TYPE_CLASS_NUMBER
+        binding.mobileNumberEt.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         if (arguments?.containsKey(Constants.IS_IT_MOBILE_NUMBER) == true) {
             if (arguments?.getBoolean(Constants.IS_IT_MOBILE_NUMBER) == true) {
@@ -129,6 +129,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         }
 
         binding.btnNext.setOnClickListener(this)
+
         when (navFlowCall) {
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY, EDIT_MOBILE -> {
                 binding.incompatiblePoint3Tv.text =
@@ -302,14 +303,14 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
                     )
                 }
                 if (NewCreateAccountRequestModel.prePay) {
-                    binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
+                    binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(1))
                 } else if (data != null && data?.accountInformation?.accSubType.equals
                         (Constants.PAYG)
                         .not()
                 ) {
-                    binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
+                    binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(1))
                 } else {
-                    binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(0))
+                    binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(0))
                 }
             }
         Identity.getSignInClient(requireActivity())
@@ -395,18 +396,18 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (requireActivity() !is CreateAccountActivity && requireActivity() !is MakeOffPaymentActivity) {
             title?.text = getString(R.string.profile_phone_number)
         }
-        binding.labelMobileNumber.setText(getString(R.string.phone_number))
+        binding.mobileNumberEt.setLabel(getString(R.string.phone_number))
         binding.txtTitleTop.text = getString(R.string.str_what_is_your_number)
         binding.txtBottom.visibility = View.GONE
         if (NewCreateAccountRequestModel.prePay) {
-            binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
+            binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(1))
         } else if (data != null && data?.accountInformation?.accSubType.equals(Constants.PAYG)
                 .not()
         ) {
-            binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
+            binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(1))
 
         } else {
-            binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(0))
+            binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(0))
         }
     }
 
@@ -415,10 +416,10 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
         if (requireActivity() !is CreateAccountActivity && navFlowCall != PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
             title?.text = getString(R.string.profile_mobile_number)
         }
-        binding.labelMobileNumber.setText(getString(R.string.mobile_number))
+        binding.mobileNumberEt.setLabel(getString(R.string.mobile_number))
         binding.txtTitleTop.text = getString(R.string.str_what_mobile_number)
         binding.txtBottom.visibility = View.VISIBLE
-        binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(1))
+        binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(1))
     }
 
     override fun initCtrl() {

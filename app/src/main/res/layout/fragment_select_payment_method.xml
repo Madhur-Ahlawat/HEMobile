@@ -55,17 +55,18 @@
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/tv_select_payment_method"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_18dp"
                     android:layout_marginEnd="18dp"
+                    android:gravity="center"
                     android:fontFamily="@font/open_sans"
                     android:textColor="@color/black"
                     android:text="@string/debit_credit_card"
                     android:textSize="@dimen/font_16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/forward"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivCardType"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -113,7 +114,7 @@
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/debitCreditCard"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_18dp"
                     android:layout_marginEnd="18dp"
@@ -121,9 +122,9 @@
                     android:textColor="@color/black"
                     android:text="@string/direct_debit"
                     android:textSize="@dimen/font_16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/directDebitForward"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/cardIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 

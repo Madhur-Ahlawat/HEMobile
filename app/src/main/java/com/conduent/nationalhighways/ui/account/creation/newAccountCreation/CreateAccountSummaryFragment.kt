@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.util.Util
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
@@ -24,6 +25,7 @@ import com.conduent.nationalhighways.utils.common.Constants.N
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
 import com.conduent.nationalhighways.utils.extn.visible
@@ -98,6 +100,8 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                 binding.phoneCard.gone()
             }
         }
+
+        binding.mobileNumber.contentDescription= Utils.accessibilityForNumbers(binding.mobileNumber.text.toString())
 
         if (NewCreateAccountRequestModel.notSupportedCountrySaveDetails) {
             binding.phoneCard.visible()
@@ -344,7 +348,6 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     override fun onResume() {
         if (requireActivity() is CreateAccountActivity) {
             title.text = getString(R.string.str_create_an_account)
-
         }
         super.onResume()
     }

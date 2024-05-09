@@ -85,9 +85,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         }
         val title: TextView? = requireActivity().findViewById(R.id.title_txt)
         title?.text = getString(R.string.profile_management)
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }
+
     }
 
     override fun initCtrl() {
@@ -108,7 +106,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editAccountType.setOnClickListener(this)
         binding.editCompanyName.setOnClickListener(this)
         binding.editPassword.setOnClickListener(this)
-
 
     }
 
@@ -183,8 +180,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             personalInformation?.phoneCell?.let {
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneCellCountryCode + " " + it
-                                var fullPhoneNumber = personalInformation?.phoneCellCountryCode + " "+ it
-                                binding.mobileNumber.setContentDescription(Utils.accessibilityForNumbers(fullPhoneNumber.toString()))
                             }
 
                         } else if (personalInformation?.phoneDay.isNullOrEmpty().not()) {
@@ -193,8 +188,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             personalInformation?.phoneDay?.let {
                                 binding.mobileNumber.text =
                                     personalInformation?.phoneDayCountryCode + " " + it
-                                var fullPhoneNumber = personalInformation?.phoneCellCountryCode + " "+ it
-                                binding.mobileNumber.setContentDescription(Utils.accessibilityForNumbers(fullPhoneNumber))
                             }
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
@@ -215,6 +208,10 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                     }
                 }
 
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).focusToolBarHome()
+                }
+
             }
 
             is Resource.DataError -> {
@@ -224,9 +221,15 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).focusToolBarHome()
+                }
             }
 
             else -> {
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).focusToolBarHome()
+                }
             }
         }
         if(navFlowFrom == Constants.BIOMETRIC_CHANGE){

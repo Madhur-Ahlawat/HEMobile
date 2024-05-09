@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.bottomnav
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -68,7 +69,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private var loader: LoaderDialog? = null
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     var from: String = ""
-    var refreshTokenApiCalled: Boolean = false
+    private var refreshTokenApiCalled: Boolean = false
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
 
     companion object {
@@ -83,7 +84,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         fun setTitle(title: String) {
             dataBinding?.titleTxt?.text = title
-            dataBinding?.titleTxt?.contentDescription = title
         }
 
         fun removeBottomBar() {
@@ -122,21 +122,21 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         }
 
-        fun setDeselectedIcon(context: Context, i: Int) {
+        private fun setDeselectedIcon(context: Context, i: Int) {
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
-                context.resources.getColor(R.color.new_btn_color)
+                context.resources.getColor(R.color.new_btn_color,null)
             )
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-                context.resources.getColor(R.color.new_btn_color)
+                context.resources.getColor(R.color.new_btn_color,null)
             )
         }
 
-        fun setSelectedIcon(context: Context, i: Int) {
+        private fun setSelectedIcon(context: Context, i: Int) {
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
-                context.resources.getColor(R.color.hyperlink_blue2)
+                context.resources.getColor(R.color.hyperlink_blue2,null)
             )
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-                context.resources.getColor(R.color.hyperlink_blue2)
+                context.resources.getColor(R.color.hyperlink_blue2,null)
             )
         }
     }
@@ -153,7 +153,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
 
-    fun showLoader() {
+    private fun showLoader() {
         val fragmentManager = supportFragmentManager
         val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
         if (existingFragment != null) {
@@ -183,7 +183,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dashboardViewModel.getDashboardAllData(request)
     }
 
-    fun hitAPIs(): () -> Unit? {
+    private fun hitAPIs(): () -> Unit? {
         getDashBoardAllData()
         getNotificationApi()
         return {}
@@ -228,7 +228,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             from = ""
 
         } else {
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, from)
             bundle.putBoolean(Constants.GO_TO_SUCCESS_PAGE, goToSuccessPage)
             dataBinding?.idToolBarLyt?.gone()
@@ -278,7 +278,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             } else {
                 dataBinding?.backButton?.visible()
             }
-            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
 
         }
         dataBinding?.bottomNavigationView?.setOnNavigationItemChangedListener(
@@ -293,7 +292,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             if (navController.currentDestination?.id != R.id.dashBoardFragment) {
                                 dashboardClick()
                             }
-                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
                         }
 
                         1 -> {
@@ -306,7 +304,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                                 dataBinding?.fragmentContainerView?.findNavController()
                                     ?.navigate(R.id.crossingHistoryFragment)
                             }
-                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
                         }
 
                         2 -> {
@@ -320,7 +317,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                                     ?.navigate(R.id.notificationFragment)
 
                             }
-                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
 
                         }
 
@@ -329,16 +325,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                             if (navController.currentDestination?.id != R.id.accountFragment) {
                                 accountFragmentClick()
                             }
-                            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
                         }
 
                     }
                 }
             }
         )
-
-        dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.text.toString()
-
     }
 
 
@@ -410,7 +402,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         loader?.dismiss()
         when (resource) {
             is Resource.Success -> {
-                if (resource.data?.messageList.isNullOrEmpty() == false) {
+                if (!resource.data?.messageList.isNullOrEmpty()) {
                     val countOfY = resource.data?.messageList?.count { it?.isViewed == "Y" }
                     val countOfN = (resource.data?.messageList?.size ?: 0).minus(countOfY ?: 0)
                     if (countOfN != 0) {
@@ -429,7 +421,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
     }
 
-    fun setbagdeCount(countOfN: Int) {
+    fun setbadgeCount(countOfN: Int) {
         dataBinding?.bottomNavigationView?.updateBadgeCount(2, countOfN)
 
     }
@@ -565,7 +557,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     fun refreshTokenApi() {
-        if (refreshTokenApiCalled == false) {
+        if (!refreshTokenApiCalled) {
             BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
         }
         refreshTokenApiCalled = true
@@ -612,16 +604,20 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     fun focusToolBarHome() {
+        Log.e("TAG", "focusToolBarHome: " )
         dataBinding?.backButton?.requestFocus() // Focus on the backButton
         val task = Runnable {
             if (dataBinding?.backButton?.isVisible == true && dataBinding?.backButton?.isAccessibilityFocused == false) {
+                Log.e("TAG", "focusToolBarHome:--> " )
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             } else if (dataBinding?.backButton?.isVisible == false) {
+                Log.e("TAG", "focusToolBarHome:**> " )
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             }
         }
+        Log.e("TAG", "focusToolBarHome:(()) " )
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }

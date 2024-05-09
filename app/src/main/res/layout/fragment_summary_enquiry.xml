@@ -17,8 +17,8 @@
 
         <variable
             name="sub_category"
-            android:value="Sub category"
-            type="String" />
+            type="String"
+            android:value="Sub category" />
 
         <variable
             name="commentsClickListener"
@@ -28,6 +28,7 @@
             name="contactDetailsClickListener"
             type="android.view.View.OnClickListener" />
     </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,9 +50,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:fontFamily="@font/open_sans_semibold"
-                tools:text="@string/details_of_enquiry"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_16sp" />
+                android:textSize="@dimen/font_16sp"
+                tools:text="@string/details_of_enquiry" />
 
             <TextView
                 android:id="@+id/contact_details_tv"
@@ -71,59 +72,57 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                android:importantForAccessibility="yes"
-                android:screenReaderFocusable="true"
+                android:importantForAccessibility="no"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/category_tv"
-                        style="@style/MediumTextBlack"
-                        android:layout_width="0dp"
-                        android:screenReaderFocusable="false"
-                        android:text="@string/str_category"
-                        android:textSize="15sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/category_edit_iv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/category_data_tv"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
-                        android:screenReaderFocusable="false"
-                        android:text="@{viewModel.enquiryModel.category.value}"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/ll_edit_category"
-                        app:layout_constraintTop_toBottomOf="@id/category_tv" />
-                    <LinearLayout
-                        android:id="@+id/ll_edit_category"
+                        <TextView
+                            android:id="@+id/category_tv"
+                            style="@style/MediumTextBlack"
+                            android:layout_width="0dp"
+                            android:text="@string/str_category"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/category_data_tv"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:text="@{viewModel.enquiryModel.category.value}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/category_tv" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <ImageView
+                        android:id="@+id/category_edit_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="yes"
                         android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:onClick="@{categoryClickListener}"
+                        android:padding="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" >
-                        <ImageView
-                            android:id="@+id/category_edit_iv"
-                            android:layout_width="wrap_content"
-                            android:screenReaderFocusable="true"
-                            android:onClick="@{categoryClickListener}"
-                            android:importantForAccessibility="yes"
-                            android:contentDescription="@string/str_edit"
-                            android:layout_height="wrap_content"
-                            android:minHeight="@dimen/margin_48dp"
-                            android:minWidth="@dimen/margin_48dp"
-                            android:padding="@dimen/margin_20dp"
-                            android:src="@drawable/edit"/>
-                    </LinearLayout>
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -138,50 +137,55 @@
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
                 android:focusable="true"
-                android:importantForAccessibility="yes"
-                android:screenReaderFocusable="true"
+                android:importantForAccessibility="no"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_sub_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/sub_category_tv"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/str_sub_category"
-                        android:textSize="15sp"
-                        android:screenReaderFocusable="false"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/subcategory_edit_iv"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/sub_category_data_tv"
-                        style="@style/RegularTextBlack"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:focusable="false"
-                        android:layout_width="0dp"
-                        android:text="@{viewModel.enquiryModel.subCategory.value}"
-                        android:importantForAccessibility="no"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/subcategory_edit_iv"
-                        app:layout_constraintTop_toBottomOf="@id/sub_category_tv"/>
+                        <TextView
+                            android:id="@+id/sub_category_tv"
+                            style="@style/MediumTextBlack"
+                            android:text="@string/str_sub_category"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/sub_category_data_tv"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:text="@{viewModel.enquiryModel.subCategory.value}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/sub_category_tv" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/subcategory_edit_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
-                        android:minWidth="@dimen/margin_48dp"
-                        android:padding="@dimen/margin_20dp"
-                        android:importantForAccessibility="yes"
-                        android:src="@drawable/edit"
-                        android:onClick="@{categoryClickListener}"
                         android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:onClick="@{categoryClickListener}"
+                        android:padding="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -196,44 +200,51 @@
                 android:id="@+id/contact_message_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/contact_message"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="@dimen/margin_2dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
+                android:contentDescription="@string/contact_message"
                 android:elevation="3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
-                    android:padding="@dimen/margin_15dp">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/contact_message_tv"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/contact_message"
-                        android:textSize="15sp"
-                        android:screenReaderFocusable="false"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"  />
+                        app:layout_constraintEnd_toStartOf="@+id/contact_message_edit_iv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/contact_message_tv"
+                            style="@style/MediumTextBlack"
+                            android:text="@string/contact_message"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <ImageView
                         android:id="@+id/contact_message_edit_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
-                        android:minWidth="@dimen/margin_48dp"
-                        android:padding="@dimen/margin_20dp"
                         android:contentDescription="@string/str_edit"
                         android:importantForAccessibility="yes"
-                        android:src="@drawable/edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
                         android:onClick="@{commentsClickListener}"
+                        android:padding="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -248,9 +259,9 @@
                 android:id="@+id/personal_details_tv"
                 style="@style/SemiBoldTextBlack"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:text="@string/personal_details"
-                android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/contact_message_cv" />
@@ -265,51 +276,57 @@
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
                 android:focusable="true"
-                android:importantForAccessibility="yes"
+                android:importantForAccessibility="no"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/name_tv"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/str_name"
-                        android:screenReaderFocusable="false"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/name_data_tv"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="start|center"
-                        android:text="@{viewModel.enquiryModel.firstname+' '+viewModel.enquiryModel.lastname}"
-                        android:importantForAccessibility="no"
-                        android:focusable="false"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/name_edit_iv"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/name_tv" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/name_tv"
+                            style="@style/MediumTextBlack"
+                            android:text="@string/str_name"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/name_data_tv"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            android:text="@{viewModel.enquiryModel.firstname+' '+viewModel.enquiryModel.lastname}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/name_tv" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/name_edit_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
-                        android:minWidth="@dimen/margin_48dp"
-                        android:padding="@dimen/margin_20dp"
-                        android:importantForAccessibility="yes"
-                        android:src="@drawable/edit"
-                        android:onClick="@{contactDetailsClickListener}"
                         android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:onClick="@{contactDetailsClickListener}"
+                        android:padding="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -327,53 +344,58 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                android:contentDescription="Email Address @{viewModel.enquiryModel.email}"
                 android:focusable="true"
-                android:importantForAccessibility="yes"
+                android:importantForAccessibility="no"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/email_tv"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/email_address"
-                        android:textSize="15sp"
-                        android:screenReaderFocusable="false"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/email_data_tv"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="start|center"
-                        android:text="@{viewModel.enquiryModel.email}"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/email_edit_iv"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/email_tv" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/email_tv"
+                            style="@style/MediumTextBlack"
+                            android:text="@string/email_address"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/email_data_tv"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            android:text="@{viewModel.enquiryModel.email}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/email_tv" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/email_edit_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
+                        android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
                         android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:onClick="@{contactDetailsClickListener}"
                         android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
-                        android:onClick="@{contactDetailsClickListener}"
-                        android:importantForAccessibility="yes"
-                        android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -389,58 +411,61 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
-                android:visibility="@{viewModel.enquiryModel.mobileNumber.empty?View.GONE:View.VISIBLE}"
                 android:layout_marginTop="@dimen/margin_2dp"
-                android:contentDescription="Mobile Number @{viewModel.enquiryModel.countryCode+' ' +viewModel.enquiryModel.mobileNumber}"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
                 android:elevation="3dp"
-                android:focusable="true"
-                android:importantForAccessibility="yes"
+                android:importantForAccessibility="no"
+                android:visibility="@{viewModel.enquiryModel.mobileNumber.empty?View.GONE:View.VISIBLE}"
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_mobile_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/mobile_tv"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/str_mobile_number"
-                        android:textSize="15sp"
-                        android:screenReaderFocusable="false"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/mobile_data_tv"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="start|center"
-                        android:text="@{viewModel.enquiryModel.countryCode+' ' +viewModel.enquiryModel.mobileNumber}"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/mobile_edit_iv"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/mobile_tv" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/mobile_tv"
+                            style="@style/MediumTextBlack"
+                            android:text="@string/str_mobile_number"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/mobile_data_tv"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:gravity="start|center"
+                            android:text="@{viewModel.enquiryModel.countryCode+' ' +viewModel.enquiryModel.mobileNumber}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/mobile_tv" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/mobile_edit_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
+                        android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
                         android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:onClick="@{contactDetailsClickListener}"
                         android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
-                        android:importantForAccessibility="yes"
-                        android:onClick="@{contactDetailsClickListener}"
-                        android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,7 +26,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
@@ -49,12 +49,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     private var topup: String? = null
     private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
-    private val countPerPage = 10
-    var apiState = Constants.UNAVAILABLE
-    private var startIndex = 1
-    private var noOfPages = 1
     private val viewModel: DashboardViewModel by viewModels()
-    private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
     private val recentTransactionAdapter: GenericRecyclerViewAdapter<CheckedCrossingRecentTransactionsResponseModelItem> by lazy { createPaymentsHistoryListAdapter() }
 
     override fun getFragmentBinding(
@@ -66,7 +61,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     @RequiresApi(Build.VERSION_CODES.O)
     override fun init() {
 
-        if(requireActivity() is CheckPaidCrossingActivity){
+        if (requireActivity() is CheckPaidCrossingActivity) {
             (requireActivity() as CheckPaidCrossingActivity).focusToolBarCrossingDetails()
         }
 
@@ -78,32 +73,37 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         data.let {
             val crossings = it?.unusedTrip?.toInt()
             binding.fullName.text = it?.referenceNumber
-            if(crossings==1){
-                binding.address.text = resources.getString(R.string.str_crossing_data,crossings.toString())
-            }else{
-                binding.address.text =  resources.getString(R.string.str_crossings_data,crossings.toString())
+            binding.fullName.contentDescription = Utils.accessibilityForNumbers(it?.referenceNumber?:"")
+            if (crossings == 1) {
+                binding.address.text =
+                    resources.getString(R.string.str_crossing_data, crossings.toString())
+            } else {
+                binding.address.text =
+                    resources.getString(R.string.str_crossings_data, crossings.toString())
             }
             binding.emailAddress.text = it?.expirationDate?.let { it1 ->
                 DateUtils.convertStringDatetoAnotherFormat(
-                    it1,DateUtils.mm_dd_yyyy_hh_mm_ss_a,DateUtils.dd_mmm_yyyy
+                    it1, DateUtils.mm_dd_yyyy_hh_mm_ss_a, DateUtils.dd_mmm_yyyy
                 )
             }
-            binding.valueVehicleRegistrationNumber.text=it?.plateNumberToTransfer
+            binding.valueVehicleRegistrationNumber.text = it?.plateNumberToTransfer
+            binding.valueVehicleRegistrationNumber.contentDescription = Utils.accessibilityForNumbers(it?.plateNumberToTransfer?:"")
             val current = LocalDateTime.now()
             val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH)
             val date = LocalDateTime.parse(it?.expirationDate, formatter)
-            if(date.isBefore(current)){
+            if (date.isBefore(current)) {
                 binding.errorTxt.visible()
-                binding.errorTxt.text = getString(R.string.your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make
-                , it?.expirationDate?.let { it1 -> DateUtils.convertDateFormatToDateFormat(it1) })
+                binding.errorTxt.text =
+                    getString(R.string.your_credit_expired_on_s_you_must_pay_for_any_further_crossings_you_intend_to_make,
+                        it?.expirationDate?.let { it1 -> DateUtils.convertDateFormatToDateFormat(it1) })
             }
-            if(crossings==0){
+            if (crossings == 0) {
                 binding.transferBtn.gone()
                 binding.errorTxt.visible()
                 binding.emailCard.gone()
-                binding.errorTxt.text = getString(R.string.you_have_no_credit_left_you_must_pay_for_any_further_crossings_you_intend_to_make)
-            }
-            else{
+                binding.errorTxt.text =
+                    getString(R.string.you_have_no_credit_left_you_must_pay_for_any_further_crossings_you_intend_to_make)
+            } else {
                 binding.transferBtn.visible()
                 binding.errorTxt.gone()
                 binding.emailCard.visible()
@@ -111,23 +111,13 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         }
         initLoaderDialog()
         initTransactionsRecyclerView()
-        getPaymentHistoryList(startIndex)
+        getPaymentHistoryList()
 
 
-        setContentDescriptionForBullets()
-
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
     }
-
-    private fun setContentDescriptionForBullets() {
-        binding.layerFullName.contentDescription=binding.txtFullName.text.toString()+"."+ Utils.accessibilityForNumbers(binding.fullName.text.toString())
-        binding.layerCompanyName.contentDescription=binding.txtVehicleRegistrationNumber.text.toString()+"."+ Utils.accessibilityForNumbers(binding.valueVehicleRegistrationNumber.text.toString())
-        binding.creditRemainingCl.contentDescription=binding.txtAddress.text.toString()+"."+binding.address.text.toString()
-        binding.creditExpiryDateCl.contentDescription=binding.txtEmailAddress.text.toString()+"."+binding.emailAddress.text.toString()
-    }
-
 
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
@@ -139,6 +129,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     override fun observer() {
         observe(viewModel.paymentHistoryLiveDataCheckedCrossing, ::handlePaymentResponse)
     }
+
     private fun navigateLandingActivity() {
         requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
             putString(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
@@ -146,11 +137,13 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         }
         requireActivity().finish()
     }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnNext -> {
                 navigateLandingActivity()
             }
+
             R.id.transfer_btn -> {
                 val bundle = Bundle().apply {
                     putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -172,9 +165,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
 
     }
 
-    private fun getPaymentHistoryList(
-        index: Int
-    ) {
+    private fun getPaymentHistoryList() {
         if (loader?.isVisible == false && loader?.isAdded == true) {
             loader?.showsDialog
         }
@@ -203,24 +194,32 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         }
     }
 
-    fun createPaymentsHistoryListAdapter() = GenericRecyclerViewAdapter(
+    private fun createPaymentsHistoryListAdapter() = GenericRecyclerViewAdapter(
         getViewLayout = { R.layout.item_recent_tansactions_checked_crossings },
         areItemsSame = ::areRecentTransactionsSame,
         areItemContentsEqual = ::areRecentTransactionsSame,
         onBind = { recentTransactionItem, viewDataBinding, _ ->
             with(viewDataBinding as ItemRecentTansactionsCheckedCrossingsBinding) {
                 viewDataBinding.apply {
-                    tvDate.text = recentTransactionItem.entryDate+" "+recentTransactionItem.exitTime
+                    tvDate.text =resources.getString(R.string.concatenate_two_strings_with_space,
+                        recentTransactionItem.entryDate ,recentTransactionItem.exitTime)
                     tvTransactionType.text =
-                        recentTransactionItem.activity?.substring(0, 1)!!.toUpperCase().plus(
+                        recentTransactionItem.activity?.substring(0, 1)!!
+                            .uppercase(Locale.getDefault())
+                            .plus(
                             recentTransactionItem.activity?.substring(
-                                1,
-                                recentTransactionItem.activity!!.length
-                            )!!.toLowerCase()
+                                                        1,
+                                                        recentTransactionItem.activity!!.length
+                                                    )!!.lowercase(Locale.getDefault())
                         )
                     if (recentTransactionItem.activity?.lowercase()?.contains("toll") == false) {
-                        verticalStripTransactionType.setBackgroundColor(resources.getColor(R.color.green_status))
-                        indicatorIconTransactionType.setImageDrawable(resources.getDrawable(R.drawable.ic_euro_circular_green))
+                        verticalStripTransactionType.setBackgroundColor(
+                            resources.getColor(
+                                R.color.green_status,
+                                null
+                            )
+                        )
+                        indicatorIconTransactionType.setImageDrawable(ResourcesCompat.getDrawable(resources,R.drawable.ic_euro_circular_green,null))
                         topup = "+" + recentTransactionItem.amount
                     } else {
                         if (recentTransactionItem.exitDirection.equals("N")) {
@@ -232,31 +231,38 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                         }
                         verticalStripTransactionType.background.setTint(
                             resources.getColor(
-                                R.color.red_status
+                                R.color.red_status,null
                             )
                         )
-                        if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(
+                        topup = if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(
                                 Constants.EXEMPT_PARTNER
                             )
                         ) {
-                            topup = recentTransactionItem.amount
+                            recentTransactionItem.amount
                         } else {
-                            topup = "-" + recentTransactionItem.amount
+                            "-" + recentTransactionItem.amount
                         }
                         indicatorIconEuro.gone()
                         Glide.with(indicatorIconTransactionType.context)
-                            .load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_car_grey))
+                            .load(R.drawable.ic_car_grey)
                             .into(indicatorIconTransactionType)
                     }
                     root.setOnClickListener {
                         HomeActivityMain.checkedCrossing = recentTransactionItem
-                        HomeActivityMain.crossing=TransactionData(amount=recentTransactionItem.amount, transactionDate = recentTransactionItem.txDate,
-                            exitTime = recentTransactionItem.exitTime, plateNumber = recentTransactionItem.plateNumber, exitDirection = recentTransactionItem.exitDirection,
-                            tranSettleStatus = "")
+                        HomeActivityMain.crossing = TransactionData(
+                            amount = recentTransactionItem.amount,
+                            transactionDate = recentTransactionItem.txDate,
+                            exitTime = recentTransactionItem.exitTime,
+                            plateNumber = recentTransactionItem.plateNumber,
+                            exitDirection = recentTransactionItem.exitDirection,
+                            tranSettleStatus = ""
+                        )
                         val bundle = Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-                        bundle.putParcelable(Constants.NAV_DATA_KEY,data)
-                        if (HomeActivityMain.checkedCrossing?.activity?.lowercase().equals("toll")) {
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                        if (HomeActivityMain.checkedCrossing?.activity?.lowercase()
+                                .equals("toll")
+                        ) {
                             findNavController().navigate(
                                 R.id.action_crossing_details_to_tollDetails,
                                 bundle
@@ -274,8 +280,11 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
         }
     )
 
-    fun areRecentTransactionsSame(item1: CheckedCrossingRecentTransactionsResponseModelItem, item2: CheckedCrossingRecentTransactionsResponseModelItem): Boolean {
-        return ((item1.entryTime == item2.entryTime) && (item1.entryTime == item2.entryTime) && (item1.entryTime == item2.entryTime))
+    private fun areRecentTransactionsSame(
+        item1: CheckedCrossingRecentTransactionsResponseModelItem,
+        item2: CheckedCrossingRecentTransactionsResponseModelItem
+    ): Boolean {
+        return (item1.entryTime == item2.entryTime)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -317,30 +326,11 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData?>): MutableList<TransactionData> {
-        var transactionListSorted: MutableList<TransactionData> = mutableListOf()
-        for (transaction in transactions) {
-            if (transactionListSorted?.isEmpty() == true) {
-                transactionListSorted.add(transaction!!)
-            } else {
-                if (DateUtils.compareDates(
-                        transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
-                        transaction?.transactionDate + " " + transaction?.exitTime
-                    )
-                ) {
-                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
-
-                } else {
-                    transactionListSorted.add(transaction!!)
-                }
-            }
-        }
-        return transactionListSorted
-    }@RequiresApi(Build.VERSION_CODES.O)
     private fun sortTransactionsDateWiseDescendingCheckedCrossings(transactions: MutableList<CheckedCrossingRecentTransactionsResponseModelItem?>): MutableList<CheckedCrossingRecentTransactionsResponseModelItem> {
-        var transactionListSorted: MutableList<CheckedCrossingRecentTransactionsResponseModelItem> = mutableListOf()
+        val transactionListSorted: MutableList<CheckedCrossingRecentTransactionsResponseModelItem> =
+            mutableListOf()
         for (transaction in transactions) {
-            if (transactionListSorted?.isEmpty() == true) {
+            if (transactionListSorted.isEmpty()) {
                 transactionListSorted.add(transaction!!)
             } else {
                 if (DateUtils.compareDates(

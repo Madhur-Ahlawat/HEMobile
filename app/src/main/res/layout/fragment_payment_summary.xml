@@ -43,34 +43,39 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutVehicleRegistration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtVehicleRegistration"
-                        style="@style/MediumTextBlack"
-                        android:layout_width="0dp"
-                        android:importantForAccessibility="no"
-                        android:text="@string/vehicle_registration_number_plate"
-                        android:textSize="15sp"
-                        android:focusable="false"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
+                        android:importantForAccessibility="yes"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editRegistrationNumber"
                         app:layout_constraintRight_toLeftOf="@id/barrier"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/vehicleRegisration"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:importantForAccessibility="no"
-                        android:focusable="false"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/barrier"
-                        app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration"
-                        tools:text="AJ66 MHA" />
+                        <TextView
+                            android:id="@+id/txtVehicleRegistration"
+                            style="@style/MediumTextBlack"
+                            android:layout_width="0dp"
+                            android:focusable="false"
+                            android:text="@string/vehicle_registration_number_plate"
+                            android:textSize="15sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/vehicleRegisration"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.Barrier
                         android:id="@+id/barrier"
@@ -84,12 +89,12 @@
                         android:id="@+id/editRegistrationNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
-                        android:minWidth="@dimen/margin_48dp"
-                        android:padding="@dimen/margin_20dp"
-                        android:src="@drawable/edit"
                         android:contentDescription="@string/str_edit"
                         android:importantForAccessibility="yes"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -115,41 +120,48 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardRecentCrossings"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtRecentCrossings"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/recent_crossings"
-                        android:textSize="15sp"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
+                        android:importantForAccessibility="yes"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editRecentCrossings"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/recentCrossings"
-                        style="@style/RegularTextBlack"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:text="3"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtRecentCrossings" />
+                        <TextView
+                            android:id="@+id/txtRecentCrossings"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/recent_crossings"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/recentCrossings"
+                            style="@style/RegularTextBlack"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtRecentCrossings"
+                            tools:text="3" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editRecentCrossings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
-                        android:minWidth="@dimen/margin_48dp"
-                        android:padding="@dimen/margin_20dp"
-                        android:importantForAccessibility="yes"
-                        android:src="@drawable/edit"
                         android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -174,44 +186,51 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtCreditAdditionalCrossings"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/credit_for_additional_crossings"
-                        android:textSize="15sp"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/creditAdditionalCrossings"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="start|center"
-                        android:focusable="false"
-                        tools:text="1"
-                        android:importantForAccessibility="no"
+                        android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
+                        android:importantForAccessibility="yes"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editCreditForAdditionalCrossings"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtCreditAdditionalCrossings" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txtCreditAdditionalCrossings"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/credit_for_additional_crossings"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/creditAdditionalCrossings"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtCreditAdditionalCrossings"
+                            tools:text="1" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editCreditForAdditionalCrossings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
-                        android:minWidth="@dimen/margin_48dp"
-                        android:padding="@dimen/margin_20dp"
                         android:contentDescription="@string/str_edit"
                         android:importantForAccessibility="yes"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -245,10 +264,9 @@
                     <TextView
                         android:id="@+id/txtPaymentAmount"
                         style="@style/MediumTextBlack"
+                        android:focusable="false"
                         android:text="@string/str_total_payment_amount"
                         android:textSize="15sp"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -258,9 +276,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="start|center"
                         android:focusable="false"
-                        android:importantForAccessibility="no"
+                        android:gravity="start|center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtPaymentAmount" />
 
@@ -284,44 +301,51 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtEmail"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/str_email"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/email"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="start|center"
-                        android:importantForAccessibility="no"
-                        android:focusable="false"
+                        android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
+                        android:importantForAccessibility="yes"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editEmail"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtEmail" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txtEmail"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/str_email"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/email"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtEmail" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
-                        android:minWidth="@dimen/margin_48dp"
-                        android:padding="@dimen/margin_20dp"
-                        android:importantForAccessibility="yes"
-                        android:src="@drawable/edit"
                         android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
+                        android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -346,44 +370,51 @@
                 app:cardCornerRadius="5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAccessibility="no"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtMobileNumber"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/mobile_number"
-                        android:textSize="15sp"
-                        android:importantForAccessibility="no"
-                        android:focusable="false"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/mobileNumber"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="start|center"
-                        android:focusable="false"
-                        android:importantForAccessibility="no"
+                        android:focusable="true"
+                        android:padding="@dimen/margin_5dp"
+                        android:importantForAccessibility="yes"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editMobileNumber"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txtMobileNumber"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/mobile_number"
+                            android:textSize="15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/mobileNumber"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editMobileNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/margin_48dp"
+                        android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="yes"
                         android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
                         android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
-                        android:importantForAccessibility="yes"
-                        android:contentDescription="@string/str_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

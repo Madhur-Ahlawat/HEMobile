@@ -8,15 +8,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15dp"
         android:layout_marginEnd="@dimen/margin_15dp"
-        android:paddingBottom="@dimen/margin_30dp"
-        android:importantForAccessibility="no">
+        android:importantForAccessibility="no"
+        android:paddingBottom="@dimen/margin_30dp">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/btnContinue"
             android:fillViewport="true"
             android:importantForAccessibility="no"
-            android:layout_above="@+id/btnContinue"
             android:overScrollMode="never">
 
             <LinearLayout
@@ -58,27 +58,35 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutVehicleRegistration"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
-                        android:padding="@dimen/margin_15dp">
+                        style="@style/account_summary_layer_cl_style">
 
-                        <TextView
-                            android:id="@+id/txtVehicleRegistration"
-                            style="@style/MediumTextBlack"
-                            android:importantForAccessibility="no"
-                            android:text="@string/vehicle_registration_number_plate"
-                            android:textSize="15sp"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/margin_50dp"
+                            android:focusable="true"
+                            android:padding="@dimen/margin_5dp"
+                            android:importantForAccessibility="yes"
+                            android:orientation="vertical"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            android:id="@+id/vehicleRegisration"
-                            style="@style/RegularTextBlack"
-                            android:layout_marginTop="@dimen/margin_5dp"
-                            android:importantForAccessibility="no"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
+                            <TextView
+                                android:id="@+id/txtVehicleRegistration"
+                                style="@style/MediumTextBlack"
+                                android:text="@string/vehicle_registration_number_plate"
+                                android:textSize="15sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/vehicleRegisration"
+                                style="@style/RegularTextBlack"
+                                android:layout_marginTop="@dimen/margin_5dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txtVehicleRegistration" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                         <ImageView
@@ -109,20 +117,20 @@
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
                     android:elevation="3dp"
-                    android:importantForAccessibility="yes"
+                    android:importantForAccessibility="no"
                     app:cardCornerRadius="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cardRecentCrossings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
                         android:padding="@dimen/margin_15dp">
 
                         <TextView
                             android:id="@+id/txtCreditRemaining"
                             style="@style/MediumTextBlack"
-                            android:importantForAccessibility="no"
                             android:text="@string/credit_remaining"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +140,6 @@
                             android:id="@+id/creditRemaining"
                             style="@style/RegularTextBlack"
                             android:layout_marginTop="@dimen/margin_5dp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtCreditRemaining" />
 
@@ -151,19 +158,19 @@
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
                     android:elevation="3dp"
-                    android:importantForAccessibility="yes"
+                    android:importantForAccessibility="no"
                     app:cardCornerRadius="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:importantForAccessibility="no"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
                         android:padding="@dimen/margin_15dp">
 
                         <TextView
                             android:id="@+id/txtCreditWillExpireOn"
                             style="@style/MediumTextBlack"
-                            android:importantForAccessibility="no"
                             android:text="@string/credit_will_expire_on"
                             android:textSize="15sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -176,7 +183,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_5dp"
                             android:gravity="start|center"
-                            android:importantForAccessibility="no"
                             app:layout_constraintEnd_toEndOf="@+id/txtCreditWillExpireOn"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txtCreditWillExpireOn" />
