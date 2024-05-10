@@ -19,6 +19,7 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountPostCodeNe
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
@@ -73,6 +74,10 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             PROFILE_MANAGEMENT -> {
                 binding.btnEnterAddressManually.gone()
                 binding.btnUpdateAddressManually.visible()
+
+                if(requireActivity() is HomeActivityMain){
+                    HomeActivityMain.setTitle(resources.getString(R.string.profile_address))
+                }
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
                 val data = navData as ProfileDetailModel?

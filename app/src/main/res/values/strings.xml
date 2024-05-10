@@ -939,13 +939,9 @@
     <string name="dotunicode">\u25CF</string>
     <string name="tickunicode">\u2713</string>
     <string name="str_at_least_8_character">be at least 8 characters long</string>
-    <string name="str_bullet_at_least_8_character">Bullet point, Be at least 8 characters long</string>
     <string name="str_contain_at_least_one_upper_case">contain at least one upper case letter (A-Z)</string>
-    <string name="str_bullet_contain_at_least_one_upper_case">Bullet point, Contain at least one upper case letter (A-Z)</string>
     <string name="str_contain_at_least_one_lower_case">contain at least one lower case letter (a-z)</string>
-    <string name="str_bullet_contain_at_least_one_lower_case">Bullet point, Contain at least one lower case letter (a-z)</string>
     <string name="str_contain_at_least_one_number">contain at least one number (0–9)</string>
-    <string name="str_bullet_contain_at_least_one_number">Bullet point, Contain at least one number (0–9)</string>
     <string name="forgotPassword_email_screenHeading">Forgot your password</string>
     <string name="str_choose_verification_method">Choose a verification method</string>
     <string name="str_enter_six_digit_code">Enter 6-digit security code</string>
@@ -969,10 +965,6 @@
     <string name="str_about_this_service_2">sign in or set up a Dart Charge account</string>
     <string name="str_about_this_service_3">check with crossings you\'ve paid for</string>
     <string name="str_about_this_service_4">register to receive notifications when you cross</string>
-    <string name="str_bullet_about_this_service_4">Bullet point, Register to receive notifications when you cross</string>
-    <string name="str_bullet_about_this_service_1">Bullet point, Pay for the crossing</string>
-    <string name="str_bullet_about_this_service_2">Bullet point, Sign in or set up a Dart Charge account</string>
-    <string name="str_bullet_about_this_service_3">Bullet point, Check with crossings you\'ve paid for</string>
     <string name="a_valid_debit_or_credit_card">a valid debit or credit card</string>
     <string name="create_account">Create account</string>
     <string name="the_vehicle_registration_number_plate_you_want_to_add_to_the_account">the vehicle registration (number plate) you want to add to the account</string>
@@ -1914,15 +1906,10 @@
     <string name="recent_crossings">Recent Crossings</string>
     <string name="how_your_payment_gets_calculated">How your payment amount gets calculated?</string>
     <string name="str_pay_for_crossing_point1">Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
-    <string name="str_bullet_pay_for_crossing_point1">Bullet point, Recent crossings include all northbound and southbound crossings made yesterday and today.</string>
     <string name="str_pay_for_crossing_point2">It costs £%s per crossing for a %s.</string>
-    <string name="str_bullet_pay_for_crossing_point2">Bullet point, It costs £%s per crossing for a %s.</string>
     <string name="str_pay_for_crossing_point3">A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>
-    <string name="str_bullet_pay_for_crossing_point3">Bullet point, A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>
     <string name="str_pay_for_crossing_point4">A return trip is 2 crossings</string>
-    <string name="str_bullet_pay_for_crossing_point4">Bullet point, A return trip is 2 crossings</string>
     <string name="str_pay_for_crossing_point5">Late payments will be used for future crossings - you may receive a PCN for any late payment</string>
-    <string name="str_bullet_pay_for_crossing_point5">Late payments will be used for future crossings - you may receive a PCN for any late payment</string>
     <string name="str_additional_crossing_point1">A crossing is a single journey over the bridge (Southbound) or through the tunnel (Northbound).</string>
     <string name="str_additional_crossing_point2">A return trip is 2 crossings.</string>
     <string name="str_additional_crossing_point3">These payments are valid up to 12 months or till they are used.</string>
@@ -1981,9 +1968,7 @@
     <string name="str_500_characters_remaining">You have 500 characters remaining.</string>
     <string name="str_upload_file_">Upload File</string>
     <string name="str_allowed_file_types">The selected file type must be a JPG, PDF, BMP or TIF</string>
-    <string name="str_bullet_allowed_file_types">Bullet point, The selected file type must be a JPG, PDF, BMP or TIF</string>
     <string name="str_file_size_not_morethan_8mb">Also, the selected file type should be no more than 8MB.</string>
-    <string name="str_bullet_file_size_not_morethan_8mb">Bullet point, Also, the selected file type should be no more than 8MB.</string>
 
     <string name="what_contact_details">What are your contact details?</string>
     <string name="well_use_details_to_respond_enquiry">We’ll only use these details to respond to your enquiry.</string>
@@ -2018,17 +2003,11 @@
     <string name="str_find_out_about_call_charges"><a href="https://www.gov.uk/call-charges"><u>Find out about call charges</u></a></string>
     <string name="str_get_in_touch_about">Get in touch about:</string>
     <string name="str_charges">charges</string>
-    <string name="str_bullet_charges">Bullet point, Charges</string>
     <string name="str_fines">fines (Penalty Charge Notice)</string>
-    <string name="str_bullet_fines">Bullet point, Fines (Penalty Charge Notice)</string>
     <string name="str_refunds">refunds</string>
-    <string name="str_bullet_refunds">Bullet point, Refunds</string>
     <string name="str_dart_charge_accounts">Dart Charge accounts</string>
-    <string name="str_bullet_dart_charge_accounts">Bullet point, Dart Charge accounts</string>
     <string name="str_complaints">complaints</string>
-    <string name="str_bullet_complaints">Bullet point, Complaints</string>
     <string name="str_general_enquiries">general enquiries</string>
-    <string name="str_bullet_general_enquiries">Bullet point, General enquiries</string>
     <string name="str_get_in_touch">Get in touch</string>
     <string name="str_enquiry_status">Enquiry status</string>
     <string name="str_incorrect_enquiry">Incorrect enquiry reference number or last name. Please try again.</string>
@@ -2213,10 +2192,8 @@
     <string name="str_phone_number_starts_countrycode">Your phone number starts with the country code %1$s. At this time you will be unable to use the following services.</string>
     <string name="str_description_error_message_number">Your phone number starts with the country code %1$s. At this time you will be unable to use the following services, Receiving communications about your account by text message, Two-step verification, %s</string>
     <string name="str_receving_communications">Receiving communications about your account by text message</string>
-    <string name="str_bullet_receving_communications">Bullet point, Receiving communications about your account by text message</string>
     <string name="str_receving_payment_receipt">Receiving your payment receipt by text message.</string>
     <string name="str_two_step_verification">Two-step verification</string>
-    <string name="str_bullet_two_step_verification">Bullet point, Two-step verification</string>
     <string name="str_may_change_mobile_number">You may change your mobile phone number or continue with your account creation</string>
     <string name="str_may_change_mobile_number_two_step">You may change your mobile phone number or continue to opt out of two-step verification and SMS messages.</string>
     <string name="str_may_change_mobile_number_pay_for_crossings">You may change your mobile phone number or select only email to receive your receipt. Or continue without a receipt.</string>

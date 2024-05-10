@@ -83,9 +83,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         } else {
             viewModel.accountDetail()
         }
-        val title: TextView? = requireActivity().findViewById(R.id.title_txt)
-        title?.text = getString(R.string.profile_management)
-
+        if(requireActivity() is HomeActivityMain){
+            HomeActivityMain.setTitle(resources.getString(R.string.profile_management))
+        }
     }
 
     override fun initCtrl() {

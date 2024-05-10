@@ -43,9 +43,6 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         FragmentAdditionalCrossingsBinding.inflate(inflater, container, false)
 
     override fun init() {
-
-        setContentDescriptionForBullet()
-
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         if (arguments?.containsKey(Constants.HAVE_RECENT_CROSSINGS) == true) {
@@ -125,15 +122,6 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
 
         binding.numberAdditionalCrossings.editText.addTextChangedListener(GenericTextWatcher())
         binding.numberAdditionalCrossings.editText.contentDescription = getString(R.string.editing_future_crossings,binding.numberAdditionalCrossings.editText.text.toString())
-    }
-
-    private fun setContentDescriptionForBullet() {
-        binding.point1Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.str_additional_crossing_point1)
-        binding.point2Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.str_additional_crossing_point2)
-        binding.point3Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) +"."+ resources.getString(R.string.str_additional_crossing_point3)
     }
 
     inner class GenericTextWatcher : TextWatcher {

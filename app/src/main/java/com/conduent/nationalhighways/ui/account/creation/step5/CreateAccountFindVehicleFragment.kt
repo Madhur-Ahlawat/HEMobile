@@ -129,8 +129,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
         }
 
-        binding.titleText2.contentDescription=resources.getString(R.string.accessibility_bullet)+", "+resources.getString(R.string.str_pay_for_crossing_numberplate_point1)
-        binding.titleText3.contentDescription=resources.getString(R.string.accessibility_bullet)+", "+resources.getString(R.string.str_pay_for_crossing_numberplate_point2)
+//        binding.titleText2.contentDescription=resources.getString(R.string.accessibility_bullet)+", "+resources.getString(R.string.str_pay_for_crossing_numberplate_point1)
+//        binding.titleText3.contentDescription=resources.getString(R.string.accessibility_bullet)+", "+resources.getString(R.string.str_pay_for_crossing_numberplate_point2)
         if(requireActivity() is MakeOffPaymentActivity){
             (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
         }
