@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:importantForAccessibility="yes"
+                android:focusable="true"
                 android:orientation="horizontal"
                 android:visibility="gone"
                 tools:visibility="visible">
