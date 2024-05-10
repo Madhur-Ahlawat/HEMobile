@@ -49,9 +49,6 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         FragmentCasesEnquiryDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if(requireActivity() is HomeActivityMain){
-            HomeActivityMain.dataBinding?.titleTxt?.contentDescription = HomeActivityMain.dataBinding?.titleTxt?.getText()
-        }
         if (requireActivity() is RaiseEnquiryActivity) {
             binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
         } else {

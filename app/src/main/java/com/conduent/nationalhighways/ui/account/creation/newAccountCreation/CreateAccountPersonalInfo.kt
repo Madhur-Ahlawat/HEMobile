@@ -79,7 +79,6 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
             PROFILE_MANAGEMENT -> {
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_name)
-                title?.contentDescription = title?.text
                 val data = navData as ProfileDetailModel?
                 if (data?.accountInformation?.accountType.equals(Constants.BUSINESS_ACCOUNT, true)==false) {
                     enablePersonalView()

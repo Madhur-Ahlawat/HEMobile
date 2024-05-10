@@ -44,7 +44,6 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
 
         fun setToolBarTitle(title: String) {
             binding.toolBarLyt.titleTxt.text = title
-            binding.toolBarLyt.titleTxt.contentDescription = binding.toolBarLyt.titleTxt.text
         }
         fun setBackIcon(status: Int) {
             binding.toolBarLyt.backButton.visibility=status
