@@ -85,7 +85,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         }
         val title: TextView? = requireActivity().findViewById(R.id.title_txt)
         title?.text = getString(R.string.profile_management)
-
     }
 
     override fun initCtrl() {
