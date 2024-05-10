@@ -84,6 +84,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         fun setTitle(title: String) {
             dataBinding?.titleTxt?.text = title
+            dataBinding?.titleTxt?.contentDescription = dataBinding?.titleTxt?.getText().toString().replace("-", " ")
         }
 
         fun removeBottomBar() {

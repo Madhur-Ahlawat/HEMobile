@@ -75,6 +75,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 binding.btnUpdateAddressManually.visible()
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
+                title?.contentDescription = title?.text
                 val data = navData as ProfileDetailModel?
                 data?.personalInformation?.zipcode?.let { binding.inputPostCode.setText(it) }
                 postcode = data?.personalInformation?.zipcode ?: ""

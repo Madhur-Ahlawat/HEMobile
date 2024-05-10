@@ -67,7 +67,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
             if(HomeActivityMain.dataBinding?.titleTxt!!.getText().toString().toLowerCase().contains("contact")){
-                HomeActivityMain.dataBinding?.titleTxt!!.contentDescription = getString(R.string.contact_us_upper_case)
+                HomeActivityMain.dataBinding?.titleTxt!!.contentDescription = getString(R.string.contact_us)
             }
             else if(HomeActivityMain.dataBinding?.titleTxt!!.getText().toString().toLowerCase().contains("enquiry")){
                 HomeActivityMain.dataBinding?.titleTxt!!.contentDescription = getString(R.string.enquiry_status)

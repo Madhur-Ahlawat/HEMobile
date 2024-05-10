@@ -138,6 +138,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             PROFILE_MANAGEMENT -> {
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
+                title?.contentDescription = title?.text
                 (navData as ProfileDetailModel).personalInformation?.let {
                     if (oldPostCode.equals(editPostCode)) {
                         binding.address.editText.setText(it.addressLine1)

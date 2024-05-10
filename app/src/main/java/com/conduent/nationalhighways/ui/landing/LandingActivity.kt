@@ -63,6 +63,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
 
         fun setToolBarTitle(title: String) {
             binding.titleTxt.text = title
+            binding.titleTxt.contentDescription = binding.titleTxt.text
         }
 
         fun setBackIcon(status: Int) {
