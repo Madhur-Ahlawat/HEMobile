@@ -24,6 +24,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
+import com.conduent.nationalhighways.utils.extn.toolbar
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -48,11 +49,11 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         FragmentCasesEnquiryDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
-
         if (requireActivity() is RaiseEnquiryActivity) {
             binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
         } else {
             binding.btnNext.text = resources.getString(R.string.str_continue)
+
         }
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(requireActivity().resources.getString(R.string.enquiry_status))
