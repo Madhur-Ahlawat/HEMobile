@@ -53,9 +53,10 @@ class GenericRecyclerViewAdapter<T>(
         val sameItems: (oldItem: T, newItem: T) -> Boolean,
         val sameItemContents: (oldItem: T, newItem: T) -> Boolean,
     ) : DiffUtil.ItemCallback<T>() {
-        override fun areItemsTheSame(oldItem: T, newItem: T) =
-            sameItems(oldItem, newItem)
-        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
+        override fun areItemsTheSame(oldItem: T & Any, newItem: T & Any): Boolean {
+           return sameItems(oldItem, newItem)
+        }
+        override fun areContentsTheSame(oldItem: T & Any, newItem: T & Any): Boolean {
             return sameItemContents(oldItem, newItem)
         }
     }

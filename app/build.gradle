@@ -17,7 +17,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        minSdkVersion 24
+        minSdkVersion 29
         targetSdkVersion 34
         applicationId "com.conduent.nationalhighways"
         versionCode 1
@@ -137,7 +137,6 @@ android {
     dependencies {
 
         def hiltLifeCycleVersion = '1.0.0-alpha03'
-        def nav_version = "2.7.7"
         def lifecycle_version = "2.7.0"
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -173,18 +172,16 @@ android {
         // Network
         implementation 'com.squareup.retrofit2:retrofit:2.9.0'
         implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-        implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+        implementation 'com.squareup.okhttp3:okhttp:4.12.0'
         implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
         implementation 'com.google.code.gson:gson:2.10.1'
 
         //Hilt for DI
-        implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
-        annotationProcessor "com.google.dagger:hilt-compiler:$daggerHiltVersion"
 
-        // Hilt ViewModel extension
-       // implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hiltLifeCycleVersion"
-        kapt "androidx.hilt:hilt-compiler:$hiltLifeCycleVersion"
-        kapt "com.google.dagger:hilt-compiler:$daggerHiltVersion"
+        //HiltDependencyInjection
+        implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
+        kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+        kapt "androidx.hilt:hilt-compiler:1.2.0"
 
         //Adobe analytics
         implementation 'com.adobe.marketing.mobile:analytics:1.2.10'
@@ -284,9 +281,10 @@ android {
         //https://stackoverflow.com/questions/51365778/how-to-generate-11-char-hash-key-for-sms-retriever-with-google-app-signing
     }
 
-    hilt {
-        enableAggregatingTask = true
+    kapt {
+        correctErrorTypes = true
     }
+    namespace 'com.conduent.nationalhighways'
 
 }
 
@@ -297,7 +295,7 @@ dependencies {
     implementation 'androidx.webkit:webkit:1.11.0'
     implementation 'androidx.paging:paging-common-ktx:3.2.1'
     implementation 'androidx.paging:paging-runtime-ktx:3.2.1'
-    implementation 'com.google.android.gms:play-services-location:20.0.0'
+    implementation 'com.google.android.gms:play-services-location:21.2.0'
     implementation 'io.michaelrocks:libphonenumber-android:8.13.28'
     implementation 'androidx.work:work-runtime-ktx:2.9.0'
     implementation 'androidx.activity:activity-ktx:1.9.0'
