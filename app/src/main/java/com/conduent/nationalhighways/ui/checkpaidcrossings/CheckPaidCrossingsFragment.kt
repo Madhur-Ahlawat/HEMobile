@@ -1,15 +1,10 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityEvent
-import android.view.accessibility.AccessibilityManager
-import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -33,7 +28,6 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
-import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -82,12 +76,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
         binding.editReferenceNumber.editText.doAfterTextChanged {
             isEnable(it)
         }
-        binding.point1Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "\u202F" + resources.getString(R.string.paid_crossing_point1)
-        binding.point2Ll.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "\u202F" + resources.getString(R.string.paid_crossing_point2)
-
-        binding.referenceNumberHint.contentDescription = Utils.accessibilityForNumbers(resources.getString(R.string.for_example_hd542321725_or_1_898008009))
+        binding.referenceNumberHint.contentDescription =
+            Utils.accessibilityForNumbers(resources.getString(R.string.for_example_hd542321725_or_1_898008009))
     }
 
     override fun initCtrl() {
@@ -114,7 +104,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             ) {
                 isReferenceNumberValid = false
                 binding.errorMobileNumber.visible()
-                binding.errorMobileNumber.setText(getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9))
+                binding.errorMobileNumber.text = getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9)
             } else {
                 binding.errorMobileNumber.gone()
             }
@@ -207,7 +197,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                 is Resource.DataError -> {
                     if (status.errorMsg.contains("401")) {
                         binding.errorMobileNumber.visible()
-                        binding.errorMobileNumber.setText(getString(R.string.error_check_paid_crossings))
+                        binding.errorMobileNumber.text = getString(R.string.error_check_paid_crossings)
                     } else {
                         binding.errorMobileNumber.gone()
                         ErrorUtil.showError(binding.root, status.errorMsg)

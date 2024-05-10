@@ -12,7 +12,9 @@
             android:id="@+id/headerParent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:paddingBottom="@dimen/margin_20dp"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/header"
@@ -522,7 +524,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_20dp"
                 android:layout_marginTop="@dimen/margin_8dp"
-                android:layout_marginBottom="@dimen/margin_20dp"
                 android:background="@color/white"
                 android:minHeight="@dimen/margin_55dp"
                 app:cardCornerRadius="@dimen/margin_5dp"

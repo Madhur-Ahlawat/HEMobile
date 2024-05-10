@@ -69,8 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_5dp"
             android:layout_marginTop="@dimen/margin_5dp"
-            android:orientation="horizontal"
+            android:focusable="true"
             android:importantForAccessibility="yes"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2">
 
@@ -79,14 +80,12 @@
                 android:layout_height="@dimen/margin_5dp"
                 android:layout_gravity="center"
                 android:background="@drawable/circle_5dp"
-                android:importantForAccessibility="no"
-                />
+                android:contentDescription="@string/accessibility_bullet" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 style="@style/RegularTextBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
                 android:layout_marginStart="@dimen/margin_15dp"
                 android:text="@string/an_email_address_to_receive_a_code" />
 
@@ -98,6 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_5dp"
             android:layout_marginTop="@dimen/margin_5dp"
+            android:focusable="true"
             android:importantForAccessibility="yes"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,15 +108,13 @@
                 android:layout_height="@dimen/margin_5dp"
                 android:layout_gravity="center"
                 android:background="@drawable/circle_5dp"
-                android:importantForAccessibility="no"
-                />
+                android:contentDescription="@string/accessibility_bullet" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 style="@style/RegularTextBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_15dp"
-                android:importantForAccessibility="no"
                 android:text="@string/a_phone_number" />
 
         </LinearLayout>
@@ -127,8 +125,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_5dp"
             android:layout_marginTop="@dimen/margin_5dp"
-            android:orientation="horizontal"
+            android:focusable="true"
             android:importantForAccessibility="yes"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/createAccounPoint2">
 
@@ -137,15 +136,13 @@
                 android:layout_height="@dimen/margin_5dp"
                 android:layout_marginTop="@dimen/margin_7dp"
                 android:background="@drawable/circle_5dp"
-                android:importantForAccessibility="no"
-                />
+                android:contentDescription="@string/accessibility_bullet" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 style="@style/RegularTextBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_15dp"
-                android:importantForAccessibility="no"
                 android:text="@string/the_vehicle_registration_number_plate_you_want_to_add_to_the_account" />
 
         </LinearLayout>
@@ -156,8 +153,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_5dp"
             android:layout_marginTop="@dimen/margin_5dp"
-            android:orientation="horizontal"
+            android:focusable="true"
             android:importantForAccessibility="yes"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/createAccounPoint3">
 
@@ -166,14 +164,12 @@
                 android:layout_height="@dimen/margin_5dp"
                 android:layout_marginTop="@dimen/margin_7dp"
                 android:background="@drawable/circle_5dp"
-                android:importantForAccessibility="no"
-                />
+                android:contentDescription="@string/accessibility_bullet" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 style="@style/RegularTextBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
                 android:layout_marginStart="@dimen/margin_15dp"
                 android:text="@string/a_valid_debit_or_credit_card" />
 

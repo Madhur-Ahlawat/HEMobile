@@ -1044,10 +1044,13 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 
     override fun onAutoCompleteItemClick(item: String, selected: Boolean) {
         if (selected) {
-//            binding.mobileNumberEt.editText.setText("")
             binding.errorMobileNumber.gone()
             checkIncompatibleCountry(item, 5)
-            binding.mobileNumberEt.setText(binding.mobileNumberEt.text.toString())
+            if(binding.mobileNumberEt.editText.text.toString().isEmpty()){
+                binding.mobileNumberEt.setText("")
+            }else{
+                binding.mobileNumberEt.setText(binding.mobileNumberEt.editText.text.toString())
+            }
 
         } else {
             if (fullCountryNameWithCode.size > 0) {

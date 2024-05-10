@@ -119,21 +119,20 @@
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:orientation="horizontal"
                     android:importantForAccessibility="yes"
-                    android:contentDescription="@string/str_bullet_allowed_file_types"
+                    android:focusable="true"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/upload_file_tv">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_dot1"
-                        android:importantForAccessibility="no"
                         android:layout_width="@dimen/margin_6dp"
                         android:layout_height="@dimen/margin_6dp"
                         android:layout_marginTop="@dimen/margin_6dp"
+                        android:contentDescription="@string/accessibility_bullet"
                         android:src="@drawable/circle_5dp" />
 
                     <TextView
-                        android:importantForAccessibility="no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_8dp"
@@ -149,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5dp"
-                    android:contentDescription="@string/str_bullet_file_size_not_morethan_8mb"
+                    android:focusable="true"
                     android:orientation="horizontal"
                     android:importantForAccessibility="yes"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -159,7 +158,6 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_dot2"
                         android:layout_width="@dimen/margin_6dp"
-                        android:importantForAccessibility="no"
                         android:layout_height="@dimen/margin_6dp"
                         android:layout_marginTop="@dimen/_6sdp"
                         android:src="@drawable/circle_5dp" />
@@ -168,7 +166,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_8dp"
-                        android:importantForAccessibility="no"
                         android:fontFamily="@font/open_sans"
                         android:text="@string/str_file_size_not_morethan_8mb"
 

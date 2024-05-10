@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -53,13 +52,12 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         if (arguments?.containsKey(Constants.Edit_REQUEST_KEY) == true) {
             editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         }
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(requireActivity().resources.getString(R.string.str_raise_new_enquiry))
         }
 
         setBackPressListener(this)
 
-        saveEditData()
 
         binding.categoryDropdown.dropDownItemSelectListener = this
         binding.subcategoryDropdown.dropDownItemSelectListener = this
@@ -103,14 +101,10 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
             }
         }
 
-        if(requireActivity() is HomeActivityMain){
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }
-        if(requireActivity() is RaiseEnquiryActivity){
-            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
-        }
+
         binding.categoryDropdown.contentDescription = getString(R.string.category_accessibility)
-        binding.subcategoryDropdown.contentDescription = getString(R.string.sub_category_accessibility)
+        binding.subcategoryDropdown.contentDescription =
+            getString(R.string.sub_category_accessibility)
     }
 
     private fun getBundleData(): Bundle {
@@ -225,35 +219,47 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
                         categoryDropdown.dataSet.addAll(categoryNameList)
                     }
                     if (editRequest == Constants.EDIT_SUMMARY) {
-                        var selectedCategoryName=""
-                        var selectedCategoryPos=0
-                        for (i in 0 until categoryList.size){
-                            if(categoryList[i].value==binding.categoryDropdown.getSelectedValue().toString()){
-                                selectedCategoryName=categoryList[i].name?:""
-                                selectedCategoryPos=i
+                        var selectedCategoryName = ""
+                        var selectedCategoryPos = 0
+                        for (i in 0 until categoryList.size) {
+                            if (categoryList[i].value == binding.categoryDropdown.getSelectedValue()
+                                    .toString()
+                            ) {
+                                selectedCategoryName = categoryList[i].name ?: ""
+                                selectedCategoryPos = i
                                 break
                             }
                         }
                         apiViewModel.getSubCategories(selectedCategoryName)
-                        viewModel.edit_enquiryModel.value?.category = categoryList.get(selectedCategoryPos)
+                        viewModel.edit_enquiryModel.value?.category =
+                            categoryList.get(selectedCategoryPos)
                         binding.apply {
                             subcategoryDropdown.dataSet.clear()
                         }
                     }
-
-
                 }
+                focusTooolBar()
             }
 
             is Resource.DataError -> {
                 if (checkSessionExpiredOrServerError(resource.errorModel)) {
                     displaySessionExpireDialog(resource.errorModel)
                 }
+                focusTooolBar()
             }
 
             else -> {
-
+                focusTooolBar()
             }
+        }
+    }
+
+    fun focusTooolBar(){
+        saveEditData()
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is RaiseEnquiryActivity) {
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
 
@@ -261,9 +267,9 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
     }
 
-    fun isCategory(selectedItem: String):Boolean{
-        for (i in 0 until categoryList.size){
-            if(selectedItem.equals(categoryList[i].value)){
+    fun isCategory(selectedItem: String): Boolean {
+        for (i in 0 until categoryList.size) {
+            if (selectedItem.equals(categoryList[i].value)) {
                 return true
             }
         }
