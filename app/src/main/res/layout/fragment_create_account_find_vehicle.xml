@@ -100,14 +100,13 @@
                     android:layout_height="@dimen/margin_7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
                     android:background="@drawable/circle_5dp"
-                    android:importantForAccessibility="no" />
+                    android:contentDescription="@string/accessibility_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_pay_for_crossing_numberplate_point1"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
@@ -121,6 +120,7 @@
                 android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_marginBottom="@dimen/margin_20dp"
                 android:importantForAccessibility="yes"
+                android:focusable="true"
                 android:orientation="horizontal"
                 android:visibility="gone"
                 tools:visibility="visible">
@@ -131,14 +131,13 @@
                     android:layout_marginTop="@dimen/margin_7dp"
                     android:background="@drawable/circle_5dp"
                     android:contentDescription="@string/accessibility_bullet"
-                    android:importantForAccessibility="no" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_pay_for_crossing_numberplate_point2"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />

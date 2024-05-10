@@ -68,9 +68,9 @@
                 android:id="@+id/mobileNumber_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:backgroundTint="@color/label_color"
                 android:gravity="center_vertical"
-android:layout_marginTop="@dimen/margin_20dp"
                 android:maxLength="15"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp"
@@ -116,7 +116,8 @@ android:layout_marginTop="@dimen/margin_20dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtBottom">
+                app:layout_constraintTop_toBottomOf="@+id/txtBottom"
+                tools:visibility="visible">
 
                 <TextView
                     android:id="@+id/incompatible_tv"
@@ -133,17 +134,16 @@ android:layout_marginTop="@dimen/margin_20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_15dp"
-                    android:contentDescription="@string/str_bullet_receving_communications"
+                    android:focusable="true"
                     android:importantForAccessibility="yes"
                     android:orientation="horizontal"
                     android:screenReaderFocusable="true">
 
                     <ImageView
-                        android:layout_width="6dp"
-                        android:layout_height="6dp"
+                        android:layout_width="@dimen/margin_6dp"
+                        android:layout_height="@dimen/margin_6dp"
                         android:layout_marginTop="@dimen/_6sdp"
-                        android:importantForAccessibility="no"
-                        android:screenReaderFocusable="false"
+                        android:contentDescription="@string/accessibility_bullet"
                         android:src="@drawable/circle_red_5dp" />
 
 
@@ -152,8 +152,6 @@ android:layout_marginTop="@dimen/margin_20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:importantForAccessibility="no"
-                        android:screenReaderFocusable="false"
                         android:text="@string/str_receving_communications"
                         android:textColor="@color/red_error_color"
                         android:textSize="@dimen/font_16sp"
@@ -167,17 +165,16 @@ android:layout_marginTop="@dimen/margin_20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5dp"
-                    android:contentDescription="@string/str_bullet_two_step_verification"
+                    android:focusable="true"
                     android:importantForAccessibility="yes"
                     android:orientation="horizontal"
                     android:screenReaderFocusable="true">
 
                     <ImageView
-                        android:layout_width="6dp"
-                        android:layout_height="6dp"
+                        android:layout_width="@dimen/margin_6dp"
+                        android:layout_height="@dimen/margin_6dp"
                         android:layout_marginTop="@dimen/_6sdp"
-                        android:importantForAccessibility="no"
-                        android:screenReaderFocusable="false"
+                        android:contentDescription="@string/accessibility_bullet"
                         android:src="@drawable/circle_red_5dp" />
 
 
@@ -186,8 +183,6 @@ android:layout_marginTop="@dimen/margin_20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:importantForAccessibility="no"
-                        android:screenReaderFocusable="false"
                         android:text="@string/str_two_step_verification"
                         android:textColor="@color/red_error_color"
                         android:textSize="@dimen/font_16sp"

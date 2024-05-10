@@ -36,9 +36,9 @@
                 android:id="@+id/payment_amount_future_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:importantForAccessibility="yes"
-                android:focusable="true"
                 android:layout_marginTop="@dimen/margin_20dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 android:orientation="vertical">
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -46,12 +46,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_3dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:text="@string/str_payment_amount_for_additional_crossings"
                     android:textColor="@color/label_color"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/paymentCrossing"
@@ -64,16 +64,16 @@
                     android:textColor="@color/black"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/paymentCrossing_helper"/>
+                    app:layout_constraintTop_toBottomOf="@id/paymentCrossing_helper" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/payment_amount_recent_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:importantForAccessibility="yes"
-                android:focusable="true"
                 android:layout_marginTop="@dimen/margin_25dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 android:orientation="vertical">
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -81,12 +81,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_3dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:text="@string/str_payment_amount_for_recent_crossings"
                     android:textColor="@color/label_color"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/recentCrossing"
@@ -107,9 +107,9 @@
                 android:id="@+id/payment_amount_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:importantForAccessibility="yes"
-                android:focusable="true"
                 android:layout_marginTop="@dimen/margin_25dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 android:orientation="vertical">
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -117,12 +117,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_3dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:text="@string/str_total_amount"
                     android:textColor="@color/label_color"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/totalAmount"
@@ -135,7 +135,7 @@
                     android:textColor="@color/black"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/totalAmount_helper"/>
+                    app:layout_constraintTop_toBottomOf="@id/totalAmount_helper" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -152,6 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20dp"
+                android:focusable="true"
                 android:importantForAccessibility="yes"
                 android:orientation="horizontal">
 
@@ -159,7 +160,7 @@
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:importantForAccessibility="no"
+                    android:contentDescription="@string/accessibility_bullet"
                     android:src="@drawable/circle_5dp" />
 
                 <TextView
@@ -179,6 +180,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12dp"
+                android:focusable="true"
                 android:importantForAccessibility="yes"
                 android:orientation="horizontal">
 
@@ -186,7 +188,7 @@
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:importantForAccessibility="no"
+                    android:contentDescription="@string/accessibility_bullet"
                     android:src="@drawable/circle_5dp" />
 
                 <TextView
@@ -194,7 +196,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_additional_crossing_point2"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
@@ -207,6 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12dp"
                 android:layout_marginBottom="@dimen/margin_15dp"
+                android:focusable="true"
                 android:importantForAccessibility="yes"
                 android:orientation="horizontal">
 
@@ -214,7 +216,7 @@
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
-                    android:importantForAccessibility="no"
+                    android:contentDescription="@string/accessibility_bullet"
                     android:src="@drawable/circle_5dp" />
 
                 <TextView
@@ -222,7 +224,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_additional_crossing_point3"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
