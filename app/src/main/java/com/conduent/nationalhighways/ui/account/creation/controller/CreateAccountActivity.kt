@@ -1,11 +1,13 @@
 package com.conduent.nationalhighways.ui.account.creation.controller
 
 import android.view.accessibility.AccessibilityEvent
+import androidx.core.view.isVisible
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -52,12 +54,16 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
 
     }
     fun focusToolBarCreateAccount() {
-        binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
-        binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-
         val task = Runnable {
-            binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-            binding.toolBarLyt.backButton.contentDescription = getString(R.string.str_back)
+            if (binding.toolBarLyt.backButton.isVisible) {
+                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+            } else {
+                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                binding.toolBarLyt.titleTxt.requestFocus() // Focus on the backButton
+            }
         }
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)

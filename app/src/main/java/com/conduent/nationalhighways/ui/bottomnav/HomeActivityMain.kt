@@ -607,11 +607,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         Log.e("TAG", "focusToolBarHome: " )
         dataBinding?.backButton?.requestFocus() // Focus on the backButton
         val task = Runnable {
-            if (dataBinding?.backButton?.isVisible == true && dataBinding?.backButton?.isAccessibilityFocused == false) {
+            if (dataBinding?.backButton?.isVisible == true) {
                 Log.e("TAG", "focusToolBarHome:--> " )
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
-            } else if (dataBinding?.backButton?.isVisible == false) {
+            } else {
                 Log.e("TAG", "focusToolBarHome:**> " )
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
