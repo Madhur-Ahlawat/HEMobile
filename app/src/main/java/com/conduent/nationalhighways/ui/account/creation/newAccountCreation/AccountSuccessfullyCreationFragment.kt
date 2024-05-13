@@ -44,7 +44,9 @@ class AccountSuccessfullyCreationFragment :
 
         if (createProfileDetailModelModel!=null){
             binding.accountNumber.text=createProfileDetailModelModel?.accountNumber
+            binding.accountNumber.contentDescription=Utils.accessibilityForNumbers(createProfileDetailModelModel?.accountNumber?:"")
             binding.paymentReferenceNumber.text=createProfileDetailModelModel?.referenceNumber
+            binding.paymentReferenceNumber.contentDescription=Utils.accessibilityForNumbers(createProfileDetailModelModel?.referenceNumber?:"")
         }
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
 

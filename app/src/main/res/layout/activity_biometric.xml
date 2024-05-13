@@ -36,11 +36,11 @@
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/margin_48dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/margin_30dp"
                 android:fontFamily="@font/open_sans"
                 android:text="@string/biometriclogin"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="@dimen/font_16sp" />
 
 
             <!-- <androidx.appcompat.widget.SwitchCompat

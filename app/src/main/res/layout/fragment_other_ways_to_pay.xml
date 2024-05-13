@@ -114,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:importantForAccessibility="yes"
+            android:focusable="true"
             android:layout_marginTop="@dimen/margin_50dp">
 
             <ImageView
@@ -122,14 +123,12 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/margin_15dp"
                 android:scaleType="centerCrop"
-                android:importantForAccessibility="no"
                 android:src="@drawable/ic_exclaimation_black" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_18dp"
-                android:importantForAccessibility="no"
                 android:fontFamily="@font/open_sans_bold"
                 android:text="@string/str_you_must_pay"
                 android:textColor="@color/gray_707070"
