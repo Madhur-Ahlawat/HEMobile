@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
 import com.conduent.nationalhighways.databinding.FragmentSummaryEnquiryBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
@@ -100,6 +101,9 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 R.id.action_enquirySummaryFragment_to_enquiryContactDetailsFragment,
                 getBundleData()
             )
+        }
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
     }
 

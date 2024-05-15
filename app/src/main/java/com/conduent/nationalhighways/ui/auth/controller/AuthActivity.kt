@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.auth.controller
 
 import android.os.Bundle
 import android.view.accessibility.AccessibilityEvent
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -215,11 +216,15 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
     }
 
     fun focusToolBarAuth() {
-        binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
-
         val task = Runnable {
-            if(!binding.toolBarLyt.backButton.isAccessibilityFocused){
+            if (binding.toolBarLyt.backButton.isVisible) {
                 binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+            } else {
+                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                binding.toolBarLyt.titleTxt.requestFocus() // Focus on the backButton
             }
         }
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
