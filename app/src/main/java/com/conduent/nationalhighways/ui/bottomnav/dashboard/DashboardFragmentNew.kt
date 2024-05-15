@@ -5,12 +5,14 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.util.TypedValueCompat.dpToPx
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -84,6 +86,42 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         initLoaderDialog()
         setBackPressListener(this)
     }
+
+    private fun setHorizontalStrains() {
+        val boxTopupAmountHeight =
+            binding.boxTopupAmount.height
+        val boxLowBalanceThresholdHeight =
+            binding.boxLowBalanceThreshold.height
+        val boxTopupMethodHeight =
+            binding.boxTopupMethod.height
+        val maxHeightOfThree =
+            maxOf(boxTopupAmountHeight, boxLowBalanceThresholdHeight, boxTopupMethodHeight)
+        var highestAmountValue = ""
+        if(maxHeightOfThree>0) {
+            when (maxHeightOfThree) {
+                boxTopupAmountHeight -> {
+                    highestAmountValue = binding.valueTopupAmount.text.toString()
+                }
+
+                boxLowBalanceThresholdHeight -> {
+                    highestAmountValue = binding.valueLowBalanceThreshold.text.toString()
+                }
+
+                boxTopupMethodHeight -> {
+                    highestAmountValue = binding.valueAutopay.text.toString()
+                }
+            }
+        }
+        binding.valueLowBalanceThresholdDup.text = highestAmountValue
+        binding.valueAutopayDup.text = highestAmountValue
+        binding.valueTopupAmountDup.text = highestAmountValue
+
+        binding.threeBoxCl.visible()
+
+    }
+
+
+
 
     private fun initLoaderDialog() {
         loader = LoaderDialog()
@@ -206,6 +244,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showExemptPartnerUI(this)
             }
         }
+
+
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage) {
             val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
@@ -298,7 +338,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-            tvAccountNumberValue.contentDescription = Utils.accessibilityForNumbers(data.personalInformation?.accountNumber?:"")
+            tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
             data.let { itData ->
                 itData.accountInformation?.let { itAccount ->
@@ -386,17 +427,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
 
             accountStatusRl.visible()
-            threeBoxCl.visible()
             valueLowBalanceThreshold.text = getString(R.string.str_zero_euro)
             valueTopupAmount.text = getString(R.string.str_zero_euro)
             valueAutopay.text = getString(R.string.exempt)
+            setHorizontalStrains()
 
             buttonTopup.gone()
             setGuideLinePercent(0.25F, R.dimen.margin_15dp)
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-            tvAccountNumberValue.contentDescription = Utils.accessibilityForNumbers(data.personalInformation?.accountNumber?:"")
+            tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
@@ -444,7 +486,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupAmount.visible()
             valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
             valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
-            threeBoxCl.visible()
             setGuideLinePercent(0.2F, R.dimen.margin_0dp)
 
             binding.buttonTopup.setOnClickListener {
@@ -479,7 +520,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-            tvAccountNumberValue.contentDescription = Utils.accessibilityForNumbers(data.personalInformation?.accountNumber?:"")
+            tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
             val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
             data.let { itData ->
@@ -521,6 +563,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
 
+            setHorizontalStrains()
             if (cardType.equals("CASH")) {
                 cardLogo.gone()
             } else {
