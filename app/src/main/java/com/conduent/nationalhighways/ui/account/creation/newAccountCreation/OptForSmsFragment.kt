@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
-import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsModel
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModelList
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsResp
@@ -31,7 +29,6 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
@@ -47,9 +44,6 @@ import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -106,12 +100,12 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
         binding.switchCommunication.setOnClickListener {
             if (binding.switchCommunication.isChecked) {
-                binding.switchCommunication.contentDescription  = "checked, " +
+                binding.switchCommunication.contentDescription = "checked, " +
                         " tap to " + "uncheck"
                 binding.btnNext.enable()
                 NewCreateAccountRequestModel.communicationTextMessage = true
             } else {
-                binding.switchCommunication.contentDescription  = "unchecked, " +
+                binding.switchCommunication.contentDescription = "unchecked, " +
                         " tap to " + "check"
                 NewCreateAccountRequestModel.communicationTextMessage = false
                 binding.btnNext.enable()
@@ -170,13 +164,14 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         }
         isViewCreated = true
 
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
-        if (requireActivity() is CreateAccountActivity){
+        if (requireActivity() is CreateAccountActivity) {
             (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
-        binding.switchCommunication.contentDescription  = getString(R.string.would_you_like_to_receive) + " switch, " + if(binding.switchCommunication.isChecked) "checked" else "unchecked"
+        binding.switchCommunication.contentDescription =
+            getString(R.string.would_you_like_to_receive) + " switch, " + if (binding.switchCommunication.isChecked) "checked" else "unchecked"
     }
 
 
@@ -187,7 +182,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 if (Utils.areNotificationsEnabled(requireContext()) == false) {
                     oldPushOption = false
                 } else {
-                    oldPushOption = sessionManager.fetchNotificationOption() ?: false
+                    oldPushOption = sessionManager.fetchNotificationOption()
                 }
                 binding.switchNotification.isChecked =
                     oldPushOption
@@ -226,15 +221,15 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 dashboardViewmodel.accountInformationData.value?.communicationPreferences =
                     resource.data?.accountInformation?.communicationPreferences ?: ArrayList()
 
-               /* for (i in 0 until resource.data?.accountInformation?.communicationPreferences.orEmpty().size) {
-                    val communicationModel =
-                        resource.data?.accountInformation?.communicationPreferences?.get(i)
-                    if (communicationModel?.category?.lowercase().equals("standard notification")) {
-                        oldSmsOption = communicationModel?.smsFlag?.uppercase().equals("Y")
-                        binding.switchCommunication.isChecked = oldSmsOption
-                        break
-                    }
-                }*/
+                /* for (i in 0 until resource.data?.accountInformation?.communicationPreferences.orEmpty().size) {
+                     val communicationModel =
+                         resource.data?.accountInformation?.communicationPreferences?.get(i)
+                     if (communicationModel?.category?.lowercase().equals("standard notification")) {
+                         oldSmsOption = communicationModel?.smsFlag?.uppercase().equals("Y")
+                         binding.switchCommunication.isChecked = oldSmsOption
+                         break
+                     }
+                 }*/
                 oldSmsOption = resource.data?.accountInformation?.smsOption?.uppercase().equals("Y")
                 binding.switchCommunication.isChecked = oldSmsOption
 
@@ -396,7 +391,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                         if (binding.switchCommunication.isChecked == oldCommunicationTextMessage) {
                             findNavController().popBackStack()
                         } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.switchCommunication.isChecked) &&
-                            (NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true || NewCreateAccountRequestModel.isCountryNotSupportForSms)) {
+                            (NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true || NewCreateAccountRequestModel.isCountryNotSupportForSms)
+                        ) {
                             findNavController().navigate(
                                 R.id.action_optForSmsFragment_to_mobileVerificationFragment,
                                 bundle()

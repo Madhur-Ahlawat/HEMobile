@@ -82,9 +82,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
 
         binding.headerParent.contentDescription =
-            getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
+            getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + "\n" + Utils.capitalizeString(
                 sessionManager.fetchLastName()
-            ) + ", " + getString(R.string.account_number) + ", " + builder + ", " + getString(
+            ) + ", " + getString(R.string.account_number) + ", " + builder + "\n" + getString(
                 R.string.account_status
             ) + ", " + binding.indicatorAccountStatus.text.toString()
 
@@ -129,17 +129,27 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 paymentManagement.gone()
             }
 
-           val firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
-           val secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
+            val firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
+            val secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
 
-            profilePic.text = resources.getString(R.string.concatenate_two_strings, firstNameChar.toString() ,secondNameChar.toString())
+            profilePic.text = resources.getString(
+                R.string.concatenate_two_strings,
+                firstNameChar.toString(),
+                secondNameChar.toString()
+            )
             profilePic.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
             profilePic.isScreenReaderFocusable = false
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
+            tvAccountNumberValueLargefont.text = sessionManager.fetchAccountNumber()
             DashboardUtils.setAccountStatusNew(
                 sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
                 binding.cardIndicatorAccountStatus, 4
+            )
+            DashboardUtils.setAccountStatusNew(
+                sessionManager.fetchAccountStatus() ?: "",
+                indicatorAccountStatusLargefont,
+                binding.cardIndicatorAccountStatusLargefont, 4
             )
             if (sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
                 leftIcon6.alpha = 0.5f
@@ -151,10 +161,12 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 iconArrow6.alpha = 1f
             }
             valueName.text =
-                resources.getString(R.string.concatenate_two_strings_with_space,
-                Utils.capitalizeString(sessionManager.fetchFirstName()) , Utils.capitalizeString(
-                    sessionManager.fetchLastName()
-                ))
+                resources.getString(
+                    R.string.concatenate_two_strings_with_space,
+                    Utils.capitalizeString(sessionManager.fetchFirstName()), Utils.capitalizeString(
+                        sessionManager.fetchLastName()
+                    )
+                )
 
             if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).focusToolBarHome()
@@ -173,6 +185,21 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 R.id.action_accountFragment_to_profileManagementFragment,
                 bundle
             )
+        }
+
+
+        if(getResources().getConfiguration().fontScale>1){
+            binding.llAccountNumberLargefont.visible()
+            binding.llAccountStatusLargefont.visible()
+
+            binding.llAccountNumber.gone()
+            binding.llAccountStatus.gone()
+        }else{
+            binding.llAccountNumberLargefont.gone()
+            binding.llAccountStatusLargefont.gone()
+
+            binding.llAccountNumber.visible()
+            binding.llAccountStatus.visible()
         }
     }
 
@@ -232,10 +259,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         when (v?.id) {
 
             R.id.profile_management -> {
-                if (requireActivity() is HomeActivityMain) {
-                    HomeActivityMain.setTitle(getString(R.string.profile_management))
-                }
                 findNavController().navigate(R.id.action_accountFragment_to_profileManagementFragment)
+//                if (requireActivity() is HomeActivityMain) {
+//                    HomeActivityMain.setTitle(getString(R.string.profile_management))
+//                }
             }
 
             R.id.payment_management -> {
