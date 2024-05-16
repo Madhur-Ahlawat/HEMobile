@@ -20,13 +20,13 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center|top"
         android:minWidth="@dimen/margin_50dp"
         android:minHeight="@dimen/margin_50dp"
-        android:gravity="center|top"
-        app:layout_constraintBaseline_toBaselineOf="@+id/navigation_item_image"
-        app:layout_constraintBottom_toTopOf="@+id/navigation_item_image"
-        app:layout_constraintStart_toStartOf="@id/navigation_item_image">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/navigation_item_image"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/badge_btn"

@@ -144,6 +144,9 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
 
         }
 
+        if(requireActivity() is LandingActivity){
+            (requireActivity() as LandingActivity).focusToolBarLanding()
+        }
     }
 
     override fun observer() {

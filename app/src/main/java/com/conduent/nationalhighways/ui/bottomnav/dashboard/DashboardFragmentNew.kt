@@ -5,14 +5,12 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.util.TypedValueCompat.dpToPx
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -97,7 +95,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         val maxHeightOfThree =
             maxOf(boxTopupAmountHeight, boxLowBalanceThresholdHeight, boxTopupMethodHeight)
         var highestAmountValue = ""
-        if(maxHeightOfThree>0) {
+        if (maxHeightOfThree > 0) {
             when (maxHeightOfThree) {
                 boxTopupAmountHeight -> {
                     highestAmountValue = binding.valueTopupAmount.text.toString()
@@ -119,8 +117,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         binding.threeBoxCl.visible()
 
     }
-
-
 
 
     private fun initLoaderDialog() {
@@ -224,6 +220,15 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleAccountType(profileDetailModel: ProfileDetailModel) {
+
+        if (resources.configuration.fontScale > 1) {
+            binding.largefontLl.visible()
+            binding.normalfontLl.gone()
+        } else {
+            binding.largefontLl.gone()
+            binding.normalfontLl.visible()
+        }
+
         HomeActivityMain.accountDetailsData?.personalInformation =
             profileDetailModel.personalInformation
         HomeActivityMain.accountDetailsData = profileDetailModel
@@ -244,6 +249,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showExemptPartnerUI(this)
             }
         }
+
+
+
 
 
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage) {
@@ -341,6 +349,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             tvAccountNumberValue.contentDescription =
                 Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
+            tvAccountNumberValueLargefont.text = data.personalInformation?.accountNumber
+            tvAccountNumberValueLargefont.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+
             data.let { itData ->
                 itData.accountInformation?.let { itAccount ->
                     itAccount.accountStatus?.let {
@@ -365,6 +377,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                             ) + " " + Utils.accessibilityForNumbers(cardNumber.text.toString())
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 2
+                        )
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatusLargefont,
+                            binding.cardIndicatorAccountStatusLargefont,
+                            2
                         )
 
                     }
@@ -425,6 +443,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     get(0) + "" + drop(1)
                 }
             }
+            tvAvailableBalanceLargefont.apply {
+                visible()
+                text = data.replenishmentInformation?.currentBalance?.run {
+                    get(0) + "" + drop(1)
+                }
+            }
 
             accountStatusRl.visible()
             valueLowBalanceThreshold.text = getString(R.string.str_zero_euro)
@@ -440,6 +464,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             tvAccountNumberValue.contentDescription =
                 Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
+            tvAccountNumberValueLargefont.text = data.personalInformation?.accountNumber
+            tvAccountNumberValueLargefont.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
             boxCardType.contentDescription =
@@ -450,6 +478,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     itAccount.accountStatus?.let {
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 3
+                        )
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatusLargefont,
+                            binding.cardIndicatorAccountStatusLargefont,
+                            3
                         )
                     }
 
@@ -474,6 +508,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         binding.apply {
             accountBalanceRl.visible()
             tvAvailableBalance.apply {
+                visible()
+                text = data.replenishmentInformation?.currentBalance?.run {
+                    get(0) + "" + drop(1)
+                }
+            }
+            tvAvailableBalanceLargefont.apply {
                 visible()
                 text = data.replenishmentInformation?.currentBalance?.run {
                     get(0) + "" + drop(1)
@@ -519,8 +559,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
 
             accountNumberRl.visible()
+            accountNumberRlLargefont.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
             tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+            tvAccountNumberValueLargefont.text = data.personalInformation?.accountNumber
+            tvAccountNumberValueLargefont.contentDescription =
                 Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
             val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
@@ -548,6 +592,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 1
+                        )
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatusLargefont,
+                            binding.cardIndicatorAccountStatusLargefont,
+                            1
                         )
                     }
 
