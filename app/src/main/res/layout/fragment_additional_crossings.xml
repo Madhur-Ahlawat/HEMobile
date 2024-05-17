@@ -168,7 +168,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_additional_crossing_point1"
                     android:textColor="@color/grayColorIcon"
                     android:textSize="14sp" />
