@@ -39,6 +39,7 @@ class DartChargeAccountTypeEnquiryFragment :
             }
             checkContinue()
         }
+        binding.radioButtonNo.isChecked = true
         binding.btnNext.setOnClickListener {
             if (dartChargeSelectStatus == Constants.NO) {
                 findNavController().navigate(R.id.action_dartChargeAccountTypeEnquiryFragment_to_enquiryCategoryFragment)

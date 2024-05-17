@@ -101,7 +101,6 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
                 lastDestination = destination.id
                 if (destination.id == R.id.additionalCrossingsFragment) {
                     binding.toolBarLyt.titleTxt.text = getString(R.string.additional_crossings_txt)
-
                 } else {
                     binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
 
@@ -109,7 +108,6 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
             }
 
         })
-
     }
 
     override fun observeViewModel() {}
