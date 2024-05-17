@@ -1,19 +1,21 @@
 package com.conduent.nationalhighways.ui.landing
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.accessibility.AccessibilityEvent
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.navigation.NavArgument
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityLandingBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -32,6 +34,9 @@ import com.conduent.nationalhighways.utils.extn.visible
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -162,6 +167,8 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
             Utils.areNotificationsEnabled(this)
         )
 
+        Log.e("TAG", "onResume: fontScale "+getResources().getConfiguration().fontScale)
+
     }
 
     override fun onPause() {
@@ -216,8 +223,28 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
             }
         }
         navHostFragment.navController.setGraph(oldGraph, bundle)
-
     }
+
+    fun focusToolBarLanding() {
+        Log.e("TAG", "focusToolBarHome: " )
+        binding.btnBack.requestFocus() // Focus on the btnBack
+        val task = Runnable {
+            if (binding.btnBack.isVisible) {
+                Log.e("TAG", "focusToolBarHome:--> " )
+                binding.btnBack.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.btnBack.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+            } else {
+                Log.e("TAG", "focusToolBarHome:**> " )
+                binding.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+            }
+        }
+        Log.e("TAG", "focusToolBarHome:(()) " )
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+    }
+
+
 }
 
 

@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:importantForAccessibility="no"
         android:overScrollMode="never">
 
         <LinearLayout
@@ -15,6 +16,7 @@
             android:layout_marginHorizontal="@dimen/margin_20dp"
             android:layout_marginTop="@dimen/margin_5dp"
             android:layout_marginBottom="@dimen/margin_20dp"
+            android:importantForAccessibility="no"
             android:gravity="start|top"
             android:orientation="vertical">
 

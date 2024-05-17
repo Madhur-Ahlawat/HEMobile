@@ -85,6 +85,40 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         setBackPressListener(this)
     }
 
+    private fun setHorizontalStrains() {
+        val boxTopupAmountHeight =
+            binding.boxTopupAmount.height
+        val boxLowBalanceThresholdHeight =
+            binding.boxLowBalanceThreshold.height
+        val boxTopupMethodHeight =
+            binding.boxTopupMethod.height
+        val maxHeightOfThree =
+            maxOf(boxTopupAmountHeight, boxLowBalanceThresholdHeight, boxTopupMethodHeight)
+        var highestAmountValue = ""
+        if (maxHeightOfThree > 0) {
+            when (maxHeightOfThree) {
+                boxTopupAmountHeight -> {
+                    highestAmountValue = binding.valueTopupAmount.text.toString()
+                }
+
+                boxLowBalanceThresholdHeight -> {
+                    highestAmountValue = binding.valueLowBalanceThreshold.text.toString()
+                }
+
+                boxTopupMethodHeight -> {
+                    highestAmountValue = binding.valueAutopay.text.toString()
+                }
+            }
+        }
+        binding.valueLowBalanceThresholdDup.text = highestAmountValue
+        binding.valueAutopayDup.text = highestAmountValue
+        binding.valueTopupAmountDup.text = highestAmountValue
+
+        binding.threeBoxCl.visible()
+
+    }
+
+
     private fun initLoaderDialog() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -186,6 +220,15 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleAccountType(profileDetailModel: ProfileDetailModel) {
+
+        if (resources.configuration.fontScale > 1) {
+            binding.largefontLl.visible()
+            binding.normalfontLl.gone()
+        } else {
+            binding.largefontLl.gone()
+            binding.normalfontLl.visible()
+        }
+
         HomeActivityMain.accountDetailsData?.personalInformation =
             profileDetailModel.personalInformation
         HomeActivityMain.accountDetailsData = profileDetailModel
@@ -206,6 +249,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showExemptPartnerUI(this)
             }
         }
+
+
+
+
+
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage) {
             val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
@@ -298,7 +346,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-            tvAccountNumberValue.contentDescription = Utils.accessibilityForNumbers(data.personalInformation?.accountNumber?:"")
+            tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+
+            tvAccountNumberValueLargefont.text = data.personalInformation?.accountNumber
+            tvAccountNumberValueLargefont.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
             data.let { itData ->
                 itData.accountInformation?.let { itAccount ->
@@ -324,6 +377,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                             ) + " " + Utils.accessibilityForNumbers(cardNumber.text.toString())
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 2
+                        )
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatusLargefont,
+                            binding.cardIndicatorAccountStatusLargefont,
+                            2
                         )
 
                     }
@@ -384,19 +443,30 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     get(0) + "" + drop(1)
                 }
             }
+            tvAvailableBalanceLargefont.apply {
+                visible()
+                text = data.replenishmentInformation?.currentBalance?.run {
+                    get(0) + "" + drop(1)
+                }
+            }
 
             accountStatusRl.visible()
-            threeBoxCl.visible()
             valueLowBalanceThreshold.text = getString(R.string.str_zero_euro)
             valueTopupAmount.text = getString(R.string.str_zero_euro)
             valueAutopay.text = getString(R.string.exempt)
+            setHorizontalStrains()
 
             buttonTopup.gone()
             setGuideLinePercent(0.25F, R.dimen.margin_15dp)
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-            tvAccountNumberValue.contentDescription = Utils.accessibilityForNumbers(data.personalInformation?.accountNumber?:"")
+            tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+
+            tvAccountNumberValueLargefont.text = data.personalInformation?.accountNumber
+            tvAccountNumberValueLargefont.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
@@ -408,6 +478,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     itAccount.accountStatus?.let {
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 3
+                        )
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatusLargefont,
+                            binding.cardIndicatorAccountStatusLargefont,
+                            3
                         )
                     }
 
@@ -437,6 +513,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     get(0) + "" + drop(1)
                 }
             }
+            tvAvailableBalanceLargefont.apply {
+                visible()
+                text = data.replenishmentInformation?.currentBalance?.run {
+                    get(0) + "" + drop(1)
+                }
+            }
 
 
             accountStatusRl.visible()
@@ -444,7 +526,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupAmount.visible()
             valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
             valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
-            threeBoxCl.visible()
             setGuideLinePercent(0.2F, R.dimen.margin_0dp)
 
             binding.buttonTopup.setOnClickListener {
@@ -478,8 +559,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
 
             accountNumberRl.visible()
+            accountNumberRlLargefont.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
-            tvAccountNumberValue.contentDescription = Utils.accessibilityForNumbers(data.personalInformation?.accountNumber?:"")
+            tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+            tvAccountNumberValueLargefont.text = data.personalInformation?.accountNumber
+            tvAccountNumberValueLargefont.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
             val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
             data.let { itData ->
@@ -507,6 +593,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 1
                         )
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatusLargefont,
+                            binding.cardIndicatorAccountStatusLargefont,
+                            1
+                        )
                     }
 
                     valueAutopay.text = resources.getString(R.string.str_auto_pay)
@@ -521,6 +613,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 }
             }
 
+            setHorizontalStrains()
             if (cardType.equals("CASH")) {
                 cardLogo.gone()
             } else {
