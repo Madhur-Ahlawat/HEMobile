@@ -36,6 +36,7 @@
                     android:gravity="center"
                     android:importantForAccessibility="yes"
                     android:screenReaderFocusable="true"
+                    android:focusable="true"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +44,6 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/success_iv"
-                        android:importantForAccessibility="no"
                         android:layout_width="@dimen/margin_70dp"
                         android:layout_height="@dimen/margin_70dp"
                         android:layout_marginTop="@dimen/margin_60dp"
@@ -52,7 +52,6 @@
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/title_tv"
-                        android:importantForAccessibility="no"
                         style="@style/SemiBoldTextBlack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
