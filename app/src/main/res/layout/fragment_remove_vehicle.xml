@@ -46,7 +46,7 @@
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/vehicleRegNum"
                     style="@style/MediumTextBlack"
-                    android:text="@string/vehicle_reg_number"
+                    android:text="@string/vehicle_registration_number_plate"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

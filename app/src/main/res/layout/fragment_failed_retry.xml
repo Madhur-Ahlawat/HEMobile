@@ -46,6 +46,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:importantForAccessibility="yes"
+                android:focusable="true"
                 android:paddingBottom="20dp"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_tv">
@@ -54,7 +55,6 @@
                     style="@style/SemiBoldTextBlack_14sp"
                     android:layout_marginTop="@dimen/margin_20dp"
                     android:gravity="center"
-                    android:importantForAccessibility="no"
                     android:text="@string/try_again_later_did_not_save_changes"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -66,7 +66,6 @@
                     android:layout_marginTop="@dimen/margin_20dp"
                     android:text="@string/str_contact_dart_charge_contact_centre"
                     android:gravity="center"
-                    android:importantForAccessibility="no"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/decs1_tv" />
@@ -75,7 +74,6 @@
                     android:id="@+id/decs3_tv"
                     style="@style/SemiBoldTextBlack_14sp"
                     android:layout_marginTop="@dimen/margin_20dp"
-                    android:importantForAccessibility="no"
                     android:text="@string/str_contact_telephone"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -85,7 +83,6 @@
                     android:id="@+id/decs4_tv"
                     style="@style/SemiBoldTextBlack_14sp"
                     android:text="@string/str_contact_textphone"
-                    android:importantForAccessibility="no"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/decs3_tv" />
@@ -94,7 +91,6 @@
                     android:id="@+id/decs5_tv"
                     style="@style/SemiBoldTextBlack_14sp"
                     android:text="@string/str_contact_every_day"
-                    android:importantForAccessibility="no"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/decs4_tv" />
