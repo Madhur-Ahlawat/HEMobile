@@ -89,32 +89,21 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun setHorizontalStrains() {
         val boxTopupAmountHeight =
-            binding.boxTopupAmount.height
+            binding.valueTopupAmount.text.toString().length
         val boxLowBalanceThresholdHeight =
-            binding.boxLowBalanceThreshold.height
-        val boxTopupMethodHeight =
-            binding.boxTopupMethod.height
-        val maxHeightOfThree =
-            maxOf(boxTopupAmountHeight, boxLowBalanceThresholdHeight, boxTopupMethodHeight)
-        var highestAmountValue = ""
-        if (maxHeightOfThree > 0) {
-            when (maxHeightOfThree) {
-                boxTopupAmountHeight -> {
-                    highestAmountValue = binding.valueTopupAmount.text.toString()
-                }
+            binding.valueLowBalanceThreshold.text.toString().length
 
-                boxLowBalanceThresholdHeight -> {
-                    highestAmountValue = binding.valueLowBalanceThreshold.text.toString()
-                }
-
-                boxTopupMethodHeight -> {
-                    highestAmountValue = binding.valueAutopay.text.toString()
-                }
-            }
+        val topupValue=binding.valueTopupAmount.text.toString()
+        val lowbalanceThresholdValue=binding.valueLowBalanceThreshold.text.toString()
+        if(boxTopupAmountHeight>=boxLowBalanceThresholdHeight){
+            binding.valueLowBalanceThresholdDup.text=topupValue
+            binding.valueAutopayDup.text=topupValue
+            binding.valueTopupAmountDup.text=topupValue
+        }else{
+            binding.valueLowBalanceThresholdDup.text=lowbalanceThresholdValue
+            binding.valueAutopayDup.text=lowbalanceThresholdValue
+            binding.valueTopupAmountDup.text=lowbalanceThresholdValue
         }
-        binding.valueLowBalanceThresholdDup.text = highestAmountValue
-        binding.valueAutopayDup.text = highestAmountValue
-        binding.valueTopupAmountDup.text = highestAmountValue
 
         binding.threeBoxCl.visible()
 

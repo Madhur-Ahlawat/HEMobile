@@ -53,10 +53,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         
-        WebView.setWebContentsDebuggingEnabled(true)
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
-
-
 
         if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
             paymentList = arguments?.getParcelableArrayList(Constants.DATA)

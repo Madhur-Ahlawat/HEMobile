@@ -193,6 +193,8 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
+
+                        binding.mobileNumber.contentDescription=Utils.accessibilityForNumbers(binding.mobileNumber.text.toString())
                         binding.accountType.text = accountInformation!!.accountType
 
                         if (accountInformation.accountType.equals(
