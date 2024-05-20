@@ -199,6 +199,12 @@ class PaymentMethodAdapter(
                 Constants.MAKE_DEFAULT
             )
         }
+        holder.binding.textMakeDefaultLargefont.setOnClickListener {
+            paymentMethodCallback.paymentMethodCallback(
+                position,
+                Constants.MAKE_DEFAULT
+            )
+        }
         holder.binding.delete.setOnClickListener {
             if (paymentList?.get(position)?.bankAccount == true && paymentList?.get(position)?.emandateStatus == "ACTIVE") {
                 paymentMethodCallback.paymentMethodCallback(
