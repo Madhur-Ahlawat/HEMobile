@@ -82,9 +82,6 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
             binding.feedbackBt.visible()
             binding.checkStatusBt.setText(resources.getString(R.string.str_check_enquiry_status))
             binding.respondEnquiryTv.setText(resources.getString(R.string.respond_enquiry_1day))
-            if (requireActivity() is HomeActivityMain) {
-                (requireActivity() as HomeActivityMain).focusToolBarHome()
-            }
         } else {
             binding.titleTv.setText(resources.getString(R.string.str_Your_complaint_submitted))
             binding.checkStatusBt.setText(resources.getString(R.string.str_check_complaint_status))

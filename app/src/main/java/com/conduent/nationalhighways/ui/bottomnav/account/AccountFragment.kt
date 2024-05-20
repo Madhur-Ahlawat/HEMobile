@@ -272,9 +272,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
             R.id.profile_management -> {
                 findNavController().navigate(R.id.action_accountFragment_to_profileManagementFragment)
-//                if (requireActivity() is HomeActivityMain) {
-//                    HomeActivityMain.setTitle(getString(R.string.profile_management))
-//                }
             }
 
             R.id.payment_management -> {
