@@ -65,7 +65,8 @@
                             android:id="@+id/vehicleRegNum"
                             style="@style/MediumTextBlack"
                             android:layout_width="@dimen/margin_0dp"
-                            android:text="@string/vehicle_registration_number_plate"
+                            android:importantForAccessibility="no"
+                            android:text="@string/vehicle_reg_number"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -75,6 +76,7 @@
                             style="@style/RegularTextBlack"
                             android:layout_width="@dimen/margin_0dp"
                             android:layout_marginTop="@dimen/margin_4dp"
+                            android:importantForAccessibility="no"
                             android:textAllCaps="true"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -131,10 +133,10 @@
                             android:id="@+id/str_make"
                             style="@style/MediumTextBlack"
                             android:layout_width="@dimen/margin_0dp"
-                            android:text="@string/str_make"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@string/str_make" />
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/vehicleMake"

@@ -744,6 +744,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/str_edit"
+                        android:importantForAccessibility="no"
                         android:minWidth="@dimen/margin_48dp"
                         android:minHeight="@dimen/margin_48dp"
                         android:padding="@dimen/margin_20dp"

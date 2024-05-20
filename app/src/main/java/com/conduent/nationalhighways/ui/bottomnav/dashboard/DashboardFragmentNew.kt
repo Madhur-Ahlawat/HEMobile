@@ -5,11 +5,9 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -223,25 +221,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun handleAccountType(profileDetailModel: ProfileDetailModel) {
 
-
-        binding.tvAccountNumberHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                // Ensure we only get the line count once
-                binding.tvAccountNumberHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                // Now you can safely get the line count
-                val accountNumberLinesCount = binding.tvAccountNumberHeading.lineCount
-                Log.e("TAG", "accountNumberLinesCount dashboard $accountNumberLinesCount")
-
-                if (accountNumberLinesCount > 2) {
-                    binding.largefontLl.visible()
-                    binding.normalfontLl.gone()
-                } else {
-                    binding.largefontLl.gone()
-                    binding.normalfontLl.visible()
-                }
-            }
-        })
+        if (resources.configuration.fontScale > 1) {
+            binding.largefontLl.visible()
+            binding.normalfontLl.gone()
+        } else {
+            binding.largefontLl.gone()
+            binding.normalfontLl.visible()
+        }
 
         HomeActivityMain.accountDetailsData?.personalInformation =
             profileDetailModel.personalInformation

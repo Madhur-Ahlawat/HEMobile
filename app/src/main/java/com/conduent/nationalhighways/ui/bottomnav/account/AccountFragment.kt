@@ -5,12 +5,10 @@ import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -143,8 +141,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             profilePic.isScreenReaderFocusable = false
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
             tvAccountNumberValueLargefont.text = sessionManager.fetchAccountNumber()
-
-
             DashboardUtils.setAccountStatusNew(
                 sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
@@ -191,30 +187,20 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             )
         }
 
-        binding.tvAccountNumberHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                // Ensure we only get the line count once
-                binding.tvAccountNumberHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                // Now you can safely get the line count
-                val accountNumberLinesCount = binding.tvAccountNumberHeading.lineCount
-                Log.e("TAG", "accountNumberLinesCount account $accountNumberLinesCount")
 
-                if (accountNumberLinesCount > 2) {
-                    binding.llAccountNumberLargefont.visible()
-                    binding.llAccountStatusLargefont.visible()
+        if(getResources().getConfiguration().fontScale>1){
+            binding.llAccountNumberLargefont.visible()
+            binding.llAccountStatusLargefont.visible()
 
-                    binding.llAccountNumber.gone()
-                    binding.llAccountStatus.gone()
-                } else {
-                    binding.llAccountNumberLargefont.gone()
-                    binding.llAccountStatusLargefont.gone()
+            binding.llAccountNumber.gone()
+            binding.llAccountStatus.gone()
+        }else{
+            binding.llAccountNumberLargefont.gone()
+            binding.llAccountStatusLargefont.gone()
 
-                    binding.llAccountNumber.visible()
-                    binding.llAccountStatus.visible()
-                }
-            }
-        })
+            binding.llAccountNumber.visible()
+            binding.llAccountStatus.visible()
+        }
     }
 
     private fun setPaymentsVisibility() {
@@ -274,6 +260,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
             R.id.profile_management -> {
                 findNavController().navigate(R.id.action_accountFragment_to_profileManagementFragment)
+//                if (requireActivity() is HomeActivityMain) {
+//                    HomeActivityMain.setTitle(getString(R.string.profile_management))
+//                }
             }
 
             R.id.payment_management -> {

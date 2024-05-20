@@ -149,7 +149,7 @@
                         android:fontFamily="@font/open_sans"
                         android:gravity="center_vertical"
                         android:importantForAccessibility="no"
-                        android:text="@string/vehicle_registration_number_plate"
+                        android:text="@string/vehicle_reg_number"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_14sp"
                         app:layout_constraintEnd_toStartOf="@+id/guideline1"

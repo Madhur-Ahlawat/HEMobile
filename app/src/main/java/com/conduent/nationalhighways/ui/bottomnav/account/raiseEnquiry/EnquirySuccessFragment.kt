@@ -74,7 +74,6 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
 
     private fun setData() {
         binding.referenceNumberTv.text = enquiryModel?.srNumber ?: ""
-        binding.referenceNumberTv.contentDescription = Utils.accessibilityForNumbers(enquiryModel?.srNumber ?: "").toString()
         binding.referenceNumberTv.contentDescription = Utils.accessibilityForNumbers(enquiryModel?.srNumber ?: "")
         binding.descTv.text =
             resources.getString(R.string.sent_email_line, enquiryModel?.email ?: "")

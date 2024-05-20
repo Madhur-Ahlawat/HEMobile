@@ -16,7 +16,6 @@ import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
 import com.conduent.nationalhighways.utils.common.SessionManager
-import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -56,10 +55,12 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>() {
             }
         }
 
-        binding.decs3Tv.contentDescription =
-            Utils.accessibilityForNumbers(binding.decs3Tv.text.toString())
-        binding.decs4Tv.contentDescription =
-            Utils.accessibilityForNumbers(binding.decs4Tv.text.toString())
+        binding.detailsCl.contentDescription =
+            binding.decs1Tv.text.toString() +"."+
+                    binding.decs2Tv.text.toString() +"."+
+                    binding.decs3Tv.text.toString() +"."+
+                    binding.decs4Tv.text.toString() +"."+
+                    binding.decs5Tv.text.toString()
 
     }
 
