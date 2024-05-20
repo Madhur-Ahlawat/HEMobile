@@ -103,17 +103,21 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             dashboardViewModel.getAccountDetailsData()
 
         }
-        binding.paymentRecycleView.layoutManager = LinearLayoutManager(requireContext())
 
-        paymentMethodAdapter = PaymentMethodAdapter(requireContext(), paymentList, this)
-        binding.paymentRecycleView.adapter = paymentMethodAdapter
-
+        initRecyclerView()
 
         isViewCreated = false
 
         binding.addNewPaymentMethod.setOnClickListener(this)
         binding.cardViewTopYourBalance.setOnClickListener(this)
         binding.cardViewThresholdLimit.setOnClickListener(this)
+    }
+
+    private fun initRecyclerView() {
+        binding.paymentRecycleView.layoutManager = LinearLayoutManager(requireContext())
+        paymentMethodAdapter = PaymentMethodAdapter(requireContext(), paymentList, this)
+        binding.paymentRecycleView.adapter = paymentMethodAdapter
+        paymentMethodAdapter.notifyDataSetChanged()
     }
 
     override fun init() {
@@ -211,9 +215,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                     binding.maximumVehicleAdded.gone()
                     binding.textMaximumVehicle.gone()
 
-                    paymentMethodAdapter.updateList(paymentList)
+//                    paymentMethodAdapter.updateList(paymentList)
 
 
+                    initRecyclerView()
                 } else {
                     binding.paymentMethodInformation.gone()
                     binding.paymentRecycleView.gone()

@@ -1,11 +1,9 @@
 package com.conduent.nationalhighways.ui.account.profile
 
-import android.icu.text.LocaleDisplayNames.UiListItem
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -57,7 +55,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     override fun init() {
         if (arguments?.containsKey(NAV_FLOW_KEY) == true) {
-            navFlowFrom = arguments?.getString(NAV_FLOW_KEY,"").toString()
+            navFlowFrom = arguments?.getString(NAV_FLOW_KEY, "").toString()
         }
         binding.accountCard.gone()
         binding.accountSubType.gone()
@@ -86,6 +84,8 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         if(requireActivity() is HomeActivityMain){
             HomeActivityMain.setTitle(resources.getString(R.string.profile_management))
         }
+
+        callFocusToolBarHome()
     }
 
     override fun initCtrl() {
@@ -171,15 +171,15 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             binding.twoStepVerification.text = getString(R.string.no)
                         }
 
-                      setAddressToView(personalInformation)
+                        setAddressToView(personalInformation)
                         binding.emailAddressProfile.text =
                             personalInformation?.userName?.lowercase()
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
                             personalInformation?.phoneCell?.let {
-                                binding.mobileNumber.text =
-                                    personalInformation?.phoneCellCountryCode + " " + it
+                                binding.mobileNumber.text = resources.getString(R.string.concatenate_two_strings_with_space,""+
+                                    personalInformation?.phoneCellCountryCode , it)
                             }
 
                         } else if (personalInformation?.phoneDay.isNullOrEmpty().not()) {
@@ -187,11 +187,14 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
                             personalInformation?.phoneDay?.let {
                                 binding.mobileNumber.text =
-                                    personalInformation?.phoneDayCountryCode + " " + it
+                                    resources.getString(R.string.concatenate_two_strings_with_space,""+
+                                    personalInformation?.phoneDayCountryCode , it)
                             }
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
+
+                        binding.mobileNumber.contentDescription=Utils.accessibilityForNumbers(binding.mobileNumber.text.toString())
                         binding.accountType.text = accountInformation!!.accountType
 
                         if (accountInformation.accountType.equals(
@@ -207,11 +210,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         binding.password.text = accountInformation.password
                     }
                 }
-
-                if (requireActivity() is HomeActivityMain) {
-                    (requireActivity() as HomeActivityMain).focusToolBarHome()
-                }
-
             }
 
             is Resource.DataError -> {
@@ -221,63 +219,73 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                 } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }
-                if (requireActivity() is HomeActivityMain) {
-                    (requireActivity() as HomeActivityMain).focusToolBarHome()
-                }
             }
 
             else -> {
-                if (requireActivity() is HomeActivityMain) {
-                    (requireActivity() as HomeActivityMain).focusToolBarHome()
-                }
             }
         }
-        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
+        if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
             HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
-            var bundle = Bundle()
-            bundle.putString(NAV_FLOW_KEY,navFlowFrom)
-            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
-            findNavController()?.navigate(R.id.action_profileManagementFragment_to_resetFragment,bundle)
+            val bundle = Bundle()
+            bundle.putString(NAV_FLOW_KEY, navFlowFrom)
+            bundle.putParcelable(
+                Constants.PERSONALDATA,
+                HomeActivityMain.accountDetailsData?.personalInformation
+            )
+            findNavController().navigate(
+                R.id.action_profileManagementFragment_to_resetFragment,
+                bundle
+            )
         }
+    }
+
+    private fun callFocusToolBarHome() {
+        if (requireActivity() is HomeActivityMain) {
+//            HomeActivityMain.dataBinding?.backButton?.contentDescription=resources.getString(R.string.str_back)
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+            HomeActivityMain.dataBinding?.backButton?.requestFocus()
+        }
+
+
     }
 
     private fun setAddressToView(personalInformation: PersonalInformation?) {
         var address = ""
         if (personalInformation?.addressLine1?.isNotEmpty() == true) {
-            address = address + personalInformation.addressLine1
+            address += personalInformation.addressLine1
         }
         if (personalInformation?.addressLine2?.isNotEmpty() == true) {
-            if (address.isNotEmpty() == true) {
-                address = address + "\n"
+            if (address.isNotEmpty()) {
+                address += "\n"
             }
-            address = address + personalInformation.addressLine2
+            address += personalInformation.addressLine2
         }
         if (personalInformation?.city?.isNotEmpty() == true) {
-            if (address.isNotEmpty() == true) {
-                address = address + "\n"
+            if (address.isNotEmpty()) {
+                address += "\n"
             }
-            address = address + personalInformation.city
+            address += personalInformation.city
         }
         if (personalInformation?.zipcode?.isNotEmpty() == true) {
-            if (address.isNotEmpty() == true) {
-                address = address + "\n"
+            if (address.isNotEmpty()) {
+                address += "\n"
             }
-            address = address + personalInformation.zipcode
+            address += personalInformation.zipcode
         }
         if (Utils.getCountryName(
                 sessionManager,
                 personalInformation?.country ?: ""
             ).isNotEmpty()
         ) {
-            if (address.isNotEmpty() == true) {
-                address = address + "\n"
+            if (address.isNotEmpty()) {
+                address += "\n"
             }
-            address = address + Utils.getCountryName(
+            address += Utils.getCountryName(
                 sessionManager,
                 personalInformation?.country ?: ""
             )
         }
-        if (personalInformation?.addressLine1?.isEmpty() == true && personalInformation?.city?.isEmpty() == true && personalInformation?.zipcode?.isEmpty() == true) {
+        if (personalInformation?.addressLine1?.isEmpty() == true && personalInformation.city?.isEmpty() == true && personalInformation.zipcode?.isEmpty() == true) {
 
         } else {
             binding.address.text = address

@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showTo
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
@@ -118,12 +119,10 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
             }
         }
 
-        binding.detailsCl.contentDescription =
-            binding.decs1Tv.text.toString() +"."+
-                    binding.decs2Tv.text.toString() +"."+
-                    binding.decs3Tv.text.toString() +"."+
-                    binding.decs4Tv.text.toString() +"."+
-                    binding.decs5Tv.text.toString()
+        binding.decs3Tv.contentDescription =
+            Utils.accessibilityForNumbers(binding.decs3Tv.text.toString())
+        binding.decs4Tv.contentDescription =
+            Utils.accessibilityForNumbers(binding.decs4Tv.text.toString())
         binding.btnGoToWebsite.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
@@ -144,6 +143,9 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
 
         }
 
+        if (requireActivity() is LandingActivity) {
+            (requireActivity() as LandingActivity).focusToolBarLanding()
+        }
     }
 
     override fun observer() {

@@ -27,13 +27,14 @@
             <ImageView
                 android:id="@+id/ivCardType"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="@dimen/margin_18dp"
                 android:importantForAccessibility="no"
                 android:screenReaderFocusable="false"
                 android:src="@drawable/visablue"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/cl_card_status_large_font"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -41,25 +42,97 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_18dp"
-                android:layout_marginEnd="@dimen/margin_18dp"
+                android:layout_marginEnd="@dimen/margin_10dp"
                 android:fontFamily="@font/open_sans"
+                app:layout_constraintBottom_toTopOf="@id/cl_card_status_large_font"
                 android:importantForAccessibility="no"
                 android:screenReaderFocusable="false"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/cl_card_status"
                 app:layout_constraintStart_toEndOf="@+id/ivCardType"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="MASTER CARD\n****3456" />
 
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_card_status_large_font"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:importantForAccessibility="no"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_select_payment_method"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivCardTypeLargeFont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_18dp"
+                    android:importantForAccessibility="no"
+                    android:visibility="invisible"
+                    android:screenReaderFocusable="false"
+                    android:src="@drawable/visablue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="no"
+                    android:layout_marginStart="@dimen/margin_18dp"
+                    android:visibility="visible"
+                    android:screenReaderFocusable="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/ivCardTypeLargeFont"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/text_default_largefont"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:importantForAccessibility="no"
+                        android:padding="3dp"
+                        android:text="@string/str_default"
+                        android:textColor="@color/label_color"
+                        android:textSize="@dimen/font_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/text_make_default_largefont"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center"
+                        android:minWidth="@dimen/_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:paddingHorizontal="@dimen/margin_3dp"
+                        android:text="@string/str_make_default"
+                        android:textColor="@color/radioButtonIconColor"
+                        android:textSize="@dimen/font_14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_card_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_8dp"
                 android:importantForAccessibility="no"
                 android:screenReaderFocusable="false"
+                app:layout_constraintBottom_toTopOf="@id/cl_card_status_large_font"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/delete"
                 app:layout_constraintStart_toEndOf="@id/tv_select_payment_method"
@@ -102,6 +175,9 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
+
             <ImageView
                 android:id="@+id/delete"
                 android:layout_width="@dimen/margin_48dp"
@@ -112,7 +188,7 @@
                 android:padding="12dp"
                 android:screenReaderFocusable="true"
                 android:src="@drawable/delete"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/cl_card_status_large_font"
                 app:layout_constraintEnd_toStartOf="@id/forward"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,11 +202,15 @@
                 android:screenReaderFocusable="true"
                 android:src="@drawable/ic_right_arrow"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/cl_card_status_large_font"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
     </androidx.cardview.widget.CardView>
 </layout>
 

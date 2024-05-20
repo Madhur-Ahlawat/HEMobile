@@ -66,12 +66,17 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
                 requireActivity().startNormalActivityWithFinish(LandingActivity::class.java)
             }
         }
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is RaiseEnquiryActivity) {
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
+        }
     }
 
 
     private fun setData() {
         binding.referenceNumberTv.text = enquiryModel?.srNumber ?: ""
+        binding.referenceNumberTv.contentDescription = Utils.accessibilityForNumbers(enquiryModel?.srNumber ?: "")
         binding.descTv.text =
             resources.getString(R.string.sent_email_line, enquiryModel?.email ?: "")
         if (enquiryModel?.category.toString().contains("enquiry")) {
@@ -79,9 +84,6 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
             binding.feedbackBt.visible()
             binding.checkStatusBt.setText(resources.getString(R.string.str_check_enquiry_status))
             binding.respondEnquiryTv.setText(resources.getString(R.string.respond_enquiry_1day))
-            if (requireActivity() is HomeActivityMain) {
-                (requireActivity() as HomeActivityMain).focusToolBarHome()
-            }
         } else {
             binding.titleTv.setText(resources.getString(R.string.str_Your_complaint_submitted))
             binding.checkStatusBt.setText(resources.getString(R.string.str_check_complaint_status))
