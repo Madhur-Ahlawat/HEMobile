@@ -21,6 +21,7 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -432,6 +433,14 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         }
     }
 
+    fun focusContactDetailsToolBar(){
+        if(requireActivity() is MakeOffPaymentActivity){
+            (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
+        }else if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+    }
+
     private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
@@ -485,11 +494,12 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
                 binding.countrycodeEt.clearFocus()
                 binding.countrycodeEt.setDropDownItemSelectListener(this)
-
+                focusContactDetailsToolBar()
             }
 
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, response.errorMsg)
+                focusContactDetailsToolBar()
             }
 
             else -> {

@@ -191,28 +191,38 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             )
         }
 
-        binding.tvAccountNumberHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
+        binding.tvAccountStatusHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                // Ensure we only get the line count once
-                binding.tvAccountNumberHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                // Now you can safely get the line count
-                val accountNumberLinesCount = binding.tvAccountNumberHeading.lineCount
-                Log.e("TAG", "accountNumberLinesCount account $accountNumberLinesCount")
+                binding.tvAccountStatusHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                binding.indicatorAccountStatus.viewTreeObserver.addOnGlobalLayoutListener(object :
+                    ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(
+                            this
+                        )
+                        val accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
+                        val indicatorAccountStatusLineCount =
+                            binding.indicatorAccountStatus.lineCount
+                        Log.e(
+                            "TAG",
+                            "onGlobalLayout:accountNumberLinesCount " + accountNumberLinesCount + " *indicatorAccountStatusLineCount* " + indicatorAccountStatusLineCount
+                        )
+                        if (accountNumberLinesCount > 2 || indicatorAccountStatusLineCount >= 2) {
+                            binding.llAccountNumberLargefont.visible()
+                            binding.llAccountStatusLargefont.visible()
 
-                if (accountNumberLinesCount > 2) {
-                    binding.llAccountNumberLargefont.visible()
-                    binding.llAccountStatusLargefont.visible()
+                            binding.llAccountNumber.gone()
+                            binding.llAccountStatus.gone()
+                        } else {
+                            binding.llAccountNumberLargefont.gone()
+                            binding.llAccountStatusLargefont.gone()
 
-                    binding.llAccountNumber.gone()
-                    binding.llAccountStatus.gone()
-                } else {
-                    binding.llAccountNumberLargefont.gone()
-                    binding.llAccountStatusLargefont.gone()
-
-                    binding.llAccountNumber.visible()
-                    binding.llAccountStatus.visible()
-                }
+                            binding.llAccountNumber.visible()
+                            binding.llAccountStatus.visible()
+                        }
+                    }
+                })
             }
         })
     }

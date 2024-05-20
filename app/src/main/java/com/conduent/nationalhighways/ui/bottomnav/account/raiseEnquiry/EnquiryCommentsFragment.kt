@@ -130,7 +130,7 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
             }
         }
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
+//            (requireActivity() as HomeActivityMain).focusToolBarHome()
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }

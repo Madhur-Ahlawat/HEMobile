@@ -41,8 +41,6 @@
                 android:contentDescription="@string/str_back"
                 android:padding="@dimen/margin_11dp"
                 android:focusable="true"
-                android:clickable="true"
-                android:importantForAutofill="auto"
                 android:importantForAccessibility="yes"
                 android:tint="@color/black"
                 app:srcCompat="@drawable/ic_back_arrow_white" />

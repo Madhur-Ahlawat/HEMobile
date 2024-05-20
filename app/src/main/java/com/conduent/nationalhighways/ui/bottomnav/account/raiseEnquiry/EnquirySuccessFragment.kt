@@ -68,6 +68,8 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
         }
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is RaiseEnquiryActivity) {
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
 

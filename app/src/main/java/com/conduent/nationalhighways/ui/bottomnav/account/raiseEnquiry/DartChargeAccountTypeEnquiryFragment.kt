@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DartChargeAccountTypeEnquiryFragment :
     BaseFragment<FragmentDartChargeAccountTypeEnquiryBinding>() {
 
-    var dartChargeSelectStatus = ""
+    private var dartChargeSelectStatus = ""
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -24,18 +24,18 @@ class DartChargeAccountTypeEnquiryFragment :
 
     override fun init() {
         binding.radioButtonYes.setOnClickListener {
-            if (binding.radioButtonYes.isChecked) {
-                dartChargeSelectStatus = Constants.YES
+            dartChargeSelectStatus = if (binding.radioButtonYes.isChecked) {
+                Constants.YES
             } else {
-                dartChargeSelectStatus = ""
+                ""
             }
             checkContinue()
         }
         binding.radioButtonNo.setOnClickListener {
-            if (binding.radioButtonNo.isChecked) {
-                dartChargeSelectStatus = Constants.NO
+            dartChargeSelectStatus = if (binding.radioButtonNo.isChecked) {
+                Constants.NO
             } else {
-                dartChargeSelectStatus = ""
+                ""
             }
             checkContinue()
         }
@@ -58,25 +58,8 @@ class DartChargeAccountTypeEnquiryFragment :
         } else {
             binding.btnNext.disable()
         }
-        if(requireActivity() is RaiseEnquiryActivity){
-            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
-        }
-//        binding.radioButtonYes.setOnCheckedChangeListener { _, isChecked ->
-//            binding.radioButtonYes.contentDescription = if (isChecked) {
-//                "Checked"
-//            } else {
-//                "Unchecked"
-//            }
-//            binding.radioButtonYes.contentDescription = binding.radioButtonYes.text.toString()
-//        }
-//
-//        binding.radioButtonNo.setOnCheckedChangeListener { _, isChecked ->
-//            binding.radioButtonNo.contentDescription = if (isChecked) {
-//                "Checked "+"${binding.radioButtonNo.text}"
-//            } else {
-//                "Unchecked "+"${binding.radioButtonNo.text}"
-//            }
-//            binding.radioButtonNo.contentDescription = binding.radioButtonNo.text.toString()
+//        if(requireActivity() is RaiseEnquiryActivity){
+//            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
 //        }
     }
 
