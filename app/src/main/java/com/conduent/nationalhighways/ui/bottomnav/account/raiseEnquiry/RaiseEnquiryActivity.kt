@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
-import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -10,7 +9,6 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityRaiseEnquiryBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -35,21 +33,22 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
     @Inject
     lateinit var api: ApiService
 
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     lateinit var listener: NavController.OnDestinationChangedListener
     override fun observeViewModel() {
 
     }
 
-    companion object{
+    companion object {
         private lateinit var binding: ActivityRaiseEnquiryBinding
 
         fun setToolBarTitle(title: String) {
             binding.toolBarLyt.titleTxt.text = title
         }
+
         fun setBackIcon(status: Int) {
-            binding.toolBarLyt.backButton.visibility=status
+            binding.toolBarLyt.backButton.visibility = status
         }
     }
 
@@ -61,8 +60,8 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
     }
 
     private fun init() {
-        viewModel.apiState.value=intent.getStringExtra(Constants.API_STATE)?:""
-        viewModel.apiEndTime.value=intent.getStringExtra(Constants.API_END_TIME)?:""
+        viewModel.apiState.value = intent.getStringExtra(Constants.API_STATE) ?: ""
+        viewModel.apiEndTime.value = intent.getStringExtra(Constants.API_END_TIME) ?: ""
         binding.toolBarLyt.titleTxt.text = getString(R.string.str_raise_new_enquiry)
         binding.toolBarLyt.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -73,12 +72,13 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
         navController = navHostFragment.navController
 
         listener =
-            NavController.OnDestinationChangedListener { controller, destination, arguments ->
+            NavController.OnDestinationChangedListener { _, destination, _ ->
                 // Handle navigation events here
                 when (destination.id) {
 
                     R.id.guidanceDocumentsFragment -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_dart_charge_forms_guidance)
+                        binding.toolBarLyt.titleTxt.text =
+                            resources.getString(R.string.str_dart_charge_forms_guidance)
                     }
 
                     R.id.aboutthisserviceFragment -> {
@@ -86,7 +86,8 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                     }
 
                     R.id.contactDartChargeFragment -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_contact_dart_charge)
+                        binding.toolBarLyt.titleTxt.text =
+                            resources.getString(R.string.str_contact_dart_charge)
                     }
 
                     R.id.dartChargeAccountTypeEnquiryFragment -> {
@@ -98,27 +99,33 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                     }
 
                     R.id.fragmentTermsAndConditions -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_dart_charge_terms_conditions)
+                        binding.toolBarLyt.titleTxt.text =
+                            resources.getString(R.string.str_dart_charge_terms_conditions)
                     }
 
                     R.id.generalTermsAndConditionsFragment -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_terms_conditions)
+                        binding.toolBarLyt.titleTxt.text =
+                            resources.getString(R.string.str_terms_conditions)
                     }
 
                     R.id.paygtermsandconditions -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_payg_terms_conditions)
+                        binding.toolBarLyt.titleTxt.text =
+                            resources.getString(R.string.str_payg_terms_conditions)
                     }
 
                     R.id.privacyPolicyFragment -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_privacy_policy)
+                        binding.toolBarLyt.titleTxt.text =
+                            resources.getString(R.string.str_privacy_policy)
                     }
 
                     R.id.otherwaystopayFragment -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_other_ways_topay)
+                        binding.toolBarLyt.titleTxt.text =
+                            resources.getString(R.string.str_other_ways_topay)
                     }
 
                     R.id.thirdPartySoftwareFragment -> {
-                        binding.toolBarLyt.titleTxt.text = resources.getString(R.string.str_third_party_software)
+                        binding.toolBarLyt.titleTxt.text =
+                            resources.getString(R.string.str_third_party_software)
                     }
 
                     R.id.enquiryStatusFragment -> {
@@ -128,8 +135,10 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                     R.id.casesEnquiryDetailsFragment -> {
                         binding.toolBarLyt.titleTxt.text = getString(R.string.enquiry_status)
                     }
+
                     R.id.serviceUnavailableFragment -> {
-                        binding.toolBarLyt.titleTxt.text = getString(R.string.str_service_is_unavailable)
+                        binding.toolBarLyt.titleTxt.text =
+                            getString(R.string.str_service_is_unavailable)
                     }
 
                     else -> {
@@ -139,7 +148,11 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
                 }
 
                 when (destination.id) {
-                    R.id.enquirySuccessFragment or R.id.serviceUnavailableFragment -> {
+                    R.id.enquirySuccessFragment -> {
+                        binding.toolBarLyt.backButton.gone()
+                    }
+
+                    R.id.serviceUnavailableFragment -> {
                         binding.toolBarLyt.backButton.gone()
                     }
 
@@ -187,8 +200,9 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
+
     fun focusToolBarRaiseEnquiry() {
         val task = Runnable {
             if (binding.toolBarLyt.backButton.isVisible) {
