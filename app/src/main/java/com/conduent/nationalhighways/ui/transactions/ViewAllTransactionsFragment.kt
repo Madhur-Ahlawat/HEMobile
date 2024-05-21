@@ -93,6 +93,10 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         }
         initLoaderDialog()
         setBackPressListener(this)
+
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     override fun initCtrl() {
