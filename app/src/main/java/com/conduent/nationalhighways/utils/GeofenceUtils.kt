@@ -3,14 +3,11 @@ package com.conduent.nationalhighways.utils
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.os.Build
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -25,26 +22,22 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.Priority
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
 
 
 @SuppressLint("StaticFieldLeak")
 object GeofenceUtils {
-    private val TAG = "GeofenceUtils"
+    private const val TAG = "GeofenceUtils"
 
-    private val gadgetQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
     private val geofenceList = ArrayList<Geofence>()
 
-    lateinit var geoClient: GeofencingClient
-    lateinit var geofenceCircularIntent: PendingIntent
+    private lateinit var geoClient: GeofencingClient
+    private lateinit var geofenceCircularIntent: PendingIntent
 
     lateinit var context: Context
 
     //starting geofence
     fun startGeofence(context1: Context, from: Int = 0) {
-        Utils.writeInFile(context1,"startgeofence from $from")
+        Utils.writeInFile(context1, "startgeofence from $from")
         context = context1
         val geofenceIntent: PendingIntent by lazy {
             val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
@@ -115,11 +108,9 @@ object GeofenceUtils {
     }
 
     //specify the Geofence to monitor and the initial trigger
-    private fun seekGeofencing(list: ArrayList<Geofence>): GeofencingRequest {
-        Log.e(TAG, "seekGeofencing: list:$list")
+    private fun seekGeofencing(geofenceList: ArrayList<Geofence>): GeofencingRequest {
         return GeofencingRequest.Builder().apply {
-//            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-            addGeofences(list)
+            addGeofences(geofenceList)
         }.build()
     }
 
@@ -148,7 +139,6 @@ object GeofenceUtils {
     }
 
     // check if background and foreground permissions are approved
-    @TargetApi(29)
     private fun authorizedLocation(): Boolean {
         val formalizeForeground =
             (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
@@ -161,20 +151,22 @@ object GeofenceUtils {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ))
         val formalizeBackground =
-            if (gadgetQ) {
-                PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
-                    context, Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
-            } else {
-                true
-            }
+            PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+                context, Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            )
+
         return (formalizeForeground || coarseForeground) && formalizeBackground
     }
 
     private fun validateGadgetAreaInitiateGeofence(resolve: Boolean = true) {
-        val locationRequest = LocationRequest.create().apply {
-            priority = Priority.PRIORITY_HIGH_ACCURACY
-        }
+
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000L).apply {
+            setWaitForAccurateLocation(true)
+            setMinUpdateIntervalMillis(5000L)
+            setMaxUpdateDelayMillis(10000L)
+        }.build()
+
+
         val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
         val client = LocationServices.getSettingsClient(context)
         val locationResponses =
@@ -192,7 +184,7 @@ object GeofenceUtils {
                       }*/
                 } catch (sendEx: IntentSender.SendIntentException) {
                     Log.d(TAG, "Error getting location settings resolution: " + sendEx.message)
-                } catch (ex: Exception) {
+                } catch (_: Exception) {
 
                 }
             } else {
