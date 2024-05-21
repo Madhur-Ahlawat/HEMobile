@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.accessibility.AccessibilityEvent
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -50,6 +51,9 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -93,16 +97,16 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         val boxLowBalanceThresholdHeight =
             binding.valueLowBalanceThreshold.text.toString().length
 
-        val topupValue=binding.valueTopupAmount.text.toString()
-        val lowbalanceThresholdValue=binding.valueLowBalanceThreshold.text.toString()
-        if(boxTopupAmountHeight>=boxLowBalanceThresholdHeight){
-            binding.valueLowBalanceThresholdDup.text=topupValue
-            binding.valueAutopayDup.text=topupValue
-            binding.valueTopupAmountDup.text=topupValue
-        }else{
-            binding.valueLowBalanceThresholdDup.text=lowbalanceThresholdValue
-            binding.valueAutopayDup.text=lowbalanceThresholdValue
-            binding.valueTopupAmountDup.text=lowbalanceThresholdValue
+        val topupValue = binding.valueTopupAmount.text.toString()
+        val lowbalanceThresholdValue = binding.valueLowBalanceThreshold.text.toString()
+        if (boxTopupAmountHeight >= boxLowBalanceThresholdHeight) {
+            binding.valueLowBalanceThresholdDup.text = topupValue
+            binding.valueAutopayDup.text = topupValue
+            binding.valueTopupAmountDup.text = topupValue
+        } else {
+            binding.valueLowBalanceThresholdDup.text = lowbalanceThresholdValue
+            binding.valueAutopayDup.text = lowbalanceThresholdValue
+            binding.valueTopupAmountDup.text = lowbalanceThresholdValue
         }
 
         binding.threeBoxCl.visible()
@@ -162,6 +166,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         binding.accountBalanceRl.setOnClickListener {
             findNavController().navigate(R.id.action_dashBoardFragment_to_notificationsFrament)
         }
+
+        focusToolBarDashboard()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -700,6 +707,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun onBackButtonPressed() {
         Utils.onBackPressed(requireContext())
     }
+
+
+    fun focusToolBarDashboard() {
+        binding.logout.requestFocus() // Focus on the backButton
+        val task = Runnable {
+            binding.logout.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+            binding.logout.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+    }
+
 }
 
 
