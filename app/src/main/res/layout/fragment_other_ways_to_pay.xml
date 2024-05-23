@@ -19,7 +19,7 @@
             android:fontFamily="@font/open_sans_semibold"
             android:gravity="center_vertical"
             android:text="@string/str_otherways_to_pay_your_charge"
-            android:textColor="@color/grayColorIcon"
+            android:textColor="@color/gray_707070"
             android:textSize="@dimen/font_17sp"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"

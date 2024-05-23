@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_24dp"
             android:text="@string/str_Mastercard"
-            android:textColor="@color/grayColorIcon"
+            android:textColor="@color/gray_707070"
             android:textStyle="bold"
             android:textSize="@dimen/font_16sp"
             app:layout_constraintBottom_toBottomOf="parent"

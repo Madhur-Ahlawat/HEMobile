@@ -114,7 +114,7 @@
                                 style="@style/RegularTextBlack"
                                 android:fontFamily="@font/segoe_ui_semibold"
                                 android:text="@string/str_make_one_of_payment"
-                                android:textColor="@color/grayColorIcon"
+                                android:textColor="@color/gray_707070"
                                 android:textSize="@dimen/font_16sp" />
 
                             <View
@@ -172,7 +172,7 @@
                                 android:layout_toEndOf="@id/img_pcn"
                                 android:fontFamily="@font/segoe_ui_semibold"
                                 android:text="@string/str_resolve_penalty_charge"
-                                android:textColor="@color/grayColorIcon"
+                                android:textColor="@color/gray_707070"
                                 android:textSize="@dimen/font_16sp" />
 
                             <View
@@ -232,7 +232,7 @@
                                 android:layout_toEndOf="@id/img_crossing"
                                 android:fontFamily="@font/segoe_ui_semibold"
                                 android:text="@string/str_check_for_paid_crossing"
-                                android:textColor="@color/grayColorIcon"
+                                android:textColor="@color/gray_707070"
                                 android:textSize="@dimen/font_16sp" />
 
                             <View
@@ -293,7 +293,7 @@
                                 android:layout_toEndOf="@id/img_crossing"
                                 android:fontFamily="@font/segoe_ui_semibold"
                                 android:text="@string/receive_notifications"
-                                android:textColor="@color/grayColorIcon"
+                                android:textColor="@color/gray_707070"
                                 android:textSize="@dimen/font_16sp" />
 
                             <View
