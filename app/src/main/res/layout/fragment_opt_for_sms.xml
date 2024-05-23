@@ -14,7 +14,7 @@
             android:id="@+id/switchCommunication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/margin_20dp"
             style="@style/MediumTextBlack"
             android:textColor="@color/black"
             android:text="@string/would_you_like_to_receive"
@@ -33,7 +33,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/message_received_txt"
             style="@style/RegularText"
-            android:textColor="@color/txt_grey"
+            android:textColor="@color/txt_grey_5c"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/this_will_be_in_addition"
             />
@@ -55,7 +55,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/notification_txt"
             style="@style/RegularText"
-            android:textColor="@color/txt_grey"
+            android:textColor="@color/txt_grey_5c"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/this_will_be_in_addition_push"
             />

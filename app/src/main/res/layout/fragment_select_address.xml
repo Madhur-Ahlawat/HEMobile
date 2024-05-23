@@ -64,7 +64,7 @@
                 android:fontFamily="@font/open_sans"
 
                 android:text="@string/str_if_you_dont_see"
-                android:textColor="@color/grayColorIcon"
+                android:textColor="@color/gray_707070"
                 android:textSize="14sp" />
 
 

@@ -51,7 +51,7 @@
             android:screenReaderFocusable="true"
             tools:text="Mastercard\n*****3456"
             android:importantForAccessibility="yes"
-            android:textColor="@color/grayColorIcon"
+            android:textColor="@color/gray_707070"
             android:fontFamily="@font/open_sans"
             android:textSize="@dimen/font_16sp"
             app:layout_constraintBottom_toBottomOf="parent"
