@@ -245,7 +245,7 @@
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/grayColorIcon"
+                android:background="@color/gray_707070"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>

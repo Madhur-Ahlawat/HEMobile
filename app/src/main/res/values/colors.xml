@@ -20,6 +20,7 @@
     <color name="btn_color">#008BCB</color>
     <color name="btn_disable">#C9C9C9</color>
     <color name="txt_grey">#85858B</color>
+    <color name="txt_grey_5c">#5C5C5C</color>
     <color name="txt_disable">#7D7D7D</color>
     <color name="btn_shade">#002D18</color>
     <color name="tool_bar_clr">#0f0f0f</color>
@@ -121,7 +122,6 @@
     <color name="label_color">#555B5A</color>
     <color name="toolbarColor" tools:ignore="MissingDefaultResource">#298AC7</color>
 
-    <color name="grayColorIcon">#707070</color>
     <color name="opacity_gray_ColorIcon">#FF957070</color>
 
     <color name="buttonColorPrimary">#0099E0</color>

@@ -133,8 +133,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         viewModel.enquiryModel.value?.apiFileName =
             viewModel.edit_enquiryModel.value?.apiFileName ?: ""
         binding.mobileDataTv.text = viewModel.enquiryModel.value?.mobileNumber
-        binding.mobileDataTv.contentDescription = Utils.accessibilityForNumbers(
-            (viewModel.enquiryModel.value?.countryCode + viewModel.enquiryModel.value?.mobileNumber)
+        binding.mobileDataTv.contentDescription = "+"+Utils.accessibilityForNumbers(
+            (viewModel.enquiryModel.value?.countryCode?.replace("+","") + viewModel.enquiryModel.value?.mobileNumber)
         )
     }
 

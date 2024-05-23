@@ -93,7 +93,7 @@
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/paid_crossing_point1"
-                    android:textColor="@color/grayColorIcon"
+                    android:textColor="@color/gray_707070"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -121,7 +121,7 @@
                     android:layout_marginStart="@dimen/margin_7dp"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/paid_crossing_point2"
-                    android:textColor="@color/grayColorIcon"
+                    android:textColor="@color/gray_707070"
                     android:textSize="14sp" />
 
             </LinearLayout>

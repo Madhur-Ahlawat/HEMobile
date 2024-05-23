@@ -28,7 +28,7 @@
             android:id="@+id/message_received_txt"
             style="@style/RegularText"
             android:layout_marginTop="@dimen/margin_5dp"
-            android:textColor="@color/txt_grey"
+            android:textColor="@color/txt_grey_5c"
             android:text="@string/this_will_make_access_to_your_account_more_secure"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtTitleTop" />
