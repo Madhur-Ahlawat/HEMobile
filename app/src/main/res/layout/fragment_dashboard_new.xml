@@ -468,7 +468,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/v_account_numner"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:text="£000.00" />
+                        tools:text="£100,000.00" />
 
                     <View
                         android:id="@+id/v_account_numner"
@@ -489,6 +489,8 @@
                         android:fontFamily="@font/open_sans"
                         android:gravity="center"
                         android:text="@string/txt_topup_amount"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:textColor="@color/label_color"
                         android:textSize="@dimen/font_12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -545,7 +547,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/v_low_balance_threshold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:text="£1230000.00" />
+                        tools:text="£100,000.00" />
 
                     <View
                         android:id="@+id/v_low_balance_threshold"
@@ -565,6 +567,8 @@
                         android:fontFamily="@font/open_sans"
                         android:gravity="center"
                         android:text="@string/txt_low_threshold_balance"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         android:textColor="@color/label_color"
                         android:textSize="@dimen/font_12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -590,21 +594,6 @@
                     app:layout_constraintLeft_toRightOf="@id/guideline4"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
-                    <com.conduent.nationalhighways.utils.widgets.NHTextView
-                        android:id="@+id/value_autopay"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@+id/v_autopay"
-                        android:fontFamily="@font/open_sans"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14sp"
-                        app:layout_constraintBottom_toTopOf="@+id/v_autopay"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:text="£10.00" />
-
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/value_autopay_dup"
                         android:layout_width="0dp"
@@ -618,7 +607,22 @@
                         app:layout_constraintBottom_toTopOf="@+id/v_autopay"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:text="£10.00" />
+                        tools:text="£100,000.00" />
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/value_autopay"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/v_autopay"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_14sp"
+                        app:layout_constraintBottom_toTopOf="@+id/v_autopay"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="£10000.00" />
+
+
 
                     <View
                         android:id="@+id/v_autopay"
@@ -640,6 +644,8 @@
                         android:text="@string/txt_topup_method"
                         android:textColor="@color/label_color"
                         android:textSize="@dimen/font_12sp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

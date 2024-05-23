@@ -152,12 +152,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     }
 
     override fun initCtrl() {
-        if(requireActivity() is HomeActivityMain){
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }
-        if(requireActivity() is RaiseEnquiryActivity){
-            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
-        }
+
     }
 
     private fun getCategoriesApiCall() {
@@ -266,7 +261,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         }
     }
 
-    fun focusTooolBar(){
+    fun focusTooolBar() {
         saveEditData()
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()

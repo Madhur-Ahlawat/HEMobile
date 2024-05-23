@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
@@ -104,6 +105,8 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         }
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }else  if (requireActivity() is RaiseEnquiryActivity) {
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
 
@@ -129,9 +132,10 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         viewModel.enquiryModel.value?.fileName = viewModel.edit_enquiryModel.value?.fileName ?: ""
         viewModel.enquiryModel.value?.apiFileName =
             viewModel.edit_enquiryModel.value?.apiFileName ?: ""
-
         binding.mobileDataTv.text = viewModel.enquiryModel.value?.mobileNumber
-        binding.mobileDataTv.contentDescription = Utils.accessibilityForNumbers(viewModel.enquiryModel.value?.mobileNumber?:"")
+        binding.mobileDataTv.contentDescription = "+"+Utils.accessibilityForNumbers(
+            (viewModel.enquiryModel.value?.countryCode?.replace("+","") + viewModel.enquiryModel.value?.mobileNumber)
+        )
     }
 
     private fun getBundleData(): Bundle {
