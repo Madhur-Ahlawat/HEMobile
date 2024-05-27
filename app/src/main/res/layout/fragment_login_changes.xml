@@ -5,9 +5,9 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rootLayout"
         android:background="@color/white">
 
 
@@ -53,7 +53,6 @@
                     android:id="@+id/back_button"
                     android:layout_width="@dimen/margin_48dp"
                     android:layout_height="@dimen/margin_48dp"
-                    android:layout_marginStart="@dimen/margin_8dp"
                     android:contentDescription="@string/str_back"
                     android:padding="@dimen/margin_11dp"
                     android:tint="@color/white"
@@ -62,35 +61,44 @@
                     app:srcCompat="@drawable/ic_back_arrow_white" />
 
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/logo"
-                    android:layout_width="@dimen/margin_40dp"
-                    android:layout_height="@dimen/margin_40dp"
-                    android:layout_marginTop="@dimen/margin_4dp"
-                    android:layout_marginEnd="@dimen/margin_10dp"
-                    android:importantForAccessibility="no"
-                    app:layout_constraintEnd_toStartOf="@+id/textView"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_dart_charge_logo" />
-
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_bold"
-                    android:gravity="center"
-                    android:minHeight="@dimen/margin_48dp"
-                    android:text="@string/app_name"
-                    android:textColor="@color/white"
                     android:importantForAccessibility="no"
-                    android:textSize="@dimen/font_20sp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.59"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintLeft_toRightOf="@+id/back_button"
+                    app:layout_constraintStart_toEndOf="@+id/back_button"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/logo"
+                        android:layout_width="@dimen/margin_40dp"
+                        android:layout_height="@dimen/margin_40dp"
+                        android:layout_marginTop="@dimen/margin_2dp"
+                        android:layout_marginEnd="@dimen/margin_10dp"
+                        android:importantForAccessibility="no"
+                        app:srcCompat="@drawable/ic_dart_charge_logo" />
+
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:gravity="center"
+                        android:importantForAccessibility="no"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:text="@string/app_name"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_20sp"
+                        />
+
+                </LinearLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -114,11 +122,11 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:scrollbars="none"
             android:paddingTop="@dimen/margin_20dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline1"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/guideline1">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -133,10 +141,10 @@
                     android:id="@+id/edt_email"
                     style="@style/input_text"
                     android:autofillHints="emailAddress"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
                     android:imeOptions="actionNext"
+                    android:importantForAccessibility="yes"
                     android:inputType="textEmailAddress"
+                    android:screenReaderFocusable="true"
                     android:singleLine="true"
                     app:labelText="@string/email_address"
                     app:layout_constraintStart_toStartOf="parent"
@@ -148,13 +156,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_3dp"
+                    android:contentDescription="@string/str_credential_note"
                     android:elevation="@dimen/margin_1dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="start"
                     android:importantForAccessibility="yes"
                     android:screenReaderFocusable="true"
                     android:text="@string/str_credential_note"
-                    android:contentDescription="@string/str_credential_note"
                     android:textColor="@color/label_color"
                     android:textSize="@dimen/font_12sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -164,10 +172,10 @@
                     android:id="@+id/edt_pwd"
                     style="@style/input_text"
                     android:autofillHints="password"
-                    android:importantForAccessibility="yes"
-                    android:screenReaderFocusable="true"
                     android:imeOptions="actionDone"
+                    android:importantForAccessibility="yes"
                     android:inputType="textPassword"
+                    android:screenReaderFocusable="true"
                     android:singleLine="true"
                     app:imeOptions="actionDone"
                     app:inputType="textPassword"
@@ -183,10 +191,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_8dp"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:minHeight="@dimen/margin_48dp"
-                    android:text="@string/str_forgot_password"
                     android:importantForAccessibility="yes"
+                    android:minHeight="@dimen/margin_48dp"
                     android:screenReaderFocusable="true"
+                    android:text="@string/str_forgot_password"
                     android:textColor="@color/forgotPasswordColor"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
