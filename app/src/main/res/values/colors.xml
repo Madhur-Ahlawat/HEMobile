@@ -90,7 +90,7 @@
 
 
     <!--  rebranding colors  -->
-    <color name="blue_color">#008BCB</color>
+    <color name="blue_color">#007AFF</color>
     <color name="red_color">#CA2A1F</color>
     <color name="toolbar_color">#FF272727</color>
     <color name="btn_disable_txt_color">#7D7D7D</color>
