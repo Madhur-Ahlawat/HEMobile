@@ -143,8 +143,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             profilePic.isScreenReaderFocusable = false
             tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
             tvAccountNumberValueLargefont.text = sessionManager.fetchAccountNumber()
-
-
             DashboardUtils.setAccountStatusNew(
                 sessionManager.fetchAccountStatus() ?: "",
                 indicatorAccountStatus,
