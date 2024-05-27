@@ -254,7 +254,7 @@ interface ApiService {
     suspend fun getOneOffAccountFindVehicle(
         @Path("vehicleNumber") vehicleNumber: String?,
         @Query("agencyId") agencyId: Int?
-    ): Response<ArrayList<NewVehicleInfoDetails>?>?
+    ): Response<List<NewVehicleInfoDetails>?>?
 
     @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getVehiclePlateInfo(

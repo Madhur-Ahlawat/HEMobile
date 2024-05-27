@@ -1,2 +1,0 @@
-androidx.fragment.testing.manifest
-style FragmentScenarioEmptyFragmentActivityTheme

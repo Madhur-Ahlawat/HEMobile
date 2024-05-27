@@ -28,8 +28,8 @@ class CreateAccountVehicleViewModel @Inject constructor(
     val findVehicleLiveData: LiveData<Resource<VehicleInfoDetails?>?> get() = findVehicleMutData
 
     private val findOneOffVehicleMutData =
-        MutableLiveData<Resource<ArrayList<NewVehicleInfoDetails>?>?>()
-    val findOneOffVehicleLiveData: LiveData<Resource<ArrayList<NewVehicleInfoDetails>?>?> get() = findOneOffVehicleMutData
+        MutableLiveData<Resource<List<NewVehicleInfoDetails>?>?>()
+    val findOneOffVehicleLiveData: LiveData<Resource<List<NewVehicleInfoDetails>?>?> get() = findOneOffVehicleMutData
 
     private val findVehiclePlateMutData = MutableLiveData<Resource<GetPlateInfoResponseModel?>?>()
     val findVehiclePlateLiveData: LiveData<Resource<GetPlateInfoResponseModel?>?> get() = findVehiclePlateMutData

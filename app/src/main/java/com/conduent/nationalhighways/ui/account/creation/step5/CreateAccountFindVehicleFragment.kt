@@ -443,7 +443,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         )
     }
 
-    private fun apiResponseDVRM1(resource: Resource<ArrayList<NewVehicleInfoDetails>?>?) {
+    private fun apiResponseDVRM1(resource: Resource<List<NewVehicleInfoDetails>?>?) {
         if (loader?.isVisible == true) {
             loader?.dismiss()
         }
