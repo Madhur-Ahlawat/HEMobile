@@ -45,7 +45,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var cursorPosition: Int? = 0
     private lateinit var suspendPaymentMethodAdapter: SuspendPaymentMethodAdapter
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
-    private var real_paymentList: MutableList<CardListResponseModel?>? = ArrayList()
+    private var realPaymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var lowBalance: Boolean = true
     private var cardSelection: Boolean = false
     private val viewModel: PaymentMethodViewModel by viewModels()
@@ -143,16 +143,21 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
-            if (mText.length == 1 && mText.equals(".")) {
+            if (mText.length == 1 && mText == ".") {
                 mText = "0.0"
             }
-            var formatedAmount = formatter.format(mText.toDouble())
-            if (!formatedAmount.isNullOrEmpty() && formatedAmount.equals(".00")) {
-                formatedAmount = "0.00"
+            var formattedAmount = formatter.format(mText.toDouble())
+            if (!formattedAmount.isNullOrEmpty() && formattedAmount.equals(".00")) {
+                formattedAmount = "0.00"
             }
-            binding.topBalance.setText("£" + formatedAmount)
+            binding.topBalance.setText(
+                resources.getString(R.string.price, "" + formattedAmount)
+            )
             // Assuming editText is your EditText view
-            binding.topBalance.setSelection(binding.topBalance.editText.text?.length ?: 0)
+            binding.topBalance.setSelection(
+                binding.topBalance.editText.text?.length
+                    ?: 0
+            )
 
         }
 
@@ -264,11 +269,11 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         when (status) {
             is Resource.Success -> {
                 paymentList?.clear()
-                real_paymentList?.clear()
-                real_paymentList = status.data?.creditCardListType?.cardsList
+                realPaymentList?.clear()
+                realPaymentList = status.data?.creditCardListType?.cardsList
                 for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
                     if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
-                        paymentList?.add(status.data.creditCardListType.cardsList.get(i))
+                        paymentList?.add(status.data.creditCardListType.cardsList[i])
                     }
                 }
                 for (i in 0 until paymentList.orEmpty().size) {

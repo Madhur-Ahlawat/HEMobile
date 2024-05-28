@@ -8,7 +8,6 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +26,6 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -158,20 +156,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
 
         override fun afterTextChanged(s: Editable?) {
-//            val inputText = s.toString()
-//            val capitalizedText = inputText.capitalize() // Capitalize the text
-//
-//            // Remove the TextWatcher to prevent infinite loop
-//            binding.editNumberPlate.editText.removeTextChangedListener(this)
-//
-//            // Set the capitalized text back to the EditText
-//            binding.editNumberPlate.editText.setText(capitalizedText)
-//
-//            // Move the cursor to the end of the text
-//            binding.editNumberPlate.editText.setSelection(capitalizedText.length)
-//
-//            // Add the TextWatcher back
-//            binding.editNumberPlate.editText.addTextChangedListener(this)
+
         }
     }
 
@@ -391,7 +376,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         requireActivity().supportFragmentManager,
                         Constants.LOADER_DIALOG
                     )
-                    getOneoffApi()
+                    getOneOffApi()
                 }
             } else {
 
@@ -399,7 +384,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     requireActivity().supportFragmentManager,
                     Constants.LOADER_DIALOG
                 )
-                getOneoffApi()
+                getOneOffApi()
             }
         } else {
 
@@ -435,7 +420,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
     }
 
-    private fun getOneoffApi() {
+    private fun getOneOffApi() {
         viewModel.getOneOffVehicleData(
             binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                 .replace("-", "").uppercase(),
@@ -460,8 +445,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         binding.editNumberPlate.editText.text.toString()
                     )
 
-                    if (it.size > 0) {
-
+                    if (it.isNotEmpty()) {
                         if (it[0].vehicleClass.equals("E", true)) {
                             NewCreateAccountRequestModel.isExempted = true
                             bundle.putParcelable(Constants.VEHICLE_DETAIL, it[0])
@@ -874,10 +858,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 )
                             }
                             bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
-//                            findNavController().navigate(
-//                                R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
-//                                bundle
-//                            )
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
@@ -981,14 +961,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
         when (resource) {
             is Resource.Success -> {
-
                 viewModel.getNewVehicleData(
                     binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                         .replace("-", "").uppercase(),
                     Constants.AGENCY_ID.toInt()
                 )
-
-
             }
 
             is Resource.DataError -> {

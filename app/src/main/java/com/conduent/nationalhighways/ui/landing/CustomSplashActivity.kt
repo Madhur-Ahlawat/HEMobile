@@ -17,26 +17,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivitySplashNewBinding
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
-import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.utils.AppSignatureHelper
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Calendar
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class SplashActivity : AppCompatActivity() {
+class CustomSplashActivity : AppCompatActivity() {
 
     private var binding: ActivitySplashNewBinding? = null
     private var mIsRooted: Boolean =false
-
-
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -45,8 +40,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashNewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         mIsRooted = checkIfRootConditionAndDisplayMessage()
-        Log.e("Signature",AppSignatureHelper(this).appSignatures
-            .toString())
+        Log.e("Signature",AppSignatureHelper(this).appSignatures.toString())
         sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,Utils.areNotificationsEnabled(this))
 
         if (!mIsRooted){
@@ -61,20 +55,13 @@ class SplashActivity : AppCompatActivity() {
                         resources.getString(R.string.str_allow),
                         resources.getString(R.string.str_dont_allow)
                     )
-
                 }
             } else {
                 redirectNextScreenWithHandler()
-
             }
         }
-
-
-
-
     }
     private fun checkIfRootConditionAndDisplayMessage(): Boolean {
-
         //In some devices app restarts if opened from launcher even if app is running and user is logged in,
         // Below code prevents app from restarting
         if (!isTaskRoot
@@ -85,7 +72,6 @@ class SplashActivity : AppCompatActivity() {
             finish()
             return true
         }
-
         return if (Utils.isRooted(this)) {
             if (!isFinishing) { // Added condition for a leaked window exception (if Activity is not finishing show dialog else not)
                 displayAlertMessage(
@@ -99,7 +85,6 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-
     private fun redirectNextScreenWithHandler() {
         Handler(Looper.getMainLooper()).postDelayed({
             navigateLandingActivity()
@@ -112,7 +97,6 @@ class SplashActivity : AppCompatActivity() {
             redirectNextScreenWithHandler()
         }
 
-
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
@@ -123,17 +107,7 @@ class SplashActivity : AppCompatActivity() {
         AdobeAnalytics.setLifeCycleCallAdobe(false)
     }
 
-
-
-    private fun navigateAuthActivity() {
-        startActivity(
-            Intent(this, LoginActivity::class.java)
-        )
-        finish()
-    }
-
     private fun navigateLandingActivity() {
-//        sessionManager.saveAuthToken(null)
         startActivity(
             Intent(this, LandingActivity::class.java)
         )
@@ -143,28 +117,18 @@ class SplashActivity : AppCompatActivity() {
     private fun displayAlertMessage(
         fTitle: String?,
         message: String
-
     ) {
-
         val dialog = Dialog(this)
         dialog.setCancelable(false)
-
-
         val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(this))
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
-
-
-
         dialog.setContentView(binding.root)
-
         dialog.window?.setLayout(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         ) //Controlling width and height.
-
-
         binding.title.text = fTitle
         binding.message.text = message
         binding.backLl.gone()
@@ -172,14 +136,11 @@ class SplashActivity : AppCompatActivity() {
             redirectNextScreenWithHandler()
             dialog.dismiss()
         }
-
         binding.okBtn.setOnClickListener {
             Utils.redirectToNotificationPermissionSettings(this)
             dialog.dismiss()
         }
         dialog.show()
-
-
     }
 
     private fun displayCustomMessage(
@@ -188,26 +149,17 @@ class SplashActivity : AppCompatActivity() {
         positiveBtnTxt: String,
         negativeBtnTxt: String,
     ) {
-
         val dialog = Dialog(this)
         dialog.setCancelable(false)
-
-
         val binding: CustomDialogBinding = CustomDialogBinding.inflate(LayoutInflater.from(this))
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(true)
-
-
-
         dialog.setContentView(binding.root)
-
         dialog.window?.setLayout(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         ) //Controlling width and height.
-
-
         binding.title.text = fTitle
         binding.message.text = message
         binding.cancelBtn.text = negativeBtnTxt
@@ -216,14 +168,11 @@ class SplashActivity : AppCompatActivity() {
             redirectNextScreenWithHandler()
             dialog.dismiss()
         }
-
         binding.okBtn.setOnClickListener {
             Utils.redirectToNotificationPermissionSettings(this)
             dialog.dismiss()
         }
         dialog.show()
-
-
     }
 
 }

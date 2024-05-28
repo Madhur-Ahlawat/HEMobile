@@ -319,10 +319,6 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
                             this.file = null
                             binding.errorFileTv.text=resources.getString(R.string.str_allowed_file_types)
                             binding.errorFileTv.visible()
-//                            ErrorUtil.showError(
-//                                binding.root,
-//                                resources.getString(R.string.str_allowed_file_types)
-//                            )
                         }
 
                     } ?: run {

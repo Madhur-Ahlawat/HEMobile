@@ -239,7 +239,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     } else {
                         if (!Utils.isLastCharOfStringACharacter(
                                 binding.emailEt.editText.text.toString().trim()
-                            ) || Utils.countOccurenceOfChar(
+                            ) || Utils.countOccurrenceOfChar(
                                 binding.emailEt.editText.text.toString().trim(), '@'
                             ) > 1 || binding.emailEt.editText.text.toString().trim().contains(
                                 Utils.TWO_OR_MORE_DOTS
@@ -249,9 +249,9 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                 .toString() == ".") || (binding.emailEt.editText.text.toString()
                                 .trim().last()
                                 .toString() == "-" || binding.emailEt.editText.text.toString()
-                                .first().toString() == "-") || (Utils.countOccurenceOfChar(
+                                .first().toString() == "-") || (Utils.countOccurrenceOfChar(
                                 binding.emailEt.editText.text.toString().trim(), '.'
-                            ) < 1) || (Utils.countOccurenceOfChar(
+                            ) < 1) || (Utils.countOccurrenceOfChar(
                                 binding.emailEt.editText.text.toString().trim(), '@'
                             ) < 1)
                         ) {
@@ -303,7 +303,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                     binding.emailEt.removeError()
                                     true
                                 }
-                            } else if (Utils.countOccurenceOfChar(
+                            } else if (Utils.countOccurrenceOfChar(
                                     binding.emailEt.editText.text.toString().trim(), '@'
                                 ) !in (1..1)
                             ) {

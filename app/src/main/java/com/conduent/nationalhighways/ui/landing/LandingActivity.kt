@@ -1,12 +1,9 @@
 package com.conduent.nationalhighways.ui.landing
 
-import android.content.Context
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -15,7 +12,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivityLandingBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -26,27 +22,21 @@ import com.conduent.nationalhighways.utils.common.Constants.LRDS_SCREEN
 import com.conduent.nationalhighways.utils.common.Constants.SERVER_ERROR
 import com.conduent.nationalhighways.utils.common.Constants.SESSION_TIME_OUT
 import com.conduent.nationalhighways.utils.common.Constants.START_NOW_SCREEN
-import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class LandingActivity : BaseActivity<ActivityLandingBinding>() {
 
     @Inject
     lateinit var sessionManager: SessionManager
-
-    //    private var loader: LoaderDialog? = null
     private var navFlowFrom: String = ""
     private var plateNumber: String = ""
     private var email: String = ""
@@ -80,7 +70,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         binding = ActivityLandingBinding.inflate(layoutInflater)
         setContentView(binding.root)
         screenType = intent?.getStringExtra(Constants.SHOW_SCREEN).toString()
-        Logg.logging("landingActivy", "test called $screenType")
 
         if (intent?.hasExtra(Constants.NAV_FLOW_FROM) == true) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
@@ -100,45 +89,38 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
 
         loadFragment(screenType)
 
-        if (screenType == LRDS_SCREEN) {
-            binding.titleTxt.text = resources.getString(R.string.txt_my_account)
-            setBackIcon(View.GONE)
-        } else if (screenType == LOGOUT_SCREEN || screenType == SESSION_TIME_OUT) {
-            binding.titleTxt.text = resources.getString(R.string.str_signed_out)
-            setBackIcon(View.GONE)
-        } else if (screenType == SERVER_ERROR || screenType == FAILED_RETRY_SCREEN) {
-            binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
-            setBackIcon(View.GONE)
-        } else {
-            binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
-            setBackIcon(View.VISIBLE)
+        when (screenType) {
+            LRDS_SCREEN -> {
+                binding.titleTxt.text = resources.getString(R.string.txt_my_account)
+                setBackIcon(View.GONE)
+            }
+
+            LOGOUT_SCREEN, SESSION_TIME_OUT -> {
+                binding.titleTxt.text = resources.getString(R.string.str_signed_out)
+                setBackIcon(View.GONE)
+            }
+
+            SERVER_ERROR, FAILED_RETRY_SCREEN -> {
+                binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
+                setBackIcon(View.GONE)
+            }
+
+            else -> {
+                binding.titleTxt.text = resources.getString(R.string.failed_problem_with_service)
+                setBackIcon(View.VISIBLE)
+            }
         }
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            finish()
         }
         backClickListener()
         sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, false)
         if (sessionManager.fetchBooleanData(SessionManager.SettingsClick)) {
-//            sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
             sessionManager.saveBooleanData(
                 SessionManager.LOCATION_PERMISSION,
-                Utils.checkLocationpermission(this)
+                Utils.checkLocationPermission(this)
             )
         }
-        Log.e("TAG", "initViewBinding: isGeofencingAvailable "+isGeofencingAvailable() )
-        Log.e("TAG", "initViewBinding: isLocationServicesEnabled "+isLocationServicesEnabled() )
-    }
-
-    fun isGeofencingAvailable(): Boolean {
-        val apiAvailability = GoogleApiAvailability.getInstance()
-        val resultCode = apiAvailability.isGooglePlayServicesAvailable(this)
-        return resultCode == ConnectionResult.SUCCESS
-    }
-
-    fun isLocationServicesEnabled(): Boolean {
-        val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as android.location.LocationManager
-        return locationManager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER) ||
-                locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)
     }
 
     private fun backClickListener() {
@@ -167,7 +149,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
             Utils.areNotificationsEnabled(this)
         )
 
-        Log.e("TAG", "onResume: fontScale "+getResources().getConfiguration().fontScale)
+        Log.e("TAG", "onResume: fontScale " + getResources().configuration.fontScale)
 
     }
 
@@ -190,7 +172,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
 
         val oldGraph = inflater.inflate(R.navigation.nav_graph_landing)
 
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         if (intent.extras != null)
             oldGraph.addArgument(
                 Constants.TYPE,
@@ -226,20 +208,16 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     }
 
     fun focusToolBarLanding() {
-        Log.e("TAG", "focusToolBarHome: " )
-        binding.btnBack.requestFocus() // Focus on the btnBack
+        binding.btnBack.requestFocus()
         val task = Runnable {
             if (binding.btnBack.isVisible) {
-                Log.e("TAG", "focusToolBarHome:--> " )
                 binding.btnBack.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 binding.btnBack.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             } else {
-                Log.e("TAG", "focusToolBarHome:**> " )
                 binding.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 binding.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             }
         }
-        Log.e("TAG", "focusToolBarHome:(()) " )
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }

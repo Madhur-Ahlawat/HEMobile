@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
@@ -30,10 +29,10 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class AuthActivity : BaseActivity<Any?>(),LogoutListener{
+class AuthActivity : BaseActivity<Any?>(), LogoutListener {
 
     private lateinit var binding: ActivityAuthBinding
-    public var previousScreen = "home"
+    var previousScreen = "home"
     private lateinit var navController: NavController
     private var navFlow: String = ""
     private var currentBalance: String = ""
@@ -42,11 +41,12 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var crossingCount: String = ""
     private var navFlowFrom: String = ""
-    private var lrds_account: Boolean = false
+    private var lrdsAccount: Boolean = false
 
 
     @Inject
     lateinit var api: ApiService
+
     @Inject
     lateinit var sessionManager: SessionManager
     override fun initViewBinding() {
@@ -56,24 +56,24 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
             navFlow = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
         }
         if (intent.getStringExtra(Constants.LRDS_ACCOUNT) != null) {
-            lrds_account = intent.getBooleanExtra(Constants.LRDS_ACCOUNT,false) ?: false
+            lrdsAccount = intent.getBooleanExtra(Constants.LRDS_ACCOUNT, false)
         }
-        if(intent.hasExtra(Constants.NAV_FLOW_FROM)){
-            navFlowFrom=intent.getStringExtra(Constants.NAV_FLOW_FROM)?:""
+        if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
+            navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
         if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
-                intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA)
+                intent.getParcelableExtra(Constants.PERSONALDATA)
 
         }
         if (intent.getParcelableExtra<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                intent.getParcelableExtra<AccountInformation>(Constants.ACCOUNTINFORMATION)
+                intent.getParcelableExtra(Constants.ACCOUNTINFORMATION)
         }
 
         if (intent.getParcelableExtra<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION) != null) {
             replenishmentInformation =
-                intent.getParcelableExtra<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)
+                intent.getParcelableExtra(Constants.REPLENISHMENTINFORMATION)
         }
 
         crossingCount = intent.getStringExtra(Constants.CROSSINGCOUNT) ?: ""
@@ -112,60 +112,61 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
         val graph = inflater.inflate(R.navigation.navigation_auth)
 
         val bundle = Bundle()
-        if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-            binding.toolBarLyt.titleTxt.text = getString(R.string.forgot_password)
-            graph.setStartDestination(R.id.forgotPasswordFragment)
-            bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
+        when (navFlow) {
+            Constants.FORGOT_PASSWORD_FLOW -> {
+                binding.toolBarLyt.titleTxt.text = getString(R.string.forgot_password)
+                graph.setStartDestination(R.id.forgotPasswordFragment)
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
 
-        } else if (navFlow == Constants.TWOFA) {
-            bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-            bundle.putBoolean(Constants.LRDS_ACCOUNT, lrds_account)
-            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
-            binding.toolBarLyt.titleTxt.text = getString(R.string.str_sign_in_validation)
-            graph.setStartDestination(R.id.chooseOptionFragment)
+            }
 
-
-        } else if (navFlow == Constants.SUSPENDED) {
-
-            binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
-            bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-            bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
-            bundle.putString(Constants.CROSSINGCOUNT,crossingCount)
-            graph.setStartDestination(R.id.accountSuspendedFragment)
+            Constants.TWOFA -> {
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                binding.toolBarLyt.titleTxt.text = getString(R.string.str_sign_in_validation)
+                graph.setStartDestination(R.id.chooseOptionFragment)
 
 
-        }else if (navFlow==Constants.PAYMENT_TOP_UP){
-            binding.toolBarLyt.titleTxt.text = getString(R.string.top_up)
-            bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
-            graph.setStartDestination(R.id.accountSuspendedPaymentFragment)
+            }
+
+            Constants.SUSPENDED -> {
+
+                binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                bundle.putString(Constants.CROSSINGCOUNT, crossingCount)
+                graph.setStartDestination(R.id.accountSuspendedFragment)
+
+
+            }
+
+            Constants.PAYMENT_TOP_UP -> {
+                binding.toolBarLyt.titleTxt.text = getString(R.string.top_up)
+                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                graph.setStartDestination(R.id.accountSuspendedPaymentFragment)
+            }
         }
 
         navController = navHostFragment.navController
         navController.setGraph(graph, bundle)
 
-        navController.addOnDestinationChangedListener(object : NavController.OnDestinationChangedListener{
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-                if(destination.id==R.id.resetFragment){
-                    if (navFlow == Constants.FORGOT_PASSWORD_FLOW){
-                        binding.toolBarLyt.materialToolbar.gone()
-                    }else{
-                        binding.toolBarLyt.materialToolbar.visible()
-                    }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.resetFragment) {
+                if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
+                    binding.toolBarLyt.materialToolbar.gone()
+                } else {
+                    binding.toolBarLyt.materialToolbar.visible()
                 }
             }
-
-        })
+        }
 
     }
 
@@ -207,7 +208,7 @@ class AuthActivity : BaseActivity<Any?>(),LogoutListener{
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {

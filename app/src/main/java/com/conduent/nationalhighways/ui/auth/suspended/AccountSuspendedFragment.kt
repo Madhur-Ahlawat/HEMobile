@@ -55,7 +55,6 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
             val balance = currentBalance.replace("£", "").replace(",", "")
             if (balance.isNotEmpty()) {
                 val doubleBalance = balance.toDouble()
-                val intBalance = doubleBalance.toInt()
                 val finalCurrentBalance = 5.00 - doubleBalance
                 binding.textMaximumVehicle.text = getString(
                     R.string.str_you_will_need_to_pay,
@@ -79,12 +78,12 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
-                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+                arguments?.getParcelable(Constants.PERSONALDATA)
         }
 
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
 
     }

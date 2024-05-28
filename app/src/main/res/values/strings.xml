@@ -1046,6 +1046,7 @@
     <string name="str_in_the_uk">In the UK</string>
     <string name="str_outside_the_uk">Outside the UK</string>
     <string name="str_you_have_added_vehicle">You\'ve added %s vehicle</string>
+    <string name="str_you_have_added_vehicles">You\'ve added %s vehicles</string>
     <string name="str_do_you_want_to_add">Do you want to add another vehicle?</string>
     <string name="str_maximum_vehicle_registered">Maximum number of vehicles have been registered against the account</string>
     <string name="str_you_have_reached_the_maximum_vehicle">You’ve reached the maximum amount of vehicles that you can add to your account. You’ll need to remove a vehicle before adding another.</string>
@@ -1613,7 +1614,7 @@
     <string name="str_email_already_associated_with_other_account">An account with this email address already exists</string>
     <string name="str_email_length_less_than_eight">Enter an email address that is 8 characters or more</string>
     <string name="str_email_length_more_than_100">Email address must be 64 100 characters or fewer</string>
-    <string name="str_email_disallowed_character">Email address must not include [disallowed character]</string>
+    <string name="str_email_disallowed_character">Email address must not include %1$s</string>
 
     <!--Verify Email Error Message-->
     <string name="str_code_empty">Enter the 6-digit security code</string>
@@ -1628,7 +1629,7 @@
     <string name="str_password_must_contain_at_least_one_character">Password must contain at least 1 number</string>
     <string name="str_password_must_least_contain_one_upper_case">Password must contain at least 1 upper case letter </string>
     <string name="str_password_must_least_contain_one_lower_case">Password must contain at least 1 lower case letter</string>
-    <string name="str_password_must_not_include_disallowed_character">Password must not include [disallowed character]</string>
+    <string name="str_password_must_not_include_disallowed_character">Password must not include %1$s</string>
     <string name="str_confirm_password_error_message">Confirm your password</string>
     <string name="str_your_password_must_match">Your passwords must match</string>
 

@@ -8,43 +8,30 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.CountDownTimer
-import android.os.Environment
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import android.view.accessibility.AccessibilityEvent
-import android.view.accessibility.AccessibilityNodeInfo
-import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatRadioButton
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequest
-import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
@@ -61,8 +48,6 @@ import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.extn.changeBackgroundColor
-import com.conduent.nationalhighways.utils.extn.changeTextColor
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
@@ -70,9 +55,7 @@ import com.conduent.nationalhighways.utils.rating.RatingDialog
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
-import java.io.BufferedWriter
 import java.io.File
-import java.io.FileWriter
 import java.lang.reflect.Field
 import java.text.DateFormat
 import java.text.DecimalFormat
@@ -102,7 +85,6 @@ object Utils {
     var ALLOWED_CHARS_PASSWORD =
         "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890~!@#\$%^&*_-+=`|\\(){}[]:;\"\'<>,.?/"
     var ALLOWED_CHARS_EMAIL = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@-._+"
-    var SPECIAL_CHARACTERS = "!@#\$%^&*₹()+<>?/;:{}[]\\\\|~\"_\',.-`•√π÷×§∆£¢€¥^°=\\©®™✓"
 
 
     var LOWER_CASE = "qwertyuiopasdfghjklzxcvbnm"
@@ -113,15 +95,9 @@ object Utils {
     var NUMBER: Regex = Regex(".*[0-9]+.*")
     var UPPERCASE: Regex = Regex(".*[A-Z]+.*")
     var TWO_OR_MORE_DOTS: Regex = Regex("[\\.]+[\\.]+")
-    var TWO_OR_MORE_AT_THE_RATE: Regex = Regex("[@]+[@]+")
-    var TWO_OR_MORE_HYPEN: Regex = Regex("[\\-]+[\\-]+")
     var LOWECASE: Regex = Regex(".*[a-z]+.*")
     var DIGITS = "0123456789"
-    var SPECIAL_CHARACTERS_ALLOWED_IN_PASSWORD =
-        "~!@#\$%^&*_-+=`|\\(){}[]:;\"'<>,.?/`•√π÷×§∆£¢€¥^°\\©®™✓"
-    var ALPHABETS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
-    var passwordRegEX: Regex =
-        Regex("^(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z])[\\w~!@#$%^&*_\\-+=`|\\(){}\\[\\]:;\"'<>,.?\\/]{8,20}$")
+    private var ALPHABETS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
 
     val splCharAddress1: String by lazy {
         ALLOWED_CHARS_BUILDING_STREE_NO
@@ -153,7 +129,7 @@ object Utils {
     }
 
 
-    fun smsSupportCountryList(): ArrayList<String> {
+    private fun smsSupportCountryList(): ArrayList<String> {
         val supportCountryList = ArrayList<String>()
 
         supportCountryList.add("Austria - (+43)")
@@ -191,32 +167,8 @@ object Utils {
         supportCountryList.add("Romania - (+40)")
 
         return supportCountryList
-
-
     }
 
-    fun cardNumberDigitText(editText: EditText) {
-        editText.accessibilityDelegate = object : View.AccessibilityDelegate() {
-            override fun onInitializeAccessibilityNodeInfo(
-                host: View,
-                info: AccessibilityNodeInfo
-            ) {
-                super.onInitializeAccessibilityNodeInfo(host, info)
-                val originalText = editText.text.toString()
-                val modifiedText = originalText.replace("", " ")
-                info.text = modifiedText.trim { it <= ' ' }
-            }
-
-            override fun onPopulateAccessibilityEvent(host: View, event: AccessibilityEvent) {
-                super.onPopulateAccessibilityEvent(host, event)
-                val originalText = editText.text.toString()
-                val modifiedText = originalText.replace("", " ")
-                event.text.add(modifiedText.trim { it <= ' ' })
-            }
-        }
-    }
-
-    @RequiresApi(VERSION_CODES.O)
     fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData>): MutableList<TransactionData> {
 
         transactions.sortWith(Comparator { o1, o2 ->
@@ -237,11 +189,10 @@ object Utils {
         return transactions
     }
 
-    @RequiresApi(VERSION_CODES.O)
     fun sortAlertsDateWiseDescending(transactions: MutableList<AlertMessage>): MutableList<AlertMessage> {
-        var transactionListSorted: MutableList<AlertMessage> = mutableListOf()
+        val transactionListSorted: MutableList<AlertMessage> = mutableListOf()
         for (transaction in transactions) {
-            if (transactionListSorted.isEmpty() == true) {
+            if (transactionListSorted.isEmpty()) {
                 transactionListSorted.add(transaction)
             } else {
                 if (DateUtils.compareDates(
@@ -273,14 +224,13 @@ object Utils {
                 .replace(" ", "")
         Log.e("TOPUP", mText + "\n\n")
         if (mText.isNotEmpty()) {
-            if (mText.length == 1 && mText.equals(".")) {
+            if (mText.length == 1 && mText == ".") {
                 mText = "0"
             }
-            var amount = ""
-            if (isDecimal(minimumAmount)) {
-                amount = minimumAmount.toString()
+            val amount: String = if (isDecimal(minimumAmount)) {
+                minimumAmount.toString()
             } else {
-                amount = minimumAmount.toInt().toString()
+                minimumAmount.toInt().toString()
             }
 
             isValid = if (mText.toDouble().toInt() <= 100000) {
@@ -327,34 +277,27 @@ object Utils {
 
     val splCharEmailCode: String by lazy {
         ALLOWED_CHARS_EMAIL
-//        getSplCharString(ALLOWED_CHARS_EMAIL)
     }
     val splCharCompanyName: String by lazy {
         ALLOWED_CHARS_COMPANY_NAME
-//        getSplCharString(ALLOWED_CHARS_COMPANY_NAME)
     }
     val splCharVehicleMake: String by lazy {
         ALLOWED_CHARS_VEHICLE_MAKE
-//        getSplCharString(ALLOWED_CHARS_VEHICLE_MAKE)
     }
     val splCharVehicleModel: String by lazy {
         ALLOWED_CHARS_VEHICLE_MODEL
-//        getSplCharString(ALLOWED_CHARS_VEHICLE_MODEL)
     }
     val splCharVehicleColor: String by lazy {
         ALLOWED_CHARS_VEHICLE_COLOR
-//        getSplCharString(ALLOWED_CHARS_VEHICLE_COLOR)
     }
     val splCharsPassword: String by lazy {
         ALLOWED_CHARS_PASSWORD
-//        getSplCharString(ALLOWED_CHARS_PASSWORD)
     }
     val splCharsVehicleRegistration: String by lazy {
         ALLOWED_CHARS_VEHICLE_REGISTRATION_PLATE
-//        getSplCharString(ALLOWED_CHARS_VEHICLE_REGISTRATION_PLATE)
     }
 
-    fun countOccurenceOfChar(s: String, c: Char): Int {
+    fun countOccurrenceOfChar(s: String, c: Char): Int {
         var res = 0
         for (element in s) {
             // checking character in string
@@ -386,12 +329,12 @@ object Utils {
     fun isLastCharOfStringACharacter(input: String): Boolean {
         var isAlphabet = false
         LOWER_CASE.forEach {
-            if (input.last().toString().equals(it.toString())) {
+            if (input.last().toString() == it.toString()) {
                 isAlphabet = true
             }
         }
         UPPER_CASE.forEach {
-            if (input.last().toString().equals(it.toString())) {
+            if (input.last().toString() == it.toString()) {
                 isAlphabet = true
             }
         }
@@ -399,42 +342,20 @@ object Utils {
     }
 
     fun convertDateForTransferCrossingsScreen(inputDate: String?): String {
-        val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a")
-        val date: Date = inputFormat.parse(inputDate)
-        val outputFormat = SimpleDateFormat("dd MMM yyyy")
-        return outputFormat.format(date)
+        val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a",Locale.US)
+        val date: Date? = inputFormat.parse(inputDate.toString())
+        val outputFormat = SimpleDateFormat("dd MMM yyyy",Locale.US)
+        return outputFormat.format(date?:Date())
     }
 
     fun removeAllCharacters(charsToBeRemoved: String, input: String): String {
-        var input = input
+        var input1 = input
         charsToBeRemoved.forEach {
-            input = input.replace(it.toString(), "")
+            input1 = input.replace(it.toString(), "")
         }
-        return input
+        return input1
     }
 
-
-//    fun getSplCharString(allowedChars: String): String {
-//        var splChar = ""
-//        SPECIAL_CHARACTERS.forEach { c ->
-//            if (!allowedChars.contains(c.toString())) {
-//                splChar = splChar + c
-//            }
-//        }
-//        return splChar
-//    }
-
-    //    fun hasSpecialCharacters(str: String, specialCharacterString: String): Boolean {
-//        //
-//        var hasSpecialChar = false
-//        str.forEach { char ->
-//            if (specialCharacterString.contains(char.toString())) {
-//                hasSpecialChar = true
-//                return@forEach
-//            }
-//        }
-//        return hasSpecialChar
-//    }
     fun hasSpecialCharacters(input: String, allowedCharacters: String): Boolean {
         var hasSpecialCharacter = false
         input.forEach { inputChar ->
@@ -488,104 +409,8 @@ object Utils {
     }
 
     var specialCharacter: Regex = Regex("[0-9$&+,:;=\\\\?@#|/'<>.^*()%!]")
-    var excludeNumber: Regex = Regex("[$&+,:;=\\\\?@#|/'<>.^*()%!]")
 
-    var colourSpecialCharacter: Regex = Regex("[$&\\[\\]+,:;=\\\\?@#|'<>.^*()%!{_}-]")
-    var addressSpecialCharacter: Regex = Regex("[\${_&\\[\\]+:;=\\\\?@|/<>^*()%!}]")
-
-
-    fun hasInternetConnection(application: BaseApplication): Boolean {
-        val connectivityManager = application.getSystemService(
-            Context.CONNECTIVITY_SERVICE
-        ) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.M) {
-            val activeNetwork = connectivityManager.activeNetwork ?: return false
-            val capabilities =
-                connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-            return when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                else -> false
-            }
-        } else {
-            connectivityManager.activeNetworkInfo?.run {
-                return when (type) {
-                    ConnectivityManager.TYPE_WIFI -> true
-                    ConnectivityManager.TYPE_MOBILE -> true
-                    ConnectivityManager.TYPE_ETHERNET -> true
-                    else -> false
-                }
-            }
-        }
-        return false
-    }
-
-    private val EMAIL = Pattern.compile(
-        "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
-        Pattern.CASE_INSENSITIVE
-    )
-    private const val MIN_PASSWORD_LENGTH = 6
-
-
-    fun isEmailValid(email: String): Boolean {
-        return if (email.isEmpty()) {
-            false
-        } else {
-            EMAIL.matcher(email).matches()
-        }
-    }
-
-    fun isPasswordValid(password: String?): Boolean {
-        return if (password == null || password.trim { it <= ' ' }.isEmpty()) {
-            false
-        } else {
-            password.trim { it <= ' ' }.length >= MIN_PASSWORD_LENGTH
-        }
-    }
-
-
-    fun currentDateAndTime(): String {
-        val sdf = SimpleDateFormat("MM/dd/yyyy hh:mm aa", Locale.getDefault())
-        return sdf.format(Date())
-
-    }
-
-    fun getDirection(entry: String?): String {
-        return when (entry) {
-            "N" -> "NORTHBOUND"
-            "S" -> "SOUTHBOUND"
-            else -> ""
-        }
-    }
-
-    fun loadStatus(status: String, tvTitle: AppCompatTextView) {
-        when (status) {
-
-            "Y" -> {
-                tvTitle.text = tvTitle.context.getString(R.string.paid)
-                tvTitle.changeTextColor(R.color.color_10403C)
-                tvTitle.changeBackgroundColor(R.color.color_CCE2D8)
-
-
-            }
-
-            "N" -> {
-                tvTitle.text = tvTitle.context.getString(R.string.unpaid)
-                tvTitle.changeTextColor(R.color.color_10403C)
-                tvTitle.changeBackgroundColor(R.color.FCD6C3)
-
-            }
-
-            else -> {
-                tvTitle.text = status
-                tvTitle.changeTextColor(R.color.color_594D00)
-                tvTitle.changeBackgroundColor(R.color.FFF7BF)
-            }
-        }
-    }
-
-    fun redirectToSignoutPage(context: Activity) {
+    fun redirectToSignOutPage(context: Activity) {
         context.startActivity(
             Intent(context, LandingActivity::class.java).putExtra(
                 Constants.SHOW_SCREEN, Constants.SESSION_TIME_OUT
@@ -660,7 +485,7 @@ object Utils {
                 //textView.setText("00:00:00")
                 if (sessionManager.getLoggedInUser()) {
                     sessionManager.clearAll()
-                    redirectToSignoutPage(activity)
+                    redirectToSignOutPage(activity)
                 } else {
                     activity.startNewActivityByClearingStack(LandingActivity::class.java)
                 }
@@ -713,7 +538,7 @@ object Utils {
             countDownTimer.cancel()
             if (activity is HomeActivityMain) {
                 sessionManager.clearAll()
-                redirectToSignoutPage(activity)
+                redirectToSignOutPage(activity)
             } else {
                 activity.startNewActivityByClearingStack(LandingActivity::class.java)
             }
@@ -748,72 +573,26 @@ object Utils {
 
         var output1 = ""
         textInput.forEachIndexed { index, c ->
-            if (index > 0) {
-                output1 = output1 + ", " + c.toString()
+            output1 = if (index > 0) {
+                "$output1, $c"
             } else {
-                output1 = output1 + c.toString()
+                output1 + c.toString()
             }
         }
-        if (output1.contains(',')) {
-            return output1.substring(0, output1.lastIndexOf(',')) + " and" + output1.substring(
+        return if (output1.contains(',')) {
+            output1.substring(0, output1.lastIndexOf(',')) + " and" + output1.substring(
                 output1.lastIndexOf(',') + 1,
                 output1.length
             )
         } else {
-            return output1
+            output1
         }
     }
-//    fun getOccuringChar(str: String): Int {
-////creating an array of size 256 (ASCII_SIZE)
-//        val count = IntArray(256)
-//        //finds the length of the string
-//        val len = str.length
-//        //initialize count array index
-//        for (i in 0 until len) count[str[i].code]++
-//        //create an array of given String size
-//        val ch = CharArray(str.length)
-//        for (i in 0 until len) {
-//            ch[i] = str[i]
-//            var find = 0
-//            for (j in 0..i) {
-////if any matches found
-//                if (str[i] == ch[j]) find++
-//            }
-//            if (find == 1) //prints occurrence of the character
-//                return count[str[i].code]
-//            else
-//                return 0
-//        }
-//    }
-
-    fun getStatusForCases(status: String, tvTitle: AppCompatTextView) {
-        when (status) {
-            "Closed" -> {
-                tvTitle.text = tvTitle.context.getString(R.string.resolved)
-                tvTitle.changeTextColor(R.color.color_3D2375)
-                tvTitle.changeBackgroundColor(R.color.color_DBD5E9)
-            }
-
-            "Open" -> {
-                tvTitle.text = tvTitle.context.getString(R.string.submitted)
-                tvTitle.changeTextColor(R.color.color_10403C)
-                tvTitle.changeBackgroundColor(R.color.color_CCE2D8)
-            }
-
-            else -> {
-                tvTitle.text = tvTitle.context.getString(R.string.in_progress_open)
-                tvTitle.changeTextColor(R.color.color_594D00)
-                tvTitle.changeBackgroundColor(R.color.FFF7BF)
-            }
-        }
-    }
-
 
     fun isValidPassword(password: String?): Boolean {
-//        val PASSWORD_PATTERN = "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$"
         val PASSWORD_PATTERN = "^(?=.{8,})(?=.*[a-z])(?=.*[A-Z]).*$"
         val pattern = Pattern.compile(PASSWORD_PATTERN)
-        val matcher: Matcher = pattern.matcher(password)
+        val matcher: Matcher = pattern.matcher(password.toString())
         return matcher.matches()
     }
 
@@ -889,18 +668,13 @@ object Utils {
         }
     }
 
-    fun validateString(target: String, pattern: String): Boolean {
-        val mPattern =
-            Pattern.compile(pattern)
-        return mPattern.matcher(target).matches()
-    }
 
     fun mobileNumber(mobNo: String?): String {
         val regexPattern =
             "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
         val match: Matcher
         val pattern = Pattern.compile(regexPattern)
-        match = pattern.matcher(mobNo)
+        match = pattern.matcher(mobNo.toString())
         if (match.find()) {
             return "Password matched"
         }
@@ -966,31 +740,16 @@ object Utils {
     }
 
     fun maskPhoneNumber(phoneNumber: String): String {
-        if (phoneNumber.isNotEmpty()) {
+        return if (phoneNumber.isNotEmpty()) {
             val star = phoneNumber.length - 6
-            return if (star == 4) {
+            if (star == 4) {
                 phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length - 3), "*****")
-
             } else {
                 phoneNumber.replace(phoneNumber.substring(2, phoneNumber.length - 3), "******")
-
             }
         } else {
-            return phoneNumber
+            phoneNumber
         }
-
-    }
-
-
-    fun getYesterdayDate(): String {
-        val dateFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.DATE, -1)
-        return dateFormat.format(cal.time)
-    }
-
-    fun currentDate(): String {
-        return SimpleDateFormat("dd-MMMM-yyyy", Locale.getDefault()).format(Date())
 
     }
 
@@ -1001,27 +760,20 @@ object Utils {
 
     }
 
-    fun currentTimeWithAMPM(): String {
-        return SimpleDateFormat("hh:mma", Locale.getDefault()).format(Date()).replace("AM", "am")
-            .replace("PM", "pm")
-
-    }
-
     fun areNotificationsEnabled(context: Context): Boolean {
         val notificationManagerCompat = NotificationManagerCompat.from(context)
-        val status = notificationManagerCompat.areNotificationsEnabled()
-        return status
+        return notificationManagerCompat.areNotificationsEnabled()
     }
 
     fun getNotificationStatus(context: Context): String {
         return "N"
-        val notificationManagerCompat = NotificationManagerCompat.from(context)
+        /*val notificationManagerCompat = NotificationManagerCompat.from(context)
         val status = notificationManagerCompat.areNotificationsEnabled()
-        if (status) {
-            return "Y"
+        return if (status) {
+            "Y"
         } else {
-            return "N"
-        }
+            "N"
+        }*/
     }
 
     private const val DOC = "application/msword"
@@ -1035,8 +787,6 @@ object Utils {
     private const val IMAGE_TIFF = "image/tiff"
     private const val IMAGE_BMP = "image/bmp"
     private const val CSV = "text/csv"
-    private const val AUDIO = "audio/*"
-    private const val TEXT = "text/*"
 
     fun convertToPoundFormat(currentBalance: String?): CharSequence? {
         var balance = currentBalance
@@ -1090,16 +840,6 @@ object Utils {
 
     fun getCountryCodeRequiredText(text: String) = text.substringAfter('(').replace(")", "")
 
-
-    fun setMaskWithDots(activity: Activity, info: String?): String {
-        return if ((info?.length ?: 0) >= 4) {
-            activity.resources.getString(R.string.str_maskcardnumber, info?.takeLast(4))
-        } else {
-            activity.resources.getString(R.string.str_maskcardnumber, info)
-        }
-
-    }
-
     fun setStarmaskcardnumber(activity: Activity, info: String?): String {
         return if ((info?.length ?: 0) >= 4) {
             activity.resources.getString(R.string.str_starmaskcardnumber, info?.takeLast(4))
@@ -1127,123 +867,43 @@ object Utils {
 
     }
 
-    fun checkLocationPermissionState(context: Context) {
-
-        var fineLocation =
-            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
-        var coarseLocation =
-            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-
-            var backgroundLocationPermissionApproved: Boolean = ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            ) > -1
-
-            var isAppLocationPermissionGranted =
-                (backgroundLocationPermissionApproved) &&
-                        (coarseLocation == PackageManager.PERMISSION_GRANTED);
-
-            var preciseLocationAllowed = (fineLocation == PackageManager.PERMISSION_GRANTED)
-                    && (coarseLocation == PackageManager.PERMISSION_GRANTED);
-
-            if (preciseLocationAllowed) {
-                Log.e("PERMISSION", "Precise location is enabled in Android 12");
-            } else {
-                Log.e("PERMISSION", "Precise location is disabled in Android 12");
-            }
-
-            if (isAppLocationPermissionGranted) {
-                Log.e("PERMISSION", "Location is allowed all the time");
-            } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
-                Log.e("PERMISSION", "Location is allowed while using the app");
-            } else {
-                Log.e("PERMISSION", "Location is not allowed.");
-            }
-
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
-            var bgLocation = ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            );
-
-            var isAppLocationPermissionGranted =
-                (bgLocation == PackageManager.PERMISSION_GRANTED) &&
-                        (coarseLocation == PackageManager.PERMISSION_GRANTED);
-
-            if (isAppLocationPermissionGranted) {
-                Log.e("PERMISSION", "Location is allowed all the time");
-            } else if (coarseLocation == PackageManager.PERMISSION_GRANTED) {
-                Log.e("PERMISSION", "Location is allowed while using the app");
-            } else {
-                Log.e("PERMISSION", "Location is not allowed.");
-            }
-
-        } else {
-
-            var isAppLocationPermissionGranted =
-                (fineLocation == PackageManager.PERMISSION_GRANTED) &&
-                        (coarseLocation == PackageManager.PERMISSION_GRANTED);
-
-            if (isAppLocationPermissionGranted) {
-                Log.e("PERMISSION", "Location permission is granted");
-            } else {
-                Log.e("PERMISSION", "Location permission is not granted");
-            }
-        }
-    }
-
-
     fun setCardImage(paymentTypeInfo: String): Int {
-        if (paymentTypeInfo.contains("CURRENT")) {
-            return R.drawable.directdebit
+        return if (paymentTypeInfo.contains("CURRENT")) {
+            R.drawable.directdebit
         } else if (paymentTypeInfo.contains("SAVINGS")) {
-            return R.drawable.directdebit
+            R.drawable.directdebit
         } else if (paymentTypeInfo.contains("MASTERCARD")) {
-            return R.drawable.mastercard
+            R.drawable.mastercard
         } else if (paymentTypeInfo.contains(Constants.MAESTRO)) {
-            return R.drawable.maestro
+            R.drawable.maestro
         } else if (paymentTypeInfo.contains("VISA")) {
-            return R.drawable.visablue
+            R.drawable.visablue
         } else {
-            return R.color.white
+            R.color.white
         }
     }
 
     fun returnCardText(paymentTypeInfo: String): String {
-        if (paymentTypeInfo.contains("CURRENT")) {
-            return "CURRENT"
+        return if (paymentTypeInfo.contains("CURRENT")) {
+            "CURRENT"
         } else if (paymentTypeInfo.contains("SAVINGS")) {
-            return "SAVINGS"
+            "SAVINGS"
         } else if (paymentTypeInfo.contains("MASTERCARD")) {
-            return "MASTERCARD"
+            "MASTERCARD"
         } else if (paymentTypeInfo.contains(Constants.MAESTRO)) {
-            return "MAESTRO"
+            "MAESTRO"
         } else if (paymentTypeInfo.contains("VISA")) {
-            return "VISA"
+            "VISA"
         } else {
-            return ""
+            ""
         }
     }
 
     fun redirectToNotificationPermissionSettings(context: Context) {
         val intent = Intent().apply {
-            when {
-                Build.VERSION.SDK_INT >= VERSION_CODES.O -> {
-                    // For Android 8.0 (API level 26) and above
-                    action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
-                    putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-                }
-
-                else -> {
-                    // For Android 4.4 and below
-                    action = "android.settings.APP_NOTIFICATION_SETTINGS"
-                    putExtra("app_package", context.packageName)
-                    putExtra("app_uid", context.applicationInfo.uid)
-                }
-            }
+            // For Android 8.0 (API level 26) and above
+            action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+            putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
         }
         context.startActivity(intent)
 
@@ -1281,18 +941,18 @@ object Utils {
     }
 
     fun convertStringToDate(dateString: String, dateFormat: String): Date? {
-        val dateFormat = SimpleDateFormat(dateFormat, Locale.getDefault())
+        val dateFormat1 = SimpleDateFormat(dateFormat, Locale.getDefault())
         return try {
-            dateFormat.parse(dateString)
+            dateFormat1.parse(dateString)
         } catch (e: Exception) {
             Date()
         }
     }
 
     fun convertStringToDate1(dateString: String, dateFormat: String): Date? {
-        val dateFormat = SimpleDateFormat(dateFormat, Locale.getDefault())
+        val dateFormat1 = SimpleDateFormat(dateFormat, Locale.getDefault())
         return try {
-            dateFormat.parse(dateString)
+            dateFormat1.parse(dateString)
         } catch (e: Exception) {
             null
         }
@@ -1303,15 +963,9 @@ object Utils {
             val differenceInMillis = endTime.time - startTime.time
             val hours = differenceInMillis / (1000 * 60 * 60)
             val minutes = differenceInMillis % (1000 * 60 * 60) / (1000 * 60)
-            val seconds = differenceInMillis % (1000 * 60) / 1000
-
-            val millisecondsInMonth =
-                1000L * 60 * 60 * 24 * 30 // Approximation of a month in milliseconds
-            val months = differenceInMillis / millisecondsInMonth
 
             val millisecondsInDay = 1000L * 60 * 60 * 24
             val days = differenceInMillis / millisecondsInDay
-
 
 //            Triple(hours, minutes, months)
             Triple(hours, minutes, days)
@@ -1335,14 +989,7 @@ object Utils {
     }
 
     fun hasFaceId(context: Context): Boolean {
-        val hasFaceBiometric = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            context.packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)
-        } else {
-            false
-        }
-
-        return hasFaceBiometric
-
+        return context.packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)
     }
 
     fun hasTouchId(context: Context): Boolean {
@@ -1386,13 +1033,13 @@ object Utils {
             .onThresholdCleared { dialog, rating, thresholdCleared ->
                 Log.e(
                     "TAG",
-                    "onThresholdCleared: $rating $thresholdCleared"
+                    "onThresholdCleared: $dialog $rating $thresholdCleared"
                 )
             }
             .onThresholdFailed { dialog, rating, thresholdCleared ->
                 Log.e(
                     "TAG",
-                    "onThresholdFailed: $rating $thresholdCleared"
+                    "onThresholdFailed: $dialog $rating $thresholdCleared"
                 )
             }
             .onRatingChanged { rating, thresholdCleared ->
@@ -1418,17 +1065,11 @@ object Utils {
     fun vibrate(activity: Activity) {
         val vibrator: Vibrator =
             activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.O) {
-            // Create a VibrationEffect object for the default vibration strength
-            val vibrationEffect =
-                VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
-            // Vibrate the device with the created VibrationEffect
-            vibrator.vibrate(vibrationEffect)
-        } else {
-            // For older versions of Android, vibrate without VibrationEffect
-            vibrator.vibrate(200)
-        }
+        // Create a VibrationEffect object for the default vibration strength
+        val vibrationEffect =
+            VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE)
+        // Vibrate the device with the created VibrationEffect
+        vibrator.vibrate(vibrationEffect)
     }
 
     fun showProgressBar(context: Context, isProgressVisibile: Boolean) {
@@ -1453,7 +1094,7 @@ object Utils {
                     progressBar.dismiss()
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
 
         }
     }
@@ -1483,7 +1124,6 @@ object Utils {
 
     fun checkFileTypeByExtension(filePath: String): Boolean {
         val extension = getFileExtension(filePath)
-        Log.e("TAG", "checkFileTypeByExtension: extension " + extension)
         return extension.equals("jpg", ignoreCase = true) ||
                 extension.equals("pdf", ignoreCase = true) ||
                 extension.equals("bmp", ignoreCase = true) ||
@@ -1560,25 +1200,25 @@ object Utils {
         securityCode: String? = null,
         referenceId: String? = null,
     ): UpdateProfileRequest {
-        var correspDeliveryMode_ = correspDeliveryMode
-        var correspDeliveryFrequency_ = correspDeliveryFrequency
-        var businessName_: String? = null
+        var correspondDeliveryModeDup = correspDeliveryMode
+        var correspondDeliveryFrequencyDup = correspDeliveryFrequency
+        var businessNameDup: String? = null
 
         if (accountType.equals(
                 Constants.BUSINESS_ACCOUNT,
                 true
             )
         ) {
-            businessName_ = businessName ?: ""
+            businessNameDup = businessName ?: ""
         }
         if (correspDeliveryMode == null) {
-            correspDeliveryMode_ = ""
+            correspondDeliveryModeDup = ""
         }
         if (correspDeliveryFrequency == null) {
-            correspDeliveryFrequency_ = ""
+            correspondDeliveryFrequencyDup = ""
         }
         return UpdateProfileRequest(
-            businessName_,
+            businessNameDup,
             null,
             firstName,
             lastName,
@@ -1599,8 +1239,8 @@ object Utils {
             phoneFax,
             smsOption,
             phoneEvening,
-            correspDeliveryMode_,
-            correspDeliveryFrequency_,
+            correspondDeliveryModeDup,
+            correspondDeliveryFrequencyDup,
             mfaEnabled,
             securityCode = securityCode,
             referenceId = referenceId
@@ -1621,60 +1261,39 @@ object Utils {
         }
 
         val filteredList = countriesList.filter { it.countryCode == countryCode }
-        if (filteredList.size > 0) {
-            return filteredList.get(0).countryName ?: ""
+        return if (filteredList.isNotEmpty()) {
+            filteredList[0].countryName ?: ""
         } else {
-            return ""
+            ""
         }
     }
 
-    fun checkLocationpermission(context: Context): Boolean {
-        return if (Build.VERSION.SDK_INT >= VERSION_CODES.Q) {
-            !((ContextCompat.checkSelfPermission(
+    fun checkLocationPermission(context: Context): Boolean {
+        return ContextCompat.checkSelfPermission(
                 context,
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            ) == PackageManager.PERMISSION_DENIED))
-        } else {
-            !((ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_DENIED) &&
-                    (ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_DENIED))
-        }
+            ) != PERMISSION_DENIED
+
     }
 
     fun checkAccessFineLocationPermission(context: Context): Boolean {
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.Q) {
-            return !((ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_DENIED) &&
-                    (ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_DENIED) &&
-                    (ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                    ) == PackageManager.PERMISSION_DENIED))
-        } else {
-            return !((ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_DENIED) &&
-                    (ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_DENIED))
-        }
+        return !((ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PERMISSION_DENIED) &&
+                (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PERMISSION_DENIED) &&
+                (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                ) == PERMISSION_DENIED))
 
     }
 
     fun isSupportedCountry(country: String): Boolean {
-        if (country.isEmpty() == true) {
+        if (country.isEmpty()) {
             return true
         }
         val smsSupportCountryList = smsSupportCountryList().map {
@@ -1684,13 +1303,10 @@ object Utils {
             extractTextWithinBrackets(it)
         }
 
-        val isSupportedCoutry = smsSupportCountryList.contains(
-            extractTextWithinBrackets(country).toString().trim()
+        return smsSupportCountryList.contains(
+            extractTextWithinBrackets(country).trim()
                 .replace(" ", "").replace("-", "").lowercase()
         )
-        Log.e("TAG", "country is " + country + " isSupportedCoutry-> " + country)
-
-        return isSupportedCoutry
     }
 
     fun extractTextWithinBrackets(input: String): String {
@@ -1711,17 +1327,6 @@ object Utils {
         appSettingsIntent.data = appSettingsUri
         activity.startActivity(appSettingsIntent)
     }
-
-    fun RadioGroup.clearCheckedRadioButtonsContentDescriptions() {
-        for (i in 0 until childCount) {
-            val view = getChildAt(i)
-            if (view is AppCompatRadioButton) {
-                view.contentDescription = view.text.toString()
-            }
-        }
-    }
-
-
     fun replaceAsterisks(input: String): String {
 
         var count = 0
@@ -1730,7 +1335,7 @@ object Utils {
         input.forEachIndexed { index, char ->
             var nextChar = ""
             if (input.length > (index + 1)) {
-                nextChar = input.toString().get(index + 1).toString()
+                nextChar = input[index + 1].toString()
             }
 
             if (char == '*') {
@@ -1750,7 +1355,6 @@ object Utils {
             }
             previousChar = char
         }
-        Log.e("TAG", "replaceAsterisks: " + stringBuilder.toString())
         return stringBuilder.toString()
     }
 
@@ -1765,7 +1369,6 @@ object Utils {
 
 
     fun accessibilityForNumbers(value: String): StringBuilder {
-        Log.e("TAG", "accessibilityForNumbers: value -> "+value )
         val builder = StringBuilder()
         var isFirstDigit = true
 
@@ -1816,13 +1419,8 @@ object Utils {
                 WorkManager.getInstance(activity).enqueue(periodicWorkRequest)
 
                 val i = Intent(activity, PlayLocationService::class.java)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     Log.e("TAG", "startForegroundService: Running-- ")
                     activity.startForegroundService(i)
-                } else {
-                    Log.e("TAG", "startForegroundService: Running--- ")
-                    activity.startService(i)
-                }
             } catch (e: Exception) {
                 writeInFile(
                     activity,
@@ -1847,8 +1445,4 @@ object Utils {
         return Calendar.getInstance().get(Calendar.YEAR)
     }
 
-    fun dpToPx(dp: Int, context: Context): Int {
-        val density = context.resources.displayMetrics.density
-        return (dp * density).toInt()
-    }
 }

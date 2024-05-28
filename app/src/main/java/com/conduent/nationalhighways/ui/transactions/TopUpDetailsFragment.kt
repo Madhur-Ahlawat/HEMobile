@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
-import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
 import com.conduent.nationalhighways.databinding.FragmentTopupDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -29,8 +28,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
 
-    private var dateRangeModel: PaymentDateRangeModel? = null
-    private var topup: String? = null
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
@@ -65,20 +62,20 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
             tvPaymentReferenceValue.text = crossing?.transactionNumber
             tvTypeOfPaymentValue.text = Utils.capitalizeString(crossing?.activity)
 
-            var rebillPaymentType = crossing?.rebillPaymentType
+            var reBillPaymentType = crossing?.rebillPaymentType
             if (crossing?.rebillPaymentType?.contains("-") == true) {
-                rebillPaymentType = crossing?.rebillPaymentType?.substring(
+                reBillPaymentType = crossing?.rebillPaymentType?.substring(
                     0,
                     crossing?.rebillPaymentType?.indexOf("-") ?: 0
                 )
             }
 
-            if (rebillPaymentType?.lowercase().equals("current") ||
-                rebillPaymentType?.lowercase().equals("savings")
+            if (reBillPaymentType?.lowercase().equals("current") ||
+                reBillPaymentType?.lowercase().equals("savings")
             ) {
                 tvPaymentMethodValue.text = resources.getString(R.string.direct_debit)
             } else {
-                tvPaymentMethodValue.text = Utils.capitalizeString(rebillPaymentType)
+                tvPaymentMethodValue.text = Utils.capitalizeString(reBillPaymentType)
             }
 
             val paymentSource= crossing?.paymentSource?.lowercase()
@@ -92,12 +89,12 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
                 tvChannelValue.text = Utils.capitalizeString(crossing?.paymentSource)
             }
 
-            val rebillPayment= crossing?.rebillPaymentType?.substring(
+            val reBillPayment= crossing?.rebillPaymentType?.substring(
                 (crossing?.rebillPaymentType?.indexOf("-") ?: 0) + 1,
                 crossing?.rebillPaymentType?.length?:0
             )
-            if(rebillPayment?.lowercase()?.all { it.isDigit() } == true){
-                tvFourDigitsOfTheCardValue.text = rebillPayment
+            if(reBillPayment?.lowercase()?.all { it.isDigit() } == true){
+                tvFourDigitsOfTheCardValue.text = reBillPayment
             }else{
                 tvFourDigitsOfTheCardValue.text = "N/A"
             }

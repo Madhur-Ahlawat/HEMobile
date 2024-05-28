@@ -79,7 +79,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
 
             totalAmountOfAdditionalCrossings = additionalCrossingsCharge
             crossingsList.clear()
-            for (i in 1..additionalCrossings.plus(unSettledTrips!!)) {
+            for (i in 1..additionalCrossings.plus(unSettledTrips?:0)) {
                 crossingsList.add(i.toString())
             }
             inputCountry.dataSet.clear()

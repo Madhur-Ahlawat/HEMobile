@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -60,7 +59,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     private var isViewCreated: Boolean = false
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var btnEnabled: Boolean = false
-    private var oldEmail :String= ""
+    private var oldEmail: String = ""
 
 
     override fun getFragmentBinding(
@@ -69,7 +68,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     ) = FragmentEnterEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
-      
+
         sessionManager.clearAll()
 //        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
@@ -86,8 +85,8 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
 
-                if(!isViewCreated){
-                    oldEmail=NewCreateAccountRequestModel.emailAddress?:""
+                if (!isViewCreated) {
+                    oldEmail = NewCreateAccountRequestModel.emailAddress ?: ""
                 }
                 NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
                 setView()
@@ -120,7 +119,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     }
 
     private fun setView() {
-        if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty()==true){
+        if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty() == true) {
             NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
 
         }
@@ -160,7 +159,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
             if (loader?.isVisible == true) {
                 loader?.dismiss()
             }
-            if(navFlowCall==ACCOUNT_CREATION_EMAIL_FLOW){
+            if (navFlowCall == ACCOUNT_CREATION_EMAIL_FLOW) {
                 binding.edtEmail.setErrorText(getString(R.string.an_account_with_this_email_address_already_exists))
             }
 
@@ -176,7 +175,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
             when (status) {
                 is Resource.Success -> {
                     if (status.data?.statusCode?.equals("1054") == true) {
-                        if(navFlowCall==FORGOT_PASSWORD_FLOW){
+                        if (navFlowCall == FORGOT_PASSWORD_FLOW) {
                             status.data.message?.let { binding.edtEmail.setErrorText(getString(R.string.incorrect_email_try_again)) }
                         }
                     } else {
@@ -203,7 +202,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                 }
 
                 is Resource.DataError -> {
-                    if (checkSessionExpiredOrServerError(status.errorModel) ) {
+                    if (checkSessionExpiredOrServerError(status.errorModel)) {
                         displaySessionExpireDialog(status.errorModel)
                     } else {
                         binding.edtEmail.setErrorText(status.errorMsg)
@@ -303,22 +302,23 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                 if (binding.edtEmail.editText.getText().toString().length > 100) {
                     binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                     false
-                }
-                else {
+                } else {
                     if (!Utils.isLastCharOfStringACharacter(
                             binding.edtEmail.editText.getText().toString().trim()
-                        ) || Utils.countOccurenceOfChar(
+                        ) || Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.getText().toString().trim(), '@'
                         ) > 1 || binding.edtEmail.editText.getText().toString().trim().contains(
                             Utils.TWO_OR_MORE_DOTS
                         ) || (binding.edtEmail.editText.getText().toString().trim().last()
                             .toString() == "." || binding.edtEmail.editText.text
                             .toString().first().toString() == ".")
-                        || (binding.edtEmail.editText.getText().toString().trim().last().toString() == "-" || binding.edtEmail.editText.getText().toString().first()
+                        || (binding.edtEmail.editText.getText().toString().trim().last()
+                            .toString() == "-" || binding.edtEmail.editText.getText().toString()
+                            .first()
                             .toString() == "-")
-                        || (Utils.countOccurenceOfChar(
+                        || (Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.getText().toString().trim(), '.'
-                        ) < 1) || (Utils.countOccurenceOfChar(
+                        ) < 1) || (Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.getText().toString().trim(), '@'
                         ) < 1)
                     ) {
@@ -349,11 +349,11 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                             commaSeparatedString =
                                 Utils.makeCommaSeperatedStringForPassword(
                                     Utils.removeAllCharacters(
-                                        ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
+                                        ALLOWED_CHARS_EMAIL, filterTextForSpecialChars ?: ""
                                     )
                                 )
-                            if (filterTextForSpecialChars!!.isNotEmpty()) {
-                                binding.edtEmail.setErrorText("Email address must not include $commaSeparatedString")
+                            if (filterTextForSpecialChars?.isNotEmpty() == true) {
+                                binding.edtEmail.setErrorText(resources.getString(R.string.str_email_disallowed_character,commaSeparatedString))
                                 false
                             } else if (!Patterns.EMAIL_ADDRESS.matcher(
                                     binding.edtEmail.getText().toString()
@@ -365,7 +365,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                                 binding.edtEmail.removeError()
                                 true
                             }
-                        } else if (Utils.countOccurenceOfChar(
+                        } else if (Utils.countOccurrenceOfChar(
                                 binding.edtEmail.editText.getText().toString().trim(), '@'
                             ) !in (1..1)
                         ) {
@@ -407,9 +407,20 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
             is Resource.Success -> {
 
                 val bundle = Bundle()
-                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL, binding.edtEmail.getText().toString().trim()))
+                bundle.putParcelable(
+                    "data",
+                    RequestOTPModel(Constants.EMAIL, binding.edtEmail.getText().toString().trim())
+                )
 
-                bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode, 0L, resource.data?.referenceId, true))
+                bundle.putParcelable(
+                    "response",
+                    SecurityCodeResponseModel(
+                        resource.data?.emailStatusCode,
+                        0L,
+                        resource.data?.referenceId,
+                        true
+                    )
+                )
 
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)

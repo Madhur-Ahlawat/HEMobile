@@ -277,9 +277,9 @@
     </fragment>
     <fragment
         android:id="@+id/crossingRecieptFragment"
-        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentRecieptFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentReceiptFragment"
         android:label="crossingRecieptFragment"
-        tools:layout="@layout/fragment_payment_reciept_method">
+        tools:layout="@layout/fragment_payment_receipt_method">
         <action
             android:id="@+id/action_crossingRecieptFragment_to_crossingCheckAnswersFragment"
             app:destination="@id/crossingCheckAnswersFragment" />

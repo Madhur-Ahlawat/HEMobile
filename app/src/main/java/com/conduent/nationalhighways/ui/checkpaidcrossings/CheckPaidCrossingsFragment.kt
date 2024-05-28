@@ -36,15 +36,14 @@ import javax.inject.Inject
 class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBinding>(),
     View.OnClickListener {
 
-    private var mBuilder: StringBuilder? = null
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
     private var loader: LoaderDialog? = null
     private var isCalled = false
 
     @Inject
     lateinit var sessionManager: SessionManager
-    var paymentRefereceNumberRegex = "^[a-zA-Z0-9-]+$"
-    var plateNumberREgex = "[0-9a-zA-Z -]{1,10}$"
+    private var paymentReferenceNumberRegex = "^[a-zA-Z0-9-]+$"
+    private var plateNumberRegex = "[0-9a-zA-Z -]{1,10}$"
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -61,12 +60,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             "check crossings:login",
             sessionManager.getLoggedInUser()
         )
-
-//        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        binding.editReferenceNumber.setText("1-99352459")
-//        binding.editNumberPlate.setText("ERR")
         binding.editNumberPlate.editText.doAfterTextChanged {
             isEnable(it)
         }
@@ -98,7 +93,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             binding.errorMobileNumber.gone()
             isReferenceNumberValid = false
         } else {
-            if (!Regex(paymentRefereceNumberRegex).matches(
+            if (!Regex(paymentReferenceNumberRegex).matches(
                     binding.editReferenceNumber.getText().toString()
                 )
             ) {
@@ -114,7 +109,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             isPlateNumberValid = false
             binding.editNumberPlate.removeError()
         } else {
-            if (!Regex(plateNumberREgex).matches(binding.editNumberPlate.getText().toString())) {
+            if (!Regex(plateNumberRegex).matches(binding.editNumberPlate.getText().toString())) {
                 isPlateNumberValid = false
                 binding.editNumberPlate.setErrorText(getString(R.string.str_vehicle_registration))
             } else {
@@ -127,11 +122,6 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             binding.findVehicle.isEnabled = false
         }
 
-//        else if(Regex(paymentRefereceNumberRegex).matches(binding.editReferenceNumber.getText().toString()) && Regex(plateNumberREgex).matches(binding.editNumberPlate.getText().toString())){
-//            binding.findVehicle.isEnabled = true
-//            binding.editReferenceNumber.removeError()
-//            binding.editNumberPlate.removeError()
-//        }
         binding.editNumberPlate.binding.inputFirstName.contentDescription = editable?.toString()
     }
 

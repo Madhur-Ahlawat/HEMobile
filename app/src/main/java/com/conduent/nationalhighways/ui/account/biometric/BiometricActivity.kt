@@ -7,7 +7,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -16,11 +15,11 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.DialogFragment
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityBiometricBinding
@@ -38,18 +37,20 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.*
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.conduent.nationalhighways.utils.extn.toolbar
+import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClickListener,
     LogoutListener {
 
-    private var biometricToggleButtopnState: String?=null
+    private var biometricToggleButtonState: String? = null
     lateinit var binding: ActivityBiometricBinding
     private var twoFA: Boolean = false
     private val dashboardViewModel: DashboardViewModel by viewModels()
@@ -60,13 +61,15 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
     private var isScreenLaunchedBefore: Boolean = false
-    private var isAuthenticaed: Boolean = false
+    private var isAuthenticated: Boolean = false
+
     @Inject
     lateinit var sessionManager: SessionManager
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var navFlowFrom: String = ""
     var navFlowCall: String = ""
+
     @Inject
     lateinit var api: ApiService
 
@@ -87,12 +90,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
 
 
-        if(navFlowFrom.equals(Constants.TWOFA) || navFlowFrom.equals(Constants.LOGIN)|| navFlowFrom.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
+        if (navFlowFrom == Constants.TWOFA || navFlowFrom == Constants.LOGIN || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
             binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
             binding.toolBarLyt.backButton.gone()
             binding.biometricCancel.visible()
-        }
-        else{
+        } else {
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_profile_biometrics)
             binding.toolBarLyt.backButton.visible()
             binding.biometricCancel.gone()
@@ -109,8 +111,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
-            biometricToggleButtopnState = if(switchFingerprintLogin.isChecked) "on" else "off"
-//            switchFingerprintLogin.contentDescription=getString(R.string.usefingerprinttologin) + biometricToggleButtopnState + " Toggle to ${if(biometricToggleButtopnState.equals("yes")) "turn off" else "turn on"}"
+            biometricToggleButtonState = if (switchFingerprintLogin.isChecked) "on" else "off"
         }
 
         initBiometric(this)
@@ -120,11 +121,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             binding.biometricCancel.gone()
         }
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
-            biometricToggleButtopnState = if(binding.switchFingerprintLogin.isChecked) "on" else "off"
+            biometricToggleButtonState =
+                if (binding.switchFingerprintLogin.isChecked) "on" else "off"
             binding.switchFingerprintLogin.contentDescription = if (isChecked) {
-                biometricToggleButtopnState + " Toggle to ${if(biometricToggleButtopnState.equals("yes")) "turn off" else "turn on"}"
+                biometricToggleButtonState + " Toggle to ${if (biometricToggleButtonState.equals("yes")) "turn off" else "turn on"}"
             } else {
-                biometricToggleButtopnState + " Toggle to ${if(biometricToggleButtopnState.equals("yes")) "turn on" else "turn off"}"
+                biometricToggleButtonState + " Toggle to ${if (biometricToggleButtonState.equals("yes")) "turn on" else "turn off"}"
             }
             if (isChecked) {
                 if (!sessionManager.fetchTouchIdEnabled()) {
@@ -187,12 +189,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     binding.btnSave.isEnabled = false
                 }
             } else {
-                if(sessionManager.fetchTouchIdEnabled()){
-                    binding.btnSave.isEnabled = true
-                }
-                else{
-                    binding.btnSave.isEnabled = false
-                }
+                binding.btnSave.isEnabled = sessionManager.fetchTouchIdEnabled()
             }
         }
 
@@ -255,58 +252,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
     }
 
-    private fun checkBiometricStatus() {
-        val biometricManager = BiometricManager.from(this)
-        when (biometricManager.canAuthenticate()) {
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                Toast.makeText(this, "No Hardware found", Toast.LENGTH_SHORT).show()
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                Toast.makeText(this, "No Hardware unavailable", Toast.LENGTH_SHORT).show()
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                displayAccountSettingsDialog()
-
-
-            }
-
-            BiometricManager.BIOMETRIC_SUCCESS -> {
-                displayFingerPrintPopup()
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
-                Toast.makeText(this, "Biometric security update required!", Toast.LENGTH_SHORT)
-                    .show()
-
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
-                Toast.makeText(this, "Biometric unsupported!", Toast.LENGTH_SHORT).show()
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-
-            BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
-                Toast.makeText(this, "Biometric status unknown!", Toast.LENGTH_SHORT).show()
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-        }
-    }
-
     private fun displayAccountSettingsDialog() {
         displayCustomMessage(getString(R.string.enable_biometric),
             getString(R.string.biometric_has_not_been_setup),
@@ -364,14 +309,14 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                         ).show()
                     }
                     binding.switchFingerprintLogin.isChecked = false
-                    isAuthenticaed = false
+                    isAuthenticated = false
                 }
 
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    isAuthenticaed = true
+                    isAuthenticated = true
                     binding.btnSave.isEnabled = true
                 }
 
@@ -398,12 +343,12 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             R.id.btn_save -> {
-                if (binding.switchFingerprintLogin.isChecked && isAuthenticaed) {
+                if (binding.switchFingerprintLogin.isChecked && isAuthenticated) {
                     sessionManager.saveTouchIdEnabled(true)
                     goToHomeActivity()
                 } else if (!binding.switchFingerprintLogin.isChecked) {
                     sessionManager.saveTouchIdEnabled(false)
-                    isAuthenticaed = false
+                    isAuthenticated = false
                     goToHomeActivity()
                 }
 
@@ -420,31 +365,30 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
     private fun goToHomeActivity() {
         startNewActivityByClearingStack(HomeActivityMain::class.java) {
-            if (navFlowFrom.equals(Constants.TWOFA)||navFlowFrom.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)||navFlowCall.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+            if (navFlowFrom == (Constants.TWOFA) || navFlowFrom == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) || navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
 
-               if(navFlowCall.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
-                   putString(
-                       Constants.NAV_FLOW_FROM,
-                       Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
-                   )
-               }else {
-                   putString(
-                       Constants.NAV_FLOW_FROM,
-                       navFlowFrom
-                   )
-               }
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-            } else if(navFlowFrom.equals(Constants.LOGIN)){
-
+                if (navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
                     putString(
                         Constants.NAV_FLOW_FROM,
-                        Constants.BIOMETRIC_CHANGE
+                        Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
                     )
-                    putBoolean(
-                        Constants.GO_TO_SUCCESS_PAGE,
-                        false
+                } else {
+                    putString(
+                        Constants.NAV_FLOW_FROM,
+                        navFlowFrom
                     )
-                    putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                }
+                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+            } else if (navFlowFrom == Constants.LOGIN) {
+                putString(
+                    Constants.NAV_FLOW_FROM,
+                    Constants.BIOMETRIC_CHANGE
+                )
+                putBoolean(
+                    Constants.GO_TO_SUCCESS_PAGE,
+                    false
+                )
+                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
 
             } else {
                 putString(
