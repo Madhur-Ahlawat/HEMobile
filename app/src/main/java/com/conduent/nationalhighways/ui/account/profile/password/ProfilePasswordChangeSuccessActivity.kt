@@ -7,7 +7,6 @@ import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityChangePasswordSuccessProfileBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -15,6 +14,7 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -48,7 +48,7 @@ class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePassword
             binding.message.text = Html.fromHtml(
             getString(
                 R.string.you_will_receive_a_confirmation_email,
-                intent.getStringExtra(Constants.EMAIL)?.toLowerCase()
+                intent.getStringExtra(Constants.EMAIL)?.lowercase(Locale.getDefault())
             ), Html.FROM_HTML_MODE_COMPACT)
         } catch (e: Exception) {
             binding.message.text = Html.fromHtml(
@@ -81,7 +81,6 @@ class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePassword
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager,api)
     }
 

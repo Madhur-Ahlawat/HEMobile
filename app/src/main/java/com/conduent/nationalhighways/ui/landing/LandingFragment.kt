@@ -64,11 +64,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     override fun init() {
-        /*    Toast.makeText(
-                requireContext(),
-                "Location is ${Utils.isLocationServiceRunning(requireContext())}", Toast.LENGTH_SHORT
-            ).show()*/
-
         BaseApplication.screenNameAnalytics = ""
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
             plateNumber = arguments?.getString(Constants.PLATE_NUMBER) ?: ""
@@ -150,7 +145,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         if (!Utils.areNotificationsEnabled(requireContext())) {
             sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
         }
-        if (!Utils.checkLocationpermission(requireContext())) {
+        if (!Utils.checkLocationPermission(requireContext())) {
             sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
         }
         setNotificationDescText()

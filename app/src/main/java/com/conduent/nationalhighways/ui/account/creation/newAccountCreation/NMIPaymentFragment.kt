@@ -907,7 +907,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                     bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
-                    if (navFlowFrom.equals(Constants.PAYG_SUSPENDED)) {
+                    if (navFlowFrom == Constants.PAYG_SUSPENDED) {
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                         bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                         findNavController().navigate(
@@ -923,18 +923,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
-                    var bundle = Bundle()
+                    val bundle = Bundle()
                     bundle.putString(
                         Constants.CARD_IS_ALREADY_REGISTERED,
                         Constants.CARD_IS_ALREADY_REGISTERED
                     )
-//                    bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
-//                    bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
-
-//                    findNavController().navigate(
-//                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-//                        bundle
-//                    )
                     displayCustomMessage(
                         getString(R.string.str_warning),
                         getString(R.string.the_card_you_are_trying_to_add_is_already),
@@ -942,8 +935,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         object : DialogPositiveBtnListener {
                             override fun positiveBtnClick(dialog: DialogInterface) {
                                 val fragmentId = findNavController().currentDestination?.id
-                                findNavController().popBackStack(fragmentId!!, true)
-                                findNavController().navigate(fragmentId, arguments)
+                                findNavController().popBackStack(fragmentId?:0, true)
+                                findNavController().navigate(fragmentId?:0, arguments)
                             }
                         },
                         object : DialogNegativeBtnListener {
@@ -990,7 +983,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private fun redirectToTryAgainPaymentScreen() {
 
-        if (navFlowFrom.equals(Constants.PAYG_SUSPENDED)) {
+        if (navFlowFrom == Constants.PAYG_SUSPENDED) {
             val bundle = Bundle()
 
             bundle.putString(

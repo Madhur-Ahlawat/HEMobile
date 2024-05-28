@@ -103,7 +103,7 @@ private var oldEmail=""
                     } else {
                         if (!Utils.isLastCharOfStringACharacter(
                                 binding.edtEmail.editText.text.toString().trim()
-                            ) || Utils.countOccurenceOfChar(
+                            ) || Utils.countOccurrenceOfChar(
                                 binding.edtEmail.editText.text.toString().trim(), '@'
                             ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
                                 Utils.TWO_OR_MORE_DOTS
@@ -113,9 +113,9 @@ private var oldEmail=""
                             || (binding.edtEmail.editText.text.toString().trim().last().toString()
                                 .equals("-") || binding.edtEmail.editText.text.toString().first()
                                 .toString().equals("-"))
-                            || (Utils.countOccurenceOfChar(
+                            || (Utils.countOccurrenceOfChar(
                                 binding.edtEmail.editText.text.toString().trim(), '.'
-                            ) < 1) || (Utils.countOccurenceOfChar(
+                            ) < 1) || (Utils.countOccurrenceOfChar(
                                 binding.edtEmail.editText.text.toString().trim(), '@'
                             ) < 1)
                         ) {
@@ -166,9 +166,9 @@ private var oldEmail=""
                                     binding.edtEmail.removeError()
                                     true
                                 }
-                            } else if (!(Utils.countOccurenceOfChar(
+                            } else if (!(Utils.countOccurrenceOfChar(
                                     binding.edtEmail.editText.text.toString().trim(), '@'
-                                ) > 0 && Utils.countOccurenceOfChar(
+                                ) > 0 && Utils.countOccurrenceOfChar(
                                     binding.edtEmail.editText.text.toString().trim(), '@'
                                 ) < 2)
                             ) {

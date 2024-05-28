@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.text.Html
-import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -121,7 +120,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     binding.title.text = getString(R.string.name_change_successful)
                     var email = personalInformation?.emailAddress
 
-                    if (navData is PersonalInformation && (email == null || email.isEmpty() == true)) {
+                    if (navData is PersonalInformation && (email == null || email.isEmpty())) {
                         email = (navData as PersonalInformation).emailAddress
                     }
                     binding.subTitle.text = Html.fromHtml(
@@ -199,7 +198,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
         }
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
 
@@ -231,7 +230,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     }
 
                     PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
-                        if (navFlowFrom.equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)) {
+                        if (navFlowFrom == Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE) {
                             requireActivity().startNewActivityByClearingStack(LoginActivity::class.java)
                         } else {
                             findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
@@ -263,7 +262,4 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
         }
     }
 
-    private fun getSpannedText(text: String): Spanned? {
-        return Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
-    }
 }

@@ -53,7 +53,7 @@
             android:name=".ui.account.biometric.BiometricActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.landing.SplashActivity"
+            android:name=".ui.landing.CustomSplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">

@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,10 +58,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     }
 
-    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
-
-    }
-
     override fun onResume() {
         super.onResume()
         invalidateList()
@@ -109,7 +104,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         }
     }
 
-    fun indexExists(list: List<*>, index: Int): Boolean {
+    private fun indexExists(list: List<*>, index: Int): Boolean {
         return index >= 0 && index < list.size
     }
 
@@ -161,11 +156,13 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
         vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
         val size = vehicleAdapter.itemCount
-        var text = "vehicle"
         if (size > 1) {
-            text = "vehicles"
+            binding.youHaveAddedVehicle.text =
+                resources.getString(R.string.str_you_have_added_vehicles, size.toString())
+        } else {
+            binding.youHaveAddedVehicle.text =
+                resources.getString(R.string.str_you_have_added_vehicle, size.toString())
         }
-        binding.youHaveAddedVehicle.text = "You've added $size $text"
         if (size == 0) {
             binding.btnNext.disable()
         }
@@ -312,7 +309,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         if (obj.vehicleClass.isNullOrEmpty()) {
             data.vehicleInfo?.vehicleClassDesc = "2"
         } else {
-            data.vehicleInfo?.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass?:"")
+            data.vehicleInfo?.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass ?: "")
         }
 
 

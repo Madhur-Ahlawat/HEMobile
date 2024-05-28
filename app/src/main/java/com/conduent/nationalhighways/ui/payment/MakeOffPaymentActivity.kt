@@ -2,8 +2,6 @@ package com.conduent.nationalhighways.ui.payment
 
 import android.os.Bundle
 import android.view.accessibility.AccessibilityEvent
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
@@ -53,6 +51,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
         )
 
     }
+
     fun focusMakeOffToolBar() {
         binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
 
@@ -63,6 +62,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }
+
     private fun init() {
         NewCreateAccountRequestModel.oneOffVehiclePlateNumber = ""
         NewCreateAccountRequestModel.plateNumber = ""
@@ -81,7 +81,7 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
         navGraph?.setStartDestination(destination)
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAY_FOR_CROSSINGS)
-        if (data != null && data is CrossingDetailsModelsResponse) {
+        if (data != null) {
             bundle.putString(
                 Constants.PLATE_NUMBER,
                 (data as CrossingDetailsModelsResponse).plateNo
@@ -92,23 +92,15 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
         navController?.setGraph(navGraph!!, bundle)
 
 
-        navController?.addOnDestinationChangedListener(object :
-            NavController.OnDestinationChangedListener {
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-                lastDestination = destination.id
-                if (destination.id == R.id.additionalCrossingsFragment) {
-                    binding.toolBarLyt.titleTxt.text = getString(R.string.additional_crossings_txt)
-                } else {
-                    binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
+        navController?.addOnDestinationChangedListener { _, destination, _ ->
+            lastDestination = destination.id
+            if (destination.id == R.id.additionalCrossingsFragment) {
+                binding.toolBarLyt.titleTxt.text = getString(R.string.additional_crossings_txt)
+            } else {
+                binding.toolBarLyt.titleTxt.text = getString(R.string.one_of_payment)
 
-                }
             }
-
-        })
+        }
     }
 
     override fun observeViewModel() {}
@@ -129,17 +121,19 @@ class MakeOffPaymentActivity : BaseActivity<Any>(), LogoutListener {
 //        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager, api)
     }
+
     override fun onPostResume() {
         super.onPostResume()
         binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
         val task = Runnable {
-            if(!binding.toolBarLyt.backButton.isAccessibilityFocused){
+            if (!binding.toolBarLyt.backButton.isAccessibilityFocused) {
                 binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
             }
         }
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }
+
     override fun onDestroy() {
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()

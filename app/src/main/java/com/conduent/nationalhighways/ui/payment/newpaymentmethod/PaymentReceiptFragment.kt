@@ -6,7 +6,6 @@ import android.os.Parcelable
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -19,12 +18,11 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.CountriesModel
 import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
-import com.conduent.nationalhighways.databinding.FragmentPaymentRecieptMethodBinding
+import com.conduent.nationalhighways.databinding.FragmentPaymentReceiptMethodBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
@@ -39,13 +37,12 @@ import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>(),
+class PaymentReceiptFragment : BaseFragment<FragmentPaymentReceiptMethodBinding>(),
     View.OnClickListener, NHAutoCompleteTextview.AutoCompleteSelectedTextListener {
     private var filterTextForSpecialChars: String? = null
     private var requiredCountryCode = true
@@ -63,8 +60,8 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentPaymentRecieptMethodBinding =
-        FragmentPaymentRecieptMethodBinding.inflate(inflater, container, false)
+    ): FragmentPaymentReceiptMethodBinding =
+        FragmentPaymentReceiptMethodBinding.inflate(inflater, container, false)
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -113,10 +110,9 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             checkButton()
         }
         setMobileView()
-        if (requireActivity() is CreateAccountActivity){
+        if (requireActivity() is CreateAccountActivity) {
             (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
-        }
-        else if (requireActivity() is MakeOffPaymentActivity){
+        } else if (requireActivity() is MakeOffPaymentActivity) {
             (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
         }
         binding.edtEmail.editText.setAccessibilityDelegateForDigits()
@@ -173,121 +169,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
     override fun observer() {
         observe(viewModel.countriesList, ::handleCountriesListResponse)
         observe(viewModel.countriesCodeList, ::handleCountryCodesListResponse)
-    }
-
-    private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (response) {
-            is Resource.Success -> {
-                countriesCodeList.clear()
-                for (i in 0..(countriesModel?.size?.minus(1) ?: 0)) {
-                    for (j in 0..(response.data?.size?.minus(1) ?: 0)) {
-                        if (countriesModel?.get(i)?.id == response.data?.get(j)?.id) {
-                            fullCountryNameWithCode.add(
-                                countriesModel?.get(i)?.countryName + " " + "(" + response.data?.get(
-                                    j
-                                )?.key + ")"
-                            )
-                        }
-                    }
-
-                }
-                Log.d("fullCountryWithCode", Gson().toJson(fullCountryNameWithCode))
-                response.data?.forEach {
-                    it?.value?.let { it1 -> countriesCodeList.add(it1) }
-                }
-                fullCountryNameWithCode.sortWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it })
-
-
-                if (fullCountryNameWithCode.contains(Constants.UNITED_KINGDOM)) {
-                    fullCountryNameWithCode.remove(Constants.UNITED_KINGDOM)
-                    fullCountryNameWithCode.add(0, Constants.UNITED_KINGDOM)
-                }
-
-                binding.apply {
-                    inputCountry.dataSet.clear()
-                    inputCountry.dataSet.addAll(fullCountryNameWithCode)
-                    seperateCountryCodeListFromNameList(fullCountryNameWithCode)
-                }
-
-
-                if (navFlowCall == Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE) {
-                    var userCountryCode =
-                        HomeActivityMain.accountDetailsData?.personalInformation?.phoneDayCountryCode
-
-                    if (HomeActivityMain.accountDetailsData?.personalInformation?.phoneCell.isNullOrEmpty()
-                            .not()
-                    ) {
-                        userCountryCode =
-                            HomeActivityMain.accountDetailsData?.personalInformation?.phoneCellCountryCode
-                    }
-
-
-
-                    fullCountryNameWithCode.forEachIndexed { _, fullCountryName ->
-                        val countrycode = getCountryCode(fullCountryName)
-                        if (countrycode == userCountryCode) {
-                            binding.inputCountry.setSelectedValue(fullCountryName)
-                            return@forEachIndexed
-                        }
-                    }
-                } else {
-                    if (NewCreateAccountRequestModel.countryCode?.isEmpty() == true) {
-                        binding.inputCountry.setSelectedValue(Constants.UNITED_KINGDOM)
-                    } else {
-                        binding.inputCountry.setSelectedValue(
-                            NewCreateAccountRequestModel.countryCode ?: ""
-                        )
-                    }
-                }
-
-                checkSupportedCountry(binding.inputCountry.selectedItemDescription)
-
-                requiredCountryCode =
-                    fullCountryNameWithCode.any { it == binding.inputCountry.selectedItemDescription }
-
-                if (!NewCreateAccountRequestModel.prePay) {
-                    checkButton()
-                }
-
-                if (binding.inputMobileNumber.editText.text?.isNotEmpty() == true) {
-                    checkButton()
-                }
-
-                binding.inputCountry.clearFocus()
-                binding.inputCountry.setDropDownItemSelectListener(this)
-
-
-            }
-
-            is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(response.errorModel)
-                ) {
-                    displaySessionExpireDialog(response.errorModel)
-                } else {
-                    ErrorUtil.showError(binding.root, response.errorMsg)
-                }
-            }
-
-            else -> {
-            }
-
-        }
-    }
-
-    private fun getCountryCode(selectedItem: String): String {
-        val openingParenIndex = selectedItem.indexOf("(")
-        val closingParenIndex = selectedItem.indexOf(")")
-
-        val extractedText =
-            if (openingParenIndex != -1 && closingParenIndex != -1 && closingParenIndex > openingParenIndex) {
-                selectedItem.substring(openingParenIndex + 1, closingParenIndex)
-            } else {
-                ""
-            }
-        return extractedText
     }
 
     private fun handleCountriesListResponse(response: Resource<List<CountriesModel?>?>?) {
@@ -575,7 +456,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                 } else {
                     if (!Utils.isLastCharOfStringACharacter(
                             binding.edtEmail.editText.text.toString().trim()
-                        ) || Utils.countOccurenceOfChar(
+                        ) || Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.text.toString().trim(), '@'
                         ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
                             Utils.TWO_OR_MORE_DOTS
@@ -586,9 +467,9 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                             .toString() == "-" || binding.edtEmail.editText.text.toString()
                             .first()
                             .toString() == "-")
-                        || (Utils.countOccurenceOfChar(
+                        || (Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.text.toString().trim(), '.'
-                        ) < 1) || (Utils.countOccurenceOfChar(
+                        ) < 1) || (Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.text.toString().trim(), '@'
                         ) < 1)
                     ) {
@@ -619,10 +500,10 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                             commaSeparatedString =
                                 Utils.makeCommaSeperatedStringForPassword(
                                     Utils.removeAllCharacters(
-                                        Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
+                                        Utils.ALLOWED_CHARS_EMAIL, (filterTextForSpecialChars?:"")
                                     )
                                 )
-                            if (filterTextForSpecialChars!!.isNotEmpty()) {
+                            if (filterTextForSpecialChars?.isNotEmpty() == true) {
                                 binding.edtEmail.setErrorText("Email address must not include $commaSeparatedString")
                                 false
                             } else if (!Patterns.EMAIL_ADDRESS.matcher(
@@ -635,7 +516,7 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
                                 binding.edtEmail.removeError()
                                 true
                             }
-                        } else if (Utils.countOccurenceOfChar(
+                        } else if (Utils.countOccurrenceOfChar(
                                 binding.edtEmail.editText.text.toString().trim(), '@'
                             ) !in (1..1)
                         ) {
@@ -693,10 +574,10 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             requiredCountryCode = true
         } else {
 
-            if (item.isEmpty() == true) {
-                requiredCountryCode = false
+            requiredCountryCode = if (item.isEmpty()) {
+                false
             } else {
-                requiredCountryCode = if (fullCountryNameWithCode.size > 0) {
+                if (fullCountryNameWithCode.size > 0) {
                     fullCountryNameWithCode.any { it == item }
                 } else {
                     false
@@ -737,16 +618,6 @@ class PaymentRecieptFragment : BaseFragment<FragmentPaymentRecieptMethodBinding>
             } else {
                 binding.incompatibleLl.visible()
             }
-        }
-
-    }
-
-    private val countryCodesList: MutableList<String> = mutableListOf()
-
-    private fun seperateCountryCodeListFromNameList(fullCountryNameWithCode: MutableList<String>) {
-        countryCodesList.clear()
-        fullCountryNameWithCode.forEachIndexed { index, s ->
-            countryCodesList.add(s.substring(s.indexOf("(") + 1, s.indexOf(")")))
         }
     }
 

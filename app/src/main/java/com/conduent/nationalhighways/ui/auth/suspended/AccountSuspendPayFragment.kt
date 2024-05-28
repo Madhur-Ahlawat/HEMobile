@@ -161,17 +161,16 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             "£" + formatter.format(topUpAmount)
         )
 
-        if (paymentList.isNotEmpty() == true) {
-
+        if (paymentList.isNotEmpty()) {
             binding.ivCardType.setImageResource(
                 Utils.setCardImage(
-                    paymentList.get(position).cardType
+                    paymentList[position].cardType
                 )
             )
 
             val htmlText = Html.fromHtml(
-                paymentList.get(position).cardType + "<br>" + Utils.maskCardNumber(
-                    paymentList.get(position).cardNumber
+                paymentList[position].cardType + "<br>" + Utils.maskCardNumber(
+                    paymentList[position].cardNumber
                 ),
                 Html.FROM_HTML_MODE_COMPACT
             )
@@ -182,8 +181,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
 
             binding.cardView.contentDescription =
-                paymentList.get(position).cardType +" "+ Utils.accessibilityForNumbers( Utils.maskCardNumber(
-                    paymentList.get(position).cardNumber
+                paymentList[position].cardType +" "+ Utils.accessibilityForNumbers( Utils.maskCardNumber(
+                    paymentList[position].cardNumber
                 ))
 
 
@@ -214,14 +213,14 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
-            if (mText.length == 1 && mText.equals(".")) {
+            if (mText.length == 1 && mText == ".") {
                 mText = "0.0"
             }
-            var formatedAmount = formatter.format(mText.toDouble())
-            if (!formatedAmount.isNullOrEmpty() && formatedAmount.equals(".00")) {
-                formatedAmount = "0.00"
+            var formattedAmount = formatter.format(mText.toDouble())
+            if (!formattedAmount.isNullOrEmpty() && formattedAmount.equals(".00")) {
+                formattedAmount = "0.00"
             }
-            binding.lowBalance.setText("£" + formatedAmount)
+            binding.lowBalance.setText(resources.getString(R.string.price,""+ formattedAmount))
             // Assuming editText is your EditText view
             binding.lowBalance.setSelection(binding.lowBalance.editText.text?.length ?: 0)
 
@@ -294,21 +293,13 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private fun newPaymentMethod(s: String) {
+    private fun newPaymentMethod(easyPay: String) {
         var primaryCard = "N"
-        var easyPay = s
 
         if (paymentListSize == 0) {
             primaryCard = "Y"
 
         }
-        /* if (responseModel?.checkCheckBox == true) {
-             easyPay = "Y"
-         } else {
- //            easyPay = "N"
-             easyPay = "Y"
-         }*/
-
         cardModel = PaymentWithNewCardModel(
             addressLine1 = personalInformation?.addressLine1.toString(),
             addressLine2 = personalInformation?.addressLine1.toString(),
@@ -327,7 +318,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             maskedNumber = Utils.maskCardNumber(responseModel?.card?.number.toString()),
             paymentType = "card",
             primaryCard = primaryCard,
-            saveCard = s,
+            saveCard = easyPay,
             state = "HE",
             transactionAmount = binding.lowBalance.getText().toString().trim().replace("£", "")
                 .replace(",", "").replace(" ", ""),
@@ -355,12 +346,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             cardType = "",
             cardNumber = "",
             cvv = "",
-            rowId = paymentList.get(position).rowId,
+            rowId = paymentList[position].rowId,
             saveCard = "",
             useAddressCheck = "N",
-            firstName = paymentList.get(position).firstName,
-            middleName = paymentList.get(position).middleName,
-            lastName = paymentList.get(position).lastName,
+            firstName = paymentList[position].firstName,
+            middleName = paymentList[position].middleName,
+            lastName = paymentList[position].lastName,
             paymentType = "",
             primaryCard = "",
             maskedCardNumber = "",
@@ -443,8 +434,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         bundle
                     )
                 } else if (status.data?.statusCode?.equals("1337") == true && status.data.transactionId != null) {
-                    if (navFlowCall.equals(Constants.PAYMENT_TOP_UP) || navFlowCall.equals(Constants.SUSPENDED)) {
-                        var bundle = Bundle()
+                    if (navFlowCall == Constants.PAYMENT_TOP_UP || navFlowCall == Constants.SUSPENDED) {
+                        val bundle = Bundle()
                         bundle.putString(
                             Constants.CARD_IS_ALREADY_REGISTERED,
                             Constants.CARD_IS_ALREADY_REGISTERED

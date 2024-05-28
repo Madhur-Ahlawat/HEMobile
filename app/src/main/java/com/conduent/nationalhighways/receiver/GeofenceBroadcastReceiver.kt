@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import com.conduent.nationalhighways.R
@@ -15,8 +14,6 @@ import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.location.GeofencingEvent
 import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -56,10 +53,10 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         var checkLocationPermission = false
         var checkNotificationPermission = false
         if (sessionManager.fetchBooleanData(SessionManager.SettingsClick)) {
-            checkLocationPermission = Utils.checkLocationpermission(context)
+            checkLocationPermission = Utils.checkLocationPermission(context)
         } else {
             checkLocationPermission =
-                (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION) && Utils.checkLocationpermission(
+                (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION) && Utils.checkLocationPermission(
                     context
                 ))
         }

@@ -54,11 +54,6 @@ class VehicleIsExemptFromDartChargesFragment :
             if (charge != null) {
                 totalAmountOfUnsettledTrips = charge * unSettledTrips
             }
-
-//            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
-//                totalAmountOfAdditionalCrossings = totalAmountOfAdditionalCrossings?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
-//
-//            }
         }
     }
 
@@ -102,7 +97,7 @@ class VehicleIsExemptFromDartChargesFragment :
         bundle.putString(NAV_FLOW_KEY, PAY_FOR_CROSSINGS)
         bundle.putString(
             PLATE_NUMBER,
-            (navData as CrossingDetailsModelsResponse).plateNo?.trim()
+            (navData as CrossingDetailsModelsResponse).plateNo.trim()
         )
         bundle.putParcelable(NAV_DATA_KEY, navData as Parcelable?)
         return bundle

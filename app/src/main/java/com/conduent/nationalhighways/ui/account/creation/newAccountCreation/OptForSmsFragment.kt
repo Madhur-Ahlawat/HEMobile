@@ -19,7 +19,6 @@ import com.conduent.nationalhighways.data.model.communicationspref.Communication
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
-import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
@@ -41,7 +40,6 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -173,10 +171,10 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         super.onResume()
         when (navFlowCall) {
             Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                if (Utils.areNotificationsEnabled(requireContext()) == false) {
-                    oldPushOption = false
+                oldPushOption = if (!Utils.areNotificationsEnabled(requireContext())) {
+                    false
                 } else {
-                    oldPushOption = sessionManager.fetchNotificationOption()
+                    sessionManager.fetchNotificationOption()
                 }
                 binding.switchNotification.isChecked =
                     oldPushOption
@@ -482,24 +480,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         }
     }
 
-    private fun callPushNotificationApi() {
-        var optInStatus = "N"
-        if (binding.switchNotification.isChecked) {
-            optInStatus = "Y"
-        }
-        sessionManager.getFirebaseToken()?.let { firebaseToken ->
-            val request = PushNotificationRequest(
-                deviceToken = firebaseToken,
-                osName = PushNotificationUtils.getOSName(),
-                osVersion = PushNotificationUtils.getOSVersion(),
-                appVersion = PushNotificationUtils.getAppVersion(requireContext()),
-                optInStatus = optInStatus
-            )
-            webServiceViewModel.allowPushNotification(request)
-        }
-    }
-
-
     private fun bundle(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -552,7 +532,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         }
     }
 
-    fun showLoader() {
+    private fun showLoader() {
         val fragmentManager = requireActivity().supportFragmentManager
         val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
 

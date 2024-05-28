@@ -43,7 +43,7 @@ class MakeOneOffPaymentSuccessfullyFragment :
     override fun initCtrl() {
         if (arguments?.getParcelable<OneOfPaymentModelResponse>(Constants.ONE_OF_PAYMENTS_PAY_RESP) != null) {
             oneOfPaymentResponse =
-                arguments?.getParcelable<OneOfPaymentModelResponse>(Constants.ONE_OF_PAYMENTS_PAY_RESP)
+                arguments?.getParcelable(Constants.ONE_OF_PAYMENTS_PAY_RESP)
         }
 
         if (arguments?.getString(Constants.DATA) != null) {

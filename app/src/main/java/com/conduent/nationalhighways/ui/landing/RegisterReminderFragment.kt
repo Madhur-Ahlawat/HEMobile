@@ -9,22 +9,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentRegisterReminderBinding
 import com.conduent.nationalhighways.databinding.LocationPermissionDialogBinding
@@ -41,9 +35,6 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
 import javax.inject.Inject
 
 
@@ -67,19 +58,19 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         if (arguments?.containsKey("SERVICE_RUN") == true) {
             if (arguments?.getBoolean("SERVICE_RUN") == true) {
                 Log.e("TAG", "init:SERVICE_RUN ")
-                if (Utils.checkLocationpermission(requireContext())) {
+                if (Utils.checkLocationPermission(requireContext())) {
                     Utils.startLocationService(requireContext())
                 }
 
             }
         } else {
-         /*   if (sessionManager.fetchStringData("SAVED_FILE").isEmpty()) {
-                val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-                intent.addCategory(Intent.CATEGORY_OPENABLE)
-                intent.setType("text/plain")
-                intent.putExtra(Intent.EXTRA_TITLE, ".txt")
-                startActivityForResult(intent, 1000)
-            }*/
+            /*   if (sessionManager.fetchStringData("SAVED_FILE").isEmpty()) {
+                   val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+                   intent.addCategory(Intent.CATEGORY_OPENABLE)
+                   intent.setType("text/plain")
+                   intent.putExtra(Intent.EXTRA_TITLE, ".txt")
+                   startActivityForResult(intent, 1000)
+               }*/
         }
 
     }
@@ -100,7 +91,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         }
 
 
-        if (!Utils.checkLocationpermission(requireContext())) {
+        if (!Utils.checkLocationPermission(requireContext())) {
             binding.switchGeoLocation.isChecked = false
             sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
         } else {
@@ -108,12 +99,12 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
         }
 
-        if (sessionManager.fetchBooleanData(SessionManager.SettingsClick) && ((arguments?.containsKey(
+        if (sessionManager.fetchBooleanData(SessionManager.SettingsClick) && arguments?.containsKey(
                 Constants.GpsSettings
-            ) == false) == false)
+            ) != false
         ) {
             sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
-            if (!Utils.checkLocationpermission(requireContext())) {
+            if (!Utils.checkLocationPermission(requireContext())) {
                 if (!Utils.checkAccessFineLocationPermission(requireContext())) {
                     sessionManager.saveBooleanData(SessionManager.FOREGROUND_LOCATION_SHOWN, true)
                 }
@@ -135,7 +126,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             if (fromGpsSettings) {
                 sessionManager.saveBooleanData(
                     SessionManager.LOCATION_PERMISSION,
-                    Utils.checkLocationpermission(requireContext())
+                    Utils.checkLocationPermission(requireContext())
                 )
                 binding.switchGeoLocation.isChecked =
                     sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
@@ -143,26 +134,24 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             if (binding.switchGeoLocation.isChecked) {
                 startLocationServiceGeofence(2)
             }
-        } else {
-
         }
 
         if (sessionManager.fetchStringData("SAVED_FILE").isNotEmpty()) {
-           /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                if (Environment.isExternalStorageManager()) {
-                    // All files access permission is granted
-                    // Your code here
-                } else {
-                    val intent = Intent(
-                        ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
-                        Uri.parse("package:" + BuildConfig.APPLICATION_ID)
-                    )
-                    startActivityForResult(intent, 1948)
-                }
-            } else {
-                // For versions lower than Android 11, handle permissions accordingly
-                // You may request WRITE_EXTERNAL_STORAGE permission or other relevant permissions
-            }*/
+            /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                 if (Environment.isExternalStorageManager()) {
+                     // All files access permission is granted
+                     // Your code here
+                 } else {
+                     val intent = Intent(
+                         ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                         Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+                     )
+                     startActivityForResult(intent, 1948)
+                 }
+             } else {
+                 // For versions lower than Android 11, handle permissions accordingly
+                 // You may request WRITE_EXTERNAL_STORAGE permission or other relevant permissions
+             }*/
         }
 
 
@@ -174,7 +163,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             "TAG",
             "onActivityResult() called with: requestCode = $requestCode, resultCode = $resultCode, data = $dataIntent"
         )
-     if (requestCode == 1000 && dataIntent != null) {
+        if (requestCode == 1000 && dataIntent != null) {
             Log.e("TAG", "onActivityResult: " + dataIntent.data)
 //            sessionManager.saveStringData("SAVED_FILE", dataIntent.data?.path ?: "")
 
@@ -209,7 +198,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             if (!binding.switchGeoLocation.isChecked) {
                 stopForeGroundService()
             } else {
-                if (Utils.checkLocationpermission(requireContext())) {
+                if (Utils.checkLocationPermission(requireContext())) {
                     sessionManager.saveBooleanData(
                         SessionManager.LOCATION_PERMISSION,
                         binding.switchGeoLocation.isChecked
@@ -272,7 +261,6 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
     }
 
     private fun startLocationServiceGeofence(from: Int) {
-        Log.e("TAG", "startLocationServiceGeofence: " + from)
         GeofenceUtils.startGeofence(this.requireContext(), from)
         if (from != 4) {
             val fragmentId = findNavController().currentDestination?.id
@@ -337,7 +325,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
         sessionManager.saveBooleanData(
             SessionManager.LOCATION_PERMISSION,
-            Utils.checkLocationpermission(requireContext())
+            Utils.checkLocationPermission(requireContext())
         )
 
         if (fineLocation || coarseLocation) {
@@ -362,9 +350,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
             ) == PackageManager.PERMISSION_DENIED
         ) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                displayLocationAlwaysAllowPopup()
-            }
+            displayLocationAlwaysAllowPopup()
         }
     }
 

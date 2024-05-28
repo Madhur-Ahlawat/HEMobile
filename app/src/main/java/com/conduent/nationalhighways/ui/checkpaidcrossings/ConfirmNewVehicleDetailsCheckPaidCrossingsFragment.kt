@@ -175,10 +175,6 @@ class ConfirmNewVehicleDetailsCheckPaidCrossingsFragment : BaseFragment<Fragment
                 bundle.putString(NAV_FLOW_KEY, navFlowCall)
                 bundle.putParcelable(NAV_DATA_KEY, data)
                 findNavController().popBackStack(R.id.addNewVehicleDetailsFragment,false)
-//                findNavController().navigate(
-//                    R.id.action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_addNewVehicleDetailsFragment,
-//                    bundle
-//                )
             }
 
             R.id.editVehicleRegistrationNumber->{

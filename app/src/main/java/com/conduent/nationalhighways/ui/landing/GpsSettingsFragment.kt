@@ -49,7 +49,7 @@ class GpsSettingsFragment : BaseFragment<FragmentGpsSettingsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        if(Utils.checkLocationpermission(requireContext())){
+        if(Utils.checkLocationPermission(requireContext())){
             val bundle=Bundle()
             bundle.putBoolean(Constants.GpsSettings,true)
             findNavController().navigate(R.id.action_gpsSettingsFragment_to_registerReminderFragment,bundle)

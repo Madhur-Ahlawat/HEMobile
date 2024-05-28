@@ -341,7 +341,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
                 if (!Utils.isLastCharOfStringACharacter(
                         binding.edtEmail.editText.text.toString().trim()
-                    ) || Utils.countOccurenceOfChar(
+                    ) || Utils.countOccurrenceOfChar(
                         binding.edtEmail.editText.text.toString().trim(), '@'
                     ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
                         Utils.TWO_OR_MORE_DOTS
@@ -352,9 +352,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         .toString() == "-" || binding.edtEmail.editText.text.toString()
                         .first()
                         .toString() == "-")
-                    || (Utils.countOccurenceOfChar(
+                    || (Utils.countOccurrenceOfChar(
                         binding.edtEmail.editText.text.toString().trim(), '.'
-                    ) < 1) || (Utils.countOccurenceOfChar(
+                    ) < 1) || (Utils.countOccurrenceOfChar(
                         binding.edtEmail.editText.text.toString().trim(), '@'
                     ) < 1)
                 ) {
@@ -385,7 +385,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         commaSeparatedString =
                             Utils.makeCommaSeperatedStringForPassword(
                                 Utils.removeAllCharacters(
-                                    Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
+                                    Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars?:""
                                 )
                             )
                         if (!Patterns.EMAIL_ADDRESS.matcher(
@@ -398,7 +398,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                             binding.edtEmail.removeError()
                             true
                         }
-                    } else if (Utils.countOccurenceOfChar(
+                    } else if (Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.text.toString().trim(), '@'
                         ) !in (1..1)
                     ) {

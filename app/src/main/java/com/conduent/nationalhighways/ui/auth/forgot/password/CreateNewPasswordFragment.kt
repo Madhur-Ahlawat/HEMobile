@@ -15,11 +15,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
-import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
@@ -52,8 +50,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
     private var data: SecurityCodeResponseModel? = null
     private var loader: LoaderDialog? = null
-    private var passwordVisibile: Boolean = false
-    private var confirmPasswordVisibile: Boolean = false
+    private var passwordVisible: Boolean = false
+    private var confirmPasswordVisible: Boolean = false
     private lateinit var navFlow: String
 
 
@@ -66,11 +64,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         FragmentForgotCreateNewPasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
-        setPersonalInfoAnnouncement(binding.rootLayout,requireActivity())
-        if(requireActivity() is AuthActivity){
+        setPersonalInfoAnnouncement(binding.rootLayout, requireActivity())
+        if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
-        if (requireActivity() is CreateAccountActivity){
+        if (requireActivity() is CreateAccountActivity) {
             (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
@@ -86,34 +84,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             confirmPassword = "",
             enable = false
         )
-
-        if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
-//            binding.btnSubmit.text = getString(R.string.str_continue)
-            /* AdobeAnalytics.setScreenTrack(
-                 "createAccount:email_setPassword",
-                 "set password",
-                 "english",
-                 "create Account",
-                 "createAccount_email",
-                 "login:forgot password:choose options:otp:new password set",
-                 sessionManager.getLoggedInUser()
-             )*/
-        } else if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-//            binding.btnSubmit.text = getString(R.string.str_submit)
-
-            /* AdobeAnalytics.setScreenTrack(
-                 "login:forgot password:choose options:otp:new password set",
-                 "forgot password",
-                 "english",
-                 "login",
-                 (requireActivity() as AuthActivity).previousScreen,
-                 "login:forgot password:choose options:otp:new password set",
-                 sessionManager.getLoggedInUser()
-             )*/
-        }
-
-
-        //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
@@ -122,7 +92,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         binding.edtNewPassword.editText.addTextChangedListener {
             isEnable(it.toString())
         }
-        binding.edtConformPassword.editText.addTextChangedListener { isEnable1(it.toString()) }
+        binding.edtConformPassword.editText.addTextChangedListener { isEnable1() }
 
         setContentDesForDot(resources.getString(R.string.accessibility_bullet))
 
@@ -133,13 +103,13 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= binding.edtNewPassword.right - binding.edtNewPassword.editText.compoundDrawables[right].bounds.width()) {
 
-                    if (passwordVisibile) {
+                    if (passwordVisible) {
                         binding.edtNewPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
                         binding.edtNewPassword.editText.transformationMethod =
                             PasswordTransformationMethod.getInstance()
-                        passwordVisibile = false
+                        passwordVisible = false
                     } else {
 
 
@@ -148,10 +118,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         )
                         binding.edtNewPassword.editText.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()
-                        passwordVisibile = true
+                        passwordVisible = true
                     }
                 }
-                var text = binding.edtConformPassword.editText.text.toString()
+                val text = binding.edtConformPassword.editText.text.toString()
                 isEnable(text)
             }
 
@@ -165,13 +135,13 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= binding.edtConformPassword.right - binding.edtConformPassword.editText.compoundDrawables[right].bounds.width()) {
 
-                    if (confirmPasswordVisibile) {
+                    if (confirmPasswordVisible) {
                         binding.edtConformPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
                         binding.edtConformPassword.editText.transformationMethod =
                             PasswordTransformationMethod.getInstance()
-                        confirmPasswordVisibile = false
+                        confirmPasswordVisible = false
                     } else {
 
                         binding.edtConformPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
@@ -179,11 +149,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         )
                         binding.edtConformPassword.editText.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()
-                        confirmPasswordVisibile = true
+                        confirmPasswordVisible = true
                     }
                 }
-                var text = binding.edtConformPassword.editText.text.toString()
-                isEnable1(text)
+                isEnable1()
             }
 
             false
@@ -222,53 +191,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 } else {
                     showError(binding.root, validation.second)
                 }
-            }
-        }
-    }
-
-
-    private fun verifyRequestOtp(status: Resource<VerifyRequestOtpResp?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (status) {
-            is Resource.Success -> {
-                /* AdobeAnalytics.setActionTrack1(
-                     "verify",
-                     "login:forgot password:choose options:otp:new password set",
-                     "forgot password",
-                     "english",
-                     "login",
-                     (requireActivity() as AuthActivity).previousScreen, "success",
-                     sessionManager.getLoggedInUser()
-                 )*/
-
-            }
-
-            is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel)
-                ) {
-                    displaySessionExpireDialog(status.errorModel)
-                } else {
-                    Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
-
-                    /* AdobeAnalytics.setActionTrack1(
-                     "verify",
-                     "login:forgot password:choose options:otp:new password set",
-                     "forgot password",
-                     "english",
-                     "login",
-                     (requireActivity() as AuthActivity).previousScreen,
-                     status.errorMsg,
-                     sessionManager.getLoggedInUser()
-                 )
- */
-
-                    showError(binding.root, status.errorMsg)
-                }
-            }
-
-            else -> {
             }
         }
     }
@@ -335,10 +257,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
     }
 
-    private fun isEnable1(text: String) {
+    private fun isEnable1() {
         isConfirmPasswordValid = true
 
-        if (binding.edtConformPassword.getText().toString().length == 0) {
+        if (binding.edtConformPassword.getText().toString().isEmpty()) {
             isConfirmPasswordValid = false
             binding.edtConformPassword.removeError()
         } else if (binding.edtConformPassword.getText().toString()
@@ -367,7 +289,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
     private fun isEnable(text: String) {
         var filterTextForSpecialChars = ""
-        var commaSeperatedString = ""
+        var commaSeparatedString = ""
         isNewPasswordValid = true
 
         if (binding.edtNewPassword.getText().toString().isEmpty()) {
@@ -397,18 +319,21 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 binding.edtNewPassword.getText().toString()
             )
             filterTextForSpecialChars.replace(" ", "space ")
-            commaSeperatedString =
+            commaSeparatedString =
                 Utils.makeCommaSeperatedStringForPassword(
                     Utils.removeAllCharacters(
                         Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars
                     )
                 )
             if (filterTextForSpecialChars.isNotEmpty()) {
-                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
-                false
+                binding.edtNewPassword.setErrorText(
+                    resources.getString(
+                        R.string.str_password_must_not_include_disallowed_character,
+                        commaSeparatedString
+                    )
+                )
             } else {
                 binding.edtNewPassword.removeError()
-                true
             }
         } else if (!binding.edtNewPassword.getText().toString().contains(Utils.NUMBER)) {
             isNewPasswordValid = false
@@ -460,12 +385,14 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
         if (hasLowerCase(text)) {
-            setTickBackground(binding.imgDot3,
+            setTickBackground(
+                binding.imgDot3,
                 binding.point3Ll,
                 resources.getString(R.string.str_contain_at_least_one_lower_case)
             )
         } else {
-            setDotBackground(binding.imgDot3,
+            setDotBackground(
+                binding.imgDot3,
                 binding.point3Ll,
                 resources.getString(R.string.str_contain_at_least_one_lower_case)
             )
@@ -475,7 +402,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             setTickBackground(
                 binding.imgDot2,
                 binding.point2Ll,
-                resources.getString(R.string.str_contain_at_least_one_upper_case))
+                resources.getString(R.string.str_contain_at_least_one_upper_case)
+            )
         } else {
             setDotBackground(
                 binding.imgDot2,
@@ -485,9 +413,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
         if (text.length >= 8) {
-            setTickBackground(binding.imgDot1,
+            setTickBackground(
+                binding.imgDot1,
                 binding.point1Ll,
-                resources.getString(R.string.str_at_least_8_character))
+                resources.getString(R.string.str_at_least_8_character)
+            )
         } else {
             setDotBackground(
                 binding.imgDot1,
@@ -497,8 +427,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
         if (hasDigits(text)) {
-            setTickBackground(binding.imgDot4,binding.point4Ll,
-                resources.getString(R.string.str_contain_at_least_one_number))
+            setTickBackground(
+                binding.imgDot4, binding.point4Ll,
+                resources.getString(R.string.str_contain_at_least_one_number)
+            )
         } else {
             setDotBackground(
                 binding.imgDot4,
@@ -511,28 +443,27 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
-    fun setDotBackground(view: View, pointLl: LinearLayout, string: String) {
-        pointLl.contentDescription=resources.getString(R.string.accessibility_bullet)+"."+string
+    private fun setDotBackground(view: View, pointLl: LinearLayout, string: String) {
+        pointLl.contentDescription =
+            resources.getString(R.string.accessibility_bullet) + "." + string
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_5dp)
     }
-    fun setTickBackground(view: View, pointLl: LinearLayout, string: String) {
-        pointLl.contentDescription=resources.getString(R.string.accessibility_check_mark)+"."+string
+
+    private fun setTickBackground(view: View, pointLl: LinearLayout, string: String) {
+        pointLl.contentDescription =
+            resources.getString(R.string.accessibility_check_mark) + "." + string
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.grin_tick)
     }
-    private fun setContentDesForDot(content:String) {
-        binding.point1Ll.contentDescription=content+"."+resources.getString(R.string.str_at_least_8_character)
-        binding.point2Ll.contentDescription=content+"."+resources.getString(R.string.str_contain_at_least_one_upper_case)
-        binding.point3Ll.contentDescription=content+"."+resources.getString(R.string.str_contain_at_least_one_lower_case)
-        binding.point4Ll.contentDescription=content+"."+resources.getString(R.string.str_contain_at_least_one_number)
-    }
 
-
-    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
-
-    }
-
-    override fun onResume() {
-        super.onResume()
+    private fun setContentDesForDot(content: String) {
+        binding.point1Ll.contentDescription =
+            content + "." + resources.getString(R.string.str_at_least_8_character)
+        binding.point2Ll.contentDescription =
+            content + "." + resources.getString(R.string.str_contain_at_least_one_upper_case)
+        binding.point3Ll.contentDescription =
+            content + "." + resources.getString(R.string.str_contain_at_least_one_lower_case)
+        binding.point4Ll.contentDescription =
+            content + "." + resources.getString(R.string.str_contain_at_least_one_number)
     }
 
 

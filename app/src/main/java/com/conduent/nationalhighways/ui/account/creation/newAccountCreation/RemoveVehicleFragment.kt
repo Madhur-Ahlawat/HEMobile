@@ -150,7 +150,7 @@ class RemoveVehicleFragment : BaseFragment<FragmentRemoveVehicleBinding>(), View
                 } else {
                     index?.let { vehicleList.removeAt(it) }
                     if (vehicleList.isEmpty()) {
-                        if(navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)){
+                        if(navFlowCall == Constants.VEHICLE_MANAGEMENT){
                             findNavController().navigate(R.id.action_removeVehicleFragment_to_vehicleHomeListFragment)
                         }else{
                             findNavController().navigate(R.id.action_removeVehicleFragment_to_findVehicleFragment)
