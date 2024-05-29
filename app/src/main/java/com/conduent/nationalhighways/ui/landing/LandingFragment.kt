@@ -429,5 +429,18 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         webServiceViewModel.checkServiceStatus()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        loader = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        webServiceViewModel.webServiceLiveData.removeObservers(viewLifecycleOwner)
+        webServiceViewModel.pushNotification.removeObservers(viewLifecycleOwner)
+    }
 
 }

@@ -10,11 +10,13 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseDialog<B: ViewBinding> : DialogFragment() {
 
-    protected lateinit var binding: B
+
+    private var _binding: B? = null
+    protected val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding=getDialogBinding(inflater, container)
-        return binding.root
+        _binding=getDialogBinding(inflater, container)
+        return _binding?.root
     }
 
     override fun onStart() {
@@ -23,11 +25,16 @@ abstract class BaseDialog<B: ViewBinding> : DialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
         initCtrl()
         observer()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Clear the binding reference to avoid memory leaks
+    }
     abstract fun getDialogBinding(inflater: LayoutInflater, container: ViewGroup?): B
     abstract fun init()
     abstract fun initCtrl()

@@ -993,5 +993,19 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
         }
     }
+    override fun onDestroyView() {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        loader = null
+
+        viewModel.findOneOffVehicleLiveData.removeObservers(viewLifecycleOwner)
+        viewModel.findVehiclePlateLiveData.removeObservers(viewLifecycleOwner)
+        viewModel.findNewVehicleLiveData.removeObservers(viewLifecycleOwner)
+        viewModel.validVehicleLiveData.removeObservers(viewLifecycleOwner)
+        viewModel.heartBeatLiveData.removeObservers(viewLifecycleOwner)
+
+        super.onDestroyView()
+    }
 
 }

@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.bottomnav.account
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -60,7 +58,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         container: ViewGroup?
     ): FragmentAccountNewBinding = FragmentAccountNewBinding.inflate(inflater, container, false)
 
-    @RequiresApi(Build.VERSION_CODES.P)
     override fun init() {
         loader = LoaderDialog()
         loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
@@ -102,7 +99,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
     private fun initUI() {
         if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
             navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY, "").toString()

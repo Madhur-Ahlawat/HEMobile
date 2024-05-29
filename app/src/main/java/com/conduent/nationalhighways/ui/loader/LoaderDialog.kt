@@ -25,10 +25,28 @@ class LoaderDialog : BaseDialog<DialogLoaderBinding>() {
 
     override fun onResume() {
         super.onResume()
-        this.requireView().isFocusableInTouchMode = true
-        this.requireView().requestFocus()
-        this.requireView().setOnKeyListener { _, keyCode, _ ->
+
+        val view = this.requireView()
+
+
+        view.isFocusableInTouchMode = true
+        view.requestFocus()
+        view.setOnKeyListener { _, keyCode, _ ->
             keyCode == KeyEvent.KEYCODE_BACK
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        cleanupResources()
+    }
+
+    override fun onDismiss(dialog: android.content.DialogInterface) {
+        super.onDismiss(dialog)
+        cleanupResources()
+    }
+
+    private fun cleanupResources() {
+        this.requireView().setOnKeyListener(null) // Remove the key listener to avoid leaks
     }
 }

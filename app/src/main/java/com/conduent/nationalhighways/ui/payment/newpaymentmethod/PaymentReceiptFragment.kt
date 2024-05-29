@@ -621,4 +621,16 @@ class PaymentReceiptFragment : BaseFragment<FragmentPaymentReceiptMethodBinding>
         }
     }
 
+    override fun onDestroyView() {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        loader = null
+
+        viewModel.countriesList.removeObservers(viewLifecycleOwner)
+        viewModel.countriesCodeList.removeObservers(viewLifecycleOwner)
+
+        super.onDestroyView()
+    }
+
 }

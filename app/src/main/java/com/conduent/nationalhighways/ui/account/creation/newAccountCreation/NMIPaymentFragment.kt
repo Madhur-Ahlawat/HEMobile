@@ -1015,4 +1015,14 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         }
     }
 
+    override fun onDestroyView() {
+
+        viewModel.account.removeObservers(viewLifecycleOwner)
+        paymentMethodViewModel.saveNewCard.removeObservers(viewLifecycleOwner)
+        oneOfPaymentViewModel.oneOfPaymentsPay.removeObservers(viewLifecycleOwner)
+
+        super.onDestroyView()
+    }
+
+
 }

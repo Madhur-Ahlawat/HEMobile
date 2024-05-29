@@ -207,4 +207,12 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             ))
         }
     }
+
+    override fun onDestroyView() {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        loader = null
+        super.onDestroyView()
+    }
 }

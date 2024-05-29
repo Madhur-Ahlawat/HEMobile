@@ -298,4 +298,11 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         }
     }
 
+    override fun onDestroyView() {
+        if (loader?.isVisible == true) {
+            loader?.dismiss()
+        }
+        loader = null
+        super.onDestroyView()
+    }
 }

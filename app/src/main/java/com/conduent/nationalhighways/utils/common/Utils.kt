@@ -47,6 +47,7 @@ import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.logout.LogoutListener
@@ -342,10 +343,10 @@ object Utils {
     }
 
     fun convertDateForTransferCrossingsScreen(inputDate: String?): String {
-        val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a",Locale.US)
+        val inputFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", Locale.US)
         val date: Date? = inputFormat.parse(inputDate.toString())
-        val outputFormat = SimpleDateFormat("dd MMM yyyy",Locale.US)
-        return outputFormat.format(date?:Date())
+        val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.US)
+        return outputFormat.format(date ?: Date())
     }
 
     fun removeAllCharacters(charsToBeRemoved: String, input: String): String {
@@ -1270,9 +1271,9 @@ object Utils {
 
     fun checkLocationPermission(context: Context): Boolean {
         return ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            ) != PERMISSION_DENIED
+            context,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        ) != PERMISSION_DENIED
 
     }
 
@@ -1327,6 +1328,7 @@ object Utils {
         appSettingsIntent.data = appSettingsUri
         activity.startActivity(appSettingsIntent)
     }
+
     fun replaceAsterisks(input: String): String {
 
         var count = 0
@@ -1419,8 +1421,8 @@ object Utils {
                 WorkManager.getInstance(activity).enqueue(periodicWorkRequest)
 
                 val i = Intent(activity, PlayLocationService::class.java)
-                    Log.e("TAG", "startForegroundService: Running-- ")
-                    activity.startForegroundService(i)
+                Log.e("TAG", "startForegroundService: Running-- ")
+                activity.startForegroundService(i)
             } catch (e: Exception) {
                 writeInFile(
                     activity,
@@ -1444,5 +1446,4 @@ object Utils {
     fun getCurrentYear(): Int {
         return Calendar.getInstance().get(Calendar.YEAR)
     }
-
 }
