@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.viewcharges
 
 import androidx.activity.viewModels
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
@@ -9,8 +8,12 @@ import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityViewChargesBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
@@ -24,7 +27,6 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
     private val viewModel: ViewChargeViewModel by viewModels()
 
     private lateinit var binding: ActivityViewChargesBinding
-    private var loader: LoaderDialog? = null
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -34,9 +36,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
     lateinit var api: ApiService
 
     override fun initViewBinding() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         binding = ActivityViewChargesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolBarLyt.titleTxt.text = getString(R.string.str_create_an_account)
@@ -64,7 +64,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
     }
 
     private fun handleTollRateResponse(status: Resource<List<TollRatesResp?>?>?) {
-        loader?.dismiss()
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 binding.topTitle.visible()
@@ -87,6 +87,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
                                 )
 
                             }
+
                             "B" -> {
                                 mTollRatesList.add(
                                     TollRatesResp(
@@ -99,6 +100,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
                                 )
 
                             }
+
                             "C" -> {
                                 mTollRatesList.add(
                                     TollRatesResp(
@@ -111,6 +113,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
                                 )
 
                             }
+
                             "D" -> {
                                 mTollRatesList.add(
                                     TollRatesResp(
@@ -123,6 +126,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
                                 )
 
                             }
+
                             else -> {
 
                             }
@@ -157,7 +161,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {

@@ -25,20 +25,7 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
         FragmentCreateAccountEligibleLrdsBinding.inflate(inflater, container, false)
 
     override fun init() {
-/*        val semiBold: Typeface = Typeface.create(
-            ResourcesCompat.getFont(requireContext(), com.conduent.nationalhighways.R.font.sfsemibold),
-            Typeface.NORMAL
-        )
-        val clickableLink = object : ClickableSpan() {
-            override fun onClick(view: View) {
-                Toast.makeText(view.context, "Link Clicked!", Toast.LENGTH_SHORT).show()
-            }
-        }
-        val string = SpannableString("Your post code has been recognised as a valid Local Resident Discount Scheme (LRDS) post code. \n\nTo apply for a LRDS plan, click on this link which will navigate to the account creation journey on the web.")
-        string.setSpan(UnderlineSpan(), 137, 142, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-//        string.setSpan(clickableLink,  0, 100, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        string.setSpan(StyleSpan(Typeface.BOLD), 137, 142, Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
-        binding.txtDescription.setText(string, TextView.BufferType.SPANNABLE)*/
+
     }
 
     override fun initCtrl() {

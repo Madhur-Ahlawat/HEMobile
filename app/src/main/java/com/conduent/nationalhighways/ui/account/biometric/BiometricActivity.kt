@@ -54,7 +54,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     lateinit var binding: ActivityBiometricBinding
     private var twoFA: Boolean = false
     private val dashboardViewModel: DashboardViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private val toggleDelay: Long = 200
 
     private var personalInformation: PersonalInformation? = null
@@ -98,11 +97,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_profile_biometrics)
             binding.toolBarLyt.backButton.visible()
             binding.biometricCancel.gone()
-
         }
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
 
         twoFA = intent.getBooleanExtra(Constants.TWOFA, false)
 
@@ -417,10 +412,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
 
 
                 if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                    if (loader?.isVisible == true) {
-                        loader?.dismiss()
-                    }
-
+                    dismissLoaderDialog()
 
                     val intent = Intent(this, AuthActivity::class.java)
                     intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
@@ -442,9 +434,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             is Resource.DataError -> {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
+               dismissLoaderDialog()
 
 
                 AdobeAnalytics.setLoginActionTrackError(
@@ -480,9 +470,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {

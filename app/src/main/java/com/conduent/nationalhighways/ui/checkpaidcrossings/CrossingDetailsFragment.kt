@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +22,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
@@ -45,7 +43,6 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     View.OnClickListener {
     private var mLayoutManager: LinearLayoutManager? = null
     private var topUp: String? = null
-    private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
     private val viewModel: DashboardViewModel by viewModels()
     private val recentTransactionAdapter: GenericRecyclerViewAdapter<CheckedCrossingRecentTransactionsResponseModelItem> by lazy { createPaymentsHistoryListAdapter() }
@@ -163,9 +160,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     }
 
     private fun getPaymentHistoryList() {
-        if (loader?.isVisible == false && loader?.isAdded == true) {
-            loader?.showsDialog
-        }
+        showLoaderDialog()
         HomeActivityMain.dateRangeModel =
             PaymentDateRangeModel(
                 filterType = Constants.PAYMENT_FILTER_SPECIFIC,
@@ -176,8 +171,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     }
 
     private fun initLoaderDialog() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
     }
 
     private fun initTransactionsRecyclerView() {
@@ -203,11 +197,12 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                         recentTransactionItem.entryDate, recentTransactionItem.exitTime
                     )
                     tvTransactionType.text =
-                        recentTransactionItem.activity?.substring(0, 1)?.uppercase(Locale.getDefault())
+                        recentTransactionItem.activity?.substring(0, 1)
+                            ?.uppercase(Locale.getDefault())
                             .plus(
                                 recentTransactionItem.activity?.substring(
                                     1,
-                                    recentTransactionItem.activity?.length?:0
+                                    recentTransactionItem.activity?.length ?: 0
                                 )?.lowercase(Locale.getDefault())
                             )
                     if (recentTransactionItem.activity?.lowercase()?.contains("toll") == false) {
@@ -292,9 +287,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
     }
 
     private fun handlePaymentResponse(resource: Resource<CheckedCrossingRecentTransactionsResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {

@@ -1,14 +1,11 @@
 package com.conduent.nationalhighways.ui.bottomnav.notification
 
 import android.content.Context
-import android.os.Build
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -25,7 +22,6 @@ import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationAdapterNew
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -49,7 +45,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
     private var isStandardSelected: Boolean = false
     private var mLayoutManager: LinearLayoutManager? = null
     private val viewModel: NotificationViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var priorityNotifications: MutableList<AlertMessage> = mutableListOf()
     private var standardNotifications: MutableList<AlertMessage> = mutableListOf()
     private var numberOfAlertsTOBeCleared = 0
@@ -111,9 +106,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         binding.feedbackToImproveMb.movementMethod = LinkMovementMethod.getInstance()
         binding.feedbackToImproveNoMb.movementMethod = LinkMovementMethod.getInstance()
 
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         viewModel.getAlertsApi(Constants.LANGUAGE)
         selectPriority()
         setClickListeners()
@@ -162,12 +155,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                     }
                 }
                 if (numberOfAlertsTOBeCleared > 0) {
-                    if (!loader!!.isVisible) {
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
-                    }
+                    showLoaderDialog()
                 }
             } else {
                 standardNotifications.forEach {
@@ -179,12 +167,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                     }
                 }
                 if (numberOfAlertsTOBeCleared > 0) {
-                    if (!loader!!.isVisible) {
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
-                    }
+                    showLoaderDialog()
                 }
             }
         }
@@ -193,7 +176,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         }
         binding.standard.setOnClickListener {
             selectStandard()
-//            setStandardNotifications()
         }
         binding.selectAll.setAccessibilityDelegate()
         binding.selectAll.setOnClickListener {
@@ -232,7 +214,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun observer() {
         observe(viewModel.alertLivData, ::handleAlertResponse)
         observe(viewModel.dismissAlertLiveData, ::handleDismissAlertResponse)
@@ -275,9 +256,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
-        loader?.dismiss()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (!resource.data?.messageList.isNullOrEmpty()) {
@@ -367,9 +347,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             numberOfAlertsTOBeCleared--
         }
         if (numberOfAlertsTOBeCleared == 0) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
+            dismissLoaderDialog()
             binding.btnClearNotification.isEnabled = true
             binding.btnClearNotification.isFocusable = true
         }
@@ -396,9 +374,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
             numberOfAlertsTOBeCleared--
         }
         if (numberOfAlertsTOBeCleared == 0) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
+            dismissLoaderDialog()
             binding.btnClearNotification.isEnabled = true
             binding.btnClearNotification.isFocusable = true
         }

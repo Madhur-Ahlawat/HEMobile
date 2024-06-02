@@ -21,7 +21,6 @@ import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentNewAddVehicleDetailsBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -62,7 +61,6 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     private var colourInputCheck: Boolean = false
     private var vehicleRegRequired: Boolean = true
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var dataType: String = ""
 
     @Inject
@@ -151,12 +149,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         Utils.setupAccessibilityDelegatesForRadioButtons(binding.radioGroupYesNo)
 
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId ->
-
-
             radioButtonChecked = R.id.radioButtonYes == checkedId || R.id.radioButtonNo == checkedId
-
             data?.veicleUKnonUK = radioButtonChecked
-
             checkButton()
         }
 
@@ -220,7 +214,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
                 }
             }
 
-            binding.vehiclePlateNumber.contentDescription=Utils.accessibilityForNumbers(binding.vehiclePlateNumber.text.toString())
+            binding.vehiclePlateNumber.contentDescription =
+                Utils.accessibilityForNumbers(binding.vehiclePlateNumber.text.toString())
 
             if (NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK) {
                 if (data?.vehicleClass == "D") {
@@ -272,15 +267,12 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
             Constants.TRANSFER_CROSSINGS -> {
                 NewCreateAccountRequestModel.vehicleList.clear()
-//                typeOfVehicle.clear()
-//                typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_B))
-//                typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_C))
-//                typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_D))
                 binding.apply {
                     typeVehicle.dataSet.clear()
                     typeVehicle.dataSet.addAll(typeOfVehicle)
                     vehiclePlateNumber.text = data?.plateNo.toString()
-                    vehiclePlateNumber.contentDescription = Utils.accessibilityForNumbers(data?.plateNo.toString())
+                    vehiclePlateNumber.contentDescription =
+                        Utils.accessibilityForNumbers(data?.plateNo.toString())
                 }
             }
         }
@@ -323,9 +315,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun getUnSettledCrossings(resource: Resource<CrossingDetailsModelsResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
@@ -402,7 +392,8 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
 
         } else {
             binding.vehiclePlateNumber.text = plateNumber
-            binding.vehiclePlateNumber.contentDescription = Utils.accessibilityForNumbers(plateNumber)
+            binding.vehiclePlateNumber.contentDescription =
+                Utils.accessibilityForNumbers(plateNumber)
 
             binding.makeInputLayout.setText(vehicleMake)
             binding.colorInputLayout.setText(vehicleColor)
@@ -428,7 +419,10 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
             modelInputCheck = true
             colourInputCheck = true
         }
-        if (vehicleClass.equals("D", true) && NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK
+        if (vehicleClass.equals(
+                "D",
+                true
+            ) && NewCreateAccountRequestModel.plateCountry == Constants.COUNTRY_TYPE_UK
         ) {
             typeOfVehicle.clear()
             typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_C))
@@ -577,11 +571,11 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         radioButtonChecked = (binding.radioButtonYes.isChecked || binding.radioButtonNo.isChecked)
         checkBoxChecked = binding.checkBoxTerms.isChecked
         modelInputCheck = if (binding.modelInputLayout.editText.text?.isNotEmpty() == true) {
-            if ((binding.modelInputLayout.editText.text?.toString()?.trim()?.length?:0) > 50) {
+            if ((binding.modelInputLayout.editText.text?.toString()?.trim()?.length ?: 0) > 50) {
                 false
             } else if (hasSpecialCharacters(
-                    binding.modelInputLayout.editText.text?.toString()?.
-                    trim()?.replace(" ", "").toString(), Utils.splCharVehicleModel
+                    binding.modelInputLayout.editText.text?.toString()?.trim()?.replace(" ", "")
+                        .toString(), Utils.splCharVehicleModel
                 )
             ) {
                 false
@@ -1055,7 +1049,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
     }
 
     private fun getCrossingDetailsApi(newVehicleInfoDetails: NewVehicleInfoDetails) {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         val model = CrossingDetailsModelsRequest(
             newVehicleInfoDetails.plateNumber.toString().uppercase(),
             newVehicleInfoDetails.vehicleClass,

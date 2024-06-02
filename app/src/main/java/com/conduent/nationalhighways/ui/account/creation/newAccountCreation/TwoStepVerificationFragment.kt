@@ -32,9 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBinding>(),
     View.OnClickListener {
-    //    private lateinit var  navFlow:String // create account , forgot password
     private var oldtwoStepVerification = false
-    private var loader: LoaderDialog? = null
     private val viewModel: ProfileViewModel by viewModels()
     private var isViewCreated: Boolean = false
 
@@ -42,11 +40,6 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         FragmentTwoStepVerificationBinding.inflate(inflater, container, false)
 
     override fun init() {
-
-//        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         if (requireActivity() is CreateAccountActivity){
             (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
@@ -83,10 +76,8 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 
         binding.twoFactor.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-//                NewCreateAccountRequestModel.twoStepVerification = true
                 binding.btnNext.enable()
             } else {
-//                NewCreateAccountRequestModel.twoStepVerification = false
                 binding.btnNext.enable()
             }
         }
@@ -103,9 +94,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
     }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")
@@ -183,10 +172,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                                 }
                             } else {
                                 if(Utils.isSupportedCountry( data?.personalInformation?.phoneCellCountryCode.toString()) ){
-                                    loader?.show(
-                                        requireActivity().supportFragmentManager,
-                                        Constants.LOADER_DIALOG
-                                    )
+                                    showLoaderDialog()
                                     updateProfileDetails(data)
                                 }else{
                                     verifyMobileNumber(data)

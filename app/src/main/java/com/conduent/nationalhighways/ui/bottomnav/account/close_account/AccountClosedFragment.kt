@@ -21,9 +21,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AccountClosedFragment : BaseFragment<FragmentAccountClosedBinding>() {
 
-    private val contactDartChargeViewModel: ContactDartChargeViewModel by viewModels()
-    private var loader: LoaderDialog? = null
-
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -33,8 +30,6 @@ class AccountClosedFragment : BaseFragment<FragmentAccountClosedBinding>() {
     ) = FragmentAccountClosedBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.btnContinue.movementMethod = LinkMovementMethod.getInstance()
 
     }
@@ -50,46 +45,5 @@ class AccountClosedFragment : BaseFragment<FragmentAccountClosedBinding>() {
     }
 
     override fun observer() {
-//        observe(contactDartChargeViewModel.createNewCaseVal, ::createNewCase)
     }
-
-//    private fun createNewCase(resource: Resource<CreateNewCaseResp?>?) {
-//        loader?.dismiss()
-//        when (resource) {
-//            is Resource.Success -> {
-//                resource.data?.let {
-//                  findNavController().navigate(R.id.action_closeAccountFragment_to_accountClosedFragment)
-//                }
-//            }
-//
-//            is Resource.DataError -> {
-//                ErrorUtil.showError(binding.root, resource.errorMsg)
-//            }
-//
-//            else -> {
-//
-//            }
-//        }
-//    }
-
-//    private fun receipt(resource: Resource<ResponseBody?>?) {
-//        if (loader?.isVisible == true) {
-//            loader?.dismiss()
-//        }
-////        emailSuccessResponse=resource?.data
-//        when (resource) {
-//            is Resource.Success -> {
-//                resource.data?.let {
-//                    findNavController().navigate(R.id.emailRecieptSuccessFragment)
-//                }
-//            }
-//
-//            is Resource.DataError -> {
-//                ErrorUtil.showError(binding.root, resource.errorMsg)
-//            }
-//
-//            else -> {}
-//        }
-//
-//    }
 }

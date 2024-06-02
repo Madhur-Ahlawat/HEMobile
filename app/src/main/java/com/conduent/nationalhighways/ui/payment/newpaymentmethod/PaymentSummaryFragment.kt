@@ -34,8 +34,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     View.OnClickListener, OnRetryClickListener, DropDownItemSelectListener {
     private var additionalCrossingsCount: Int = 0
     private var crossingsList: MutableList<String>? = mutableListOf()
-
-
     private var data: CrossingDetailsModelsResponse? = null
 
     override fun getFragmentBinding(
@@ -267,5 +265,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     override fun onRetryClick(apiUrl: String) {
     }
+
+
 
 }

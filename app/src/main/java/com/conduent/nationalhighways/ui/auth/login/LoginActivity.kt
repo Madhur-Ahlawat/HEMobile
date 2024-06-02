@@ -61,7 +61,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
     private val viewModel: LoginViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private var materialToolbar: MaterialToolbar? = null
@@ -104,7 +103,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             is Resource.Success -> {
 
                 if (resource.data?.srApprovalStatus?.uppercase().equals("APPROVED")) {
-                    hideLoader()
+                    dismissLoaderDialog()
                     startNewActivityByClearingStack(LandingActivity::class.java) {
                         putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
                     }
@@ -118,7 +117,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     }
 
                     if (sessionManager.getTwoFAEnabled()) {
-                        hideLoader()
+                        dismissLoaderDialog()
                         val intent = Intent(this@LoginActivity, AuthActivity::class.java)
                         intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
                         intent.putExtra(Constants.NAV_FLOW_FROM, from)
@@ -132,33 +131,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                hideLoader()
+                dismissLoaderDialog()
             }
 
             else -> {
-                hideLoader()
+                dismissLoaderDialog()
             }
-        }
-    }
-
-    private fun showLoader() {
-        val fragmentManager = supportFragmentManager
-        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
-        if (existingFragment != null) {
-            // Dismiss the existing fragment if it exists
-            (existingFragment as LoaderDialog).dismiss()
-        }
-//        if (existingFragment == null) {
-        // Fragment is not added, add it now
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
-        loader?.show(fragmentManager, Constants.LOADER_DIALOG)
-//        }
-    }
-
-    private fun hideLoader() {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
         }
     }
 
@@ -198,7 +176,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
-        hideLoader()
+        dismissLoaderDialog()
 
         when (status) {
             is Resource.Success -> {
@@ -244,7 +222,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                hideLoader()
+                dismissLoaderDialog()
                 AdobeAnalytics.setLoginActionTrackError(
                     "login",
                     "login",
@@ -456,7 +434,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                hideLoader()
+                dismissLoaderDialog()
                 if (status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
@@ -488,7 +466,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             else -> {
-                hideLoader()
+                dismissLoaderDialog()
                 status?.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
                 binding.btnLogin.isEnabled = true
             }
@@ -519,7 +497,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
 
         if (sessionManager.getTwoFAEnabled()) {
-            hideLoader()
+            dismissLoaderDialog()
             val intent = Intent(this@LoginActivity, AuthActivity::class.java)
             intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
             intent.putExtra(Constants.NAV_FLOW_FROM, from)
@@ -558,7 +536,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     enable = true
                 )
 
-                showLoader()
+                showLoaderDialog()
                 viewModel.login(loginModel)
 
 
@@ -656,7 +634,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun onBiometricSuccessful() {
-        showLoader()
+        showLoaderDialog()
         getNewToken(api = api, sessionManager)
     }
 

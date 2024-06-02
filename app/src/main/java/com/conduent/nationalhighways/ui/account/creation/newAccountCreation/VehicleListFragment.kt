@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import com.conduent.nationalhighways.utils.common.Constants
@@ -32,8 +30,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     private lateinit var vehicleList: ArrayList<NewVehicleInfoDetails>
     private lateinit var vehicleAdapter: VehicleListAdapter
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
-
-    private var loader: LoaderDialog? = null
     private var apiRequestCount = 0
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -41,8 +37,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     ): FragmentVehicleList2Binding = FragmentVehicleList2Binding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
     }
@@ -92,7 +86,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             if (apiRequestCount < vehicleList.size) {
                 apiCall(apiRequestCount)
             } else {
-                loader?.dismiss()
+                dismissLoaderDialog()
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_SUMMARY)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
@@ -227,7 +221,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
             R.id.btnNext -> {
                 if (navCall) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    showLoaderDialog()
                     if (vehicleList.size > 0) {
                         apiCall(apiRequestCount)
                     }

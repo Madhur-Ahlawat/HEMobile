@@ -50,7 +50,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.prePayCard -> {
-                if (navFlowCall.equals(EDIT_SUMMARY) && NewCreateAccountRequestModel.prePay) {
+                if (navFlowCall == EDIT_SUMMARY && NewCreateAccountRequestModel.prePay) {
                     findNavController().popBackStack()
                 } else {
                     NewCreateAccountRequestModel.prePay = true
@@ -59,7 +59,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
             }
 
             R.id.payCard -> {
-                if (navFlowCall.equals(EDIT_SUMMARY) && !NewCreateAccountRequestModel.prePay) {
+                if (navFlowCall == EDIT_SUMMARY && !NewCreateAccountRequestModel.prePay) {
                     findNavController().popBackStack()
                 } else {
                     NewCreateAccountRequestModel.prePay = false
@@ -79,7 +79,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         when (navFlowCall) {
 
             EDIT_SUMMARY -> {
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_ACCOUNT_TYPE)
+                bundle.putString(Constants.NAV_FLOW_KEY, EDIT_ACCOUNT_TYPE)
                 findNavController().navigate(
                     R.id.action_createAccountTypes_to_forgotPasswordFragment,
                     bundle

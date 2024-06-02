@@ -1,10 +1,8 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,7 +15,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -29,7 +26,6 @@ import java.io.File
 @AndroidEntryPoint
 class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
-    private var loader: LoaderDialog? = null
     private var apiSuccess: Boolean = false
     private var isViewCreated: Boolean = false
     private var editRequest: String = ""
@@ -55,16 +51,15 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
             binding.detailsEnquiryTv.text = resources.getString(R.string.details_of_complaint)
         }
         binding.btnNext.setOnClickListener {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
+            showLoaderDialog()
             val subcategorySplit = viewModel.enquiryModel.value?.subCategory?.name?.split("~")
             var selectSubArea = ""
-            var seletedArea = ""
+            var selectedArea = ""
             if (subcategorySplit.orEmpty().isNotEmpty()) {
                 selectSubArea = subcategorySplit?.get(0).toString()
             }
             if (subcategorySplit.orEmpty().size > 1) {
-                seletedArea = subcategorySplit?.get(1).toString()
+                selectedArea = subcategorySplit?.get(1).toString()
             }
             val arrayList: ArrayList<String> = ArrayList()
             if (viewModel.enquiryModel.value?.apiFileName != null && viewModel.enquiryModel.value?.apiFileName?.isNotEmpty() == true) {
@@ -78,7 +73,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
                 viewModel.enquiryModel.value?.mobileNumber.toString(),
                 viewModel.enquiryModel.value?.countryCode.toString(),
                 viewModel.enquiryModel.value?.comments.toString(),
-                seletedArea,
+                selectedArea,
                 selectSubArea,
                 arrayList
             )
@@ -105,7 +100,7 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         }
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }else  if (requireActivity() is RaiseEnquiryActivity) {
+        } else if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
@@ -133,8 +128,11 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         viewModel.enquiryModel.value?.apiFileName =
             viewModel.edit_enquiryModel.value?.apiFileName ?: ""
         binding.mobileDataTv.text = viewModel.enquiryModel.value?.mobileNumber
-        binding.mobileDataTv.contentDescription = "+"+Utils.accessibilityForNumbers(
-            (viewModel.enquiryModel.value?.countryCode?.replace("+","") + viewModel.enquiryModel.value?.mobileNumber)
+        binding.mobileDataTv.contentDescription = "+" + Utils.accessibilityForNumbers(
+            (viewModel.enquiryModel.value?.countryCode?.replace(
+                "+",
+                ""
+            ) + viewModel.enquiryModel.value?.mobileNumber)
         )
     }
 
@@ -153,20 +151,14 @@ class SummaryEnquiryFragment : BaseFragment<FragmentSummaryEnquiryBinding>() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         if (!isViewCreated) {
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
             observe(apiViewModel.enquiryResponseLiveData, ::enquiryResponseModel)
-
         }
         isViewCreated = true
     }
 
     private fun enquiryResponseModel(resource: Resource<EnquiryResponseModel?>?) {
         if (!apiSuccess) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
+            dismissLoaderDialog()
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.email = binding.emailDataTv.text.toString()

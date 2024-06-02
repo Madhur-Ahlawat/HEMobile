@@ -3,16 +3,13 @@ package com.conduent.nationalhighways.ui.bottomnav.account.close_account
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.contactdartcharge.CreateNewCaseReq
 import com.conduent.nationalhighways.data.model.contactdartcharge.CreateNewCaseResp
 import com.conduent.nationalhighways.databinding.FragmentCloseAccountBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.startNow.contactdartcharge.ContactDartChargeViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -29,7 +26,6 @@ import javax.inject.Inject
 class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
 
     private val contactDartChargeViewModel: ContactDartChargeViewModel by viewModels()
-    private var loader: LoaderDialog? = null
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -40,17 +36,15 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
     ) = FragmentCloseAccountBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
 
     override fun initCtrl() {
         binding.message1.visible()
         binding.btnCloseAccount.setOnClickListener {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            showLoaderDialog()
             val newCaseReq = CreateNewCaseReq(
                 HomeActivityMain.accountDetailsData?.personalInformation?.firstName,
                 HomeActivityMain.accountDetailsData?.personalInformation?.lastName,
@@ -78,9 +72,7 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
     }
 
     private fun createNewCase(resource: Resource<CreateNewCaseResp?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {

@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,7 +20,6 @@ import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.adapter.C
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.listener.ItemClickListener
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -35,10 +33,9 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
 
     lateinit var adapter: CasesEnquiryListAdapter
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
-    private var loader: LoaderDialog? = null
-    var caseEnquiryList: ArrayList<ServiceRequest> = ArrayList()
+    private var caseEnquiryList: ArrayList<ServiceRequest> = ArrayList()
     var isViewCreated: Boolean = false
-    val apiViewModel: RaiseAPIViewModel by viewModels()
+    private val apiViewModel: RaiseAPIViewModel by viewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -48,7 +45,8 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
 
     override fun init() {
 
-        binding.includeNoData.messageTv.text=resources.getString(R.string.str_no_enquiries_have_been_raised)
+        binding.includeNoData.messageTv.text =
+            resources.getString(R.string.str_no_enquiries_have_been_raised)
         setBackPressListener(this)
         if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
             binding.btnNext.visible()
@@ -56,8 +54,8 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
             binding.btnNext.gone()
         }
         binding.btnNext.setOnClickListener {
-            viewModel.enquiryModel.value= EnquiryModel()
-            viewModel.edit_enquiryModel.value= EnquiryModel()
+            viewModel.enquiryModel.value = EnquiryModel()
+            viewModel.edit_enquiryModel.value = EnquiryModel()
             findNavController().navigate(
                 R.id.action_caseEnquiryHistoryListFragment_to_enquiryCategoryFragment,
                 getBundleData()
@@ -77,12 +75,6 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
         }
     }
 
-    private fun initAdapter() {
-//        adapter = CasesEnquiryListAdapter(caseEnquiryList)
-//        binding.casesEnquiryRv.adapter = adapter
-//        binding.casesEnquiryRv.layoutManager = LinearLayoutManager(requireActivity())
-//        adapter.notifyDataSetChanged()
-    }
 
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
@@ -97,14 +89,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
 
             binding.viewModel = viewModel
             binding.lifecycleOwner = this
-
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            loader?.show(
-                requireActivity().supportFragmentManager,
-                Constants.LOADER_DIALOG
-            )
-
+            showLoaderDialog()
             observe(apiViewModel.getAccountSRList, ::getAccountSRListResponse)
         }
         isViewCreated = true
@@ -112,9 +97,7 @@ class CasesEnquiryHistoryListFragment : BaseFragment<FragmentCasesEnquiryHistory
     }
 
     private fun getAccountSRListResponse(resource: Resource<EnquiryListResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 caseEnquiryList.clear()

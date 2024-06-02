@@ -1,13 +1,10 @@
 package com.conduent.nationalhighways.ui.transactions
 
 import android.content.Context
-import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
@@ -19,11 +16,14 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsAdapter
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils.sortTransactionsDateWiseDescending
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecorator
@@ -43,16 +43,13 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
     private var paymentHistoryDatesList: MutableList<String> = mutableListOf()
     private var mLayoutManager: LinearLayoutManager? = null
     private val dashboardViewModel: DashboardViewModel by activityViewModels()
-    val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
+    private val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
 
-    //    private val recentTransactionAdapter: GenericRecyclerViewAdapter<TransactionData> by lazy { createPaymentsHistoryListAdapter() }
     private var transactionsAdapter: TransactionsAdapter? = null
-
-    private var loader: LoaderDialog? = null
 
     @Inject
     lateinit var sessionManager: SessionManager
-    private var transactionType=Constants.ALL_TRANSACTION
+    private var transactionType = Constants.ALL_TRANSACTION
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -61,13 +58,11 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
 
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         transactionsAdapter = TransactionsAdapter(
             this@ViewAllTransactionsFragment,
             paymentHistoryDatesList,
             paymentHistoryHashMap,
-            dashboardViewModel.accountInformationData.value?.accSubType?:""
+            dashboardViewModel.accountInformationData.value?.accSubType ?: ""
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
@@ -83,15 +78,14 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
             adapter = transactionsAdapter
         }
 
-        if(dashboardViewModel.accountInformationData.value?.accSubType.equals(Constants.PAYG)){
-            transactionType=Constants.TOLL_TRANSACTION
+        if (dashboardViewModel.accountInformationData.value?.accSubType.equals(Constants.PAYG)) {
+            transactionType = Constants.TOLL_TRANSACTION
         }
-        getPaymentHistoryList(1)
+        getPaymentHistoryList()
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
             HomeActivityMain.setTitle(getString(R.string.transactions))
         }
-        initLoaderDialog()
         setBackPressListener(this)
 
         if (requireActivity() is HomeActivityMain) {
@@ -102,21 +96,14 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
     override fun initCtrl() {
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun observer() {
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
     }
 
-    private fun initLoaderDialog() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-    }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        Log.e("TAG", "getPaymentHistoryList: showLoaderDialog dismissLoaderDialog " )
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.transactionList?.count?.let {
@@ -147,7 +134,6 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
                             ivNoTransactions.visible()
                             tvNoTransactions.visible()
                         }
-//                        binding.paginationLayout.gone()
                     }
                 } ?: run {
                     binding.apply {
@@ -170,14 +156,11 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
     }
 
     private fun getPaymentHistoryList(
-        index: Int
     ) {
-        if (loader?.isVisible == false && loader?.isAdded == true) {
-            loader?.showsDialog
-        }
-
+        showLoaderDialog()
+        Log.e("TAG", "getPaymentHistoryList: showLoaderDialog " )
         val request = AccountPaymentHistoryRequest(
-            index,
+            1,
             transactionType,
             20,
             endDate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
@@ -192,7 +175,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
 
-    fun getDatesList(transactionsList: MutableList<TransactionData>) {
+    private fun getDatesList(transactionsList: MutableList<TransactionData>) {
         var tempDate: String? = null
         transactionsList.forEach {
             if (tempDate == null) {
@@ -200,16 +183,18 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
                 paymentHistoryDatesList.add(it.transactionDate!!)
 
             } else {
-                if ((dfDate.parse(tempDate.toString())?.equals(dfDate.parse(it.transactionDate.toString())))==false) {
-                    paymentHistoryDatesList.add(it.transactionDate?:"")
+                if ((dfDate.parse(tempDate.toString())
+                        ?.equals(dfDate.parse(it.transactionDate.toString()))) == false
+                ) {
+                    paymentHistoryDatesList.add(it.transactionDate ?: "")
                     tempDate = it.transactionDate
                 }
             }
-            var transactionsListTemp =
-                paymentHistoryHashMap.get(it.transactionDate) ?: mutableListOf()
+            val transactionsListTemp =
+                paymentHistoryHashMap[it.transactionDate] ?: mutableListOf()
             transactionsListTemp.add(it)
-            paymentHistoryHashMap.remove(it.transactionDate?:"")
-            paymentHistoryHashMap.put(it.transactionDate?:"", transactionsListTemp)
+            paymentHistoryHashMap.remove(it.transactionDate ?: "")
+            paymentHistoryHashMap[it.transactionDate ?: ""] = transactionsListTemp
         }
     }
 

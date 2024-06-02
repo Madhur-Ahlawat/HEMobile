@@ -2,14 +2,12 @@ package com.conduent.nationalhighways.ui.transactions
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentTollDetailsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.crossing
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
@@ -20,7 +18,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
 
-    private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
 
     @Inject
@@ -33,8 +30,6 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
 
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }

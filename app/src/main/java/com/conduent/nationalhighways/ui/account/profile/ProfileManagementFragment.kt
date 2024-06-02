@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -16,7 +15,6 @@ import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
@@ -40,7 +38,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
     View.OnClickListener {
 
     private val viewModel: ProfileViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var profileDetailModel: ProfileDetailModel? = null
     private val countryViewModel: CreateAccountPostCodeViewModel by viewModels()
 
@@ -72,20 +69,19 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.biometricsCard.visible()
         binding.passwordCard.visible()
 
-
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         if (sessionManager.fetchStringData(SessionManager.COUNTRIES).isEmpty()) {
             countryViewModel.getCountries()
         } else {
             viewModel.accountDetail()
         }
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             HomeActivityMain.setTitle(resources.getString(R.string.profile_management))
         }
 
         callFocusToolBarHome()
+//        binding.scrollView.accessibilityDelegate = CustomScrollAccessibilityDelegate(binding.scrollView)
+
     }
 
     override fun initCtrl() {
@@ -150,15 +146,13 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-        loader?.dismiss()
-
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 status.data?.run {
                     if (status.equals("500")) ErrorUtil.showError(binding.root, message)
                     else {
                         profileDetailModel = status.data
-//                        profileDetailModel?.personalInformation?.phoneCell = ""
                         (Utils.capitalizeString(personalInformation?.firstName) + " " + Utils.capitalizeString(
                             personalInformation?.lastName
                         )).also {
@@ -178,8 +172,10 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
                             personalInformation?.phoneCell?.let {
-                                binding.mobileNumber.text = resources.getString(R.string.concatenate_two_strings_with_space,""+
-                                    personalInformation?.phoneCellCountryCode , it)
+                                binding.mobileNumber.text = resources.getString(
+                                    R.string.concatenate_two_strings_with_space, "" +
+                                            personalInformation?.phoneCellCountryCode, it
+                                )
                             }
 
                         } else if (personalInformation?.phoneDay.isNullOrEmpty().not()) {
@@ -187,14 +183,17 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
                             personalInformation?.phoneDay?.let {
                                 binding.mobileNumber.text =
-                                    resources.getString(R.string.concatenate_two_strings_with_space,""+
-                                    personalInformation?.phoneDayCountryCode , it)
+                                    resources.getString(
+                                        R.string.concatenate_two_strings_with_space, "" +
+                                                personalInformation?.phoneDayCountryCode, it
+                                    )
                             }
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
 
-                        binding.mobileNumber.contentDescription=Utils.accessibilityForNumbers(binding.mobileNumber.text.toString())
+                        binding.mobileNumber.contentDescription =
+                            Utils.accessibilityForNumbers(binding.mobileNumber.text.toString())
                         binding.accountType.text = accountInformation!!.accountType
 
                         if (accountInformation.accountType.equals(
@@ -241,7 +240,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     private fun callFocusToolBarHome() {
         if (requireActivity() is HomeActivityMain) {
-//            HomeActivityMain.dataBinding?.backButton?.contentDescription=resources.getString(R.string.str_back)
             (requireActivity() as HomeActivityMain).focusToolBarHome()
             HomeActivityMain.dataBinding?.backButton?.requestFocus()
         }

@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.bottomnav.notification
 
 import android.view.View
 import androidx.activity.viewModels
-import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
@@ -10,8 +9,11 @@ import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityViewallNotificationBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.notification.adapter.NotificationViewAllAdapter
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.showToast
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
@@ -22,11 +24,8 @@ import javax.inject.Inject
 class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBinding>(),
     LogoutListener {
 
-    private var mType: Int? = null
     private lateinit var binding: ActivityViewallNotificationBinding
-    private var mNotificationAdapter: NotificationViewAllAdapter? = null
     private var mList = ArrayList<AlertMessage>()
-    private var loader: LoaderDialog? = null
     private val viewModel: NotificationViewAllViewModel by viewModels()
 
     @Inject
@@ -42,7 +41,6 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
     }
 
     override fun observeViewModel() {
-        // observe(viewModel.alertLivData, ::handleAlertDeleteResponse)
     }
 
     private fun initCtrl() {
@@ -53,7 +51,7 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
     }
 
     private fun handleAlertDeleteResponse(resource: Resource<String?>?) {
-        loader?.dismiss()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data != null)
@@ -107,21 +105,9 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
     }
 
     private fun apiInitialization() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        //loader?.show(requireActivity().supportFragmentManager, "")
-//        viewModel.deleteAlertItem()
         observe(viewModel.alertLivData, ::handleAlertDeleteResponse)
     }
 
-    //    override fun onClick(notificationModel: AlertMessage?, pos: Int) {
-//    }
-//
-//    override fun onLongClick(notificationModel: AlertMessage?, pos: Int) {
-//        notificationModel?.isSelectListItem = true
-//        mList[pos] = notificationModel!!
-//        mNotificationAdapter?.notifyItemChanged(pos)
-//    }
     override fun onStart() {
         super.onStart()
         loadSession()
@@ -139,8 +125,7 @@ class NotificationViewAllActivity : BaseActivity<ActivityViewallNotificationBind
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-//        sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {

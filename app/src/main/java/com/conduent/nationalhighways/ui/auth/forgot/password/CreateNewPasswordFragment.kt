@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -23,10 +22,8 @@ import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccoun
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -49,7 +46,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private val viewModel: ForgotPasswordViewModel by viewModels()
 
     private var data: SecurityCodeResponseModel? = null
-    private var loader: LoaderDialog? = null
     private var passwordVisible: Boolean = false
     private var confirmPasswordVisible: Boolean = false
     private lateinit var navFlow: String
@@ -72,10 +68,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
-
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         data = arguments?.getParcelable("data")
         binding.model = ResetPasswordModel(
             code = data?.code,
@@ -185,8 +177,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 }
                 val validation = viewModel.checkPassword(binding.model)
                 if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    Logg.logging("NewPassword", "binding.model ${binding.model}")
+                    showLoaderDialog()
                     viewModel.resetPassword(binding.model)
                 } else {
                     showError(binding.root, validation.second)
@@ -196,22 +187,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     }
 
     private fun handleResetResponse(status: Resource<ForgotPasswordResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 if (status.data?.success == true) {
-                    /* AdobeAnalytics.setActionTrack1(
-                         "submit",
-                         "login:forgot password:choose options:otp:new password set",
-                         "forgot password",
-                         "english",
-                         "login",
-                         (requireActivity() as AuthActivity).previousScreen,
-                         "success",
-                         sessionManager.getLoggedInUser()
-                     )*/
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                     bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
@@ -237,17 +216,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    /*AdobeAnalytics.setActionTrack1(
-                    "submit",
-                    "login:forgot password:choose options:otp:new password set",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )*/
-
                     showError(binding.root, status.errorMsg)
                 }
             }
@@ -271,18 +239,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
 
         } else {
-//            isConfirmPasswordValid = true
-//            isNewPasswordValid = true
             binding.edtConformPassword.removeError()
-//            binding.edtNewPassword.removeError()
             binding.edtNewPassword.editText.setText(binding.edtNewPassword.editText.text.toString())
-//            binding.model = ResetPasswordModel(
-//                code = data?.code,
-//                referenceId = data?.referenceId,
-//                newPassword = binding.edtNewPassword.getText().toString(),
-//                confirmPassword = binding.edtConformPassword.getText().toString(),
-//                enable = true
-//            )
         }
         binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }

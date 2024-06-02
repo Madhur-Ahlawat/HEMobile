@@ -3,16 +3,12 @@ package com.conduent.nationalhighways.ui.bottomnav.account
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -28,7 +24,6 @@ import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -48,22 +43,17 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     private val raiseViewmodel: RaiseNewEnquiryViewModel by viewModels()
     private val logOutViewModel: LogoutViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var isSecondaryUser: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
-
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentAccountNewBinding = FragmentAccountNewBinding.inflate(inflater, container, false)
 
-    @RequiresApi(Build.VERSION_CODES.P)
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         isSecondaryUser = sessionManager.getSecondaryUser()
         setPaymentsVisibility()
         initUI()
@@ -102,7 +92,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
     private fun initUI() {
         if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
             navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY, "").toString()
@@ -202,10 +191,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                         val accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
                         val indicatorAccountStatusLineCount =
                             binding.indicatorAccountStatus.lineCount
-                        Log.e(
-                            "TAG",
-                            "onGlobalLayout:accountNumberLinesCount " + accountNumberLinesCount + " *indicatorAccountStatusLineCount* " + indicatorAccountStatusLineCount
-                        )
+
                         if (accountNumberLinesCount > 2 || indicatorAccountStatusLineCount >= 2) {
                             binding.llAccountNumberLargefont.visible()
                             binding.llAccountStatusLargefont.visible()
@@ -215,7 +201,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                         } else {
                             binding.llAccountNumberLargefont.gone()
                             binding.llAccountStatusLargefont.gone()
-
                             binding.llAccountNumber.visible()
                             binding.llAccountStatus.visible()
                         }
@@ -371,17 +356,12 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onDestroy() {
         super.onDestroy()
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-
+        dismissLoaderDialog()
     }
 
 
     private fun handleLogout(status: Resource<AuthResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 logOutOfAccount()
@@ -403,7 +383,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     override fun onLogOutClick() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         logOutViewModel.logout()
     }
 

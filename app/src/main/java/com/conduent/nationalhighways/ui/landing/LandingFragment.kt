@@ -20,7 +20,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
@@ -40,7 +39,6 @@ import javax.inject.Inject
 class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickListener {
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var isChecked = false
     private var isPushNotificationChecked = true
     private var count = 1
@@ -89,8 +87,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         HomeActivityMain.dateRangeModel = null
         HomeActivityMain.paymentHistoryListData = mutableListOf()
         HomeActivityMain.paymentHistoryListDataCheckedCrossings = mutableListOf()
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
         val backButton: ImageView? = requireActivity().findViewById(R.id.back_button)
 
@@ -150,10 +146,9 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         }
         setNotificationDescText()
 
-//        if (!isChecked) {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         webServiceViewModel.checkServiceStatus()
-//        }
+
         isChecked = true
         if (navFlowFrom != Constants.ONE_OFF_PAYMENT_SUCCESS) {
             resetOneOffData()
@@ -352,9 +347,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     private fun handlePushNotification(resource: Resource<EmptyApiResponse?>) {
         if (isPushNotificationChecked) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
+           dismissLoaderDialog()
             when (resource) {
                 is Resource.Success -> {
                     ErrorUtil.showError(
@@ -382,9 +375,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     private fun handleMaintenanceNotification(resource: Resource<WebSiteStatus?>) {
 
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 apiState = resource.data?.state ?: Constants.UNAVAILABLE
@@ -428,6 +419,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         isChecked = true
         webServiceViewModel.checkServiceStatus()
     }
+
+
+
+
+
 
 
 }

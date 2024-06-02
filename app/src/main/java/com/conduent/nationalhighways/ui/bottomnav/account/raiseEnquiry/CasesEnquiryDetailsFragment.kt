@@ -34,7 +34,6 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     private val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     private var serviceRequest: ServiceRequest? = null
     private val apiViewModel: RaiseAPIViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var isViewCreated: Boolean = false
 
     @Inject
@@ -111,9 +110,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
     private fun setCategoryData() {
         if (sm.fetchSubCategoriesData().size == 0) {
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+           showLoaderDialog()
             apiViewModel.getCategories()
         } else {
             getCategoryDataFromSession()
@@ -137,9 +134,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     }
 
     private fun categoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+       dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().isNotEmpty()) {
@@ -208,9 +203,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
     private fun subCategoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
         if (categoryList.size <= apiCallPos) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
+          dismissLoaderDialog()
         }
         if (apiCallPos == 1) {
             subcategoryList?.clear()

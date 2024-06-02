@@ -954,6 +954,7 @@
     <string name="biometric_has_not_been_setup">Biometrics has not been set up on this device.  Please go to your phone\u0027s settings menu to set up Biometrics.</string>
     <string name="goto_settings">Go to settings</string>
     <string name="str_three_address_found">0 Addresses Found</string>
+    <string name="str_address_found">%1$s Addresses Found</string>
     <string name="str_select_your_address">Select your address</string>
     <string name="str_if_you_dont_see">If you don\u0027t see your address you can enter it manually.</string>
     <string name="str_enter_address_manually">Enter address manually</string>

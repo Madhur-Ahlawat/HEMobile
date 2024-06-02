@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.bottomnav.account.payments.topup
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.AccountGetThresholdResponse
@@ -11,8 +10,6 @@ import com.conduent.nationalhighways.data.model.accountpayment.AccountTopUpUpdat
 import com.conduent.nationalhighways.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.conduent.nationalhighways.databinding.FragmentAccountTopupPaymentBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -25,7 +22,6 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
     View.OnClickListener {
 
     private val viewModel: AccountTopUpPaymentViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var topUpAmount = 0.0f
     private var thresholdAmount = 0.0f
 
@@ -33,8 +29,6 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
         FragmentAccountTopupPaymentBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         getThresholdAmount()
         checkButton()
     }
@@ -55,14 +49,12 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
     }
 
     private fun getThresholdAmount() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         viewModel.getThresholdAmount()
     }
 
     private fun getThresholdApiResponse(resource: Resource<AccountGetThresholdResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.apply {
@@ -88,9 +80,11 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                     }
                 }
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+
             else -> {
             }
         }
@@ -98,9 +92,7 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
     }
 
     private fun updateThresholdApiResponse(resource: Resource<AccountTopUpUpdateThresholdResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.apply {
@@ -110,9 +102,11 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                     }
                 }
             }
+
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
             }
+
             else -> {
             }
         }
@@ -133,21 +127,20 @@ class AccountTopUpPaymentFragment : BaseFragment<FragmentAccountTopupPaymentBind
                                 resources.getString(R.string.customer_amount_err_msg)
                             )
                         }
+
                         thresholdAmount < 5.0 -> {
                             ErrorUtil.showError(
                                 binding.root,
                                 resources.getString(R.string.threshold_amount_err_msg)
                             )
                         }
+
                         else -> {
                             val request = AccountTopUpUpdateThresholdRequest(
                                 thresholdAmount.toString(),
                                 customerAmount.getText().toString()
                             )
-                            loader?.show(
-                                requireActivity().supportFragmentManager,
-                                Constants.LOADER_DIALOG
-                            )
+                            showLoaderDialog()
                             viewModel.updateThresholdAmount(request)
                         }
                     }

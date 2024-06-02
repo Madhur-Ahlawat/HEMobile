@@ -19,8 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TermsConditionFragment : BaseFragment<FragmentTermsConditionBinding>() {
     private var url: String = ""
-    private var loader: LoaderDialog? = null
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -29,12 +27,7 @@ class TermsConditionFragment : BaseFragment<FragmentTermsConditionBinding>() {
 
 
     override fun initCtrl() {
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader = LoaderDialog()
-
-
         setupWebView()
-
         url = arguments?.getString(Constants.TERMSCONDITIONURL).toString()
     }
 

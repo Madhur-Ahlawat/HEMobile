@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,7 +19,6 @@ import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -42,13 +40,12 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
     @Inject
     lateinit var sm: SessionManager
-    private val createaccountViewmodel: CreateAccountPostCodeViewModel by viewModels()
+    private val createAccountViewmodel: CreateAccountPostCodeViewModel by viewModels()
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
 
     private var fullCountryNameWithCode: MutableList<String> = ArrayList()
     private var requiredCountryCode = false
     private var countriesCodeList: MutableList<String> = ArrayList()
-    private var loader: LoaderDialog? = null
     private var requiredFirstName = false
     private var requiredLastName = false
     private var requiredEmail = false
@@ -73,7 +70,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
         setBackPressListener(this)
 
-        createaccountViewmodel.getCountries()
+        createAccountViewmodel.getCountries()
         binding.btnNext.setOnClickListener {
 
             saveData()
@@ -337,7 +334,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                 true
                             } else {
                                 binding.errorMobileNumber.visible()
-                                binding.errorMobileNumber.setText(getString(R.string.str_uk_phoneNumber_error_message))
+                                binding.errorMobileNumber.text = getString(R.string.str_uk_phoneNumber_error_message)
                                 false
                             }
 
@@ -347,7 +344,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                 binding.errorMobileNumber.gone()
                                 true
                             } else {
-                                binding.errorMobileNumber.setText(getString(R.string.str_non_uk_phoneNumber_error_message))
+                                binding.errorMobileNumber.text = getString(R.string.str_non_uk_phoneNumber_error_message)
                                 false
                             }
 
@@ -388,24 +385,20 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             binding.viewModel = viewModel
             binding.lifecycleOwner = this
 
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            observe(createaccountViewmodel.countriesCodeList, ::getCountryCodesList)
-            observe(createaccountViewmodel.countriesList, ::getCountriesList)
+            showLoaderDialog()
+            observe(createAccountViewmodel.countriesCodeList, ::getCountryCodesList)
+            observe(createAccountViewmodel.countriesList, ::getCountriesList)
         }
         isViewCreated = true
 
     }
 
-    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {/* if (loader?.isVisible == true) {
-             loader?.dismiss()
-         }*/
+    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
         when (response) {
             is Resource.Success -> {
                 countriesList.clear()
                 countriesModel = response.data
-                createaccountViewmodel.getCountryCodesList()
+                createAccountViewmodel.getCountryCodesList()
 
                 response.data?.forEach {
                     it?.countryName?.let { it1 -> countriesList.add(it1) }
@@ -433,18 +426,16 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         }
     }
 
-    fun focusContactDetailsToolBar(){
-        if(requireActivity() is MakeOffPaymentActivity){
+    private fun focusContactDetailsToolBar() {
+        if (requireActivity() is MakeOffPaymentActivity) {
             (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
-        }else if(requireActivity() is HomeActivityMain){
+        } else if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
     }
 
     private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (response) {
             is Resource.Success -> {
                 fullCountryNameWithCode.clear()
@@ -509,11 +500,10 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     private fun checkRequireCountryCode() {
-        if (binding.mobileNumberEt.getText().toString().trim().isNotEmpty()) {
-            requiredCountryCode =
-                fullCountryNameWithCode.any { it == binding.countrycodeEt.selectedItemDescription }
+        requiredCountryCode = if (binding.mobileNumberEt.getText().toString().trim().isNotEmpty()) {
+            fullCountryNameWithCode.any { it == binding.countrycodeEt.selectedItemDescription }
         } else {
-            requiredCountryCode = true
+            true
         }
     }
 
@@ -534,8 +524,8 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 val userCountryCode = sm.fetchUserCountryCode()
                 var fullCountryNameToSave = ""
                 fullCountryNameWithCode.forEachIndexed { _, fullCountryName ->
-                    val countrycode = getCountryCode(fullCountryName)
-                    if (countrycode == userCountryCode) {
+                    val countryCode = getCountryCode(fullCountryName)
+                    if (countryCode == userCountryCode) {
                         fullCountryNameToSave = fullCountryName
                         binding.countrycodeEt.setSelectedValue(fullCountryName)
                         return@forEachIndexed
@@ -630,7 +620,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
     }
 
-    fun saveCountryCodeToViewModel(item: String) {
+    private fun saveCountryCodeToViewModel(item: String) {
         viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(item)
         viewModel.edit_enquiryModel.value?.fullcountryCode = item
 

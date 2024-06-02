@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,7 +16,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
@@ -32,12 +30,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
 
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
-    private var loader: LoaderDialog? = null
     var isViewCreated: Boolean = false
-    var isApiCalled: Boolean = false
+    private var isApiCalled: Boolean = false
     var referenceNumberValidations: Boolean = false
     var lastNameValidations: Boolean = false
-    val apiViewModel: RaiseAPIViewModel by viewModels()
+    private val apiViewModel: RaiseAPIViewModel by viewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -50,8 +47,10 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
         binding.enquiryReferenceNumberEt.editText.addTextChangedListener(GenericTextWatcher(1))
         binding.lastNameEt.editText.addTextChangedListener(GenericTextWatcher(2))
 
-        binding.lastNameEt.editText.setText(viewModel.enquiry_last_name.value?:"")
-        binding.enquiryReferenceNumberEt.editText.setText(viewModel.enquiry_status_number.value?:"")
+        binding.lastNameEt.editText.setText(viewModel.enquiry_last_name.value ?: "")
+        binding.enquiryReferenceNumberEt.editText.setText(
+            viewModel.enquiry_status_number.value ?: ""
+        )
         binding.btnNext.setOnClickListener {
             isApiCalled = false
             val jsonObject = EnquiryStatusRequest(
@@ -59,16 +58,13 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 viewModel.enquiry_last_name.value?.trim().toString()
             )
             apiViewModel.getAccountSRDetails(jsonObject)
-            loader?.show(
-                requireActivity().supportFragmentManager,
-                Constants.LOADER_DIALOG
-            )
+            showLoaderDialog()
 
         }
 
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             binding.btnGotoStartMenu.visible()
-        }else{
+        } else {
             binding.btnGotoStartMenu.gone()
         }
 
@@ -77,7 +73,7 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 LandingActivity::class.java
             )
         }
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
@@ -90,10 +86,6 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
         if (!isViewCreated) {
             binding.viewModel = viewModel
             binding.lifecycleOwner = this
-
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
             observe(apiViewModel.getAccountSRList, ::getAccountSRListResponse)
         }
         isViewCreated = true
@@ -114,12 +106,14 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 viewModel.enquiry_status_number.value = charSequence.toString()
 
                 when {
-                    charSequence.toString().trim().length==0->{
-                        referenceNumberValidations=false
+                    charSequence.toString().trim().isEmpty() -> {
+                        referenceNumberValidations = false
                         binding.enquiryReferenceNumberEt.removeError()
 
                     }
-                    charSequence.toString().trim().length>1 && charSequence.toString().trim().length < 3 -> {
+
+                    charSequence.toString().trim().length > 1 && charSequence.toString()
+                        .trim().length < 3 -> {
                         referenceNumberValidations = false
                         binding.enquiryReferenceNumberEt.setErrorText(resources.getString(R.string.str_reference_3_charac))
                     }
@@ -138,11 +132,11 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
                 }
             } else {
                 viewModel.enquiry_last_name.value = charSequence.toString()
-                if(charSequence.toString().trim().isEmpty()){
+                if (charSequence.toString().trim().isEmpty()) {
                     lastNameValidations = false
                     binding.lastNameEt.removeError()
 
-                }else  if (Utils.hasDigits(charSequence.toString()) || Utils.hasSpecialCharacters(
+                } else if (Utils.hasDigits(charSequence.toString()) || Utils.hasSpecialCharacters(
                         charSequence.toString(),
                         Utils.splCharVehicleMake
                     )
@@ -173,19 +167,19 @@ class EnquiryStatusFragment : BaseFragment<FragmentEnquiryStatusBinding>() {
 
     private fun getAccountSRListResponse(resource: Resource<EnquiryListResponseModel?>?) {
         if (!isApiCalled) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
+            dismissLoaderDialog()
             when (resource) {
                 is Resource.Success -> {
-                    if (resource.data?.statusCode == 0 && resource.data.serviceRequestList.serviceRequest.orEmpty().size > 0) {
-                        if (resource.data.serviceRequestList.serviceRequest.get(0).closedDate == null) {
-                            resource.data.serviceRequestList.serviceRequest.get(0).closedDate = ""
+                    if (resource.data?.statusCode == 0 && resource.data.serviceRequestList.serviceRequest
+                            .isNotEmpty()
+                    ) {
+                        if (resource.data.serviceRequestList.serviceRequest[0].closedDate == null) {
+                            resource.data.serviceRequestList.serviceRequest[0].closedDate = ""
                         }
-                        val bundle: Bundle = Bundle()
+                        val bundle = Bundle()
                         bundle.putParcelable(
                             Constants.EnquiryResponseModel,
-                            resource.data.serviceRequestList.serviceRequest.get(0)
+                            resource.data.serviceRequestList.serviceRequest[0]
                         )
                         findNavController().navigate(
                             R.id.action_enquiryStatusFragment_to_casesEnquiryDetailsFragment,

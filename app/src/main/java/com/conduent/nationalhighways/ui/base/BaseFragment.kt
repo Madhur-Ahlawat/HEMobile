@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
@@ -30,6 +31,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
@@ -52,6 +54,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     var edit_summary: Boolean = false
     private var backPressListener: BackPressListener? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
+    private var loaderDialog: LoaderDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,11 +79,11 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
             backButton = arguments?.getBoolean(SHOW_BACK_BUTTON, true) ?: true
         }
 
-        if((requireActivity() is HomeActivityMain) && !backButton){
+        if ((requireActivity() is HomeActivityMain) && !backButton) {
             (requireActivity() as HomeActivityMain).hideBackIcon()
         }
-        Log.e("TAG", "onCreateView: navFlowCall --> "+navFlowCall )
-        Log.e("TAG", "onCreateView: navFlowFrom --> "+navFlowFrom )
+        Log.e("TAG", "onCreateView: navFlowCall --> " + navFlowCall)
+        Log.e("TAG", "onCreateView: navFlowFrom --> " + navFlowFrom)
         return binding.root
     }
 
@@ -149,16 +152,12 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     }
 
     fun checkSessionExpiredOrServerError(errorResponsModel: ErrorResponseModel?): Boolean {
-        if ((errorResponsModel?.errorCode == Constants.TOKEN_FAIL && (errorResponsModel.error != null && errorResponsModel.error.equals(
-                Constants.INVALID_TOKEN
-            ))) || (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR &&
-                    (errorResponsModel.error != null && errorResponsModel.error.equals(
-                Constants.SERVER_ERROR
-            )))
-        ) {
-            return true
-        }
-        return false
+        return (errorResponsModel?.errorCode == Constants.TOKEN_FAIL && (errorResponsModel.error != null && errorResponsModel.error.equals(
+            Constants.INVALID_TOKEN
+        ))) || (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR &&
+                (errorResponsModel.error != null && errorResponsModel.error.equals(
+                    Constants.SERVER_ERROR
+                )))
     }
 
     fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel?) {
@@ -243,7 +242,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         cancelButtonColor: Int = 0,
         typeFace: Typeface? = null,
         lineView: Boolean? = false,
-        messageContentDesc:String=""
+        messageContentDesc: String = ""
     ) {
 
         val dialog = Dialog(requireActivity(), R.style.CustomDialogTheme1)
@@ -272,8 +271,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         ok.text = positiveBtnTxt
         cancel.visibility = cancelVisibility
 
-        if(messageContentDesc.isNotEmpty()){
-            textMessage.contentDescription=messageContentDesc
+        if (messageContentDesc.isNotEmpty()) {
+            textMessage.contentDescription = messageContentDesc
         }
 
         if (lineView == true) {
@@ -346,6 +345,47 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
         }
     }
+
+    fun showLoaderDialog(type: Int = 0) {
+        Log.e(
+            "TAG",
+            "LoaderDialog showLoaderDialog: $type $loaderDialog ${loaderDialog?.isVisible} ${loaderDialog?.isVisible == false}"
+        )
+        val fragmentManager = requireActivity().supportFragmentManager
+        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
+        if (existingFragment != null) {
+            (existingFragment as LoaderDialog).dismiss()
+        }
+        if (loaderDialog == null) {
+            loaderDialog = LoaderDialog()
+            loaderDialog?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+        }
+        if (loaderDialog?.isVisible == null || loaderDialog?.isVisible == false) {
+            loaderDialog?.show(fragmentManager, Constants.LOADER_DIALOG)
+        }
+
+
+    }
+
+    fun dismissLoaderDialog(type: Int = 0) {
+        Log.e(
+            "TAG",
+            "LoaderDialog dismissLoaderDialog: $type $loaderDialog ${loaderDialog?.showsDialog}"
+        )
+        if (loaderDialog != null) {
+            loaderDialog?.dismiss()
+            loaderDialog = null
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (loaderDialog?.isVisible == true) {
+            loaderDialog?.dismiss()
+        }
+        loaderDialog = null
+    }
+
 
 }
 

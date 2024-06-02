@@ -130,6 +130,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     override fun init() {
         binding.webView.settings.javaScriptEnabled = true
+        binding.webView.settings.domStorageEnabled = true
+        binding.webView.settings.loadsImagesAutomatically = true
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
         binding.webView.setOnLongClickListener { true }
@@ -453,13 +455,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             (crossingDetailModelResponse?.additionalCrossingCount?.toDouble())?.times(
                 (crossingDetailModelResponse?.chargingRate?.toDouble() ?: 0.00)
             )
-
-
-        /* pending dues =recent crossing selected * charging Rate
-            pendingTxnCount=recent crossing selected
-            futureTollCount =Additional crossing selected
-            future toll payment =Additional Crossing Selected * Charging Rate
-        * */
 
         val vehicleList = VehicleList(
             crossingDetailModelResponse?.plateNo?.uppercase(),

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,9 +18,13 @@ import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentForgotChooseOptionchangesBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +36,6 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     private var model: RequestOTPModel? = null
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var responseModel: ConfirmOptionResponseModel? = null
-    private var loader: LoaderDialog? = null
     private var response: SecurityCodeResponseModel? = null
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
@@ -58,9 +60,6 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
         model = RequestOTPModel(optionType = "", optionValue = "")
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
@@ -70,10 +69,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         responseModel = arguments?.getParcelable(Constants.OPTIONS)
 
         if (navFlow == Constants.TWOFA) {
-
             viewModel.twoFAConfirmOption()
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
+            showLoaderDialog()
         } else {
             if (!responseModel?.phone.isNullOrEmpty() && !responseModel?.phone.equals(
                     "null",
@@ -169,18 +166,13 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn -> {
-
                 if (!TextUtils.isEmpty(model?.optionType ?: "")) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    showLoaderDialog()
                     if (navFlow == Constants.TWOFA) {
                         viewModel.twoFARequestOTP(model)
-
                     } else {
                         viewModel.requestOTP(model)
-
                     }
-
-
                 }
             }
 
@@ -189,11 +181,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
 
     private fun handleOTPResponse(status: Resource<SecurityCodeResponseModel?>?) {
-
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 val bundle = Bundle()
@@ -213,7 +201,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                     "english",
                     "login",
                     (requireActivity() as AuthActivity).previousScreen,
-                    model?.optionType?:"",
+                    model?.optionType ?: "",
                     sessionManager.getLoggedInUser()
                 )
 
@@ -241,9 +229,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     }
 
     private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("1054") == true) {

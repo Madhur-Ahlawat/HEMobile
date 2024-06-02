@@ -44,22 +44,6 @@ class CreateAccountVehicleViewModel @Inject constructor(
     val heartBeatLiveData: LiveData<Resource<EmptyApiResponse?>?> get() = heartBeatMutableLiveData
 
 
-    fun getVehicleData(vehicleNumber: String?, agencyId: Int?) {
-        viewModelScope.launch {
-            try {
-                findVehicleMutData.setValue(
-                    ResponseHandler.success(
-                        repo.getVehicleDetail(
-                            vehicleNumber,
-                            agencyId
-                        ), errorManager
-                    )
-                )
-            } catch (e: Exception) {
-                findVehicleMutData.setValue(ResponseHandler.failure(e))
-            }
-        }
-    }
     fun getOneOffVehicleData(vehicleNumber: String?, agencyId: Int?) {
         viewModelScope.launch {
             try {

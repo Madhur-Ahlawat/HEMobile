@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -49,7 +48,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.OTPReceiver
 import com.conduent.nationalhighways.utils.Utility
@@ -87,7 +85,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private var data: RequestOTPModel? = null
     private var response: SecurityCodeResponseModel? = null
-    private var loader: LoaderDialog? = null
     private var timer: CountDownTimer? = null
     private var timeFinish: Boolean = false
     private var isCalled = true
@@ -131,24 +128,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         }
         hasFaceBiometric = Utils.hasFaceId(requireContext())
         hasTouchBiometric = Utils.hasTouchId(requireContext())
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        binding.edtOtp.editText.setText("101010")
-//        binding.btnVerify.isEnabled = true
-//        binding.btnVerify.isClickable = true
         loadUI()
-        /*AdobeAnalytics.setScreenTrack(
-            "login:forgot password:choose options:otp",
-            "forgot password",
-            "english",
-            "login",
-            (requireActivity() as AuthActivity).previousScreen,
-            "login:forgot password:choose options:otp",
-            sessionManager.getLoggedInUser()
-        )*/
-
         binding.edtOtp.editText.setAccessibilityDelegateForDigits()
-
     }
 
 
@@ -270,7 +251,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 //        }
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requireActivity().registerReceiver(
                     myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
@@ -282,7 +262,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), Context.RECEIVER_EXPORTED
                 )
             }
-        }
+
 
         //Receiving the OTP
         myOTPReceiver!!.init(object : OTPReceiver.OTPReceiveListener {
@@ -302,12 +282,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun setInputParamsData() {
-        val profileNavdata = navData as ProfileDetailModel?
+        val profileData = navData as ProfileDetailModel?
 
-        phoneCell = profileNavdata?.personalInformation?.phoneCell ?: ""
-        phoneCellCountryCode = profileNavdata?.personalInformation?.phoneCellCountryCode ?: ""
-        phoneDay = profileNavdata?.personalInformation?.phoneDay ?: ""
-        phoneDayCountryCode = profileNavdata?.personalInformation?.phoneDayCountryCode ?: ""
+        phoneCell = profileData?.personalInformation?.phoneCell ?: ""
+        phoneCellCountryCode = profileData?.personalInformation?.phoneCellCountryCode ?: ""
+        phoneDay = profileData?.personalInformation?.phoneDay ?: ""
+        phoneDayCountryCode = profileData?.personalInformation?.phoneDayCountryCode ?: ""
 
         if (!isItMobileNumber) {
             phoneDay = data?.optionValue.toString()
@@ -374,9 +354,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             is Resource.DataError -> {
                 binding.edtOtp.editText.isFocusable = true
                 binding.edtOtp.editText.isFocusableInTouchMode = true
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
+                dismissLoaderDialog()
                 if (checkSessionExpiredOrServerError(resource.errorModel)
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
@@ -387,9 +365,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             else -> {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
+                dismissLoaderDialog()
             }
         }
     }
@@ -423,9 +399,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
 
@@ -488,27 +462,20 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             R.id.btn_verify -> {
                 binding.edtOtp.editText.isFocusable = false
                 binding.edtOtp.editText.isFocusableInTouchMode = false
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
+                dismissLoaderDialog()
 
                 when (navFlowCall) {
 
 
                     FORGOT_PASSWORD_FLOW -> {
                         if (!timeFinish) {
-                            loader?.show(
-                                requireActivity().supportFragmentManager,
-                                Constants.LOADER_DIALOG
-                            )
-
+                            showLoaderDialog()
                             val mVerifyRequestOtpReq =
                                 VerifyRequestOtpReq(
                                     binding.edtOtp.getText().toString(),
                                     response?.referenceId
                                 )
                             viewModel.verifyRequestCode(mVerifyRequestOtpReq)
-
                         } else {
                             showError(
                                 binding.root,
@@ -610,18 +577,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
                 bundle.putBoolean(Constants.IS_MOBILE_NUMBER, isItMobileNumber)
-
                 findNavController().navigate(R.id.action_otpFragment_to_resenedCodeFragment, bundle)
-
-                /* isCalled = true
-                 loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                 viewModel.requestOTP(data)*/
             }
         }
     }
 
     private fun hitTWOFAVerifyAPI() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
 
         val request = VerifyRequestOtpReq(
             binding.edtOtp.getText().toString().trim(),
@@ -633,7 +595,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun confirmEmailCode() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         if (phoneCountryCode.isNotEmpty()) {
             val request = ConfirmEmailRequest(
                 response?.referenceId ?: "",
@@ -714,21 +676,20 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
         }
 
-        binding.messageReceivedTxt.contentDescription= Utils.accessibilityForNumbers(binding.messageReceivedTxt.text.toString())
+        binding.messageReceivedTxt.contentDescription =
+            Utils.accessibilityForNumbers(binding.messageReceivedTxt.text.toString())
         binding.edtOtp.editText.requestFocus()
     }
 
 
     private fun verifyRequestOtp(status: Resource<VerifyRequestOtpResp?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 val bundle = Bundle()
 
                 if (navFlowCall == TWOFA) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    showLoaderDialog()
                     dashboardViewModel.getLRDSResponse()
                 } else {
                     response?.code = binding.edtOtp.getText().toString()
@@ -818,9 +779,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private fun handleOTPResponse(status: Resource<SecurityCodeResponseModel?>?) {
         Logg.logging("NewPassword", "response handleOTPResponse called  $response")
 
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         if (isCalled) {
             when (status) {
                 is Resource.Success -> {
@@ -859,9 +818,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun handleConfirmEmailResponse(resource: Resource<EmptyApiResponse?>?) {
 
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
 
         when (resource) {
             is Resource.Success -> {
@@ -961,10 +918,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                loader?.show(
-                    requireActivity().supportFragmentManager,
-                    Constants.LOADER_DIALOG
-                )
+                showLoaderDialog()
                 val model = CommunicationPrefsRequestModel(ArrayList())
 
                 val communicationList =
@@ -1009,10 +963,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             }
 
             PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
-                loader?.show(
-                    requireActivity().supportFragmentManager,
-                    Constants.LOADER_DIALOG
-                )
+                showLoaderDialog()
                 val data = navData as ProfileDetailModel?
 
                 updateProfileDetails(data?.personalInformation, data?.accountInformation)
@@ -1209,9 +1160,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
 
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
 
         when (status) {
             is Resource.Success -> {
@@ -1318,9 +1267,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
