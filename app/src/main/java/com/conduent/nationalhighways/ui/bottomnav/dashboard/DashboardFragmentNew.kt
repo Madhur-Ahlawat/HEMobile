@@ -3,18 +3,14 @@ package com.conduent.nationalhighways.ui.bottomnav.dashboard
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.accessibility.AccessibilityEvent
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,7 +32,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dateRangeModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsInnerAdapterDashboard
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
@@ -65,7 +60,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         hashMapOf()
     private var transactionsAdapter: TransactionsInnerAdapterDashboard? = null
     private var mLayoutManager: LinearLayoutManager? = null
-    private var loader: LoaderDialog? = null
     private val countPerPage = 20
     private var startIndex = 1
     private var noOfPages = 1
@@ -87,36 +81,29 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     ) = FragmentDashboardNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        initLoaderDialog()
         setBackPressListener(this)
     }
 
     private fun setHorizontalStrains() {
-        val boxTopupAmountHeight =
+        val boxTopUpAmountHeight =
             binding.valueTopupAmount.text.toString().length
         val boxLowBalanceThresholdHeight =
             binding.valueLowBalanceThreshold.text.toString().length
 
-        val topupValue = binding.valueTopupAmount.text.toString()
-        val lowbalanceThresholdValue = binding.valueLowBalanceThreshold.text.toString()
-        if (boxTopupAmountHeight >= boxLowBalanceThresholdHeight) {
-            binding.valueLowBalanceThresholdDup.text = topupValue
-            binding.valueAutopayDup.text = topupValue
-            binding.valueTopupAmountDup.text = topupValue
+        val topUpValue = binding.valueTopupAmount.text.toString()
+        val lowBalanceThresholdValue = binding.valueLowBalanceThreshold.text.toString()
+        if (boxTopUpAmountHeight >= boxLowBalanceThresholdHeight) {
+            binding.valueLowBalanceThresholdDup.text = topUpValue
+            binding.valueAutopayDup.text = topUpValue
+            binding.valueTopupAmountDup.text = topUpValue
         } else {
-            binding.valueLowBalanceThresholdDup.text = lowbalanceThresholdValue
-            binding.valueAutopayDup.text = lowbalanceThresholdValue
-            binding.valueTopupAmountDup.text = lowbalanceThresholdValue
+            binding.valueLowBalanceThresholdDup.text = lowBalanceThresholdValue
+            binding.valueAutopayDup.text = lowBalanceThresholdValue
+            binding.valueTopupAmountDup.text = lowBalanceThresholdValue
         }
 
         binding.threeBoxCl.visible()
 
-    }
-
-
-    private fun initLoaderDialog() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
     }
 
     private fun initTransactionsRecyclerView() {
@@ -157,10 +144,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             (requireActivity() as HomeActivityMain).viewAllTransactions()
         }
         binding.logout.setOnClickListener {
-//            LogoutDialog.newInstance(
-//                this
-//            ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
-//            dashboardViewModel.logout()
             logOutOfAccount()
         }
         binding.accountBalanceRl.setOnClickListener {
@@ -171,7 +154,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun observer() {
         observe(dashboardViewModel.logout, ::handleLogout)
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
@@ -199,16 +181,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
-        loader?.dismiss()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
             }
 
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, resource.errorMsg)
-//                binding.notificationsRecyclerview.gone()
-//                binding.noNotificationsTxt.visible()
-
             }
 
             else -> {
@@ -227,7 +206,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 binding.tvAccountNumberHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 // Now you can safely get the line count
                 val accountNumberLinesCount = binding.tvAccountNumberHeading.lineCount
-                Log.e("TAG", "accountNumberLinesCount dashboard $accountNumberLinesCount")
 
                 if (accountNumberLinesCount > 2) {
                     binding.largefontLl.visible()
@@ -261,9 +239,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
 
 
-
-
-
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage) {
             val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
@@ -282,11 +257,8 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.transactionList?.count?.let {
@@ -643,9 +615,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         index: Int? = 0,
         transactionType: String? = Constants.ALL_TRANSACTION
     ) {
-        if (loader?.isVisible == false && loader?.isAdded == true) {
-            loader?.showsDialog
-        }
+        showLoaderDialog()
         dateRangeModel = PaymentDateRangeModel(
             filterType = Constants.PAYMENT_FILTER_SPECIFIC,
             DateUtils.lastPriorDate(-30),
@@ -661,9 +631,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun handleLogout(status: Resource<AuthResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 logOutOfAccount()
@@ -709,7 +677,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
 
-    fun focusToolBarDashboard() {
+    private fun focusToolBarDashboard() {
         binding.logout.requestFocus() // Focus on the backButton
         val task = Runnable {
             binding.logout.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)

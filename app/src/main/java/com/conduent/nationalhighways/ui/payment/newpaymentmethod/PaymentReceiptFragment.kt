@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -23,7 +22,6 @@ import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccoun
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -47,7 +45,6 @@ class PaymentReceiptFragment : BaseFragment<FragmentPaymentReceiptMethodBinding>
     private var filterTextForSpecialChars: String? = null
     private var requiredCountryCode = true
     private var requiredMobileNumber = false
-    private var loader: LoaderDialog? = null
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesCodeList: MutableList<String> = ArrayList()
     private var isItMobileNumber = true
@@ -66,10 +63,10 @@ class PaymentReceiptFragment : BaseFragment<FragmentPaymentReceiptMethodBinding>
     @Inject
     lateinit var sessionManager: SessionManager
     override fun init() {
+        showLoaderDialog()
         viewModel.getCountries()
 
         binding.btnContinue.setOnClickListener(this)
-        loader = LoaderDialog()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (arguments?.getParcelable(
                     Constants.NAV_DATA_KEY,
@@ -89,7 +86,6 @@ class PaymentReceiptFragment : BaseFragment<FragmentPaymentReceiptMethodBinding>
             }
         }
 
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.inputMobileNumber.editText.inputType = InputType.TYPE_CLASS_NUMBER
 
         if (!NewCreateAccountRequestModel.emailAddress.isNullOrEmpty()) {
@@ -137,6 +133,7 @@ class PaymentReceiptFragment : BaseFragment<FragmentPaymentReceiptMethodBinding>
                     Constants.NAV_DATA_KEY,
                 )
             }
+
         }
         binding.apply {
             selectEmail.setOnCheckedChangeListener { _, isChecked ->
@@ -208,9 +205,7 @@ class PaymentReceiptFragment : BaseFragment<FragmentPaymentReceiptMethodBinding>
     }
 
     private fun handleCountryCodesListResponse(response: Resource<List<CountryCodes?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (response) {
             is Resource.Success -> {
                 countriesCodeList.clear()
@@ -500,7 +495,7 @@ class PaymentReceiptFragment : BaseFragment<FragmentPaymentReceiptMethodBinding>
                             commaSeparatedString =
                                 Utils.makeCommaSeperatedStringForPassword(
                                     Utils.removeAllCharacters(
-                                        Utils.ALLOWED_CHARS_EMAIL, (filterTextForSpecialChars?:"")
+                                        Utils.ALLOWED_CHARS_EMAIL, (filterTextForSpecialChars ?: "")
                                     )
                                 )
                             if (filterTextForSpecialChars?.isNotEmpty() == true) {
@@ -620,17 +615,4 @@ class PaymentReceiptFragment : BaseFragment<FragmentPaymentReceiptMethodBinding>
             }
         }
     }
-
-    override fun onDestroyView() {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        loader = null
-
-        viewModel.countriesList.removeObservers(viewLifecycleOwner)
-        viewModel.countriesCodeList.removeObservers(viewLifecycleOwner)
-
-        super.onDestroyView()
-    }
-
 }

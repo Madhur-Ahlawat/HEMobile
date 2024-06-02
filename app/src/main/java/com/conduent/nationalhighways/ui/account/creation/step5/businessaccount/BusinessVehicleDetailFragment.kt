@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -15,7 +14,6 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailChangesBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -29,7 +27,6 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     View.OnClickListener {
 
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var isViewCreated = false
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentBusinessVehicleDetailChangesBinding.inflate(inflater, container, false)
@@ -39,8 +36,6 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     private var nonUKVehicleModel: NewVehicleInfoDetails? = null
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
@@ -93,9 +88,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
 
     private fun getUnSettledCrossings(resource: Resource<CrossingDetailsModelsResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
@@ -169,10 +162,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
                     Constants.PAY_FOR_CROSSINGS -> {
                         nonUKVehicleModel?.let { vehicleList.add(it) }
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
+                        showLoaderDialog()
 
                         val model = CrossingDetailsModelsRequest(
                             data?.plateNo?.uppercase(),

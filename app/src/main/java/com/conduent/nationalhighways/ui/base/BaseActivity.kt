@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.Window
@@ -15,6 +14,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.ErrorResponseModel
@@ -23,6 +23,7 @@ import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -48,6 +49,7 @@ abstract class BaseActivity<T> : AppCompatActivity() {
     lateinit var apiServiceBa: ApiService
 
     private val activityScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private var loaderDialog: LoaderDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -231,6 +233,27 @@ abstract class BaseActivity<T> : AppCompatActivity() {
         }
     }
 
+    fun showLoaderDialog() {
+        val fragmentManager = supportFragmentManager
+        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
+        if (existingFragment != null) {
+            (existingFragment as LoaderDialog).dismiss()
+        }
+        if (loaderDialog == null) {
+            loaderDialog = LoaderDialog()
+            loaderDialog?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+        }
+        if (loaderDialog?.isVisible == null || loaderDialog?.isVisible == false) {
+            loaderDialog?.show(fragmentManager, Constants.LOADER_DIALOG)
+        }
+    }
+
+    fun dismissLoaderDialog() {
+        if (loaderDialog != null) {
+            loaderDialog?.dismiss()
+            loaderDialog = null
+        }
+    }
 
 }
 

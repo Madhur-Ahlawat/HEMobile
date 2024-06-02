@@ -4,11 +4,10 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,7 +22,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -43,11 +41,11 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     private var flow: String = ""
     private var responseModel: CardResponseModel? = null
     private val viewModel: PaymentMethodViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var paymentList: CardListResponseModel? = null
     private var isViewCreated: Boolean = false
     private var accountNumber: String = ""
     private val dashboardViewModel: DashboardViewModel by activityViewModels()
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -61,19 +59,13 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
     override fun initCtrl() {
 
-        Utils.validationsToShowRatingDialog(requireActivity(),sessionManager)
+        Utils.validationsToShowRatingDialog(requireActivity(), sessionManager)
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         flow = arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED) ?: ""
-        if (!isViewCreated) {
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-
-        }
         isViewCreated = false
 
         if (arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA) != null) {
@@ -133,7 +125,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.cancelBtn.visibility = View.GONE
             binding.feedbackBt.visible()
             if (paymentList?.primaryCard == true) {
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                showLoaderDialog()
                 viewModel.saveCardList()
                 binding.textMaximumVehicle.text =
                     getString(R.string.str_your_default_payment_method)
@@ -153,7 +145,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.feedbackBt.visible()
             HomeActivityMain.dataBinding?.backButton?.gone()
 
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            showLoaderDialog()
             viewModel.saveCardList()
 
         } else if (flow == Constants.DIRECT_DEBIT) {
@@ -179,7 +171,8 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.feedbackBt.gone()
         } else if (flow == Constants.CREDIT_NOT_SET_UP) {
             HomeActivityMain.dataBinding?.backButton?.gone()
-            Glide.with(requireContext()).load(resources.getDrawable(R.drawable.error_blue)).into(binding.warningIcon)
+            Glide.with(requireContext()).load(ResourcesCompat.getDrawable(resources,R.drawable.error_blue,null))
+                .into(binding.warningIcon)
             binding.maximumVehicleAdded.text =
                 getString(R.string.str_your_credit_card_was_not_setup)
             binding.textMaximumVehicle.text = getString(R.string.str_you_can_try)
@@ -196,13 +189,13 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     }
 
     private fun setContentDescriptionForCard() {
-        binding.titleLl.contentDescription=binding.maximumVehicleAdded.text.toString()
+        binding.titleLl.contentDescription = binding.maximumVehicleAdded.text.toString()
         val stringBuilder = StringBuilder()
         stringBuilder.append(Utils.accessibilityForNumbers(binding.tvSelectPaymentMethod.text.toString()))
-        if(binding.textDefault.visibility==View.VISIBLE){
+        if (binding.textDefault.visibility == View.VISIBLE) {
             stringBuilder.append(Utils.accessibilityForNumbers(binding.textDefault.text.toString()))
         }
-        binding.cardView.contentDescription=stringBuilder
+        binding.cardView.contentDescription = stringBuilder
     }
 
     override fun init() {
@@ -243,11 +236,14 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
                                 findNavController().popBackStack()
                             } else {
                                 if (dashboardViewModel.directDebitCardListSize.value == 0) {
-                                    val bundle =Bundle()
+                                    val bundle = Bundle()
                                     bundle.putBoolean(Constants.IS_DIRECT_DEBIT, false)
                                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                                     bundle.putDouble(Constants.DATA, 0.0)
-                                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, dashboardViewModel.paymentListSize.value?:0)
+                                    bundle.putInt(
+                                        Constants.PAYMENT_METHOD_SIZE,
+                                        dashboardViewModel.paymentListSize.value ?: 0
+                                    )
 
                                     findNavController().navigate(
                                         R.id.action_paymentSuccessFragment_to_selectPaymentMethodFragment,
@@ -267,12 +263,12 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             }
 
             R.id.cancel_btn -> {
-                if(navFlowFrom.equals(Constants.PAYG_SUSPENDED)){
+                if (navFlowFrom == Constants.PAYG_SUSPENDED) {
                     requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                         putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                     }
-                }else if (flow == Constants.CARD_IS_ALREADY_REGISTERED || flow == Constants.DIRECT_DEBIT_NOT_SET_UP || flow == Constants.CREDIT_NOT_SET_UP) {
+                } else if (flow == Constants.CARD_IS_ALREADY_REGISTERED || flow == Constants.DIRECT_DEBIT_NOT_SET_UP || flow == Constants.CREDIT_NOT_SET_UP) {
                     findNavController().navigate(R.id.action_paymentSuccessFragment_to_paymentMethodFragment)
                 } else {
                     findNavController().popBackStack()
@@ -282,9 +278,7 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
     }
 
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 if (status.data?.creditCardListType?.cardsList?.isNotEmpty() == true) {

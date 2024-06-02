@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -31,7 +30,6 @@ import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
@@ -51,7 +49,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     private var paymentList: ArrayList<CardListResponseModel> = ArrayList()
     private var position: Int = 0
-    private var loader: LoaderDialog? = null
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
     private var personalInformation: PersonalInformation? = null
     private var currentBalance: String = ""
@@ -101,11 +98,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-
-
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
             responseModel = arguments?.getParcelable(Constants.DATA)
 
@@ -128,7 +120,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             binding.tvSelectPaymentMethod.text = htmlText
 
             binding.cardView.contentDescription =
-                responseModel?.card?.type?.uppercase() +" "+ Utils.accessibilityForNumbers(
+                responseModel?.card?.type?.uppercase() + " " + Utils.accessibilityForNumbers(
                     responseModel?.card?.number?.let {
                         Utils.maskCardNumber(
                             it
@@ -181,9 +173,11 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             }
 
             binding.cardView.contentDescription =
-                paymentList[position].cardType +" "+ Utils.accessibilityForNumbers( Utils.maskCardNumber(
-                    paymentList[position].cardNumber
-                ))
+                paymentList[position].cardType + " " + Utils.accessibilityForNumbers(
+                    Utils.maskCardNumber(
+                        paymentList[position].cardNumber
+                    )
+                )
 
 
         }
@@ -220,7 +214,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             if (!formattedAmount.isNullOrEmpty() && formattedAmount.equals(".00")) {
                 formattedAmount = "0.00"
             }
-            binding.lowBalance.setText(resources.getString(R.string.price,""+ formattedAmount))
+            binding.lowBalance.setText(resources.getString(R.string.price, "" + formattedAmount))
             // Assuming editText is your EditText view
             binding.lowBalance.setSelection(binding.lowBalance.editText.text?.length ?: 0)
 
@@ -269,13 +263,11 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                         } else {
                             newPaymentMethod("N")
                         }
-
-
                     } else {
                         payWithExistingCard()
                     }
                 }
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                showLoaderDialog()
             }
 
             R.id.btnCancel -> {
@@ -370,9 +362,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     }
 
     private fun handlePaymentWithExistingCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
 
@@ -411,9 +401,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     }
 
     private fun handlePaymentWithNewCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("0") == true) {

@@ -25,10 +25,7 @@ class LoaderDialog : BaseDialog<DialogLoaderBinding>() {
 
     override fun onResume() {
         super.onResume()
-
         val view = this.requireView()
-
-
         view.isFocusableInTouchMode = true
         view.requestFocus()
         view.setOnKeyListener { _, keyCode, _ ->
@@ -36,6 +33,11 @@ class LoaderDialog : BaseDialog<DialogLoaderBinding>() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        cleanupResources()
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         cleanupResources()

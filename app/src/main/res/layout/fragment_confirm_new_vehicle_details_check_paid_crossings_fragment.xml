@@ -16,7 +16,6 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/btnContinue"
             android:fillViewport="true"
-            android:importantForAccessibility="no"
             android:overScrollMode="never">
 
             <LinearLayout

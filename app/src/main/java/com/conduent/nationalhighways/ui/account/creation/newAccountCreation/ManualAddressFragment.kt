@@ -10,8 +10,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -28,7 +26,6 @@ import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPost
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_FROM_POST_CODE
@@ -59,7 +56,6 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var countriesList: MutableList<String> = ArrayList()
     private var totalCountriesList: ArrayList<CountriesModel> = ArrayList()
-    private var loader: LoaderDialog? = null
     private var requiredAddress: Boolean = false
     private var requiredAddress2: Boolean = true
     private var requiredCityTown: Boolean = false
@@ -136,11 +132,11 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             }
 
             PROFILE_MANAGEMENT -> {
-                if(requireActivity() is HomeActivityMain){
+                if (requireActivity() is HomeActivityMain) {
                     HomeActivityMain.setTitle(resources.getString(R.string.profile_address))
                 }
                 (navData as ProfileDetailModel).personalInformation?.let {
-                    if (oldPostCode.equals(editPostCode)) {
+                    if (oldPostCode == editPostCode) {
                         binding.address.editText.setText(it.addressLine1)
                         binding.address2.editText.setText(it.addressLine2)
                         binding.townCity.editText.setText(it.city)
@@ -173,10 +169,10 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
             }
 
         }
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
-        if(requireActivity() is CreateAccountActivity){
+        if (requireActivity() is CreateAccountActivity) {
             (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
     }
@@ -187,11 +183,8 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
 
     override fun initCtrl() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         binding.btnFindAddress.setOnClickListener(this)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         viewModel.getCountries()
     }
 
@@ -207,7 +200,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
     }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-        loader?.dismiss()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")
@@ -247,25 +240,21 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 NewCreateAccountRequestModel.addressLine2 = binding.address2.getText().toString()
                 NewCreateAccountRequestModel.townCity = binding.townCity.getText().toString()
                 NewCreateAccountRequestModel.country =
-                    binding.country.selectedItemDescription.toString()
+                    binding.country.selectedItemDescription
 
                 NewCreateAccountRequestModel.address_country_code =
-                    getCountryCode(binding.country.selectedItemDescription.toString())
+                    getCountryCode(binding.country.selectedItemDescription)
                 NewCreateAccountRequestModel.zipCode = binding.postCode.getText().toString()
                 if (navFlowCall.equals(PROFILE_MANAGEMENT, true)) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
+                    showLoaderDialog()
                     val data = navData as ProfileDetailModel?
 
                     updateProfileDetails(data)
 
                 } else {
                     if (NewCreateAccountRequestModel.personalAccount) {
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
-                        hitlrdsCheckApi()
+                        showLoaderDialog()
+                        hitLrdsCheckApi()
                     } else {
                         redirectToNextPage()
                     }
@@ -278,24 +267,22 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
     private fun getCountryCode(country: String): String {
         val filteredModels = totalCountriesList.filter { it.countryName == country }
-        if (filteredModels.size > 0) {
-            return filteredModels.get(0).countryCode ?: ""
+        if (filteredModels.isNotEmpty()) {
+            return filteredModels[0].countryCode ?: ""
         }
         return country
     }
 
     private fun getCountryCodeName(country: String): String {
         val filteredModels = totalCountriesList.filter { it.countryCode == country }
-        if (filteredModels.size > 0) {
-            return filteredModels.get(0).countryName ?: ""
+        if (filteredModels.isNotEmpty()) {
+            return filteredModels[0].countryName ?: ""
         }
         return country
     }
 
     private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (response) {
             is Resource.Success -> {
                 countriesList.clear()
@@ -318,14 +305,14 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                     country.dataSet.clear()
                     country.dataSet.addAll(countriesList)
                 }
-                if (navFlowCall.equals(PROFILE_MANAGEMENT)) {
+                if (navFlowCall == PROFILE_MANAGEMENT) {
                     binding.country.setSelectedValue(
                         getCountryCodeName(
                             (navData as ProfileDetailModel).personalInformation?.country
                                 ?: UK_COUNTRY
                         )
                     )
-                } else if (navFlowCall.equals(EDIT_ACCOUNT_TYPE) or navFlowCall.equals(EDIT_SUMMARY)) {
+                } else if ((navFlowCall == EDIT_ACCOUNT_TYPE) or (navFlowCall == EDIT_SUMMARY)) {
                     binding.country.setSelectedValue(
                         NewCreateAccountRequestModel.country
                     )
@@ -352,7 +339,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         }
     }
 
-    private fun hitlrdsCheckApi() {
+    private fun hitLrdsCheckApi() {
         val lrdsEligibilityCheck = LrdsEligibiltyRequest()
         if (NewCreateAccountRequestModel.country.equals(UK_COUNTRY, true)) {
             lrdsEligibilityCheck.country = "UK"
@@ -387,19 +374,19 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         ) {
             when (index) {
                 0 -> {
-                    addressErrorMessage(charSequence)
+                    addressErrorMessage()
                 }
 
                 1 -> {
-                    address2ErrorMessage(charSequence)
+                    address2ErrorMessage()
                 }
 
                 2 -> {
-                    townCityErrorMessage(charSequence)
+                    townCityErrorMessage()
                 }
 
                 3 -> {
-                    postCodeErrorMessage(charSequence)
+                    postCodeErrorMessage()
                 }
             }
 
@@ -414,7 +401,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
     }
 
 
-    private fun addressErrorMessage(char: CharSequence?) {
+    private fun addressErrorMessage() {
         if (binding.address.getText().toString().trim().isEmpty()) {
             binding.address.removeError()
             requiredAddress = false
@@ -440,7 +427,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
     }
 
-    private fun address2ErrorMessage(char: CharSequence?) {
+    private fun address2ErrorMessage() {
         if (binding.address2.getText().toString().isEmpty()) {
             binding.address2.removeError()
             requiredAddress2 = true
@@ -466,13 +453,12 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
     }
 
-    private fun postCodeErrorMessage(char: CharSequence?) {
+    private fun postCodeErrorMessage() {
         requiredPostcode = if (binding.postCode.getText().toString().trim().isEmpty()) {
             binding.postCode.removeError()
             false
         } else {
             val string = binding.postCode.getText().toString().trim()
-            val regex: Pattern = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!]")
             val finalString = string.replace(" ", "")
             val pattern = Pattern.compile("[^-]*-")
             val matcher: Matcher = pattern.matcher(finalString)
@@ -507,7 +493,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
     }
 
-    private fun townCityErrorMessage(char: CharSequence?) {
+    private fun townCityErrorMessage() {
         if (binding.townCity.getText().toString().trim().isEmpty()) {
             binding.townCity.removeError()
             requiredCityTown = false
@@ -546,9 +532,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
 
     private fun handleLrdsApiResponse(response: Resource<LrdsEligibilityResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
 
         when (response) {
             is Resource.Success -> {
@@ -587,7 +571,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
         when (navFlowCall) {
 
             EDIT_SUMMARY -> {
-                if (navFlowFrom.equals(EDIT_FROM_POST_CODE)) {
+                if (navFlowFrom == EDIT_FROM_POST_CODE) {
                     findNavController().navigate(
                         R.id.action_manualaddressfragment_to_createAccountSummary,
                         bundle()

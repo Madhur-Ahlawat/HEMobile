@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -17,7 +16,6 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -31,7 +29,6 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
     View.OnClickListener {
 
     private val viewModel: PaymentMethodViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var paymentList: CardListResponseModel? = null
     private var data: CrossingDetailsModelsResponse? = null
     private var accountNumber: String = ""
@@ -52,19 +49,11 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
     }
 
     override fun initCtrl() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         binding.btnContinue.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
-
-
         accountNumber = arguments?.getString(Constants.ACCOUNT_NUMBER) ?: ""
-
-
         if (arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA) != null) {
-            paymentList = arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA)
-
+            paymentList = arguments?.getParcelable(Constants.PAYMENT_DATA)
         }
 
         when (navFlowCall) {
@@ -104,9 +93,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
     }
 
     private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("500") == true || status.data?.statusCode?.equals(
@@ -154,10 +141,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
 
                     else -> {
                         viewModel.deletePrimaryCard()
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
+                        showLoaderDialog()
                     }
                 }
 
@@ -184,7 +168,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
 
     private fun handleFlow(goWithNewAmount: Boolean) {
         data = navData as CrossingDetailsModelsResponse?
-        val unSettledTrips = data?.unSettledTrips?.toInt()
+        val unSettledTrips = data?.unSettledTrips
         if (goWithNewAmount) {
             data?.chargingRate = data?.customerClassRate
         }

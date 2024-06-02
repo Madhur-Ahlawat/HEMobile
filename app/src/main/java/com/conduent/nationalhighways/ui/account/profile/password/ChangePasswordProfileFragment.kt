@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
@@ -20,7 +19,6 @@ import com.conduent.nationalhighways.databinding.FragmentChangePasswordProfileBi
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Resource
@@ -44,7 +42,6 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
     private val viewModel: ProfileViewModel by viewModels()
     private var data: SecurityCodeResponseModel? = null
     private var profileDetailModel: ProfileDetailModel? = null
-    private var loader: LoaderDialog? = null
     private var passwordVisible: Boolean = false
     private var confirmPasswordVisible: Boolean = false
 
@@ -58,8 +55,6 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         FragmentChangePasswordProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navData?.let {
             if (it is ProfileDetailModel) {
                 profileDetailModel = navData as ProfileDetailModel
@@ -72,7 +67,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     override fun initCtrl() {
-        setPersonalInfoAnnouncement(binding.rootLayout,requireActivity())
+        setPersonalInfoAnnouncement(binding.rootLayout, requireActivity())
         binding.btnSubmit.setOnClickListener(this)
         binding.edtCurrentPassword.editText.addTextChangedListener { currentPasswordListener() }
         binding.edtNewPassword.editText.addTextChangedListener { isEnable(it.toString()) }
@@ -160,15 +155,15 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         when (v?.id) {
             R.id.btn_submit -> {
                 hideKeyboard()
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    disableButton()
-                    viewModel.updatePassword(
-                        ResetPasswordModel(
-                            currentPassword = binding.edtCurrentPassword.editText.text.toString(),
-                            newPassword = binding.edtNewPassword.editText.text.toString(),
-                            confirmPassword = binding.edtConfirmPassword.editText.text.toString()
-                        )
+                showLoaderDialog()
+                disableButton()
+                viewModel.updatePassword(
+                    ResetPasswordModel(
+                        currentPassword = binding.edtCurrentPassword.editText.text.toString(),
+                        newPassword = binding.edtNewPassword.editText.text.toString(),
+                        confirmPassword = binding.edtConfirmPassword.editText.text.toString()
                     )
+                )
             }
         }
     }
@@ -184,16 +179,15 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
     }
 
     private fun handleResetResponse(status: Resource<ForgotPasswordResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
-                if(status.data?.statusCode=="1308"){
-                    binding.edtCurrentPassword.setErrorText(status.data.message?:"")
+                if (status.data?.statusCode == "1308") {
+                    binding.edtCurrentPassword.setErrorText(status.data.message ?: "")
                     enableButton()
-                }
-               else if (status.data?.statusCode != "1308" && status.data?.message?.lowercase(Locale.ROOT)?.contains("success")==true
+                } else if (status.data?.statusCode != "1308" && status.data?.message?.lowercase(
+                        Locale.ROOT
+                    )?.contains("success") == true
                 ) {
                     sessionManager.clearAll()
                     Intent(
@@ -315,7 +309,12 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                     )
                 )
             if (filterTextForSpecialChars.isNotEmpty()) {
-                binding.edtNewPassword.setErrorText(resources.getString(R.string.str_password_must_not_include_disallowed_character,commaSeparatedString))
+                binding.edtNewPassword.setErrorText(
+                    resources.getString(
+                        R.string.str_password_must_not_include_disallowed_character,
+                        commaSeparatedString
+                    )
+                )
             } else {
                 binding.edtNewPassword.removeError()
             }

@@ -38,7 +38,6 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     private var previousCategory: String = ""
     private var previousSubCategory: String = ""
 
-    private var loader: LoaderDialog? = null
     private var isViewCreated: Boolean = false
 
     private var editRequest: String = ""
@@ -156,14 +155,12 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     }
 
     private fun getCategoriesApiCall() {
-//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         apiViewModel.getCategories()
     }
 
     override fun observer() {
         if (!isViewCreated) {
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
             getCategoriesApiCall()
             observe(apiViewModel.categoriesLiveData, ::categoriesData)
             observe(apiViewModel.subcategoriesLiveData, ::subCategoriesData)
@@ -172,9 +169,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     }
 
     private fun subCategoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+       dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().size > 0) {
@@ -213,9 +208,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
 
     private fun categoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+       dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().size > 0) {

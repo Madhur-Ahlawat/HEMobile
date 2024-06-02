@@ -11,7 +11,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.BuildConfig
@@ -25,7 +24,6 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicl
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -45,7 +43,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var plateNumber = ""
     private var oldPlateNumber = ""
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var time = (1 * 1000).toLong()
     private var isPayForCrossingFlow = false
     private var isClicked: Boolean = false
@@ -94,10 +91,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         if (plateNumber.isNotEmpty()) {
             binding.findVehicle.isEnabled = true
         }
-        loader = LoaderDialog()
-        loader?.setStyle(
-            DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle
-        )
+
 
         NewCreateAccountRequestModel.isExempted = false
         NewCreateAccountRequestModel.isRucEligible = false
@@ -372,18 +366,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         bundle
                     )
                 } else {
-                    loader?.show(
-                        requireActivity().supportFragmentManager,
-                        Constants.LOADER_DIALOG
-                    )
+                    showLoaderDialog()
                     getOneOffApi()
                 }
             } else {
-
-                loader?.show(
-                    requireActivity().supportFragmentManager,
-                    Constants.LOADER_DIALOG
-                )
+                showLoaderDialog()
                 getOneOffApi()
             }
         } else {
@@ -402,10 +389,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         bundle
                     )
                 } else {
-                    loader?.show(
-                        requireActivity().supportFragmentManager,
-                        Constants.LOADER_DIALOG
-                    )
+                    showLoaderDialog()
                     viewModel.getVehiclePlateData(
                         numberPlate.uppercase(),
                         Constants.AGENCY_ID.toInt()
@@ -429,9 +413,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseDVRM1(resource: Resource<List<NewVehicleInfoDetails>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         val accountData = NewCreateAccountRequestModel
         val vehicleList = accountData.vehicleList
         when (resource) {
@@ -658,9 +640,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
 
         bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         val accountData = NewCreateAccountRequestModel
         val vehicleList = accountData.vehicleList
         when (resource) {
@@ -775,9 +755,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         val accountData = NewCreateAccountRequestModel
         val vehicleList = accountData.vehicleList
         if (isClicked) {
@@ -956,9 +934,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseValidVehicle(resource: Resource<String?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 viewModel.getNewVehicleData(
@@ -993,19 +969,4 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
         }
     }
-    override fun onDestroyView() {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        loader = null
-
-        viewModel.findOneOffVehicleLiveData.removeObservers(viewLifecycleOwner)
-        viewModel.findVehiclePlateLiveData.removeObservers(viewLifecycleOwner)
-        viewModel.findNewVehicleLiveData.removeObservers(viewLifecycleOwner)
-        viewModel.validVehicleLiveData.removeObservers(viewLifecycleOwner)
-        viewModel.heartBeatLiveData.removeObservers(viewLifecycleOwner)
-
-        super.onDestroyView()
-    }
-
 }

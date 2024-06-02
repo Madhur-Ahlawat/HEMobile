@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_18dp"
                     android:layout_marginEnd="18dp"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:fontFamily="@font/open_sans"
                     android:textColor="@color/black"
                     android:text="@string/debit_credit_card"

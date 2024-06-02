@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,7 +25,6 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -49,7 +47,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var lowBalance: Boolean = true
     private var cardSelection: Boolean = false
     private val viewModel: PaymentMethodViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var position: Int = 0
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
@@ -74,10 +71,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
 
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         if (!isViewCreated) {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            showLoaderDialog()
             viewModel.saveCardListState()
         }
 
@@ -263,9 +258,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 paymentList?.clear()

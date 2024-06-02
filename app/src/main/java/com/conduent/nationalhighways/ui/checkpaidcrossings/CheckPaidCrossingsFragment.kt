@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,7 +15,6 @@ import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCros
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentPaidPreviousCrossingsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -37,7 +35,6 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
     View.OnClickListener {
 
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
-    private var loader: LoaderDialog? = null
     private var isCalled = false
 
     @Inject
@@ -60,8 +57,6 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             "check crossings:login",
             sessionManager.getLoggedInUser()
         )
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.editNumberPlate.editText.doAfterTextChanged {
             isEnable(it)
         }
@@ -99,7 +94,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             ) {
                 isReferenceNumberValid = false
                 binding.errorMobileNumber.visible()
-                binding.errorMobileNumber.text = getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9)
+                binding.errorMobileNumber.text =
+                    getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9)
             } else {
                 binding.errorMobileNumber.gone()
             }
@@ -141,7 +137,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 
                 hideKeyboard()
                 isCalled = true
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                showLoaderDialog()
                 val checkPaidCrossingReq = CheckPaidCrossingsRequest(
                     referenceNumber =
                     binding.editReferenceNumber.getText().toString(),
@@ -154,9 +150,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
     }
 
     private fun loginWithRefHeader(status: Resource<LoginWithPlateAndReferenceNumberResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         if (isCalled) {
             when (status) {
                 is Resource.Success -> {
@@ -187,7 +181,8 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                 is Resource.DataError -> {
                     if (status.errorMsg.contains("401")) {
                         binding.errorMobileNumber.visible()
-                        binding.errorMobileNumber.text = getString(R.string.error_check_paid_crossings)
+                        binding.errorMobileNumber.text =
+                            getString(R.string.error_check_paid_crossings)
                     } else {
                         binding.errorMobileNumber.gone()
                         ErrorUtil.showError(binding.root, status.errorMsg)

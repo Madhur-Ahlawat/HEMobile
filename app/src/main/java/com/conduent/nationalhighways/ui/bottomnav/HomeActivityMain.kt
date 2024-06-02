@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -30,7 +29,6 @@ import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
@@ -66,7 +64,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     @Inject
     lateinit var api: ApiService
     private lateinit var navController: NavController
-    private var loader: LoaderDialog? = null
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     var from: String = ""
     private var refreshTokenApiCalled: Boolean = false
@@ -124,19 +121,19 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
         private fun setDeselectedIcon(context: Context, i: Int) {
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
-                context.resources.getColor(R.color.new_btn_color,null)
+                context.resources.getColor(R.color.new_btn_color, null)
             )
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-                context.resources.getColor(R.color.new_btn_color,null)
+                context.resources.getColor(R.color.new_btn_color, null)
             )
         }
 
         private fun setSelectedIcon(context: Context, i: Int) {
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
-                context.resources.getColor(R.color.hyperlink_blue2,null)
+                context.resources.getColor(R.color.hyperlink_blue2, null)
             )
             dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-                context.resources.getColor(R.color.hyperlink_blue2,null)
+                context.resources.getColor(R.color.hyperlink_blue2, null)
             )
         }
     }
@@ -153,17 +150,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
 
-    private fun showLoader() {
-        val fragmentManager = supportFragmentManager
-        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
-        if (existingFragment != null) {
-            (existingFragment as LoaderDialog).dismiss()
-        }
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
-        loader?.show(fragmentManager, Constants.LOADER_DIALOG)
-    }
-
     fun viewAllTransactions() {
         dataBinding?.apply {
             bottomNavigationView.setActiveNavigationIndex(1)
@@ -171,7 +157,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun getDashBoardAllData() {
-        showLoader()
+        showLoaderDialog()
         val request = CrossingHistoryRequest(
             startIndex = 1,
             count = 5,
@@ -399,7 +385,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
-        loader?.dismiss()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (!resource.data?.messageList.isNullOrEmpty()) {
@@ -427,9 +413,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun getCommunicationSettingsPref(resource: Resource<ProfileDetailModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
 
@@ -604,20 +588,20 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     fun focusToolBarHome() {
-        Log.e("TAG", "focusToolBarHome: " )
+        Log.e("TAG", "focusToolBarHome: ")
         dataBinding?.backButton?.requestFocus() // Focus on the backButton
         val task = Runnable {
             if (dataBinding?.backButton?.isVisible == true) {
-                Log.e("TAG", "focusToolBarHome:--> " )
+                Log.e("TAG", "focusToolBarHome:--> ")
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             } else {
-                Log.e("TAG", "focusToolBarHome:**> " )
+                Log.e("TAG", "focusToolBarHome:**> ")
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
                 dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
             }
         }
-        Log.e("TAG", "focusToolBarHome:(()) " )
+        Log.e("TAG", "focusToolBarHome:(()) ")
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }

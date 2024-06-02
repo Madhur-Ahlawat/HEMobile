@@ -18,7 +18,6 @@ import com.conduent.nationalhighways.databinding.FragmentAdditionalCrossingsBind
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.ErrorDialog
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.gone
@@ -32,7 +31,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBinding>(),
     View.OnClickListener, OnRetryClickListener {
 
-    private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
     var requiredNoAdditionalCrossings: Boolean = false
     private var viewCreated: Boolean = false
@@ -43,8 +41,7 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         FragmentAdditionalCrossingsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+
         if (arguments?.containsKey(Constants.HAVE_RECENT_CROSSINGS) == true) {
             haveRecentCrossings = arguments?.getBoolean(Constants.HAVE_RECENT_CROSSINGS) ?: false
         }
@@ -298,11 +295,5 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
         }
     }
 
-    override fun onDestroyView() {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        loader = null
-        super.onDestroyView()
-    }
+
 }
