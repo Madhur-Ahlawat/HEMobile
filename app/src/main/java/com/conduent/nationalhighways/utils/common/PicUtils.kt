@@ -54,17 +54,36 @@ object PicUtils {
                         uri
                     ).startsWith("msf:")
                 ) {
-                    val file: File = File(
-                        context.cacheDir,
+
+                    val hasFileExtension = Utils.checkFileTypeByExtension(
                         getFileNameFromUri(
                             uri,
                             context.contentResolver
-                        ) + "." + Objects.requireNonNull(
-                            context.contentResolver.getType(
-                                uri
-                            )
-                        )?.split("/")?.get(1)
+                        ).toString()
                     )
+                    var file = File("")
+                    if (hasFileExtension) {
+                        file = File(
+                            context.cacheDir,
+                            getFileNameFromUri(
+                                uri,
+                                context.contentResolver
+                            ).toString()
+                        )
+                    } else {
+                        file = File(
+                            context.cacheDir,
+                            getFileNameFromUri(
+                                uri,
+                                context.contentResolver
+                            ) + "." + Objects.requireNonNull(
+                                context.contentResolver.getType(
+                                    uri
+                                )
+                            )?.split("/")?.get(1)
+                        )
+                    }
+
                     Log.e("TAG", "getPath: file " + file)
                     Log.e(
                         "TAG", "getPath: file " + Objects.requireNonNull(
@@ -104,7 +123,7 @@ object PicUtils {
                 } else if ("audio" == type) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
                 } else if ("document".equals(type)) {
-                  return  copyFileToInternal(context,uri)
+                    return copyFileToInternal(context, uri)
 //                    contentUri = MediaStore.Files.getContentUri("external", split[1].toLong());
                 }
                 val selection = "_id=?"
@@ -137,7 +156,7 @@ object PicUtils {
             cursor?.moveToFirst()
             val displayName = cursor?.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
             val size = cursor?.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
-            val file: File = File((context.getFilesDir()).toString() + "/" + displayName)
+            val file: File = File((context.filesDir).toString() + "/" + displayName)
             try {
                 val fileOutputStream = FileOutputStream(file)
                 val inputStream: InputStream = context.contentResolver.openInputStream(fileUri)!!

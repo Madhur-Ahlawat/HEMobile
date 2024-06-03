@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
@@ -273,7 +274,6 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let {
                     val path: String? = PicUtils.getPath(requireContext(), it)
-
                     path?.let { pat ->
                         if (Utils.checkFileTypeByExtension(pat)) {
                             val file = File(pat)
