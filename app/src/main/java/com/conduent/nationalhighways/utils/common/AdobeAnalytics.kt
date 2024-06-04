@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.utils.common
 import com.adobe.marketing.mobile.MobileCore
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import java.util.HashMap
-import javax.inject.Inject
 
 object AdobeAnalytics {
 

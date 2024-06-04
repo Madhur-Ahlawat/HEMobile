@@ -115,7 +115,9 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
 
 
         } else if (flow == Constants.DELETE_CARD) {
-            HomeActivityMain.dataBinding?.backButton?.gone()
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).hideBackIcon()
+            }
             binding.maximumVehicleAdded.text =
                 getString(
                     R.string.str_payment_method_deleted,
@@ -143,13 +145,16 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.textDefault.visibility = View.VISIBLE
             binding.cancelBtn.visibility = View.GONE
             binding.feedbackBt.visible()
-            HomeActivityMain.dataBinding?.backButton?.gone()
-
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).hideBackIcon()
+            }
             showLoaderDialog()
             viewModel.saveCardList()
 
         } else if (flow == Constants.DIRECT_DEBIT) {
-            HomeActivityMain.dataBinding?.backButton?.gone()
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).hideBackIcon()
+            }
             binding.maximumVehicleAdded.text = getString(R.string.str_your_new_direct)
             binding.textMaximumVehicle.text = getString(R.string.str_while_your_new_direct_debit)
             binding.textDefault.visibility = View.GONE
@@ -166,11 +171,15 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.cardView.visibility = View.INVISIBLE
             binding.btnContinue.text = getString(R.string.str_try_again)
 
-            HomeActivityMain.dataBinding?.backButton?.gone()
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).hideBackIcon()
+            }
             binding.cancelBtn.visibility = View.VISIBLE
             binding.feedbackBt.gone()
         } else if (flow == Constants.CREDIT_NOT_SET_UP) {
-            HomeActivityMain.dataBinding?.backButton?.gone()
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).hideBackIcon()
+            }
             Glide.with(requireContext()).load(ResourcesCompat.getDrawable(resources,R.drawable.error_blue,null))
                 .into(binding.warningIcon)
             binding.maximumVehicleAdded.text =

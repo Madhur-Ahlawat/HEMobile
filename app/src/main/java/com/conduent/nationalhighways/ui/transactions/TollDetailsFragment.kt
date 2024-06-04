@@ -33,7 +33,7 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
-        HomeActivityMain.setTitle(getString(R.string.crossing_details))
+        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.crossing_details))
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
@@ -69,7 +69,7 @@ class TollDetailsFragment : BaseFragment<FragmentTollDetailsBinding>() {
                 }
             }
         }
-        HomeActivityMain.setTitle(resources.getString(R.string.crossing_details))
+        (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.crossing_details))
         setAccessibilityText()
     }
 

@@ -81,7 +81,16 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     ) = FragmentDashboardNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        setBackPressListener(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        destroyBackPressListener()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        destroyBackPressListener()
     }
 
     private fun setHorizontalStrains() {
@@ -126,6 +135,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun onResume() {
         super.onResume()
+        setBackPressListener(this)
         (requireActivity() as HomeActivityMain).showHideToolbar(false)
         (requireActivity() as HomeActivityMain).getNotificationApi()
         dashboardViewModel.getLRDSResponse()
@@ -250,9 +260,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 R.id.action_dashBoardFragment_to_accountManagementFragment,
                 bundle
             )
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            if(requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
+            }
         } else {
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 0)
+            if(requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 0)
+            }
         }
 
     }

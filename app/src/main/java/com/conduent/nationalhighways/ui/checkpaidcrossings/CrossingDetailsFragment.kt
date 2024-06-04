@@ -143,7 +143,9 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                     putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     putParcelable(Constants.NAV_DATA_KEY, data)
                 }
-                HomeActivityMain.setTitle(getString(R.string.transfer_remaining_credit))
+                if(requireActivity() is HomeActivityMain){
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.transfer_remaining_credit))
+                }
                 findNavController().navigate(
                     R.id.action_crossing_details_to_find_vehicles,
                     bundle

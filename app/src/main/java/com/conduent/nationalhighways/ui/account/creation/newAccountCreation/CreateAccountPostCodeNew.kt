@@ -69,7 +69,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                 binding.btnUpdateAddressManually.visible()
 
                 if (requireActivity() is HomeActivityMain) {
-                    HomeActivityMain.setTitle(resources.getString(R.string.profile_address))
+                    (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.profile_address))
                 }
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)

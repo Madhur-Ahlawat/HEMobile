@@ -20,8 +20,8 @@ class ThirdPartySoftwareFragment : BaseFragment<FragmentThirdPartySoftwareBindin
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentThirdPartySoftwareBinding {
-        binding = FragmentThirdPartySoftwareBinding.inflate(inflater, container, false)
-        return binding
+       return FragmentThirdPartySoftwareBinding.inflate(inflater, container, false)
+
     }
 
     override fun init() {

@@ -84,7 +84,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         getPaymentHistoryList()
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
-            HomeActivityMain.setTitle(getString(R.string.transactions))
+            (requireActivity() as HomeActivityMain).setTitle(getString(R.string.transactions))
         }
         setBackPressListener(this)
 

@@ -46,7 +46,9 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
-    protected lateinit var binding: B
+    private var _binding: B? = null
+    protected val binding get() = _binding!!
+
     lateinit var navFlowCall: String
     var navFlowFrom: String = ""
     var navData: Any? = null
@@ -61,7 +63,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = getFragmentBinding(inflater, container)
+        _binding = getFragmentBinding(inflater, container)
 
         navFlowCall = arguments?.getString(NAV_FLOW_KEY, "").toString()
         if (arguments?.containsKey(NAV_FLOW_FROM) == true) {
@@ -82,13 +84,10 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         if ((requireActivity() is HomeActivityMain) && !backButton) {
             (requireActivity() as HomeActivityMain).hideBackIcon()
         }
-        Log.e("TAG", "onCreateView: navFlowCall --> " + navFlowCall)
-        Log.e("TAG", "onCreateView: navFlowFrom --> " + navFlowFrom)
-        return binding.root
+        return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        checkBackIcon()
         observer()
         initCtrl()
         init()
@@ -99,6 +98,10 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     fun setBackPressListener(listener: BackPressListener) {
         backPressListener = listener
     }
+    fun destroyBackPressListener() {
+        backPressListener = null
+    }
+
 
     private fun backClickListener() {
         val callback = object : OnBackPressedCallback(true) {
@@ -384,6 +387,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
             loaderDialog?.dismiss()
         }
         loaderDialog = null
+
+        _binding = null
     }
 
 

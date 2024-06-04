@@ -133,7 +133,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
 
             PROFILE_MANAGEMENT -> {
                 if (requireActivity() is HomeActivityMain) {
-                    HomeActivityMain.setTitle(resources.getString(R.string.profile_address))
+                    (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.profile_address))
                 }
                 (navData as ProfileDetailModel).personalInformation?.let {
                     if (oldPostCode == editPostCode) {

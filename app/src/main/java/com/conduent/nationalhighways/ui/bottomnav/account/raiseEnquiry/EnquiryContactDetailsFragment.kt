@@ -145,7 +145,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         binding.firstnameEt.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.lastnameEt.editText.addTextChangedListener(GenericTextWatcher(3))
         binding.emailEt.editText.addTextChangedListener(GenericTextWatcher(1))
-        binding.mobileNumberEt.addTextChangedListener(GenericTextWatcher(2))
+        binding.mobileNumberEt.editText.addTextChangedListener(GenericTextWatcher(2))
     }
 
     inner class GenericTextWatcher(private val index: Int) : TextWatcher {
@@ -330,28 +330,27 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     ) {
                         requiredMobileNumber =
                             if (phoneNumber.matches(Utils.UK_MOBILE_REGEX)) {
-                                binding.errorMobileNumber.gone()
+                                binding.mobileNumberEt.removeError()
                                 true
                             } else {
-                                binding.errorMobileNumber.visible()
-                                binding.errorMobileNumber.text = getString(R.string.str_uk_phoneNumber_error_message)
+                                binding.mobileNumberEt.setErrorText( getString(R.string.str_uk_phoneNumber_error_message))
                                 false
                             }
 
                     } else {
                         requiredMobileNumber =
                             if (phoneNumber.matches(Utils.PHONENUMBER)) {
-                                binding.errorMobileNumber.gone()
+                                binding.mobileNumberEt.removeError()
                                 true
                             } else {
-                                binding.errorMobileNumber.text = getString(R.string.str_non_uk_phoneNumber_error_message)
+                                binding.mobileNumberEt.setErrorText( getString(R.string.str_non_uk_phoneNumber_error_message))
                                 false
                             }
 
                     }
 
                 } else {
-                    binding.errorMobileNumber.gone()
+                    binding.mobileNumberEt.removeError()
                     requiredCountryCode = true
                     requiredMobileNumber = true
                 }
@@ -377,7 +376,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                 sm.fetchUserMobileNUmber() ?: ""
             )
 
-        binding.mobileNumberEt.setAccessibilityDelegateForDigits()
+        binding.mobileNumberEt.editText.setAccessibilityDelegateForDigits()
     }
 
     override fun observer() {
@@ -597,7 +596,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             viewModel.edit_enquiryModel.value?.fullcountryCode = item
 
             binding.mobileNumberEt.setText("")
-            binding.errorMobileNumber.gone()
+            binding.mobileNumberEt.removeError()
         } else {
             if (binding.mobileNumberEt.getText().toString().trim().isNotEmpty()) {
                 if (fullCountryNameWithCode.size > 0) {

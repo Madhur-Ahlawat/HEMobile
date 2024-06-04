@@ -61,7 +61,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             }
         }
         data = arguments?.getParcelable("data")
-        HomeActivityMain.setTitle(getString(R.string.profile_password))
+        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_password))
         (requireActivity() as HomeActivityMain).showHideToolbar(true)
     }
 

@@ -6,7 +6,6 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentFailedRetryBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
@@ -37,9 +35,10 @@ class FailedRetryFragment : BaseFragment<FragmentFailedRetryBinding>() {
     override fun init() {
         backButton = false
         checkBackIcon()
-        showToolBar(true)
-//        binding.desc3.movementMethod = LinkMovementMethod.getInstance()
-//        makeLinksInLicenseAgreementDescription()
+        if (requireActivity() is LandingActivity) {
+            (requireActivity() as LandingActivity).showToolBar(true)
+
+        }
         if (sessionManager.getLoggedInUser()) {
             binding.decs1Tv.text = resources.getString(R.string.try_again_later_signin_account)
             binding.btnNext.text = resources.getString(R.string.sign_in)

@@ -129,7 +129,7 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 )
         }
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
-            HomeActivityMain.setTitle(resources.getString(R.string.str_top_up))
+            (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_top_up))
         }
 
     }

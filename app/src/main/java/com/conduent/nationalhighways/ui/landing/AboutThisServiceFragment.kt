@@ -22,9 +22,7 @@ class AboutThisServiceFragment : BaseFragment<FragmentAboutThisServiceBinding>()
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentAboutThisServiceBinding {
-        binding = FragmentAboutThisServiceBinding.inflate(inflater, container, false)
-
-        return binding
+        return FragmentAboutThisServiceBinding.inflate(inflater, container, false)
     }
 
     override fun init() {

@@ -7,8 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentGpsSettingsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.setToolBarTitle
-import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
+
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -27,8 +26,11 @@ class GpsSettingsFragment : BaseFragment<FragmentGpsSettingsBinding>() {
 
 
     override fun init() {
-        showToolBar(true)
-        setToolBarTitle(resources.getString(R.string.str_register_to_receive_notifications))
+        if (requireActivity() is LandingActivity) {
+            (requireActivity() as LandingActivity).showToolBar(true)
+            (requireActivity() as LandingActivity).setToolBarTitle(resources.getString(R.string.str_register_to_receive_notifications))
+        }
+
     }
 
     override fun initCtrl() {

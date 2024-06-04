@@ -28,9 +28,7 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentGeneralTermsAndConditionsBinding {
-        binding = FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
-
-        return binding
+       return FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
     }
 
     override fun init() {

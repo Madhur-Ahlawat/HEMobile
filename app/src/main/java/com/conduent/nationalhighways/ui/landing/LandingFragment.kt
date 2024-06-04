@@ -56,9 +56,9 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentNewLandingBinding {
-        binding = FragmentNewLandingBinding.inflate(inflater, container, false)
+       return FragmentNewLandingBinding.inflate(inflater, container, false)
 
-        return binding
+
     }
 
     override fun init() {
@@ -196,7 +196,9 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
 
     override fun initCtrl() {
-        LandingActivity.showToolBar(false)
+        if(requireActivity() is LandingActivity){
+            (requireActivity() as LandingActivity).showToolBar(false)
+        }
         binding.btnGuidanceAndDocuments.setOnClickListener {
             val bundle = Bundle()
             bundle.putString(Constants.API_STATE, apiState)
@@ -204,29 +206,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
             requireActivity().openActivityWithData(
                 RaiseEnquiryActivity::class.java, bundle
             )
-//            when (apiState) {
-//
-//                Constants.LIVE -> {
-//                    AdobeAnalytics.setActionTrack(
-//                        "dart charge guidance and documents",
-//                        "home",
-//                        "home",
-//                        "english",
-//                        "home",
-//                        "splash",
-//                        sessionManager.getLoggedInUser()
-//                    )
-//
-//                }
-//
-//                else -> {
-//                    findNavController().navigate(
-//                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-//                        getBundleData(apiState, apiEndTime)
-//                    )
-//                }
-//            }
-
         }
         binding.payCrossingLayout.setOnClickListener {
             when (apiState) {

@@ -21,7 +21,7 @@ android {
         targetSdkVersion 34
         applicationId "com.conduent.nationalhighways"
         versionCode 1
-        versionName "1.2"
+        versionName "0.1"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -217,6 +217,9 @@ android {
         implementation 'com.google.android.gms:play-services-auth:21.1.1'
         implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.2'
         //https://stackoverflow.com/questions/51365778/how-to-generate-11-char-hash-key-for-sms-retriever-with-google-app-signing
+
+//        implementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+
     }
 
     kapt {

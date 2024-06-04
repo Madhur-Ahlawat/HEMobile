@@ -22,8 +22,8 @@ class OtherWaysToPayFragment : BaseFragment<FragmentOtherWaysToPayBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentOtherWaysToPayBinding {
-        binding = FragmentOtherWaysToPayBinding.inflate(inflater, container, false)
-        return binding
+       return FragmentOtherWaysToPayBinding.inflate(inflater, container, false)
+
     }
     override fun init() {
         AdobeAnalytics.setScreenTrack(

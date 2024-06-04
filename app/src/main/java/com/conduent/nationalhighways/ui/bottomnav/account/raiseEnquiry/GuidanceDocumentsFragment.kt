@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>() {
-    val raise_viewModel: RaiseNewEnquiryViewModel by activityViewModels()
+    private val raiseViewmodel: RaiseNewEnquiryViewModel by activityViewModels()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -28,14 +28,15 @@ class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentGuidanceDocumentsBinding =
-        FragmentGuidanceDocumentsBinding.inflate(inflater, container, false)
+    ): FragmentGuidanceDocumentsBinding {
+        return  FragmentGuidanceDocumentsBinding.inflate(inflater, container, false)
+    }
 
     override fun init() {
         binding.feedbackToImproveMb.movementMethod = LinkMovementMethod.getInstance()
 
         binding.contactDartChargeCv.setOnClickListener {
-            when (raise_viewModel.apiState.value) {
+            when (raiseViewmodel.apiState.value) {
                 Constants.LIVE -> {
                     findNavController().navigate(R.id.action_guidanceDocumentsFragment_to_contactDartChargeFragment)
                 }
@@ -44,8 +45,8 @@ class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>
                     findNavController().navigate(
                         R.id.action_guidanceanddocumentsFragment_to_serviceUnavailableFragment,
                         getBundleData(
-                            raise_viewModel.apiState.value,
-                            raise_viewModel.apiEndTime.value
+                            raiseViewmodel.apiState.value,
+                            raiseViewmodel.apiEndTime.value
                         )
                     )
                 }
@@ -99,14 +100,16 @@ class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>
     }
 
     private fun getBundleData(state: String?, endTime: String? = null): Bundle {
-        val bundle: Bundle = Bundle()
-        bundle.putString(Constants.SERVICE_TYPE, state)
-        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-        if (endTime != null && endTime.replace("null", "").isNotEmpty()) {
-            bundle.putString(Constants.END_TIME, endTime)
+        return Bundle().apply {
+            putString(Constants.SERVICE_TYPE, state)
+            putBoolean(Constants.SHOW_BACK_BUTTON, false)
+            if (endTime != null && endTime.replace("null", "").isNotEmpty()) {
+                putString(Constants.END_TIME, endTime)
+            }
         }
-        return bundle
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 }

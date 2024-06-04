@@ -14,7 +14,6 @@ import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.removeBottomBar
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.BIOMETRIC_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
@@ -85,11 +84,16 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.feedbackBt.invisible()
                 binding.cardViewPlateNumber.gone()
                 binding.deleteTitle.gone()
-                HomeActivityMain.setTitle(resources.getString(R.string.str_profile_biometrics))
+                (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_profile_biometrics))
                 binding.title.text = getString(R.string.biometric_changed_successfully)
                 binding.subTitle.gone()
                 binding.btnSubmit.text = getString(R.string.str_continue)
-                HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).changeBottomIconColors(
+                        requireActivity(),
+                        3
+                    )
+                }
             }
 
             PROFILE_MANAGEMENT -> {
@@ -97,7 +101,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 if (arguments?.getString(Constants.NAV_FLOW_FROM)
                         .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                 ) {
-                    removeBottomBar()
+                    if (requireActivity() is HomeActivityMain) {
+                        (requireActivity() as HomeActivityMain).removeBottomBar()
+                    }
                     if (requireActivity() is HomeActivityMain && !backButton) {
                         (requireActivity() as HomeActivityMain).hideBackIcon()
                     }
@@ -166,13 +172,13 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 val isMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER, true)
                 if (isMobileNumber == false) {
                     binding.title.text = getString(R.string.phone_number_change_successful)
-                    HomeActivityMain.setTitle(getString(R.string.profile_phone_number))
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_phone_number))
                 } else {
                     if (requireActivity() is HomeActivityMain) {
                         (requireActivity() as HomeActivityMain).hideBackIcon()
                     }
                     binding.title.text = getString(R.string.mobile_change_successful)
-                    HomeActivityMain.setTitle(getString(R.string.profile_mobile_number))
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_mobile_number))
                 }
                 binding.subTitle.text = Html.fromHtml(
                     getString(

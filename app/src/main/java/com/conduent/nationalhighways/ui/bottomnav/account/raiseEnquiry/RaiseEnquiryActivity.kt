@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
+import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -35,22 +36,9 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
 
     private lateinit var navController: NavController
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
-    lateinit var listener: NavController.OnDestinationChangedListener
-    override fun observeViewModel() {
+    private lateinit var listener: NavController.OnDestinationChangedListener
+    private lateinit var binding: ActivityRaiseEnquiryBinding
 
-    }
-
-    companion object {
-        private lateinit var binding: ActivityRaiseEnquiryBinding
-
-        fun setToolBarTitle(title: String) {
-            binding.toolBarLyt.titleTxt.text = title
-        }
-
-        fun setBackIcon(status: Int) {
-            binding.toolBarLyt.backButton.visibility = status
-        }
-    }
 
     override fun initViewBinding() {
         binding = ActivityRaiseEnquiryBinding.inflate(layoutInflater)
@@ -172,6 +160,16 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
         )
     }
 
+    fun setToolBarTitle(title: String) {
+        binding.toolBarLyt.titleTxt.text = title
+    }
+
+    fun setBackIcon(status: Int) {
+        binding.toolBarLyt.backButton.visibility = status
+    }
+
+
+
     private fun initCtrl() {
 
     }
@@ -179,7 +177,9 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
     override fun onDestroy() {
         super.onDestroy()
         if (this::navController.isInitialized) {
+            Log.e("TAG", "onDestroy: navcontroller")
             navController.removeOnDestinationChangedListener(listener)
+
         }
         LogoutUtil.stopLogoutTimer()
     }
@@ -202,7 +202,9 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
         LogoutUtil.stopLogoutTimer()
         Utils.sessionExpired(this, this, sessionManager, api)
     }
+    override fun observeViewModel() {
 
+    }
     fun focusToolBarRaiseEnquiry() {
         val task = Runnable {
             if (binding.toolBarLyt.backButton.isVisible) {

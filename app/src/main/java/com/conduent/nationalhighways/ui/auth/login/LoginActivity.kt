@@ -13,7 +13,6 @@ import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricPrompt
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
@@ -37,7 +36,6 @@ import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
@@ -648,7 +646,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             var responseOK: Boolean
             var response: Response<LoginResponse?>? = null
 
-            BaseApplication.saveDateinSession(sessionManager)
+            BaseApplication.saveDateInSession(sessionManager)
 
             try {
                 response = runBlocking {

@@ -68,9 +68,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     var from: String = ""
     private var refreshTokenApiCalled: Boolean = false
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
+    var dataBinding: ActivityHomeMainBinding? = null
 
     companion object {
-        var dataBinding: ActivityHomeMainBinding? = null
         var dateRangeModel: PaymentDateRangeModel? = null
         var accountDetailsData: ProfileDetailModel? = null
         var crossing: TransactionData? = null
@@ -78,65 +78,66 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         var paymentHistoryListData: MutableList<TransactionData> = mutableListOf()
         var paymentHistoryListDataCheckedCrossings: MutableList<CheckedCrossingRecentTransactionsResponseModelItem?> =
             mutableListOf()
-
-        fun setTitle(title: String) {
-            dataBinding?.titleTxt?.text = title
-        }
-
-        fun removeBottomBar() {
-            dataBinding?.bottomNavigationView?.gone()
-        }
-
-        fun changeBottomIconColors(context: Context, pos: Int) {
-            if (pos == 0) {
-                setSelectedIcon(context, 0)
-                setDeselectedIcon(context, 1)
-                setDeselectedIcon(context, 2)
-                setDeselectedIcon(context, 3)
-            }
-
-            if (pos == 1) {
-                setSelectedIcon(context, 1)
-                setDeselectedIcon(context, 0)
-                setDeselectedIcon(context, 2)
-                setDeselectedIcon(context, 3)
-            }
-
-            if (pos == 2) {
-                setSelectedIcon(context, 2)
-                setDeselectedIcon(context, 1)
-                setDeselectedIcon(context, 0)
-                setDeselectedIcon(context, 3)
-            }
-
-            if (pos == 3) {
-                setSelectedIcon(context, 3)
-                setDeselectedIcon(context, 1)
-                setDeselectedIcon(context, 2)
-                setDeselectedIcon(context, 0)
-            }
-
-
-        }
-
-        private fun setDeselectedIcon(context: Context, i: Int) {
-            dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
-                context.resources.getColor(R.color.new_btn_color, null)
-            )
-            dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-                context.resources.getColor(R.color.new_btn_color, null)
-            )
-        }
-
-        private fun setSelectedIcon(context: Context, i: Int) {
-            dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
-                context.resources.getColor(R.color.hyperlink_blue2, null)
-            )
-            dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-                context.resources.getColor(R.color.hyperlink_blue2, null)
-            )
-        }
     }
+
+    fun removeBottomBar() {
+        dataBinding?.bottomNavigationView?.gone()
+    }
+
+    fun changeBottomIconColors(context: Context, pos: Int) {
+        if (pos == 0) {
+            setSelectedIcon(context, 0)
+            setDeselectedIcon(context, 1)
+            setDeselectedIcon(context, 2)
+            setDeselectedIcon(context, 3)
+        }
+
+        if (pos == 1) {
+            setSelectedIcon(context, 1)
+            setDeselectedIcon(context, 0)
+            setDeselectedIcon(context, 2)
+            setDeselectedIcon(context, 3)
+        }
+
+        if (pos == 2) {
+            setSelectedIcon(context, 2)
+            setDeselectedIcon(context, 1)
+            setDeselectedIcon(context, 0)
+            setDeselectedIcon(context, 3)
+        }
+
+        if (pos == 3) {
+            setSelectedIcon(context, 3)
+            setDeselectedIcon(context, 1)
+            setDeselectedIcon(context, 2)
+            setDeselectedIcon(context, 0)
+        }
+
+
+    }
+
+    private fun setDeselectedIcon(context: Context, i: Int) {
+        dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
+            context.resources.getColor(R.color.new_btn_color, null)
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
+            context.resources.getColor(R.color.new_btn_color, null)
+        )
+    }
+
+
+    private fun setSelectedIcon(context: Context, i: Int) {
+        dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
+            context.resources.getColor(R.color.hyperlink_blue2, null)
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
+            context.resources.getColor(R.color.hyperlink_blue2, null)
+        )
+    }
+    fun setTitle(title: String) {
+        dataBinding?.titleTxt?.text = title
+    }
+
 
     fun showHideToolbar(isShown: Boolean) {
         if (isShown) dataBinding?.idToolBarLyt?.visible() else dataBinding?.idToolBarLyt?.gone()
@@ -585,6 +586,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     fun hideBackIcon() {
         dataBinding?.backButton?.gone()
+    }
+ fun requestFocusBackIcon() {
+        dataBinding?.backButton?.requestFocus()
     }
 
     fun focusToolBarHome() {
