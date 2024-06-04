@@ -13,7 +13,6 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
-import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
@@ -30,7 +29,6 @@ import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
-import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -69,6 +67,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private var refreshTokenApiCalled: Boolean = false
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
     var dataBinding: ActivityHomeMainBinding? = null
+
+    lateinit var profileDetailModel: ProfileDetailModel
 
     companion object {
         var dateRangeModel: PaymentDateRangeModel? = null
@@ -134,6 +134,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             context.resources.getColor(R.color.hyperlink_blue2, null)
         )
     }
+
     fun setTitle(title: String) {
         dataBinding?.titleTxt?.text = title
     }
@@ -159,20 +160,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     private fun getDashBoardAllData() {
         showLoaderDialog()
-        val request = CrossingHistoryRequest(
-            startIndex = 1,
-            count = 5,
-            transactionType = Constants.ALL_TRANSACTION,
-            searchDate = Constants.TRANSACTION_DATE,
-            startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
-            endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
-        )
-        dashboardViewModel.getDashboardAllData(request)
+        dashboardViewModel.getDashboardAllData()
     }
 
     private fun hitAPIs(): () -> Unit? {
         getDashBoardAllData()
-        getNotificationApi()
         return {}
     }
 
@@ -387,6 +379,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
 
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
         dismissLoaderDialog()
+
+        if (this::profileDetailModel.isInitialized) {
+            dashboardViewModel.setAccountType(profileDetailModel)
+        }
+
+
         when (resource) {
             is Resource.Success -> {
                 if (!resource.data?.messageList.isNullOrEmpty()) {
@@ -408,13 +406,13 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
     }
 
-    fun setbadgeCount(countOfN: Int) {
+    fun setBadgeCount(countOfN: Int) {
         dataBinding?.bottomNavigationView?.updateBadgeCount(2, countOfN)
 
     }
 
     private fun getCommunicationSettingsPref(resource: Resource<ProfileDetailModel?>?) {
-        dismissLoaderDialog()
+        getNotificationApi()
         when (resource) {
             is Resource.Success -> {
 
@@ -517,7 +515,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     (applicationContext as BaseApplication).setAccountSavedData(
                         this
                     )
-                    dashboardViewModel.setAccountType(this)
+                    profileDetailModel = this
                 }
             }
 
@@ -587,7 +585,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     fun hideBackIcon() {
         dataBinding?.backButton?.gone()
     }
- fun requestFocusBackIcon() {
+
+    fun requestFocusBackIcon() {
         dataBinding?.backButton?.requestFocus()
     }
 

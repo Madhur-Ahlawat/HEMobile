@@ -73,7 +73,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity() as HomeActivityMain).showHideToolbar(false)
+        if(requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).showHideToolbar(false)
+        }
     }
 
     override fun getFragmentBinding(
@@ -135,9 +137,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun onResume() {
         super.onResume()
+        showLoaderDialog()
         setBackPressListener(this)
-        (requireActivity() as HomeActivityMain).showHideToolbar(false)
-        (requireActivity() as HomeActivityMain).getNotificationApi()
+        if(requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).showHideToolbar(false)
+            (requireActivity() as HomeActivityMain).getNotificationApi()
+        }
         dashboardViewModel.getLRDSResponse()
     }
 
@@ -167,7 +172,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun observer() {
         observe(dashboardViewModel.logout, ::handleLogout)
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
-        observe(dashboardViewModel.alertLivData, ::handleAlertResponse)
         observe(dashboardViewModel.lrdsVal, ::handleLrdsResponse)
         dashboardViewModel.accountType.observe(this@DashboardFragmentNew) {
             handleAccountType(it)
@@ -190,24 +194,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
-        dismissLoaderDialog()
-        when (resource) {
-            is Resource.Success -> {
-            }
-
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-            }
-
-            else -> {
-                // do nothing
-            }
-        }
-    }
-
     private fun handleAccountType(profileDetailModel: ProfileDetailModel) {
-
 
         binding.tvAccountNumberHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
@@ -629,7 +616,6 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         index: Int? = 0,
         transactionType: String? = Constants.ALL_TRANSACTION
     ) {
-        showLoaderDialog()
         dateRangeModel = PaymentDateRangeModel(
             filterType = Constants.PAYMENT_FILTER_SPECIFIC,
             DateUtils.lastPriorDate(-30),

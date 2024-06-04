@@ -123,16 +123,23 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
     }
 
     private fun showLoader() {
-        binding.progressBar.visibility = View.VISIBLE
+        try {
+            binding.progressBar.visibility = View.VISIBLE
+        }catch (_:Exception){
+            Log.e("TAG", "showLoader: exception" )
+        }
     }
 
     private fun hideLoader() {
-        binding.progressBar.visibility = View.GONE
+        try {
+            binding.progressBar.visibility = View.GONE
+        }catch (_:Exception){
+            Log.e("TAG", "showLoader:- exception" )
+        }
     }
 
 
     override fun initCtrl() {
-//        topUpAmount = arguments?.getDouble(Constants.DATA).toString()
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =

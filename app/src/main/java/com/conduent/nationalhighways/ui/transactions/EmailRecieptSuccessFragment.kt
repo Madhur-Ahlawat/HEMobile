@@ -47,8 +47,9 @@ class EmailRecieptSuccessFragment : BaseFragment<FragmentEmailRecieptSuccessBind
         binding.btnContinue.setOnClickListener {
             findNavController().popBackStack(R.id.crossingHistoryFragment, false)
         }
-        (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.payment_details))
-
+        if(requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.payment_details))
+        }
     }
 
     override fun observer() {

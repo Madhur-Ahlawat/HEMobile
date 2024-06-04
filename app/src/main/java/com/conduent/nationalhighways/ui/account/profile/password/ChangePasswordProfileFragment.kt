@@ -61,8 +61,10 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             }
         }
         data = arguments?.getParcelable("data")
-        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_password))
-        (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        if(requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_password))
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        }
     }
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")

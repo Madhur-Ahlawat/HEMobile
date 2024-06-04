@@ -164,16 +164,17 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                             )
                         }
                     }
-                    AdobeAnalytics.setActionTrackError(
-                        "next",
-                        "login:forgot password",
-                        "forgot password",
-                        "english",
-                        "login",
-                        (requireActivity() as AuthActivity).previousScreen, "success",
-                        sessionManager.getLoggedInUser()
-                    )
-
+                    if (requireActivity() is AuthActivity) {
+                        AdobeAnalytics.setActionTrackError(
+                            "next",
+                            "login:forgot password",
+                            "forgot password",
+                            "english",
+                            "login",
+                            (requireActivity() as AuthActivity).previousScreen, "success",
+                            sessionManager.getLoggedInUser()
+                        )
+                    }
                 }
 
                 is Resource.DataError -> {
@@ -181,16 +182,17 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                         displaySessionExpireDialog(status.errorModel)
                     } else {
                         binding.edtEmail.setErrorText(status.errorMsg)
-
-                        AdobeAnalytics.setActionTrackError(
-                            "next",
-                            "login:forgot password",
-                            "forgot password",
-                            "english",
-                            "login",
-                            (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
-                            sessionManager.getLoggedInUser()
-                        )
+                        if (requireActivity() is AuthActivity) {
+                            AdobeAnalytics.setActionTrackError(
+                                "next",
+                                "login:forgot password",
+                                "forgot password",
+                                "english",
+                                "login",
+                                (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                                sessionManager.getLoggedInUser()
+                            )
+                        }
                     }
 
                 }

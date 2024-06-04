@@ -351,7 +351,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     fun showLoaderDialog(type: Int = 0) {
         Log.e(
-            "TAG",
+            "BaseFragment",
             "LoaderDialog showLoaderDialog: $type $loaderDialog ${loaderDialog?.isVisible} ${loaderDialog?.isVisible == false}"
         )
         val fragmentManager = requireActivity().supportFragmentManager
@@ -372,7 +372,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     fun dismissLoaderDialog(type: Int = 0) {
         Log.e(
-            "TAG",
+            "BaseFragment",
             "LoaderDialog dismissLoaderDialog: $type $loaderDialog ${loaderDialog?.showsDialog}"
         )
         if (loaderDialog != null) {

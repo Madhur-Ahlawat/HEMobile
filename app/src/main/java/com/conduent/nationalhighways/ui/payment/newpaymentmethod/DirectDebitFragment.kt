@@ -210,8 +210,10 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
     }
 
     private fun hideLoader() {
-        binding.progressBar.visibility = View.GONE
-
+        try {
+            binding.progressBar.visibility = View.GONE
+        } catch (_: Exception) {
+        }
     }
 
 }

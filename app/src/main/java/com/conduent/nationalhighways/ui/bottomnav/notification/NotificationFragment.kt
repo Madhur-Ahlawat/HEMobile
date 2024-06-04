@@ -290,12 +290,12 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Filter
                     val countOfY = resource.data?.messageList?.count { it?.isViewed == "Y" }
                     val countOfN = (resource.data?.messageList?.size ?: 0).minus(countOfY ?: 0)
                     if (requireActivity() is HomeActivityMain) {
-                        (requireActivity() as HomeActivityMain).setbadgeCount(countOfN)
+                        (requireActivity() as HomeActivityMain).setBadgeCount(countOfN)
                     }
 
                 } else {
                     if (requireActivity() is HomeActivityMain) {
-                        (requireActivity() as HomeActivityMain).setbadgeCount(0)
+                        (requireActivity() as HomeActivityMain).setBadgeCount(0)
                     }
                 }
 

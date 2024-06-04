@@ -28,12 +28,8 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
-import retrofit2.Response
 import java.io.InterruptedIOException
 import java.net.SocketTimeoutException
 import javax.inject.Inject
@@ -95,7 +91,8 @@ class DashboardViewModel @Inject constructor(
     var personalInformationData: MutableLiveData<PersonalInformation> =
         MutableLiveData()
     var accountInformationData: MutableLiveData<AccountInformation> = MutableLiveData()
-    var communicationPreferenceData: MutableLiveData<ArrayList<CommunicationPrefsModel>> = MutableLiveData()
+    var communicationPreferenceData: MutableLiveData<ArrayList<CommunicationPrefsModel>> =
+        MutableLiveData()
     var profileDetailModel: MutableLiveData<ProfileDetailModel> = MutableLiveData()
 
     var accountSubType: MutableLiveData<String> = MutableLiveData()
@@ -240,82 +237,15 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
-    fun getDashboardAllData(request: CrossingHistoryRequest) {
+    fun getDashboardAllData() {
         viewModelScope.launch {
             try {
-                coroutineScope {
-                    val vehicleCountResponse: Response<List<VehicleResponse?>?>?
-                    val crossingCountResponse: Response<CrossingHistoryApiResponse?>?
-//                    val thresholdAmountResponse: Response<ThresholdAmountApiResponse?>?
-                    val overviewResponse: Response<ProfileDetailModel?>?
-                    val alertsResponse: Response<AlertMessageApiResponse?>?
-
-                    val callVehicleCount = async { repository.getVehicleData() }
-                    delay(100)
-                    val callCrossingCount = async { repository.crossingHistoryApiCall(request) }
-                    delay(100)
-//                    val callThreshold = async { repository.getThresholdAmountApiCAll() }
-//                    delay(100)
-                    val callOverview = async {
-                        repository.getAccountDetailsApiCall()
-                    }
-                    delay(100)
-                    val callAlerts = async { repository.getAlertMessages() }
-
-                    vehicleCountResponse = callVehicleCount.await()
-                    crossingCountResponse = callCrossingCount.await()
-//                    thresholdAmountResponse = callThreshold.await()
-                    overviewResponse = callOverview.await()
-                    alertsResponse = callAlerts.await()
-
-                    if (alertsResponse?.isSuccessful == true) {
-                        _alertsVal.postValue(
-                            ResponseHandler.success(
-                                alertsResponse,
-                                errorManager
-                            )
-                        )
-                    } else {
-                        _alertsVal.value =
-                            Resource.DataError("Something went wrong. Try again later")
-                    }
-
-                    if (vehicleCountResponse?.isSuccessful == true) {
-                        _vehicleListVal.postValue(
-                            ResponseHandler.success(
-                                vehicleCountResponse,
-                                errorManager
-                            )
-                        )
-                    } else {
-                        _vehicleListVal.value =
-                            Resource.DataError("Something went wrong. Try again later")
-                    }
-
-                    if (crossingCountResponse?.isSuccessful == true) {
-                        _crossingHistoryVal.postValue(
-                            ResponseHandler.success(
-                                crossingCountResponse,
-                                errorManager
-                            )
-                        )
-                    } else {
-                        _crossingHistoryVal.value =
-                            Resource.DataError("Something went wrong. Try again later")
-                    }
-
-                    if (overviewResponse?.isSuccessful == true) {
-                        _accountDetailsVal.postValue(
-                            ResponseHandler.success(
-                                overviewResponse,
-                                errorManager
-                            )
-                        )
-                    } else {
-                        _accountDetailsVal.value =
-                            Resource.DataError("Something went wrong. Try again later")
-                    }
-                }
+                _accountDetailsVal.postValue(
+                    ResponseHandler.success(
+                        repository.getAccountDetailsApiCall(),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 if (e is NoConnectivityException) {
                     _accountDetailsVal.value = Resource.DataError(e.message)
@@ -327,7 +257,9 @@ class DashboardViewModel @Inject constructor(
             }
         }
 
+
     }
+
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _logout = MutableLiveData<Resource<AuthResponseModel?>?>()

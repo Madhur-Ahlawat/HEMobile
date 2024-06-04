@@ -109,17 +109,17 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
         binding.btn.setOnClickListener(this)
 
 
-
-        AdobeAnalytics.setScreenTrack(
-            "login:forgot password:choose options",
-            "forgot password",
-            "english",
-            "login",
-            (requireActivity() as AuthActivity).previousScreen,
-            "login:forgot password:choose options",
-            sessionManager.getLoggedInUser()
-        )
-
+        if (requireActivity() is AuthActivity) {
+            AdobeAnalytics.setScreenTrack(
+                "login:forgot password:choose options",
+                "forgot password",
+                "english",
+                "login",
+                (requireActivity() as AuthActivity).previousScreen,
+                "login:forgot password:choose options",
+                sessionManager.getLoggedInUser()
+            )
+        }
     }
 
     override fun observer() {
@@ -193,17 +193,18 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
-
-                AdobeAnalytics.setActionTrack2(
-                    "continue",
-                    "login:forgot password:choose options",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    model?.optionType ?: "",
-                    sessionManager.getLoggedInUser()
-                )
+                if (requireActivity() is AuthActivity) {
+                    AdobeAnalytics.setActionTrack2(
+                        "continue",
+                        "login:forgot password:choose options",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen,
+                        model?.optionType ?: "",
+                        sessionManager.getLoggedInUser()
+                    )
+                }
 
 
                 findNavController().navigate(
@@ -260,31 +261,34 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
                     }
                 }
-                AdobeAnalytics.setActionTrackError(
-                    "next",
-                    "login:forgot password",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen, "success",
-                    sessionManager.getLoggedInUser()
-                )
-
-            }
-
-            is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel)) {
-                    displaySessionExpireDialog(status.errorModel)
-                } else {
+                if (requireActivity() is AuthActivity) {
                     AdobeAnalytics.setActionTrackError(
                         "next",
                         "login:forgot password",
                         "forgot password",
                         "english",
                         "login",
-                        (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                        (requireActivity() as AuthActivity).previousScreen, "success",
                         sessionManager.getLoggedInUser()
                     )
+                }
+            }
+
+            is Resource.DataError -> {
+                if (checkSessionExpiredOrServerError(status.errorModel)) {
+                    displaySessionExpireDialog(status.errorModel)
+                } else {
+                    if (requireActivity() is AuthActivity) {
+                        AdobeAnalytics.setActionTrackError(
+                            "next",
+                            "login:forgot password",
+                            "forgot password",
+                            "english",
+                            "login",
+                            (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                            sessionManager.getLoggedInUser()
+                        )
+                    }
                 }
             }
 

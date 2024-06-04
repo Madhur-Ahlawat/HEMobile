@@ -86,7 +86,9 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
     }
 
     override fun initCtrl() {
-        (requireActivity() as HomeActivityMain).setTitle(Constants.PROFILE_TWO_FACTOR_VERIFICATION)
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).setTitle(Constants.PROFILE_TWO_FACTOR_VERIFICATION)
+        }
     }
 
     override fun observer() {

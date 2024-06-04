@@ -47,8 +47,10 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             binding.edtEmail.editText.setText(data?.personalInformation?.userName?.lowercase(Locale.getDefault()))
             oldEmail = data?.personalInformation?.userName?.lowercase(Locale.getDefault()) ?: ""
         }
-        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_email_address))
-        (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        if(requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_email_address))
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        }
     }
 
     override fun initCtrl() {

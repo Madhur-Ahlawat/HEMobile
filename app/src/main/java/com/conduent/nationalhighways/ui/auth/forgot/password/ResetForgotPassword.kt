@@ -80,11 +80,12 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
             BIOMETRIC_CHANGE -> {
                 if (requireActivity() is HomeActivityMain) {
                     (requireActivity() as HomeActivityMain).hideBackIcon()
+                    (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_profile_biometrics))
                 }
                 binding.feedbackBt.invisible()
                 binding.cardViewPlateNumber.gone()
                 binding.deleteTitle.gone()
-                (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_profile_biometrics))
+
                 binding.title.text = getString(R.string.biometric_changed_successfully)
                 binding.subTitle.gone()
                 binding.btnSubmit.text = getString(R.string.str_continue)
@@ -172,13 +173,15 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 val isMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER, true)
                 if (isMobileNumber == false) {
                     binding.title.text = getString(R.string.phone_number_change_successful)
-                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_phone_number))
+                    if(requireActivity() is HomeActivityMain) {
+                        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_phone_number))
+                    }
                 } else {
                     if (requireActivity() is HomeActivityMain) {
                         (requireActivity() as HomeActivityMain).hideBackIcon()
+                        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_mobile_number))
                     }
                     binding.title.text = getString(R.string.mobile_change_successful)
-                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_mobile_number))
                 }
                 binding.subTitle.text = Html.fromHtml(
                     getString(
