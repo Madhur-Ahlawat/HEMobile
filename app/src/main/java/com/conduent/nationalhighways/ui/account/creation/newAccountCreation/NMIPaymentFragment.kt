@@ -120,11 +120,13 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
 
 
-        setPersonalInfoAnnouncement(binding.rootLayout,requireActivity())
+        setPersonalInfoAnnouncement(binding.rootLayout, requireActivity())
 
         setupWebView()
         if (navFlowCall == Constants.PAYMENT_TOP_UP && paymentListSize == 0) {
-            (requireActivity() as HomeActivityMain).setTitle("Top Up New Payment Method")
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).setTitle("Top Up New Payment Method")
+            }
         }
     }
 
@@ -532,8 +534,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     }
 
     private fun hideLoader() {
-        binding.progressBar.visibility = View.GONE
-
+        try {
+            binding.progressBar.visibility = View.GONE
+        } catch (_: Exception) {
+        }
     }
 
     private fun callAccountCreationApi(
@@ -930,8 +934,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         object : DialogPositiveBtnListener {
                             override fun positiveBtnClick(dialog: DialogInterface) {
                                 val fragmentId = findNavController().currentDestination?.id
-                                findNavController().popBackStack(fragmentId?:0, true)
-                                findNavController().navigate(fragmentId?:0, arguments)
+                                findNavController().popBackStack(fragmentId ?: 0, true)
+                                findNavController().navigate(fragmentId ?: 0, arguments)
                             }
                         },
                         object : DialogNegativeBtnListener {

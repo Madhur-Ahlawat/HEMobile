@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.Window
@@ -234,6 +235,10 @@ abstract class BaseActivity<T> : AppCompatActivity() {
     }
 
     fun showLoaderDialog() {
+        Log.e(
+            "BaseActivity",
+            "LoaderDialog showLoaderDialog: $loaderDialog ${loaderDialog?.isVisible} ${loaderDialog?.isVisible == false}"
+        )
         val fragmentManager = supportFragmentManager
         val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
         if (existingFragment != null) {
@@ -249,6 +254,10 @@ abstract class BaseActivity<T> : AppCompatActivity() {
     }
 
     fun dismissLoaderDialog() {
+        Log.e(
+            "BaseActivity",
+            "LoaderDialog dismissLoaderDialog: $loaderDialog ${loaderDialog?.showsDialog}"
+        )
         if (loaderDialog != null) {
             loaderDialog?.dismiss()
             loaderDialog = null

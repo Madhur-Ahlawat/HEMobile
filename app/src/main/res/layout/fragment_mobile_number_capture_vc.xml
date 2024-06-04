@@ -33,6 +33,7 @@
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:importantForAccessibility="no"
                 android:text="@string/country_code"
+                android:layout_marginLeft="@dimen/margin_3dp"
                 android:textColor="@color/label_color"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -41,31 +42,23 @@
 
             <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
                 android:id="@+id/inputCountry"
+                style="@style/input_text1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/country_code"
                 android:minHeight="@dimen/margin_48dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp"
+                android:fontFamily="@font/open_sans"
                 app:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputCountry_helper" />
 
-            <!--            <com.conduent.nationalhighways.utils.widgets.NHTextView-->
-            <!--                android:id="@+id/label_mobile_number"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginTop="@dimen/margin_20dp"-->
-            <!--                android:text="@string/mobile_number"-->
-            <!--                android:importantForAccessibility="no"-->
-            <!--                android:textColor="@color/label_color"-->
-            <!--                android:textSize="12sp"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/inputCountry" />-->
 
             <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                 android:id="@+id/mobileNumber_et"
+                style="@style/input_text1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20dp"

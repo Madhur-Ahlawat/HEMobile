@@ -41,9 +41,9 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
-        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.payment_details))
-        (requireActivity() as HomeActivityMain).showHideToolbar(true)
         if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).setTitle(getString(R.string.payment_details))
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
     }

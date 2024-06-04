@@ -121,8 +121,9 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         cursorPosition = binding.topBalance.editText.selectionStart
         edtLength = binding.topBalance.editText.text?.length
         Selection.setSelection(binding.topBalance.editText.text, edtLength!! - 1)
-        if (navFlowCall == Constants.PAYMENT_TOP_UP) {
+        if (navFlowCall == Constants.PAYMENT_TOP_UP && requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_top_up))
+
         }
     }
 

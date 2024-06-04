@@ -522,15 +522,17 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     }
 
                     FORGOT_PASSWORD_FLOW -> {
-                        AdobeAnalytics.setActionTrack(
-                            "resend",
-                            "login:forgot password:choose options:otp",
-                            "forgot password",
-                            "english",
-                            "login",
-                            (requireActivity() as AuthActivity).previousScreen,
-                            sessionManager.getLoggedInUser()
-                        )
+                        if (requireActivity() is AuthActivity) {
+                            AdobeAnalytics.setActionTrack(
+                                "resend",
+                                "login:forgot password:choose options:otp",
+                                "forgot password",
+                                "english",
+                                "login",
+                                (requireActivity() as AuthActivity).previousScreen,
+                                sessionManager.getLoggedInUser()
+                            )
+                        }
                     }
 
                     PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
@@ -695,18 +697,18 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     response?.code = binding.edtOtp.getText().toString()
                     bundle.putParcelable("data", response)
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                    if (requireActivity() is AuthActivity) {
+                        AdobeAnalytics.setActionTrack(
+                            "verify",
+                            "login:forgot password:choose options:otp",
+                            "forgot password",
+                            "english",
+                            "login",
+                            (requireActivity() as AuthActivity).previousScreen,
+                            sessionManager.getLoggedInUser()
+                        )
 
-                    AdobeAnalytics.setActionTrack(
-                        "verify",
-                        "login:forgot password:choose options:otp",
-                        "forgot password",
-                        "english",
-                        "login",
-                        (requireActivity() as AuthActivity).previousScreen,
-                        sessionManager.getLoggedInUser()
-                    )
-
-
+                    }
                     findNavController().navigate(
                         R.id.action_otpFragment_to_createPasswordFragment,
                         bundle
@@ -714,17 +716,17 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 }
 
 
-
-                AdobeAnalytics.setActionTrack1(
-                    "verify",
-                    "login:forgot password:choose options:otp:new password set",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen, "success",
-                    sessionManager.getLoggedInUser()
-                )
-
+                if (requireActivity() is AuthActivity) {
+                    AdobeAnalytics.setActionTrack1(
+                        "verify",
+                        "login:forgot password:choose options:otp:new password set",
+                        "forgot password",
+                        "english",
+                        "login",
+                        (requireActivity() as AuthActivity).previousScreen, "success",
+                        sessionManager.getLoggedInUser()
+                    )
+                }
             }
 
             is Resource.DataError -> {
@@ -735,17 +737,19 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
+                    if (requireActivity() is AuthActivity) {
 
-                    AdobeAnalytics.setActionTrack1(
-                        "verify",
-                        "login:forgot password:choose options:otp:new password set",
-                        "forgot password",
-                        "english",
-                        "login",
-                        (requireActivity() as AuthActivity).previousScreen,
-                        status.errorMsg,
-                        sessionManager.getLoggedInUser()
-                    )
+                        AdobeAnalytics.setActionTrack1(
+                            "verify",
+                            "login:forgot password:choose options:otp:new password set",
+                            "forgot password",
+                            "english",
+                            "login",
+                            (requireActivity() as AuthActivity).previousScreen,
+                            status.errorMsg,
+                            sessionManager.getLoggedInUser()
+                        )
+                    }
 
                     when (status.errorModel?.errorCode) {
                         2051 -> {

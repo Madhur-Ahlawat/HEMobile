@@ -391,7 +391,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        if(requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        }
 
 
     }

@@ -85,12 +85,10 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
             (requireActivity() as HomeActivityMain).setTitle(getString(R.string.transactions))
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
         setBackPressListener(this)
 
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }
     }
 
     override fun initCtrl() {
@@ -172,7 +170,9 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        if(requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        }
     }
 
     private fun getDatesList(transactionsList: MutableList<TransactionData>) {

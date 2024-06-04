@@ -153,11 +153,14 @@
 
                     <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
                         android:id="@+id/inputCountry"
+                        style="@style/input_text1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="-5dp"
+                        android:layout_marginStart="-2dp"
                         android:hint="@string/country_code"
                         android:minHeight="@dimen/margin_48dp"
+                        android:fontFamily="@font/open_sans"
+                        android:paddingStart="2dp"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_16sp"
@@ -168,6 +171,7 @@
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                         android:id="@+id/inputMobileNumber"
+                        style="@style/input_text1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_12dp"

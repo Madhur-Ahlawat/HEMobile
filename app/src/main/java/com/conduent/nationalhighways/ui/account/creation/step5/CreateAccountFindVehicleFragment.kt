@@ -251,9 +251,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         .replace("-", "")
                 NewCreateAccountRequestModel.plateNumber = numberPlate
 
-                Handler(Looper.getMainLooper()).postDelayed({
+//                Handler(Looper.getMainLooper()).postDelayed({
                     binding.findVehicle.isEnabled = true
-                }, time)
+//                }, time)
 
 
                 val addedVehicleList = NewCreateAccountRequestModel.addedVehicleList
