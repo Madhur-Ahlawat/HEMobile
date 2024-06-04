@@ -59,12 +59,4 @@ class ManualTopUpViewModel @Inject constructor(
     }
 
 
-    fun validation(model: String?): Pair<Boolean, String> {
-        var ret = Pair(true, "")
-        if (model?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.enter_amount_top_up) ?: "")
-        if (model?.equals("0") == true) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.validation_manual_top_up) ?: "")
-        return ret
-    }
 }

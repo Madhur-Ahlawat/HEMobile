@@ -54,7 +54,9 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment :
         /*  val i = Intent(Intent.ACTION_VIEW)
           i.data = Uri.parse(url)
           startActivity(i)*/
-        HomeActivityMain.dataBinding?.backButton?.gone()
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).hideBackIcon()
+        }
 
     }
 

@@ -307,7 +307,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
             R.id.cardViewTopYourBalance -> {
                 if (requireActivity() is HomeActivityMain) {
-                    HomeActivityMain.setTitle(getString(R.string.top_up))
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.top_up))
                 }
 
                 val bundle = Bundle()
@@ -329,7 +329,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
             R.id.cardViewThresholdLimit -> {
                 if (requireActivity() is HomeActivityMain) {
-                    HomeActivityMain.setTitle(getString(R.string.set_threshold_limit))
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.set_threshold_limit))
                 }
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.THRESHOLD)
@@ -611,7 +611,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     override fun onResume() {
         if (requireActivity() is HomeActivityMain) {
-            HomeActivityMain.setTitle(getString(R.string.payment_management))
+            (requireActivity() as HomeActivityMain).setTitle(getString(R.string.payment_management))
         }
         super.onResume()
     }

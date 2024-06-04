@@ -35,7 +35,6 @@ interface RetryCallback {
             Log.e("TAG", "onRetryClick:--> ")
             runOnUiThread {
                 BaseApplication.CurrentContext?.let {
-
                     showRetryDialog(it, dispatchRetry)
                 }
             }

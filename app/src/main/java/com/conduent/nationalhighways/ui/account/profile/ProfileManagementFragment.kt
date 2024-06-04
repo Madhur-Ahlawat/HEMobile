@@ -76,7 +76,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             viewModel.accountDetail()
         }
         if (requireActivity() is HomeActivityMain) {
-            HomeActivityMain.setTitle(resources.getString(R.string.profile_management))
+            (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.profile_management))
         }
 
         callFocusToolBarHome()
@@ -224,7 +224,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            if(requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
+            }
             val bundle = Bundle()
             bundle.putString(NAV_FLOW_KEY, navFlowFrom)
             bundle.putParcelable(
@@ -241,7 +243,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
     private fun callFocusToolBarHome() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
-            HomeActivityMain.dataBinding?.backButton?.requestFocus()
+            (requireActivity() as HomeActivityMain).requestFocusBackIcon()
         }
 
 

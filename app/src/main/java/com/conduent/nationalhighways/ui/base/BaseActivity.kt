@@ -189,7 +189,7 @@ abstract class BaseActivity<T> : AppCompatActivity() {
                     val diff = Utils.getTimeDifference(lastTokenTime, Date())
                     if (diff.first >= 1 || (diff.first == 0L && diff.second > 13)) {
                         BaseApplication.getNewToken(apiServiceBa, smBa)
-                        BaseApplication.saveDateinSession(smBa)
+                        BaseApplication.saveDateInSession(smBa)
                     }
                 }
             }

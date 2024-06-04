@@ -155,27 +155,6 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-    fun checkPassword(newPassword:String, confirmPassword:String?, currentPassword:String?): Pair<Boolean, String> {
-        var ret = Pair(true, "")
-        if (!Utils.isValidPassword(newPassword)) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.confirm_password_validation) ?: "")
-        else if (!Utils.isValidPassword(confirmPassword)) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.confirm_password_validation) ?: "")
-        else if (currentPassword?.equals(newPassword) == true) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.current_password_validation) ?: "")
-        return ret
-    }
-    fun checkPassword(model: ResetPasswordModel?): Pair<Boolean, String> {
-        var ret = Pair(true, "")
-        if (!Utils.isValidPassword(model?.newPassword)) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.confirm_password_validation) ?: "")
-        else if (!Utils.isValidPassword(model?.confirmPassword)) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.confirm_password_validation) ?: "")
-        else if (model?.currentPassword?.equals(model.newPassword) == true) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.current_password_validation) ?: "")
-        return ret
-    }
-
     fun updateUserDetails(request: UpdateProfileRequest) {
 
         viewModelScope.launch {

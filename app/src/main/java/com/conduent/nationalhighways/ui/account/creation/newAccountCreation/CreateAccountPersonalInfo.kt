@@ -72,7 +72,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
 
             PROFILE_MANAGEMENT -> {
                 if (requireActivity() is HomeActivityMain) {
-                    HomeActivityMain.setTitle(resources.getString(R.string.profile_name))
+                    (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.profile_name))
                 }
                 val data = navData as ProfileDetailModel?
                 if (!data?.accountInformation?.accountType.equals(

@@ -44,27 +44,25 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     private var countryCode: String = ""
     private var screenType: String = ""
     val viewModel: WebSiteServiceViewModel by viewModels()
+    private lateinit var binding: ActivityLandingBinding
 
-    companion object {
-        private lateinit var binding: ActivityLandingBinding
 
-        fun showToolBar(isShown: Boolean) {
-            if (isShown) {
-                binding.toolbar.visible()
-            } else {
-                binding.toolbar.gone()
-            }
+    fun showToolBar(isShown: Boolean) {
+        if (isShown) {
+            binding.toolbar.visible()
+        } else {
+            binding.toolbar.gone()
         }
-
-        fun setToolBarTitle(title: String) {
-            binding.titleTxt.text = title
-        }
-
-        fun setBackIcon(status: Int) {
-            binding.btnBack.visibility = status
-        }
-
     }
+
+    fun setToolBarTitle(title: String) {
+        binding.titleTxt.text = title
+    }
+
+    fun setBackIcon(status: Int) {
+        binding.btnBack.visibility = status
+    }
+
 
     override fun initViewBinding() {
         binding = ActivityLandingBinding.inflate(layoutInflater)

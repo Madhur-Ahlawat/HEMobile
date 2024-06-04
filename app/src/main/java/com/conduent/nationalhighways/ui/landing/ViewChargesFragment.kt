@@ -25,9 +25,9 @@ class ViewChargesFragment : BaseFragment<FragmentViewChargesNewBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentViewChargesNewBinding {
-        binding = FragmentViewChargesNewBinding.inflate(inflater, container, false)
+       return FragmentViewChargesNewBinding.inflate(inflater, container, false)
 
-        return binding
+
     }
 
     override fun init() {

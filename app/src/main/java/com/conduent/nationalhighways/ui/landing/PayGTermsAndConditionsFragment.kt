@@ -28,9 +28,9 @@ class PayGTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCondi
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentGeneralTermsAndConditionsBinding {
-        binding = FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
+       return FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
 
-        return binding
+
     }
 
     override fun init() {

@@ -165,7 +165,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            if(requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
+            }
             val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
             bundle.putParcelable(
@@ -233,7 +235,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onResume() {
         if (requireActivity() is HomeActivityMain) {
-            HomeActivityMain.setTitle(getString(R.string.txt_my_account))
+            (requireActivity() as HomeActivityMain).setTitle(getString(R.string.txt_my_account))
             (requireActivity() as HomeActivityMain).refreshTokenApi()
         }
 
@@ -272,13 +274,13 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             R.id.payment_management -> {
                 findNavController().navigate(R.id.action_accountFragment_to_paymentMethodFragment)
                 if (requireActivity() is HomeActivityMain) {
-                    HomeActivityMain.setTitle(getString(R.string.payment_management))
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.payment_management))
                 }
             }
 
             R.id.communication_preferences -> {
                 if (requireActivity() is HomeActivityMain) {
-                    HomeActivityMain.setTitle(getString(R.string.communication_preferences))
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.communication_preferences))
                 }
                 val bundle = Bundle()
                 bundle.putString(
@@ -293,7 +295,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
             R.id.vehicle_management -> {
                 if (requireActivity() is HomeActivityMain) {
-                    HomeActivityMain.setTitle(getString(R.string.vehicle_management))
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.vehicle_management))
                 }
                 findNavController().navigate(R.id.action_accountFragment_to_vehicleManagementFragment)
             }
@@ -301,7 +303,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             R.id.close_acount -> {
                 if (!sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
                     if (requireActivity() is HomeActivityMain) {
-                        HomeActivityMain.setTitle(getString(R.string.str_close_account))
+                        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.str_close_account))
                     }
                     findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
                 }
