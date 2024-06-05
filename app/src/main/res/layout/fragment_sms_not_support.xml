@@ -7,6 +7,7 @@
 
 
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,8 +25,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/font_16sp"
             android:fontFamily="@font/roboto_regular"
-            android:id="@+id/sms_text"
-            />
+            android:id="@+id/sms_text" />
 
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
@@ -54,8 +54,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:radius="@dimen/margin_5dp" />
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

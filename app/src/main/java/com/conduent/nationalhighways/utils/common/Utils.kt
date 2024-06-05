@@ -1107,7 +1107,7 @@ object Utils {
 
 
     fun getFileExtension(filePath: String): String {
-        Log.e("TAG", "getFileExtension: filePath "+filePath )
+        Log.e("TAG", "getFileExtension: filePath " + filePath)
         /* if (filePath.length >= 3) {
              return filePath.substring(filePath.length - 3)
          } else {

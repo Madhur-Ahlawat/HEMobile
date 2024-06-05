@@ -6,8 +6,7 @@
     android:paddingTop="@dimen/margin_20dp"
     android:paddingStart="18dp"
     android:paddingEnd="@dimen/margin_18dp"
-    android:paddingBottom="@dimen/margin_20dp"
-    >
+    android:paddingBottom="@dimen/margin_20dp">
 
     <com.conduent.nationalhighways.utils.widgets.NHTextView
         android:id="@+id/tv_check_your_answers"
@@ -21,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent" />
+
     <com.conduent.nationalhighways.utils.widgets.NHTextView
         android:id="@+id/tv_personal_details"
         style="@style/Widget.HeMobile.TextInputLayout"

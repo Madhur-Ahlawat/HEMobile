@@ -28,7 +28,7 @@ class PayGTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCondi
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentGeneralTermsAndConditionsBinding {
-       return FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
+        return FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
 
 
     }
@@ -50,7 +50,8 @@ class PayGTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCondi
                     startActivity(intent)
                     return true
                 }
-                return super.shouldOverrideUrlLoading(view, request)            }
+                return super.shouldOverrideUrlLoading(view, request)
+            }
 
         })
         binding.webView.loadUrl("file:///android_res/raw/paygtermsandcondition.html")
@@ -64,10 +65,11 @@ class PayGTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCondi
             "home",
             sessionManager.getLoggedInUser()
         )
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
+
     override fun initCtrl() {
     }
 

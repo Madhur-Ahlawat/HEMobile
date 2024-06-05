@@ -17,7 +17,7 @@
             android:layout_marginRight="@dimen/margin_5dp"
             android:layout_marginBottom="@dimen/margin_10dp"
 
- />
+            />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

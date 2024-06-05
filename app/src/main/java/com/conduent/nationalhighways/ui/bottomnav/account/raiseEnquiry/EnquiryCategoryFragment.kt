@@ -103,10 +103,10 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         binding.subcategoryDropdown.contentDescription =
             getString(R.string.sub_category_accessibility)
 
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
@@ -167,7 +167,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     }
 
     private fun subCategoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-       dismissLoaderDialog()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().size > 0) {
@@ -206,7 +206,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
 
     private fun categoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-       dismissLoaderDialog()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().size > 0) {

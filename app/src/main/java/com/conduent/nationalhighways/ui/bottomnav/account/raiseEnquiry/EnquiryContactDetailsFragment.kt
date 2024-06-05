@@ -331,7 +331,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                 binding.mobileNumberEt.removeError()
                                 true
                             } else {
-                                binding.mobileNumberEt.setErrorText( getString(R.string.str_uk_phoneNumber_error_message))
+                                binding.mobileNumberEt.setErrorText(getString(R.string.str_uk_phoneNumber_error_message))
                                 false
                             }
 
@@ -341,7 +341,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                 binding.mobileNumberEt.removeError()
                                 true
                             } else {
-                                binding.mobileNumberEt.setErrorText( getString(R.string.str_non_uk_phoneNumber_error_message))
+                                binding.mobileNumberEt.setErrorText(getString(R.string.str_non_uk_phoneNumber_error_message))
                                 false
                             }
 

@@ -432,7 +432,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             is Resource.DataError -> {
-               dismissLoaderDialog()
+                dismissLoaderDialog()
 
 
                 AdobeAnalytics.setLoginActionTrackError(

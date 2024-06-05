@@ -72,5 +72,4 @@ class MakeOneOfPaymentViewModel @Inject constructor(
     }
 
 
-
 }

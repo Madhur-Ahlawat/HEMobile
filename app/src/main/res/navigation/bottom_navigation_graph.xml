@@ -74,7 +74,7 @@
             android:id="@+id/action_removeVehicleFragment_to_vehicleHomeListFragment"
             app:destination="@id/vehicleHomeListFragment"
             app:popUpTo="@id/vehicleHomeListFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_removeVehicleFragment_to_resetForgotPassword"
             app:destination="@id/resetFragment"
@@ -91,12 +91,12 @@
             android:id="@+id/action_resetFragment_to_profileManagementFragment"
             app:destination="@id/profileManagementFragment"
             app:popUpTo="@id/profileManagementFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_resetFragment_to_accountManagementFragment"
             app:destination="@id/accountFragment"
             app:popUpTo="@id/profileManagementFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -119,31 +119,29 @@
 
         <action
             android:id="@+id/action_maximumFragment_to_businessVehicleDetailFragment"
-            app:destination="@+id/businessVehicleDetailFragment"
-            />
+            app:destination="@+id/businessVehicleDetailFragment" />
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_maximumFragment_to_createAccountSummaryFragment"
             app:destination="@id/createAccountSummaryFragment" />
         <action
             android:id="@+id/action_maximumFragment_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment"
-            />
+            app:destination="@+id/vehicleListFragment" />
         <action
             android:id="@+id/action_maximumFragment_clear_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@+id/vehicleListFragment"/>
+            app:popUpTo="@+id/vehicleListFragment" />
         <action
             android:id="@+id/action_maximumFragment_addNewVehicleDetailsFragment"
             app:destination="@+id/addNewVehicleDetailsFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@+id/addNewVehicleDetailsFragment"/>
+            app:popUpTo="@+id/addNewVehicleDetailsFragment" />
         <action
             android:id="@+id/action_maximumFragment_to_vehicleResultFragment"
             app:destination="@+id/vehicleResultFragment"
@@ -156,8 +154,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_maximumFragment_businessVehicleDetailFragment"
-            app:destination="@+id/businessVehicleDetailFragment"
-            />
+            app:destination="@+id/businessVehicleDetailFragment" />
 
     </fragment>
 
@@ -231,7 +228,7 @@
             android:id="@+id/action_addVehicleDetailsFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpTo="@+id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addVehicleDetailFragment_to_max_vehicleFragment"
             app:destination="@+id/maximumVehicleFragment" />
@@ -250,7 +247,7 @@
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpTo="@+id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment"
@@ -384,12 +381,12 @@
             android:id="@+id/action_HWMobileNumberCaptureVC_to_profileManagementFragment"
             app:destination="@+id/profileManagementFragment"
             app:popUpTo="@+id/profileManagementFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_HWMobileNumberCaptureVC_to_accountFragment"
             app:destination="@+id/accountFragment"
             app:popUpTo="@+id/accountFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -436,7 +433,7 @@
             android:id="@+id/action_resenedCodeFragment_to_otpFragment"
             app:destination="@id/forgotOtpFragment"
             app:popUpTo="@id/forgotOtpFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -568,7 +565,7 @@
         android:id="@+id/notificationFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment"
         android:label="Notifications"
-        tools:layout="@layout/fragment_notification"/>
+        tools:layout="@layout/fragment_notification" />
 
     <fragment
         android:id="@+id/vehicleListFragment2"
@@ -694,8 +691,7 @@
         tools:layout="@layout/fragment_three_d_s_webview">
         <action
             android:id="@+id/action_threeDSWebViewFragment_to_accountSuspendedFinalPayFragment"
-            app:destination="@+id/accountSuspendedFinalPayFragment"
-            />
+            app:destination="@+id/accountSuspendedFinalPayFragment" />
 
     </fragment>
 
@@ -723,7 +719,7 @@
             android:id="@+id/action_accountSuspendedFinalPayFragment_to_accountSuspendedPaymentFragment"
             app:destination="@id/accountSuspendedPaymentFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@id/accountSuspendedPaymentFragment"/>
+            app:popUpTo="@id/accountSuspendedPaymentFragment" />
     </fragment>
 
     <fragment
@@ -844,29 +840,29 @@
         android:id="@+id/tryPaymentAgainFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.TryPaymentAgainFragment"
         android:label="TryPaymentAgainFragment"
-        tools:layout="@layout/fragment_try_payment_again" >
+        tools:layout="@layout/fragment_try_payment_again">
 
         <action
             android:id="@+id/action_tryPaymentAgainFragment_to_selectPaymentMethodFragment"
             app:destination="@id/selectPaymentMethodFragment"
             app:popUpTo="@id/selectPaymentMethodFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_tryPaymentAgainFragment_to_accountSuspendedPaymentFragment"
             app:destination="@id/accountSuspendedPaymentFragment"
             app:popUpTo="@id/accountSuspendedPaymentFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_tryPaymentAgainFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment"
             app:popUpTo="@id/nmiPaymentFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_tryPaymentAgainFragment_to_paymentMethodFragment"
             app:destination="@id/paymentMethodFragment"
             app:popUpTo="@id/paymentMethodFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
     </fragment>
 

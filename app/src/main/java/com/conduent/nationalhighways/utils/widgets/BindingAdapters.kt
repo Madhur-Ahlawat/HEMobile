@@ -4,9 +4,6 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.databinding.BindingAdapter
 
 
-
-
-
 /**
  * Created by Mohammed Sameer Ahmad .
  */

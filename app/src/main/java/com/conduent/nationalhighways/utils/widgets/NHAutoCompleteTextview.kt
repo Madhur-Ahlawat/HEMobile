@@ -70,7 +70,7 @@ class NHAutoCompleteTextview @JvmOverloads constructor(
                         selectedItemDescription = ""
                     }
                 } else {
-                    if(text.toString() != Constants.UNITED_KINGDOM){
+                    if (text.toString() != Constants.UNITED_KINGDOM) {
                         setText("")
                         selectedItemDescription = ""
                     }

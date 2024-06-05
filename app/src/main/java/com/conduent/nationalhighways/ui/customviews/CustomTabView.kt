@@ -9,9 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.conduent.nationalhighways.R
 
-class CustomTabView: AppCompatTextView {
+class CustomTabView : AppCompatTextView {
 
-    private var showDividerVal:Boolean=false
+    private var showDividerVal: Boolean = false
 
 
     constructor(context: Context) : super(context) {
@@ -38,15 +38,14 @@ class CustomTabView: AppCompatTextView {
         typeface = mTypeFace
     }
 
-    fun setDivider(show:Boolean)
-    {
+    fun setDivider(show: Boolean) {
         showDividerVal = show
     }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        if(showDividerVal)
-        {
+        if (showDividerVal) {
             val paint = Paint()
             paint.color = ContextCompat.getColor(context, R.color.black)
             paint.strokeWidth = 0F

@@ -107,7 +107,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
     private fun setCategoryData() {
         if (sm.fetchSubCategoriesData().size == 0) {
-           showLoaderDialog()
+            showLoaderDialog()
             apiViewModel.getCategories()
         } else {
             getCategoryDataFromSession()
@@ -131,7 +131,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     }
 
     private fun categoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-       dismissLoaderDialog()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().isNotEmpty()) {
@@ -200,7 +200,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
     private fun subCategoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
         if (categoryList.size <= apiCallPos) {
-          dismissLoaderDialog()
+            dismissLoaderDialog()
         }
         if (apiCallPos == 1) {
             subcategoryList?.clear()

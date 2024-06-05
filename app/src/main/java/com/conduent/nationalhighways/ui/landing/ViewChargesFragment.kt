@@ -25,7 +25,7 @@ class ViewChargesFragment : BaseFragment<FragmentViewChargesNewBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentViewChargesNewBinding {
-       return FragmentViewChargesNewBinding.inflate(inflater, container, false)
+        return FragmentViewChargesNewBinding.inflate(inflater, container, false)
 
 
     }
@@ -46,21 +46,21 @@ class ViewChargesFragment : BaseFragment<FragmentViewChargesNewBinding>() {
             layoutManager = LinearLayoutManager(requireActivity())
 
             val mTollRatesList = ArrayList<TollRatesRespNew>()
-                mTollRatesList.add(
-                    TollRatesRespNew(1, "Motorcycle", "A", "Free", "Free")
-                )
-                mTollRatesList.add(
-                    TollRatesRespNew(2, "Car", "B", "£2.50", "£2.00")
-                )
-                mTollRatesList.add(
-                    TollRatesRespNew(3, "Bus", "C", "£3.00", "£2.63")
-                )
-                mTollRatesList.add(
-                    TollRatesRespNew(4, "Truck", "D", "£6.00", "£5.19")
-                )
+            mTollRatesList.add(
+                TollRatesRespNew(1, "Motorcycle", "A", "Free", "Free")
+            )
+            mTollRatesList.add(
+                TollRatesRespNew(2, "Car", "B", "£2.50", "£2.00")
+            )
+            mTollRatesList.add(
+                TollRatesRespNew(3, "Bus", "C", "£3.00", "£2.63")
+            )
+            mTollRatesList.add(
+                TollRatesRespNew(4, "Truck", "D", "£6.00", "£5.19")
+            )
             adapter = TollRateAdapterNew(requireActivity(), mTollRatesList)
         }
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
@@ -73,8 +73,9 @@ class ViewChargesFragment : BaseFragment<FragmentViewChargesNewBinding>() {
             textLocalResidentDiscount?.setMovementMethod(LinkMovementMethod.getInstance())
         }
 
-        binding.textLocalResidentDiscount.contentDescription=resources.getString(R.string.b_local_resident_discount_desc)
-        binding.textFines.contentDescription=resources.getString(R.string.fines_you_can_get_desc)
+        binding.textLocalResidentDiscount.contentDescription =
+            resources.getString(R.string.b_local_resident_discount_desc)
+        binding.textFines.contentDescription = resources.getString(R.string.fines_you_can_get_desc)
     }
 
     override fun observer() {

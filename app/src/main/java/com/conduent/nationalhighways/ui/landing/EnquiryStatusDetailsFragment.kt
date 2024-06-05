@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class EnquiryStatusDetailsFragment : BaseFragment<FragmentEnquiryStatusDetailsBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener, DropDownItemSelectListener {
-    private var serviceRequest: ServiceRequest?=null
+    private var serviceRequest: ServiceRequest? = null
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     private var data: CrossingDetailsModelsResponse? = null
 
@@ -126,22 +126,22 @@ class EnquiryStatusDetailsFragment : BaseFragment<FragmentEnquiryStatusDetailsBi
                 )
             }
 
-/*
-            R.id.editPaymentAmount -> {
-                if (data?.unSettledTrips!! > 0) {
-                    findNavController().navigate(
-                        R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
-                        enableEditMode()
-                    )
-                } else {
-                    findNavController().navigate(
-                        R.id.action_crossingCheckAnswersFragment_to_additionalCrossingsFragment,
-                        enableEditMode()
-                    )
-                }
+            /*
+                        R.id.editPaymentAmount -> {
+                            if (data?.unSettledTrips!! > 0) {
+                                findNavController().navigate(
+                                    R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
+                                    enableEditMode()
+                                )
+                            } else {
+                                findNavController().navigate(
+                                    R.id.action_crossingCheckAnswersFragment_to_additionalCrossingsFragment,
+                                    enableEditMode()
+                                )
+                            }
 
-            }
-*/
+                        }
+            */
         }
     }
 

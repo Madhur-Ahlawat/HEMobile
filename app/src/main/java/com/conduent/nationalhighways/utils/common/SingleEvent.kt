@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.utils.common
 open class SingleEvent<out T>(private val content: T) {
 
     private var hasBeenHandled = false
+
     /**
      * Returns the content and prevents its use again.
      */

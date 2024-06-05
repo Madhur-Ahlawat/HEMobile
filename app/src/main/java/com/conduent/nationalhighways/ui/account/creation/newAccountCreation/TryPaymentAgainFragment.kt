@@ -43,7 +43,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
     override fun init() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }else if(requireActivity() is AuthActivity){
+        } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {

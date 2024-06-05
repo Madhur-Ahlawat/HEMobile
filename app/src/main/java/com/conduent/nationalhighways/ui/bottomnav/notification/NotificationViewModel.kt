@@ -46,6 +46,7 @@ class NotificationViewModel @Inject constructor(
             }
         }
     }
+
     fun readAlertItem(cssLookUpKey: String) {
         viewModelScope.launch {
             try {
@@ -60,6 +61,7 @@ class NotificationViewModel @Inject constructor(
             }
         }
     }
+
     fun getAlertsApi(lang: String) {
         viewModelScope.launch {
             try {

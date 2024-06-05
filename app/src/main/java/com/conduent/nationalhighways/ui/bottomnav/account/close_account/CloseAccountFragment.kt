@@ -103,7 +103,7 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
     }

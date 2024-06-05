@@ -39,7 +39,7 @@ object GeofenceUtils {
 
     //starting geofence
     fun startGeofence(context1: Context, from: Int = 0) {
-        Utils.writeInFile(context1,"startgeofence from $from")
+        Utils.writeInFile(context1, "startgeofence from $from")
         context = context1
         val geofenceIntent: PendingIntent by lazy {
             val intent = Intent(context, GeofenceBroadcastReceiver::class.java)

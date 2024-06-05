@@ -29,7 +29,7 @@ class GuidanceDocumentsFragment : BaseFragment<FragmentGuidanceDocumentsBinding>
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentGuidanceDocumentsBinding {
-        return  FragmentGuidanceDocumentsBinding.inflate(inflater, container, false)
+        return FragmentGuidanceDocumentsBinding.inflate(inflater, container, false)
     }
 
     override fun init() {

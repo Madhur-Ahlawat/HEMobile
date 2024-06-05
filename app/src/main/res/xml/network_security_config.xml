@@ -2,8 +2,8 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">www.api-highwaystest.services.conduent.com</domain>
-<!--                <domain includeSubdomains="true">www.e2-app-dartford-crossing-charge.services.conduent.com</domain>-->
-<!--                <domain includeSubdomains="true">www.app-dartford-crossing-charge.services.conduent.com</domain>-->
+        <!--                <domain includeSubdomains="true">www.e2-app-dartford-crossing-charge.services.conduent.com</domain>-->
+        <!--                <domain includeSubdomains="true">www.app-dartford-crossing-charge.services.conduent.com</domain>-->
     </domain-config>
     <!--    <base-config>-->
     <!--        <trust-anchors>-->

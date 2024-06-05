@@ -37,7 +37,8 @@ class PaymentMethodViewModel @Inject constructor(
     val savedCardState: StateFlow<Resource<PaymentMethodResponseModel?>?> get() = _savedCardListState
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-     val _saveDirectDebitNewCardState = MutableStateFlow<Resource<PaymentMethodDeleteResponseModel?>?>(null)
+    val _saveDirectDebitNewCardState =
+        MutableStateFlow<Resource<PaymentMethodDeleteResponseModel?>?>(null)
     val saveDirectDebitNewCardState: StateFlow<Resource<PaymentMethodDeleteResponseModel?>?> get() = _saveDirectDebitNewCardState
 
 
@@ -68,7 +69,6 @@ class PaymentMethodViewModel @Inject constructor(
     private val _saveDirectDebitNewCard =
         MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
     val saveDirectDebitNewCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _saveDirectDebitNewCard
-
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -137,6 +137,7 @@ class PaymentMethodViewModel @Inject constructor(
             }
         }
     }
+
     fun deleteCardState(model: PaymentMethodDeleteModel?) {
         viewModelScope.launch {
             try {

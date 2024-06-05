@@ -18,4 +18,4 @@ data class CommunicationPrefsRequestModelList(
     val pushNotFlag: String?,
     val defPushNot: String?,
     val defMail: String?
-):Parcelable
+) : Parcelable

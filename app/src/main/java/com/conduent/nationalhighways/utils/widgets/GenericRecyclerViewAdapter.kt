@@ -15,7 +15,12 @@ class GenericRecyclerViewAdapter<T>(
     areItemContentsEqual: (oldItem: T, newItem: T) -> Boolean = { old, new -> old == new },
     private val onItemClick: ((View, T) -> Unit)? = null,
     private val onBind: ((T, ViewDataBinding, position: Int) -> Unit)? = null,
-) : ListAdapter<T, GenericRecyclerViewAdapter.DataBindingViewHolder<T>>(DiffCallback(areItemsSame, areItemContentsEqual)) {
+) : ListAdapter<T, GenericRecyclerViewAdapter.DataBindingViewHolder<T>>(
+    DiffCallback(
+        areItemsSame,
+        areItemContentsEqual
+    )
+) {
 
     constructor(
         getViewLayout: (item: T) -> Int,
@@ -27,9 +32,10 @@ class GenericRecyclerViewAdapter<T>(
         getViewLayout, areItemsSame, areItemContentsEqual, onItemClick::onItemClick,
         onBind::onBind,
     )
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder<T> {
         val layoutInflater = LayoutInflater.from(parent.context)
-         val binding= DataBindingUtil.inflate<ViewDataBinding>(
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(
             layoutInflater, viewType, parent,
             false
         )
@@ -54,12 +60,14 @@ class GenericRecyclerViewAdapter<T>(
         val sameItemContents: (oldItem: T, newItem: T) -> Boolean,
     ) : DiffUtil.ItemCallback<T>() {
         override fun areItemsTheSame(oldItem: T & Any, newItem: T & Any): Boolean {
-           return sameItems(oldItem, newItem)
+            return sameItems(oldItem, newItem)
         }
+
         override fun areContentsTheSame(oldItem: T & Any, newItem: T & Any): Boolean {
             return sameItemContents(oldItem, newItem)
         }
     }
+
     class DataBindingViewHolder<T>(private val binding: ViewDataBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -99,6 +107,7 @@ class GenericRecyclerViewAdapter<T>(
             }
         }
     }
+
     object BR {
         var _all = 0
         var controller = 1

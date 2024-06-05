@@ -72,7 +72,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(false)
         }
     }
@@ -138,7 +138,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         super.onResume()
         showLoaderDialog()
         setBackPressListener(this)
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(false)
             (requireActivity() as HomeActivityMain).getNotificationApi()
         }
@@ -246,11 +246,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 R.id.action_dashBoardFragment_to_accountManagementFragment,
                 bundle
             )
-            if(requireActivity() is HomeActivityMain) {
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
             }
         } else {
-            if(requireActivity() is HomeActivityMain) {
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 0)
             }
         }

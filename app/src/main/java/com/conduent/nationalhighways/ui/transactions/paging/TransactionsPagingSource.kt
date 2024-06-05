@@ -27,8 +27,8 @@ class TransactionsPagingSource(
                 request
             )
             val data = response?.body()!!.transactionList?.transaction
-            data!!.forEach{
-                Log.e("XJ220",it.amount.toString())
+            data!!.forEach {
+                Log.e("XJ220", it.amount.toString())
             }
 
             responseData?.addAll(data!!)

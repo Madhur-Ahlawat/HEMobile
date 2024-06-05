@@ -40,12 +40,14 @@ class CheckPaidCrossingViewModel @Inject constructor(
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _loginWithRefAndPlateNumber = MutableLiveData<Resource<LoginWithPlateAndReferenceNumberResponseModel?>?>()
+    private val _loginWithRefAndPlateNumber =
+        MutableLiveData<Resource<LoginWithPlateAndReferenceNumberResponseModel?>?>()
     val loginWithRefAndPlateNumber: LiveData<Resource<LoginWithPlateAndReferenceNumberResponseModel?>?> get() = _loginWithRefAndPlateNumber
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _usedTollTransactions = MutableLiveData<Resource<List<UsedTollTransactionResponse?>?>?>()
+    private val _usedTollTransactions =
+        MutableLiveData<Resource<List<UsedTollTransactionResponse?>?>?>()
     val usedTollTransactions: LiveData<Resource<List<UsedTollTransactionResponse?>?>?> get() = _usedTollTransactions
 
 
@@ -60,10 +62,11 @@ class CheckPaidCrossingViewModel @Inject constructor(
     val paidCrossingResponse: LiveData<CrossingDetailsModelsResponse?> get() = _paidCrossingResponse
 
 
-    fun setPaidCrossingOption(data : CheckPaidCrossingsOptionsModel?){
+    fun setPaidCrossingOption(data: CheckPaidCrossingsOptionsModel?) {
         _paidCrossingOption.value = data
     }
-    fun setPaidCrossingResponse(data : CrossingDetailsModelsResponse?){
+
+    fun setPaidCrossingResponse(data: CrossingDetailsModelsResponse?) {
         _paidCrossingResponse.value = data
     }
 
@@ -76,15 +79,16 @@ class CheckPaidCrossingViewModel @Inject constructor(
                     if (response.isSuccessful) {
                         val serverToken =
                             response.headers()["Authorization"]?.split("Bearer ")?.get(1)
-                        Logg.logging("CheckpaidCrossi","serverToken $serverToken")
+                        Logg.logging("CheckpaidCrossi", "serverToken $serverToken")
 
                         sessionManager.saveAuthToken(serverToken ?: "")
-                        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
+                        sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, true)
                         _loginWithRefAndPlateNumber.postValue(Resource.Success(response.body()))
                     } else {
                         _loginWithRefAndPlateNumber.postValue(
-                            Resource.DataError(msg=
-                            response.code().toString().trim()
+                            Resource.DataError(
+                                msg =
+                                response.code().toString().trim()
                             )
                         )
                     }
@@ -99,12 +103,18 @@ class CheckPaidCrossingViewModel @Inject constructor(
     fun usedTollTransactions(model: UsedTollTransactionsRequest?) {
         viewModelScope.launch {
             try {
-                _usedTollTransactions.postValue(success(repository.getTollTransactions(model), errorManager))
+                _usedTollTransactions.postValue(
+                    success(
+                        repository.getTollTransactions(model),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _usedTollTransactions.postValue(failure(e))
             }
         }
     }
+
     fun balanceTransfer(model: BalanceTransferRequest?) {
         viewModelScope.launch {
             try {

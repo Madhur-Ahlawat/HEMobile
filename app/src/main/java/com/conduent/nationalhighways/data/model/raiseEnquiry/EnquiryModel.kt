@@ -14,8 +14,8 @@ data class EnquiryModel(
     var fullcountryCode: String = "",
     var mobileNumber: String = "",
     var vehicleRegistration: String = "",
-    var fileName: String ="",
-    var apiFileName: String ="",
+    var fileName: String = "",
+    var apiFileName: String = "",
     var file: File = File("")
 
-    )
+)

@@ -57,8 +57,7 @@
         android:id="@+id/resetFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
         android:label="ResetFragment"
-        tools:layout="@layout/fragment_forgot_reset">
-    </fragment>
+        tools:layout="@layout/fragment_forgot_reset"></fragment>
     <fragment
         android:id="@+id/resenedCodeFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"

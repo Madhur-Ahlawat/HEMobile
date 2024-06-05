@@ -29,10 +29,9 @@ class TermsConditionFragment : BaseFragment<FragmentTermsConditionBinding>() {
 
     override fun init() {
         binding.webView.settings.javaScriptEnabled = true
-        if(url.isEmpty()){
+        if (url.isEmpty()) {
             binding.webView.loadUrl("file:///android_asset/termsandconditionspage.html")
-        }
-        else{
+        } else {
             binding.webView.loadUrl(url)
         }
 
@@ -71,7 +70,7 @@ class TermsConditionFragment : BaseFragment<FragmentTermsConditionBinding>() {
     }
 
     private fun showLoader() {
-        binding.progressBar.visibility=View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     private fun hideLoader() {

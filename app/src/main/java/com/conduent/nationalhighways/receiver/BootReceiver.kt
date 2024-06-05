@@ -53,26 +53,36 @@ class BootReceiver : BroadcastReceiver() {
     }
 
 
-    private fun startForeService(context:Context){
+    private fun startForeService(context: Context) {
         Utils.writeInFile(context, "BootReceiver startForeService Called")
-        val serviceIntent = Intent(Intent.ACTION_MAIN).setClass(context, PlayLocationService::class.java)
+        val serviceIntent =
+            Intent(Intent.ACTION_MAIN).setClass(context, PlayLocationService::class.java)
         serviceIntent.putExtra("StartForeground", true)
 
-        if (android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.S) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             try {
                 Utils.writeInFile(context, "BootReceiver S startForeService")
                 context.startForegroundService(serviceIntent)
             } catch (fssnae: ForegroundServiceStartNotAllowedException) {
-                Utils.writeInFile(context, "BootReceiver startForeService exception 1 ->"+fssnae.message)
-                Log.e(TAG,"[Api31 Compatibility] Can't start service as foreground! $fssnae")
+                Utils.writeInFile(
+                    context,
+                    "BootReceiver startForeService exception 1 ->" + fssnae.message
+                )
+                Log.e(TAG, "[Api31 Compatibility] Can't start service as foreground! $fssnae")
             } catch (se: SecurityException) {
-                Utils.writeInFile(context, "BootReceiver startForeService exception 2 ->"+se.message)
-                Log.e(TAG,"[Api31 Compatibility] Can't start service as foreground! $se")
+                Utils.writeInFile(
+                    context,
+                    "BootReceiver startForeService exception 2 ->" + se.message
+                )
+                Log.e(TAG, "[Api31 Compatibility] Can't start service as foreground! $se")
             } catch (e: Exception) {
-                Utils.writeInFile(context, "BootReceiver startForeService exception 3 ->"+e.message)
-                Log.e(TAG,"[Api31 Compatibility] Can't start service as foreground! $e")
+                Utils.writeInFile(
+                    context,
+                    "BootReceiver startForeService exception 3 ->" + e.message
+                )
+                Log.e(TAG, "[Api31 Compatibility] Can't start service as foreground! $e")
             }
-        }else {
+        } else {
             Utils.writeInFile(context, "BootReceiver O startForeService")
             context.startForegroundService(serviceIntent)
         }

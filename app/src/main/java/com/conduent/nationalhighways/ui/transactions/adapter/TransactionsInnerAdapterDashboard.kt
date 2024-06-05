@@ -50,7 +50,7 @@ class TransactionsInnerAdapterDashboard(
         binding?.apply {
             if (accSubType == Constants.PAYG) {
                 balanceCl.gone()
-            }else{
+            } else {
                 balanceCl.visible()
                 valueCurrentBalance.text = recentTransactionItem.balance
             }

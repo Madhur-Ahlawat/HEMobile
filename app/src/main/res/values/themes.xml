@@ -23,8 +23,12 @@
 
         <!-- Customize your theme here. -->
     </style>
+
     <style name="CustomDialogTheme1" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>    <!-- Add other attributes as needed --></style>
+        <item name="android:windowBackground">@android:color/transparent
+        </item>    <!-- Add other attributes as needed -->
+    </style>
+
     <style name="Theme.CreateAccount" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
@@ -35,7 +39,7 @@
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:windowLightStatusBar">true</item> <!-- Customize your theme here. -->
     </style>
@@ -91,7 +95,8 @@
     </style>
 
     <style name="Widget.HeMobile.TextInputLayoutDrop" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText</item>
+        <item name="hintTextAppearance">@style/TextAppearance.HeMobile.TextInputLayout.HintText
+        </item>
         <item name="hintTextColor">@color/black</item>
         <item name="boxStrokeColor">@color/black</item>
     </style>
@@ -193,6 +198,7 @@
         <item name="trackColorInactive">@color/color_000000</item>
         <item name="trackColor">@color/color_000000</item>
     </style>
+
     <style name="EditTextStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -202,7 +208,8 @@
         <item name="fontFamily">@font/sfregular</item>
         <item name="textSize">@dimen/_13ssp</item>
         <item name="android:paddingStart">@dimen/_5sdp</item>
-        <item name="android:paddingEnd">@dimen/_5sdp</item>    </style>
+        <item name="android:paddingEnd">@dimen/_5sdp</item>
+    </style>
 
     <style name="ButtonStyle">
         <item name="android:layout_width">match_parent</item>
@@ -215,6 +222,7 @@
         <item name="fontFamily">@font/sfsemibold</item>
         <item name="textAllCaps">false</item>
     </style>
+
     <style name="input_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -234,7 +242,7 @@
         <item name="inputStrongColor">@color/label_color</item>
     </style>
 
-     <style name="input_text1">
+    <style name="input_text1">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="inputTextSize">16sp</item>
@@ -258,6 +266,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
+
     <style name="RegularTextSmallSize">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -281,6 +290,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
+
     <style name="RegularTextGrey">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -288,6 +298,7 @@
         <item name="android:textColor">@color/gray_707070</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
+
     <style name="MediumText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -295,6 +306,7 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">@font/sfmedium</item>
     </style>
+
     <style name="MediumTextBlack">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -319,6 +331,7 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:fontFamily">@font/open_sans_semibold</item>
     </style>
+
     <style name="SemiBoldTextBlack_14sp">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -364,10 +377,6 @@
     </style>
 
 
-
-
-
-
     <style name="button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -379,9 +388,6 @@
     </style>
 
 
-
-
-
     <style name="rectangleButtonStyle">
         <item name="background">@drawable/button_border</item>
         <item name="android:textColor">@color/buttonTextColorSecondary</item>
@@ -389,6 +395,7 @@
         <item name="elevation">10dp</item>
 
     </style>
+
     <style name="RadioButtonStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">51dp</item>
@@ -419,7 +426,6 @@
     </style>
 
 
-
     <style name="cardView_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -429,6 +435,7 @@
         <item name="android:elevation">@dimen/margin_3dp</item>
         <item name="cornerRadius">@dimen/margin_5dp</item>
     </style>
+
     <style name="CustomLoaderDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>

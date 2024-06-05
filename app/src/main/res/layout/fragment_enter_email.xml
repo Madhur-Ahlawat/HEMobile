@@ -5,22 +5,22 @@
 
     <data>
 
-       <!-- <variable
-            name="model"
-            type="com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionModel" />
--->
+        <!-- <variable
+             name="model"
+             type="com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionModel" />
+ -->
         <variable
             name="email"
             type="String" />
+
         <variable
             name="isValid"
             type="Boolean" />
 
 
-            <variable
-                name="model"
-                type="com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel" />
-
+        <variable
+            name="model"
+            type="com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel" />
 
 
     </data>
@@ -31,8 +31,7 @@
         android:paddingStart="@dimen/margin_20dp"
         android:paddingTop="@dimen/margin_18dp"
         android:paddingEnd="@dimen/margin_20dp"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -73,9 +72,7 @@
             app:layout_constraintTop_toBottomOf="@id/edt_email"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/_5sdp"
-            android:id="@+id/text_username"
-            />
-
+            android:id="@+id/text_username" />
 
 
         <com.conduent.apollo.ui.CMButton
@@ -87,8 +84,7 @@
             app:layout_goneMarginTop="@dimen/margin_30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_username"
-            />
+            app:layout_constraintTop_toBottomOf="@id/text_username" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

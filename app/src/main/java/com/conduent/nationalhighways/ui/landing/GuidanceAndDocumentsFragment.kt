@@ -21,7 +21,7 @@ class GuidanceAndDocumentsFragment : BaseFragment<FragmentGuidanceAndDocumentsBi
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentGuidanceAndDocumentsBinding {
-       return FragmentGuidanceAndDocumentsBinding.inflate(inflater, container, false)
+        return FragmentGuidanceAndDocumentsBinding.inflate(inflater, container, false)
 
 
     }

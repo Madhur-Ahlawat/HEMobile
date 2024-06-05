@@ -5,7 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +15,7 @@
         android:fontFamily="@font/sfbold"
         android:textSize="15dp"
         android:layout_marginStart="@dimen/margin_50dp"
-        android:layout_marginEnd="@dimen/margin_100dp"/>
+        android:layout_marginEnd="@dimen/margin_100dp" />
 
 
     <TextView
@@ -29,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@id/title"
         android:textColor="@color/black"
         android:fontFamily="@font/sfbold"
-        android:textSize="15dp"/>
+        android:textSize="15dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -37,8 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/title"
         android:layout_marginStart="25dp"
-        android:id="@+id/imageview"/>
-
+        android:id="@+id/imageview" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

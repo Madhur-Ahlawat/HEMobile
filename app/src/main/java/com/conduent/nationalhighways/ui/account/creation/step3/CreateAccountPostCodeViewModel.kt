@@ -57,6 +57,7 @@ class CreateAccountPostCodeViewModel @Inject constructor(
             }
         }
     }
+
     fun fetchAddressState(search: String) {
         viewModelScope.launch {
             try {
@@ -101,7 +102,6 @@ class CreateAccountPostCodeViewModel @Inject constructor(
             }
         }
     }
-
 
 
 }

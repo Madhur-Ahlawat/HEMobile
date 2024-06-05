@@ -278,6 +278,7 @@ class VehicleMgmtViewModel @Inject constructor(
             }
         }
     }
+
     fun getVehicleListApi(start: String, count: String) {
         viewModelScope.launch {
             try {

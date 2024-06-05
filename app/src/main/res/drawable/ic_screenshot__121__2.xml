@@ -4,6 +4,5 @@
     android:tint="@color/blue_color"
     android:viewportWidth="34"
     android:viewportHeight="24">
-  <path
-      android:pathData="M0,0h33.8824v24h-33.8824z"/>
+    <path android:pathData="M0,0h33.8824v24h-33.8824z" />
 </vector>

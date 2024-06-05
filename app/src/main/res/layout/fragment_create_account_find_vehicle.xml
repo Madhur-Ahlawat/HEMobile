@@ -130,8 +130,7 @@
                     android:layout_height="@dimen/margin_7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
                     android:background="@drawable/circle_5dp"
-                    android:contentDescription="@string/accessibility_bullet"
-                    />
+                    android:contentDescription="@string/accessibility_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -183,7 +182,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:text="@string/str_continue"
                 app:isEnabled="false"
-                android:layout_marginBottom="@dimen/margin_20dp"/>
+                android:layout_marginBottom="@dimen/margin_20dp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/cancel_bt"

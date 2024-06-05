@@ -107,7 +107,7 @@ class DirectDebitFragment : BaseFragment<FragmentDirectDebitBinding>() {
 
 
             is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel) ) {
+                if (checkSessionExpiredOrServerError(status.errorModel)) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     val bundle = Bundle()

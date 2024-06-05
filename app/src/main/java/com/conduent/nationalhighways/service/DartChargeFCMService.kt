@@ -34,11 +34,11 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
             remoteMessage.notification?.let {
                 it.body?.let { body -> sendNotification(body) }
             }
-          /*  val from = remoteMessage.from
-            val data: Map<*, *> = remoteMessage.data
-            data[message]?.let {
-                // check data and show notification
-            }*/
+            /*  val from = remoteMessage.from
+              val data: Map<*, *> = remoteMessage.data
+              data[message]?.let {
+                  // check data and show notification
+              }*/
         } catch (e: Exception) {
             // handle exception
         }
@@ -83,7 +83,8 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Since android Oreo notification channel is needed.
         val channel = NotificationChannel(

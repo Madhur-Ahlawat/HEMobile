@@ -40,8 +40,7 @@
             android:text="@string/str_continue"
             app:layout_constraintTop_toBottomOf="@id/txtDescription"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
@@ -53,8 +52,7 @@
             android:text="@string/continueWithoutApplying"
             app:layout_constraintTop_toBottomOf="@id/btnContinue"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-             />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

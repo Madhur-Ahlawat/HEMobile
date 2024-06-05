@@ -67,7 +67,7 @@
                     android:id="@+id/firstView"
                     android:layout_height="0.8dp"
                     android:background="#000000"
-                    android:alpha="0.3"/>
+                    android:alpha="0.3" />
 
                 <LinearLayout
                     android:id="@+id/rebooking_back_button_ll"

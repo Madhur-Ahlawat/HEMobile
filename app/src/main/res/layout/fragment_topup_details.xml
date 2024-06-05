@@ -24,6 +24,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:importantForAccessibility="yes"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/crossing_amount"
                     android:layout_width="@dimen/margin_0dp"
@@ -51,7 +52,6 @@
                     app:layout_constraintStart_toStartOf="@id/crossing_amount"
                     app:layout_constraintTop_toBottomOf="@id/crossing_amount" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
             <View

@@ -33,7 +33,7 @@
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/blue_color</item>
+        <item name="android:statusBarColor">@color/blue_color</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
@@ -47,7 +47,7 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorControlActivated">@color/black</item>
         <item name="colorControlNormal">@color/tool_bar_clr</item>
-        <item name="android:statusBarColor" >@color/blue_color</item>
+        <item name="android:statusBarColor">@color/blue_color</item>
     </style>
 
     <style name="Theme.HEMobileLight" parent="Theme.AppCompat.Light.NoActionBar">
@@ -176,6 +176,7 @@
         <item name="trackColorInactive">@color/color_000000</item>
         <item name="trackColor">@color/color_000000</item>
     </style>
+
     <style name="input_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

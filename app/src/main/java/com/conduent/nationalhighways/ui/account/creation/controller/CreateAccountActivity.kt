@@ -52,6 +52,7 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
         )
 
     }
+
     fun focusToolBarCreateAccount() {
         val task = Runnable {
             if (binding.toolBarLyt.backButton.isVisible) {
@@ -67,6 +68,7 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }
+
     override fun observeViewModel() {}
 
     override fun onPostResume() {
@@ -74,13 +76,14 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
         binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
 
         val task = Runnable {
-            if(!binding.toolBarLyt.backButton.isAccessibilityFocused){
+            if (!binding.toolBarLyt.backButton.isAccessibilityFocused) {
                 binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
             }
         }
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         val navHost = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)

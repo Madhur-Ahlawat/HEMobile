@@ -166,8 +166,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp"
                     android:importantForAccessibility="yes"
-                    android:focusable="true"
-                    >
+                    android:focusable="true">
 
                     <TextView
                         android:id="@+id/txtEmailAddress"
@@ -203,6 +202,7 @@
                 tools:text="@string/app_name"
                 android:textColor="@color/red_color"
                 android:textSize="@dimen/font_16sp" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/vehicleHeading"
                 android:layout_width="match_parent"
@@ -246,8 +246,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </RelativeLayout>
-
-
 
 
             <com.conduent.nationalhighways.utils.widgets.NHButton

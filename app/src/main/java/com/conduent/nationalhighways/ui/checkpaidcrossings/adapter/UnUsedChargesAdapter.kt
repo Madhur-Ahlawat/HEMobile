@@ -7,7 +7,7 @@ import com.conduent.nationalhighways.data.model.checkpaidcrossings.UnUsedCharges
 import com.conduent.nationalhighways.databinding.AdapterUnusedChargesBinding
 
 class UnUsedChargesAdapter(
-    private var list: MutableList<UnUsedChargesModel?>?,val listener: OnChangeClickListener
+    private var list: MutableList<UnUsedChargesModel?>?, val listener: OnChangeClickListener
 ) : RecyclerView.Adapter<UnUsedChargesAdapter.HistoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder =

@@ -35,8 +35,8 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
         mClearPaint = new Paint();
         mClearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         deleteDrawable = ContextCompat.getDrawable(mContext, R.drawable.ic_mark_as_read_png);
-        intrinsicWidth = (deleteDrawable.getIntrinsicWidth()/3) - (deleteDrawable.getIntrinsicWidth()/13);
-        intrinsicHeight = (deleteDrawable.getIntrinsicHeight()/3) - (deleteDrawable.getIntrinsicHeight()/13);
+        intrinsicWidth = (deleteDrawable.getIntrinsicWidth() / 3) - (deleteDrawable.getIntrinsicWidth() / 13);
+        intrinsicHeight = (deleteDrawable.getIntrinsicHeight() / 3) - (deleteDrawable.getIntrinsicHeight() / 13);
 
 
     }
@@ -57,7 +57,7 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         View itemView = viewHolder.itemView;
-        int itemHeight =itemView.getBottom() - itemView.getTop();
+        int itemHeight = itemView.getBottom() - itemView.getTop();
 
         boolean isCancelled = dX == 0 && !isCurrentlyActive;
 

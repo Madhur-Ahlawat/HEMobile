@@ -67,6 +67,7 @@ class ContactDartChargeViewModel @Inject constructor(
             }
         }
     }
+
     fun getCaseHistoryLoginData(request: CaseHistoryRangeModel?) {
         viewModelScope.launch {
             try {

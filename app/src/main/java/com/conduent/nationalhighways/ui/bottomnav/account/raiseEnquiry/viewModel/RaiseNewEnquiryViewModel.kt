@@ -27,10 +27,10 @@ class RaiseNewEnquiryViewModel @Inject constructor(
     init {
         enquiryModel.value = EnquiryModel()
         edit_enquiryModel.value = EnquiryModel()
-        enquiryDetailsModel.value=ServiceRequest()
-        enquiry_status_number.value=""
-        enquiry_last_name.value=""
-        apiState.value=""
-        apiEndTime.value=""
+        enquiryDetailsModel.value = ServiceRequest()
+        enquiry_status_number.value = ""
+        enquiry_last_name.value = ""
+        apiState.value = ""
+        apiEndTime.value = ""
     }
 }

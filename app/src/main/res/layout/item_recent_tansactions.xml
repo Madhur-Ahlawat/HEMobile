@@ -5,6 +5,7 @@
 
 
     <data>
+
         <variable
             name="item"
             type="com.conduent.nationalhighways.data.model.accountpayment.TransactionData" />
@@ -40,6 +41,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/vertical_strip_transaction_type"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/indicator_icon_euro"
                 android:layout_width="0dp"
@@ -54,6 +56,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/indicator_icon_transaction_type"
                 app:layout_constraintEnd_toEndOf="@+id/indicator_icon_transaction_type"
                 app:layout_constraintTop_toTopOf="@id/indicator_icon_transaction_type" />
+
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/tv_transaction_type"
                 android:layout_width="wrap_content"

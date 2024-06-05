@@ -14,7 +14,6 @@
         android:layout_height="match_parent">
 
 
-
         <LinearLayout
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
@@ -60,7 +59,7 @@
                 app:isRippleEnable="true"
                 app:maxValue="99999.99"
                 app:keyBackgroundColor="@android:color/transparent"
-                app:fontSize="20dp"/>
+                app:fontSize="20dp" />
 
 
             <LinearLayout

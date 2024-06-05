@@ -169,7 +169,6 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
     }
 
 
-
     private fun initCtrl() {
 
     }
@@ -202,9 +201,11 @@ class RaiseEnquiryActivity : BaseActivity<ActivityRaiseEnquiryBinding>(), Logout
         LogoutUtil.stopLogoutTimer()
         Utils.sessionExpired(this, this, sessionManager, api)
     }
+
     override fun observeViewModel() {
 
     }
+
     fun focusToolBarRaiseEnquiry() {
         val task = Runnable {
             if (binding.toolBarLyt.backButton.isVisible) {

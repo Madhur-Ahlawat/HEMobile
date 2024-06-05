@@ -28,37 +28,43 @@ object DashboardUtils {
             tvTitle.changeTextColor(R.color.FFF7BF)
         }
     }
-    fun setAccountStatusNew(status: String, tvTitle: AppCompatTextView, viewGroup: MaterialCardView,type:Int) {
+
+    fun setAccountStatusNew(
+        status: String,
+        tvTitle: AppCompatTextView,
+        viewGroup: MaterialCardView,
+        type: Int
+    ) {
         if (status.uppercase().equals("OPEN", true) || status.uppercase().equals("ACTIVE", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.open)
             tvTitle.run {
-                setTextColor(viewGroup.context.resources.getColor(R.color.dark_blue_color,null))
+                setTextColor(viewGroup.context.resources.getColor(R.color.dark_blue_color, null))
             }
-            viewGroup.run{
+            viewGroup.run {
                 setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.green_status))
             }
         } else if (status.uppercase().equals("SUSPENDED", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.suspended)
             tvTitle.run {
-                setTextColor(viewGroup.context.resources.getColor(R.color.white_color,null))
+                setTextColor(viewGroup.context.resources.getColor(R.color.white_color, null))
             }
-            viewGroup.run{
+            viewGroup.run {
                 setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514))
             }
         } else if (status.uppercase().equals("DORMANT", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.dormant)
             tvTitle.run {
-                setTextColor(viewGroup.context.resources.getColor(R.color.white_color,null))
+                setTextColor(viewGroup.context.resources.getColor(R.color.white_color, null))
             }
-            viewGroup.run{
+            viewGroup.run {
                 setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514))
             }
-        }  else {
+        } else {
             tvTitle.text = status
             tvTitle.run {
-                setTextColor(viewGroup.context.resources.getColor(R.color.dark_blue_color,null))
+                setTextColor(viewGroup.context.resources.getColor(R.color.dark_blue_color, null))
             }
-            viewGroup.run{
+            viewGroup.run {
                 setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.FFF7BF))
             }
         }
@@ -79,23 +85,28 @@ object DashboardUtils {
             type.equals("BUSINESS", true) -> {
                 tvTitle.text = tvTitle.context.getString(R.string.business)
             }
+
             type.equals("NONREVENUE", true) -> {
                 tvTitle.text = tvTitle.context.getString(R.string.exempt_partner)
             }
+
             type.equals("PRIVATE", true) -> {
                 when {
                     subType.equals("PAYG", true) -> {
                         tvTitle.text =
                             tvTitle.context.getString(R.string.personal_pay_as_you_go_acc)
                     }
+
                     subType.equals("STANDARD", true) -> {
                         tvTitle.text = tvTitle.context.getString(R.string.personal_pre_pay_acc)
                     }
+
                     else -> {
                         tvTitle.text = tvTitle.context.getString(R.string.personal_pre_pay_acc)
                     }
                 }
             }
+
             else -> {
                 tvTitle.text = "$type $subType"
             }

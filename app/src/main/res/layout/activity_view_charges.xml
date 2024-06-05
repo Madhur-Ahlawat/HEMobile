@@ -61,8 +61,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:importantForAccessibility="no"
-                        >
+                        android:importantForAccessibility="no">
 
                         <androidx.constraintlayout.widget.Guideline
                             android:id="@+id/guide_line_vertical1"

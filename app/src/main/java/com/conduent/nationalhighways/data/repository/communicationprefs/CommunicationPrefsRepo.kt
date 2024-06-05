@@ -10,10 +10,13 @@ class CommunicationPrefsRepo @Inject constructor(private val apiService: ApiServ
 
     suspend fun getAccountSettingsPrefs() = apiService.getAccountSettings()
 
-    suspend fun updateCommunicationSettingsPrefs(model : CommunicationPrefsRequestModel?) = apiService.updateCommunicationPrefs(model)
+    suspend fun updateCommunicationSettingsPrefs(model: CommunicationPrefsRequestModel?) =
+        apiService.updateCommunicationPrefs(model)
 
-    suspend fun updateAccountSettingPrefs(model: UpdateProfileRequest?)= apiService.updateAccountSettingPrefs(model)
+    suspend fun updateAccountSettingPrefs(model: UpdateProfileRequest?) =
+        apiService.updateAccountSettingPrefs(model)
 
-    suspend fun searchProcessParameters(model:SearchProcessParamsModelReq?)= apiService.searchProcessParameters(model)
+    suspend fun searchProcessParameters(model: SearchProcessParamsModelReq?) =
+        apiService.searchProcessParameters(model)
 
 }

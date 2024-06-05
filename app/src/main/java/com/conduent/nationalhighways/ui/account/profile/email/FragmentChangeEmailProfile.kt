@@ -47,7 +47,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
             binding.edtEmail.editText.setText(data?.personalInformation?.userName?.lowercase(Locale.getDefault()))
             oldEmail = data?.personalInformation?.userName?.lowercase(Locale.getDefault()) ?: ""
         }
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_email_address))
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
@@ -100,7 +100,9 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
                             ) || (binding.edtEmail.editText.text.toString().trim().last()
                                 .toString() == "." || binding.edtEmail.editText.text
                                 .toString().first().toString() == ".")
-                            || (binding.edtEmail.editText.text.toString().trim().last().toString() == "-" || binding.edtEmail.editText.text.toString().first()
+                            || (binding.edtEmail.editText.text.toString().trim().last()
+                                .toString() == "-" || binding.edtEmail.editText.text.toString()
+                                .first()
                                 .toString() == "-")
                             || (Utils.countOccurrenceOfChar(
                                 binding.edtEmail.editText.text.toString().trim(), '.'
@@ -184,7 +186,7 @@ class FragmentChangeEmailProfile : BaseFragment<FragmentChangeEmailProfileBindin
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
-      dismissLoaderDialog()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
 

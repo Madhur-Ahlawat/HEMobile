@@ -31,12 +31,12 @@ data class PaymentTypeInfo(
     val country: String?,
     val zipcode: String?,
     val zipCode2: String?,
-    val cardholderAuth:String?=null,
-    val cavv:String?=null,
-    val directoryServerID:String?=null,
-    val eci:String?=null,
-    val threeDsVer:String?=null,
-):Parcelable
+    val cardholderAuth: String? = null,
+    val cavv: String? = null,
+    val directoryServerID: String? = null,
+    val eci: String? = null,
+    val threeDsVer: String? = null,
+) : Parcelable
 
 @Parcelize
 data class VehicleList(
@@ -55,6 +55,6 @@ data class VehicleList(
     val accountNumber: String?,
     val pendingTxnCount: String?,
     val chargingRate: String?
-):Parcelable
+) : Parcelable
 
 

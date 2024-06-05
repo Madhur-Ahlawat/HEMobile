@@ -88,6 +88,7 @@
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical_new"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/label_one_off_payment"
                     android:layout_width="0dp"
@@ -176,6 +177,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/view_footer"
                     tools:text="Cars,\nMotorhomes,\nMinibuses" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/value_vehicle_class"
                     android:layout_width="0dp"
@@ -188,8 +190,7 @@
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical_new"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
                     app:layout_constraintTop_toTopOf="@+id/iv_type_of_vehicle"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle"
-                    />
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle" />
 
                 <!--
                         <androidx.appcompat.widget.AppCompatTextView
@@ -223,7 +224,7 @@
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical_new"
                     app:layout_constraintTop_toTopOf="@+id/iv_type_of_vehicle"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/value_if_you_have_an_account"
@@ -241,6 +242,7 @@
                     app:layout_constraintTop_toTopOf="@id/iv_type_of_vehicle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"

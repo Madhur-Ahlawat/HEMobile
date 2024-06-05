@@ -42,7 +42,7 @@ class ForgotPasswordViewModel @Inject constructor(
     private val _otp = MutableLiveData<Resource<SecurityCodeResponseModel?>?>()
     val otp: LiveData<Resource<SecurityCodeResponseModel?>?> get() = _otp
 
- @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _verifyRequestCode = MutableLiveData<Resource<VerifyRequestOtpResp?>?>()
     val verifyRequestCode: LiveData<Resource<VerifyRequestOtpResp?>?> get() = _verifyRequestCode
 
@@ -52,17 +52,17 @@ class ForgotPasswordViewModel @Inject constructor(
     val resetPassword: LiveData<Resource<ForgotPasswordResponseModel?>?> get() = _resetPassword
 
 
-
-    fun confirmOptionForForgot(email:String) {
+    fun confirmOptionForForgot(email: String) {
 
         viewModelScope.launch {
             try {
-                val response = repository.confirmOptionForForgot(ConfirmOptionModel(identifier = email,true))
+                val response =
+                    repository.confirmOptionForForgot(ConfirmOptionModel(identifier = email, true))
                 if (response?.isSuccessful == true) {
                     val serverToken =
                         response.headers()["Authorization"]?.split("Bearer ")?.get(1)
                     sessionManager.saveAuthToken(serverToken ?: "")
-                    sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
+                    sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, true)
                     _confirmOption.postValue(Resource.Success(response.body()))
                 } else {
                     _confirmOption.postValue(
@@ -89,10 +89,16 @@ class ForgotPasswordViewModel @Inject constructor(
             }
         }
     }
+
     fun verifyRequestCode(model: VerifyRequestOtpReq?) {
         viewModelScope.launch {
             try {
-                _verifyRequestCode.postValue(success(repository.verifyRequestCode(model), errorManager))
+                _verifyRequestCode.postValue(
+                    success(
+                        repository.verifyRequestCode(model),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _verifyRequestCode.postValue(failure(e))
             }
@@ -148,10 +154,16 @@ class ForgotPasswordViewModel @Inject constructor(
             }
         }
     }
+
     fun twoFAVerifyRequestCode(model: VerifyRequestOtpReq) {
         viewModelScope.launch {
             try {
-                _verifyRequestCode.postValue(success(repository.twoFAVerifyOTP(model), errorManager))
+                _verifyRequestCode.postValue(
+                    success(
+                        repository.twoFAVerifyOTP(model),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _verifyRequestCode.postValue(failure(e))
             }

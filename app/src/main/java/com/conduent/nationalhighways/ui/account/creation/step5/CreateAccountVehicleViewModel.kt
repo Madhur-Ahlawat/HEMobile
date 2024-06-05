@@ -114,14 +114,14 @@ class CreateAccountVehicleViewModel @Inject constructor(
     }
 
 
-    fun heartBeat(agencyId:String,referenceId:String) {
+    fun heartBeat(agencyId: String, referenceId: String) {
 
         viewModelScope.launch {
             try {
                 heartBeatMutableLiveData.postValue(
                     ResponseHandler.success(
                         repo.getHeartBeat(
-                            agencyId,referenceId
+                            agencyId, referenceId
                         ), errorManager
                     )
                 )

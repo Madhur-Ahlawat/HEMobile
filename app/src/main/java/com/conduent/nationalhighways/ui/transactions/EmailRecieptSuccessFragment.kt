@@ -37,12 +37,13 @@ class EmailRecieptSuccessFragment : BaseFragment<FragmentEmailRecieptSuccessBind
     }
 
     override fun initCtrl() {
-        binding.emailTv.text = HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
+        binding.emailTv.text =
+            HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
 
         binding.btnContinue.setOnClickListener {
             findNavController().popBackStack(R.id.crossingHistoryFragment, false)
         }
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.payment_details))
         }
     }

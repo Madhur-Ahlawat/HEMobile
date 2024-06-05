@@ -250,7 +250,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 NewCreateAccountRequestModel.plateNumber = numberPlate
 
 //                Handler(Looper.getMainLooper()).postDelayed({
-                    binding.findVehicle.isEnabled = true
+                binding.findVehicle.isEnabled = true
 //                }, time)
 
 

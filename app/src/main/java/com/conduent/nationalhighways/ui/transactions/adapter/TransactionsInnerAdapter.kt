@@ -22,11 +22,12 @@ import com.conduent.nationalhighways.utils.extn.visible
 class TransactionsInnerAdapter(
     var viewAllTransactionsFragment: Fragment,
     var transactionItemsList: List<TransactionData>,
-    var accSubType:String
+    var accSubType: String
 ) :
     RecyclerView.Adapter<TransactionsInnerAdapter.TransactionViewHolder>() {
     class TransactionViewHolder(binding: ItemCrossingsBinding) :
         RecyclerView.ViewHolder(binding.root)
+
     private var binding: ItemCrossingsBinding? = null
     private var pos: Int = -1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
@@ -46,7 +47,7 @@ class TransactionsInnerAdapter(
         binding?.apply {
             if (accSubType == Constants.PAYG) {
                 balanceCl.gone()
-            }else{
+            } else {
                 balanceCl.visible()
                 valueCurrentBalance.text = recentTransactionItem.balance
             }
@@ -66,11 +67,12 @@ class TransactionsInnerAdapter(
                 valueTopUpAmount.text = topup
                 valueTopUpAmount.setTextColor(viewAllTransactionsFragment.resources.getColor(R.color.green_status))
             } else {
-                if(recentTransactionItem.exitDirection.equals("N")){
-                    tvTransactionType.text = viewAllTransactionsFragment.requireContext().getString(R.string.northbound)
-                }
-                else{
-                    tvTransactionType.text = viewAllTransactionsFragment.requireContext().getString(R.string.southbound)
+                if (recentTransactionItem.exitDirection.equals("N")) {
+                    tvTransactionType.text =
+                        viewAllTransactionsFragment.requireContext().getString(R.string.northbound)
+                } else {
+                    tvTransactionType.text =
+                        viewAllTransactionsFragment.requireContext().getString(R.string.southbound)
                 }
                 verticalStripTransactionType.background.setTint(
                     viewAllTransactionsFragment.resources.getColor(
@@ -87,7 +89,9 @@ class TransactionsInnerAdapter(
                 }
                 valueTopUpAmount.text = topup
                 indicatorIconEuro.gone()
-                Glide.with(indicatorIconTransactionType.context).load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_car_grey)).into(indicatorIconTransactionType)
+                Glide.with(indicatorIconTransactionType.context)
+                    .load(indicatorIconTransactionType.context.getDrawable(R.drawable.ic_car_grey))
+                    .into(indicatorIconTransactionType)
                 valueTopUpAmount.setTextColor(viewAllTransactionsFragment.resources.getColor(R.color.red_status))
             }
         }
@@ -96,31 +100,33 @@ class TransactionsInnerAdapter(
             val bundle = Bundle()
             HomeActivityMain.crossing = transactionItemsList.get(pos)
             if (HomeActivityMain.crossing?.activity?.lowercase().equals("toll")) {
-                if(viewAllTransactionsFragment is ViewAllTransactionsFragment){
-                    (viewAllTransactionsFragment as ViewAllTransactionsFragment).findNavController().navigate(
-                        R.id.action_crossingHistoryFragment_to_tollDetails,
-                        bundle
-                    )
-                }
-                else{
-                    (viewAllTransactionsFragment as DashboardFragmentNew).findNavController().navigate(
-                        R.id.action_dashBoardFragment_to_tollDetails,
-                        bundle
-                    )
+                if (viewAllTransactionsFragment is ViewAllTransactionsFragment) {
+                    (viewAllTransactionsFragment as ViewAllTransactionsFragment).findNavController()
+                        .navigate(
+                            R.id.action_crossingHistoryFragment_to_tollDetails,
+                            bundle
+                        )
+                } else {
+                    (viewAllTransactionsFragment as DashboardFragmentNew).findNavController()
+                        .navigate(
+                            R.id.action_dashBoardFragment_to_tollDetails,
+                            bundle
+                        )
                 }
 
             } else {
-                if(viewAllTransactionsFragment is ViewAllTransactionsFragment) {
-                    (viewAllTransactionsFragment as ViewAllTransactionsFragment).findNavController().navigate(
-                        R.id.action_crossingHistoryFragment_to_topUpDetails,
-                        bundle
-                    )
-                }
-                else{
-                    (viewAllTransactionsFragment as DashboardFragmentNew).findNavController().navigate(
-                        R.id.action_dashBoardFragment_to_topUpDetails,
-                        bundle
-                    )
+                if (viewAllTransactionsFragment is ViewAllTransactionsFragment) {
+                    (viewAllTransactionsFragment as ViewAllTransactionsFragment).findNavController()
+                        .navigate(
+                            R.id.action_crossingHistoryFragment_to_topUpDetails,
+                            bundle
+                        )
+                } else {
+                    (viewAllTransactionsFragment as DashboardFragmentNew).findNavController()
+                        .navigate(
+                            R.id.action_dashBoardFragment_to_topUpDetails,
+                            bundle
+                        )
                 }
 
             }

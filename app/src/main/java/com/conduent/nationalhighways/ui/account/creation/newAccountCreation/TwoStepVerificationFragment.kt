@@ -38,7 +38,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         FragmentTwoStepVerificationBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (requireActivity() is CreateAccountActivity){
+        if (requireActivity() is CreateAccountActivity) {
             (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
         binding.btnNext.setOnClickListener(this)
@@ -47,7 +47,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
-                if(!isViewCreated){
+                if (!isViewCreated) {
                     oldtwoStepVerification = NewCreateAccountRequestModel.twoStepVerification
                 }
 
@@ -62,8 +62,8 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 }
 
 
-                if(!isViewCreated){
-                    oldtwoStepVerification =  binding.twoFactor.isChecked
+                if (!isViewCreated) {
+                    oldtwoStepVerification = binding.twoFactor.isChecked
                 }
 
 
@@ -80,11 +80,11 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
             }
         }
 
-        isViewCreated=true
+        isViewCreated = true
     }
 
     override fun initCtrl() {
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(Constants.PROFILE_TWO_FACTOR_VERIFICATION)
         }
     }
@@ -112,7 +112,7 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
             is Resource.DataError -> {
                 if (checkSessionExpiredOrServerError(resource.errorModel)) {
                     displaySessionExpireDialog(resource.errorModel)
-                }else {
+                } else {
                     ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
             }
@@ -137,12 +137,14 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                 when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
-                          NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
+                        NewCreateAccountRequestModel.twoStepVerification =
+                            binding.twoFactor.isChecked
 
                         if (binding.twoFactor.isChecked == oldtwoStepVerification) {
                             findNavController().popBackStack()
                         } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.twoFactor.isChecked)
-                            &&( NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true || NewCreateAccountRequestModel.isCountryNotSupportForSms)) {
+                            && (NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true || NewCreateAccountRequestModel.isCountryNotSupportForSms)
+                        ) {
                             findNavController().navigate(
                                 R.id.action_twoStepVerificationFragment_to_HWMobileNumberCaptureVC,
                                 bundle()
@@ -158,10 +160,11 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
                     }
 
                     PROFILE_MANAGEMENT_2FA_CHANGE -> {
-                        if(oldtwoStepVerification==binding.twoFactor.isChecked){
+                        if (oldtwoStepVerification == binding.twoFactor.isChecked) {
                             findNavController().popBackStack()
-                        }else {
-                            NewCreateAccountRequestModel.twoStepVerification = binding.twoFactor.isChecked
+                        } else {
+                            NewCreateAccountRequestModel.twoStepVerification =
+                                binding.twoFactor.isChecked
                             val data = navData as ProfileDetailModel?
                             if (data?.personalInformation?.phoneCell.isNullOrEmpty()) {
                                 if (binding.twoFactor.isChecked) {
@@ -171,10 +174,10 @@ class TwoStepVerificationFragment : BaseFragment<FragmentTwoStepVerificationBind
 
                                 }
                             } else {
-                                if(Utils.isSupportedCountry( data?.personalInformation?.phoneCellCountryCode.toString()) ){
+                                if (Utils.isSupportedCountry(data?.personalInformation?.phoneCellCountryCode.toString())) {
                                     showLoaderDialog()
                                     updateProfileDetails(data)
-                                }else{
+                                } else {
                                     verifyMobileNumber(data)
                                 }
 

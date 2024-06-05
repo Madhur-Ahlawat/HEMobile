@@ -56,7 +56,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
-        
+
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
         if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
@@ -81,7 +81,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
     }
 
-    val a11yDelegate = object: AccessibilityDelegateCompat() {
+    val a11yDelegate = object : AccessibilityDelegateCompat() {
         override fun onInitializeAccessibilityNodeInfo(
             host: View,
             info: AccessibilityNodeInfoCompat
@@ -147,16 +147,16 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
     private fun showLoader() {
         try {
             binding.progressBar.visibility = View.VISIBLE
-        }catch (_:Exception){
-            Log.e("TAG", "showLoader: exception" )
+        } catch (_: Exception) {
+            Log.e("TAG", "showLoader: exception")
         }
     }
 
     private fun hideLoader() {
         try {
             binding.progressBar.visibility = View.GONE
-        }catch (_:Exception){
-            Log.e("TAG", "showLoader:- exception" )
+        } catch (_: Exception) {
+            Log.e("TAG", "showLoader:- exception")
         }
     }
 

@@ -16,7 +16,8 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import java.util.Date
 
-class ForegroundServiceWorker(val context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
+class ForegroundServiceWorker(val context: Context, params: WorkerParameters) :
+    CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
         Log.e("TAG", "doWork: ")
@@ -57,7 +58,7 @@ class ForegroundServiceWorker(val context: Context, params: WorkerParameters) : 
 }
 
 
-class HighPriorityWorker (val context: Context, workerParams: WorkerParameters) :
+class HighPriorityWorker(val context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {
 
     override suspend fun getForegroundInfo(): ForegroundInfo {
@@ -69,6 +70,7 @@ class HighPriorityWorker (val context: Context, workerParams: WorkerParameters) 
             Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(context)
         )
     }
+
     override suspend fun doWork(): Result {
 
         Utils.writeInFile(
@@ -80,7 +82,7 @@ class HighPriorityWorker (val context: Context, workerParams: WorkerParameters) 
 
     private fun createNotification(context: Context): Notification {
         val CHANNEL_ID = "my_channel_01"
-        val channel =  NotificationChannel(
+        val channel = NotificationChannel(
             CHANNEL_ID,
             applicationContext.resources.getString(R.string.app_name),
             NotificationManager.IMPORTANCE_LOW

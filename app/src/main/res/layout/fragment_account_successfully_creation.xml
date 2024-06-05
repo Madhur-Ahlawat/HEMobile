@@ -82,6 +82,7 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <TextView
                 style="@style/RegularText"
                 android:layout_width="wrap_content"
@@ -189,7 +190,7 @@
                 style="@style/PrimaryButton"
                 android:layout_marginTop="40dp"
                 android:text="@string/sign_in"
-                android:id="@+id/signIn"/>
+                android:id="@+id/signIn" />
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/feedback_bt"
@@ -203,8 +204,7 @@
                 android:layout_marginBottom="@dimen/margin_20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </LinearLayout>

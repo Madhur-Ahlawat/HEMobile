@@ -27,7 +27,7 @@ class AppModule {
     @Provides
     @Singleton
     fun provideEncryptedSharedPref(@ApplicationContext context: Context): SharedPreferences {
-       return Utils.returnSharedPreference(context)
+        return Utils.returnSharedPreference(context)
     }
 
     @Singleton
@@ -41,6 +41,7 @@ class AppModule {
     fun provideErrorManager(errorMapper: ErrorMapper): ErrorManager {
         return ErrorManager(errorMapper)
     }
+
     @Provides
     @Singleton
     fun provideErrorMapper(@ApplicationContext context: Context): ErrorMapper {

@@ -34,6 +34,7 @@ class LogoutDialog : BaseDialog<DialogLogoutBinding>(), View.OnClickListener {
             R.id.cancel_btn -> {
                 dismiss()
             }
+
             R.id.tvLogout -> {
                 dismiss()
                 mListener?.onLogOutClick()

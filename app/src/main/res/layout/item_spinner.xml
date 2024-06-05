@@ -9,5 +9,5 @@
     android:paddingVertical="@dimen/_8sdp"
     android:text="New Group"
     android:textColor="@color/black"
-    android:textSize="@dimen/_14ssp"/>
+    android:textSize="@dimen/_14ssp" />
 

@@ -131,7 +131,8 @@ interface ApiService {
         @Query("startIndex") startIndex: String?,
         @Query("count") count: String?
     ): Response<List<VehicleResponse?>?>?
-  @GET(VEHICLELIST)
+
+    @GET(VEHICLELIST)
     suspend fun getVehicleListData(
         @Query("startIndex") startIndex: String?,
         @Query("count") count: String?
@@ -465,7 +466,7 @@ interface ApiService {
     @POST(GET_CROSSING_DETAILS)
     suspend fun getCrossingDetails(
         @Body model: CrossingDetailsModelsRequest?,
-        @Path("agencyId") agencyId: String=AGENCY_ID
+        @Path("agencyId") agencyId: String = AGENCY_ID
     ): Response<CrossingDetailsModelsResponse?>?
 
     @POST(ONE_OF_PAYMENTS_PAY)
@@ -493,7 +494,7 @@ interface ApiService {
     @POST(BALANCE_TRANSFER)
     suspend fun balanceTransfer(
         @Body request: BalanceTransferRequest?,
-        @Path("agencyId") agencyId: String=AGENCY_ID
+        @Path("agencyId") agencyId: String = AGENCY_ID
     ): Response<BalanceTransferResponse?>?
 
     @POST(SEARCH_PROCESS_PARAMETERS)
@@ -505,7 +506,7 @@ interface ApiService {
     @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
     suspend fun loginWithRefAndPlateNumber(
         @Body request: CheckPaidCrossingsRequest?,
-        @Path("agencyId") agencyId: String=AGENCY_ID,
+        @Path("agencyId") agencyId: String = AGENCY_ID,
         @Query("returnReferenceInformation") value: Boolean? = true,
     ): Response<LoginWithPlateAndReferenceNumberResponseModel?>?
 
@@ -536,7 +537,7 @@ interface ApiService {
     suspend fun allowPushNotification(
         @Body request: PushNotificationRequest,
         @Query("agencyId") agencyId: String? = AGENCY_ID
-        ): Response<EmptyApiResponse?>?
+    ): Response<EmptyApiResponse?>?
 
 
     @GET(CATEGORY_LIST)

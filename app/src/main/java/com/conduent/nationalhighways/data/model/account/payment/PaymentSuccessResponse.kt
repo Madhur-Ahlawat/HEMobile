@@ -25,4 +25,4 @@ data class PaymentSuccessResponse(
     @field:SerializedName("eci")
     val eci: String? = null,
 
-):Parcelable
+    ) : Parcelable

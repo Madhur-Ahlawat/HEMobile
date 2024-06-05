@@ -63,15 +63,15 @@ class PlayLocationService : Service(), LocationListener {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Utils.writeInFile(context = null,"onStartCommand Called")
+        Utils.writeInFile(context = null, "onStartCommand Called")
         if (intent != null) {
             try {
                 createLocationRequest()
                 startLocationUpdates()
                 try {
-                    Utils.writeInFile(context = null,"onStartCommand Foreground Called")
+                    Utils.writeInFile(context = null, "onStartCommand Foreground Called")
                     ServiceCompat.startForeground(
-                        this,  Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(),
+                        this, Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(),
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                             FOREGROUND_SERVICE_TYPE_LOCATION
                         } else {
@@ -83,11 +83,17 @@ class PlayLocationService : Service(), LocationListener {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
                         && e is ForegroundServiceStartNotAllowedException
                     ) {
-                        Utils.writeInFile(context = null,"onStartCommand Foreground ForegroundServiceStartNotAllowedException Called ${e.message}")
-                    }else  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                        Utils.writeInFile(
+                            context = null,
+                            "onStartCommand Foreground ForegroundServiceStartNotAllowedException Called ${e.message}"
+                        )
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
                         && e is SecurityException
                     ) {
-                        Utils.writeInFile(context = null,"onStartCommand Foreground SecurityException Called ${e.message}")
+                        Utils.writeInFile(
+                            context = null,
+                            "onStartCommand Foreground SecurityException Called ${e.message}"
+                        )
                     } else if (e is NullPointerException) {
 
                     }
@@ -182,7 +188,7 @@ class PlayLocationService : Service(), LocationListener {
 
 
     override fun onTaskRemoved(rootIntent: Intent) {
-        Utils.writeInFile(null,"PlayLocation Task Removed")
+        Utils.writeInFile(null, "PlayLocation Task Removed")
         super.onTaskRemoved(rootIntent)
     }
 

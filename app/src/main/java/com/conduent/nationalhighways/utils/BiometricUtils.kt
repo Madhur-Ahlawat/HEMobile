@@ -56,6 +56,7 @@ object BiometricUtils {
 //                }
 //                startActivityForResult(enrollIntent, 100)
             }
+
             BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
                 Toast.makeText(
                     context,
@@ -63,6 +64,7 @@ object BiometricUtils {
                 ).show()
                 return false
             }
+
             BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
                 Toast.makeText(
                     context,
@@ -70,6 +72,7 @@ object BiometricUtils {
                 ).show()
                 return false
             }
+
             BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
                 Toast.makeText(
                     context,

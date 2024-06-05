@@ -31,12 +31,12 @@ object SignatureHelper {
             val encryptedPublicKey = publicKey.let { keyHelper?.encrypt(context, it) }
             val encryptedPrivateKey = privateKey.let { keyHelper?.encrypt(context, it) }
 
-          /*  encryptedPublicKey?.let {
-                sessionManager.savePublicKey(it)
-            }
-            encryptedPrivateKey?.let {
-                sessionManager.savePrivateKey(it)
-            }*/
+            /*  encryptedPublicKey?.let {
+                  sessionManager.savePublicKey(it)
+              }
+              encryptedPrivateKey?.let {
+                  sessionManager.savePrivateKey(it)
+              }*/
 
         } catch (e: NoSuchAlgorithmException) {
 
@@ -57,7 +57,7 @@ object SignatureHelper {
         return URLEncoder.encode(publicKey, "UTF-8").replace("+", "%20")
     }
 
-    fun getSignature(context: Context,dataToBeSigned:String?):String? {
+    fun getSignature(context: Context, dataToBeSigned: String?): String? {
 
         val keyHelper = KeystoreHelper.getInstance(context)
         val privateKey = ""

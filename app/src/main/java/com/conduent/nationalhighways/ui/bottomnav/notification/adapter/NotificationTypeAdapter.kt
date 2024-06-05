@@ -155,6 +155,7 @@ class NotificationTypeAdapter(private val mContext: Context) :
                 return HighPriorityViewHolder(view)
 
             }
+
             else -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.adapter_high_priority_notifications, parent, false)

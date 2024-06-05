@@ -155,7 +155,7 @@
         android:id="@+id/registerReminderFragment"
         android:name="com.conduent.nationalhighways.ui.landing.RegisterReminderFragment"
         android:label="RegisterReminderFragment"
-        tools:layout="@layout/fragment_register_reminder" >
+        tools:layout="@layout/fragment_register_reminder">
         <action
             android:id="@+id/action_registerReminderFragment_to_gpsSettingsFragment"
             app:destination="@id/gpsSettingsFragment" />
@@ -165,12 +165,12 @@
         android:id="@+id/gpsSettingsFragment"
         android:name="com.conduent.nationalhighways.ui.landing.GpsSettingsFragment"
         android:label="GpsSettingsFragment"
-        tools:layout="@layout/fragment_gps_settings" >
+        tools:layout="@layout/fragment_gps_settings">
         <action
             android:id="@+id/action_gpsSettingsFragment_to_registerReminderFragment"
             app:destination="@id/registerReminderFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@id/registerReminderFragment"/>
+            app:popUpTo="@id/registerReminderFragment" />
 
     </fragment>
 

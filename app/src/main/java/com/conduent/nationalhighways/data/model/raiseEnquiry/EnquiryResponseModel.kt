@@ -11,7 +11,7 @@ data class EnquiryResponseModel(
     val srNumber: String = "",
     val emailMessage: String = "",
     val emailStatusCode: String = "",
-    var email:String="",
-    var category:String=""
+    var email: String = "",
+    var category: String = ""
 
-):Parcelable
+) : Parcelable

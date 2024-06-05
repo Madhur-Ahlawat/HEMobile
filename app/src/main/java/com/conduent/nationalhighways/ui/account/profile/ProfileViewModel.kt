@@ -32,13 +32,15 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val repository: ProfileRepository,
     val errorManager: ErrorManager
-) : ViewModel(),Observable {
+) : ViewModel(), Observable {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _userNameAvailabilityCheck = MutableLiveData<Resource<Boolean?>?>()
     val userNameAvailabilityCheck: LiveData<Resource<Boolean?>?> get() = _userNameAvailabilityCheck
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _verifyRequestCode = MutableLiveData<Resource<VerifyRequestOtpResp?>?>()
     val verifyRequestCode: LiveData<Resource<VerifyRequestOtpResp?>?> get() = _verifyRequestCode
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _accountDetail = MutableLiveData<Resource<ProfileDetailModel?>?>()
     val accountDetail: LiveData<Resource<ProfileDetailModel?>?> get() = _accountDetail
@@ -69,12 +71,18 @@ class ProfileViewModel @Inject constructor(
     fun verifyRequestCode(model: VerifyRequestOtpReq?) {
         viewModelScope.launch {
             try {
-                _verifyRequestCode.postValue(success(repository.verifyRequestCode(model), errorManager))
+                _verifyRequestCode.postValue(
+                    success(
+                        repository.verifyRequestCode(model),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _verifyRequestCode.postValue(ResponseHandler.failure(e))
             }
         }
     }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _getNominatedContactsApiVal = MutableLiveData<Resource<NominatedContactRes?>?>()
     val getNominatedContactsApiVal: LiveData<Resource<NominatedContactRes?>?> get() = _getNominatedContactsApiVal
@@ -135,10 +143,16 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
     fun twoFAVerifyRequestCode(model: VerifyRequestOtpReq) {
         viewModelScope.launch {
             try {
-                _verifyRequestCode.postValue(success(repository.twoFAVerifyOTP(model), errorManager))
+                _verifyRequestCode.postValue(
+                    success(
+                        repository.twoFAVerifyOTP(model),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _verifyRequestCode.postValue(ResponseHandler.failure(e))
             }
@@ -154,6 +168,7 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
     fun updateUserDetails(request: UpdateProfileRequest) {
 
         viewModelScope.launch {
@@ -193,6 +208,7 @@ class ProfileViewModel @Inject constructor(
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
         TODO("Not yet implemented")
     }
+
     fun userNameAvailabilityCheck(request: UserNameCheckReq) {
         viewModelScope.launch {
             try {

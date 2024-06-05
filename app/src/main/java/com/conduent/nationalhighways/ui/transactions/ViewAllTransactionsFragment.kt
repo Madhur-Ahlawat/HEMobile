@@ -100,7 +100,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
 
 
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
-        Log.e("TAG", "getPaymentHistoryList: showLoaderDialog dismissLoaderDialog " )
+        Log.e("TAG", "getPaymentHistoryList: showLoaderDialog dismissLoaderDialog ")
         dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
@@ -156,7 +156,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
     private fun getPaymentHistoryList(
     ) {
         showLoaderDialog()
-        Log.e("TAG", "getPaymentHistoryList: showLoaderDialog " )
+        Log.e("TAG", "getPaymentHistoryList: showLoaderDialog ")
         val request = AccountPaymentHistoryRequest(
             1,
             transactionType,
@@ -170,7 +170,7 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
     }

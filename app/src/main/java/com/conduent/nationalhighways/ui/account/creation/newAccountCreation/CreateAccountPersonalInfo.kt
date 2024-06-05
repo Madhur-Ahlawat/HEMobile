@@ -108,7 +108,7 @@ class CreateAccountPersonalInfo : BaseFragment<FragmentCreateAccountPersonalInfo
     }
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-dismissLoaderDialog()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 Log.d("Success", "Updated successfully")
@@ -277,6 +277,7 @@ dismissLoaderDialog()
 
                 checkButtonEnable()
             }
+
             1 -> {
 
 
@@ -304,6 +305,7 @@ dismissLoaderDialog()
 
                 checkButtonEnable()
             }
+
             2 -> {
                 requiredCompanyName =
                     if (binding.inputCompanyName.getText().toString().trim().isEmpty()) {

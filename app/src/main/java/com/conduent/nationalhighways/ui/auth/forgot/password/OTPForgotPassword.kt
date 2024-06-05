@@ -251,17 +251,17 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 //        }
 
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requireActivity().registerReceiver(
-                    myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
-                    Context.RECEIVER_EXPORTED
-                )
-            } else {
-                requireActivity().registerReceiver(
-                    myOTPReceiver,
-                    IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), Context.RECEIVER_EXPORTED
-                )
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireActivity().registerReceiver(
+                myOTPReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
+                Context.RECEIVER_EXPORTED
+            )
+        } else {
+            requireActivity().registerReceiver(
+                myOTPReceiver,
+                IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), Context.RECEIVER_EXPORTED
+            )
+        }
 
 
         //Receiving the OTP
