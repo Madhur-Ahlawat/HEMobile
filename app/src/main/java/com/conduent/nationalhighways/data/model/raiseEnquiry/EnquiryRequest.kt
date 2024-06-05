@@ -1,7 +1,5 @@
 package com.conduent.nationalhighways.data.model.raiseEnquiry
 
-import java.io.File
-
 data class EnquiryRequest(
     val fname: String,
     val lname: String,
@@ -12,5 +10,4 @@ data class EnquiryRequest(
     val selectSubArea: String,
     val seletedArea: String,
     val fileNames: ArrayList<String> = ArrayList()
-) {
-}
+)

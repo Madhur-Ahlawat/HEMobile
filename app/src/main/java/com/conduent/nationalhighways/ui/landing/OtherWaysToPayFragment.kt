@@ -8,7 +8,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
-import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

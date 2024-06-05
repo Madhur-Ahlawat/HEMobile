@@ -11,7 +11,6 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -28,7 +27,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import com.conduent.nationalhighways.R
 
@@ -104,16 +102,11 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
         ratingBar?.apply {
             onRatingBarChangeListener = this@RatingDialog
             if (builder.ratingBarColor != 0) {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                    val stars = progressDrawable as LayerDrawable
-                    stars.getDrawable(2).setColorFilter(builder.ratingBarColor, PorterDuff.Mode.SRC_ATOP)
-                    stars.getDrawable(1).setColorFilter(builder.ratingBarColor, PorterDuff.Mode.SRC_ATOP)
-                    val ratingBarBackgroundColor = if (builder.ratingBarBackgroundColor != 0) builder.ratingBarBackgroundColor else R.color.btn_disable
-                    stars.getDrawable(0).setColorFilter(ContextCompat.getColor(context, ratingBarBackgroundColor), PorterDuff.Mode.SRC_ATOP)
-                } else {
-                    val stars = progressDrawable
-                    DrawableCompat.setTint(stars, builder.ratingBarColor)
-                }
+                val stars = progressDrawable as LayerDrawable
+                stars.getDrawable(2).setColorFilter(builder.ratingBarColor, PorterDuff.Mode.SRC_ATOP)
+                stars.getDrawable(1).setColorFilter(builder.ratingBarColor, PorterDuff.Mode.SRC_ATOP)
+                val ratingBarBackgroundColor = if (builder.ratingBarBackgroundColor != 0) builder.ratingBarBackgroundColor else R.color.btn_disable
+                stars.getDrawable(0).setColorFilter(ContextCompat.getColor(context, ratingBarBackgroundColor), PorterDuff.Mode.SRC_ATOP)
             }
         }
 

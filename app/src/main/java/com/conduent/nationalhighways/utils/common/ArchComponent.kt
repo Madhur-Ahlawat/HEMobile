@@ -8,7 +8,7 @@ fun <T> LifecycleOwner.observe(liveData: LiveData<T>, action: (t: T) -> Unit) {
     liveData.observe(this) { it?.let { t -> action(t) } }
 }
 
-fun <T> LifecycleOwner.removeObserve(liveData: LiveData<T>, action: (t: T) -> Unit) {
+fun <T> removeObserve(liveData: LiveData<T>, action: (t: T) -> Unit) {
     liveData.removeObserver(action)
 }
 

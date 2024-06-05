@@ -172,7 +172,7 @@ class EnquiryStatusDetailsFragment : BaseFragment<FragmentEnquiryStatusDetailsBi
             val bundle = Bundle()
 
             if (isDblaAvailable == true) {
-                bundle.putString(Constants.PLATE_NUMBER, plateNumber)
+                bundle.putString(PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountFindVehicleFragment,

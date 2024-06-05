@@ -5,7 +5,6 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -146,31 +145,29 @@ object PicUtils {
 
     @SuppressLint("Range")
     private fun copyFileToInternal(context: Context, fileUri: Uri): String? {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val cursor: Cursor? = context.contentResolver.query(
-                fileUri,
-                arrayOf<String>(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
-                null,
-                null
-            )
-            cursor?.moveToFirst()
-            val displayName = cursor?.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-            val size = cursor?.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
-            val file: File = File((context.filesDir).toString() + "/" + displayName)
-            try {
-                val fileOutputStream = FileOutputStream(file)
-                val inputStream: InputStream = context.contentResolver.openInputStream(fileUri)!!
-                val buffers = ByteArray(1024)
-                var read: Int
-                while (inputStream.read(buffers).also { read = it } != -1) {
-                    fileOutputStream.write(buffers, 0, read)
-                }
-                inputStream.close()
-                fileOutputStream.close()
-                return file.path
-            } catch (e: IOException) {
-                e.printStackTrace()
+        val cursor: Cursor? = context.contentResolver.query(
+            fileUri,
+            arrayOf<String>(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
+            null,
+            null
+        )
+        cursor?.moveToFirst()
+        val displayName = cursor?.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+        val size = cursor?.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
+        val file: File = File((context.filesDir).toString() + "/" + displayName)
+        try {
+            val fileOutputStream = FileOutputStream(file)
+            val inputStream: InputStream = context.contentResolver.openInputStream(fileUri)!!
+            val buffers = ByteArray(1024)
+            var read: Int
+            while (inputStream.read(buffers).also { read = it } != -1) {
+                fileOutputStream.write(buffers, 0, read)
             }
+            inputStream.close()
+            fileOutputStream.close()
+            return file.path
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
         return null
     }

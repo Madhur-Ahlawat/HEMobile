@@ -8,5 +8,4 @@ data class LRDSResponse(
     @SerializedName("srNumber") val srNumber : String?,
     @SerializedName("srApprovalStatus") val srApprovalStatus : String?,
     @SerializedName("message") val message : String?,
-){
-}
+)

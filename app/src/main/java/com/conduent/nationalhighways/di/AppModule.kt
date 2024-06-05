@@ -3,8 +3,6 @@ package com.conduent.nationalhighways.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.error.mapper.ErrorMapper
 import com.conduent.nationalhighways.utils.common.SessionManager

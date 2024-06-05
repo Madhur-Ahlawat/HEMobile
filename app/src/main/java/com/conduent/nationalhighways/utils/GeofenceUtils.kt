@@ -9,8 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.os.Build
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -25,16 +23,13 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.Priority
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
 
 
 @SuppressLint("StaticFieldLeak")
 object GeofenceUtils {
     private val TAG = "GeofenceUtils"
 
-    private val gadgetQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+    private const val gadgetQ = true
     private val geofenceList = ArrayList<Geofence>()
 
     lateinit var geoClient: GeofencingClient

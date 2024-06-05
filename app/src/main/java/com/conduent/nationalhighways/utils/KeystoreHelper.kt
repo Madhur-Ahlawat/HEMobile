@@ -37,13 +37,10 @@ constructor(ctx: Context) {
     init {
         this.generateEncryptKey(ctx)
         this.generateRandomIV(ctx)
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
-            try {
-                this.generateAESKey(ctx)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
+        try {
+            this.generateAESKey(ctx)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

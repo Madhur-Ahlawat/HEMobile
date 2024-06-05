@@ -8,7 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.account.LoginWithPlateAndReferenceNumberResponseModel
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
-import com.conduent.nationalhighways.data.model.checkpaidcrossings.*
+import com.conduent.nationalhighways.data.model.checkpaidcrossings.BalanceTransferRequest
+import com.conduent.nationalhighways.data.model.checkpaidcrossings.BalanceTransferResponse
+import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsOptionsModel
+import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCrossingsRequest
+import com.conduent.nationalhighways.data.model.checkpaidcrossings.UsedTollTransactionResponse
+import com.conduent.nationalhighways.data.model.checkpaidcrossings.UsedTollTransactionsRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.repository.checkpaidcrossings.CheckPaidCrossingsRepo
 import com.conduent.nationalhighways.utils.common.Logg

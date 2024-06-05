@@ -72,12 +72,9 @@ class BootReceiver : BroadcastReceiver() {
                 Utils.writeInFile(context, "BootReceiver startForeService exception 3 ->"+e.message)
                 Log.e(TAG,"[Api31 Compatibility] Can't start service as foreground! $e")
             }
-        } else if (android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.O) {
+        }else {
             Utils.writeInFile(context, "BootReceiver O startForeService")
             context.startForegroundService(serviceIntent)
-        } else {
-            Utils.writeInFile(context, "BootReceiver else startForeService")
-            context.startService(serviceIntent)
         }
 
     }

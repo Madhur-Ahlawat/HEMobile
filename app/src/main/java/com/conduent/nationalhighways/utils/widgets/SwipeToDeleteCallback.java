@@ -8,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.conduent.nationalhighways.R;
-import com.conduent.nationalhighways.databinding.LayoutMaskAsReadBinding;
 
 abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
 

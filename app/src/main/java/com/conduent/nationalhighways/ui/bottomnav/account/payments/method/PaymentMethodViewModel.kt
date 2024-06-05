@@ -6,7 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
-import com.conduent.nationalhighways.data.model.payment.*
+import com.conduent.nationalhighways.data.model.payment.AddCardModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodEditModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodEditResponse
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
+import com.conduent.nationalhighways.data.model.payment.SaveNewCardRequest
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.repository.payment.PaymentMethodRepository
 import com.conduent.nationalhighways.utils.common.Resource
@@ -79,7 +85,7 @@ class PaymentMethodViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _savedCardListState.emit(
-                    ResponseHandler.success(
+                    success(
                         repository.savedCard(
                         ), errorManager
                     )

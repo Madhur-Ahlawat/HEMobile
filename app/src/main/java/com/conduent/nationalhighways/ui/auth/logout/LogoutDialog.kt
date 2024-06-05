@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.DialogLogoutBinding
 import com.conduent.nationalhighways.ui.base.BaseDialog
-import com.conduent.nationalhighways.utils.common.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -568,7 +568,7 @@
         android:id="@+id/notificationFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment"
         android:label="Notifications"
-        tools:layout="@layout/fragment_notification"></fragment>
+        tools:layout="@layout/fragment_notification"/>
 
     <fragment
         android:id="@+id/vehicleListFragment2"

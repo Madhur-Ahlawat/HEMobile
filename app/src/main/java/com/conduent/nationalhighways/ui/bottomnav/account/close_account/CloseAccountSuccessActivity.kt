@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.close_account
 
-import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCloseAccountSuccessBinding

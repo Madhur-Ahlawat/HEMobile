@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.data.model.account
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

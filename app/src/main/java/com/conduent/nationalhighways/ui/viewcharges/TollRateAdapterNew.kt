@@ -172,9 +172,7 @@ class TollRateAdapterNew(private val context: Context?, var list: List<TollRates
         }
     }
 
-    inner class VehicleViewHolder(val binding: ItemViewChargesBinding) : RecyclerView.ViewHolder(binding.root){
-
-    }
+    inner class VehicleViewHolder(val binding: ItemViewChargesBinding) : RecyclerView.ViewHolder(binding.root)
 
 
 

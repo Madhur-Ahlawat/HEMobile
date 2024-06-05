@@ -6,7 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
-import com.conduent.nationalhighways.data.model.contactdartcharge.*
+import com.conduent.nationalhighways.data.model.contactdartcharge.CaseCategoriesModel
+import com.conduent.nationalhighways.data.model.contactdartcharge.CaseEnquiryHistoryRequest
+import com.conduent.nationalhighways.data.model.contactdartcharge.CaseEnquiryHistoryResponse
+import com.conduent.nationalhighways.data.model.contactdartcharge.CaseHistoryRangeModel
+import com.conduent.nationalhighways.data.model.contactdartcharge.CreateNewCaseReq
+import com.conduent.nationalhighways.data.model.contactdartcharge.CreateNewCaseResp
+import com.conduent.nationalhighways.data.model.contactdartcharge.UploadFileResponseModel
 import com.conduent.nationalhighways.data.repository.contactdartcharge.ContactDartChargeRepository
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler

@@ -18,5 +18,4 @@ data class EnquiryModel(
     var apiFileName: String ="",
     var file: File = File("")
 
-    ) {
-}
+    )

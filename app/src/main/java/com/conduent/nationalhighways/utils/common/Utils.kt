@@ -26,7 +26,6 @@ import android.view.WindowManager
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -47,7 +46,6 @@ import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.logout.LogoutListener
@@ -58,7 +56,6 @@ import com.conduent.nationalhighways.utils.widgets.NHTextInputCell
 import com.google.firebase.crashlytics.internal.common.CommonUtils
 import java.io.File
 import java.lang.reflect.Field
-import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.ParseException

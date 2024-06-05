@@ -10,8 +10,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.listener.NotificationItemClick
 import com.conduent.nationalhighways.data.model.notification.NotificationModel
+import com.conduent.nationalhighways.listener.NotificationItemClick
 
 class NotificationTypeAdapter(private val mContext: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

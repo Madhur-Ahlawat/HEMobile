@@ -51,7 +51,6 @@ import com.conduent.nationalhighways.utils.common.Constants.PHONE_COUNTRY_CODE
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 

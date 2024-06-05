@@ -4,7 +4,11 @@ import android.app.Activity
 import android.os.Environment
 import com.conduent.nationalhighways.utils.common.Constants
 import okhttp3.ResponseBody
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 
 object StorageHelper {
 

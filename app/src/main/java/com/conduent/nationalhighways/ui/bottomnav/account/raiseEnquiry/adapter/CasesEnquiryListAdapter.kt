@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.raiseEnquiry.ServiceRequest
 import com.conduent.nationalhighways.databinding.AdapterCasesEnquiryListBinding
@@ -34,8 +33,7 @@ class CasesEnquiryListAdapter(val listener:ItemClickListener,val caseEnquiryList
     }
 
     class CasesEnquiryListViewHolder(var binding: AdapterCasesEnquiryListBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
 }
 
 

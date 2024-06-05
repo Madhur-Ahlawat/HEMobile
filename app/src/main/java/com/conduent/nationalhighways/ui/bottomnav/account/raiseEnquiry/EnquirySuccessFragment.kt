@@ -15,7 +15,6 @@ import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import com.conduent.nationalhighways.utils.extn.visible
 
@@ -102,7 +101,7 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
     }
 
     private fun getBundleData(): Bundle {
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         return bundle
     }

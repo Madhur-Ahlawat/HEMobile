@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.data.model.makeoneofpayment
 
 import android.os.Parcelable
-import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

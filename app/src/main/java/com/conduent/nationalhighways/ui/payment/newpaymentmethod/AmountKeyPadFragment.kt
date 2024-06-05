@@ -93,7 +93,7 @@ class AmountKeyPadFragment : BaseFragment<FragmentAmountKeyPadBinding>(), View.O
 
             R.id.btn_continue_reload -> {
                 val text = binding.txtPaymentAmount.getText().toString().trim()
-                var updatedText: String = ""
+                var updatedText = ""
                 updatedText = if (text.contains("$")) {
                     text.replace("$", "")
                 } else {

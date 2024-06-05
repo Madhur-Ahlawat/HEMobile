@@ -1,14 +1,14 @@
-package com.conduent.nationalhighways.utils;
+package com.conduent.nationalhighways.utils
 
 import android.content.Context
-import android.content.ContextWrapper;
+import android.content.ContextWrapper
 import android.content.pm.PackageManager
 import android.util.Base64
 import android.util.Log
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.util.*
+import java.util.Arrays
 
 //TODO: Warning: Make sure to delete this class before release build for play store / production
 class AppSignatureHelper(context: Context?) :

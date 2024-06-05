@@ -16,7 +16,7 @@ fun EditText.onTextChanged(listener: (String) -> Unit) {
         }
     })
 }
-fun addChar(str: String, ch: Char, position: Int): String? {
+fun addChar(str: String, ch: Char, position: Int): String {
     val len = str.length
     val updatedArr = CharArray(len + 1)
     str.toCharArray(updatedArr, 0, 0, position)

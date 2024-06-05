@@ -2,13 +2,10 @@ package com.conduent.nationalhighways.utils
 
 
 import android.app.Activity
-import android.content.Context
 import android.util.Log
 import com.conduent.apollo.security.cryptography.Hashing
-import com.conduent.nationalhighways.receiver.SmsBroadcastReceiver
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
-import java.lang.Exception
 
 
 object Utility {

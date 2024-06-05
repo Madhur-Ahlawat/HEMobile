@@ -1,8 +1,5 @@
 package com.conduent.nationalhighways.utils.common
 
-import java.lang.Exception
-import java.lang.StringBuilder
-
 object Common {
 
 

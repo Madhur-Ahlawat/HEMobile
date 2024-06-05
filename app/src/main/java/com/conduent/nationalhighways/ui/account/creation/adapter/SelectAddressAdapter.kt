@@ -16,10 +16,7 @@ class SelectAddressAdapter(private val context: Context?,
 
 
     inner class SelectAddressViewHolder(var binding: AdapterSelectAddressBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-    }
-
+        RecyclerView.ViewHolder(binding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectAddressViewHolder=SelectAddressViewHolder(
         AdapterSelectAddressBinding.inflate(
             LayoutInflater.from(context),

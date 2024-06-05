@@ -2,9 +2,13 @@ package com.conduent.nationalhighways.data.repository.vehicle
 
 
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
-import com.conduent.nationalhighways.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
-import com.conduent.nationalhighways.data.model.vehicle.*
+import com.conduent.nationalhighways.data.model.crossingHistory.TransactionHistoryDownloadRequest
+import com.conduent.nationalhighways.data.model.vehicle.AddDeleteVehicleGroup
+import com.conduent.nationalhighways.data.model.vehicle.DeleteVehicleRequest
+import com.conduent.nationalhighways.data.model.vehicle.RenameVehicleGroup
+import com.conduent.nationalhighways.data.model.vehicle.VehicleListManagementEditRequest
+import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import javax.inject.Inject

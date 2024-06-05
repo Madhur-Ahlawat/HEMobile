@@ -43,8 +43,7 @@ class VehicleListAdapter(private val context: Context, private val list: Mutable
         return list.size
     }
 
-    class VehicleListViewHolder(var binding:VehiclelistlayoutBinding):RecyclerView.ViewHolder(binding.root) {
-    }
+    class VehicleListViewHolder(var binding:VehiclelistlayoutBinding):RecyclerView.ViewHolder(binding.root)
 
     interface VehicleListCallBack{
         fun vehicleListCallBack(

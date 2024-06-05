@@ -33,7 +33,6 @@ class VehiclesResultAdapter(private val context: Context, private val list: Arra
         return list.size
     }
 
-    class VehicleListViewHolder(var binding:VehiclelistlayoutBinding):RecyclerView.ViewHolder(binding.root) {
-    }
+    class VehicleListViewHolder(var binding:VehiclelistlayoutBinding):RecyclerView.ViewHolder(binding.root)
 
 }

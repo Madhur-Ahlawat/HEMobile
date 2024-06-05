@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.step5
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.Parcelable
 import android.text.Editable
 import android.text.InputFilter

@@ -1,17 +1,14 @@
-package com.conduent.nationalhighways.ui.transactions.adapter;
+package com.conduent.nationalhighways.ui.transactions.adapter
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
-import com.conduent.nationalhighways.databinding.ItemAllTansactionsBinding
 import com.conduent.nationalhighways.databinding.ItemCrossingsBinding
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
@@ -20,7 +17,6 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.visible
-import java.text.SimpleDateFormat
 
 
 class TransactionsInnerAdapter(
@@ -30,8 +26,7 @@ class TransactionsInnerAdapter(
 ) :
     RecyclerView.Adapter<TransactionsInnerAdapter.TransactionViewHolder>() {
     class TransactionViewHolder(binding: ItemCrossingsBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
     private var binding: ItemCrossingsBinding? = null
     private var pos: Int = -1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {

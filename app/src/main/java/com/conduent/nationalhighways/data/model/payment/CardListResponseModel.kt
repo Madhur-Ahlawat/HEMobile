@@ -30,6 +30,4 @@ data class CardListResponseModel(
     var expMonth:String="",
     var expYear:String=""
 
-) : Parcelable{
-
-}
+) : Parcelable

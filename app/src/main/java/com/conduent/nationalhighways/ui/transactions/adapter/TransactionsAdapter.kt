@@ -1,10 +1,8 @@
 package com.conduent.nationalhighways.ui.transactions.adapter
 
-import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,7 +36,6 @@ class TransactionsAdapter(
         return transactionItemList.size
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         pos = -1
         var innerAdapter: TransactionsInnerAdapter? = null

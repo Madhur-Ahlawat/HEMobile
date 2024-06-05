@@ -14,5 +14,4 @@ data class EnquiryResponseModel(
     var email:String="",
     var category:String=""
 
-):Parcelable {
-}
+):Parcelable

@@ -110,7 +110,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
                     if (paymentListSize == 0) {
 
                         val bundle = Bundle()
-                        bundle.putDouble(Constants.DATA, paymentTopup.toDouble())
+                        bundle.putDouble(Constants.DATA, paymentTopup)
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)

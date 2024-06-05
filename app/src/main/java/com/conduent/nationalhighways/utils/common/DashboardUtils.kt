@@ -1,10 +1,5 @@
 package com.conduent.nationalhighways.utils.common
 
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.util.Log
-import android.util.TypedValue
-import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.utils.extn.changeTextColor

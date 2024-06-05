@@ -7,12 +7,8 @@ import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.fragment.app.DialogFragment
-import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentTermsConditionBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +29,7 @@ class TermsConditionFragment : BaseFragment<FragmentTermsConditionBinding>() {
 
     override fun init() {
         binding.webView.settings.javaScriptEnabled = true
-        if(url.isNullOrEmpty()){
+        if(url.isEmpty()){
             binding.webView.loadUrl("file:///android_asset/termsandconditionspage.html")
         }
         else{

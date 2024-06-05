@@ -8,7 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
-import com.conduent.nationalhighways.data.model.auth.forgot.password.*
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
+import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.data.repository.auth.ForgotPasswordRepository
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure
