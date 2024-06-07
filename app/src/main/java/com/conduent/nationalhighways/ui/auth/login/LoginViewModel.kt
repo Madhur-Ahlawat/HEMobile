@@ -13,11 +13,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.IOException
-import java.net.Socket
-import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel

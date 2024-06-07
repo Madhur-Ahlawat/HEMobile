@@ -6,11 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityNodeInfo.FOCUS_ACCESSIBILITY
 import android.webkit.JavascriptInterface
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.view.AccessibilityDelegateCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
@@ -52,7 +56,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
-        
+
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
         if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
@@ -62,10 +66,28 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
         topUpAmount = arguments?.getDouble(Constants.PAYMENT_TOP_UP) ?: 0.0
         binding.webView.settings.javaScriptEnabled = true
-
+        binding.webView.settings.domStorageEnabled = true
+        binding.webView.settings.loadsImagesAutomatically = true
         binding.webView.loadUrl("file:///android_asset/ThreeDSGateway.html")
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ViewCompat.setAccessibilityDelegate(binding.webView, a11yDelegate)
+        binding.webView.setAccessibilityDelegate(View.AccessibilityDelegate())
+        binding.webView.requestFocus(FOCUS_ACCESSIBILITY)
+
+    }
+
+    val a11yDelegate = object : AccessibilityDelegateCompat() {
+        override fun onInitializeAccessibilityNodeInfo(
+            host: View,
+            info: AccessibilityNodeInfoCompat
+        ) {
+            super.onInitializeAccessibilityNodeInfo(host, info)
+        }
     }
 
     inner class JsObject {
@@ -125,16 +147,16 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
     private fun showLoader() {
         try {
             binding.progressBar.visibility = View.VISIBLE
-        }catch (_:Exception){
-            Log.e("TAG", "showLoader: exception" )
+        } catch (_: Exception) {
+            Log.e("TAG", "showLoader: exception")
         }
     }
 
     private fun hideLoader() {
         try {
             binding.progressBar.visibility = View.GONE
-        }catch (_:Exception){
-            Log.e("TAG", "showLoader:- exception" )
+        } catch (_: Exception) {
+            Log.e("TAG", "showLoader:- exception")
         }
     }
 

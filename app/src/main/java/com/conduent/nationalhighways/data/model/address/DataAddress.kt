@@ -14,8 +14,8 @@ data class DataAddress(
     @SerializedName("town") var town: String? = "",
     @SerializedName("country") val country: String? = "",
     @SerializedName("postcode") var postcode: String? = "",
-      var isSelected:Boolean=false
-): Parcelable
+    var isSelected: Boolean = false
+) : Parcelable
 
 
 

@@ -28,7 +28,7 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentGeneralTermsAndConditionsBinding {
-       return FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
+        return FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
     }
 
     override fun init() {
@@ -50,12 +50,13 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
                     startActivity(intent)
                     return true
                 }
-                return super.shouldOverrideUrlLoading(view, request)            }
+                return super.shouldOverrideUrlLoading(view, request)
+            }
 
         })
 
 //        if (NewCreateAccountRequestModel.prePay) {
-            binding.webView.loadUrl("file:///android_res/raw/termsandconditionspage.html")
+        binding.webView.loadUrl("file:///android_res/raw/termsandconditionspage.html")
 //        } else {
 //            binding.webView.loadUrl("file:///android_res/raw/paygtermsandcondition.html")
 //        }
@@ -69,10 +70,11 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
             "home",
             sessionManager.getLoggedInUser()
         )
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
+
     override fun initCtrl() {
     }
 

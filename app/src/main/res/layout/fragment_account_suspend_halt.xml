@@ -140,9 +140,9 @@
                         app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle" />
 
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btnContinue"
                 style="@style/PrimaryButton"
@@ -168,6 +168,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintTop_toBottomOf="@+id/btnContinue"
                 app:layout_constraintStart_toStartOf="parent">
+
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/btnAddNewPayment"
                     style="@style/secondaryButton"
@@ -183,6 +184,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
+
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/btnMainAddNewPayment"
                     style="@style/PrimaryButton"

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModel
-import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseModelItem
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
@@ -115,14 +114,14 @@ class CreateAccountVehicleViewModel @Inject constructor(
     }
 
 
-    fun heartBeat(agencyId:String,referenceId:String) {
+    fun heartBeat(agencyId: String, referenceId: String) {
 
         viewModelScope.launch {
             try {
                 heartBeatMutableLiveData.postValue(
                     ResponseHandler.success(
                         repo.getHeartBeat(
-                            agencyId,referenceId
+                            agencyId, referenceId
                         ), errorManager
                     )
                 )

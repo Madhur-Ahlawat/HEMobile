@@ -17,7 +17,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GpsSettingsFragment : BaseFragment<FragmentGpsSettingsBinding>() {
     @Inject
-    lateinit var sessionManager:SessionManager
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -42,19 +42,25 @@ class GpsSettingsFragment : BaseFragment<FragmentGpsSettingsBinding>() {
                 SessionManager.FOREGROUND_LOCATION_SHOWN,
                 true
             )
-            val bundle=Bundle()
-            bundle.putBoolean(Constants.GpsSettings,true)
+            val bundle = Bundle()
+            bundle.putBoolean(Constants.GpsSettings, true)
             sessionManager.saveBooleanData(SessionManager.SettingsClick, true)
-            findNavController().navigate(R.id.action_gpsSettingsFragment_to_registerReminderFragment,bundle)
+            findNavController().navigate(
+                R.id.action_gpsSettingsFragment_to_registerReminderFragment,
+                bundle
+            )
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if(Utils.checkLocationPermission(requireContext())){
-            val bundle=Bundle()
-            bundle.putBoolean(Constants.GpsSettings,true)
-            findNavController().navigate(R.id.action_gpsSettingsFragment_to_registerReminderFragment,bundle)
+        if (Utils.checkLocationPermission(requireContext())) {
+            val bundle = Bundle()
+            bundle.putBoolean(Constants.GpsSettings, true)
+            findNavController().navigate(
+                R.id.action_gpsSettingsFragment_to_registerReminderFragment,
+                bundle
+            )
             sessionManager.saveBooleanData(SessionManager.SettingsClick, true)
         }
     }

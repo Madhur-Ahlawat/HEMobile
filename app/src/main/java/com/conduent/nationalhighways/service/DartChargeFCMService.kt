@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
-import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Lifecycle
@@ -35,11 +34,11 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
             remoteMessage.notification?.let {
                 it.body?.let { body -> sendNotification(body) }
             }
-          /*  val from = remoteMessage.from
-            val data: Map<*, *> = remoteMessage.data
-            data[message]?.let {
-                // check data and show notification
-            }*/
+            /*  val from = remoteMessage.from
+              val data: Map<*, *> = remoteMessage.data
+              data[message]?.let {
+                  // check data and show notification
+              }*/
         } catch (e: Exception) {
             // handle exception
         }
@@ -63,7 +62,7 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
 
     private fun sendNotification(messageBody: String) {
         val requestCode = 0
-        val intent :Intent= Intent(this, LandingActivity::class.java)
+        val intent = Intent(this, LandingActivity::class.java)
         intent.putExtra(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
         intent.putExtra(Constants.NAV_FLOW_FROM, Constants.CHECK_FOR_PAID_CROSSINGS_ONEOFF)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -84,17 +83,16 @@ class DartChargeFCMService : FirebaseMessagingService(), LifecycleObserver {
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Since android Oreo notification channel is needed.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Channel human readable title",
-                NotificationManager.IMPORTANCE_DEFAULT,
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
+        val channel = NotificationChannel(
+            channelId,
+            "Channel human readable title",
+            NotificationManager.IMPORTANCE_DEFAULT,
+        )
+        notificationManager.createNotificationChannel(channel)
 
         val notificationId = 0
         notificationManager.notify(notificationId, notificationBuilder.build())

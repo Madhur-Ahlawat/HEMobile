@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.utils
 
 import android.content.Context
-import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.accessibility.AccessibilityNodeInfo
@@ -106,17 +105,8 @@ fun TextInputEditText.setAccessibilityDelegateForDigits() {
             Log.e("TAG", "sendAccessibilityEvent: eventType = " + hint)
 
             if (info.isFocusable == true) {
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    info.text = Utils.accessibilityForNumbers(text.toString())
-                    info.hintText = hint.toString()
-                } else {
-                    val builder = StringBuilder()
-                    builder.append(Utils.accessibilityForNumbers(text.toString()))
-                    builder.append(hint.toString())
-                    info.text = builder
-
-                }
+                info.text = Utils.accessibilityForNumbers(text.toString())
+                info.hintText = hint.toString()
             }
         }
     }

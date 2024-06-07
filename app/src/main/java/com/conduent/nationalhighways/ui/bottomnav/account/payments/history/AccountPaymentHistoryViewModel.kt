@@ -16,7 +16,6 @@ import com.conduent.nationalhighways.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel

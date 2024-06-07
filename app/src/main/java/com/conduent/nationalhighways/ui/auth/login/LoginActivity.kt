@@ -361,7 +361,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         commaSeparatedString =
                             Utils.makeCommaSeperatedStringForPassword(
                                 Utils.removeAllCharacters(
-                                    Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars?:""
+                                    Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars ?: ""
                                 )
                             )
                         if (!Patterns.EMAIL_ADDRESS.matcher(

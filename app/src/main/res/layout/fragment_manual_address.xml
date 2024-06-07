@@ -18,6 +18,7 @@
             android:paddingTop="@dimen/margin_16dp"
             android:paddingEnd="@dimen/margin_20dp"
             android:paddingBottom="20dp">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/data_ll"
                 android:layout_width="match_parent"
@@ -25,8 +26,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:paddingStart="@dimen/margin_20dp"
-               >
+                android:paddingStart="@dimen/margin_20dp">
 
                 <TextView
                     android:id="@+id/txtHeading"
@@ -93,7 +93,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/townCity"
                     app:maxLength="10" />
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

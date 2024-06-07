@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.data.model.account
 
-class LoginWithPlateAndReferenceNumberResponseModel : ArrayList<LoginWithPlateAndReferenceNumberResponseModel1Item>()
+class LoginWithPlateAndReferenceNumberResponseModel :
+    ArrayList<LoginWithPlateAndReferenceNumberResponseModel1Item>()
+
 data class LoginWithPlateAndReferenceNumberResponseModel1Item(
     val accountActStatus: String,
     val accountBalance: String,

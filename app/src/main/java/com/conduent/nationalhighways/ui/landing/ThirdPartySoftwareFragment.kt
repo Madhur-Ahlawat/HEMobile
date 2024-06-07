@@ -20,13 +20,13 @@ class ThirdPartySoftwareFragment : BaseFragment<FragmentThirdPartySoftwareBindin
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentThirdPartySoftwareBinding {
-       return FragmentThirdPartySoftwareBinding.inflate(inflater, container, false)
+        return FragmentThirdPartySoftwareBinding.inflate(inflater, container, false)
 
     }
 
     override fun init() {
-     binding?.textTermsAndConditions?.setMovementMethod(LinkMovementMethod.getInstance())
-        if(requireActivity() is RaiseEnquiryActivity){
+        binding?.textTermsAndConditions?.setMovementMethod(LinkMovementMethod.getInstance())
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }

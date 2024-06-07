@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.utils.widgets
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +33,7 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val results = FilterResults()
-                var suggestions:MutableList<String> = mutableListOf()
+                var suggestions: MutableList<String> = mutableListOf()
 
                 if (constraint.isNullOrEmpty()) {
                     suggestions.addAll(originalItems)
@@ -59,8 +58,8 @@ class CustomAutoCompleteAdapter(context: Context, private val data: List<String>
                     val filteredList = results.values as List<String>
 
 
-                    if (filteredList.isNotEmpty()){
-                        filteredList.sortedBy { it.substring(0,it.length-1)}
+                    if (filteredList.isNotEmpty()) {
+                        filteredList.sortedBy { it.substring(0, it.length - 1) }
                         if (filteredList.contains(Constants.UK_COUNTRY)) {
                             filteredList.filter { it != Constants.UK_COUNTRY }
                             filteredList.toMutableList().add(0, Constants.UK_COUNTRY)

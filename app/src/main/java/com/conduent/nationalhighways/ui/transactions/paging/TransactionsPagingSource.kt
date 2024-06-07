@@ -6,9 +6,7 @@ import androidx.paging.PagingState
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.repository.dashboard.DashBoardRepo
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
-import com.google.gson.Gson
 import retrofit2.HttpException
 
 class TransactionsPagingSource(
@@ -29,8 +27,8 @@ class TransactionsPagingSource(
                 request
             )
             val data = response?.body()!!.transactionList?.transaction
-            data!!.forEach{
-                Log.e("XJ220",it.amount.toString())
+            data!!.forEach {
+                Log.e("XJ220", it.amount.toString())
             }
 
             responseData?.addAll(data!!)

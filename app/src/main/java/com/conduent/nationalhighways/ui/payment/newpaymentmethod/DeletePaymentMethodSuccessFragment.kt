@@ -70,7 +70,7 @@ class DeletePaymentMethodSuccessFragment :
                 binding.textMaximumVehicle.text = getString(
                     R.string.str_your_low_balance_limit,
                     (String.format("%.2f", lBalance))
-                ) +"\n"+ getString(
+                ) + "\n" + getString(
                     R.string.str_your_top_amount_limit,
                     (String.format("%.2f", tBalance))
                 )

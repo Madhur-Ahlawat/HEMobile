@@ -2,14 +2,16 @@ package com.conduent.nationalhighways.utils
 
 import android.content.Context
 import android.util.Base64
-import com.conduent.nationalhighways.utils.common.SessionManager
-import dagger.hilt.android.AndroidEntryPoint
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-
 import java.net.URLEncoder
-import java.security.*
+import java.security.KeyFactory
+import java.security.KeyPairGenerator
+import java.security.NoSuchAlgorithmException
+import java.security.NoSuchProviderException
+import java.security.Security
+import java.security.Signature
+import java.security.SignatureException
 import java.security.spec.PKCS8EncodedKeySpec
-import javax.inject.Inject
 
 object SignatureHelper {
     fun generateKeyPair(context: Context) {
@@ -29,12 +31,12 @@ object SignatureHelper {
             val encryptedPublicKey = publicKey.let { keyHelper?.encrypt(context, it) }
             val encryptedPrivateKey = privateKey.let { keyHelper?.encrypt(context, it) }
 
-          /*  encryptedPublicKey?.let {
-                sessionManager.savePublicKey(it)
-            }
-            encryptedPrivateKey?.let {
-                sessionManager.savePrivateKey(it)
-            }*/
+            /*  encryptedPublicKey?.let {
+                  sessionManager.savePublicKey(it)
+              }
+              encryptedPrivateKey?.let {
+                  sessionManager.savePrivateKey(it)
+              }*/
 
         } catch (e: NoSuchAlgorithmException) {
 
@@ -55,10 +57,10 @@ object SignatureHelper {
         return URLEncoder.encode(publicKey, "UTF-8").replace("+", "%20")
     }
 
-    fun getSignature(context: Context,dataToBeSigned:String?):String? {
+    fun getSignature(context: Context, dataToBeSigned: String?): String? {
 
         val keyHelper = KeystoreHelper.getInstance(context)
-        val privateKey: String? = ""
+        val privateKey = ""
 
         val pkcs8EncodedBytes = Base64.decode(privateKey, Base64.DEFAULT)
         val keySpec = PKCS8EncodedKeySpec(pkcs8EncodedBytes)

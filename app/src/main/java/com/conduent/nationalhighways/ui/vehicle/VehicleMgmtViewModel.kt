@@ -10,16 +10,24 @@ import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.data.model.account.VehicleInfoDetails
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
-import com.conduent.nationalhighways.data.model.crossingHistory.TransactionHistoryDownloadRequest
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
-import com.conduent.nationalhighways.data.model.vehicle.*
+import com.conduent.nationalhighways.data.model.crossingHistory.TransactionHistoryDownloadRequest
+import com.conduent.nationalhighways.data.model.vehicle.DeleteVehicleRequest
+import com.conduent.nationalhighways.data.model.vehicle.VehicleGroupResponse
+import com.conduent.nationalhighways.data.model.vehicle.VehicleListManagementEditRequest
+import com.conduent.nationalhighways.data.model.vehicle.VehicleListResponse
+import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.data.repository.vehicle.VehicleRepository
 import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import com.conduent.nationalhighways.utils.VehicleClassTypeConverter
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
@@ -270,6 +278,7 @@ class VehicleMgmtViewModel @Inject constructor(
             }
         }
     }
+
     fun getVehicleListApi(start: String, count: String) {
         viewModelScope.launch {
             try {

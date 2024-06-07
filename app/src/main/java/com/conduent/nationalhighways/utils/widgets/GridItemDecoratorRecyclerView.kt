@@ -33,12 +33,12 @@ class GridItemDecoratorRecyclerView
         if (position < columns) {
             outRect.left = margin
         }
-        try{
+        try {
             if (position % columns == 0) {
                 outRect.left = margin
             }
+        } catch (e: java.lang.Exception) {
         }
-        catch (e:java.lang.Exception){}
         //add left margin only to the first column
 
     }

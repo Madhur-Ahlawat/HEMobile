@@ -6,19 +6,19 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-        <!-- Add your custom views here (e.g., TextView, ImageView, etc.) -->
-        <TextView
-            android:id="@+id/custom_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|start"
-            android:gravity="start"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingStart="@dimen/margin_15dp"
-            android:paddingEnd="@dimen/margin_15dp"
-            android:textColor="#000"
-            android:textSize="16sp"
-            tools:text="AssavAssavAssavA" />
+    <!-- Add your custom views here (e.g., TextView, ImageView, etc.) -->
+    <TextView
+        android:id="@+id/custom_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|start"
+        android:gravity="start"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="@dimen/margin_15dp"
+        android:paddingEnd="@dimen/margin_15dp"
+        android:textColor="#000"
+        android:textSize="16sp"
+        tools:text="AssavAssavAssavA" />
 
 </LinearLayout>

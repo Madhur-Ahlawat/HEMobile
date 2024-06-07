@@ -13,17 +13,17 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
     lateinit var smsBroadcastReceiverListener: SmsBroadcastReceiverListener
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.e("SmsBroadcastReceiver", "onReceive: action "+intent?.action )
+        Log.e("SmsBroadcastReceiver", "onReceive: action " + intent?.action)
 
         if (intent?.action == SmsRetriever.SMS_RETRIEVED_ACTION) {
 
             val extras = intent.extras
             val smsRetrieverStatus = extras?.get(SmsRetriever.EXTRA_STATUS) as Status
-            Log.e("SmsBroadcastReceiver", "onReceive: statusCode "+smsRetrieverStatus.statusCode )
+            Log.e("SmsBroadcastReceiver", "onReceive: statusCode " + smsRetrieverStatus.statusCode)
 
             when (smsRetrieverStatus.statusCode) {
                 CommonStatusCodes.SUCCESS -> {
-                    if(extras.containsKey(SmsRetriever.EXTRA_CONSENT_INTENT)) {
+                    if (extras.containsKey(SmsRetriever.EXTRA_CONSENT_INTENT)) {
                         extras.getParcelable<Intent>(SmsRetriever.EXTRA_CONSENT_INTENT).also {
                             Log.e("SmsBroadcastReceiver", "onReceive: statusCode ->$it")
                             smsBroadcastReceiverListener.onSuccess(it)

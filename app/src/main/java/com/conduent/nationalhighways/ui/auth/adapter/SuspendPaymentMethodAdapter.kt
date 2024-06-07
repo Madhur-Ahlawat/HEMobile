@@ -56,14 +56,15 @@ class SuspendPaymentMethodAdapter(
                 }, Html.FROM_HTML_MODE_COMPACT)
 
             holder.binding.radioButtonPaymentMethod.contentDescription =
-                model.cardType + ", " + "${Utils.accessibilityForNumbers(model?.cardNumber?.let {
-                    Utils.setStarmaskcardnumber(
-                        context,
-                        it
-                    )
-                }.toString())}"
-        }
-        else {
+                model.cardType + ", " + "${
+                    Utils.accessibilityForNumbers(model?.cardNumber?.let {
+                        Utils.setStarmaskcardnumber(
+                            context,
+                            it
+                        )
+                    }.toString())
+                }"
+        } else {
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             htmlText =
                 Html.fromHtml(
@@ -73,13 +74,15 @@ class SuspendPaymentMethodAdapter(
                         )
                     })
             holder.binding.radioButtonPaymentMethod.contentDescription =
-                context.getString(R.string.direct_debit) + ", " + "${Utils.accessibilityForNumbers(
-                    model?.bankAccountNumber?.let {
-                        Utils.maskCardNumber(
-                            it
-                        )
-                    }.toString()
-                )}"
+                context.getString(R.string.direct_debit) + ", " + "${
+                    Utils.accessibilityForNumbers(
+                        model?.bankAccountNumber?.let {
+                            Utils.maskCardNumber(
+                                it
+                            )
+                        }.toString()
+                    )
+                }"
         }
 
         holder.binding.tvSelectPaymentMethod.text = htmlText

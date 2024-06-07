@@ -163,7 +163,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
-            if(requireActivity() is HomeActivityMain) {
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
             }
             val bundle = Bundle()
@@ -389,7 +389,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
 

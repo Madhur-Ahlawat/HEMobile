@@ -28,8 +28,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/layout"
-                >
+                android:id="@+id/layout">
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/payment_method_information"
@@ -89,7 +88,6 @@
                     android:layout_marginTop="17dp"
                     android:textSize="14sp"
                     android:id="@+id/textMaximumVehicle" />
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

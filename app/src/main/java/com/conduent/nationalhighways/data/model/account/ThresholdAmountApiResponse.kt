@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ThresholdAmountApiResponse (
-    @SerializedName("thresholdAmountVo") val thresholdAmountVo : ThresholdAmountData?,
-    @SerializedName("statusCode") val statusCode : String?,
-    @SerializedName("message") val message : String?,
+data class ThresholdAmountApiResponse(
+    @SerializedName("thresholdAmountVo") val thresholdAmountVo: ThresholdAmountData?,
+    @SerializedName("statusCode") val statusCode: String?,
+    @SerializedName("message") val message: String?,
 ) : Parcelable

@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.data.model.profile
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 
@@ -60,9 +59,9 @@ data class PersonalInformation(
     val zipCodePlus: String?,
     var zipcode: String?,
     var phoneCellCountryCode: String?,
-    var phoneDayCountryCode:String,
+    var phoneDayCountryCode: String,
     var phoneCell: String?,
-     val zipCode: String?,
+    val zipCode: String?,
 
     ) : Parcelable
 

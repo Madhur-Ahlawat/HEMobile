@@ -41,17 +41,18 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
         when (v?.id) {
             binding.continueWithoutApplying.id -> {
                 val bundle = Bundle()
-                bundle.putString(NAV_FLOW_KEY,navFlowCall)
-                when(navFlowCall){
+                bundle.putString(NAV_FLOW_KEY, navFlowCall)
+                when (navFlowCall) {
 
                     EDIT_SUMMARY -> {
                         findNavController().navigate(
-                            R.id.action_createAccountEligibleLRDS_to_accountSummaryFragment,bundle
+                            R.id.action_createAccountEligibleLRDS_to_accountSummaryFragment, bundle
                         )
                     }
-                    else ->{
+
+                    else -> {
                         findNavController().navigate(
-                            R.id.action_createAccountEligibleLRDS_to_createAccountTypes,bundle
+                            R.id.action_createAccountEligibleLRDS_to_createAccountTypes, bundle
                         )
                     }
 
@@ -59,6 +60,7 @@ class CreateAccountEligibleLRDS : BaseFragment<FragmentCreateAccountEligibleLrds
 
 
             }
+
             binding.btnContinue.id -> {
 
                 val url =

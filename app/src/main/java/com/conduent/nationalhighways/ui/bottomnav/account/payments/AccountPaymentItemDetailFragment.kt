@@ -11,7 +11,7 @@ class AccountPaymentItemDetailFragment : BaseFragment<FragmentAccountPaymentItem
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    )= FragmentAccountPaymentItemDetailBinding.inflate(inflater, container, false)
+    ) = FragmentAccountPaymentItemDetailBinding.inflate(inflater, container, false)
 
     override fun init() {
     }

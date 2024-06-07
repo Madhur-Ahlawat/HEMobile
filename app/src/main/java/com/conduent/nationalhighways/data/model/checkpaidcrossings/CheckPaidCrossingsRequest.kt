@@ -71,7 +71,8 @@ data class BalanceTransferRequest(
     val accountNumber: String?,
     val plateNumber: String?,
     val plateCountry: String?,
-    val transferInfo: TransferInfo?) : Parcelable
+    val transferInfo: TransferInfo?
+) : Parcelable
 
 
 @Parcelize

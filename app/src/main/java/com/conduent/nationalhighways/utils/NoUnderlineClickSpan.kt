@@ -70,7 +70,9 @@ fun TextView.setResizableText(
     }
     val charactersAtLineEnd = textLayout.getLineEnd(maxLines - 1)
     val suffixText =
-        if (viewMore) resources.getString(R.string.resizable_text_read_more) else resources.getString(R.string.resizable_text_read_less)
+        if (viewMore) resources.getString(R.string.resizable_text_read_more) else resources.getString(
+            R.string.resizable_text_read_less
+        )
     var charactersToTake = charactersAtLineEnd - suffixText.length / 2 // Good enough first guess
     if (charactersToTake <= 0) {
         // Happens when text is empty
@@ -99,7 +101,10 @@ fun TextView.setResizableText(
         return
     }
     val lastHasNewLine =
-        adjustedText.substring(textLayout.getLineStart(maxLines - 1), textLayout.getLineEnd(maxLines - 1))
+        adjustedText.substring(
+            textLayout.getLineStart(maxLines - 1),
+            textLayout.getLineEnd(maxLines - 1)
+        )
             .contains("\n")
     var linedText = if (lastHasNewLine) {
         val charactersPerLine =
@@ -108,7 +113,10 @@ fun TextView.setResizableText(
             "\u00A0".repeat(charactersPerLine.roundToInt()) // non breaking space, will not be thrown away by HTML parser
         charactersToTake += lineOfSpaces.length - 1
         adjustedText.take(textLayout.getLineStart(maxLines - 1)) +
-                adjustedText.substring(textLayout.getLineStart(maxLines - 1), textLayout.getLineEnd(maxLines - 1))
+                adjustedText.substring(
+                    textLayout.getLineStart(maxLines - 1),
+                    textLayout.getLineEnd(maxLines - 1)
+                )
                     .replace("\n", lineOfSpaces) +
                 adjustedText.substring(textLayout.getLineEnd(maxLines - 1))
     } else {
@@ -176,15 +184,20 @@ private fun TextView.addClickablePartTextResizable(
     if (clickableText != null) {
         builder.append(clickableText)
         val startIndexOffset = if (viewMore) 4 else 0 // Do not highlight the 3 dots and the space
-        builder.setSpan(object : NoUnderlineClickSpan(context) {
-            override fun onClick(widget: View) {
-                if (viewMore) {
-                    setResizableText(fullText, maxLines, false, applyExtraHighlights)
-                } else {
-                    setResizableText(fullText, maxLines, true, applyExtraHighlights)
+        builder.setSpan(
+            object : NoUnderlineClickSpan(context) {
+                override fun onClick(widget: View) {
+                    if (viewMore) {
+                        setResizableText(fullText, maxLines, false, applyExtraHighlights)
+                    } else {
+                        setResizableText(fullText, maxLines, true, applyExtraHighlights)
+                    }
                 }
-            }
-        }, builder.indexOf(clickableText) + startIndexOffset, builder.indexOf(clickableText) + clickableText.length, 0)
+            },
+            builder.indexOf(clickableText) + startIndexOffset,
+            builder.indexOf(clickableText) + clickableText.length,
+            0
+        )
     }
     if (applyExtraHighlights != null) {
         return applyExtraHighlights(builder)

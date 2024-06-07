@@ -84,7 +84,8 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             binding.btnFeedback.text = getString(R.string.continue_with_your_selection)
         } else {
             binding.descTv.text = resources.getString(R.string.vehcile_type_mismatch,
-                crossingDetailModel?.plateNo.toString().uppercase(), crossingDetailModel?.vehicleClass?.let {
+                crossingDetailModel?.plateNo.toString().uppercase(),
+                crossingDetailModel?.vehicleClass?.let {
                     Utils.getVehicleType(
                         requireActivity(),
                         it
@@ -110,7 +111,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             token = sessionManager.fetchAuthToken() ?: ""
         } else {
             sessionManager.saveAuthToken(token)
-            sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
+            sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, true)
         }
     }
 
@@ -164,7 +165,7 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
                     )
 
                     sessionManager.saveAuthToken("")
-                    sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
+                    sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, false)
                     findNavController().navigate(
                         R.id.action_vehicleDoesNotMatchCurrentVehicleFragment_to_findYourVehicleFragment,
                         bundle

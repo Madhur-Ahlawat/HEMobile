@@ -106,7 +106,6 @@
                 android:textSize="@dimen/_13ssp" />
 
 
-
             <!--  </com.google.android.material.card.MaterialCardView>
               <com.google.android.material.card.MaterialCardView
                   android:layout_width="match_parent"
@@ -191,8 +190,6 @@
             android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radio_group" />/>
-
-
+            app:layout_constraintTop_toBottomOf="@+id/radio_group" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

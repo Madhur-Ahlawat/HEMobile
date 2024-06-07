@@ -1,4 +1,5 @@
 package com.conduent.nationalhighways.ui.landing
+
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -31,7 +32,7 @@ class ContactDartChargeFragment : BaseFragment<FragmentContactDartCharge2Binding
         binding.checkEnquiryStatusMb.setOnClickListener {
             findNavController().navigate(R.id.action_contactDartChargeFragment_to_enquiryStatusFragment)
         }
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }

@@ -143,7 +143,7 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
                     putString(Constants.NAV_FLOW_KEY, navFlowCall)
                     putParcelable(Constants.NAV_DATA_KEY, data)
                 }
-                if(requireActivity() is HomeActivityMain){
+                if (requireActivity() is HomeActivityMain) {
                     (requireActivity() as HomeActivityMain).setTitle(getString(R.string.transfer_remaining_credit))
                 }
                 findNavController().navigate(

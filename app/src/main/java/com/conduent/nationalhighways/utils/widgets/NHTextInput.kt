@@ -10,5 +10,4 @@ import com.google.android.material.textfield.TextInputEditText
  */
 open class NHTextInput @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : TextInputEditText(context, attrs) {
-}
+) : TextInputEditText(context, attrs)

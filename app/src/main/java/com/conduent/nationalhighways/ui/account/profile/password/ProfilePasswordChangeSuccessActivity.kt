@@ -19,10 +19,12 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePasswordSuccessProfileBinding>(),LogoutListener {
+class ProfilePasswordChangeSuccessActivity :
+    BaseActivity<ActivityChangePasswordSuccessProfileBinding>(), LogoutListener {
 
     @Inject
     lateinit var api: ApiService
+
     @Inject
     lateinit var sessionManager: SessionManager
     private lateinit var binding: ActivityChangePasswordSuccessProfileBinding
@@ -46,16 +48,18 @@ class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePassword
     private fun initCtrl() {
         try {
             binding.message.text = Html.fromHtml(
-            getString(
-                R.string.you_will_receive_a_confirmation_email,
-                intent.getStringExtra(Constants.EMAIL)?.lowercase(Locale.getDefault())
-            ), Html.FROM_HTML_MODE_COMPACT)
+                getString(
+                    R.string.you_will_receive_a_confirmation_email,
+                    intent.getStringExtra(Constants.EMAIL)?.lowercase(Locale.getDefault())
+                ), Html.FROM_HTML_MODE_COMPACT
+            )
         } catch (e: Exception) {
             binding.message.text = Html.fromHtml(
                 getString(
                     R.string.you_will_receive_a_confirmation_email,
                     intent.getStringExtra(Constants.EMAIL)
-                ), Html.FROM_HTML_MODE_COMPACT)
+                ), Html.FROM_HTML_MODE_COMPACT
+            )
         }
         binding.btnSignin.setOnClickListener {
             sessionManager.clearAll()
@@ -81,7 +85,7 @@ class ProfilePasswordChangeSuccessActivity : BaseActivity<ActivityChangePassword
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {

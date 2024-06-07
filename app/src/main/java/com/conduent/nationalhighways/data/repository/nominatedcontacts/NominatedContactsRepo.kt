@@ -1,6 +1,9 @@
 package com.conduent.nationalhighways.data.repository.nominatedcontacts
 
-import com.conduent.nationalhighways.data.model.nominatedcontacts.*
+import com.conduent.nationalhighways.data.model.nominatedcontacts.CreateAccountRequestModel
+import com.conduent.nationalhighways.data.model.nominatedcontacts.ResendActivationMail
+import com.conduent.nationalhighways.data.model.nominatedcontacts.TerminateRequestModel
+import com.conduent.nationalhighways.data.model.nominatedcontacts.UpdateAccessRightModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import javax.inject.Inject
 

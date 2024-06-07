@@ -44,7 +44,7 @@ class TollRateAdapter(private val context: Context?, var list: List<TollRatesRes
                 )
             ) ?: ""
         } else {
-            valuePrepay = context?.getString(R.string.str_free)?:""
+            valuePrepay = context?.getString(R.string.str_free) ?: ""
             valuePayasYouGo = context?.getString(R.string.str_free) ?: ""
         }
 

@@ -5,7 +5,10 @@ import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithNewCardMo
 import com.conduent.nationalhighways.data.remote.ApiService
 import javax.inject.Inject
 
-class ManualTopUpRepository  @Inject constructor(private val apiService: ApiService) {
-    suspend fun paymentWithNewCard(model: PaymentWithNewCardModel?)= apiService.paymentWithNewCard(model=model)
-    suspend fun paymentWithExistingCard(model: PaymentWithExistingCardModel?)= apiService.paymentWithExistingCard(model=model)
+class ManualTopUpRepository @Inject constructor(private val apiService: ApiService) {
+    suspend fun paymentWithNewCard(model: PaymentWithNewCardModel?) =
+        apiService.paymentWithNewCard(model = model)
+
+    suspend fun paymentWithExistingCard(model: PaymentWithExistingCardModel?) =
+        apiService.paymentWithExistingCard(model = model)
 }

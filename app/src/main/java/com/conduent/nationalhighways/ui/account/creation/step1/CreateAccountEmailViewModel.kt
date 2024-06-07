@@ -41,7 +41,8 @@ class CreateAccountEmailViewModel @Inject constructor(
 
 
     val emailVerificationApi = MutableStateFlow<Resource<EmailVerificationResponse?>?>(null)
-    val emailVerificationApiValStateFlow: StateFlow<Resource<EmailVerificationResponse?>?> = emailVerificationApi
+    val emailVerificationApiValStateFlow: StateFlow<Resource<EmailVerificationResponse?>?> =
+        emailVerificationApi
 
     fun emailVerificationApiMutable(request: EmailVerificationRequest?) {
         viewModelScope.launch {
@@ -58,7 +59,6 @@ class CreateAccountEmailViewModel @Inject constructor(
             }
         }
     }
-
 
 
     fun emailVerificationApi(request: EmailVerificationRequest?) {
@@ -91,6 +91,7 @@ class CreateAccountEmailViewModel @Inject constructor(
             }
         }
     }
+
     fun userNameAvailabilityCheck(request: UserNameCheckReq) {
         viewModelScope.launch {
             try {

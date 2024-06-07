@@ -16,8 +16,6 @@
         tools:visibility="visible">
 
 
-
-
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/message_tv"
             style="@style/BoldText"

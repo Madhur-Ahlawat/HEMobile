@@ -44,6 +44,7 @@ class MakeOffPaymentCrossingAdapter(
                         binding.llBelowContainer.visible()
                         binding.tvVehicleNo.setTypeface(binding.tvVehicleNo.typeface, Typeface.BOLD)
                     }
+
                     else -> {
                         binding.llBelowContainer.gone()
                         binding.tvVehicleNo.setTypeface(
@@ -75,6 +76,7 @@ class MakeOffPaymentCrossingAdapter(
                 R.id.ivAdd -> {
                     listner?.onAdd(absoluteAdapterPosition)
                 }
+
                 R.id.ivMinus -> {
                     if ((list?.get(absoluteAdapterPosition)?.futureQuantity ?: 0) > 0)
                         listner?.onMinus(absoluteAdapterPosition)

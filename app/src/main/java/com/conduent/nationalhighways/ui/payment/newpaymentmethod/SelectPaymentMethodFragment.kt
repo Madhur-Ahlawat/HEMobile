@@ -20,7 +20,7 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
 
     private var personalInformation: PersonalInformation? = null
     private var paymentListSize: Int = 0
-    private var isDrectDebit: Boolean?=false
+    private var isDrectDebit: Boolean? = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -32,11 +32,11 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
     override fun initCtrl() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }else  if (requireActivity() is AuthActivity) {
+        } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
-        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT,false)
+        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT, false)
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =

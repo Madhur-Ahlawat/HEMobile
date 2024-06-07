@@ -5,10 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
-import com.adobe.marketing.mobile.*
+import com.adobe.marketing.mobile.Analytics
+import com.adobe.marketing.mobile.Identity
+import com.adobe.marketing.mobile.Lifecycle
+import com.adobe.marketing.mobile.LoggingMode
+import com.adobe.marketing.mobile.MobileCore
+import com.adobe.marketing.mobile.MobilePrivacyStatus
+import com.adobe.marketing.mobile.Signal
+import com.adobe.marketing.mobile.UserProfile
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.receiver.BootReceiver
 import com.conduent.nationalhighways.utils.common.Constants
@@ -21,7 +28,9 @@ import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltAndroidApp

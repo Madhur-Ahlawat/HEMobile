@@ -175,7 +175,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         }
 
         if (NewCreateAccountRequestModel.isMaxVehicleAdded) {
-            if(requireActivity() is HomeActivityMain){
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).hideBackIcon()
             }
             binding.maximumVehicleAdded.text =

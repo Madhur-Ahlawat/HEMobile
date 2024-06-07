@@ -43,7 +43,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
     override fun init() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }else if(requireActivity() is AuthActivity){
+        } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
         if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
@@ -110,7 +110,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
                     if (paymentListSize == 0) {
 
                         val bundle = Bundle()
-                        bundle.putDouble(Constants.DATA, paymentTopup.toDouble())
+                        bundle.putDouble(Constants.DATA, paymentTopup)
                         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
