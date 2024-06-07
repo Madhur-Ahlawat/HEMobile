@@ -38,6 +38,7 @@ class LoaderDialog : BaseDialog<DialogLoaderBinding>() {
         cleanupResources()
 
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         cleanupResources()

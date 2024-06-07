@@ -60,13 +60,17 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
         when (serviceType) {
             Constants.MAINTENANCE -> {
                 if (requireActivity() is LandingActivity) {
-                    if(requireActivity() is LandingActivity) {
+                    if (requireActivity() is LandingActivity) {
                         (requireActivity() as LandingActivity).setBackIcon(View.GONE)
                         (requireActivity() as LandingActivity).setToolBarTitle(resources.getString(R.string.str_service_is_unavailable))
                     }
                 } else if (requireActivity() is RaiseEnquiryActivity) {
                     (requireActivity() as RaiseEnquiryActivity).setBackIcon(View.GONE)
-                    (requireActivity() as RaiseEnquiryActivity).setToolBarTitle(resources.getString(R.string.str_service_is_unavailable))
+                    (requireActivity() as RaiseEnquiryActivity).setToolBarTitle(
+                        resources.getString(
+                            R.string.str_service_is_unavailable
+                        )
+                    )
                 }
                 val convertedEndDate = DateUtils.convertStringDatetoAnotherFormat(
                     endTime,
@@ -89,7 +93,11 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
             Constants.UNAVAILABLE -> {
                 if (requireActivity() is RaiseEnquiryActivity) {
                     (requireActivity() as RaiseEnquiryActivity).setBackIcon(View.GONE)
-                        (requireActivity() as RaiseEnquiryActivity).setToolBarTitle(resources.getString(R.string.failed_problem_with_service))
+                    (requireActivity() as RaiseEnquiryActivity).setToolBarTitle(
+                        resources.getString(
+                            R.string.failed_problem_with_service
+                        )
+                    )
                 } else if (requireActivity() is LandingActivity) {
                     (requireActivity() as LandingActivity).setBackIcon(View.GONE)
                     (requireActivity() as LandingActivity).setToolBarTitle(resources.getString(R.string.failed_problem_with_service))

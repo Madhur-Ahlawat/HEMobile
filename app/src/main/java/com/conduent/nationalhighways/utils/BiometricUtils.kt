@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.utils
 
 import android.content.Context
-import android.content.Intent
-import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.biometric.BiometricManager
@@ -58,6 +56,7 @@ object BiometricUtils {
 //                }
 //                startActivityForResult(enrollIntent, 100)
             }
+
             BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
                 Toast.makeText(
                     context,
@@ -65,6 +64,7 @@ object BiometricUtils {
                 ).show()
                 return false
             }
+
             BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
                 Toast.makeText(
                     context,
@@ -72,6 +72,7 @@ object BiometricUtils {
                 ).show()
                 return false
             }
+
             BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
                 Toast.makeText(
                     context,

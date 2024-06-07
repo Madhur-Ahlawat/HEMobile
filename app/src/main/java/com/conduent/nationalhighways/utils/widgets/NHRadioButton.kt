@@ -9,5 +9,4 @@ import androidx.appcompat.widget.AppCompatRadioButton
  */
 class NHRadioButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : AppCompatRadioButton(context, attrs) {
-}
+) : AppCompatRadioButton(context, attrs)

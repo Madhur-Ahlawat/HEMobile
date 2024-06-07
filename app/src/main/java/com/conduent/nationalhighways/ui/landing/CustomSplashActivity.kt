@@ -31,7 +31,8 @@ import javax.inject.Inject
 class CustomSplashActivity : AppCompatActivity() {
 
     private var binding: ActivitySplashNewBinding? = null
-    private var mIsRooted: Boolean =false
+    private var mIsRooted: Boolean = false
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -40,10 +41,13 @@ class CustomSplashActivity : AppCompatActivity() {
         binding = ActivitySplashNewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         mIsRooted = checkIfRootConditionAndDisplayMessage()
-        Log.e("Signature",AppSignatureHelper(this).appSignatures.toString())
-        sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,Utils.areNotificationsEnabled(this))
+        Log.e("Signature", AppSignatureHelper(this).appSignatures.toString())
+        sessionManager.saveBooleanData(
+            SessionManager.NOTIFICATION_PERMISSION,
+            Utils.areNotificationsEnabled(this)
+        )
 
-        if (!mIsRooted){
+        if (!mIsRooted) {
             if (!Utils.areNotificationsEnabled(this)) {
                 // Notifications are not enabled, request the user to enable them
                 if (Build.VERSION.SDK_INT >= 33) {
@@ -61,6 +65,7 @@ class CustomSplashActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun checkIfRootConditionAndDisplayMessage(): Boolean {
         //In some devices app restarts if opened from launcher even if app is running and user is logged in,
         // Below code prevents app from restarting
@@ -93,7 +98,7 @@ class CustomSplashActivity : AppCompatActivity() {
 
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,it)
+            sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, it)
             redirectNextScreenWithHandler()
         }
 

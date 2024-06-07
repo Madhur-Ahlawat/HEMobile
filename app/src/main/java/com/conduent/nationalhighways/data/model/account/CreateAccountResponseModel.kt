@@ -9,6 +9,6 @@ data class CreateProfileDetailModelModel(
     val emailStatusCode: String?,
     val message: String?,
     val statusCode: String?,
-    var accountType : String?,
-    var referenceNumber:String?
+    var accountType: String?,
+    var referenceNumber: String?
 ) : Parcelable

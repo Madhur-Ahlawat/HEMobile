@@ -10,6 +10,4 @@ import androidx.appcompat.widget.AppCompatCheckBox
  */
 class NHCheckBox @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : AppCompatCheckBox(context, attrs) {
-
-}
+) : AppCompatCheckBox(context, attrs)

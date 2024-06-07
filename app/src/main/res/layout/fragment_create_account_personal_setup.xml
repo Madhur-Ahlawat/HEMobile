@@ -17,6 +17,7 @@
         android:paddingEnd="@dimen/margin_20dp"
 
         >
+
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent"
             style="@style/MediumTextBlack"
             android:id="@+id/what_type_of_account"
-            android:text="@string/account_creation_what_type_of_account"/>
+            android:text="@string/account_creation_what_type_of_account" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -49,7 +50,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="12dp"
                     android:layout_marginStart="19dp"
-                    android:id="@+id/prePay"/>
+                    android:id="@+id/prePay" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,7 +59,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="14dp"
                     android:layout_marginEnd="19dp"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/textView1"
                     style="@style/RegularTextBlack"
@@ -109,13 +112,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

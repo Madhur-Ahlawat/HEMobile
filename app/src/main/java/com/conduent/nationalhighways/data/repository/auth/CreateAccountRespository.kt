@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.data.repository.auth
 import com.conduent.nationalhighways.data.model.account.CreateAccountRequestModel
 import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
-import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.remote.ApiService

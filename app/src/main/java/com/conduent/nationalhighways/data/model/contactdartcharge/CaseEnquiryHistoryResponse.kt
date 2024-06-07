@@ -28,4 +28,4 @@ data class ServiceRequest(
 ) : Parcelable
 
 @Parcelize
-data class FileUploadList(val filename:String?,val fileId:String?):Parcelable
+data class FileUploadList(val filename: String?, val fileId: String?) : Parcelable

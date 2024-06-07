@@ -36,14 +36,14 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
         crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""
-        if(accountInformation?.accSubType.equals(Constants.PAYG)){
+        if (accountInformation?.accSubType.equals(Constants.PAYG)) {
             binding.textMaximumVehicle.text =
                 getString(R.string.str_provide_payment_card_details_desc)
             binding.maximumVehicleAdded.text =
                 getString(R.string.str_provide_payment_card_details)
             binding.btnTopUpNow.text = getString(R.string.str_continue)
-        }else{
-            if (crossingCount.isNotEmpty() ) {
+        } else {
+            if (crossingCount.isNotEmpty()) {
                 if (crossingCount.toInt() > 0) {
                     binding.maximumVehicleAddedNote.text =
                         getString(R.string.str_you_crossing, "£5.00", crossingCount)
@@ -63,7 +63,6 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
             }
 
         }
-
 
 
     }
@@ -101,13 +100,13 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                if(accountInformation?.accSubType.equals(Constants.PAYG)){
+                if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                     findNavController().navigate(
                         R.id.action_accountSuspendedFragment_to_paymentMethodFragment,
                         bundle
                     )
 
-                }else {
+                } else {
                     findNavController().navigate(
                         R.id.action_accountSuspendedFragment_to_accountSuspendedPaymentFragment,
                         bundle

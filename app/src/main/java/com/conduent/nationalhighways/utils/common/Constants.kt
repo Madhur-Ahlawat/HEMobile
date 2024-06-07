@@ -7,15 +7,19 @@ object Constants {
     const val contactPageName: String = "Android Dart Charge: Contact Dart Charge"
     const val chargesAndFinesPageName: String = "Android Dart Charge: Charges and fines"
     const val aboutServicePageName: String = "Android Dart Charge: About this service"
-    const val generalTermsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
-    const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions - General"
-    const val paygTermsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions - PAYG"
+    const val generalTermsAndConditionsPageName: String =
+        "Android Dart Charge: Terms and Conditions"
+    const val termsAndConditionsPageName: String =
+        "Android Dart Charge: Terms and Conditions - General"
+    const val paygTermsAndConditionsPageName: String =
+        "Android Dart Charge: Terms and Conditions - PAYG"
     const val TWOFA_ENABLED: String = "TWOFA_ENABLED"
     const val HAS_ASKED_FOR_BIOMETRIC: String = "HAS_ASKED_FOR_BIOMETRIC"
     const val privacyPolicyPageName: String = "Android Dart Charge: Privacy Policy"
     const val BIOMETRIC_CHANGE: String = "BIOMETRIC_CHANGE"
     const val otherWaysToPayPageName: String = "Android Dart Charge: Other ways to pay your charge"
-    const val doYouHaveDartAccountPageName: String = "Android Dart Charge Non-Account Holder: Have a Dart Charge account?"
+    const val doYouHaveDartAccountPageName: String =
+        "Android Dart Charge Non-Account Holder: Have a Dart Charge account?"
 //    const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
 //    const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
 
@@ -455,6 +459,6 @@ object Constants {
     const val geofenceNorthBoundDartCharge = "geofenceNorthBoundDartCharge"
     const val geofenceSouthBoundDartCharge = "geofenceSouthBoundDartCharge"
 
-    const val FOREGROUND_SERVICE_NOTIFICATIONID=12334
+    const val FOREGROUND_SERVICE_NOTIFICATIONID = 12334
 
 }

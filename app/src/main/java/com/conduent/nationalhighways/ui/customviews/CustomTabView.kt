@@ -2,17 +2,16 @@ package com.conduent.nationalhighways.ui.customviews
 
 import android.content.Context
 import android.graphics.Canvas
-import androidx.appcompat.widget.AppCompatTextView
 import android.graphics.Paint
 import android.util.AttributeSet
-
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.conduent.nationalhighways.R
 
-class CustomTabView: AppCompatTextView {
+class CustomTabView : AppCompatTextView {
 
-    private var showDividerVal:Boolean=false
+    private var showDividerVal: Boolean = false
 
 
     constructor(context: Context) : super(context) {
@@ -35,19 +34,18 @@ class CustomTabView: AppCompatTextView {
 
     private fun initResources(context: Context, attrs: AttributeSet?) {
 
-        val mTypeFace = ResourcesCompat.getFont(context, com.conduent.nationalhighways.R.font.roboto_medium)
+        val mTypeFace = ResourcesCompat.getFont(context, R.font.roboto_medium)
         typeface = mTypeFace
     }
 
-    fun setDivider(show:Boolean)
-    {
+    fun setDivider(show: Boolean) {
         showDividerVal = show
     }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        if(showDividerVal)
-        {
+        if (showDividerVal) {
             val paint = Paint()
             paint.color = ContextCompat.getColor(context, R.color.black)
             paint.strokeWidth = 0F

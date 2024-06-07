@@ -35,7 +35,7 @@ class AboutThisServiceFragment : BaseFragment<FragmentAboutThisServiceBinding>()
             "home",
             sessionManager.getLoggedInUser()
         )
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }

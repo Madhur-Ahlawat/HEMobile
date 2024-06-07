@@ -22,7 +22,14 @@ object ResponseHandler {
             if (response.code() == Constants.TOKEN_FAIL) {
                 return Resource.DataError(
                     "Token Expired",
-                    ErrorResponseModel(Constants.INVALID_TOKEN, "", Constants.INVALID_TOKEN, 401, 401, "")
+                    ErrorResponseModel(
+                        Constants.INVALID_TOKEN,
+                        "",
+                        Constants.INVALID_TOKEN,
+                        401,
+                        401,
+                        ""
+                    )
                 )
             } else {
                 Resource.Success(response.body())
@@ -31,13 +38,26 @@ object ResponseHandler {
             try {
                 val errorResponse =
                     parseError(response)
-                Log.e("TAG", "success: response error " + errorResponse?.error.equals(Constants.INVALID_TOKEN))
+                Log.e(
+                    "TAG",
+                    "success: response error " + errorResponse?.error.equals(Constants.INVALID_TOKEN)
+                )
                 Log.e("TAG", "success: response error--> " + errorResponse?.error)
 
-                if (response?.code() == Constants.TOKEN_FAIL && errorResponse?.error.equals(Constants.INVALID_TOKEN)) {
+                if (response?.code() == Constants.TOKEN_FAIL && errorResponse?.error.equals(
+                        Constants.INVALID_TOKEN
+                    )
+                ) {
                     return Resource.DataError(
                         "Token Expired",
-                        ErrorResponseModel(Constants.INVALID_TOKEN, "", Constants.INVALID_TOKEN, 401, 401, "")
+                        ErrorResponseModel(
+                            Constants.INVALID_TOKEN,
+                            "",
+                            Constants.INVALID_TOKEN,
+                            401,
+                            401,
+                            ""
+                        )
                     )
                 } else {
                     if (TextUtils.isEmpty(errorResponse?.message)) {
@@ -46,7 +66,7 @@ object ResponseHandler {
                     return Resource.DataError(errorResponse?.message, errorResponse)
                 }
             } catch (e: Exception) {
-                Log.e("TAG", "success: message "+e.message )
+                Log.e("TAG", "success: message " + e.message)
                 return Resource.DataError(e.message)
             }
         }
@@ -58,26 +78,31 @@ object ResponseHandler {
 //        Log.e("TAG", "parseError: errorBody $errorBody")
 
         return try {
-            Log.e("TAG", "parseError: message try -> " )
+            Log.e("TAG", "parseError: message try -> ")
             gson.fromJson(errorBody, ErrorResponseModel::class.java)
-                ?: ErrorResponseModel(Constants.INVALID_TOKEN, null, Constants.INVALID_TOKEN, 0, 0, null)
+                ?: ErrorResponseModel(
+                    Constants.INVALID_TOKEN,
+                    null,
+                    Constants.INVALID_TOKEN,
+                    0,
+                    0,
+                    null
+                )
         } catch (e: JsonSyntaxException) {
-            Log.e("TAG", "parseError: message -> " +e.message)
+            Log.e("TAG", "parseError: message -> " + e.message)
             ErrorResponseModel(Constants.INVALID_TOKEN, null, errorBody, 0, 0, null)
         }
     }
-
-
 
 
     fun <T> failure(e: Exception?): Resource<T?> {
         Log.e("TAG", "failure: e message-> " + e)
         Log.e("TAG", "failure: e message " + e?.message)
         if (e is NoConnectivityException) {
-            Log.e("TAG", "failure: e 11" )
+            Log.e("TAG", "failure: e 11")
             return Resource.DataError(e.message)
         } else if (e is SocketTimeoutException) {
-            Log.e("TAG", "failure: e 22" )
+            Log.e("TAG", "failure: e 22")
             return Resource.DataError(
                 Constants.VPN_ERROR,
                 ErrorResponseModel(
@@ -90,11 +115,12 @@ object ResponseHandler {
                 )
             )
         } else if (e is InterruptedIOException) {
-            Log.e("TAG", "failure: e 33" )
+            Log.e("TAG", "failure: e 33")
             return Resource.DataError(Constants.VPN_ERROR)
         }
-        Log.e("TAG", "failure: e 44" )
-        return Resource.DataError(e?.message,
+        Log.e("TAG", "failure: e 44")
+        return Resource.DataError(
+            e?.message,
             ErrorResponseModel(
                 e?.message,
                 "",
@@ -102,6 +128,7 @@ object ResponseHandler {
                 0,
                 0,
                 ""
-            ))
+            )
+        )
     }
 }

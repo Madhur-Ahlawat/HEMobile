@@ -100,8 +100,7 @@
                     style="@style/secondaryButton"
                     android:layout_marginHorizontal="20dp"
                     android:gravity="center"
-                    android:text="@string/update_address_manually"
-                     />
+                    android:text="@string/update_address_manually" />
             </LinearLayout>
 
         </RelativeLayout>

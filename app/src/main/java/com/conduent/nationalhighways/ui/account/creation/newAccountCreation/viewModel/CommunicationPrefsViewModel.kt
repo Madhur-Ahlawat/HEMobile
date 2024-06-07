@@ -36,32 +36,45 @@ class CommunicationPrefsViewModel @Inject constructor(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _updateAccountSettingPrefs = MutableLiveData<Resource<EmptyApiResponse?>?>()
-    val updateAccountSettingPrefs:LiveData<Resource<EmptyApiResponse?>?> get() = _updateAccountSettingPrefs
+    val updateAccountSettingPrefs: LiveData<Resource<EmptyApiResponse?>?> get() = _updateAccountSettingPrefs
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    private val _searchProcessParameters = MutableLiveData<Resource<SearchProcessParamsModelResp?>?>()
-    val searchProcessParameters:LiveData<Resource<SearchProcessParamsModelResp?>?> get() = _searchProcessParameters
+    private val _searchProcessParameters =
+        MutableLiveData<Resource<SearchProcessParamsModelResp?>?>()
+    val searchProcessParameters: LiveData<Resource<SearchProcessParamsModelResp?>?> get() = _searchProcessParameters
 
 
-    fun updateAccountSettingsPrefs(model: UpdateProfileRequest){
+    fun updateAccountSettingsPrefs(model: UpdateProfileRequest) {
 
         viewModelScope.launch {
             try {
 
-                _updateAccountSettingPrefs.postValue(ResponseHandler.success(repository.updateAccountSettingPrefs(model),errorManager))
+                _updateAccountSettingPrefs.postValue(
+                    ResponseHandler.success(
+                        repository.updateAccountSettingPrefs(
+                            model
+                        ), errorManager
+                    )
+                )
 
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 _updateAccountSettingPrefs.postValue(ResponseHandler.failure(e))
             }
         }
 
     }
 
-    fun searchProcessParameters(model: SearchProcessParamsModelReq){
+    fun searchProcessParameters(model: SearchProcessParamsModelReq) {
         viewModelScope.launch {
-            try{
-                _searchProcessParameters.postValue(ResponseHandler.success(repository.searchProcessParameters(model),errorManager))
-            }catch (e:Exception){
+            try {
+                _searchProcessParameters.postValue(
+                    ResponseHandler.success(
+                        repository.searchProcessParameters(
+                            model
+                        ), errorManager
+                    )
+                )
+            } catch (e: Exception) {
                 _searchProcessParameters.postValue(ResponseHandler.failure(e))
             }
         }

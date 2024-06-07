@@ -5,15 +5,16 @@
     android:layout_marginHorizontal="@dimen/_10sdp"
     android:layout_marginVertical="@dimen/_5sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<TextView
-    android:id="@+id/tv_date"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:text="@string/txt_date"
-    android:textSize="@dimen/_10ssp"
-    android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/txt_date"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/tv_transaction_id"
@@ -24,7 +25,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/txt_transaction_id"
         android:textSize="@dimen/_10ssp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black" />
+
     <TextView
         android:id="@+id/tv_amount"
         android:layout_width="wrap_content"
@@ -33,12 +35,13 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/txt_amount"
         android:textSize="@dimen/_10ssp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
         android:background="@color/black"
         app:layout_constraintTop_toBottomOf="@+id/tv_date"
         android:layout_marginVertical="@dimen/_5sdp"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

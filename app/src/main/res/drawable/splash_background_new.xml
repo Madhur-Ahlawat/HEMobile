@@ -7,5 +7,5 @@
         android:height="@dimen/_250sdp"
         android:drawable="@drawable/ic_dart_charge_app_icon"
         android:gravity="center"
-        android:bottom="@dimen/_10sdp"/>
+        android:bottom="@dimen/_10sdp" />
 </layer-list>

@@ -103,6 +103,7 @@
                             android:importantForAccessibility="no"
                             android:orientation="vertical"
                             app:layout_constraintGuide_percent="0.5" />
+
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/value_top_up_amount"
                             android:layout_width="0dp"

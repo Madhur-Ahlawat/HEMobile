@@ -2,7 +2,15 @@ package com.conduent.nationalhighways.data.error.mapper
 
 import android.content.Context
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.error.*
+import com.conduent.nationalhighways.data.error.CHECK_YOUR_FIELDS
+import com.conduent.nationalhighways.data.error.CREATE_ACCOUNT_FAILED
+import com.conduent.nationalhighways.data.error.NETWORK_ERROR
+import com.conduent.nationalhighways.data.error.NO_INTERNET_CONNECTION
+import com.conduent.nationalhighways.data.error.PASS_WORD_ERROR
+import com.conduent.nationalhighways.data.error.SERVER_ERROR
+import com.conduent.nationalhighways.data.error.TOO_MANY_LOGIN_ATTEMPT
+import com.conduent.nationalhighways.data.error.UNKNOWN_ERROR
+import com.conduent.nationalhighways.data.error.USER_NAME_ERROR
 
 class ErrorMapper(val context: Context) : ErrorMapperSource {
 

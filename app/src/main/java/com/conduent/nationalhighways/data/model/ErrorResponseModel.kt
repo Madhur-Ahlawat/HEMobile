@@ -18,7 +18,7 @@ data class ErrorResponseModel(
         fun parseError(response: Response<*>): ErrorResponseModel {
             val gson = Gson()
             val errorBody = response.errorBody()?.string()
-            Log.e("TAG", "parseError: errorBody "+errorBody )
+            Log.e("TAG", "parseError: errorBody " + errorBody)
             return gson.fromJson(errorBody, ErrorResponseModel::class.java)
                 ?: ErrorResponseModel("Unknown error", null, null, 0, 0, null)
         }

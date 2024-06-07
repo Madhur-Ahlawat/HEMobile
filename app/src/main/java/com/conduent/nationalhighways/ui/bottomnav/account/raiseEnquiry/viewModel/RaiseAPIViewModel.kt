@@ -63,6 +63,7 @@ class RaiseAPIViewModel @Inject constructor(
             }
         }
     }
+
     fun getAccountSRDetails(jsonObject: EnquiryStatusRequest) {
         viewModelScope.launch {
             try {
@@ -110,7 +111,6 @@ class RaiseAPIViewModel @Inject constructor(
     }
 
 
-
     fun raiseEnquiryApi(
         enquiryRequest: EnquiryRequest
     ) {
@@ -129,6 +129,7 @@ class RaiseAPIViewModel @Inject constructor(
             }
         }
     }
+
     fun uploadFileApi(
         file: File
     ) {

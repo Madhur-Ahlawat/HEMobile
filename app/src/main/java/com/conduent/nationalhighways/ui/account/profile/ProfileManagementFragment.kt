@@ -224,7 +224,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
-            if(requireActivity() is HomeActivityMain) {
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
             }
             val bundle = Bundle()

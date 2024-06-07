@@ -185,8 +185,7 @@
                 android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/account_summary_layer_cl_style">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
@@ -300,8 +299,7 @@
                 android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/account_summary_layer_cl_style">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"
@@ -369,8 +367,7 @@
                 android:importantForAccessibility="yes"
                 app:cardCornerRadius="5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    style="@style/account_summary_layer_cl_style">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="@dimen/margin_0dp"

@@ -5,7 +5,7 @@ data class AccountPaymentHistoryRequest(
     val transactionType: String? = "ALL",
     val count: Int? = 20,
     var sortOrder: String? = "DESC",
-    var endDate:String?="",
-    var startDate:String?="",
+    var endDate: String? = "",
+    var startDate: String? = "",
 
-)
+    )

@@ -349,7 +349,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             accountNumber = paymentList?.get(position)?.cardNumber.toString()
             this.position = position
             val bundle = Bundle()
-            if (paymentList?.get(position)?.primaryCard==false) {
+            if (paymentList?.get(position)?.primaryCard == false) {
                 isDirectDebitDelete = false
             }
 
@@ -515,6 +515,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
         }
 
     }
+
     private fun checkNullValuesOfModel(model: CardListResponseModel?) {
         if (model?.check == null) {
             model?.check = false
@@ -714,7 +715,8 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
     ) {
 
-        displayCustomMessage(title,
+        displayCustomMessage(
+            title,
             message,
             getString(R.string.cancel),
             getString(R.string.delete),

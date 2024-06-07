@@ -63,28 +63,29 @@
                 android:textStyle="bold" />
 
 
-           <RadioGroup
-               android:id="@+id/rg"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content">
-               <RadioButton
-                   android:id="@+id/rb_quick_payment"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/txt_quick_payment"/>
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-               <RadioButton
-                   android:id="@+id/rb_card_payment"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/txt_credit_debit_card"/>
+                <RadioButton
+                    android:id="@+id/rb_quick_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_quick_payment" />
 
-               <RadioButton
-                   android:id="@+id/rb_bank_transfer"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/txt_bank_transfer"/>
-           </RadioGroup>
+                <RadioButton
+                    android:id="@+id/rb_card_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_credit_debit_card" />
+
+                <RadioButton
+                    android:id="@+id/rb_bank_transfer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_bank_transfer" />
+            </RadioGroup>
 
         </LinearLayout>
 

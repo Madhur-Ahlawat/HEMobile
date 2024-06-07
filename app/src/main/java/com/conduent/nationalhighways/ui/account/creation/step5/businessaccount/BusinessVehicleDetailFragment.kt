@@ -67,10 +67,10 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
         }
 
-        binding.regNum.contentDescription=Utils.accessibilityForNumbers(binding.regNum.text.toString())
+        binding.regNum.contentDescription =
+            Utils.accessibilityForNumbers(binding.regNum.text.toString())
 
     }
-
 
 
     override fun initCtrl() {
@@ -255,6 +255,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         )
 
                     }
+
                     Constants.PAY_FOR_CROSSINGS -> {
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                         findNavController().navigate(
@@ -262,6 +263,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                             bundle
                         )
                     }
+
                     else -> {
                         bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
                         findNavController().navigate(

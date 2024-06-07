@@ -11,9 +11,19 @@ import com.conduent.nationalhighways.databinding.AdapterNotificationHeaderBindin
 import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewAllActivity
 
 
-class NotificationSectionAdapter(val context: Context, private var map: MutableMap<String?, List<AlertMessage?>?>?) : RecyclerView.Adapter<NotificationSectionAdapter.NotificationHeaderViewHolder>() {
+class NotificationSectionAdapter(
+    val context: Context,
+    private var map: MutableMap<String?, List<AlertMessage?>?>?
+) : RecyclerView.Adapter<NotificationSectionAdapter.NotificationHeaderViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationHeaderViewHolder = NotificationHeaderViewHolder(AdapterNotificationHeaderBinding.inflate(LayoutInflater.from(context), parent, false))
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): NotificationHeaderViewHolder = NotificationHeaderViewHolder(
+        AdapterNotificationHeaderBinding.inflate(
+            LayoutInflater.from(context), parent, false
+        )
+    )
 
     override fun getItemCount(): Int = map?.keys?.size ?: 0
 
@@ -33,7 +43,8 @@ class NotificationSectionAdapter(val context: Context, private var map: MutableM
                     context.startActivity(
                         Intent(context, NotificationViewAllActivity::class.java)
                             .putExtra("categoryName", title)
-                            .putParcelableArrayListExtra("list", ArrayList(data)))
+                            .putParcelableArrayListExtra("list", ArrayList(data))
+                    )
                 }
                 binding.rvNotifications.layoutManager = LinearLayoutManager(context)
                 binding.rvNotifications.adapter = NotificationAdapter(context, data)

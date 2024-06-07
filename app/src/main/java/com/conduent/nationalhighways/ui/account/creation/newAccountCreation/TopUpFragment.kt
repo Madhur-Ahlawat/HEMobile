@@ -108,7 +108,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             count: Int
         ) {
             if (isTopUp) {
-                if (binding.top.getText().toString().trim().isNullOrEmpty()) {
+                if (binding.top.getText().toString().trim().isEmpty()) {
                     binding.top.setErrorText(getString(R.string.enter_a_top_up_amount))
                 } else {
                     binding.top.removeError()

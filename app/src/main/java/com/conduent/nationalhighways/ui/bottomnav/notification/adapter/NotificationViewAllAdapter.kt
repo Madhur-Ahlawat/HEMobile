@@ -11,7 +11,10 @@ import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.databinding.AdapterViewallNotificationBinding
 import com.conduent.nationalhighways.listener.NotificationItemClick
 
-class NotificationViewAllAdapter(val context: Context, private var alertMsgList: List<AlertMessage?>?) : RecyclerView.Adapter<NotificationViewAllAdapter.NotificationViewAllViewHolder>() {
+class NotificationViewAllAdapter(
+    val context: Context,
+    private var alertMsgList: List<AlertMessage?>?
+) : RecyclerView.Adapter<NotificationViewAllAdapter.NotificationViewAllViewHolder>() {
 
     private var mListener: NotificationItemClick? = null
 
@@ -59,7 +62,7 @@ class NotificationViewAllAdapter(val context: Context, private var alertMsgList:
                     dateTxt.text = createTs ?: ""
                     messageTxt.text = message
                     messageTxt.text = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
-                    messageTxt.movementMethod= LinkMovementMethod.getInstance()
+                    messageTxt.movementMethod = LinkMovementMethod.getInstance()
                     btnTxt.visibility = View.GONE
 
                     if (isSelectListItem == true) {

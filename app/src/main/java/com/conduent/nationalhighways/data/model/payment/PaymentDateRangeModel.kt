@@ -8,5 +8,5 @@ data class PaymentDateRangeModel(
     var filterType: String?,
     var startDate: String?,
     var endDate: String?,
-    var vehicleNumber : String?
+    var vehicleNumber: String?
 ) : Parcelable

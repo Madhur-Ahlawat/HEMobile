@@ -18,13 +18,13 @@ class ContactDartChargeRepository @Inject constructor(private val apiService: Ap
     suspend fun getCaseCategoriesList() =
         apiService.getCaseCategoriesList()
 
-    suspend fun getCaseSubCategoriesList(cat:String) =
+    suspend fun getCaseSubCategoriesList(cat: String) =
         apiService.getCaseSubCategoriesList(cat)
 
     suspend fun createNewCase(requestParam: CreateNewCaseReq?) =
         apiService.createNewCase(modelReq = requestParam)
 
-    suspend fun uploadFile(data : MultipartBody.Part?) =
+    suspend fun uploadFile(data: MultipartBody.Part?) =
         apiService.uploadFile(data)
 
 }

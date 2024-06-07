@@ -245,6 +245,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
                     }
+
                     Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             arguments?.getParcelable(
@@ -258,6 +259,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
                     }
+
                     Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
                         val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             arguments?.getParcelable(

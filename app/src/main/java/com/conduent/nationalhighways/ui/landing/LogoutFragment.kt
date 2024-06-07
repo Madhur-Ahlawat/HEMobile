@@ -26,7 +26,7 @@ class LogoutFragment : BaseFragment<FragmentLogoutBinding>(), View.OnClickListen
             btnSignin.setOnClickListener(this@LogoutFragment)
             btnStart.setOnClickListener(this@LogoutFragment)
         }
-        if(requireActivity() is LandingActivity){
+        if (requireActivity() is LandingActivity) {
             (requireActivity() as LandingActivity).showToolBar(true)
             (requireActivity() as LandingActivity).setToolBarTitle(resources.getString(R.string.str_signed_out))
         }

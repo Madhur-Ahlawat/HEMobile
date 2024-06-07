@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.close_account
 
-import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCloseAccountSuccessBinding
@@ -20,12 +18,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBinding>(),LogoutListener {
+class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBinding>(),
+    LogoutListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
+
     @Inject
-    lateinit var api:ApiService
+    lateinit var api: ApiService
     var email = ""
     var accountSubType: String = ""
     lateinit var binding: ActivityCloseAccountSuccessBinding
@@ -50,7 +50,7 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
             accountSubType = intent.getStringExtra(Constants.ACCOUNT_SUBTYPE).toString()
         }
 
-        if (accountSubType.equals(Constants.PAYG)||accountSubType.equals(Constants.EXEMPT_PARTNER)) {
+        if (accountSubType.equals(Constants.PAYG) || accountSubType.equals(Constants.EXEMPT_PARTNER)) {
             binding.titleNext.gone()
             binding.whatHappensNext.gone()
         } else {
@@ -87,7 +87,7 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
 //        sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {

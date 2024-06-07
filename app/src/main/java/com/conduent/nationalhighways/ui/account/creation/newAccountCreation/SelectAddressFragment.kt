@@ -68,7 +68,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
         binding.recylcerview.adapter = selectAddressAdapter
 
         selectAddressAdapter?.updateList(mainList)
-        binding.txtAddressCount.text = resources.getString(R.string.str_address_found,mainList.size.toString())
+        binding.txtAddressCount.text =
+            resources.getString(R.string.str_address_found, mainList.size.toString())
 
         when (navFlowCall) {
             EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
@@ -154,7 +155,8 @@ class SelectAddressFragment : BaseFragment<FragmentSelectAddressBinding>(),
                 }).toMutableList()
 
                 selectAddressAdapter?.updateList(mainList)
-                binding.txtAddressCount.text = resources.getString(R.string.str_address_found,mainList.size.toString())
+                binding.txtAddressCount.text =
+                    resources.getString(R.string.str_address_found, mainList.size.toString())
                 when (navFlowCall) {
                     EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
                         mainList.forEach { it?.isSelected = false }

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CreateAccountVehicleModel (
+data class CreateAccountVehicleModel(
     var plateCountry: String?,
     var plateTypeDesc: String?,
     var vehicleColor: String?,

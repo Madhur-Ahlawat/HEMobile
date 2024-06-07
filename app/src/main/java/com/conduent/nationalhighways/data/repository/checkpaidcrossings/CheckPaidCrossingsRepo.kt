@@ -8,13 +8,17 @@ import javax.inject.Inject
 
 class CheckPaidCrossingsRepo @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun loginWithRefAndPlateNumber(request: CheckPaidCrossingsRequest?) = apiService.loginWithRefAndPlateNumber(request)
+    suspend fun loginWithRefAndPlateNumber(request: CheckPaidCrossingsRequest?) =
+        apiService.loginWithRefAndPlateNumber(request)
 
-    suspend fun balanceTransfer(request: BalanceTransferRequest?) = apiService.balanceTransfer(request)
+    suspend fun balanceTransfer(request: BalanceTransferRequest?) =
+        apiService.balanceTransfer(request)
 
-    suspend fun getTollTransactions(request: UsedTollTransactionsRequest?) = apiService.getTollTransactions(request)
+    suspend fun getTollTransactions(request: UsedTollTransactionsRequest?) =
+        apiService.getTollTransactions(request)
 
-    suspend fun getVehicleDetail(vehicleNumber: String?, agencyId: Int?) = apiService.getAccountFindVehicle(vehicleNumber, agencyId)
+    suspend fun getVehicleDetail(vehicleNumber: String?, agencyId: Int?) =
+        apiService.getAccountFindVehicle(vehicleNumber, agencyId)
 
 
 }

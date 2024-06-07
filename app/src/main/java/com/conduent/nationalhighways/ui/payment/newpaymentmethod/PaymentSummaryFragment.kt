@@ -61,8 +61,8 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     private fun setData() {
         binding.apply {
-            additionalCrossingsCount = data?.additionalCrossingCount?:0
-            val charge = data?.chargingRate?.toDouble() ?:0.0
+            additionalCrossingsCount = data?.additionalCrossingCount ?: 0
+            val charge = data?.chargingRate?.toDouble() ?: 0.0
             val unSettledTrips = data?.unsettledTripChange
             vehicleRegisration.text = data?.plateNo
             vehicleRegisration.contentDescription =
@@ -265,7 +265,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     override fun onRetryClick(apiUrl: String) {
     }
-
 
 
 }

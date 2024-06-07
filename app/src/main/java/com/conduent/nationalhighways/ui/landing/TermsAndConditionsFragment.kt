@@ -22,7 +22,7 @@ class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBindin
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentTermsAndConditionsBinding {
-       return FragmentTermsAndConditionsBinding.inflate(inflater, container, false)
+        return FragmentTermsAndConditionsBinding.inflate(inflater, container, false)
 
 
     }
@@ -37,7 +37,7 @@ class TermsAndConditionsFragment : BaseFragment<FragmentTermsAndConditionsBindin
             "home",
             sessionManager.getLoggedInUser()
         )
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }

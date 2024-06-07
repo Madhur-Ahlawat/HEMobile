@@ -11,12 +11,15 @@ import javax.inject.Inject
 class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
     suspend fun getAccountPayment(requestParam: AccountPaymentHistoryRequest?) =
         apiService.getPaymentHistoryData(requestParam)
+
     suspend fun getAccountPaymentCheckCrossings(requestParam: CheckedCrossingTransactionsRequestModel?) =
         apiService.getTransactionsListCheckCrossings(requestParam)
+
     suspend fun logout() = apiService.logout()
     suspend fun getThresholdAmount() = apiService.getThresholdValuePayment()
     suspend fun getVehicleData() = apiService.getVehicleData(startIndex = "1", count = "20")
-    suspend fun whereToReceivePaymentReceipt(request: PaymentReceiptDeliveryTypeSelectionRequest?)  = apiService.whereToReceivePaymentReceipt(request)
+    suspend fun whereToReceivePaymentReceipt(request: PaymentReceiptDeliveryTypeSelectionRequest?) =
+        apiService.whereToReceivePaymentReceipt(request)
 
     suspend fun getAlertMessages() = apiService.getAlertMessages(Constants.LANGUAGE)
 

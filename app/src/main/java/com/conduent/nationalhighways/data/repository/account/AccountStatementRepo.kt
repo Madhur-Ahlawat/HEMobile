@@ -7,6 +7,6 @@ import javax.inject.Inject
 class AccountStatementRepo @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getAccountStatement() = apiService.getAccountStatements()
-    suspend fun viewStatements(request : ViewStatementsReqModel) = apiService.viewStatements(request)
+    suspend fun viewStatements(request: ViewStatementsReqModel) = apiService.viewStatements(request)
 
 }

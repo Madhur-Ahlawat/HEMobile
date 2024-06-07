@@ -86,8 +86,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dont_include_personal_tv"
-                    app:maxLength="500"
-                   />
+                    app:maxLength="500" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/characters_rem_tv"
@@ -241,7 +240,7 @@
                     android:fontFamily="@font/open_sans_bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/file_cv"/>
+                    app:layout_constraintTop_toBottomOf="@+id/file_cv" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -312,7 +311,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:radius="@dimen/margin_5dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

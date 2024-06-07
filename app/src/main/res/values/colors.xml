@@ -94,9 +94,9 @@
     <color name="red_color">#CA2A1F</color>
     <color name="toolbar_color">#FF272727</color>
     <color name="btn_disable_txt_color">#7D7D7D</color>
-<!--
-    <color name="btn_disable_color">#D3D3D4</color>
--->
+    <!--
+        <color name="btn_disable_color">#D3D3D4</color>
+    -->
     <color name="btn_disable_color">#006796</color>
     <color name="new_disable_color">#66002E5F</color>
 

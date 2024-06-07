@@ -69,7 +69,7 @@
                     android:textColor="@color/black"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/inputTotalAmount_helper"/>
+                    app:layout_constraintTop_toBottomOf="@id/inputTotalAmount_helper" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -96,7 +96,7 @@
                     android:layout_height="7dp"
                     android:layout_marginTop="@dimen/margin_7dp"
                     android:src="@drawable/circle_5dp"
-                    android:contentDescription="@string/accessibility_bullet"/>
+                    android:contentDescription="@string/accessibility_bullet" />
 
                 <TextView
                     android:layout_width="wrap_content"
