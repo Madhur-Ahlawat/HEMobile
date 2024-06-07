@@ -236,7 +236,7 @@
         <item name="textPaddingBottom">15dp</item>
         <item name="textPaddingTop">15dp</item>
         <item name="backgroundDrawable">@drawable/edt_bg_selector</item>
-        <item name="android:fontFamily">@string/open_sans</item>
+        <item name="android:fontFamily">@font/open_sans</item>
         <item name="inputWeakColor">@color/red</item>
         <item name="inputAverageColor">@color/colorWarning</item>
         <item name="inputStrongColor">@color/label_color</item>
