@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.revalidatePayment.RevalidatePaymentCardFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:padding="@dimen/margin_20dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/titleTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/warningicon"
+                    android:drawablePadding="@dimen/margin_23dp"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/str_revalidate_payment_card_details"
+                    android:textColor="@color/new_btn_color"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/descTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:lineSpacingExtra="@dimen/margin_2dp"
+                    android:text="@string/str_revalidate_payment_card_details_desc1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleTv" />
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/desc2Tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:gravity="start"
+                    android:text="@string/str_revalidate_payment_card_details_desc2"
+                    android:textColor="@color/new_btn_color"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/descTv" />
+
+
+                <RadioGroup
+                    android:id="@+id/radioGroupYesNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/desc2Tv">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radioButtonYes"
+                        style="@style/RadioButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:contentDescription=""
+                        android:minHeight="@dimen/margin_48dp"
+                        android:text="@string/yes" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radioButtonNo"
+                        style="@style/RadioButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription=""
+                        android:minHeight="@dimen/margin_48dp"
+                        android:text="@string/str_no_ill_do_this_later" />
+
+                </RadioGroup>
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/desc3Tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_25dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text="@string/str_revalidate_payment_card_details_desc3"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioGroupYesNo" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
