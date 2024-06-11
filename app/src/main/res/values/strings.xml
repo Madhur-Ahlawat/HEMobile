@@ -26,9 +26,8 @@
     <string name="txt_euro">"\u20ac"</string>
     <string name="txt_pound">"£"</string>
     <string name="txt_view_payment_history"><u>View payment history</u></string>
-    <string name="account_number">Account number:</string>
-    <string name="account_number_">Account number</string>
-    <string name="account_status">Account status:</string>
+    <string name="account_number">Account number</string>
+    <string name="account_status">Account status</string>
     <string name="account_type">Account type:</string>
     <string name="account_type_for_summary">Account type</string>
     <string name="top_up_method">Top up Type:</string>
@@ -2217,6 +2216,7 @@
 
     <string name="accessibility_edit">Edit</string>
     <string name="accessibility_bullet">Bullet Point</string>
+    <string name="accessibility_tick_mark">Tick mark</string>
     <string name="accessibility_check_mark">Check mark</string>
     <string name="accessibility_selected">Selected.</string>
     <string name="accessibility_not_selected">Not Selected.</string>

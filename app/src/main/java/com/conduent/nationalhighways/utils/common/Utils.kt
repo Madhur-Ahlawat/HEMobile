@@ -367,6 +367,7 @@ object Utils {
     }
 
     fun hasLowerCase(str: String): Boolean {
+        Log.e("TAG", "hasLowerCase: str "+str )
         var hasSpecialChar = false
         str.forEach { char ->
             if (LOWER_CASE.contains(char)) {
@@ -378,6 +379,7 @@ object Utils {
     }
 
     fun hasUpperCase(str: String): Boolean {
+        Log.e("TAG", "hasUpperCase: str "+str )
         var hasSpecialChar = false
         str.forEach { char ->
             if (UPPER_CASE.contains(char)) {
@@ -389,6 +391,7 @@ object Utils {
     }
 
     fun hasDigits(str: String): Boolean {
+        Log.e("TAG", "hasDigits: str "+str )
         var hasDigit = false
         str.forEach { char ->
             if (DIGITS.contains(char)) {
@@ -399,6 +402,7 @@ object Utils {
     }
 
     private fun hasAlphabets(str: String): Boolean {
+        Log.e("TAG", "hasAlphabets: str "+str )
         var hasSpecialChar = false
         str.forEach { char ->
             hasSpecialChar = ALPHABETS.contains(char)
