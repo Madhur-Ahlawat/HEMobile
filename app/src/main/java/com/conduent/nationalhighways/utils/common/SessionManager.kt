@@ -66,6 +66,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val FOREGROUND_LOCATION_SHOWN = "FOREGROUND_LOCATION_SHOWN"
         val NOTIFICATION_PERMISSION = "NOTIFICATION_PERMISSION"
         val SettingsClick = "SettingsClick"
+        val CARD_VALIDATION_REQUIRED = "CARD_VALIDATION_REQUIRED"
     }
 
     /**

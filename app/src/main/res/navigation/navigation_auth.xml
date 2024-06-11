@@ -57,8 +57,7 @@
         android:id="@+id/resetFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
         android:label="ResetFragment"
-        tools:layout="@layout/fragment_forgot_reset">
-    </fragment>
+        tools:layout="@layout/fragment_forgot_reset"></fragment>
     <fragment
         android:id="@+id/resenedCodeFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"
@@ -217,5 +216,32 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/reValidatePaymentCardFragment"
+        android:name="com.conduent.nationalhighways.ui.revalidatePayment.RevalidatePaymentCardFragment"
+        android:label="RevalidatePaymentCardFragment"
+        tools:layout="@layout/fragment_revalidate_payment_card">
+        <action
+            android:id="@+id/action_reValidatePaymentCardFragment_to_reValidatePaymentCardDetailsFragment"
+            app:destination="@id/reValidatePaymentCardDetailsFragment"
+             />
+    </fragment>
 
+    <fragment
+        android:id="@+id/reValidatePaymentCardDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.revalidatePayment.RevalidatePaymentCardDetailsFragment"
+        android:label="RevalidatePaymentCardDetailsFragment"
+        tools:layout="@layout/fragment_revalidate_payment_card_details">
+        <action
+            android:id="@+id/action_reValidatePaymentCardDetailsFragment_to_reValidateExistingPaymentFragment"
+            app:destination="@id/reValidateExistingPaymentFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/reValidateExistingPaymentFragment"
+        android:name="com.conduent.nationalhighways.ui.revalidatePayment.RevalidateExistingPaymentFragment"
+        android:label="RevalidateExistingPaymentFragment"
+        tools:layout="@layout/fragment_revalidate_existing_payment">
+
+    </fragment>
 </navigation>

@@ -71,64 +71,145 @@
                     app:layout_constraintTop_toBottomOf="@id/descTv" />
 
 
-                <androidx.appcompat.widget.AppCompatRadioButton
-                    android:id="@+id/radioExistingCard"
-                    style="@style/RadioButtonStyle"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cardsCl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:checked="false"
-                    android:contentDescription=""
-                    android:minHeight="@dimen/margin_48dp"
+                    android:layout_marginTop="@dimen/margin_30dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/desc2Tv"
-                    tools:text="@string/str_your_existing_card" />
+                    app:layout_constraintTop_toBottomOf="@id/desc2Tv">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/radioExistingCard">
-
-                    <View
-                        android:layout_width="@dimen/margin_1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/black" />
-
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_payment_methods"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_10dp"
-                        android:orientation="vertical">
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/item_payment_method" />
 
-                        <com.conduent.nationalhighways.utils.widgets.NHTextView
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/noCardFoundLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
+
+                        <TextView
+                            android:id="@+id/maximumVehicleAdded"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="23dp"
+                            android:drawablePadding="@dimen/margin_23dp"
                             android:fontFamily="@font/open_sans_bold"
-                            android:gravity="start"
-                            android:text="@string/str_enter_the_card_security_code"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/font_16sp" />
+                            android:gravity="center"
+                            android:text="@string/str_you_have_no_payment_method"
+                            android:textColor="@color/new_btn_color"
+                            android:textSize="16sp"
+                            app:drawableTopCompat="@drawable/warningicon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <com.conduent.nationalhighways.utils.widgets.NHTextView
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/textMaximumVehicle"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:layout_marginTop="17dp"
                             android:fontFamily="@font/open_sans"
-                            android:gravity="start"
-                            android:lineSpacingExtra="@dimen/margin_2dp"
-                            android:text="@string/str_last_3_4_digits_back_card"
+                            android:gravity="center"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/str_you_must_pay_the_dart_charge_by_midnight"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/font_16sp" />
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded" />
+
+                        <TextView
+                            android:id="@+id/text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/open_sans"
+                            android:gravity="center"
+                            android:lineSpacingExtra="2dp"
+                            android:text="@string/str_you_must_pay_the_dart_charge_by_midnight"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:visibility="invisible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle" />
 
 
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
+
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/btnContinue"
+                    style="@style/PrimaryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_30dp"
+                    android:layout_marginBottom="@dimen/margin_20dp"
+                    android:text="@string/str_continue"
+                    android:textSize="@dimen/font_14sp"
+                    app:isEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardsCl" />
+
+
+                <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+                <!--                    android:id="@+id/bottom_cl"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginBottom="@dimen/margin_10dp"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    android:layout_marginTop="@dimen/margin_15dp"-->
+                <!--                    app:layout_constraintHorizontal_bias="0.0"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/btnContinue"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent">-->
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/btnAddNewPayment"
+                    style="@style/secondaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:text="@string/str_new_payment_method"
+                    android:textSize="@dimen/font_14sp"
+                    app:isEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnContinue"
+                    tools:visibility="visible" />
+                <!--                    <com.conduent.apollo.ui.CMButton-->
+                <!--                        android:id="@+id/btnMainAddNewPayment"-->
+                <!--                        style="@style/PrimaryButton"-->
+                <!--                        android:layout_width="0dp"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="@string/str_new_payment_method"-->
+                <!--                        android:textSize="@dimen/font_14sp"-->
+                <!--                        app:isEnabled="true"-->
+                <!--                        android:visibility="gone"-->
+                <!--                        android:layout_marginTop="@dimen/margin_0dp"-->
+                <!--                        tools:visibility="visible"-->
+                <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                        app:layout_constraintHorizontal_bias="0.0"-->
+                <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                <!--                        app:layout_constraintBottom_toBottomOf="parent" />-->
+
+                <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

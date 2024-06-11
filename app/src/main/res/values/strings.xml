@@ -1763,16 +1763,21 @@
     <string name="concatenate_two_strings_with_space">%1$s %2$s</string>
     <string name="concatenate_two_strings">%1$s%2$s</string>
     <string name="str_revalidate_payment_card_details">You have to re-validate your payment card details</string>
-    <string name="str_revalidate_payment_card_details_desc1">We changed our service provider recently.\n\nNew banking regulations means that to continue using your account, you have to re-validate your payment card.\n\nIf you do not revalidate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
+    <string name="str_revalidate_payment_card_details_payg">We changed our service provider recently.\n\nNew banking regulations means that to continue using your account, you have to re-validate your payment card.\n\nIf you do not revalidate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
+    <string name="str_revalidate_payment_card_details_prepay">We changed our service provider recently.\n\nNew banking regulations means that to continue using your account, you have to re-validate your payment card.</string>
     <string name="str_revalidate_payment_card_details_desc2">Continue to validate your payment card</string>
-    <string name="str_wantto_validate_card_now">Do you want to validate your card now</string>
+    <string name="str_wantto_validate_card_now">Do you want to validate your card now?</string>
     <string name="str_revalidate_provide_payment_card_details">Provide your payment card details</string>
     <string name="str_which_card_want_to_use">Which card do you want to use on your account?</string>
     <string name="str_revalidate_payment_card_details_desc3">If you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
     <string name="str_no_ill_do_this_later">No, I\'ll do this later</string>
     <string name="str_your_existing_card">Your existing card - %1$s</string>
-    <string name="str_to_continue_use_account">To continue to use your account we need to confirm your card details.\nWe'll collect payment from your card each time you cross.</string>
+    <string name="str_to_continue_use_account">To continue to use your account we need to confirm your card details. We\'ll collect payment from your card each time you cross.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="str_enter_the_card_security_code">Enter the card security code</string>
+    <string name="str_card_security_code">Card security code</string>
     <string name="str_last_3_4_digits_back_card">The last 3 or 4 digits on the back of the card</string>
+    <string name="str_enter_security_code_existing_card">Enter the security code for your existing card</string>
+    <string name="str_make_default_payment_method">Make this my default payment method</string>
+    <string name="str_revalidate_payment">Re-Validate Payment</string>
 
 </resources>

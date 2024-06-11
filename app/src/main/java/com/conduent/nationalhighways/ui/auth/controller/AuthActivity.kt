@@ -120,6 +120,13 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
 
             }
 
+            Constants.CARD_VALIDATION_REQUIRED -> {
+                binding.toolBarLyt.titleTxt.text = getString(R.string.str_revalidate_payment)
+                graph.setStartDestination(R.id.reValidatePaymentCardFragment)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
+            }
+
             Constants.TWOFA -> {
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)

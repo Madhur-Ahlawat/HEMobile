@@ -50,7 +50,7 @@
                     android:fontFamily="@font/open_sans"
                     android:gravity="center"
                     android:lineSpacingExtra="@dimen/margin_2dp"
-                    android:text="@string/str_revalidate_payment_card_details_desc1"
+                    android:text="@string/str_revalidate_payment_card_details_payg"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -118,6 +118,21 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/radioGroupYesNo" />
 
+
+
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/btnContinue"
+                    style="@style/PrimaryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_30dp"
+                    android:layout_marginBottom="@dimen/margin_20dp"
+                    android:text="@string/str_continue"
+                    android:textSize="@dimen/font_14sp"
+                    app:isEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/desc3Tv" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

@@ -271,7 +271,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                     }
                 }
                 for (i in 0 until paymentList.orEmpty().size) {
-                    checkNullValuesOfModel(paymentList?.get(i))
+                    Utils.checkNullValuesOfModel(paymentList?.get(i))
                 }
 
                 if (paymentList.orEmpty().size == 1) {
@@ -327,84 +327,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         }
     }
 
-    private fun checkNullValuesOfModel(model: CardListResponseModel?) {
-        if (model?.check == null) {
-            model?.check = false
-        }
-        if (model?.isSelected == null) {
-            model?.isSelected = false
-        }
-        if (model?.bankRoutingNumber == null) {
-            model?.bankRoutingNumber = ""
-        }
-        if (model?.cardType == null) {
-            model?.cardType = ""
-        }
-        if (model?.cardNumber == null) {
-            model?.cardNumber = ""
-        }
-        if (model?.middleName == null) {
-            model?.middleName = ""
-        }
-        if (model?.expMonth == null) {
-            model?.expMonth = ""
-        }
-        if (model?.expYear == null) {
-            model?.expYear = ""
-        }
-        if (model?.bankAccountNumber == null) {
-            model?.bankAccountNumber = ""
-        }
-        if (model?.bankAccountType == null) {
-            model?.bankAccountType = ""
-        }
-
-        if (model?.bankAccountType == null) {
-            model?.bankAccountType = ""
-        }
-        if (model?.rowId == null) {
-            model?.rowId = ""
-        }
-        if (model?.bankAccountType == null) {
-            model?.bankAccountType = ""
-        }
-        if (model?.bankAccountNumber == null) {
-            model?.bankAccountNumber = ""
-        }
-        if (model?.firstName == null) {
-            model?.firstName = ""
-        }
-        if (model?.lastName == null) {
-            model?.lastName = ""
-        }
-        if (model?.customerVaultId == null) {
-            model?.customerVaultId = ""
-        }
-        if (model?.addressLine1 == null) {
-            model?.addressLine1 = ""
-        }
-        if (model?.city == null) {
-            model?.city = ""
-        }
-        if (model?.state == null) {
-            model?.state = ""
-        }
-        if (model?.zipCode == null) {
-            model?.zipCode = ""
-        }
-        if (model?.country == null) {
-            model?.country = ""
-        }
-        if (model?.emandateStatus == null) {
-            model?.emandateStatus = ""
-        }
-        if (model?.paymentSeqNumber == null) {
-            model?.paymentSeqNumber = 0
-        }
-        if (model?.bankAccount == null) {
-            model?.bankAccount = false
-        }
-    }
 
     override fun paymentMethodCallback(position: Int) {
         this.position = position

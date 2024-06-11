@@ -79,13 +79,13 @@ class PaymentMethodViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _savedCardListState.emit(
-                    ResponseHandler.success(
+                    success(
                         repository.savedCard(
                         ), errorManager
                     )
                 )
             } catch (e: Exception) {
-                _savedCardListState.emit(ResponseHandler.failure(e))
+                _savedCardListState.emit(failure(e))
             }
         }
     }
