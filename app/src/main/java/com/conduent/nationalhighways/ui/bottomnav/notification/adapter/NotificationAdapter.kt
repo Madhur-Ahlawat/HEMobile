@@ -36,7 +36,7 @@ class NotificationAdapter(private val context: Context, private val list: List<A
             data?.run {
                 binding.messageTxt.text = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
                 binding.messageTxt.movementMethod = LinkMovementMethod.getInstance()
-
+                binding.clParent.contentDescription = data?.createTs+". "+data?.message
                 if (isViewed == "N")
                     binding.btnTxt.typeface = Typeface.DEFAULT_BOLD
                 else
