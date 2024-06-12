@@ -2,14 +2,16 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.data.model.raiseEnquiry.ServiceRequest
 import com.conduent.nationalhighways.databinding.AdapterCasesEnquiryListBinding
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.listener.ItemClickListener
 import com.conduent.nationalhighways.utils.common.Utils
 
-class CasesEnquiryListAdapter(val listener:ItemClickListener,val caseEnquiryList: ArrayList<ServiceRequest>) :
+class CasesEnquiryListAdapter(
+    val listener: ItemClickListener,
+    val caseEnquiryList: ArrayList<ServiceRequest>
+) :
     RecyclerView.Adapter<CasesEnquiryListAdapter.CasesEnquiryListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CasesEnquiryListViewHolder {
@@ -30,12 +32,12 @@ class CasesEnquiryListAdapter(val listener:ItemClickListener,val caseEnquiryList
         holder.itemView.setOnClickListener {
             listener.onItemClick(caseEnquiryList[position], holder.absoluteAdapterPosition)
         }
-        holder.binding.referenceNumberTv.contentDescription = Utils.accessibilityForNumbers(itemData.id.toString())
+        holder.binding.referenceNumberTv.contentDescription =
+            Utils.accessibilityForNumbers(itemData.id.toString())
     }
 
     class CasesEnquiryListViewHolder(var binding: AdapterCasesEnquiryListBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
 }
 
 

@@ -98,6 +98,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     fun setBackPressListener(listener: BackPressListener) {
         backPressListener = listener
     }
+
     fun destroyBackPressListener() {
         backPressListener = null
     }

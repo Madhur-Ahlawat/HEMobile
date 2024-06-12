@@ -4,10 +4,11 @@
     android:gravity="center"
     android:clipToPadding="false"
     android:layout_height="match_parent">
-<LinearLayout
-    android:layout_centerInParent="true"
-    android:outlineAmbientShadowColor="@color/green_status"
-    android:elevation="@dimen/margin_10dp"
-    android:layout_width="@dimen/margin_100dp"
-    android:layout_height="@dimen/margin_100dp"/>
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:outlineAmbientShadowColor="@color/green_status"
+        android:elevation="@dimen/margin_10dp"
+        android:layout_width="@dimen/margin_100dp"
+        android:layout_height="@dimen/margin_100dp" />
 </RelativeLayout>

@@ -6,7 +6,7 @@ class Error(val code: Int, val description: String) {
         code = DEFAULT_ERROR, description = exception.message
             ?: ""
     )
-    
+
 }
 
 const val NO_INTERNET_CONNECTION = -1

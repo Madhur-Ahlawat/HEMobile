@@ -35,7 +35,7 @@
                 android:importantForAccessibility="yes"
                 android:text="@string/str_you_are_removing_all_the_payments_method"
                 android:textColor="@color/new_btn_color"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16sp"
                 app:drawableTopCompat="@drawable/warningicon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
@@ -36,30 +35,17 @@ class NotificationUtils(val context: Context) {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationChannel =
-                NotificationChannel(channelId, message, NotificationManager.IMPORTANCE_HIGH)
-            notificationManager.createNotificationChannel(notificationChannel)
-            builder = NotificationCompat.Builder(context, channelId).apply {
-                setContentTitle(title)
-                setContentText(message)
-                setSmallIcon(R.drawable.notification_icon)
-                setContentIntent(pendingIntent)
-                setStyle(NotificationCompat.BigTextStyle().bigText(message))
-                setColor(context.resources.getColor(R.color.red, null))
-                setAutoCancel(true)
-            }
-        } else {
-            builder = NotificationCompat.Builder(context).apply {
-                setContentTitle(title)
-                setContentText(message)
-                setSmallIcon(R.mipmap.ic_launcher_squircle)
-                setStyle(NotificationCompat.BigTextStyle().bigText(message))
-                setContentIntent(pendingIntent)
-                setAutoCancel(true)
-            }
+        notificationChannel =
+            NotificationChannel(channelId, message, NotificationManager.IMPORTANCE_HIGH)
+        notificationManager.createNotificationChannel(notificationChannel)
+        builder = NotificationCompat.Builder(context, channelId).apply {
+            setContentTitle(title)
+            setContentText(message)
+            setSmallIcon(R.drawable.notification_icon)
+            setContentIntent(pendingIntent)
+            setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            setColor(context.resources.getColor(R.color.red, null))
+            setAutoCancel(true)
         }
 
         notificationManager.notify(9, builder.build())

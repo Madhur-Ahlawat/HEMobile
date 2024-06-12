@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.step5
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.Parcelable
 import android.text.Editable
 import android.text.InputFilter
@@ -121,7 +119,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
 
         binding.editNumberPlate.editText.setAccessibilityDelegateForDigits()
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
 
     }
 
@@ -252,7 +252,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                 NewCreateAccountRequestModel.plateNumber = numberPlate
 
 //                Handler(Looper.getMainLooper()).postDelayed({
-                    binding.findVehicle.isEnabled = true
+                binding.findVehicle.isEnabled = true
 //                }, time)
 
 

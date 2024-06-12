@@ -37,27 +37,27 @@
                 android:id="@+id/prePayCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="2dp"
-                android:elevation="2dp"
-                app:cardCornerRadius="5dp"
+                android:layout_marginStart="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginEnd="@dimen/margin_2dp"
+                android:layout_marginBottom="@dimen/margin_2dp"
+                android:elevation="@dimen/margin_2dp"
+                app:cardCornerRadius="@dimen/margin_5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/what_type_of_account">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="20dp">
+                    android:paddingBottom="@dimen/margin_20dp">
 
                     <TextView
                         android:id="@+id/prePay"
                         style="@style/MediumTextBlack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="19dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="@dimen/margin_19dp"
+                        android:layout_marginTop="@dimen/margin_12dp"
                         android:layout_marginEnd="@dimen/margin_20dp"
                         android:text="@string/str_prepay"
                         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
                         android:id="@+id/prePayLayout1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginHorizontal="@dimen/margin_20dp"
                         android:layout_marginTop="@dimen/margin_15dp"
 
                         android:orientation="horizontal"
@@ -96,8 +96,8 @@
                         android:id="@+id/prePayLayout2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginHorizontal="@dimen/margin_20dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
                         android:orientation="horizontal"
 
                         app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +115,7 @@
                             android:id="@+id/textView2"
                             style="@style/RegularTextBlack"
                             android:layout_width="match_parent"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/margin_10dp"
                             android:text="@string/str_suitable_frequent"
 
                             />
@@ -126,8 +126,8 @@
                         android:id="@+id/prePayLayout3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginHorizontal="@dimen/margin_20dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/prePayLayout2">
@@ -143,7 +143,7 @@
                             android:id="@+id/textView3"
                             style="@style/RegularTextBlack"
                             android:layout_width="match_parent"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/margin_10dp"
                             android:text="@string/str_get_a_discount"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -154,8 +154,8 @@
                         android:id="@+id/prePayLayout4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginHorizontal="@dimen/margin_20dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/prePayLayout3">
@@ -172,7 +172,7 @@
                             android:id="@+id/textView4"
                             style="@style/RegularTextBlack"
                             android:layout_width="match_parent"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/margin_10dp"
                             android:text="@string/str_your_accounts_get_top_up"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -188,12 +188,12 @@
                 android:id="@+id/payCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="2dp"
-                android:elevation="2dp"
-                app:cardCornerRadius="5dp"
+                android:layout_marginStart="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_2dp"
+                android:layout_marginBottom="@dimen/margin_2dp"
+                android:elevation="@dimen/margin_2dp"
+                app:cardCornerRadius="@dimen/margin_5dp"
                 app:layout_constraintStart_toStartOf="parent"
 
                 app:layout_constraintTop_toBottomOf="@id/prePayCard">
@@ -201,15 +201,15 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="20dp">
+                    android:paddingBottom="@dimen/margin_20dp">
 
                     <TextView
                         android:id="@+id/payAsYouGo"
                         style="@style/MediumTextBlack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="19dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="@dimen/margin_19dp"
+                        android:layout_marginTop="@dimen/margin_12dp"
                         android:layout_marginEnd="@dimen/margin_20dp"
                         android:text="@string/str_payg_account"
                         app:layout_constraintStart_toStartOf="parent"
@@ -220,7 +220,7 @@
                         android:id="@+id/payAsLayout1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginHorizontal="@dimen/margin_20dp"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/margin_15dp"
 
@@ -238,7 +238,7 @@
                             android:id="@+id/payTextView1"
                             style="@style/RegularTextBlack"
                             android:layout_width="match_parent"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/margin_10dp"
                             android:text="@string/str_no_initial_payment"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/payAsYouGo" />
@@ -250,7 +250,7 @@
                         android:id="@+id/payAsLayout2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginHorizontal="@dimen/margin_20dp"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/margin_8dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -267,7 +267,7 @@
                             android:id="@+id/payTextView2"
                             style="@style/RegularTextBlack"
                             android:layout_width="match_parent"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/margin_10dp"
                             android:text="@string/str_suitable_for_occasional"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/payTextView1" />
@@ -279,7 +279,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginHorizontal="@dimen/margin_20dp"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/margin_8dp"
 
@@ -298,17 +298,18 @@
                             android:id="@+id/payTextView3"
                             style="@style/RegularTextBlack"
                             android:layout_width="match_parent"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/margin_10dp"
                             android:text="@string/str_your_payments_get"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/payTextView2" />
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginHorizontal="@dimen/margin_20dp"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/margin_8dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -323,15 +324,14 @@
                             android:background="@drawable/circle_5dp" />
 
 
-                    <com.conduent.nationalhighways.utils.widgets.NHTextView
-                        android:id="@+id/payTextView4"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="match_parent"
-                        android:text="@string/str_no_discount"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/payTextView3"
-                        />
+                        <com.conduent.nationalhighways.utils.widgets.NHTextView
+                            android:id="@+id/payTextView4"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="match_parent"
+                            android:text="@string/str_no_discount"
+                            android:layout_marginStart="@dimen/margin_10dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/payTextView3" />
                     </LinearLayout>
 
 
@@ -342,10 +342,10 @@
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/crossingCharges"
                 style="@style/secondaryButton"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginStart="@dimen/margin_2dp"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:layout_marginEnd="@dimen/margin_2dp"
+                android:layout_marginBottom="@dimen/margin_2dp"
                 android:text="@string/crossing_charges_per_account"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/payCard" />

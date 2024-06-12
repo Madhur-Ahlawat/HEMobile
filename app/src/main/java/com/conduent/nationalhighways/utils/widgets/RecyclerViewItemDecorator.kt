@@ -31,8 +31,8 @@ class RecyclerViewItemDecorator
         if (position >= columns) {
             outRect.top = margin
         }
-        if(position==childCount-1){
-            outRect.bottom=margin
+        if (position == childCount - 1) {
+            outRect.bottom = margin
         }
         //add left margin only to the first column
 

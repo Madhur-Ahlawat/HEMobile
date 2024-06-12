@@ -103,7 +103,7 @@ class HWMobileNumberCaptureVC : BaseFragment<FragmentMobileNumberCaptureVcBindin
 //        registerReceiver(requireContext(),smsVerificationReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED)
         title = requireActivity().findViewById(R.id.title_txt)
         if (!isViewCreated) {
-showLoaderDialog()
+            showLoaderDialog()
         }
         viewModel.getCountries()
         binding.mobileNumberEt.editText.inputType = InputType.TYPE_CLASS_NUMBER
@@ -140,31 +140,43 @@ showLoaderDialog()
                         binding.mobileNumberEt.setText(
                             it
                         )
-                        binding.mobileNumberEt.setContentDescription(Utils.accessibilityForNumbers(
-                            it
-                        ))
+                        binding.mobileNumberEt.setContentDescription(
+                            Utils.accessibilityForNumbers(
+                                it
+                            )
+                        )
                     }
                     NewCreateAccountRequestModel.countryCode?.let {
                         binding.inputCountry.setSelectedValue(
                             it
                         )
                         binding.inputCountry.setContentDescription(
-                            Utils.accessibilityForNumbers(it.replace("+", "plus")))
+                            Utils.accessibilityForNumbers(it.replace("+", "plus"))
+                        )
                     }
                 } else {
                     NewCreateAccountRequestModel.telephoneNumber?.let {
                         binding.mobileNumberEt.setText(
                             it
                         )
-                        binding.mobileNumberEt.setContentDescription(Utils.accessibilityForNumbers(
-                            it
-                        ))
+                        binding.mobileNumberEt.setContentDescription(
+                            Utils.accessibilityForNumbers(
+                                it
+                            )
+                        )
                     }
                     NewCreateAccountRequestModel.telephone_countryCode?.let {
                         binding.inputCountry.setSelectedValue(
                             it
                         )
-                        binding.inputCountry.setContentDescription(Utils.accessibilityForNumbers(it.replace("+", "plus")))
+                        binding.inputCountry.setContentDescription(
+                            Utils.accessibilityForNumbers(
+                                it.replace(
+                                    "+",
+                                    "plus"
+                                )
+                            )
+                        )
                     }
                 }
                 checkIncompatibleCountry(binding.inputCountry.selectedItemDescription)
@@ -222,7 +234,7 @@ showLoaderDialog()
 
         isViewCreated = true
         requestHint()
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
     }
@@ -713,7 +725,7 @@ showLoaderDialog()
 
     private fun updateCommunicationPref() {
         if (NewCreateAccountRequestModel.isCountryNotSupportForSms) {
-           showLoaderDialog()
+            showLoaderDialog()
             updateProfileDetails(
                 personalInformationModel,
                 accountInformationModel
@@ -879,7 +891,8 @@ showLoaderDialog()
                             true
                         } else {
                             binding.errorMobileNumber.visible()
-                            binding.errorMobileNumber.text = getString(R.string.str_uk_phoneNumber_error_message)
+                            binding.errorMobileNumber.text =
+                                getString(R.string.str_uk_phoneNumber_error_message)
                             false
                         }
                     } else {
@@ -894,9 +907,11 @@ showLoaderDialog()
                         } else {
                             binding.errorMobileNumber.visible()
                             if (isItMobileNumber) {
-                                binding.errorMobileNumber.text = getString(R.string.str_non_uk_phoneNumber_error_message)
+                                binding.errorMobileNumber.text =
+                                    getString(R.string.str_non_uk_phoneNumber_error_message)
                             } else {
-                                binding.errorMobileNumber.text = getString(R.string.telephone_error_message)
+                                binding.errorMobileNumber.text =
+                                    getString(R.string.telephone_error_message)
                             }
                             false
                         }
@@ -1024,9 +1039,9 @@ showLoaderDialog()
         if (selected) {
             binding.errorMobileNumber.gone()
             checkIncompatibleCountry(item)
-            if(binding.mobileNumberEt.editText.text.toString().isEmpty()){
+            if (binding.mobileNumberEt.editText.text.toString().isEmpty()) {
                 binding.mobileNumberEt.setText("")
-            }else{
+            } else {
                 binding.mobileNumberEt.setText(binding.mobileNumberEt.editText.text.toString())
             }
 
@@ -1119,7 +1134,7 @@ showLoaderDialog()
     private fun updateProfileDetails(
         dataModel: ProfileDetailModel?, smsOption: String, mfaEnabled: String
     ) {
-       showLoaderDialog()
+        showLoaderDialog()
 
         var phoneCell = dataModel?.personalInformation?.phoneCell
         var phoneCellCountryCode = dataModel?.personalInformation?.phoneCellCountryCode

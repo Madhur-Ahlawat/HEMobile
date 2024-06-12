@@ -14,10 +14,9 @@
         android:layout_height="match_parent">
 
 
-
         <LinearLayout
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
+            android:paddingLeft="@dimen/margin_24dp"
+            android:paddingRight="@dimen/margin_24dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -26,7 +25,7 @@
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="match_parent">
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/txt_payment_amount"
@@ -34,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
                     android:gravity="center"
                     style="@style/RegularText"
                     tools:text="£0.00"
@@ -42,7 +41,7 @@
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/txt_minimum_label"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/font_16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -60,7 +59,7 @@
                 app:isRippleEnable="true"
                 app:maxValue="99999.99"
                 app:keyBackgroundColor="@android:color/transparent"
-                app:fontSize="20dp"/>
+                app:fontSize="@dimen/font_20sp" />
 
 
             <LinearLayout
@@ -70,7 +69,7 @@
 
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/btn_continue_reload"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="@dimen/margin_30dp"
                     android:layout_width="match_parent"
                     style="@style/PrimaryButton"
                     android:text="@string/str_continue"

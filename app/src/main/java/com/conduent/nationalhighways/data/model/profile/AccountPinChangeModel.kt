@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AccountPinChangeModel(
-    val pin : String?
+    val pin: String?
 ) : Parcelable

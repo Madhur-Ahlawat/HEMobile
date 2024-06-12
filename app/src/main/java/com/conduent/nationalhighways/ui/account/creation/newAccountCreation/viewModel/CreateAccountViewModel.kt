@@ -6,11 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
-import com.conduent.nationalhighways.data.model.account.CountriesModel
-import com.conduent.nationalhighways.data.model.account.CountryCodes
 import com.conduent.nationalhighways.data.model.account.CreateProfileDetailModelModel
 import com.conduent.nationalhighways.data.model.account.payment.AccountCreationRequest
-import com.conduent.nationalhighways.data.model.address.DataAddress
 import com.conduent.nationalhighways.data.repository.account.AccountCreationRepository
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure

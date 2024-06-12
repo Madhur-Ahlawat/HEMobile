@@ -73,15 +73,13 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         val builder = Utils.accessibilityForNumbers(sessionManager.fetchAccountNumber().toString())
 
 
-        binding.headerParent.contentDescription =
-            getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + "\n" + Utils.capitalizeString(
+        binding.headerParent.contentDescription = Utils.capitalizeString(sessionManager.fetchFirstName()) + "\n" + Utils.capitalizeString(
                 sessionManager.fetchLastName()
             ) + ", " + getString(R.string.account_number) + ", " + builder + "\n" + getString(
                 R.string.account_status
             ) + ", " + binding.indicatorAccountStatus.text.toString()
 
-        binding.header.contentDescription =
-            getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
+        binding.header.contentDescription = Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
                 sessionManager.fetchLastName()
             ) + ", " + getString(R.string.account_number) + ", " + builder + ", " + getString(
                 R.string.account_status
@@ -165,7 +163,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
-            if(requireActivity() is HomeActivityMain) {
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
             }
             val bundle = Bundle()
@@ -391,7 +389,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
 

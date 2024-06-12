@@ -8,5 +8,6 @@ class WebsiteServiceRepository @Inject constructor(private val apiService: ApiSe
 
     suspend fun webSiteServiceStatus() = apiService.webSiteServiceStatus()
 
-    suspend fun allowPushNotification(request: PushNotificationRequest) = apiService.allowPushNotification(request)
+    suspend fun allowPushNotification(request: PushNotificationRequest) =
+        apiService.allowPushNotification(request)
 }

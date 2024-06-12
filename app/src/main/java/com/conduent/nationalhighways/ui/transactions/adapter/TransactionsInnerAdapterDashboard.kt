@@ -1,12 +1,9 @@
 package com.conduent.nationalhighways.ui.transactions.adapter
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -53,7 +50,7 @@ class TransactionsInnerAdapterDashboard(
         binding?.apply {
             if (accSubType == Constants.PAYG) {
                 balanceCl.gone()
-            }else{
+            } else {
                 balanceCl.visible()
                 valueCurrentBalance.text = recentTransactionItem.balance
             }

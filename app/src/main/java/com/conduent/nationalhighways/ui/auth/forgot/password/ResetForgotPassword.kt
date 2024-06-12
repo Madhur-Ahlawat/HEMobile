@@ -173,7 +173,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 val isMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER, true)
                 if (isMobileNumber == false) {
                     binding.title.text = getString(R.string.phone_number_change_successful)
-                    if(requireActivity() is HomeActivityMain) {
+                    if (requireActivity() is HomeActivityMain) {
                         (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_phone_number))
                     }
                 } else {

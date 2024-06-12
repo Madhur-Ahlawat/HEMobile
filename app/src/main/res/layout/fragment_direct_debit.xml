@@ -6,6 +6,7 @@
     <data>
 
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -29,7 +30,7 @@
             android:progressTint="@color/new_btn_color"
             android:backgroundTint="@color/new_btn_color"
             android:indeterminateTint="@color/new_btn_color"
-            android:id="@+id/progressBar"/>
+            android:id="@+id/progressBar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

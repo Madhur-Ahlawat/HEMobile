@@ -67,8 +67,7 @@
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cancel_btn"
-            app:layout_constraintTop_toBottomOf="@+id/tvDes"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/tvDes" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

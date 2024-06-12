@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentProfileEmailChangeSuccessBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
-import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity

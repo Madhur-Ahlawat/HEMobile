@@ -12,8 +12,10 @@ import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailChangesBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -67,10 +69,15 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
         }
 
-        binding.regNum.contentDescription=Utils.accessibilityForNumbers(binding.regNum.text.toString())
-
+        binding.regNum.contentDescription =
+            Utils.accessibilityForNumbers(binding.regNum.text.toString())
+        if(requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
-
 
 
     override fun initCtrl() {
@@ -255,6 +262,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                         )
 
                     }
+
                     Constants.PAY_FOR_CROSSINGS -> {
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                         findNavController().navigate(
@@ -262,6 +270,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                             bundle
                         )
                     }
+
                     else -> {
                         bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
                         findNavController().navigate(

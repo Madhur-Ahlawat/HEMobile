@@ -1,13 +1,10 @@
 package com.conduent.nationalhighways.utils.common
 
-import java.lang.Exception
-import java.lang.StringBuilder
-
 object Common {
 
 
     @Throws(Exception::class)
-     fun maskString(strText: String?, start: Int, end: Int, maskChar: Char): String {
+    fun maskString(strText: String?, start: Int, end: Int, maskChar: Char): String {
         var start = start
         var end = end
         if (strText == null || strText == "") return ""

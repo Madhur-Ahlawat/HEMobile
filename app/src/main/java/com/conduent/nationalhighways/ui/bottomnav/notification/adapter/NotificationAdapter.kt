@@ -11,9 +11,17 @@ import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.databinding.AdapterNotificationBinding
 
 
-class NotificationAdapter(private val context: Context, private val list: List<AlertMessage?>?) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
+class NotificationAdapter(private val context: Context, private val list: List<AlertMessage?>?) :
+    RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder = NotificationViewHolder(AdapterNotificationBinding.inflate(LayoutInflater.from(context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder =
+        NotificationViewHolder(
+            AdapterNotificationBinding.inflate(
+                LayoutInflater.from(context),
+                parent,
+                false
+            )
+        )
 
     override fun getItemCount(): Int = if ((list?.size ?: 0) > 2) 2 else list?.size ?: 0
 
@@ -26,10 +34,10 @@ class NotificationAdapter(private val context: Context, private val list: List<A
 
         fun bind(data: AlertMessage?) {
             data?.run {
-                binding.messageTxt.text = Html.fromHtml(message,Html.FROM_HTML_MODE_LEGACY)
-                binding.messageTxt.movementMethod=LinkMovementMethod.getInstance()
-
-                if(isViewed == "N")
+                binding.messageTxt.text = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
+                binding.messageTxt.movementMethod = LinkMovementMethod.getInstance()
+                binding.clParent.contentDescription = data?.createTs+". "+data?.message
+                if (isViewed == "N")
                     binding.btnTxt.typeface = Typeface.DEFAULT_BOLD
                 else
                     binding.btnTxt.typeface = Typeface.DEFAULT

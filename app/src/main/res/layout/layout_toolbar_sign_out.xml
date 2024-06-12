@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
         android:theme="@style/Theme.ToolBar"
-        android:background="@color/tool_bar_clr"
-        >
+        android:background="@color/tool_bar_clr">
 
         <RelativeLayout
             android:layout_width="match_parent"

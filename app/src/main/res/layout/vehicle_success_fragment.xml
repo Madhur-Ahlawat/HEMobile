@@ -31,10 +31,10 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingTop="18dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="18dp"
+                    android:paddingStart="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_18dp"
+                    android:paddingEnd="@dimen/margin_20dp"
+                    android:paddingBottom="@dimen/margin_18dp"
                     tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
 
@@ -48,7 +48,7 @@
                         android:drawablePadding="@dimen/margin_20dp"
                         android:text="@string/vehicle_added_to_your_account"
                         android:textColor="@color/new_btn_color"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -112,6 +112,7 @@
             app:layout_constraintBottom_toTopOf="@id/feedback_bt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+
         <com.conduent.apollo.ui.CMButton
             android:id="@+id/feedback_bt"
             style="@style/secondaryButton"

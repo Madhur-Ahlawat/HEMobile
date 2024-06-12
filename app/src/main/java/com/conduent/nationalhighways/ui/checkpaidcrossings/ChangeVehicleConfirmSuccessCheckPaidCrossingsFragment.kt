@@ -19,7 +19,6 @@ import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
 import com.conduent.nationalhighways.utils.common.Constants.PLATE_NUMBER
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import java.util.Locale
 
@@ -63,7 +62,8 @@ class ChangeVehicleConfirmSuccessCheckPaidCrossingsFragment :
     private fun setData() {
         binding.apply {
             vehicleRegisration.text = data?.plateNo?.uppercase(Locale.getDefault())
-            vehicleRegisration.contentDescription = Utils.accessibilityForNumbers(data?.plateNo?.uppercase(Locale.getDefault())?:"")
+            vehicleRegisration.contentDescription =
+                Utils.accessibilityForNumbers(data?.plateNo?.uppercase(Locale.getDefault()) ?: "")
             creditRemaining.text =
                 data?.unusedTrip.toString()
             creditWillExpireOn.text =

@@ -117,7 +117,7 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="@dimen/margin_2dp"
                 android:background="@color/gray_707070"
                 app:layout_constraintStart_toStartOf="parent"
                 android:importantForAccessibility="no"

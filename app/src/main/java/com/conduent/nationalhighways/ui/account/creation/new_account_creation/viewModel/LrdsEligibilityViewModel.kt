@@ -23,7 +23,7 @@ class LrdsEligibilityViewModel @Inject constructor(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _lrdsEligibilityCheck = MutableLiveData<Resource<LrdsEligibilityResponse?>?>()
-    val lrdsEligibilityCheck: LiveData<Resource<LrdsEligibilityResponse?>?> get() =_lrdsEligibilityCheck
+    val lrdsEligibilityCheck: LiveData<Resource<LrdsEligibilityResponse?>?> get() = _lrdsEligibilityCheck
 
     fun getLrdsEligibilityResponse(request: LrdsEligibiltyRequest) {
         viewModelScope.launch {

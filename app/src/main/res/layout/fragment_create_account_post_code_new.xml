@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,8 +11,7 @@
         android:layout_height="match_parent"
         android:paddingStart="@dimen/margin_20dp"
         android:paddingTop="@dimen/margin_18dp"
-        android:paddingEnd="@dimen/margin_20dp"
-        >
+        android:paddingEnd="@dimen/margin_20dp">
 
         <TextView
             android:id="@+id/txtHeading"
@@ -28,7 +26,7 @@
             android:id="@+id/inputPostCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="@dimen/margin_30dp"
             app:labelText="Postcode"
             app:inputType="text"
             app:maxLength="10"
@@ -69,6 +67,7 @@
             app:layout_constraintTop_toBottomOf="@id/btnFindAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
         <com.conduent.apollo.ui.CMButton
             android:id="@+id/btnUpdateAddressManually"
             style="@style/secondaryButton"

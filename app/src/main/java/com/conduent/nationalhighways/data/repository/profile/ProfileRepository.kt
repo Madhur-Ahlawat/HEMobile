@@ -13,15 +13,22 @@ import javax.inject.Inject
 
 class ProfileRepository @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun emailVerificationApiCall(requestParam: EmailVerificationRequest?) = apiService.sendEmailVerification(request=requestParam)
+    suspend fun emailVerificationApiCall(requestParam: EmailVerificationRequest?) =
+        apiService.sendEmailVerification(request = requestParam)
+
     suspend fun accountDetail() = apiService.getUserProfileData()
-    suspend fun emailValidationForUpdation(model: ProfileUpdateEmailModel?) = apiService.emailValidationForUpdation(model)
-    suspend fun updatePassword(model: ResetPasswordModel?)= apiService.updatePassword(model=model)
-    suspend fun updateProfile(model: UpdateProfileRequest?)= apiService.updateProfileData(model)
-    suspend fun updateAccountPin(model: AccountPinChangeModel?)= apiService.updateAccountPin(model)
-    suspend fun getNominatedContactList()=apiService.getNominatedUserList()
+    suspend fun emailValidationForUpdation(model: ProfileUpdateEmailModel?) =
+        apiService.emailValidationForUpdation(model)
+
+    suspend fun updatePassword(model: ResetPasswordModel?) =
+        apiService.updatePassword(model = model)
+
+    suspend fun updateProfile(model: UpdateProfileRequest?) = apiService.updateProfileData(model)
+    suspend fun updateAccountPin(model: AccountPinChangeModel?) = apiService.updateAccountPin(model)
+    suspend fun getNominatedContactList() = apiService.getNominatedUserList()
     suspend fun twoFAVerifyOTP(model: VerifyRequestOtpReq) =
         apiService.twoFAVerifyRequestCode(BuildConfig.AGENCY_ID, model)
+
     suspend fun verifyRequestCode(model: VerifyRequestOtpReq?) = apiService.verifyRequestCode(model)
     suspend fun userNameAvailabilityCheck(reqModel: UserNameCheckReq?) =
         apiService.userNameAvailabilityCheck(reqModel)

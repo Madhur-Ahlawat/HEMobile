@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- code_review_development
+  - code_review_development
 
 pool:
   vmImage: 'macOS-latest'
@@ -24,20 +24,20 @@ steps:
       spotBugsAnalysis: false
   - task: PublishTestResults@2
     inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '**/test/TEST-*.xml'
-        searchFolder: $(System.DefaultWorkingDirectory)
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/test/TEST-*.xml'
+      searchFolder: $(System.DefaultWorkingDirectory)
   - task: CopyFiles@2
     inputs:
-        Contents: '**/*.apk'
-        TargetFolder:  '$(build.artifactStagingDirectory)'
+      Contents: '**/*.apk'
+      TargetFolder: '$(build.artifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
     inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'HE-MAPP-ANDROID'
-          publishLocation: 'Container'
-      
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'HE-MAPP-ANDROID'
+      publishLocation: 'Container'
+
   - task: Bash@3
     inputs:
       filePath: 'bash_script'

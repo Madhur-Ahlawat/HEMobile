@@ -21,26 +21,26 @@ import java.util.Locale
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "GeofenceBroadcastReceiv"
     lateinit var sessionManager: SessionManager
-    lateinit var notificationUtils:NotificationUtils
+    lateinit var notificationUtils: NotificationUtils
     override fun onReceive(context: Context, intent: Intent) {
         Log.e(TAG, "geofenceTransition - receiver -> ")
-        notificationUtils= NotificationUtils(context)
+        notificationUtils = NotificationUtils(context)
         sessionManager = SessionManager(Utils.returnSharedPreference(context))
 
-      /*  val directory =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val file = File(directory, "dartlogs.txt")
-        if (file.exists()) {
-            val fileWriter = FileWriter(file, true)
-            val bufferedWriter = BufferedWriter(fileWriter)
+        /*  val directory =
+              Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+          val file = File(directory, "dartlogs.txt")
+          if (file.exists()) {
+              val fileWriter = FileWriter(file, true)
+              val bufferedWriter = BufferedWriter(fileWriter)
 
-            bufferedWriter.write("Geofence broadcast broadcast receiver triggered " + Date().toString() + "\n")
-            bufferedWriter.newLine()
-            checkNotification(sessionManager, context, intent, bufferedWriter)
-        } else {
-            checkNotification(sessionManager, context, intent, null)
-        }
-*/
+              bufferedWriter.write("Geofence broadcast broadcast receiver triggered " + Date().toString() + "\n")
+              bufferedWriter.newLine()
+              checkNotification(sessionManager, context, intent, bufferedWriter)
+          } else {
+              checkNotification(sessionManager, context, intent, null)
+          }
+  */
         checkNotification(sessionManager, context, intent, null)
     }
 
@@ -185,7 +185,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                         ""
                     )
 
-                }else{
+                } else {
                     Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
                 }
 
@@ -208,7 +208,6 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
 //            bufferedWriter?.write("geofenceTransition $geofenceTransition requestID $requestID \n")
 //            bufferedWriter?.newLine()
-
 
 
             Log.e(TAG, "onReceive: requestID " + requestID)

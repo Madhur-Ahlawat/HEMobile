@@ -57,7 +57,7 @@ class VrmHistoryAdapter(
                 it,
                 R.drawable.baseline_keyboard_arrow_right_24
             )
-        });
+        })
         holder.binding.updateVehicle.setOnClickListener {
             pos = holder.absoluteAdapterPosition
             onItemClick.onItemClick(
@@ -73,6 +73,5 @@ class VrmHistoryAdapter(
     }
 
     class VehicleListViewHolder(var binding: VehiclelistlayoutBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
 }

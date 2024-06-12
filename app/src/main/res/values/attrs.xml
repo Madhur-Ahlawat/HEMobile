@@ -16,9 +16,8 @@
         <attr name="hintText" format="string" />
         <attr name="input_text" format="string" />
         <attr name="errorText" format="string" />
-        <attr name="placeholderText" format="string"/>
+        <attr name="placeholderText" format="string" />
     </declare-styleable>
-
 
 
     <declare-styleable name="NHTextCellStyle">
@@ -27,20 +26,19 @@
     </declare-styleable>
 
 
-
     <declare-styleable name="NHButtonStyle">
-        <attr format="boolean" name="isPrimary"/>
-        <attr name="shape"/>
-        <attr name="gradientAngle"/>
-        <attr name="borderWidth_"/>
-        <attr name="radius"/>
-        <attr name="borderColor"/>
-        <attr name="backgroundColor"/>
-        <attr name="backgroundColorPressed"/>
-        <attr name="gradientStartColor"/>
-        <attr name="gradientEndColor"/>
-        <attr name="drawableCenter"/>
-        <attr name="isEnabled"/>
+        <attr format="boolean" name="isPrimary" />
+        <attr name="shape" />
+        <attr name="gradientAngle" />
+        <attr name="borderWidth_" />
+        <attr name="radius" />
+        <attr name="borderColor" />
+        <attr name="backgroundColor" />
+        <attr name="backgroundColorPressed" />
+        <attr name="gradientStartColor" />
+        <attr name="gradientEndColor" />
+        <attr name="drawableCenter" />
+        <attr name="isEnabled" />
     </declare-styleable>
 
 

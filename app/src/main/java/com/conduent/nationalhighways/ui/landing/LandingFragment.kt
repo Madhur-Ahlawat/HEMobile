@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -56,7 +55,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentNewLandingBinding {
-       return FragmentNewLandingBinding.inflate(inflater, container, false)
+        return FragmentNewLandingBinding.inflate(inflater, container, false)
 
 
     }
@@ -196,7 +195,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
 
     override fun initCtrl() {
-        if(requireActivity() is LandingActivity){
+        if (requireActivity() is LandingActivity) {
             (requireActivity() as LandingActivity).showToolBar(false)
         }
         binding.btnGuidanceAndDocuments.setOnClickListener {
@@ -326,7 +325,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     private fun handlePushNotification(resource: Resource<EmptyApiResponse?>) {
         if (isPushNotificationChecked) {
-           dismissLoaderDialog()
+            dismissLoaderDialog()
             when (resource) {
                 is Resource.Success -> {
                     ErrorUtil.showError(
@@ -398,11 +397,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         isChecked = true
         webServiceViewModel.checkServiceStatus()
     }
-
-
-
-
-
 
 
 }

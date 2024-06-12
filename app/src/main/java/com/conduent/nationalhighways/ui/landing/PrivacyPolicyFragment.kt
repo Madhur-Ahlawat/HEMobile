@@ -28,7 +28,7 @@ class PrivacyPolicyFragment : BaseFragment<FragmentGeneralTermsAndConditionsBind
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentGeneralTermsAndConditionsBinding {
-       return FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
+        return FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
 
     }
 
@@ -49,7 +49,8 @@ class PrivacyPolicyFragment : BaseFragment<FragmentGeneralTermsAndConditionsBind
                     startActivity(intent)
                     return true
                 }
-                return super.shouldOverrideUrlLoading(view, request)            }
+                return super.shouldOverrideUrlLoading(view, request)
+            }
 
         })
         binding.webView.loadUrl("file:///android_res/raw/privacypolicy.html")
@@ -63,10 +64,11 @@ class PrivacyPolicyFragment : BaseFragment<FragmentGeneralTermsAndConditionsBind
             "home",
             sessionManager.getLoggedInUser()
         )
-        if(requireActivity() is RaiseEnquiryActivity){
+        if (requireActivity() is RaiseEnquiryActivity) {
             (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
+
     override fun initCtrl() {
     }
 

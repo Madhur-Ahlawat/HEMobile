@@ -318,7 +318,7 @@
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/tv_account_number_heading_largefont"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_gravity="start|center"
                             android:layout_weight="0.4"
                             android:fontFamily="@font/open_sans"
@@ -593,6 +593,7 @@
                     app:layout_constraintLeft_toRightOf="@id/guideline4"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/value_autopay_dup"
                         android:layout_width="0dp"
@@ -607,6 +608,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:text="£100,000.00" />
+
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/value_autopay"
                         android:layout_width="0dp"
@@ -620,7 +622,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:text="£10000.00" />
-
 
 
                     <View

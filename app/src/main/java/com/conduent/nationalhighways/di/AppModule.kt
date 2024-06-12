@@ -3,8 +3,6 @@ package com.conduent.nationalhighways.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.error.mapper.ErrorMapper
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -29,7 +27,7 @@ class AppModule {
     @Provides
     @Singleton
     fun provideEncryptedSharedPref(@ApplicationContext context: Context): SharedPreferences {
-       return Utils.returnSharedPreference(context)
+        return Utils.returnSharedPreference(context)
     }
 
     @Singleton
@@ -43,6 +41,7 @@ class AppModule {
     fun provideErrorManager(errorMapper: ErrorMapper): ErrorManager {
         return ErrorManager(errorMapper)
     }
+
     @Provides
     @Singleton
     fun provideErrorMapper(@ApplicationContext context: Context): ErrorMapper {

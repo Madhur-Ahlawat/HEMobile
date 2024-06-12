@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.auth.suspended
 
 import android.text.Html
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,17 +66,17 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
-                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+                arguments?.getParcelable(Constants.PERSONALDATA)
         }
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
 
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
-            responseModel = arguments?.getParcelable<CardResponseModel>(Constants.DATA)
+            responseModel = arguments?.getParcelable(Constants.DATA)
             if (navFlowFrom == Constants.PAYG_SUSPENDED) {
                 binding.cardView.gone()
                 binding.succesfulCardAdded.gone()

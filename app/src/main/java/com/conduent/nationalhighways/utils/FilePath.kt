@@ -37,9 +37,11 @@ object FilePath {
                     "image" -> {
                         contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                     }
+
                     "video" -> {
                         contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
                     }
+
                     "audio" -> {
                         contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
                     }
@@ -73,7 +75,15 @@ object FilePath {
         val projection = arrayOf(column)
         try {
             cursor =
-                uri?.let { context.contentResolver.query(it, projection, selection, selectionArgs, null) }
+                uri?.let {
+                    context.contentResolver.query(
+                        it,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null
+                    )
+                }
             if (cursor != null && cursor.moveToFirst()) {
                 val index: Int = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(index)

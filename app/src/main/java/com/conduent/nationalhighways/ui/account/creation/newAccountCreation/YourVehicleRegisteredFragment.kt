@@ -64,10 +64,10 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                     data?.plateCountry = Constants.COUNTRY_TYPE_UK
                     data?.veicleUKnonUK = true
                 }
-                if(data?.vehicleClass?.isEmpty() == true){
+                if (data?.vehicleClass?.isEmpty() == true) {
                     data?.vehicleClass = nonUKVehicleModel?.vehicleClass
                 }
-                if(data?.plateNo?.isEmpty() == true){
+                if (data?.plateNo?.isEmpty() == true) {
                     data?.plateNo = nonUKVehicleModel?.plateNumber ?: ""
                 }
                 val bundle = Bundle()

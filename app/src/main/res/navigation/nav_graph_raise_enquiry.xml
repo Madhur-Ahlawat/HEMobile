@@ -31,20 +31,17 @@
         android:id="@+id/generalTermsAndConditionsFragment"
         android:name="com.conduent.nationalhighways.ui.landing.GeneralTermsAndConditionsFragment"
         android:label="EnquiryStatusFragment"
-        tools:layout="@layout/fragment_general_terms_and_conditions">
-    </fragment>
+        tools:layout="@layout/fragment_general_terms_and_conditions"></fragment>
     <fragment
         android:id="@+id/privacyPolicyFragment"
         android:name="com.conduent.nationalhighways.ui.landing.PrivacyPolicyFragment"
         android:label="EnquiryStatusFragment"
-        tools:layout="@layout/fragment_privacy_policy">
-    </fragment>
+        tools:layout="@layout/fragment_privacy_policy"></fragment>
     <fragment
         android:id="@+id/paygtermsandconditions"
         android:name="com.conduent.nationalhighways.ui.landing.PayGTermsAndConditionsFragment"
         android:label="EnquiryStatusFragment"
-        tools:layout="@layout/fragment_payg_terms_and_conditions">
-    </fragment>
+        tools:layout="@layout/fragment_payg_terms_and_conditions"></fragment>
     <fragment
         android:id="@+id/enquiryStatusDetailsFragment"
         android:name="com.conduent.nationalhighways.ui.landing.EnquiryStatusDetailsFragment"
@@ -112,7 +109,7 @@
         android:id="@+id/serviceUnavailableFragment"
         android:name="com.conduent.nationalhighways.ui.landing.ServiceUnavailableFragment"
         android:label="ServiceUnavailableFragment"
-        tools:layout="@layout/fragment_service_unavailable"/>
+        tools:layout="@layout/fragment_service_unavailable" />
 
     <fragment
         android:id="@+id/contactDartChargeFragment"
@@ -253,6 +250,6 @@
         android:id="@+id/casesEnquiryDetailsFragment"
         android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.CasesEnquiryDetailsFragment"
         android:label="CasesEnquiryDetailsFragment"
-        tools:layout="@layout/fragment_cases_enquiry_details"></fragment>
+        tools:layout="@layout/fragment_cases_enquiry_details" />
 
 </navigation>

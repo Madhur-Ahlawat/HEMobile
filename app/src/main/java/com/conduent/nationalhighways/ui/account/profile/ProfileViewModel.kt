@@ -1,30 +1,29 @@
 package com.conduent.nationalhighways.ui.account.profile
 
 import androidx.annotation.VisibleForTesting
+import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
-import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
+import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
+import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
+import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
 import com.conduent.nationalhighways.data.model.nominatedcontacts.NominatedContactRes
-import com.conduent.nationalhighways.data.model.profile.*
+import com.conduent.nationalhighways.data.model.profile.AccountPinChangeModel
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
+import com.conduent.nationalhighways.data.model.profile.ProfileUpdateEmailModel
 import com.conduent.nationalhighways.data.repository.profile.ProfileRepository
-import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
-import com.conduent.nationalhighways.utils.common.Utils
-import androidx.databinding.Observable
-import com.conduent.nationalhighways.data.model.account.UserNameCheckReq
-import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpReq
-import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,13 +32,15 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val repository: ProfileRepository,
     val errorManager: ErrorManager
-) : ViewModel(),Observable {
+) : ViewModel(), Observable {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _userNameAvailabilityCheck = MutableLiveData<Resource<Boolean?>?>()
     val userNameAvailabilityCheck: LiveData<Resource<Boolean?>?> get() = _userNameAvailabilityCheck
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _verifyRequestCode = MutableLiveData<Resource<VerifyRequestOtpResp?>?>()
     val verifyRequestCode: LiveData<Resource<VerifyRequestOtpResp?>?> get() = _verifyRequestCode
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _accountDetail = MutableLiveData<Resource<ProfileDetailModel?>?>()
     val accountDetail: LiveData<Resource<ProfileDetailModel?>?> get() = _accountDetail
@@ -70,12 +71,18 @@ class ProfileViewModel @Inject constructor(
     fun verifyRequestCode(model: VerifyRequestOtpReq?) {
         viewModelScope.launch {
             try {
-                _verifyRequestCode.postValue(success(repository.verifyRequestCode(model), errorManager))
+                _verifyRequestCode.postValue(
+                    success(
+                        repository.verifyRequestCode(model),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _verifyRequestCode.postValue(ResponseHandler.failure(e))
             }
         }
     }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _getNominatedContactsApiVal = MutableLiveData<Resource<NominatedContactRes?>?>()
     val getNominatedContactsApiVal: LiveData<Resource<NominatedContactRes?>?> get() = _getNominatedContactsApiVal
@@ -136,10 +143,16 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
     fun twoFAVerifyRequestCode(model: VerifyRequestOtpReq) {
         viewModelScope.launch {
             try {
-                _verifyRequestCode.postValue(success(repository.twoFAVerifyOTP(model), errorManager))
+                _verifyRequestCode.postValue(
+                    success(
+                        repository.twoFAVerifyOTP(model),
+                        errorManager
+                    )
+                )
             } catch (e: Exception) {
                 _verifyRequestCode.postValue(ResponseHandler.failure(e))
             }
@@ -155,6 +168,7 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
     fun updateUserDetails(request: UpdateProfileRequest) {
 
         viewModelScope.launch {
@@ -194,6 +208,7 @@ class ProfileViewModel @Inject constructor(
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
         TODO("Not yet implemented")
     }
+
     fun userNameAvailabilityCheck(request: UserNameCheckReq) {
         viewModelScope.launch {
             try {

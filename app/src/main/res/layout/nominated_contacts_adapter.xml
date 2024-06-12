@@ -241,7 +241,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_5sdp"
                         app:layout_constraintTop_toBottomOf="@id/remove_btn"
-                        app:layout_constraintLeft_toLeftOf="parent"/>
+                        app:layout_constraintLeft_toLeftOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

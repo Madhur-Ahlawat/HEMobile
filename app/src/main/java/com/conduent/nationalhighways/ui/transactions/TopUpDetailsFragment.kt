@@ -46,6 +46,9 @@ class TopUpDetailsFragment : BaseFragment<FragmentTopupDetailsBinding>() {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     override fun onResume() {

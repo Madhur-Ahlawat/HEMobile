@@ -10,6 +10,6 @@ data class ProfileDetailModel(
     var personalInformation: PersonalInformation?,
     val replenishmentInformation: ReplenishmentInformation?,
     val errorCode: Long?,
-    val message : String?,
-    val status : String?,
+    val message: String?,
+    val status: String?,
 ) : Parcelable

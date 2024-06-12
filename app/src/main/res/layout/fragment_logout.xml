@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
             android:drawablePadding="@dimen/margin_20dp"
             app:drawableTopCompat="@drawable/checkicon"
             android:textColor="@color/dark_blue_color"
-            android:textSize="15sp"
+            android:textSize="@dimen/font_15sp"
             android:fontFamily="@font/open_sans_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +43,7 @@
             android:id="@+id/btnSignin"
             style="@style/PrimaryButton"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="@dimen/margin_30dp"
             android:text="@string/txt_sign_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

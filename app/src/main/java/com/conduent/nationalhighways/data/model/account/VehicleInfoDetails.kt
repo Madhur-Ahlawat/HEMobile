@@ -16,4 +16,4 @@ data class RetrievePlateInfoDetails(
     var vehicleModel: String?,
     var vehicleColor: String?,
 
-) : Parcelable
+    ) : Parcelable

@@ -33,7 +33,7 @@ class RetryDialog(val api_URL: String) : BaseDialog<DialogRetryBinding>(), View.
         when (v?.id) {
             R.id.retryBtn -> {
                 dismiss()
-                listener?.onRetryClick(apiUrl =api_URL )
+                listener?.onRetryClick(apiUrl = api_URL)
             }
         }
     }

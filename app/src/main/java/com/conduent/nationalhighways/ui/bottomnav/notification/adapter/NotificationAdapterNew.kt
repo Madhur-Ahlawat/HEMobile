@@ -16,7 +16,6 @@ import com.conduent.nationalhighways.databinding.ItemNotificationsBinding
 import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationFragment
 import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewModel
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
-import com.conduent.nationalhighways.utils.widgets.NHTextView
 import kotlinx.coroutines.launch
 
 class NotificationAdapterNew(

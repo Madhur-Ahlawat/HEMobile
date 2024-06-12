@@ -10,8 +10,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.listener.NotificationItemClick
 import com.conduent.nationalhighways.data.model.notification.NotificationModel
+import com.conduent.nationalhighways.listener.NotificationItemClick
 
 class NotificationTypeAdapter(private val mContext: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -155,6 +155,7 @@ class NotificationTypeAdapter(private val mContext: Context) :
                 return HighPriorityViewHolder(view)
 
             }
+
             else -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.adapter_high_priority_notifications, parent, false)

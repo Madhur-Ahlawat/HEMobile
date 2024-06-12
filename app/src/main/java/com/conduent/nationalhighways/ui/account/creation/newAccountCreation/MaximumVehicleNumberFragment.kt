@@ -175,7 +175,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         }
 
         if (NewCreateAccountRequestModel.isMaxVehicleAdded) {
-            if(requireActivity() is HomeActivityMain){
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).hideBackIcon()
             }
             binding.maximumVehicleAdded.text =
@@ -194,7 +194,12 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 vehicleMgmtViewModel.getVehicleInformationApi("0", "20")
             }
         }
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+        if(requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
     }
 
     override fun initCtrl() {

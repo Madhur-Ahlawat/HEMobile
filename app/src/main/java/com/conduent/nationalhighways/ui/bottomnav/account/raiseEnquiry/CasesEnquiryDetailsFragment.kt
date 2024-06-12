@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
@@ -15,7 +14,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
@@ -24,7 +22,6 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
-import com.conduent.nationalhighways.utils.extn.toolbar
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -110,7 +107,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
     private fun setCategoryData() {
         if (sm.fetchSubCategoriesData().size == 0) {
-           showLoaderDialog()
+            showLoaderDialog()
             apiViewModel.getCategories()
         } else {
             getCategoryDataFromSession()
@@ -134,7 +131,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     }
 
     private fun categoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-       dismissLoaderDialog()
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().isNotEmpty()) {
@@ -203,7 +200,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
     private fun subCategoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
         if (categoryList.size <= apiCallPos) {
-          dismissLoaderDialog()
+            dismissLoaderDialog()
         }
         if (apiCallPos == 1) {
             subcategoryList?.clear()

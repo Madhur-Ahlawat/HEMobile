@@ -20,7 +20,6 @@ import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHis
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
-import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
 import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -73,7 +72,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(false)
         }
     }
@@ -139,7 +138,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         super.onResume()
         showLoaderDialog()
         setBackPressListener(this)
-        if(requireActivity() is HomeActivityMain) {
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(false)
             (requireActivity() as HomeActivityMain).getNotificationApi()
         }
@@ -153,7 +152,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
 
         if (arguments?.containsKey(Constants.GO_TO_SUCCESS_PAGE) == true) {
-            goToSuccessPage = arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE, false)!!
+            goToSuccessPage = arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE, false)?:false
         }
         binding.labelViewAll.setOnClickListener {
             (requireActivity() as HomeActivityMain).viewAllTransactions()
@@ -247,11 +246,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 R.id.action_dashBoardFragment_to_accountManagementFragment,
                 bundle
             )
-            if(requireActivity() is HomeActivityMain) {
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
             }
         } else {
-            if(requireActivity() is HomeActivityMain) {
+            if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 0)
             }
         }

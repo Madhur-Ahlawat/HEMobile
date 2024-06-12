@@ -1,20 +1,16 @@
 package com.conduent.nationalhighways.ui.payment
 
-import android.util.Patterns
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.OneOfPaymentModelResponse
-import com.conduent.nationalhighways.data.model.payment.PaymentReceiptDeliveryTypeSelectionRequest
 import com.conduent.nationalhighways.data.repository.makeoneofpayments.MakeOneOfPaymentRepo
-import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -74,7 +70,6 @@ class MakeOneOfPaymentViewModel @Inject constructor(
             }
         }
     }
-
 
 
 }

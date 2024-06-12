@@ -11,7 +11,6 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -28,7 +27,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
 import com.conduent.nationalhighways.R
 
@@ -44,7 +42,8 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
         private const val DEFAULT_THRESHOLD = 3
     }
 
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(MyPrefs, Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences(MyPrefs, Context.MODE_PRIVATE)
     private val threshold: Int = builder.threshold
     private val session: Int = builder.session
 
@@ -104,16 +103,17 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
         ratingBar?.apply {
             onRatingBarChangeListener = this@RatingDialog
             if (builder.ratingBarColor != 0) {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                    val stars = progressDrawable as LayerDrawable
-                    stars.getDrawable(2).setColorFilter(builder.ratingBarColor, PorterDuff.Mode.SRC_ATOP)
-                    stars.getDrawable(1).setColorFilter(builder.ratingBarColor, PorterDuff.Mode.SRC_ATOP)
-                    val ratingBarBackgroundColor = if (builder.ratingBarBackgroundColor != 0) builder.ratingBarBackgroundColor else R.color.btn_disable
-                    stars.getDrawable(0).setColorFilter(ContextCompat.getColor(context, ratingBarBackgroundColor), PorterDuff.Mode.SRC_ATOP)
-                } else {
-                    val stars = progressDrawable
-                    DrawableCompat.setTint(stars, builder.ratingBarColor)
-                }
+                val stars = progressDrawable as LayerDrawable
+                stars.getDrawable(2)
+                    .setColorFilter(builder.ratingBarColor, PorterDuff.Mode.SRC_ATOP)
+                stars.getDrawable(1)
+                    .setColorFilter(builder.ratingBarColor, PorterDuff.Mode.SRC_ATOP)
+                val ratingBarBackgroundColor =
+                    if (builder.ratingBarBackgroundColor != 0) builder.ratingBarBackgroundColor else R.color.btn_disable
+                stars.getDrawable(0).setColorFilter(
+                    ContextCompat.getColor(context, ratingBarBackgroundColor),
+                    PorterDuff.Mode.SRC_ATOP
+                )
             }
         }
 
@@ -173,9 +173,17 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
     override fun onRatingChanged(ratingBar: RatingBar, v: Float, b: Boolean) {
         if (ratingBar.rating >= threshold) {
             showNever()
-            builder.ratingThresholdClearedListener?.invoke(this, ratingBar.rating, ratingBar.rating >= threshold)
+            builder.ratingThresholdClearedListener?.invoke(
+                this,
+                ratingBar.rating,
+                ratingBar.rating >= threshold
+            )
         } else {
-            builder.ratingThresholdFailedListener?.invoke(this, ratingBar.rating, ratingBar.rating >= threshold)
+            builder.ratingThresholdFailedListener?.invoke(
+                this,
+                ratingBar.rating,
+                ratingBar.rating >= threshold
+            )
         }
         builder.ratingDialogListener?.invoke(ratingBar.rating, ratingBar.rating >= threshold)
     }
@@ -194,12 +202,17 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
     }
 
     private fun openGooglePlay(context: Context) {
-        if (builder.marketUrl.isNullOrBlank()) builder.marketUrl = context.getString(R.string.market_prefix) + context.packageName
+        if (builder.marketUrl.isNullOrBlank()) builder.marketUrl =
+            context.getString(R.string.market_prefix) + context.packageName
         val marketUri = Uri.parse(builder.marketUrl)
         try {
             context.startActivity(Intent(Intent.ACTION_VIEW, marketUri))
         } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(context, context.getString(R.string.error_no_google_play), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                context.getString(R.string.error_no_google_play),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -245,6 +258,7 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
                 resetCount()
                 true
             }
+
             session > count -> {
                 if (builder.sessionIncrementAutomatic) {
                     count++
@@ -252,6 +266,7 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
                 }
                 false
             }
+
             else -> {
                 saveCount(count)
                 false
@@ -260,12 +275,12 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
     }
 
     private fun showNever(value: Boolean = false) {
-/*
-        with(sharedPreferences.edit()) {
-            putBoolean(SHOW_NEVER, value)
-            apply()
-        }
-*/
+        /*
+                with(sharedPreferences.edit()) {
+                    putBoolean(SHOW_NEVER, value)
+                    apply()
+                }
+        */
     }
 
     class Builder(private val context: Context) {
@@ -302,10 +317,13 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
         internal var iconRes: Int? = null
 
         // listeners
-        internal var ratingThresholdClearedListener: ((dialog: RatingDialog?, rating: Float, thresholdCleared: Boolean) -> Unit)? = null
-        internal var ratingThresholdFailedListener: ((dialog: RatingDialog?, rating: Float, thresholdCleared: Boolean) -> Unit)? = null
+        internal var ratingThresholdClearedListener: ((dialog: RatingDialog?, rating: Float, thresholdCleared: Boolean) -> Unit)? =
+            null
+        internal var ratingThresholdFailedListener: ((dialog: RatingDialog?, rating: Float, thresholdCleared: Boolean) -> Unit)? =
+            null
         internal var ratingDialogFormListener: ((feedback: String?) -> Unit)? = null
-        internal var ratingDialogListener: ((rating: Float, thresholdCleared: Boolean) -> Unit)? = null
+        internal var ratingDialogListener: ((rating: Float, thresholdCleared: Boolean) -> Unit)? =
+            null
         internal var positiveButtonClickListener: ((dialog: Dialog) -> Unit)? = null
         internal var negativeButtonClickListener: ((dialog: Dialog) -> Unit)? = null
 
@@ -340,7 +358,12 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
             return this
         }
 
-        fun positiveButton(@StringRes text: Int? = null, @ColorRes textColor: Int? = null, @DrawableRes background: Int = 0, clickListener: ((dialog: Dialog) -> Unit)? = null): Builder {
+        fun positiveButton(
+            @StringRes text: Int? = null,
+            @ColorRes textColor: Int? = null,
+            @DrawableRes background: Int = 0,
+            clickListener: ((dialog: Dialog) -> Unit)? = null
+        ): Builder {
             positiveText = text?.let { context.getString(it) }
             positiveTextColor = textColor?.let { ContextCompat.getColor(context, it) } ?: 0
             positiveBackground = background
@@ -348,7 +371,12 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
             return this
         }
 
-        fun negativeButton(@StringRes text: Int? = null, @ColorRes textColor: Int? = null, @DrawableRes background: Int = 0, clickListener: ((dialog: Dialog) -> Unit)? = null): Builder {
+        fun negativeButton(
+            @StringRes text: Int? = null,
+            @ColorRes textColor: Int? = null,
+            @DrawableRes background: Int = 0,
+            clickListener: ((dialog: Dialog) -> Unit)? = null
+        ): Builder {
             negativeText = text?.let { context.getString(it) }
             negativeTextColor = textColor?.let { ContextCompat.getColor(context, it) } ?: 0
             negativeBackground = background
@@ -356,7 +384,10 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
             return this
         }
 
-        fun ratingBarColor(@ColorRes color: Int? = null, @ColorRes backgroundColor: Int = 0): Builder {
+        fun ratingBarColor(
+            @ColorRes color: Int? = null,
+            @ColorRes backgroundColor: Int = 0
+        ): Builder {
             ratingBarColor = color?.let { ContextCompat.getColor(context, it) } ?: 0
             ratingBarBackgroundColor = backgroundColor
             return this
@@ -379,27 +410,41 @@ class RatingDialog(context: Context, private val builder: Builder) : AppCompatDi
             return this
         }
 
-        fun formSubmitText(@StringRes text: Int? = null, @ColorRes textColor: Int? = null, @ColorRes backgroundColor: Int = 0): Builder {
+        fun formSubmitText(
+            @StringRes text: Int? = null,
+            @ColorRes textColor: Int? = null,
+            @ColorRes backgroundColor: Int = 0
+        ): Builder {
             submitText = text?.let { context.getString(it) }
             positiveTextColor = textColor?.let { ContextCompat.getColor(context, it) } ?: 0
             positiveBackground = backgroundColor
             return this
         }
 
-        fun formCancelText(@StringRes text: Int? = null, @ColorRes textColor: Int? = null, @ColorRes backgroundColor: Int = 0): Builder {
+        fun formCancelText(
+            @StringRes text: Int? = null,
+            @ColorRes textColor: Int? = null,
+            @ColorRes backgroundColor: Int = 0
+        ): Builder {
             cancelText = text?.let { context.getString(it) }
             negativeTextColor = textColor?.let { ContextCompat.getColor(context, it) } ?: 0
             negativeBackground = backgroundColor
             return this
         }
 
-        @Deprecated(message = "Use the threshold cleared listener to set an action", replaceWith = ReplaceWith("onThresholdCleared()"))
+        @Deprecated(
+            message = "Use the threshold cleared listener to set an action",
+            replaceWith = ReplaceWith("onThresholdCleared()")
+        )
         fun playstoreUrl(url: String): Builder {
             marketUrl = url
             return this
         }
 
-        @Deprecated(message = "Use the threshold cleared listener to set an action", replaceWith = ReplaceWith("onThresholdCleared()"))
+        @Deprecated(
+            message = "Use the threshold cleared listener to set an action",
+            replaceWith = ReplaceWith("onThresholdCleared()")
+        )
         fun playstoreUrl(@StringRes url: Int): Builder {
             marketUrl = url.let { context.getString(it) }
             return this

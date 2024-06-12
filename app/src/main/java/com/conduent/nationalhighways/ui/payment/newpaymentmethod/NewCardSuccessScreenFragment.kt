@@ -180,7 +180,8 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             if (requireActivity() is HomeActivityMain) {
                 (requireActivity() as HomeActivityMain).hideBackIcon()
             }
-            Glide.with(requireContext()).load(ResourcesCompat.getDrawable(resources,R.drawable.error_blue,null))
+            Glide.with(requireContext())
+                .load(ResourcesCompat.getDrawable(resources, R.drawable.error_blue, null))
                 .into(binding.warningIcon)
             binding.maximumVehicleAdded.text =
                 getString(R.string.str_your_credit_card_was_not_setup)
