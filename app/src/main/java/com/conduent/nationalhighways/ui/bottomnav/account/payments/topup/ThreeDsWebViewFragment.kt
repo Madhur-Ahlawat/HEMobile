@@ -6,15 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityNodeInfo.FOCUS_ACCESSIBILITY
 import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.core.view.AccessibilityDelegateCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
@@ -72,7 +69,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
         binding.webView.setOnLongClickListener { true }
-        binding.webView.isLongClickable = false
+        binding.webView.isLongClickable = true
 
         binding.webView.settings.apply {
             loadWithOverviewMode = true
@@ -82,6 +79,21 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         binding.webView.settings.defaultTextEncodingName = "utf-8"
 
         binding.webView.loadUrl("file:///android_asset/ThreeDSGateway.html")
+
+        binding.webView.setWebChromeClient(object : WebChromeClient() {
+            override fun onShowCustomView(view: View, callback: CustomViewCallback) {
+                super.onShowCustomView(view, callback)
+                Log.e("TAG", "onShowCustomView: " )
+                // Handle custom view if necessary
+            }
+
+            override fun onHideCustomView() {
+                super.onHideCustomView()
+                Log.e("TAG", "onShowCustomView: " )
+                // Handle hiding custom view if necessary
+            }
+        })
+        binding.webView.requestFocus(View.FOCUS_DOWN)
 
 
     }
@@ -94,14 +106,14 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
     }
 
-    val a11yDelegate = object : AccessibilityDelegateCompat() {
-        override fun onInitializeAccessibilityNodeInfo(
-            host: View,
-            info: AccessibilityNodeInfoCompat
-        ) {
-            super.onInitializeAccessibilityNodeInfo(host, info)
-        }
-    }
+//    val a11yDelegate = object : AccessibilityDelegateCompat() {
+//        override fun onInitializeAccessibilityNodeInfo(
+//            host: View,
+//            info: AccessibilityNodeInfoCompat
+//        ) {
+//            super.onInitializeAccessibilityNodeInfo(host, info)
+//        }
+//    }
 
     inner class JsObject {
         @JavascriptInterface
