@@ -22,7 +22,7 @@
             android:id="@+id/category_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="@dimen/margin_24dp"
             android:padding="@dimen/_8sdp"
             android:text="@string/str_high_priority_small"
             android:textColor="@color/black"

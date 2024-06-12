@@ -173,16 +173,16 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
 
                 paymentList?.clear()
                 status.data?.let {
-                    it.creditCardListType?.let {
-                        it.cardsList?.let {
-                            it.forEach {
-                                if ((it?.bankAccountType.equals("CURRENT") && it?.emandateStatus.equals(
+                    it.creditCardListType?.let { it1 ->
+                        it1.cardsList?.let { it2 ->
+                            it2.forEach {it3->
+                                if ((it3?.bankAccountType.equals("CURRENT") && it3?.emandateStatus.equals(
                                         "ACTIVE"
-                                    ) || it?.primaryCard == true)
+                                    ) || it3?.primaryCard == true)
                                 ) {
-                                    paymentList?.add(0, it!!)
+                                    paymentList?.add(0, it3)
                                 } else {
-                                    paymentList?.add(it)
+                                    paymentList?.add(it3)
                                 }
 
                             }
@@ -354,10 +354,10 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
             }
 
             if (paymentList.orEmpty().size >= 2) {
-                val expMonth: String = if (paymentList?.get(position)?.expMonth?.length!! < 2) {
+                val expMonth: String = if ((paymentList?.get(position)?.expMonth?.length?:0) < 2) {
                     "0" + paymentList?.get(position)?.expMonth
                 } else {
-                    paymentList?.get(position)?.expMonth!!
+                    paymentList?.get(position)?.expMonth?:""
                 }
                 deletePaymentDialog(
                     getString(R.string.str_remove_payment_method),
@@ -369,9 +369,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             paymentList?.get(position)?.cardNumber
                         ),
 
-                        expMonth + "/" + if (paymentList?.get(
+                        expMonth + "/" + if ((paymentList?.get(
                                 position
-                            )?.expYear!!.length > 2
+                            )?.expYear?.length?:0) > 2
                         ) paymentList?.get(
                             position
                         )?.expYear?.substring(
@@ -389,9 +389,9 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             )
                         ),
 
-                        expMonth + "/" + if (paymentList?.get(
+                        expMonth + "/" + if ((paymentList?.get(
                                 position
-                            )?.expYear!!.length > 2
+                            )?.expYear?.length?:0) > 2
                         ) paymentList?.get(
                             position
                         )?.expYear?.substring(

@@ -33,9 +33,9 @@
                 android:layout_marginTop="@dimen/_6sdp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="start"
-                android:lineSpacingExtra="2dp"
+                android:lineSpacingExtra="@dimen/margin_2dp"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/font_14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top_title" />
 
@@ -85,7 +85,7 @@
                 android:id="@+id/btn_verify"
                 style="@style/PrimaryButton"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/margin_10dp"
                 android:text="@string/str_continue"
                 app:isEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"

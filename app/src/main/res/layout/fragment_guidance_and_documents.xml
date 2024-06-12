@@ -45,7 +45,7 @@
                 android:padding="@dimen/margin_19dp"
                 android:src="@drawable/ic_right_arrow"
                 android:layout_alignParentEnd="true"
-                android:layout_width="50dp"
+                android:layout_width="@dimen/margin_50dp"
                 android:layout_height="match_parent" />
         </RelativeLayout>
 
@@ -74,7 +74,7 @@
                 android:padding="@dimen/margin_19dp"
                 android:src="@drawable/ic_right_arrow"
                 android:layout_alignParentEnd="true"
-                android:layout_width="50dp"
+                android:layout_width="@dimen/margin_50dp"
                 android:layout_height="match_parent" />
         </RelativeLayout>
 
@@ -103,7 +103,7 @@
                 android:padding="@dimen/margin_19dp"
                 android:src="@drawable/ic_right_arrow"
                 android:layout_alignParentEnd="true"
-                android:layout_width="50dp"
+                android:layout_width="@dimen/margin_50dp"
                 android:layout_height="match_parent" />
         </RelativeLayout>
 
@@ -132,7 +132,7 @@
                 android:padding="@dimen/margin_19dp"
                 android:src="@drawable/ic_right_arrow"
                 android:layout_alignParentEnd="true"
-                android:layout_width="50dp"
+                android:layout_width="@dimen/margin_50dp"
                 android:layout_height="match_parent" />
         </RelativeLayout>
 
@@ -160,7 +160,7 @@
                 android:padding="@dimen/margin_19dp"
                 android:src="@drawable/ic_right_arrow"
                 android:layout_alignParentEnd="true"
-                android:layout_width="50dp"
+                android:layout_width="@dimen/margin_50dp"
                 android:layout_height="match_parent" />
         </RelativeLayout>
 
@@ -189,7 +189,7 @@
                 android:padding="@dimen/margin_19dp"
                 android:src="@drawable/ic_right_arrow"
                 android:layout_alignParentEnd="true"
-                android:layout_width="50dp"
+                android:layout_width="@dimen/margin_50dp"
                 android:layout_height="match_parent" />
         </RelativeLayout>
 

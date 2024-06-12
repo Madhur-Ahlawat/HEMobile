@@ -13,8 +13,8 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:minHeight="@dimen/margin_48dp"
-            android:elevation="3dp"
-            android:translationZ="2dp"
+            android:elevation="@dimen/margin_3dp"
+            android:translationZ="@dimen/margin_2dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">

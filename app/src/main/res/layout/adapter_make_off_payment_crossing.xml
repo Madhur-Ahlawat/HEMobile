@@ -7,9 +7,9 @@
         android:id="@+id/cvMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="@dimen/margin_7dp"
         app:cardCornerRadius="0dp"
-        app:cardElevation="3dp">
+        app:cardElevation="@dimen/margin_3dp">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,7 +68,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="36dp">
+                    android:layout_height="@dimen/margin_36dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
                         android:layout_gravity="end"
-                        android:layout_marginEnd="6dp"
+                        android:layout_marginEnd="@dimen/margin_6dp"
                         android:gravity="end|center_vertical"
                         android:text="1"
                         android:textColor="@color/black"
@@ -100,7 +100,7 @@
                 <LinearLayout
                     android:id="@+id/linearLayout3"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp">
+                    android:layout_height="@dimen/margin_36dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -130,7 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="end"
-                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginHorizontal="@dimen/margin_10dp"
                             android:gravity="end|center_vertical"
                             android:text="1"
                             android:textColor="@color/black"
@@ -149,7 +149,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="36dp">
+                    android:layout_height="@dimen/margin_36dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -180,9 +180,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
+                    android:layout_marginTop="@dimen/margin_11dp"
                     android:visibility="invisible"
-                    android:layout_marginBottom="24dp">
+                    android:layout_marginBottom="@dimen/margin_24dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -191,7 +191,7 @@
                         android:gravity="center"
                         android:text="Missed payment deadline"
                         android:drawableRight="@drawable/error"
-                        android:drawablePadding="5dp"
+                        android:drawablePadding="@dimen/margin_5dp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp"
                         android:textStyle="bold" />

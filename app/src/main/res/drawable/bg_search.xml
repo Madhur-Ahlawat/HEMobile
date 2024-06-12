@@ -3,14 +3,14 @@
     android:shape="rectangle">
 
     <!-- View background color -->
-    <solid android:color="@color/fill_grey"></solid>
+    <solid android:color="@color/fill_grey" />
 
     <!-- View border color and width -->
     <stroke
-        android:width="@dimen/_1sdp"
-        android:color="@color/fill_grey"></stroke>
+        android:width="1dp"
+        android:color="@color/fill_grey" />
 
     <!-- The radius makes the corners rounded -->
-    <corners android:radius="@dimen/_5sdp"></corners>
+    <corners android:radius="5dp" />
 
 </shape>

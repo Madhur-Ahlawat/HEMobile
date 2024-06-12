@@ -17,10 +17,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingTop="18dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="18dp"
+            android:paddingStart="@dimen/margin_20dp"
+            android:paddingTop="@dimen/margin_18dp"
+            android:paddingEnd="@dimen/margin_20dp"
+            android:paddingBottom="@dimen/margin_18dp"
             tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
             <ImageView
@@ -37,12 +37,12 @@
                 android:id="@+id/maximumVehicleAdded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="@dimen/margin_23dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
                 android:text="@string/str_your_account_has_been_suspended"
                 android:textColor="@color/new_btn_color"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/warningIcon" />
@@ -51,13 +51,13 @@
                 android:id="@+id/textMaximumVehicle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="@dimen/margin_17dp"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:lineSpacingExtra="2dp"
+                android:lineSpacingExtra="@dimen/margin_2dp"
                 android:text="@string/str_you_will_need_to_pay"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/font_14sp"
                 app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded" />
 
             <TextView

@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/btnCancel"
             android:text="@string/transfer_to_another_vehicle"
-            app:radius="5dp" />
+            app:radius="@dimen/margin_5dp" />
 
         <com.conduent.nationalhighways.utils.widgets.NHButton
             android:id="@+id/btnCancel"
@@ -64,7 +64,7 @@
             android:text="@string/cancel"
 
 
-            app:radius="5dp" />
+            app:radius="@dimen/margin_5dp" />
     </RelativeLayout>
 
 </layout>

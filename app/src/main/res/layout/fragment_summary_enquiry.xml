@@ -67,13 +67,13 @@
                 android:id="@+id/cv_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutCategory"
@@ -131,14 +131,14 @@
                 android:id="@+id/cv_sub_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_2dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_sub_category"
@@ -159,7 +159,7 @@
                             android:id="@+id/sub_category_tv"
                             style="@style/MediumTextBlack"
                             android:text="@string/str_sub_category"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -200,13 +200,13 @@
                 android:id="@+id/contact_message_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_2dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -268,14 +268,14 @@
                 android:id="@+id/name_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_24dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_name"
@@ -296,7 +296,7 @@
                             android:id="@+id/name_tv"
                             style="@style/MediumTextBlack"
                             android:text="@string/str_name"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -337,14 +337,14 @@
                 android:id="@+id/email_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_2dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_email"
@@ -408,14 +408,14 @@
                 android:id="@+id/mobile_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_2dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
                 android:visibility="@{viewModel.enquiryModel.mobileNumber.empty?View.GONE:View.VISIBLE}"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_mobile_number"
@@ -436,7 +436,7 @@
                             android:id="@+id/mobile_tv"
                             style="@style/MediumTextBlack"
                             android:text="@string/str_mobile_number"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -480,7 +480,7 @@
                 android:layout_marginTop="@dimen/margin_55dp"
                 android:layout_marginBottom="@dimen/_50sdp"
                 android:text="@string/str_continue"
-                app:radius="5dp" />
+                app:radius="@dimen/margin_5dp" />
 
         </LinearLayout>
 

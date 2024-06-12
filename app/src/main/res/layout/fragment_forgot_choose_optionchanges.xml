@@ -12,10 +12,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:importantForAccessibility="no"
-            android:paddingStart="20dp"
-            android:paddingTop="18dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="18dp">
+            android:paddingStart="@dimen/margin_20dp"
+            android:paddingTop="@dimen/margin_18dp"
+            android:paddingEnd="@dimen/margin_20dp"
+            android:paddingBottom="@dimen/margin_18dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/choose_verification_method"
@@ -57,10 +57,10 @@
                     android:layout_marginTop="@dimen/margin_30dp"
                     android:buttonTint="@color/new_btn_color"
                     android:gravity="top"
-                    android:paddingStart="5dp"
-                    android:paddingTop="3dp"
-                    android:paddingEnd="5dp"
-                    android:paddingBottom="5dp"
+                    android:paddingStart="@dimen/margin_5dp"
+                    android:paddingTop="@dimen/margin_3dp"
+                    android:paddingEnd="@dimen/margin_5dp"
+                    android:paddingBottom="@dimen/margin_5dp"
                     tools:text="@string/str_dummy_text_2fa_options_sms" />
 
                 <RadioButton
@@ -68,14 +68,14 @@
                     style="@style/RegularTextBlack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="@dimen/margin_30dp"
                     android:buttonTint="@color/new_btn_color"
                     android:gravity="top"
                     android:minHeight="@dimen/margin_48dp"
-                    android:paddingStart="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="5dp"
-                    android:paddingBottom="5dp"
+                    android:paddingStart="@dimen/margin_5dp"
+                    android:paddingTop="@dimen/margin_5dp"
+                    android:paddingEnd="@dimen/margin_5dp"
+                    android:paddingBottom="@dimen/margin_5dp"
                     tools:text="@string/str_dummy_2fa_options_email" />
 
 
