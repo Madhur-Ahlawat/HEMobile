@@ -31,14 +31,14 @@
                 android:text="asfdsf"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/font_16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="15dp"
-                android:paddingBottom="25dp"
+                android:paddingTop="@dimen/margin_15dp"
+                android:paddingBottom="@dimen/margin_25dp"
 
                 >
 
@@ -46,13 +46,13 @@
                     android:id="@+id/message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="@dimen/margin_10dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center"
                     android:text="dasf"
 
                     android:textColor="@android:color/black"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/font_13sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -90,14 +90,14 @@
                         android:paddingStart="@dimen/margin_2dp"
                         android:textAlignment="center"
                         android:textColor="@color/red_color"
-                        android:textSize="17sp" />
+                        android:textSize="@dimen/font_17sp" />
 
                     <View
                         android:layout_width="0.8dp"
                         android:id="@+id/secondView"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginRight="3dp"
+                        android:layout_marginLeft="@dimen/margin_3dp"
+                        android:layout_marginRight="@dimen/margin_3dp"
                         android:background="#000000"
                         android:alpha="0.3" />
 
@@ -114,7 +114,7 @@
                         android:paddingEnd="@dimen/margin_2dp"
                         android:textAlignment="center"
                         android:textColor="@color/hyperlink_blue2"
-                        android:textSize="17sp"
+                        android:textSize="@dimen/font_17sp"
 
                         />
                 </LinearLayout>

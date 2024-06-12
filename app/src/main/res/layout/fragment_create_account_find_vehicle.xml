@@ -33,7 +33,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/you_can_pay_for_crossings_without_an_account_to"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16sp"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
@@ -45,7 +45,7 @@
                 android:fontFamily="@font/open_sans"
                 android:text="@string/str_you_can"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16sp"
 
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -58,7 +58,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/payment_reference_number"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16sp"
                 android:visibility="gone" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
@@ -66,7 +66,7 @@
                 style="@style/input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:padding="0dp"
                 android:visibility="gone"
                 app:imeOptions="actionDone"
@@ -80,7 +80,7 @@
                 android:gravity="start"
                 android:text="@string/for_example_hd542321725_or_1_898008009"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/font_14sp"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
@@ -109,7 +109,7 @@
                     android:fontFamily="@font/open_sans"
                     android:text="@string/str_pay_for_crossing_numberplate_point1"
                     android:textColor="@color/gray_707070"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/font_14sp" />
 
             </LinearLayout>
 
@@ -139,7 +139,7 @@
                     android:fontFamily="@font/open_sans"
                     android:text="@string/str_pay_for_crossing_numberplate_point2"
                     android:textColor="@color/gray_707070"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/font_14sp" />
 
             </LinearLayout>
 
@@ -151,7 +151,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/what_is_the_vehicle_registration_number_plate_of_the_vehicle"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/font_16sp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                 android:id="@+id/edit_number_plate"
@@ -174,7 +174,7 @@
                 android:gravity="start"
                 android:text="@string/for_example_cu57abc"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/font_14sp" />
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/findVehicle"
@@ -193,7 +193,7 @@
                 android:layout_marginBottom="@dimen/margin_23dp"
                 android:text="@string/cancel"
                 android:visibility="gone"
-                app:radius="5dp"
+                app:radius="@dimen/margin_5dp"
                 tools:visibility="visible" />
 
         </LinearLayout>

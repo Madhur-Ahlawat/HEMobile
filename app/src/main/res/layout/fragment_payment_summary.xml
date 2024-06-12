@@ -32,14 +32,14 @@
                 android:id="@+id/layoutVehicleRegistrationCv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_24dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layoutVehicleRegistration"
@@ -63,7 +63,7 @@
                             android:layout_width="0dp"
                             android:focusable="false"
                             android:text="@string/vehicle_registration_number_plate"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,14 +109,14 @@
                 android:id="@+id/recent_crossings_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_24dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardRecentCrossings"
@@ -138,7 +138,7 @@
                             style="@style/MediumTextBlack"
                             android:focusable="false"
                             android:text="@string/recent_crossings"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,14 +176,14 @@
                 android:id="@+id/creditForAdditionalCrossings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_24dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -203,7 +203,7 @@
                             style="@style/MediumTextBlack"
                             android:focusable="false"
                             android:text="@string/credit_for_additional_crossings"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -245,14 +245,14 @@
                 android:id="@+id/labelPaymentAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_24dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -265,7 +265,7 @@
                         style="@style/MediumTextBlack"
                         android:focusable="false"
                         android:text="@string/str_total_payment_amount"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -290,14 +290,14 @@
                 android:id="@+id/labelEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_24dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -317,7 +317,7 @@
                             style="@style/MediumTextBlack"
                             android:focusable="false"
                             android:text="@string/str_email"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -358,14 +358,14 @@
                 android:id="@+id/labelMobileNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_24dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -385,7 +385,7 @@
                             style="@style/MediumTextBlack"
                             android:focusable="false"
                             android:text="@string/mobile_number"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -431,7 +431,7 @@
                 android:layout_marginTop="@dimen/margin_55dp"
                 android:layout_marginBottom="@dimen/_50sdp"
                 android:text="@string/pay"
-                app:radius="5dp" />
+                app:radius="@dimen/margin_5dp" />
 
         </LinearLayout>
 

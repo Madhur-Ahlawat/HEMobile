@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="20dp">
+        android:paddingHorizontal="@dimen/margin_20dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtTitleTop"
@@ -81,7 +81,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/twoFactor"
-            app:radius="5dp" />
+            app:radius="@dimen/margin_5dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="yes"
                     android:focusable="true"
-                    android:paddingBottom="20dp"
+                    android:paddingBottom="@dimen/margin_20dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/title_tv">

@@ -51,13 +51,6 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         FragmentThreeDSWebviewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        } else if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBarAuth()
-        }
-
-        binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
         if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
             paymentList = arguments?.getParcelableArrayList(Constants.DATA)
@@ -65,9 +58,29 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
         topUpAmount = arguments?.getDouble(Constants.PAYMENT_TOP_UP) ?: 0.0
+
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
+
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.domStorageEnabled = true
         binding.webView.settings.loadsImagesAutomatically = true
+
+        binding.webView.addJavascriptInterface(JsObject(), "appInterface")
+
+        binding.webView.setOnLongClickListener { true }
+        binding.webView.isLongClickable = false
+
+        binding.webView.settings.apply {
+            loadWithOverviewMode = true
+            useWideViewPort = true
+        }
+
+        binding.webView.settings.defaultTextEncodingName = "utf-8"
+
         binding.webView.loadUrl("file:///android_asset/ThreeDSGateway.html")
 
 
@@ -75,9 +88,9 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
     override fun onResume() {
         super.onResume()
-        ViewCompat.setAccessibilityDelegate(binding.webView, a11yDelegate)
-        binding.webView.setAccessibilityDelegate(View.AccessibilityDelegate())
-        binding.webView.requestFocus(FOCUS_ACCESSIBILITY)
+//        ViewCompat.setAccessibilityDelegate(binding.webView, a11yDelegate)
+//        binding.webView.setAccessibilityDelegate(View.AccessibilityDelegate())
+//        binding.webView.requestFocus(FOCUS_ACCESSIBILITY)
 
     }
 

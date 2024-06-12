@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
                 android:layout_marginTop="@dimen/margin_14dp"
-                android:layout_marginBottom="3dp"
+                android:layout_marginBottom="@dimen/margin_3dp"
                 android:elevation="@dimen/margin_3dp"
                 android:minHeight="@dimen/margin_74dp"
                 app:cardCornerRadius="@dimen/margin_5dp">
@@ -51,7 +51,7 @@
                         style="@style/MediumTextBlack"
                         android:importantForAccessibility="no"
                         android:text="@string/reference_number"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,7 +93,7 @@
                         style="@style/MediumTextBlack"
                         android:importantForAccessibility="no"
                         android:text="@string/str_category"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -134,7 +134,7 @@
                         android:importantForAccessibility="no"
                         style="@style/MediumTextBlack"
                         android:text="@string/sub_category"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -178,7 +178,7 @@
                         style="@style/MediumTextBlack"
                         android:importantForAccessibility="no"
                         android:text="@string/date_time_submitted"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -222,7 +222,7 @@
                         style="@style/MediumTextBlack"
                         android:importantForAccessibility="no"
                         android:text="@string/status_of_enquiry"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -266,7 +266,7 @@
                         style="@style/MediumTextBlack"
                         android:importantForAccessibility="no"
                         android:text="@string/date_enquiry_closed"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -309,7 +309,7 @@
                         android:importantForAccessibility="no"
                         style="@style/MediumTextBlack"
                         android:text="@string/date_time_submitted"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

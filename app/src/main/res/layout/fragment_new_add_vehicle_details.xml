@@ -43,7 +43,7 @@
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="wrap_content"-->
             <!--                android:layout_marginTop="@dimen/margin_20dp"-->
-            <!--                android:paddingBottom="10dp"-->
+            <!--                android:paddingBottom="@dimen/margin_10dp"-->
             <!--                app:layout_constraintEnd_toEndOf="parent"-->
             <!--                app:layout_constraintStart_toStartOf="parent"-->
             <!--                app:layout_constraintTop_toBottomOf="@id/title">-->
@@ -58,11 +58,11 @@
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:layout_marginEnd="@dimen/margin_1dp"
                 android:layout_marginBottom="@dimen/margin_1dp"
-                android:elevation="3dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:gravity="center"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="@dimen/margin_5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title">

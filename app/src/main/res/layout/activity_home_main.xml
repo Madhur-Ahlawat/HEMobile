@@ -21,9 +21,9 @@
             android:layout_height="wrap_content"
             android:minHeight="@dimen/margin_50dp"
             android:background="@color/white"
-            android:elevation="3dp"
+            android:elevation="@dimen/margin_3dp"
             android:theme="@style/Theme.ToolBar"
-            android:translationZ="2dp"
+            android:translationZ="@dimen/margin_2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

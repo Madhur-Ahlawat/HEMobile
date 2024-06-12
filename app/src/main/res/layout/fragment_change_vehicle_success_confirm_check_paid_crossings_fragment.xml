@@ -48,9 +48,9 @@
                     android:layout_marginTop="@dimen/margin_36dp"
                     android:layout_marginEnd="@dimen/margin_1dp"
                     android:layout_marginBottom="@dimen/margin_1dp"
-                    android:elevation="3dp"
+                    android:elevation="@dimen/margin_3dp"
                     android:importantForAccessibility="no"
-                    app:cardCornerRadius="5dp">
+                    app:cardCornerRadius="@dimen/margin_5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/layoutVehicleRegistration"
@@ -64,7 +64,7 @@
                             android:id="@+id/txtVehicleRegistration"
                             style="@style/MediumTextBlack"
                             android:text="@string/vehicle_registration_number_plate"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -89,9 +89,9 @@
                     android:layout_marginTop="@dimen/margin_16_34dp"
                     android:layout_marginEnd="@dimen/margin_1dp"
                     android:layout_marginBottom="@dimen/margin_1dp"
-                    android:elevation="3dp"
+                    android:elevation="@dimen/margin_3dp"
                     android:importantForAccessibility="no"
-                    app:cardCornerRadius="5dp">
+                    app:cardCornerRadius="@dimen/margin_5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cardRecentCrossings"
@@ -105,7 +105,7 @@
                             android:id="@+id/txtCreditRemaining"
                             style="@style/MediumTextBlack"
                             android:text="@string/credit_remaining"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -131,9 +131,9 @@
                     android:layout_marginTop="@dimen/margin_16_34dp"
                     android:layout_marginEnd="@dimen/margin_1dp"
                     android:layout_marginBottom="@dimen/margin_1dp"
-                    android:elevation="3dp"
+                    android:elevation="@dimen/margin_3dp"
                     android:importantForAccessibility="no"
-                    app:cardCornerRadius="5dp">
+                    app:cardCornerRadius="@dimen/margin_5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -146,7 +146,7 @@
                             android:id="@+id/txtCreditWillExpireOn"
                             style="@style/MediumTextBlack"
                             android:text="@string/expiry_date"
-                            android:textSize="15sp"
+                            android:textSize="@dimen/font_15sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -183,7 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/back_to_main_menu"
-                app:radius="5dp" />
+                app:radius="@dimen/margin_5dp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/btnFeedback"
@@ -194,7 +194,7 @@
                 android:textColor="@color/new_btn_color"
                 android:textColorLink="@color/new_btn_color"
                 app:borderColor="@color/new_btn_color"
-                app:radius="5dp" />
+                app:radius="@dimen/margin_5dp" />
         </LinearLayout>
 
     </RelativeLayout>

@@ -152,7 +152,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
 
         if (arguments?.containsKey(Constants.GO_TO_SUCCESS_PAGE) == true) {
-            goToSuccessPage = arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE, false)!!
+            goToSuccessPage = arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE, false)?:false
         }
         binding.labelViewAll.setOnClickListener {
             (requireActivity() as HomeActivityMain).viewAllTransactions()

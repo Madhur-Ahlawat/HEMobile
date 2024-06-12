@@ -34,8 +34,8 @@
 
             <ImageView
                 android:id="@+id/indicator_icon_transaction_type"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/margin_24dp"
+                android:layout_height="@dimen/margin_24dp"
                 android:layout_marginStart="@dimen/margin_12dp"
                 android:src="@drawable/ic_euro_circular_green"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -48,7 +48,7 @@
                 android:layout_height="0dp"
                 android:text="£"
                 android:textColor="@color/white"
-                android:elevation="1dp"
+                android:elevation="@dimen/margin_1dp"
                 android:textSize="@dimen/font_12sp"
                 android:gravity="center"
                 android:textAlignment="center"
