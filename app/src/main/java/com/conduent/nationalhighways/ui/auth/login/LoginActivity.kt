@@ -155,6 +155,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                     )
+                    intent.putExtra(
+                        Constants.CARD_VALIDATION_REQUIRED,
+                        sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+                    )
                     if (from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                         intent.putExtra(
                             Constants.NAV_FLOW_FROM,
@@ -168,9 +172,13 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                        putString(Constants.NAV_FLOW_FROM, from)
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                    if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                        redirectToAuthForRevalidate()
+                    } else {
+                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, from)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                        }
                     }
                 }
             })
@@ -202,35 +210,30 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     )
                     startActivity(intent)
                 } else {
-                    if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
-                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
-                        intent.putExtra(
-                            Constants.CARD_VALIDATION_REQUIRED,
-                            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
-                        )
-                        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                        startActivity(intent)
-                    } else if (!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) {
-                            sessionManager.saveHasAskedForBiometric(true)
-                            if (hasTouchBiometric && hasFaceBiometric) {
-                                displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+                    if (!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) {
+                        sessionManager.saveHasAskedForBiometric(true)
+                        if (hasTouchBiometric && hasFaceBiometric) {
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
 
-                            } else if (hasFaceBiometric) {
-                                displayBiometricDialog(getString(R.string.str_enable_face_ID))
+                        } else if (hasFaceBiometric) {
+                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
 
-                            } else {
-                                displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+                        } else {
+                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
 
-                            }
+                        }
+                    } else {
+
+                        if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                         redirectToAuthForRevalidate()
                         } else {
                             startNewActivityByClearingStack(HomeActivityMain::class.java) {
                                 putString(Constants.NAV_FLOW_FROM, from)
                                 putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                             }
-
                         }
+
+                    }
 
                 }
 
@@ -257,6 +260,18 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
         }
 
+    }
+
+    private fun redirectToAuthForRevalidate() {
+        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
+        intent.putExtra(
+            Constants.CARD_VALIDATION_REQUIRED,
+            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+        )
+        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+        intent.putExtra(Constants.NAV_FLOW_FROM, from)
+        startActivity(intent)
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {

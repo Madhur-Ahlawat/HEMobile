@@ -59,6 +59,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private var accountInformation: AccountInformation? = null
     private var isScreenLaunchedBefore: Boolean = false
     private var isAuthenticated: Boolean = false
+    private var cardValidationRequired: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -81,6 +82,9 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private fun initCtrl() {
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+        }
+      if (intent.hasExtra(Constants.CARD_VALIDATION_REQUIRED)) {
+          cardValidationRequired = intent.getBooleanExtra(Constants.CARD_VALIDATION_REQUIRED,false)
         }
         if (intent.hasExtra(Constants.NAV_FLOW_KEY)) {
             navFlowCall = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
@@ -355,46 +359,60 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
     }
 
-
+    private fun redirectToAuthForRevalidate() {
+        val intent = Intent(this@BiometricActivity, AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
+        intent.putExtra(
+            Constants.CARD_VALIDATION_REQUIRED,
+            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+        )
+        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+        intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+        startActivity(intent)
+    }
     private fun goToHomeActivity() {
-        startNewActivityByClearingStack(HomeActivityMain::class.java) {
-            if (navFlowFrom == (Constants.TWOFA) || navFlowFrom == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) || navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+        if(cardValidationRequired){
+            redirectToAuthForRevalidate()
+        }else {
+            startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                if (navFlowFrom == (Constants.TWOFA) || navFlowFrom == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) || navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
 
-                if (navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+                    if (navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+                        putString(
+                            Constants.NAV_FLOW_FROM,
+                            Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
+                        )
+                    } else {
+                        putString(
+                            Constants.NAV_FLOW_FROM,
+                            navFlowFrom
+                        )
+                    }
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                } else if (navFlowFrom == Constants.LOGIN) {
                     putString(
                         Constants.NAV_FLOW_FROM,
-                        Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
+                        Constants.BIOMETRIC_CHANGE
                     )
+                    putBoolean(
+                        Constants.GO_TO_SUCCESS_PAGE,
+                        false
+                    )
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+
                 } else {
                     putString(
                         Constants.NAV_FLOW_FROM,
-                        navFlowFrom
+                        Constants.BIOMETRIC_CHANGE
                     )
+                    putBoolean(
+                        Constants.GO_TO_SUCCESS_PAGE,
+                        true
+                    )
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
                 }
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-            } else if (navFlowFrom == Constants.LOGIN) {
-                putString(
-                    Constants.NAV_FLOW_FROM,
-                    Constants.BIOMETRIC_CHANGE
-                )
-                putBoolean(
-                    Constants.GO_TO_SUCCESS_PAGE,
-                    false
-                )
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
 
-            } else {
-                putString(
-                    Constants.NAV_FLOW_FROM,
-                    Constants.BIOMETRIC_CHANGE
-                )
-                putBoolean(
-                    Constants.GO_TO_SUCCESS_PAGE,
-                    true
-                )
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
             }
-
         }
     }
 
