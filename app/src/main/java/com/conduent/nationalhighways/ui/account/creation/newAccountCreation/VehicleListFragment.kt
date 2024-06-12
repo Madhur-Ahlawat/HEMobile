@@ -13,8 +13,10 @@ import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import com.conduent.nationalhighways.utils.common.Constants
@@ -38,6 +40,13 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     override fun init() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        if(requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
 
     }
 

@@ -119,7 +119,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
 
         binding.editNumberPlate.editText.setAccessibilityDelegateForDigits()
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
 
     }
 
