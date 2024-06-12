@@ -73,15 +73,13 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         val builder = Utils.accessibilityForNumbers(sessionManager.fetchAccountNumber().toString())
 
 
-        binding.headerParent.contentDescription =
-            getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + "\n" + Utils.capitalizeString(
+        binding.headerParent.contentDescription = Utils.capitalizeString(sessionManager.fetchFirstName()) + "\n" + Utils.capitalizeString(
                 sessionManager.fetchLastName()
             ) + ", " + getString(R.string.account_number) + ", " + builder + "\n" + getString(
                 R.string.account_status
             ) + ", " + binding.indicatorAccountStatus.text.toString()
 
-        binding.header.contentDescription =
-            getString(R.string.name) + ", " + Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
+        binding.header.contentDescription = Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
                 sessionManager.fetchLastName()
             ) + ", " + getString(R.string.account_number) + ", " + builder + ", " + getString(
                 R.string.account_status
