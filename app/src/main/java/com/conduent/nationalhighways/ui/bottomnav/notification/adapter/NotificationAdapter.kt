@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.text.Html
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,8 @@ class NotificationAdapter(private val context: Context, private val list: List<A
             data?.run {
                 binding.messageTxt.text = Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY)
                 binding.messageTxt.movementMethod = LinkMovementMethod.getInstance()
-                binding.clParent.contentDescription = data?.createTs+". "+data?.message
+                binding.clParent.contentDescription = createTs + ". " + message
+                Log.e("Notification", data.toString())
                 if (isViewed == "N")
                     binding.btnTxt.typeface = Typeface.DEFAULT_BOLD
                 else
