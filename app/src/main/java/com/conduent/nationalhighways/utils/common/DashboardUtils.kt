@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.utils.common
 
+import android.util.Log
 import androidx.appcompat.widget.AppCompatTextView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.utils.extn.changeTextColor
@@ -35,6 +36,10 @@ object DashboardUtils {
         viewGroup: MaterialCardView,
         type: Int
     ) {
+        Log.e(
+            "TAG",
+            "setAccountStatusNew() called with: status = $status, tvTitle = $tvTitle, viewGroup = $viewGroup, type = $type"
+        )
         if (status.uppercase().equals("OPEN", true) || status.uppercase().equals("ACTIVE", true)) {
             tvTitle.text = tvTitle.context.getString(R.string.open)
             tvTitle.run {

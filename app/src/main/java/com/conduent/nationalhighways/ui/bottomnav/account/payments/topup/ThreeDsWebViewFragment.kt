@@ -1,20 +1,19 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.payments.topup
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityNodeInfo.FOCUS_ACCESSIBILITY
+import android.view.inputmethod.InputMethodManager
 import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.core.view.AccessibilityDelegateCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
@@ -68,40 +67,28 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.domStorageEnabled = true
         binding.webView.settings.loadsImagesAutomatically = true
+        binding.webView.settings.loadWithOverviewMode = true
+        binding.webView.settings.useWideViewPort = true
+        binding.webView.settings.defaultTextEncodingName = "utf-8"
+
 
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
         binding.webView.setOnLongClickListener { true }
         binding.webView.isLongClickable = false
-
-        binding.webView.settings.apply {
-            loadWithOverviewMode = true
-            useWideViewPort = true
-        }
-
-        binding.webView.settings.defaultTextEncodingName = "utf-8"
-
         binding.webView.loadUrl("file:///android_asset/ThreeDSGateway.html")
 
 
     }
 
-    override fun onResume() {
-        super.onResume()
-//        ViewCompat.setAccessibilityDelegate(binding.webView, a11yDelegate)
-//        binding.webView.setAccessibilityDelegate(View.AccessibilityDelegate())
-//        binding.webView.requestFocus(FOCUS_ACCESSIBILITY)
-
-    }
-
-    val a11yDelegate = object : AccessibilityDelegateCompat() {
-        override fun onInitializeAccessibilityNodeInfo(
-            host: View,
-            info: AccessibilityNodeInfoCompat
-        ) {
-            super.onInitializeAccessibilityNodeInfo(host, info)
-        }
-    }
+    //    val a11yDelegate = object : AccessibilityDelegateCompat() {
+//        override fun onInitializeAccessibilityNodeInfo(
+//            host: View,
+//            info: AccessibilityNodeInfoCompat
+//        ) {
+//            super.onInitializeAccessibilityNodeInfo(host, info)
+//        }
+//    }
 
     inner class JsObject {
         @JavascriptInterface
@@ -191,8 +178,20 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
     }
 
+    // JavaScript interface to show keyboard
+
 
     private fun setupWebView() {
+
+        class JsObject {
+            @JavascriptInterface
+            fun showKeyboard() {
+                requireActivity().runOnUiThread {
+                    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                    imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+                }
+            }
+        }
 
         val webViewClient: WebViewClient = object : WebViewClient() {
 
@@ -211,6 +210,18 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
+                view?.loadUrl(
+                    "javascript:(function() { " +
+                            "var inputs = document.getElementsByTagName('input');" +
+                            "for (var i = 0; i < inputs.length; i++) {" +
+                            "inputs[i].addEventListener('focus', function() {" +
+                            "window.appInterface.showKeyboard();" +
+                            "});" +
+                            "}" +
+                            "})()"
+                )
+
+
                 val amount: Double = topUpAmount
                 val doubleAmount = String.format("%.2f", amount)
 
@@ -233,6 +244,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
 
                 binding.webView.loadUrl("javascript:loaded()")
+
 
 
                 super.onPageFinished(view, url)
