@@ -12,10 +12,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="20dp"
-        android:paddingTop="18dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="18dp">
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingTop="@dimen/margin_18dp"
+        android:paddingEnd="@dimen/margin_20dp"
+        android:paddingBottom="@dimen/margin_18dp">
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/youHaveAddedVehicle"

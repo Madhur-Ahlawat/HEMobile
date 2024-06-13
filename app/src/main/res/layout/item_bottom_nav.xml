@@ -32,7 +32,7 @@
             android:id="@+id/badge_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="@dimen/margin_1dp"
             android:background="@drawable/ic_badge_round"
             android:clickable="false"
             android:gravity="center"

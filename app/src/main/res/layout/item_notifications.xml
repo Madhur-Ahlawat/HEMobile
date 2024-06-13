@@ -81,7 +81,7 @@
             android:id="@+id/arrow_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="19dp"
+            android:layout_marginEnd="@dimen/margin_19dp"
             android:importantForAccessibility="no"
             android:src="@drawable/ic_right_arrow"
             app:layout_constraintBottom_toBottomOf="parent"

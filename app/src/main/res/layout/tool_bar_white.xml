@@ -31,7 +31,7 @@
                 android:text="@string/str_back"
                 app:fontFamily="@font/sfbold"
                 android:visibility="gone"
-                android:textSize="17sp"
+                android:textSize="@dimen/font_17sp"
                 android:fontFamily="@font/sfregular"
                 android:textColor="@color/white"
                 android:drawableLeft="@drawable/ic_back_arrow" />
@@ -45,7 +45,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/str_password_recovery"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/font_18sp" />
 
 
         </RelativeLayout>

@@ -55,7 +55,7 @@
             android:background="@color/light_grey"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/cl_header"
-            tools:layout_editor_absoluteX="6dp">
+            tools:layout_editor_absoluteX="@dimen/margin_6dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"

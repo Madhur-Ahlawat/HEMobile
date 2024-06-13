@@ -378,6 +378,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
+        Log.e("TAG", "handleAlertResponse: " )
         dismissLoaderDialog()
 
         if (this::profileDetailModel.isInitialized) {
@@ -397,7 +398,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             }
 
             is Resource.DataError -> {
-
+                dataBinding?.bottomNavigationView?.updateBadgeCount(2, 0)
             }
 
             else -> {
@@ -478,6 +479,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handleAccountDetailsResponse(status: Resource<ProfileDetailModel?>?) {
+        Log.e("TAG", "handleAccountDetailsResponse: " )
         refreshTokenApiCalled = false
 
         communicationPrefsViewModel.getAccountSettingsPrefs()

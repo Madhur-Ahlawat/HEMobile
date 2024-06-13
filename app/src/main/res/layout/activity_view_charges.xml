@@ -26,7 +26,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="18dp">
+                android:paddingTop="@dimen/margin_18dp">
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -51,7 +51,7 @@
                     android:layout_marginTop="@dimen/margin_13dp"
                     android:layout_marginEnd="@dimen/margin_23dp"
                     android:backgroundTint="@color/white"
-                    app:cardCornerRadius="5dp"
+                    app:cardCornerRadius="@dimen/margin_5dp"
                     app:cardElevation="@dimen/margin_5dp"
                     android:importantForAccessibility="no"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
                             android:id="@+id/headingLayoutCl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
                             android:importantForAccessibility="no"
                             android:backgroundTint="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +92,7 @@
                                 android:gravity="center|left"
                                 android:text="@string/str_type_of_vehicle"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/font_14sp"
                                 app:layout_constraintBottom_toBottomOf="@id/label_pay_as_you_go"
                                 app:layout_constraintEnd_toStartOf="@id/guide_line_vertical2"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +109,7 @@
                                 android:gravity="center"
                                 android:text="@string/str_pay_g_service"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/font_14sp"
                                 app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
                                 app:layout_constraintStart_toEndOf="@id/guide_line_vertical2"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -125,7 +125,7 @@
                                 android:padding="@dimen/_2sdp"
                                 android:text="@string/str_pre_pay_service"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/font_14sp"
                                 app:layout_constraintBottom_toBottomOf="@id/label_pay_as_you_go"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/guide_line_vertical3"
@@ -156,7 +156,7 @@
                             <View
                                 android:id="@+id/view_footer"
                                 android:layout_width="match_parent"
-                                android:layout_height="3dp"
+                                android:layout_height="@dimen/margin_3dp"
                                 android:layout_marginTop="@dimen/margin_17dp"
                                 android:importantForAccessibility="no"
                                 android:background="@color/blue_vehicle_charge_heading"

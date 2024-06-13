@@ -86,7 +86,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
         binding.edtConformPassword.editText.addTextChangedListener { isEnable1() }
 
-        setContentDesForDot(resources.getString(R.string.accessibility_bullet))
 
 
         binding.edtNewPassword.setOnTouchListener { _, event ->
@@ -344,85 +343,60 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
 
         if (hasLowerCase(text)) {
             setTickBackground(
-                binding.imgDot3,
-                binding.point3Ll,
-                resources.getString(R.string.str_contain_at_least_one_lower_case)
+                binding.imgDot3
             )
         } else {
             setDotBackground(
-                binding.imgDot3,
-                binding.point3Ll,
-                resources.getString(R.string.str_contain_at_least_one_lower_case)
+                binding.imgDot3
             )
         }
 
         if (hasUpperCase(text)) {
             setTickBackground(
-                binding.imgDot2,
-                binding.point2Ll,
-                resources.getString(R.string.str_contain_at_least_one_upper_case)
+                binding.imgDot2
             )
         } else {
             setDotBackground(
-                binding.imgDot2,
-                binding.point2Ll,
-                resources.getString(R.string.str_contain_at_least_one_upper_case)
+                binding.imgDot2
             )
         }
 
         if (text.length >= 8) {
             setTickBackground(
-                binding.imgDot1,
-                binding.point1Ll,
-                resources.getString(R.string.str_at_least_8_character)
+                binding.imgDot1
             )
         } else {
             setDotBackground(
-                binding.imgDot1,
-                binding.point1Ll,
-                resources.getString(R.string.str_at_least_8_character)
+                binding.imgDot1
             )
         }
 
         if (hasDigits(text)) {
             setTickBackground(
-                binding.imgDot4, binding.point4Ll,
-                resources.getString(R.string.str_contain_at_least_one_number)
+                binding.imgDot4
             )
         } else {
             setDotBackground(
-                binding.imgDot4,
-                binding.point4Ll,
-                resources.getString(R.string.str_contain_at_least_one_number)
+                binding.imgDot4
             )
         }
-//new password
 
         binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
-    private fun setDotBackground(view: View, pointLl: LinearLayout, string: String) {
-        pointLl.contentDescription =
-            resources.getString(R.string.accessibility_bullet) + "." + string
+    private fun setDotBackground(view: View) {
+        view.contentDescription =
+            resources.getString(R.string.accessibility_bullet)
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_5dp)
     }
 
-    private fun setTickBackground(view: View, pointLl: LinearLayout, string: String) {
-        pointLl.contentDescription =
-            resources.getString(R.string.accessibility_check_mark) + "." + string
+    private fun setTickBackground(view: View) {
+        view.contentDescription =
+            resources.getString(R.string.accessibility_tick_mark)
         view.background = ContextCompat.getDrawable(requireContext(), R.drawable.grin_tick)
     }
 
-    private fun setContentDesForDot(content: String) {
-        binding.point1Ll.contentDescription =
-            content + "." + resources.getString(R.string.str_at_least_8_character)
-        binding.point2Ll.contentDescription =
-            content + "." + resources.getString(R.string.str_contain_at_least_one_upper_case)
-        binding.point3Ll.contentDescription =
-            content + "." + resources.getString(R.string.str_contain_at_least_one_lower_case)
-        binding.point4Ll.contentDescription =
-            content + "." + resources.getString(R.string.str_contain_at_least_one_number)
-    }
+
 
 
 }

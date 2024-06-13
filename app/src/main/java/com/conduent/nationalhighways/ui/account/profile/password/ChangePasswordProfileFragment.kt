@@ -64,7 +64,10 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_password))
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
+
+
     }
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
@@ -144,7 +147,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             binding.edtNewPassword.setErrorText(getString(R.string.str_newpassword_cannot_be_same_current_password))
             disableButton()
         } else {
-            isEnable(binding.edtNewPassword.editText.toString())
+            isEnable(binding.edtNewPassword.editText.text.toString())
         }
         binding.edtCurrentPassword.removeError()
     }
@@ -217,17 +220,6 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                 ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    /*AdobeAnalytics.setActionTrack1(
-                    "submit",
-                    "login:forgot password:choose options:otp:new password set",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )*/
-
                     showError(binding.root, status.errorMsg)
                 }
             }
@@ -266,10 +258,8 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                 confirmPassword = binding.edtConfirmPassword.getText().toString(),
                 enable = true
             )
-            isEnable(binding.edtNewPassword.editText.toString())
+            isEnable(binding.edtNewPassword.editText.text.toString())
         }
-
-//        binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
     private fun isEnable(text: String) {
@@ -363,26 +353,34 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
 
         if (hasLowerCase(text)) {
             binding.imgDot3.setImageResource(R.drawable.grin_tick)
+            binding.imgDot3.contentDescription = resources.getString(R.string.accessibility_tick_mark)
         } else {
             binding.imgDot3.setImageResource(R.drawable.circle_5dp)
+            binding.imgDot3.contentDescription = resources.getString(R.string.accessibility_bullet)
         }
 
         if (hasUpperCase(text)) {
             binding.imgDot2.setImageResource(R.drawable.grin_tick)
+            binding.imgDot2.contentDescription = resources.getString(R.string.accessibility_tick_mark)
         } else {
             binding.imgDot2.setImageResource(R.drawable.circle_5dp)
+            binding.imgDot2.contentDescription = resources.getString(R.string.accessibility_bullet)
         }
 
         if (text.length >= 8) {
             binding.imgDot1.setImageResource(R.drawable.grin_tick)
+            binding.imgDot1.contentDescription = resources.getString(R.string.accessibility_tick_mark)
         } else {
             binding.imgDot1.setImageResource(R.drawable.circle_5dp)
+            binding.imgDot1.contentDescription = resources.getString(R.string.accessibility_bullet)
         }
 
         if (hasDigits(text)) {
             binding.imgDot4.setImageResource(R.drawable.grin_tick)
+            binding.imgDot4.contentDescription = resources.getString(R.string.accessibility_tick_mark)
         } else {
             binding.imgDot4.setImageResource(R.drawable.circle_5dp)
+            binding.imgDot4.contentDescription = resources.getString(R.string.accessibility_bullet)
         }
 //new password
 

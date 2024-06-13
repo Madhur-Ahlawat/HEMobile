@@ -305,7 +305,7 @@
         <Button
             android:id="@+id/btnLogin"
             style="@style/ButtonStyle"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="@dimen/margin_24dp"
             android:backgroundTint="@color/blue_color"
             android:gravity="center"
             android:text="@string/login"

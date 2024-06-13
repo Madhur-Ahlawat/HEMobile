@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/str_buy_crossings_for_vehicle"
-                app:radius="5dp" />
+                app:radius="@dimen/margin_5dp" />
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/btnFeedback"
@@ -77,7 +77,7 @@
                 android:layout_marginTop="@dimen/margin_30dp"
                 android:layout_marginBottom="@dimen/margin_23dp"
                 android:text="@string/cancel"
-                app:radius="5dp" />
+                app:radius="@dimen/margin_5dp" />
 
         </LinearLayout>
 

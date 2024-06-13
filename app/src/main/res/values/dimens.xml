@@ -5,6 +5,7 @@
     <dimen name="font_9sp">9sp</dimen>
     <dimen name="font_10sp">10sp</dimen>
     <dimen name="font_12sp">12sp</dimen>
+    <dimen name="font_13sp">13sp</dimen>
     <dimen name="font_14sp">14sp</dimen>
     <dimen name="font_15sp">15sp</dimen>
     <dimen name="font_16sp">16sp</dimen>
@@ -72,6 +73,7 @@
     <dimen name="margin_56dp">56dp</dimen>
     <dimen name="margin_58dp">58dp</dimen>
     <dimen name="margin_60dp">60dp</dimen>
+    <dimen name="margin_61dp">61dp</dimen>
     <dimen name="margin_62dp">62dp</dimen>
     <dimen name="margin_63dp">63dp</dimen>
     <dimen name="margin_64dp">64dp</dimen>

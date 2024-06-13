@@ -356,8 +356,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/youtube_icon_iv"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
+                        android:layout_width="@dimen/margin_55dp"
+                        android:layout_height="@dimen/margin_55dp"
                         android:src="@drawable/ic_youtube"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -369,7 +369,7 @@
                         android:fontFamily="@font/open_sans"
                         android:textSize="@dimen/font_14sp"
                         android:layout_width="@dimen/margin_0dp"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="@dimen/margin_20dp"
                         android:textColor="@color/blue_color"
                         android:text="@string/str_youtube"
                         app:layout_constraintLeft_toRightOf="@id/youtube_icon_iv"

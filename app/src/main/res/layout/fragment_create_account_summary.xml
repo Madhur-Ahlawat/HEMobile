@@ -43,14 +43,14 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layerFullName"
@@ -112,13 +112,13 @@
                 android:id="@+id/companyNameCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layerCompanyName"
@@ -176,14 +176,14 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="yes"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -241,14 +241,14 @@
                 android:id="@+id/emailCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:focusable="true"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/emailAddressSummary"
@@ -309,13 +309,13 @@
                 android:id="@+id/phoneCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -382,13 +382,13 @@
                 android:id="@+id/accountCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -445,14 +445,14 @@
                 android:id="@+id/accountSubType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
                 android:minHeight="@dimen/margin_77dp"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     style="@style/account_summary_layer_cl_style"
@@ -504,13 +504,13 @@
                 android:id="@+id/communicationCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -567,13 +567,13 @@
                 android:id="@+id/emailCardProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/emailProfileManagement"
@@ -633,13 +633,13 @@
                 android:id="@+id/passwordCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -698,13 +698,13 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
@@ -762,14 +762,14 @@
                 android:id="@+id/biometricsCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
                 android:importantForAccessibility="no"
                 android:visibility="gone"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="@dimen/margin_5dp"
                 tools:visibility="visible">
 
                 <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
@@ -860,7 +860,7 @@
                 android:layout_marginBottom="@dimen/_50sdp"
                 android:enabled="false"
                 android:text="@string/str_continue"
-                app:radius="5dp" />
+                app:radius="@dimen/margin_5dp" />
 
         </LinearLayout>
 
