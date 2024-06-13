@@ -63,6 +63,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
+        WebView.setWebContentsDebuggingEnabled(true)
 
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.domStorageEnabled = true
@@ -76,6 +77,10 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
         binding.webView.setOnLongClickListener { true }
         binding.webView.isLongClickable = false
+
+        setupWebView()
+
+
         binding.webView.loadUrl("file:///android_asset/ThreeDSGateway.html")
 
 
@@ -91,6 +96,16 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 //    }
 
     inner class JsObject {
+
+     /*   @JavascriptInterface
+        fun showKeyboard() {
+            // Code to show the keyboard
+            Log.e("appInterface", "showKeyboard called")
+            requireActivity().runOnUiThread {
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+            }
+        }*/
         @JavascriptInterface
         fun postMessage(data: String) {
             Log.i("WebView", "postMessage data=$data")
@@ -174,24 +189,15 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         }
         flow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
-        setupWebView()
 
     }
 
     // JavaScript interface to show keyboard
 
 
+
     private fun setupWebView() {
 
-        class JsObject {
-            @JavascriptInterface
-            fun showKeyboard() {
-                requireActivity().runOnUiThread {
-                    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
-                }
-            }
-        }
 
         val webViewClient: WebViewClient = object : WebViewClient() {
 
@@ -210,17 +216,21 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                view?.loadUrl(
+               /* view?.loadUrl(
                     "javascript:(function() { " +
-                            "var inputs = document.getElementsByTagName('input');" +
-                            "for (var i = 0; i < inputs.length; i++) {" +
-                            "inputs[i].addEventListener('focus', function() {" +
-                            "window.appInterface.showKeyboard();" +
-                            "});" +
-                            "}" +
+                            "document.addEventListener('DOMContentLoaded', function() { " +
+                            "console.log('Page loaded'); " +
+                            "var inputs = document.getElementsByTagName('input'); " +
+                            "console.log('Found ' + inputs.length + ' input elements'); " +
+                            "for (var i = 0; i < inputs.length; i++) { " +
+                            "inputs[i].addEventListener('focus', function() { " +
+                            "console.log('Input focused'); " +
+                            "window.appInterface.showKeyboard(); " +
+                            "}); " +
+                            "} " +
+                            "}); " +
                             "})()"
-                )
-
+                )*/
 
                 val amount: Double = topUpAmount
                 val doubleAmount = String.format("%.2f", amount)
