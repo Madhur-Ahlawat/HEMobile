@@ -83,8 +83,15 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
-      if (intent.hasExtra(Constants.CARD_VALIDATION_REQUIRED)) {
-          cardValidationRequired = intent.getBooleanExtra(Constants.CARD_VALIDATION_REQUIRED,false)
+
+        if (intent.getParcelableExtra<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                intent.getParcelableExtra(Constants.ACCOUNTINFORMATION)
+        }
+
+        if (intent.hasExtra(Constants.CARD_VALIDATION_REQUIRED)) {
+            cardValidationRequired =
+                intent.getBooleanExtra(Constants.CARD_VALIDATION_REQUIRED, false)
         }
         if (intent.hasExtra(Constants.NAV_FLOW_KEY)) {
             navFlowCall = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
@@ -370,10 +377,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
         startActivity(intent)
     }
+
     private fun goToHomeActivity() {
-        if(cardValidationRequired){
+        if (cardValidationRequired) {
             redirectToAuthForRevalidate()
-        }else {
+        } else {
             startNewActivityByClearingStack(HomeActivityMain::class.java) {
                 if (navFlowFrom == (Constants.TWOFA) || navFlowFrom == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) || navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
 

@@ -151,6 +151,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
                     intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
+                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+
                     intent.putExtra(
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
@@ -225,7 +227,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     } else {
 
                         if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
-                         redirectToAuthForRevalidate()
+                            redirectToAuthForRevalidate()
                         } else {
                             startNewActivityByClearingStack(HomeActivityMain::class.java) {
                                 putString(Constants.NAV_FLOW_FROM, from)

@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentForgotChooseOptionchangesBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
@@ -39,8 +40,10 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     private var response: SecurityCodeResponseModel? = null
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
     private lateinit var navFlow: String// create account , forgot password
     private var lrdsAccount: Boolean = false
+    private var cardValidationRequired: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -58,11 +61,21 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
             lrdsAccount = arguments?.getBoolean(Constants.LRDS_ACCOUNT, false) ?: false
         }
 
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_REQUIRED) == true) {
+            cardValidationRequired =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_REQUIRED, false) ?: false
+        }
+
+
         model = RequestOTPModel(optionType = "", optionValue = "")
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
+        }
+
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation = arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
 
 
@@ -190,9 +203,11 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 response = status.data
                 bundle.putParcelable("response", response)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
+                bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
                 if (requireActivity() is AuthActivity) {
                     AdobeAnalytics.setActionTrack2(
                         "continue",

@@ -43,6 +43,7 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
     private var navFlowFrom: String = ""
     private var lrdsAccount: Boolean = false
 
+    private var cardValidationRequired: Boolean = false
 
     @Inject
     lateinit var api: ApiService
@@ -52,6 +53,12 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
     override fun initViewBinding() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (intent.hasExtra(Constants.CARD_VALIDATION_REQUIRED)) {
+            cardValidationRequired =
+                intent.getBooleanExtra(Constants.CARD_VALIDATION_REQUIRED, false)
+        }
+
         if (intent.getStringExtra(Constants.NAV_FLOW_KEY) != null) {
             navFlow = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
         }
@@ -133,6 +140,7 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                 bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
                 binding.toolBarLyt.titleTxt.text = getString(R.string.str_sign_in_validation)
                 graph.setStartDestination(R.id.chooseOptionFragment)
 

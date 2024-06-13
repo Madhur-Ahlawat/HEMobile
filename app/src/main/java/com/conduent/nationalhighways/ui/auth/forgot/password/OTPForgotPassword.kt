@@ -113,6 +113,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
 
+    private var cardValidationRequired: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -121,6 +122,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         FragmentForgotOtpchangesBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_REQUIRED) == true) {
+            cardValidationRequired =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_REQUIRED, false) ?: false
+        }
+
         if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         } else if (requireActivity() is CreateAccountActivity) {
@@ -1189,9 +1196,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                         }
                     } else {
-                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                        if(cardValidationRequired){
+                            redirectToAuthForRevalidate()
+                        }else {
+                            requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                            }
                         }
                     }
 
@@ -1239,24 +1250,40 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     intent.putExtra(TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
                     intent.putExtra(Constants.NAV_FLOW_KEY, navFlowFrom)
-
+                    intent.putExtra(Constants.CARD_VALIDATION_REQUIRED,cardValidationRequired)
+                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
                     startActivity(intent)
-
-
                     //dialog.dismiss()
 
                 }
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                        putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+
+                    if (cardValidationRequired) {
+                        redirectToAuthForRevalidate()
+                    } else {
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                        }
                     }
                 }
             })
     }
 
+
+    private fun redirectToAuthForRevalidate() {
+        val intent = Intent(requireActivity(), AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
+        intent.putExtra(
+            Constants.CARD_VALIDATION_REQUIRED,
+            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+        )
+        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+        intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+        startActivity(intent)
+    }
 
     private fun crossingHistoryApi() {
         val request = CrossingHistoryRequest(
