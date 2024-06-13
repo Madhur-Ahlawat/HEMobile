@@ -1058,7 +1058,6 @@
     <string name="mobile_phone_number">Mobile phone number</string>
     <string name="personal_details">Personal Details</string>
     <string name="check_your_answers_before_confirming_vehicle">Check your answers before confirming your new vehicle</string>
-    <string name="check_your_answers_before_making_a_payment">Check your answers before making a payment.</string>
     <string name="account_details">Account Details</string>
     <string name="type_of_account">Type of account</string>
     <string name="text_message_communications">Text message communications</string>
@@ -1733,7 +1732,6 @@
     <string name="str_account_reopened">Account reopened</string>
     <string name="str_we_have_sent_confirmation">We\'ve sent a confirmation email to\n<Data><![CDATA[<b><br>%s</b>]]></Data></string>
     <string name="str_go_to_dashboard">GO TO DASHBOARD</string>
-    <string name="str_check_your_answers_before_making_payment">Check your answers before making a payment.</string>
     <string name="str_personal_details">Personal Details</string>
     <string name="str_play">Play</string>
     <string name="str_account_suspended">Account Suspended</string>
