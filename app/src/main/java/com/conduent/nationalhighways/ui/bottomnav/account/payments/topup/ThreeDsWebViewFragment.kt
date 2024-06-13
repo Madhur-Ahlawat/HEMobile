@@ -76,11 +76,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
         binding.webView.setOnLongClickListener { true }
         binding.webView.isLongClickable = false
-        binding.webView.loadUrl("file:///android_asset/ThreeDSGateway.html")
-
-
-    }
-
+        binding.webView.loadUrl("file:///android_asset/ThreeDSGateway.html") }
     //    val a11yDelegate = object : AccessibilityDelegateCompat() {
 //        override fun onInitializeAccessibilityNodeInfo(
 //            host: View,
@@ -89,7 +85,6 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 //            super.onInitializeAccessibilityNodeInfo(host, info)
 //        }
 //    }
-
     inner class JsObject {
         @JavascriptInterface
         fun postMessage(data: String) {
