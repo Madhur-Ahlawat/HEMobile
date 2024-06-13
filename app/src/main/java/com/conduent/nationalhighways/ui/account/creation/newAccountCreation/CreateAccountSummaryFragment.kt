@@ -15,6 +15,7 @@ import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdap
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_MOBILE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
@@ -163,7 +164,12 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
 
         }))
-
+        if(requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     private fun getRequiredText(text: String) = text.substringAfter('(').replace(")", "")

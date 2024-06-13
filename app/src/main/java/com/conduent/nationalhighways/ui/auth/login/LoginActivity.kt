@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -212,7 +213,11 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     )
                     startActivity(intent)
                 } else {
-                    if (!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) {
+
+                    if(Utils.checkLastLoggedInEmail(sessionManager,binding.edtEmail.editText.text.toString().trim())){
+                        Log.e("TAG", "checkLastLoggedInEmail -> " )
+                    }
+                    if ((!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) && !Utils.checkLastLoggedInEmail(sessionManager,binding.edtEmail.editText.text.toString().trim())) {
                         sessionManager.saveHasAskedForBiometric(true)
                         if (hasTouchBiometric && hasFaceBiometric) {
                             displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))

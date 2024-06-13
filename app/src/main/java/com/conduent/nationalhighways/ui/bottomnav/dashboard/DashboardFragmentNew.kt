@@ -195,6 +195,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun handleAccountType(profileDetailModel: ProfileDetailModel) {
 
+        sessionManager.saveStringData(SessionManager.LAST_LOGGEDIN_EMAIL,profileDetailModel.personalInformation?.emailAddress?:"")
         binding.tvAccountNumberHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {

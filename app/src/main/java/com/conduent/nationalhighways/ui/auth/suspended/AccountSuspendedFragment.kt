@@ -63,7 +63,9 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
             }
 
         }
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
 
     }
 

@@ -67,6 +67,8 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val NOTIFICATION_PERMISSION = "NOTIFICATION_PERMISSION"
         val SettingsClick = "SettingsClick"
         val CARD_VALIDATION_REQUIRED = "CARD_VALIDATION_REQUIRED"
+        const val LAST_LOGGEDIN_EMAIL = "lastLoggedInEmail"
+
     }
 
     /**
@@ -216,6 +218,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
 
     fun clearAll() {
         val lastRatingTime = fetchStringData(LAST_RATING_TIME)
+        val lastLoggedInEmail = fetchStringData(LAST_LOGGEDIN_EMAIL)
         val locationPermissiom = fetchBooleanData(LOCATION_PERMISSION)
         val foregroundLocationShown = fetchBooleanData(FOREGROUND_LOCATION_SHOWN)
         val notificationPermission = fetchBooleanData(NOTIFICATION_PERMISSION)
@@ -224,6 +227,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         HomeActivityMain.crossing = null
         HomeActivityMain.dateRangeModel = null
         HomeActivityMain.paymentHistoryListData = mutableListOf()
+        saveStringData(LAST_LOGGEDIN_EMAIL, lastLoggedInEmail)
         saveStringData(LAST_RATING_TIME, lastRatingTime)
         saveBooleanData(LOCATION_PERMISSION, locationPermissiom)
         saveBooleanData(NOTIFICATION_PERMISSION, notificationPermission)

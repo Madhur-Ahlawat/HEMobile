@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="@string/check_your_answers_before_making_a_payment"
+                android:text="@string/str_check_your_answer_before_payment"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp" />
 

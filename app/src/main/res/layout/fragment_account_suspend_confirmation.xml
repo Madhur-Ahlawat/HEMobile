@@ -15,7 +15,7 @@
         android:textSize="@dimen/font_16sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_24dp"
-        android:text="@string/str_check_your_answers_before_making_payment"
+        android:text="@string/str_check_your_answer_before_payment"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
 
