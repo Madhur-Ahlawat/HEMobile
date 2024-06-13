@@ -367,7 +367,7 @@ object Utils {
     }
 
     fun hasLowerCase(str: String): Boolean {
-        Log.e("TAG", "hasLowerCase: str "+str )
+        Log.e("TAG", "hasLowerCase: str " + str)
         var hasSpecialChar = false
         str.forEach { char ->
             if (LOWER_CASE.contains(char)) {
@@ -379,7 +379,7 @@ object Utils {
     }
 
     fun hasUpperCase(str: String): Boolean {
-        Log.e("TAG", "hasUpperCase: str "+str )
+        Log.e("TAG", "hasUpperCase: str " + str)
         var hasSpecialChar = false
         str.forEach { char ->
             if (UPPER_CASE.contains(char)) {
@@ -391,7 +391,7 @@ object Utils {
     }
 
     fun hasDigits(str: String): Boolean {
-        Log.e("TAG", "hasDigits: str "+str )
+        Log.e("TAG", "hasDigits: str " + str)
         var hasDigit = false
         str.forEach { char ->
             if (DIGITS.contains(char)) {
@@ -402,7 +402,7 @@ object Utils {
     }
 
     private fun hasAlphabets(str: String): Boolean {
-        Log.e("TAG", "hasAlphabets: str "+str )
+        Log.e("TAG", "hasAlphabets: str " + str)
         var hasSpecialChar = false
         str.forEach { char ->
             hasSpecialChar = ALPHABETS.contains(char)
@@ -1447,5 +1447,17 @@ object Utils {
 
     fun getCurrentYear(): Int {
         return Calendar.getInstance().get(Calendar.YEAR)
+    }
+
+    fun checkLastLoggedInEmail(sessionManager: SessionManager, email: String): Boolean {
+        val lastLoggedInEmail =
+            sessionManager.fetchStringData(SessionManager.LAST_LOGGEDIN_EMAIL) ?: ""
+        Log.e("TAG", "checkLastLoggedInEmail: "+email+" lastLoggedInEmail ->"+lastLoggedInEmail )
+        return if (email == lastLoggedInEmail) {
+            true
+        } else {
+            false
+        }
+
     }
 }
