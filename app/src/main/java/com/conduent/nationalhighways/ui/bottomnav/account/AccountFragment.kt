@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -24,6 +26,7 @@ import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
+import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -42,18 +45,32 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     OnLogOutListener, BackPressListener {
 
     private val raiseViewmodel: RaiseNewEnquiryViewModel by viewModels()
+    private val dashboardViewModel: DashboardViewModel by activityViewModels()
     private val logOutViewModel: LogoutViewModel by viewModels()
     private var isSecondaryUser: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
-
+    private var accountType: String = ""
+    private var subAccountType: String = ""
+    private var firstName: String = ""
+    private var lastName: String = ""
+    private var accountNumber: String = ""
+    private var accountStatus: String = ""
+    private var accountNumberLinesCount: Int = 0
+    private var indicatorAccountStatusLineCount: Int = 0
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentAccountNewBinding = FragmentAccountNewBinding.inflate(inflater, container, false)
 
     override fun init() {
+        accountType = dashboardViewModel.accountInformationData.value?.accountType ?: ""
+        subAccountType = dashboardViewModel.accountInformationData.value?.accSubType ?: ""
+        firstName = dashboardViewModel.personalInformationData.value?.firstName ?: ""
+        lastName = dashboardViewModel.personalInformationData.value?.lastName ?: ""
+        accountNumber = dashboardViewModel.accountInformationData.value?.number ?: ""
+        accountStatus = dashboardViewModel.accountInformationData.value?.status ?: ""
         isSecondaryUser = sessionManager.getSecondaryUser()
         setPaymentsVisibility()
         initUI()
@@ -70,17 +87,20 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         binding.contactUs.contentDescription = getString(R.string.contact_us)
         binding.closeAcount.contentDescription = getString(R.string.str_close_account)
         binding.signOut.contentDescription = getString(R.string.sign_out)
-        val builder = Utils.accessibilityForNumbers(sessionManager.fetchAccountNumber().toString())
+        val builder =
+            Utils.accessibilityForNumbers(dashboardViewModel.accountInformationData.value?.number.toString())
 
 
-        binding.headerParent.contentDescription = Utils.capitalizeString(sessionManager.fetchFirstName()) + "\n" + Utils.capitalizeString(
-                sessionManager.fetchLastName()
+        binding.headerParent.contentDescription =
+            Utils.capitalizeString(firstName) + "\n" + Utils.capitalizeString(
+                lastName
             ) + ", " + getString(R.string.account_number) + ", " + builder + "\n" + getString(
                 R.string.account_status
             ) + ", " + binding.indicatorAccountStatus.text.toString()
 
-        binding.header.contentDescription = Utils.capitalizeString(sessionManager.fetchFirstName()) + ", " + Utils.capitalizeString(
-                sessionManager.fetchLastName()
+        binding.header.contentDescription =
+            Utils.capitalizeString(firstName) + ", " + Utils.capitalizeString(
+                lastName
             ) + ", " + getString(R.string.account_number) + ", " + builder + ", " + getString(
                 R.string.account_status
             ) + ", " + binding.indicatorAccountStatus.text.toString()
@@ -103,23 +123,23 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             if (isSecondaryUser)
                 contactUs.gone()
 
-            if (sessionManager.fetchAccountType().equals(
+            if (accountType.equals(
                     Constants.PERSONAL_ACCOUNT,
                     true
-                ) && sessionManager.fetchSubAccountType()
+                ) && subAccountType
                     .equals(Constants.PAYG, true)
             ) {
                 contactUs.gone()
             }
 
-            if (sessionManager.fetchAccountType()
+            if (accountType
                     .equals("NonRevenue", true)
             ) {
                 paymentManagement.gone()
             }
 
-            val firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
-            val secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
+            val firstNameChar = firstName.first()
+            val secondNameChar = lastName.first()
 
             profilePic.text = resources.getString(
                 R.string.concatenate_two_strings,
@@ -128,19 +148,20 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             )
             profilePic.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
             profilePic.isScreenReaderFocusable = false
-            tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
-            tvAccountNumberValueLargefont.text = sessionManager.fetchAccountNumber()
+            Log.e("TAG", "initUI: accountNumber " + accountNumber)
+            tvAccountNumberValue.text = accountNumber
+            tvAccountNumberValueLargefont.text = accountNumber
             DashboardUtils.setAccountStatusNew(
-                sessionManager.fetchAccountStatus() ?: "",
+                accountStatus,
                 indicatorAccountStatus,
                 binding.cardIndicatorAccountStatus, 4
             )
             DashboardUtils.setAccountStatusNew(
-                sessionManager.fetchAccountStatus() ?: "",
+                accountStatus,
                 indicatorAccountStatusLargefont,
                 binding.cardIndicatorAccountStatusLargefont, 4
             )
-            if (sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
+            if (accountStatus.equals("SUSPENDED", true)) {
                 leftIcon6.alpha = 0.5f
                 valueTitle6.alpha = 0.5f
                 iconArrow6.alpha = 0.5f
@@ -152,8 +173,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             valueName.text =
                 resources.getString(
                     R.string.concatenate_two_strings_with_space,
-                    Utils.capitalizeString(sessionManager.fetchFirstName()), Utils.capitalizeString(
-                        sessionManager.fetchLastName()
+                    Utils.capitalizeString(firstName),
+                    Utils.capitalizeString(
+                        lastName
                     )
                 )
 
@@ -181,45 +203,96 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         binding.tvAccountStatusHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
+                accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
+                Log.e("TAG", "onGlobalLayout: accountNumberLinesCount -> $accountNumberLinesCount")
+                checkLinesLength()
                 binding.tvAccountStatusHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                binding.indicatorAccountStatus.viewTreeObserver.addOnGlobalLayoutListener(object :
-                    ViewTreeObserver.OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(
-                            this
-                        )
-                        val accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
-                        val indicatorAccountStatusLineCount =
-                            binding.indicatorAccountStatus.lineCount
 
-                        if (accountNumberLinesCount > 2 || indicatorAccountStatusLineCount >= 2) {
-                            binding.llAccountNumberLargefont.visible()
-                            binding.llAccountStatusLargefont.visible()
+            }
+        })
 
-                            binding.llAccountNumber.gone()
-                            binding.llAccountStatus.gone()
-                        } else {
-                            binding.llAccountNumberLargefont.gone()
-                            binding.llAccountStatusLargefont.gone()
-                            binding.llAccountNumber.visible()
-                            binding.llAccountStatus.visible()
-                        }
-                    }
-                })
+        binding.indicatorAccountStatus.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                indicatorAccountStatusLineCount = binding.indicatorAccountStatus.lineCount
+                Log.e(
+                    "TAG",
+                    "onGlobalLayout: indicatorAccountStatusLineCount -> $indicatorAccountStatusLineCount"
+                )
+                checkLinesLength()
+                binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+            }
+        })
+
+
+    }
+
+    private fun checkLinesLength() {
+        if (accountNumberLinesCount >= 1 && indicatorAccountStatusLineCount >= 1) {
+            if (accountNumberLinesCount > 2 || indicatorAccountStatusLineCount >= 2) {
+                binding.llAccountNumberLargefont.visible()
+                binding.llAccountStatusLargefont.visible()
+
+                binding.llAccountNumber.gone()
+                binding.llAccountStatus.gone()
+            } else {
+                binding.llAccountNumberLargefont.gone()
+                binding.llAccountStatusLargefont.gone()
+                binding.llAccountNumber.visible()
+                binding.llAccountStatus.visible()
+            }
+        }
+
+
+    }
+
+    private fun observeView2(accountNumberLinesCount: Int) {
+        val indicatorAccountStatus = binding.indicatorAccountStatus
+        val viewTreeObserver = indicatorAccountStatus.viewTreeObserver
+        if (viewTreeObserver == null) {
+            Log.e("TAG", "viewTreeObserver is null")
+            return
+        }
+        binding.indicatorAccountStatus.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                Log.e("TAG", "onGlobalLayout:accountNumberLinesCount **-> ")
+
+                val indicatorAccountStatusLineCount = binding.indicatorAccountStatus.lineCount
+                Log.e(
+                    "TAG",
+                    "onGlobalLayout:accountNumberLinesCount " + accountNumberLinesCount + " -indicatorAccountStatusLineCount-> " + indicatorAccountStatusLineCount
+                )
+                if (accountNumberLinesCount > 2 || indicatorAccountStatusLineCount >= 2) {
+                    binding.llAccountNumberLargefont.visible()
+                    binding.llAccountStatusLargefont.visible()
+
+                    binding.llAccountNumber.gone()
+                    binding.llAccountStatus.gone()
+                } else {
+                    binding.llAccountNumberLargefont.gone()
+                    binding.llAccountStatusLargefont.gone()
+                    binding.llAccountNumber.visible()
+                    binding.llAccountStatus.visible()
+                }
+                binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
             }
         })
     }
 
     private fun setPaymentsVisibility() {
-        if (sessionManager.fetchAccountType().equals("BUSINESS", true)
-            || (sessionManager.fetchSubAccountType().equals("STANDARD", true) &&
-                    sessionManager.fetchAccountType().equals("PRIVATE", true))
+
+        if (accountType.equals("BUSINESS", true)
+            || (subAccountType.equals("STANDARD", true) &&
+                    accountType.equals("PRIVATE", true))
         ) {
             binding.paymentManagement.visible()
             binding.contactUs.visible()
         } else {
-            if (sessionManager.fetchSubAccountType().equals(Constants.PAYG, true) &&
-                sessionManager.fetchAccountType().equals("PRIVATE", true)
+            if (subAccountType.equals(Constants.PAYG, true) &&
+                accountType.equals("PRIVATE", true)
             ) {
                 binding.paymentManagement.visible()
 
@@ -248,10 +321,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             communicationPreferences.setOnClickListener(this@AccountFragment)
             signOut.setOnClickListener(this@AccountFragment)
             closeAcount.setOnClickListener(this@AccountFragment)
-//            rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
             contactUs.setOnClickListener(this@AccountFragment)
-//            rlAccountStatement.setOnClickListener(this@AccountFragment)
-//            rlBiometrics.setOnClickListener(this@AccountFragment)
         }
 
     }
@@ -299,7 +369,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.close_acount -> {
-                if (!sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
+                if (!accountStatus.equals("SUSPENDED", true)) {
                     if (requireActivity() is HomeActivityMain) {
                         (requireActivity() as HomeActivityMain).setTitle(getString(R.string.str_close_account))
                     }
