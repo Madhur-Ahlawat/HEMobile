@@ -164,6 +164,9 @@
         <action
             android:id="@+id/action_nmiPaymentFragment_to_paymentSuccessFragment2"
             app:destination="@id/paymentSuccessFragment" />
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_reValidateInfoFragment"
+            app:destination="@id/reValidateInfoFragment" />
 
     </fragment>
     <fragment
@@ -194,6 +197,7 @@
             app:destination="@id/nmiPaymentFragment"
             app:popUpTo="@id/nmiPaymentFragment"
             app:popUpToInclusive="true" />
+
     </fragment>
 
 
@@ -223,8 +227,14 @@
         tools:layout="@layout/fragment_revalidate_payment_card">
         <action
             android:id="@+id/action_reValidatePaymentCardFragment_to_reValidatePaymentCardDetailsFragment"
-            app:destination="@id/reValidatePaymentCardDetailsFragment"
-             />
+            app:destination="@id/reValidatePaymentCardDetailsFragment" />
+        <action
+            android:id="@+id/action_reValidatePaymentCardFragment_to_nmiPaymentFragment"
+            app:destination="@+id/nmiPaymentFragment" />
+
+        <action
+            android:id="@+id/action_reValidatePaymentCardFragment_to_reValidateInfoFragment"
+            app:destination="@id/reValidateInfoFragment" />
     </fragment>
 
     <fragment
@@ -234,8 +244,11 @@
         tools:layout="@layout/fragment_revalidate_payment_card_details">
         <action
             android:id="@+id/action_reValidatePaymentCardDetailsFragment_to_reValidateExistingPaymentFragment"
-            app:destination="@id/reValidateExistingPaymentFragment"
-            />
+            app:destination="@id/reValidateExistingPaymentFragment" />
+
+        <action
+            android:id="@+id/action_reValidatePaymentCardDetailsFragment_to_nmiPaymentFragment"
+            app:destination="@+id/nmiPaymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/reValidateExistingPaymentFragment"
@@ -243,5 +256,14 @@
         android:label="RevalidateExistingPaymentFragment"
         tools:layout="@layout/fragment_revalidate_existing_payment">
 
+    </fragment>
+    <fragment
+        android:id="@+id/reValidateInfoFragment"
+        android:name="com.conduent.nationalhighways.ui.revalidatePayment.RevalidateInfoFragment"
+        android:label="RevalidateInfoFragment"
+        tools:layout="@layout/fragment_revalidate_info">
+        <action
+            android:id="@+id/action_reValidateInfoFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
     </fragment>
 </navigation>

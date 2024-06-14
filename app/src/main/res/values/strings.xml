@@ -1777,5 +1777,10 @@
     <string name="str_enter_security_code_existing_card">Enter the security code for your existing card</string>
     <string name="str_make_default_payment_method">Make this my default payment method</string>
     <string name="str_revalidate_payment">Re-Validate Payment</string>
+    <string name="str_important">Important</string>
+    <string name="str_add_payment_method">Add Payment Method</string>
+    <string name="str_payment_card_details_confirmed">Payment card details confirmed</string>
+    <string name="str_payment_card_details_confirmed_desc1">Go to Payment Management to see and change your payment method details.</string>
+    <string name="str_donot_have_valid_payment_method">You do not have a valid payment method on your account.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
 
 </resources>

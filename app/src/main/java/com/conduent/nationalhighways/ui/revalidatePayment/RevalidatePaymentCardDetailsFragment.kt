@@ -1,37 +1,31 @@
 package com.conduent.nationalhighways.ui.revalidatePayment
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
-import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentRevalidatePaymentCardDetailsBinding
 import com.conduent.nationalhighways.ui.auth.adapter.SuspendPaymentMethodAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
-import com.conduent.nationalhighways.utils.common.ErrorUtil
-import com.conduent.nationalhighways.utils.common.Resource
-import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.common.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RevalidatePaymentCardDetailsFragment :
     BaseFragment<FragmentRevalidatePaymentCardDetailsBinding>(),
     SuspendPaymentMethodAdapter.PaymentMethodSelectCallBack {
 
-    private val viewModel: PaymentMethodViewModel by viewModels()
     private lateinit var suspendPaymentMethodAdapter: SuspendPaymentMethodAdapter
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
-    private var realPaymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var cardSelection: Boolean = false
     private var position: Int = 0
+    private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -40,87 +34,60 @@ class RevalidatePaymentCardDetailsFragment :
         FragmentRevalidatePaymentCardDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
+
+        if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                arguments?.getParcelable(Constants.PERSONALDATA)
+        }
+        if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
+            paymentList =
+                arguments?.getParcelableArrayList(Constants.DATA)
+        }
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation = arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
+        }
+
+
         initAdapter()
 
         binding.btnContinue.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            bundle.putInt(Constants.POSITION, position)
+            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            bundle.putParcelableArrayList(
+                Constants.DATA,
+                paymentList as ArrayList
+            )
             findNavController().navigate(R.id.action_reValidatePaymentCardDetailsFragment_to_reValidateExistingPaymentFragment)
 
+        }
+
+        binding.btnAddNewPayment.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
+            bundle.putString(Constants.NAV_FLOW_FROM, Constants.CARD_VALIDATION_REQUIRED)
+            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+            bundle.putDouble(Constants.DATA, 0.0)
+            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
+
+            findNavController().navigate(
+                R.id.action_reValidatePaymentCardDetailsFragment_to_nmiPaymentFragment,
+                bundle
+            )
         }
     }
 
     override fun initCtrl() {
-        showLoaderDialog()
-        viewModel.saveCardListState()
+
     }
 
     override fun observer() {
-        lifecycleScope.launch {
-            viewModel.savedCardState.collect {
-                handleSaveCardResponse(it)
-            }
-        }
+
     }
 
-
-    private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
-        dismissLoaderDialog()
-        when (status) {
-            is Resource.Success -> {
-                paymentList?.clear()
-                realPaymentList?.clear()
-                realPaymentList = status.data?.creditCardListType?.cardsList
-                for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
-                    if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
-                        paymentList?.add(status.data.creditCardListType.cardsList[i])
-                    }
-                }
-                for (i in 0 until paymentList.orEmpty().size) {
-                    Utils.checkNullValuesOfModel(paymentList?.get(i))
-                }
-
-                if (paymentList.orEmpty().size == 1) {
-                    paymentList?.get(0)?.primaryCard = true
-                }
-                if (paymentList?.isNotEmpty() == true) {
-
-                    for (i in 0 until (paymentList?.size ?: 0)) {
-                        if (paymentList?.get(i)?.primaryCard == true && paymentList?.get(i)?.bankAccount == false) {
-                            position = i
-                            cardSelection = true
-                            checkContinueButton()
-                            break
-                        }
-
-                    }
-
-                    suspendPaymentMethodAdapter.updateList(paymentList, navFlowCall)
-                    binding.rvPaymentMethods.visible()
-
-
-                } else {
-                    binding.rvPaymentMethods.gone()
-                }
-
-                lifecycleScope.launch {
-                    viewModel._savedCardListState.emit(null)
-                }
-
-
-            }
-
-            is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel)
-                ) {
-                    displaySessionExpireDialog(status.errorModel)
-                } else {
-                    ErrorUtil.showError(binding.root, status.errorMsg)
-                }
-            }
-
-            else -> {
-            }
-        }
-    }
 
     private fun checkContinueButton() {
         binding.btnContinue.isEnabled = cardSelection

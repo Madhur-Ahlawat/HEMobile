@@ -385,6 +385,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                     paymentSuccessResponse.directoryServerId,
                                     paymentSuccessResponse.eci
                                 )
+                            } else if (flow == Constants.CARD_VALIDATION_REQUIRED) {
+                                saveNewCard(responseModel, paymentSuccessResponse, "Y")
                             } else if (flow == Constants.ADD_PAYMENT_METHOD) {
                                 if (responseModel?.checkCheckBox == true || paymentListSize == 0) {
                                     saveNewCard(responseModel, paymentSuccessResponse, "Y")
@@ -748,6 +750,31 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
                     }
 
+                    Constants.CARD_VALIDATION_REQUIRED -> {
+                        view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'block'; document.getElementById('title').innerText = 'How do you want to pay?';})()")
+
+                        view?.loadUrl("javascript:(function(){document.getElementById('headerTable').style.display ='';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('title').innerText  ='Enter new card details:';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('subtitle').style.display = 'none';})()")
+
+                        view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='PROCEED WITH PAYMENT';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').innerText  ='Make this my default payment method.';})()")
+
+                    }
+
                     Constants.ADD_PAYMENT_METHOD -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
@@ -911,6 +938,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                         findNavController().navigate(
                             R.id.action_nmiPaymentFragment_to_accountSuspendReOpenFragment,
+                            bundle
+                        )
+                    } else if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
+                        findNavController().navigate(
+                            R.id.action_nmiPaymentFragment_to_reValidateInfoFragment,
                             bundle
                         )
                     } else {

@@ -118,6 +118,9 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
         val inflater = navHostFragment.navController.navInflater
         val graph = inflater.inflate(R.navigation.navigation_auth)
 
+
+
+
         val bundle = Bundle()
         when (navFlow) {
             Constants.FORGOT_PASSWORD_FLOW -> {
@@ -131,6 +134,7 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                 binding.toolBarLyt.titleTxt.text = getString(R.string.str_revalidate_payment)
                 graph.setStartDestination(R.id.reValidatePaymentCardFragment)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
             }
 
@@ -180,6 +184,12 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                 } else {
                     binding.toolBarLyt.materialToolbar.visible()
                 }
+            }
+
+            if(destination.id==R.id.reValidatePaymentCardFragment){
+                binding.toolBarLyt.backButton.gone()
+            }else{
+                binding.toolBarLyt.backButton.visible()
             }
         }
 

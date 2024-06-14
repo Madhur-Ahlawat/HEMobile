@@ -1,14 +1,10 @@
 package com.conduent.nationalhighways.ui.revalidatePayment
 
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
@@ -28,7 +24,6 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
     private var personalInformation: PersonalInformation? = null
     private var paymentList: ArrayList<CardListResponseModel> = ArrayList()
     private var position: Int = 0
-    private var paymentSuccessResponse: PaymentSuccessResponse? = null
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
 
     override fun getFragmentBinding(
@@ -42,19 +37,13 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
         }
-        val receivedList = arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA)
-
-
-        if (receivedList != null) {
-            paymentList = receivedList
+        if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
+            paymentList =
+                arguments?.getParcelableArrayList(Constants.DATA) ?:ArrayList()
         }
-
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
 
 
-        if (arguments?.getParcelable<PaymentSuccessResponse>(Constants.NEW_CARD) != null) {
-            paymentSuccessResponse = arguments?.getParcelable(Constants.NEW_CARD)
-        }
     }
 
     override fun initCtrl() {
@@ -97,36 +86,35 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
 
 
     private fun payWithExistingCard() {
-        val model = PaymentWithExistingCardModel(
-            addressline1 = personalInformation?.addressLine1.toString().replace(" ", ""),
-            addressline2 = personalInformation?.addressLine2.toString().replace(" ", ""),
-            transactionAmount = "",
-            cardType = "",
-            cardNumber = "",
-            cvv = "",
-            rowId = paymentList[position].rowId,
-            saveCard = "",
-            useAddressCheck = "N",
-            firstName = paymentList[position].firstName,
-            middleName = paymentList[position].middleName,
-            lastName = paymentList[position].lastName,
-            paymentType = "",
-            primaryCard = "",
-            maskedCardNumber = "",
-            easyPay = "",
-            cavv = paymentSuccessResponse?.cavv,
-            xid = paymentSuccessResponse?.xid,
-            threeDsVersion = paymentSuccessResponse?.threeDsVersion,
-            directoryServerId = paymentSuccessResponse?.directoryServerId,
-            cardHolderAuth = paymentSuccessResponse?.cardHolderAuth,
-            eci = paymentSuccessResponse?.eci
-
-
-        )
-        Log.d("paymentRequest", Gson().toJson(model))
-        manualTopUpViewModel.paymentWithExistingCard(model)
+//        val model = PaymentWithExistingCardModel(
+//            addressline1 = personalInformation?.addressLine1.toString().replace(" ", ""),
+//            addressline2 = personalInformation?.addressLine2.toString().replace(" ", ""),
+//            transactionAmount = "",
+//            cardType = "",
+//            cardNumber = "",
+//            cvv = "",
+//            rowId = paymentList[position].rowId,
+//            saveCard = "",
+//            useAddressCheck = "N",
+//            firstName = paymentList[position].firstName,
+//            middleName = paymentList[position].middleName,
+//            lastName = paymentList[position].lastName,
+//            paymentType = "",
+//            primaryCard = "",
+//            maskedCardNumber = "",
+//            easyPay = "",
+//            cavv = paymentSuccessResponse?.cavv,
+//            xid = paymentSuccessResponse?.xid,
+//            threeDsVersion = paymentSuccessResponse?.threeDsVersion,
+//            directoryServerId = paymentSuccessResponse?.directoryServerId,
+//            cardHolderAuth = paymentSuccessResponse?.cardHolderAuth,
+//            eci = paymentSuccessResponse?.eci
+//
+//
+//        )
+//        Log.d("paymentRequest", Gson().toJson(model))
+//        manualTopUpViewModel.paymentWithExistingCard(model)
     }
-
 
 
 }
