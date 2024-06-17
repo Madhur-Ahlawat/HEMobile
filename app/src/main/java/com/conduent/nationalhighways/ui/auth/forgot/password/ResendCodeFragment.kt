@@ -13,6 +13,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -21,6 +22,7 @@ import com.conduent.nationalhighways.databinding.FragmentResendCodeBinding
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.TWOFA
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -47,6 +49,8 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     @Inject
     lateinit var sessionManager: SessionManager
     private var isItMobileNumber: Boolean = false
+    private var cardValidationRequired: Boolean = false
+    private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -55,7 +59,14 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
 
     override fun initCtrl() {
-
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_REQUIRED) == true) {
+            cardValidationRequired =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_REQUIRED, false) ?: false
+        }
+        if (arguments?.containsKey(Constants.PAYMENT_LIST_DATA) == true && arguments?.getParcelableArrayList<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+            paymentList =
+                arguments?.getParcelableArrayList(Constants.PAYMENT_LIST_DATA)
+        }
         if (arguments?.containsKey(Constants.PHONE_COUNTRY_CODE) == true) {
             phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
         }
@@ -181,7 +192,8 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
                 bundle.putString(Constants.PHONE_COUNTRY_CODE, phoneCountryCode)
                 bundle.putBoolean(Constants.IS_MOBILE_NUMBER, isItMobileNumber)
-
+                bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentList as ArrayList)
+                bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,
                     bundle
@@ -272,7 +284,12 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                     }
+                    TWOFA ->{
+                        bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentList as ArrayList)
+                        bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
+                    }
                 }
+
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)

@@ -1,11 +1,13 @@
 package com.conduent.nationalhighways.ui.auth.controller
 
 import android.os.Bundle
+import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
@@ -44,6 +46,8 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
     private var lrdsAccount: Boolean = false
 
     private var cardValidationRequired: Boolean = false
+    private var paymentList: ArrayList<CardListResponseModel?>? = ArrayList()
+
 
     @Inject
     lateinit var api: ApiService
@@ -67,6 +71,11 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
         }
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+        }
+        if (intent.hasExtra(Constants.PAYMENT_LIST_DATA) && intent.getParcelableArrayListExtra<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+            paymentList =
+                intent.getParcelableArrayListExtra(Constants.PAYMENT_LIST_DATA)
+            Log.e("TAG", "initViewBinding: paymentList "+paymentList?.size )
         }
         if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -134,16 +143,18 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                 binding.toolBarLyt.titleTxt.text = getString(R.string.str_revalidate_payment)
                 graph.setStartDestination(R.id.reValidatePaymentCardFragment)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
             }
 
             Constants.TWOFA -> {
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)
                 bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
                 binding.toolBarLyt.titleTxt.text = getString(R.string.str_sign_in_validation)
                 graph.setStartDestination(R.id.chooseOptionFragment)
@@ -186,7 +197,7 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                 }
             }
 
-            if(destination.id==R.id.reValidatePaymentCardFragment){
+            if(destination.id==R.id.reValidatePaymentCardFragment || destination.id ==R.id.reValidateInfoFragment){
                 binding.toolBarLyt.backButton.gone()
             }else{
                 binding.toolBarLyt.backButton.visible()

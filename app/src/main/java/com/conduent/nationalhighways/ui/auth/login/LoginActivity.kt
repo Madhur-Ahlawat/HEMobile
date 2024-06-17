@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -21,6 +20,8 @@ import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -35,11 +36,13 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -75,6 +78,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var crossingCount: Int = 0
     private var hasFaceBiometric = false
     private var hasTouchBiometric = false
+    private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
+    private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
+
 
     @Inject
     lateinit var api: ApiService
@@ -89,11 +95,49 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
             observe(dashboardViewModel.lrdsVal, ::handleLrdsResponse)
-
+            paymentMethodViewModel.savedCardState.collect {
+                handleSaveCardResponse(it)
+            }
         }
 
 
     }
+
+    private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
+        when (status) {
+            is Resource.Success -> {
+                paymentList?.clear()
+                for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
+                    if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
+                        paymentList?.add(status.data.creditCardListType.cardsList[i])
+                    }
+                }
+                for (i in 0 until paymentList.orEmpty().size) {
+                    Utils.checkNullValuesOfModel(paymentList?.get(i))
+                }
+
+                lifecycleScope.launch {
+                    paymentMethodViewModel._savedCardListState.emit(null)
+                }
+
+                checkAccountIsTwoFA(callLRDSAPI = true)
+
+            }
+
+            is Resource.DataError -> {
+                if (checkSessionExpiredOrServerError(status.errorModel)
+                ) {
+                    displaySessionExpireDialog(status.errorModel)
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
+            }
+
+            else -> {
+            }
+        }
+    }
+
 
     private fun handleLrdsResponse(resource: Resource<LRDSResponse?>?) {
 
@@ -103,9 +147,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
                 if (resource.data?.srApprovalStatus?.uppercase().equals("APPROVED")) {
                     dismissLoaderDialog()
-                    startNewActivityByClearingStack(LandingActivity::class.java) {
-                        putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
-                    }
+                    redirectToLanding(true)
                 } else {
                     crossingHistoryApi()
                     if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
@@ -115,26 +157,23 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         sessionManager.saveHasAskedForBiometric(false)
                     }
 
-                    if (sessionManager.getTwoFAEnabled()) {
-                        dismissLoaderDialog()
-                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                        intent.putExtra(
-                            Constants.CARD_VALIDATION_REQUIRED,
-                            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
-                        )
-                        intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
-                        startActivity(intent)
-                    } else {
-                        dashboardViewModel.getAccountDetailsData()
-                    }
+                    checkAccountIsTwoFA(callDetailsAPI = true)
                     sessionManager.saveUserName(binding.edtEmail.getText().toString())
                 }
             }
 
             is Resource.DataError -> {
-                dismissLoaderDialog()
+//                dismissLoaderDialog()
+                crossingHistoryApi()
+                if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                        .trim()
+                ) {
+                    sessionManager.saveTouchIdEnabled(false)
+                    sessionManager.saveHasAskedForBiometric(false)
+                }
+
+                checkAccountIsTwoFA(callDetailsAPI = true)
+                sessionManager.saveUserName(binding.edtEmail.getText().toString())
             }
 
             else -> {
@@ -142,6 +181,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
         }
     }
+
 
     private fun displayBiometricDialog(title: String) {
         displayCustomMessage(title,
@@ -153,7 +193,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
                     intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-
                     intent.putExtra(
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
@@ -162,6 +201,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         Constants.CARD_VALIDATION_REQUIRED,
                         sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
                     )
+                    if (Utils.checkReValidationPayment(paymentList, accountInformation).first) {
+                        intent.putParcelableArrayListExtra(
+                            Constants.PAYMENT_LIST_DATA,
+                            paymentList as ArrayList
+                        )
+                    }
                     if (from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                         intent.putExtra(
                             Constants.NAV_FLOW_FROM,
@@ -176,12 +221,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
                     if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
-                        redirectToAuthForRevalidate()
+                        redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
                     } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                            putString(Constants.NAV_FLOW_FROM, from)
-                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                        }
+                        redirectToHome()
                     }
                 }
             })
@@ -197,34 +239,23 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
 
-                if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                    intent.putExtra(
-                        Constants.CARD_VALIDATION_REQUIRED,
-                        sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
-                    )
-                    intent.putExtra(
-                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                    )
-                    startActivity(intent)
-                } else {
+                if (!Utils.checkReValidationPayment(paymentList, accountInformation).first) {
+                    sessionManager.saveBooleanData(SessionManager.CARD_VALIDATION_REQUIRED, false)
+                }
 
-                    if(Utils.checkLastLoggedInEmail(sessionManager,binding.edtEmail.editText.text.toString().trim())){
-                        Log.e("TAG", "checkLastLoggedInEmail -> " )
-                    }
-                    if ((!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) && !Utils.checkLastLoggedInEmail(sessionManager,binding.edtEmail.editText.text.toString().trim())) {
+                if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                    redirectToAuth(Constants.SUSPENDED)
+                } else {
+                    if ((!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) && !Utils.checkLastLoggedInEmail(
+                            sessionManager,
+                            binding.edtEmail.editText.text.toString().trim()
+                        )
+                    ) {
                         sessionManager.saveHasAskedForBiometric(true)
                         if (hasTouchBiometric && hasFaceBiometric) {
                             displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
-
                         } else if (hasFaceBiometric) {
                             displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
                         } else {
                             displayBiometricDialog(getString(R.string.str_enable_touch_ID))
 
@@ -232,12 +263,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     } else {
 
                         if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
-                            redirectToAuthForRevalidate()
+                            redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
                         } else {
-                            startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                                putString(Constants.NAV_FLOW_FROM, from)
-                                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                            }
+                            redirectToHome()
                         }
 
                     }
@@ -269,17 +297,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
-    private fun redirectToAuthForRevalidate() {
-        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
-        intent.putExtra(
-            Constants.CARD_VALIDATION_REQUIRED,
-            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
-        )
-        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-        intent.putExtra(Constants.NAV_FLOW_FROM, from)
-        startActivity(intent)
-    }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
         when (resource) {
@@ -477,15 +494,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     binding.btnLogin.isEnabled = true
-
                     if (status.errorModel?.errorCode == 5260) {
                         binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                     } else if (status.errorModel?.error.equals("unauthorized", true)) {
                         binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
-
                     } else {
                         status.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
-
                     }
 
                     AdobeAnalytics.setLoginActionTrackError(
@@ -513,10 +527,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun launchIntent(response: Resource.Success<LoginResponse?>) {
-        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
-                .trim()
-        ) {
-
+        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
             sessionManager.saveTouchIdEnabled(false)
             sessionManager.saveHasAskedForBiometric(false)
         }
@@ -537,19 +548,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             setLoggedInUser(true)
         }
 
-        if (sessionManager.getTwoFAEnabled()) {
-            dismissLoaderDialog()
-            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-            intent.putExtra(
-                Constants.CARD_VALIDATION_REQUIRED,
-                sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
-            )
-            intent.putExtra(Constants.NAV_FLOW_FROM, from)
-
-            startActivity(intent)
+        if (response.data?.cardValidationRequired == true) {
+            paymentMethodViewModel.saveCardListState()
         } else {
-            dashboardViewModel.getLRDSResponse()
+            checkAccountIsTwoFA(callLRDSAPI = true)
         }
 
 
@@ -566,6 +568,76 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             sessionManager.getLoggedInUser()
         )
 
+    }
+
+    private fun checkAccountIsTwoFA(
+        callLRDSAPI: Boolean = false,
+        callDetailsAPI: Boolean = false
+    ) {
+        if (sessionManager.getTwoFAEnabled()) {
+            dismissLoaderDialog()
+            redirectToAuth(Constants.TWOFA)
+        } else if (callLRDSAPI) {
+            dashboardViewModel.getLRDSResponse()
+        } else if (callDetailsAPI) {
+            dashboardViewModel.getAccountDetailsData()
+        }
+    }
+
+    private fun redirectToLanding(isLRDS: Boolean = false) {
+        if (isLRDS) {
+            startNewActivityByClearingStack(LandingActivity::class.java) {
+                putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
+            }
+        } else {
+            startNormalActivityWithFinish(LandingActivity::class.java)
+        }
+    }
+
+    private fun redirectToHome() {
+        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+            putString(Constants.NAV_FLOW_FROM, from)
+            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+        }
+    }
+
+    private fun redirectToAuth(navFlowKey: String) {
+
+        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, navFlowKey)
+        intent.putExtra(
+            Constants.CARD_VALIDATION_REQUIRED,
+            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+        )
+        intent.putExtra(Constants.NAV_FLOW_FROM, from)
+        if (navFlowKey == Constants.TWOFA) {
+            if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                intent.putParcelableArrayListExtra(
+                    Constants.PAYMENT_LIST_DATA,
+                    paymentList as ArrayList
+                )
+            }
+        } else if (navFlowKey == Constants.CARD_VALIDATION_REQUIRED) {
+            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+            if (Utils.checkReValidationPayment(paymentList, accountInformation).first) {
+                intent.putParcelableArrayListExtra(
+                    Constants.PAYMENT_LIST_DATA,
+                    paymentList as ArrayList
+                )
+            }
+        } else if (navFlowKey == Constants.SUSPENDED) {
+            intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+            intent.putExtra(Constants.PERSONALDATA, personalInformation)
+            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+            intent.putExtra(
+                Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+            )
+        }
+
+
+
+
+        startActivity(intent)
     }
 
 
@@ -588,7 +660,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             R.id.back_button -> {
-                startNormalActivityWithFinish(LandingActivity::class.java)
+                redirectToLanding()
             }
 
 
@@ -604,10 +676,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     sessionManager.getLoggedInUser()
                 )
                 NewCreateAccountRequestModel.emailAddress = ""
-                val intent = Intent(this, AuthActivity::class.java)
-                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
 
-                startActivity(intent)
+                redirectToAuth(Constants.FORGOT_PASSWORD_FLOW)
+
             }
         }
     }
@@ -714,6 +785,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
         }
     }
+
 
 }
 

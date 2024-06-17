@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.revalidatePayment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.conduent.nationalhighways.databinding.FragmentRevalidatePaymentCardDe
 import com.conduent.nationalhighways.ui.auth.adapter.SuspendPaymentMethodAdapter
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +24,7 @@ class RevalidatePaymentCardDetailsFragment :
 
     private lateinit var suspendPaymentMethodAdapter: SuspendPaymentMethodAdapter
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
+    private var realPaymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var cardSelection: Boolean = false
     private var position: Int = 0
     private var personalInformation: PersonalInformation? = null
@@ -39,14 +42,19 @@ class RevalidatePaymentCardDetailsFragment :
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
         }
-        if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA) != null) {
-            paymentList =
-                arguments?.getParcelableArrayList(Constants.DATA)
+        if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+            realPaymentList =
+                arguments?.getParcelableArrayList(Constants.PAYMENT_LIST_DATA)
+            paymentList = realPaymentList?.let { ArrayList(it) }
         }
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation = arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
-
+        if(paymentList?.isNotEmpty() == true){
+            val model = Utils.checkReValidationPayment(paymentList,accountInformation).second
+            paymentList?.clear()
+            paymentList?.add(model)
+        }
 
         initAdapter()
 
@@ -57,10 +65,10 @@ class RevalidatePaymentCardDetailsFragment :
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
             bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
             bundle.putParcelableArrayList(
-                Constants.DATA,
+                Constants.PAYMENT_LIST_DATA,
                 paymentList as ArrayList
             )
-            findNavController().navigate(R.id.action_reValidatePaymentCardDetailsFragment_to_reValidateExistingPaymentFragment)
+            findNavController().navigate(R.id.action_reValidatePaymentCardDetailsFragment_to_reValidateExistingPaymentFragment,bundle)
 
         }
 

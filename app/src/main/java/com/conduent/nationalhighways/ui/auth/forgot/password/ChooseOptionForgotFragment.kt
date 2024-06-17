@@ -14,6 +14,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ConfirmOptionResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.RequestOTPModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentForgotChooseOptionchangesBinding
@@ -42,8 +43,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     private var personalInformation: PersonalInformation? = null
     private var accountInformation: AccountInformation? = null
     private lateinit var navFlow: String// create account , forgot password
-    private var lrdsAccount: Boolean = false
     private var cardValidationRequired: Boolean = false
+    private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -57,15 +58,15 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
     override fun initCtrl() {
 
-        if (arguments?.containsKey(Constants.LRDS_ACCOUNT) == true) {
-            lrdsAccount = arguments?.getBoolean(Constants.LRDS_ACCOUNT, false) ?: false
-        }
-
         if (arguments?.containsKey(Constants.CARD_VALIDATION_REQUIRED) == true) {
             cardValidationRequired =
                 arguments?.getBoolean(Constants.CARD_VALIDATION_REQUIRED, false) ?: false
         }
 
+        if (arguments?.containsKey(Constants.PAYMENT_LIST_DATA) == true && arguments?.getParcelableArrayList<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+            paymentList =
+                arguments?.getParcelableArrayList(Constants.PAYMENT_LIST_DATA)
+        }
 
         model = RequestOTPModel(optionType = "", optionValue = "")
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
@@ -206,7 +207,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
+                bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentList as ArrayList)
                 bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
                 if (requireActivity() is AuthActivity) {
                     AdobeAnalytics.setActionTrack2(

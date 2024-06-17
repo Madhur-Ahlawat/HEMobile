@@ -16,6 +16,7 @@ import androidx.biometric.BiometricPrompt
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -67,6 +68,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var navFlowFrom: String = ""
     var navFlowCall: String = ""
+    private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
 
     @Inject
     lateinit var api: ApiService
@@ -82,6 +84,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private fun initCtrl() {
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+        }
+        if (intent.hasExtra(Constants.PAYMENT_LIST_DATA) && intent.getParcelableArrayListExtra<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+            paymentList =
+                intent.getParcelableArrayListExtra(Constants.PAYMENT_LIST_DATA)
         }
 
         if (intent.getParcelableExtra<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
@@ -374,6 +380,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
         )
         intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+        intent.putParcelableArrayListExtra(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)
         intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
         startActivity(intent)
     }

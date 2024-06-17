@@ -80,6 +80,7 @@ object Constants {
     const val POST_CODE = "post_code"
     const val EDIT_POST_CODE = "edit_post_code"
     const val DATA = "data"
+    const val PAYMENT_LIST_DATA = "PAYMENT_LIST_DATA"
     const val ALLOWED_CHARACTERS_IN_PASSWORD = "~!@#\$%^&*_-+=`|\\(){}[]:;\"'<>,.?/"
     const val LOWER_CASE_ALPHABETS = "qwertyuiopasdfghjklzxcvbnm"
     const val UPPER_CASE_ALPHABETS = "QWERTYUIOPASDFGHJKLZXCVBNM"
@@ -297,6 +298,10 @@ object Constants {
     const val API_END_TIME = "API_END_TIME"
     const val CARD_VALIDATION_REQUIRED = "cardValidationRequired"
     const val CARD_VALIDATION_LATER_DATE = "cardValidationLaterDate"
+    const val CARD_VALIDATION_FIRST_TIME = "cardValidationFirstTime"
+    const val CARD_VALIDATION_SECOND_TIME = "cardValidationSecondTime"
+    const val CARD_VALIDATION_PAYMENT_FAIL = "cardValidationPaymentFail"
+    const val CARD_VALIDATION_EXISTING_CARD = "cardValidationExistingCard"
     const val READ_STORAGE_REQUEST_CODE: Int = 1001
     const val TIME_OUT_SEC = 80L
 

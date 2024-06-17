@@ -38,6 +38,7 @@ import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessage
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.databinding.DialogSessionexpiryBinding
@@ -1534,11 +1535,51 @@ object Utils {
     fun checkLastLoggedInEmail(sessionManager: SessionManager, email: String): Boolean {
         val lastLoggedInEmail =
             sessionManager.fetchStringData(SessionManager.LAST_LOGGEDIN_EMAIL) ?: ""
-        Log.e("TAG", "checkLastLoggedInEmail: "+email+" lastLoggedInEmail ->"+lastLoggedInEmail )
+        Log.e(
+            "TAG",
+            "checkLastLoggedInEmail: " + email + " lastLoggedInEmail ->" + lastLoggedInEmail
+        )
         return if (email == lastLoggedInEmail) {
             true
         } else {
             false
+        }
+
+    }
+
+    fun checkReValidationPayment(
+        paymentList: MutableList<CardListResponseModel?>?,
+        accountInformation: AccountInformation?
+    ): Pair<Boolean, CardListResponseModel?> {
+        if (paymentList?.isNotEmpty() == true) {
+            val cardResult: ArrayList<CardListResponseModel> =
+                paymentList.filter { it?.isValidated == false && it.bankAccount == false } as ArrayList<CardListResponseModel>
+
+            var paymentCard: CardListResponseModel? = null
+            cardResult.forEach { card ->
+                if (card.primaryCard == true) {
+                    paymentCard = card
+                }
+            }
+
+            return if (cardResult.isNotEmpty()) {
+                if (accountInformation?.accSubType == "PAYG") {
+                    if (paymentCard != null) {
+                        Pair(paymentCard?.primaryCard == true, paymentCard)
+                    } else {
+                        Pair(false, null)
+                    }
+                } else {
+                    Pair((paymentCard != null), paymentCard)
+                }
+            } else {
+                Pair(false, null)
+            }
+
+
+        } else {
+            return Pair(false, null)
+
         }
 
     }

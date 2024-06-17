@@ -30,6 +30,7 @@ import com.conduent.nationalhighways.data.model.communicationspref.Communication
 import com.conduent.nationalhighways.data.model.createaccount.ConfirmEmailRequest
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -114,6 +115,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
 
     private var cardValidationRequired: Boolean = false
+    private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -126,6 +128,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         if (arguments?.containsKey(Constants.CARD_VALIDATION_REQUIRED) == true) {
             cardValidationRequired =
                 arguments?.getBoolean(Constants.CARD_VALIDATION_REQUIRED, false) ?: false
+        }
+        if (arguments?.containsKey(Constants.PAYMENT_LIST_DATA) == true && arguments?.getParcelableArrayList<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+            paymentList =
+                arguments?.getParcelableArrayList(Constants.PAYMENT_LIST_DATA)
         }
 
         if (requireActivity() is AuthActivity) {
@@ -575,6 +581,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                         }
 
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    }
+                    TWOFA ->{
+                        bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentList as ArrayList)
+                        bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
                     }
                 }
                 bundle.putString(Constants.PHONE_COUNTRY_CODE, this.phoneCountryCode)
@@ -1171,7 +1181,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
     private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
-
+        Log.e("TAG", "handleAccountDetails: status "+status )
         dismissLoaderDialog()
 
         when (status) {
@@ -1180,6 +1190,11 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
                 accountStatus = status.data?.accountInformation?.status ?: ""
+
+                if (!Utils.checkReValidationPayment(paymentList,accountInformation).first) {
+                    sessionManager.saveBooleanData(SessionManager.CARD_VALIDATION_REQUIRED, false)
+                    cardValidationRequired =false
+                }
 
                 if (accountStatus.equals(Constants.SUSPENDED, true)) {
                     crossingHistoryApi()
@@ -1281,6 +1296,12 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             Constants.CARD_VALIDATION_REQUIRED,
             sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
         )
+        if(cardValidationRequired){
+            intent.putParcelableArrayListExtra(
+                Constants.PAYMENT_LIST_DATA,
+                paymentList as ArrayList
+            )
+        }
         intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
         intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
         startActivity(intent)

@@ -255,7 +255,9 @@
         android:name="com.conduent.nationalhighways.ui.revalidatePayment.RevalidateExistingPaymentFragment"
         android:label="RevalidateExistingPaymentFragment"
         tools:layout="@layout/fragment_revalidate_existing_payment">
-
+        <action
+            android:id="@+id/action_reValidateExistingPaymentFragment_to_reValidateInfoFragment"
+            app:destination="@+id/reValidateInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/reValidateInfoFragment"
@@ -265,5 +267,8 @@
         <action
             android:id="@+id/action_reValidateInfoFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
+     <action
+            android:id="@+id/action_reValidateInfoFragment_to_reValidateExistingPaymentFragment"
+            app:destination="@id/reValidateExistingPaymentFragment" />
     </fragment>
 </navigation>

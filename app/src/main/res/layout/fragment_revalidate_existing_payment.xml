@@ -128,7 +128,6 @@
                     android:id="@+id/next_btn"
                     style="@style/PrimaryButton"
                     android:layout_marginTop="@dimen/margin_25dp"
-                    android:enabled="false"
                     android:fontFamily="@font/roboto_bold"
                     android:text="@string/str_continue"
                     android:textSize="@dimen/font_16sp"

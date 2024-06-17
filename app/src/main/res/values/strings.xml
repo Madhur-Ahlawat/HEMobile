@@ -1782,5 +1782,8 @@
     <string name="str_payment_card_details_confirmed">Payment card details confirmed</string>
     <string name="str_payment_card_details_confirmed_desc1">Go to Payment Management to see and change your payment method details.</string>
     <string name="str_donot_have_valid_payment_method">You do not have a valid payment method on your account.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
+    <string name="str_we_could_not_add_this_card">We could not add this card</string>
+    <string name="str_we_could_not_add_this_card_desc1">Try to validate the payment card again.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
+    <string name="str_we_could_not_add_this_card_desc2">Add a different card or contact your bank for more details.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
 
 </resources>

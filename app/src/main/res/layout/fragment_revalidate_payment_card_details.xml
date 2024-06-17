@@ -162,7 +162,6 @@
                     android:layout_marginBottom="@dimen/margin_20dp"
                     android:text="@string/str_continue"
                     android:textSize="@dimen/font_14sp"
-                    app:isEnabled="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardsCl" />

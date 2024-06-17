@@ -79,7 +79,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var cardToken: String = ""
     private var isTrusted: Boolean = false
     private var creditCardType: String = ""
-    private var flow: String = ""
     private var responseModel: CardResponseModel? = null
     private var isViewCreated: Boolean = false
 
@@ -89,6 +88,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var checkBox: Boolean = false
     private var paymentListSize: Int = 0
     private var threeDStarted: Boolean = false
+    private var cardValidationFirstTime: Boolean = false
+    private var cardValidationSecondTime: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -97,8 +98,14 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
     override fun initCtrl() {
-        paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
-        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT, false) ?: false
+        if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
+            paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
+        }
+
+        if (arguments?.containsKey(Constants.IS_DIRECT_DEBIT) == true) {
+            isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT, false) ?: false
+        }
+
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
@@ -112,9 +119,22 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
             crossingDetailModelResponse = arguments?.getParcelable(Constants.NAV_DATA_KEY)
         }
-        currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
-        flow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_FIRST_TIME) == true) {
+            cardValidationFirstTime =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_FIRST_TIME) ?: false
+        }
+
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_SECOND_TIME) == true) {
+            cardValidationSecondTime =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_SECOND_TIME) ?: false
+        }
+
+       if (arguments?.containsKey(Constants.CURRENTBALANCE) == true) {
+           currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
+       }
+
+
 
         topUpAmount = arguments?.getDouble(Constants.DATA).toString()
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
@@ -378,23 +398,23 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         val paymentSuccessResponse =
                             gson.fromJson(data, PaymentSuccessResponse::class.java)
                         if (paymentSuccessResponse.cardHolderAuth.equals("verified", true)) {
-                            if (flow == Constants.NOTSUSPENDED) {
+                            if (navFlowCall == Constants.NOTSUSPENDED) {
                                 callAccountCreationApi(
                                     paymentSuccessResponse.threeDsVersion,
                                     paymentSuccessResponse.cavv,
                                     paymentSuccessResponse.directoryServerId,
                                     paymentSuccessResponse.eci
                                 )
-                            } else if (flow == Constants.CARD_VALIDATION_REQUIRED) {
+                            } else if (navFlowCall == Constants.CARD_VALIDATION_REQUIRED) {
                                 saveNewCard(responseModel, paymentSuccessResponse, "Y")
-                            } else if (flow == Constants.ADD_PAYMENT_METHOD) {
+                            } else if (navFlowCall == Constants.ADD_PAYMENT_METHOD) {
                                 if (responseModel?.checkCheckBox == true || paymentListSize == 0) {
                                     saveNewCard(responseModel, paymentSuccessResponse, "Y")
                                 } else {
                                     saveNewCard(responseModel, paymentSuccessResponse, "N")
                                 }
 
-                            } else if (flow == Constants.PAY_FOR_CROSSINGS) {
+                            } else if (navFlowCall == Constants.PAY_FOR_CROSSINGS) {
 
                                 makeOneOffPaymentApi(responseModel, paymentSuccessResponse)
                             } else {
@@ -408,7 +428,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                     Constants.ACCOUNTINFORMATION,
                                     accountInformation
                                 )
-                                bundle.putString(Constants.NAV_FLOW_KEY, flow)
+                                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
                                 findNavController().navigate(
@@ -722,7 +742,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 
 
-                when (flow) {
+                when (navFlowCall) {
                     Constants.SUSPENDED -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
@@ -941,6 +961,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             bundle
                         )
                     } else if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                         findNavController().navigate(
                             R.id.action_nmiPaymentFragment_to_reValidateInfoFragment,
                             bundle
@@ -993,14 +1014,34 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             Constants.NAV_FLOW_FROM,
                             navFlowFrom
                         )
-                        bundle.putString(
-                            Constants.CARD_IS_ALREADY_REGISTERED,
-                            Constants.CREDIT_NOT_SET_UP
-                        )
-                        findNavController().navigate(
-                            R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-                            bundle
-                        )
+                        if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
+                            bundle.putBoolean(
+                                Constants.CARD_VALIDATION_FIRST_TIME,
+                                cardValidationFirstTime
+                            )
+                            bundle.putBoolean(
+                                Constants.CARD_VALIDATION_SECOND_TIME,
+                                cardValidationSecondTime
+                            )
+                            bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
+                            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+                            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                            findNavController().navigate(
+                                R.id.action_nmiPaymentFragment_to_reValidateInfoFragment,
+                                bundle
+                            )
+                        } else {
+                            bundle.putString(
+                                Constants.CARD_IS_ALREADY_REGISTERED,
+                                Constants.CREDIT_NOT_SET_UP
+                            )
+                            findNavController().navigate(
+                                R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
+                                bundle
+                            )
+                        }
+
+
                     }
 
                 }

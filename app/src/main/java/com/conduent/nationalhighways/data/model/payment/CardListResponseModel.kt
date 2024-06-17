@@ -27,6 +27,7 @@ data class CardListResponseModel(
     var cardNumber: String = "",
     var middleName: String = "",
     var isSelected: Boolean = false,
+    var isValidated: Boolean = false,
     var expMonth: String = "",
     var expYear: String = ""
 
