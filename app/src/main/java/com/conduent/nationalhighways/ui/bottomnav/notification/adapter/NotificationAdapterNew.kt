@@ -54,7 +54,7 @@ class NotificationAdapterNew(
         binding.selectNotification.text =
             binding.notificationDate.text.toString() + "\n" + binding.message.text.toString()
         binding.selectNotification.isChecked = item?.isSelectListItem == true
-        binding.clParent.contentDescription = binding.notificationDate.text.toString() + ". " + binding.message.text.toString()
+        binding.clParent.contentDescription = binding.notificationDate.getText().toString() + ". " + binding.message.getText().toString()
         binding.selectNotification.setOnCheckedChangeListener { _, p1 ->
             clickedItem = position
             val item2 = list[clickedItem]
