@@ -96,7 +96,6 @@ object Utils {
     var LOWECASE: Regex = Regex(".*[a-z]+.*")
     var DIGITS = "0123456789"
     private var ALPHABETS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
-
     val splCharAddress1: String by lazy {
         ALLOWED_CHARS_BUILDING_STREE_NO
     }
