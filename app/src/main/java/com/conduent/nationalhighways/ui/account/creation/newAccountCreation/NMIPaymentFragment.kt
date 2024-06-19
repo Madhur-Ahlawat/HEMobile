@@ -342,6 +342,15 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             findNavController().popBackStack()
                         }
 
+                        "termsClick"->{
+                            if (NewCreateAccountRequestModel.prePay) {
+                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_generalTermsAndConditions)
+                            } else {
+                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_paygtermsandconditions)
+                            }
+
+                        }
+
 
                         else -> {
 
@@ -550,7 +559,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     }
 
     private fun showLoader() {
-        binding.progressBar.visibility = View.VISIBLE
+        try {
+            binding.progressBar.visibility = View.VISIBLE
+        }catch (e:Exception){
+
+        }
 
 
     }
