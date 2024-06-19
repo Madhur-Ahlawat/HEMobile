@@ -52,7 +52,7 @@
         android:id="@+id/generalTermsAndConditionsFragment"
         android:name="com.conduent.nationalhighways.ui.landing.GeneralTermsAndConditionsFragment"
         android:label="EnquiryStatusFragment"
-        tools:layout="@layout/fragment_general_terms_and_conditions"></fragment>
+        tools:layout="@layout/fragment_general_terms_and_conditions"/>
     <fragment
         android:id="@+id/createAccountSummaryFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountSummaryFragment"
@@ -117,7 +117,7 @@
         android:id="@+id/paygtermsandconditions"
         android:name="com.conduent.nationalhighways.ui.landing.PayGTermsAndConditionsFragment"
         android:label="EnquiryStatusFragment"
-        tools:layout="@layout/fragment_payg_terms_and_conditions"></fragment>
+        tools:layout="@layout/fragment_payg_terms_and_conditions"/>
 
 
     <fragment

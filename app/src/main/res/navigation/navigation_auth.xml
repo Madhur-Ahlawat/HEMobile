@@ -168,6 +168,14 @@
             android:id="@+id/action_nmiPaymentFragment_to_reValidateInfoFragment"
             app:destination="@id/reValidateInfoFragment" />
 
+
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_generalTermsAndConditions"
+            app:destination="@id/generalTermsAndConditionsFragment" />
+        <action
+            android:id="@+id/action_nmiPaymentFragment_to_paygtermsandconditions"
+            app:destination="@id/paygtermsandconditions" />
+
     </fragment>
     <fragment
         android:id="@+id/accountSuspendReOpenFragment"
@@ -271,4 +279,16 @@
             android:id="@+id/action_reValidateInfoFragment_to_reValidateExistingPaymentFragment"
             app:destination="@id/reValidateExistingPaymentFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/paygtermsandconditions"
+        android:name="com.conduent.nationalhighways.ui.landing.PayGTermsAndConditionsFragment"
+        android:label="EnquiryStatusFragment"
+        tools:layout="@layout/fragment_payg_terms_and_conditions"/>
+    <fragment
+        android:id="@+id/generalTermsAndConditionsFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.GeneralTermsAndConditionsFragment"
+        android:label="EnquiryStatusFragment"
+        tools:layout="@layout/fragment_general_terms_and_conditions"/>
+
 </navigation>

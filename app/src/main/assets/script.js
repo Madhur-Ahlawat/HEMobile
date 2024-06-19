@@ -269,6 +269,10 @@ function saveCardClick() {
     invokeCommand("saveCardChecked",checkBox.checked)
 }
 
+function termsClick(){
+    window.appInterface.postMessage("termsClick");
+}
+
 function invokeCommand(action,params) {
     window.appInterface.postMessage(params);
 }

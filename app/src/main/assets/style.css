@@ -130,3 +130,11 @@ table,.separator {
     font-family: 'OpenSans-Bold';
     font-size: 16;
 }
+
+.opensans_regular_text {
+    font-family: 'opensans_regular';
+    font-size: 16;
+    color :#008BCB;
+    font-weight: bold;
+    text-decoration: underline;
+}

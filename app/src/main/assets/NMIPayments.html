@@ -151,17 +151,22 @@
             </tr>
         </table>
 
-        <table width="95%" class="center" id="terms" style="display: none;">
+        <table width="95%" class="center" id="terms" style="display: none; font-family: 'opensans_regular';">
             <tr>
                 <td>
-                    <label id="termsText" style="display: none; color: blue; font-weight: bold; text-decoration: underline;">
-                        <a href="your-terms-and-conditions-url" style="color: blue; text-decoration: underline;">
-                            By continuing with payment, you agree to our terms and conditions, and confirm that you are happy for us to notify you of your crossings through your chosen contact method.
-                        </a>
+                    <label id="termsText" style="display: none;">
+                        <span style="color: black;">By continuing with payment, you agree to our </span>
+                        <a type="text" onclick="termsClick()" class="opensans_regular_text">
+                            terms and conditions</a>
+                        <span style="color: black;">, and confirm that you are happy for us to notify you of your crossings through your chosen contact method.</span>
                     </label>
                 </td>
             </tr>
+            <tr>
+                <td><br></td>
+            </tr>
         </table>
+
 
 
         <table width="95%" class="center">
