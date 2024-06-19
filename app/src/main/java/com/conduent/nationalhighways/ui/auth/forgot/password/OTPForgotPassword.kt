@@ -63,6 +63,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
+import com.conduent.nationalhighways.utils.common.Constants.SUSPENDED
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Logg
@@ -110,6 +111,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var accountStatus: String = ""
     private var hasFaceBiometric = false
     private var hasTouchBiometric = false
+    private var crossingCount: String = ""
 
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
 
@@ -178,7 +180,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
 
-
+        if (arguments?.containsKey(Constants.CROSSINGCOUNT) == true) {
+            crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""
+        }
         if (arguments?.containsKey(Constants.IS_MOBILE_NUMBER) == true) {
             isItMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER) ?: false
         }
@@ -576,6 +580,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)
+                bundle.putString(Constants.CROSSINGCOUNT, crossingCount)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
@@ -1174,9 +1179,6 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 replenishmentInformation = status.data?.replenishmentInformation
                 accountStatus = status.data?.accountInformation?.status ?: ""
 
-                if (accountStatus.equals(Constants.SUSPENDED, true)) {
-                    crossingHistoryApi()
-                } else {
                     if ((!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) && !Utils.checkLastLoggedInEmail(sessionManager,personalInformation?.emailAddress?:"")) {
                         sessionManager.saveHasAskedForBiometric(true)
                         if (hasTouchBiometric && hasFaceBiometric) {
@@ -1190,13 +1192,16 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                         }
                     } else {
-                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                        if (accountStatus.equals(Constants.SUSPENDED, true)) {
+                            crossingHistoryApi()
+                        }else {
+                            requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                            }
                         }
                     }
 
-                }
 
 
             }
@@ -1237,9 +1242,14 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(requireActivity(), BiometricActivity::class.java)
+                    intent.putExtra(SUSPENDED, accountStatus.equals(SUSPENDED, true))
                     intent.putExtra(TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
                     intent.putExtra(Constants.NAV_FLOW_KEY, navFlowFrom)
+                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+                    intent.putExtra(Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance)
 
                     startActivity(intent)
 
@@ -1250,9 +1260,13 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                        putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                    if (accountStatus.equals(SUSPENDED, true)) {
+                        crossingHistoryApi()
+                    }else {
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                        }
                     }
                 }
             })

@@ -41,6 +41,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     private var personalInformation: PersonalInformation? = null
     private lateinit var navFlow: String// create account , forgot password
     private var lrdsAccount: Boolean = false
+    private var crossingCount: String = ""
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -63,6 +64,9 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
+        }
+        if (arguments?.containsKey(Constants.CROSSINGCOUNT) == true) {
+            crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""
         }
 
 
@@ -192,6 +196,7 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putString(Constants.CROSSINGCOUNT, crossingCount)
                 bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
                 if (requireActivity() is AuthActivity) {
                     AdobeAnalytics.setActionTrack2(

@@ -123,6 +123,7 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
             Constants.TWOFA -> {
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putString(Constants.CROSSINGCOUNT, crossingCount)
                 bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
