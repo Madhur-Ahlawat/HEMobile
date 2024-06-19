@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -118,7 +119,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         twoFA = intent.getBooleanExtra(Constants.TWOFA, false)
         suspended = intent.getBooleanExtra(Constants.SUSPENDED, false)
 
-
+        Log.e("TAG", "initCtrl: suspended "+suspended )
         binding.apply {
             toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
@@ -434,17 +435,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    if (it.transactionList != null) {
-                        navigateWithCrossing(it.transactionList.count ?: 0)
-
-                    } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                        }
-
-                    }
-
+                    navigateWithCrossing(it.transactionList?.count ?: 0)
                 }
             }
 
@@ -461,9 +452,8 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     }
 
     private fun navigateWithCrossing(count: Int) {
+        Log.e("TAG", "navigateWithCrossing: count "+count )
 
-
-        if (count > 0) {
 
 
             val intent = Intent(this, AuthActivity::class.java)
@@ -478,14 +468,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                 Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
             )
             startActivity(intent)
-
-        } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-            }
-        }
-
 
     }
 
