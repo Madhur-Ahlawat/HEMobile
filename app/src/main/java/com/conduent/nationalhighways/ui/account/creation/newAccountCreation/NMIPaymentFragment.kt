@@ -776,6 +776,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('headerTable').style.display ='';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('title').innerText  ='Enter new card details:';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('subtitle').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('terms').style.display ='';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('termsText').style.display ='';})()")
 
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")

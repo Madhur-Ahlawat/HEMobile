@@ -633,10 +633,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
             )
         }
-
-
-
-
         startActivity(intent)
     }
 
