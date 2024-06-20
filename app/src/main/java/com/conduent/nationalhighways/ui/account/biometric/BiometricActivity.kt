@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -51,6 +52,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private var biometricToggleButtonState: String? = null
     lateinit var binding: ActivityBiometricBinding
     private var twoFA: Boolean = false
+    private var suspended: Boolean = false
     private val dashboardViewModel: DashboardViewModel by viewModels()
     private val toggleDelay: Long = 200
 
@@ -66,6 +68,8 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var navFlowFrom: String = ""
     var navFlowCall: String = ""
+    private var crossingCount: String = ""
+    private var currentBalance: String = ""
 
     @Inject
     lateinit var api: ApiService
@@ -85,7 +89,22 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         if (intent.hasExtra(Constants.NAV_FLOW_KEY)) {
             navFlowCall = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
         }
+        if (intent.hasExtra(Constants.CROSSINGCOUNT)) {
+            crossingCount = intent.getStringExtra(Constants.CROSSINGCOUNT) ?: ""
+        }
+        if (intent.hasExtra(Constants.CURRENTBALANCE)) {
+            currentBalance = intent.getStringExtra(Constants.CURRENTBALANCE) ?: ""
+        }
 
+        if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                intent.getParcelableExtra(Constants.PERSONALDATA)
+
+        }
+        if (intent.getParcelableExtra<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                intent.getParcelableExtra(Constants.ACCOUNTINFORMATION)
+        }
 
         if (navFlowFrom == Constants.TWOFA || navFlowFrom == Constants.LOGIN || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
             binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
@@ -98,8 +117,9 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
 
         twoFA = intent.getBooleanExtra(Constants.TWOFA, false)
+        suspended = intent.getBooleanExtra(Constants.SUSPENDED, false)
 
-
+        Log.e("TAG", "initCtrl: suspended "+suspended )
         binding.apply {
             toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
@@ -273,10 +293,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     }
 
     override fun observeViewModel() {
-        observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
         observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
-
-
     }
 
 
@@ -348,112 +365,58 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             R.id.biometric_cancel -> {
-
                 goToHomeActivity()
-
             }
         }
     }
-
 
     private fun goToHomeActivity() {
-        startNewActivityByClearingStack(HomeActivityMain::class.java) {
-            if (navFlowFrom == (Constants.TWOFA) || navFlowFrom == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) || navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+        if (suspended) {
+            showLoaderDialog()
+            crossingHistoryApi()
+        } else {
+            startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                if (navFlowFrom == (Constants.TWOFA) || navFlowFrom == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) || navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
 
-                if (navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+                    if (navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+                        putString(
+                            Constants.NAV_FLOW_FROM,
+                            Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
+                        )
+                    } else {
+                        putString(
+                            Constants.NAV_FLOW_FROM,
+                            navFlowFrom
+                        )
+                    }
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                } else if (navFlowFrom == Constants.LOGIN) {
                     putString(
                         Constants.NAV_FLOW_FROM,
-                        Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
+                        Constants.BIOMETRIC_CHANGE
                     )
+                    putBoolean(
+                        Constants.GO_TO_SUCCESS_PAGE,
+                        false
+                    )
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+
                 } else {
                     putString(
                         Constants.NAV_FLOW_FROM,
-                        navFlowFrom
+                        Constants.BIOMETRIC_CHANGE
                     )
+                    putBoolean(
+                        Constants.GO_TO_SUCCESS_PAGE,
+                        true
+                    )
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
                 }
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-            } else if (navFlowFrom == Constants.LOGIN) {
-                putString(
-                    Constants.NAV_FLOW_FROM,
-                    Constants.BIOMETRIC_CHANGE
-                )
-                putBoolean(
-                    Constants.GO_TO_SUCCESS_PAGE,
-                    false
-                )
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
 
-            } else {
-                putString(
-                    Constants.NAV_FLOW_FROM,
-                    Constants.BIOMETRIC_CHANGE
-                )
-                putBoolean(
-                    Constants.GO_TO_SUCCESS_PAGE,
-                    true
-                )
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
             }
-
         }
     }
 
-
-    private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
-
-
-        when (status) {
-            is Resource.Success -> {
-                personalInformation = status.data?.personalInformation
-                accountInformation = status.data?.accountInformation
-                replenishmentInformation = status.data?.replenishmentInformation
-
-
-                if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                    dismissLoaderDialog()
-
-                    val intent = Intent(this, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                    intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
-                    intent.putExtra(Constants.CROSSINGCOUNT, "")
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                    intent.putExtra(
-                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                    )
-                    startActivity(intent)
-
-
-                } else {
-                    crossingHistoryApi()
-                }
-
-
-            }
-
-            is Resource.DataError -> {
-                dismissLoaderDialog()
-
-
-                AdobeAnalytics.setLoginActionTrackError(
-                    "login",
-                    "login",
-                    "login",
-                    "english",
-                    "login",
-                    "",
-                    "true",
-                    "manual",
-                    sessionManager.getLoggedInUser()
-                )
-            }
-
-            else -> {
-
-            }
-        }
-
-    }
 
     private fun crossingHistoryApi() {
         val request = CrossingHistoryRequest(
@@ -472,17 +435,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    if (it.transactionList != null) {
-                        navigateWithCrossing(it.transactionList.count ?: 0)
-
-                    } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                        }
-
-                    }
-
+                    navigateWithCrossing(it.transactionList?.count ?: 0)
                 }
             }
 
@@ -499,9 +452,8 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     }
 
     private fun navigateWithCrossing(count: Int) {
+        Log.e("TAG", "navigateWithCrossing: count "+count )
 
-
-        if (count > 0) {
 
 
             val intent = Intent(this, AuthActivity::class.java)
@@ -516,14 +468,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                 Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
             )
             startActivity(intent)
-
-        } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-            }
-        }
-
 
     }
 

@@ -2256,5 +2256,6 @@
     <string name="if_you_do_not_pay_the_dart_charge_when_ncrossing_you_could_get_a_fine_penalty_charge_nnotice">If you do not pay the Dart Charge when\ncrossing, you could get a fine (Penalty Charge\nNotice)</string>
     <string name="concatenate_two_strings_with_space">%1$s %2$s</string>
     <string name="concatenate_two_strings">%1$s%2$s</string>
+    <string name="concatenate_two_strings_with_newline">%1$s\n%2$s</string>
 
 </resources>

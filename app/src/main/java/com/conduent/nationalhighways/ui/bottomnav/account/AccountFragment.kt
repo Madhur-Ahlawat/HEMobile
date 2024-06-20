@@ -76,9 +76,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         initUI()
         binding.contactUs.visible()
         setBackPressListener(this)
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }
         binding.profileManagement.contentDescription = getString(R.string.profile_management)
         binding.communicationPreferences.contentDescription =
             getString(R.string.communication_preferences)
@@ -178,6 +175,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                         lastName
                     )
                 )
+
+
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
             if (requireActivity() is HomeActivityMain) {
@@ -237,42 +236,11 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
         }
 
-
-    }
-
-    private fun observeView2(accountNumberLinesCount: Int) {
-        val indicatorAccountStatus = binding.indicatorAccountStatus
-        val viewTreeObserver = indicatorAccountStatus.viewTreeObserver
-        if (viewTreeObserver == null) {
-            Log.e("TAG", "viewTreeObserver is null")
-            return
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
-        binding.indicatorAccountStatus.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                Log.e("TAG", "onGlobalLayout:accountNumberLinesCount **-> ")
 
-                val indicatorAccountStatusLineCount = binding.indicatorAccountStatus.lineCount
-                Log.e(
-                    "TAG",
-                    "onGlobalLayout:accountNumberLinesCount " + accountNumberLinesCount + " -indicatorAccountStatusLineCount-> " + indicatorAccountStatusLineCount
-                )
-                if (accountNumberLinesCount > 2 || indicatorAccountStatusLineCount >= 2) {
-                    binding.llAccountNumberLargefont.visible()
-                    binding.llAccountStatusLargefont.visible()
 
-                    binding.llAccountNumber.gone()
-                    binding.llAccountStatus.gone()
-                } else {
-                    binding.llAccountNumberLargefont.gone()
-                    binding.llAccountStatusLargefont.gone()
-                    binding.llAccountNumber.visible()
-                    binding.llAccountStatus.visible()
-                }
-                binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(this)
-
-            }
-        })
     }
 
     private fun setPaymentsVisibility() {

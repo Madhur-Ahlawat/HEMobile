@@ -52,7 +52,8 @@ class NotificationAdapterNew(
         binding.message.text = Html.fromHtml(item?.message, Html.FROM_HTML_MODE_LEGACY)
         binding.notificationDate.text = item?.createTs?.replace("AM", "am")?.replace("PM", "pm")
         binding.selectNotification.text =
-            binding.notificationDate.text.toString() + "\n" + binding.message.text.toString()
+            context.resources.getString(R.string.concatenate_two_strings_with_newline,
+            binding.notificationDate.text.toString() ,binding.message.text.toString())
         binding.selectNotification.isChecked = item?.isSelectListItem == true
         binding.selectNotification.setOnCheckedChangeListener { _, p1 ->
             clickedItem = position
@@ -62,20 +63,20 @@ class NotificationAdapterNew(
                 viewModel.notificationCheckUncheck.emit(item2!!)
             }
         }
-        binding.message.setOnLongClickListener {
-            clickedItem = position
-            val item1 = list[clickedItem]
-            item1?.isSelectListItem = true
-            this@NotificationAdapterNew.notifyDataSetChanged()
-            false
-        }
-        binding.notificationDate.setOnLongClickListener {
-            clickedItem = position
-            val item = list[clickedItem]
-            item?.isSelectListItem = true
-            this@NotificationAdapterNew.notifyDataSetChanged()
-            false
-        }
+//        binding.message.setOnLongClickListener {
+//            clickedItem = position
+//            val item1 = list[clickedItem]
+//            item1?.isSelectListItem = true
+//            this@NotificationAdapterNew.notifyDataSetChanged()
+//            false
+//        }
+//        binding.notificationDate.setOnLongClickListener {
+//            clickedItem = position
+//            val item = list[clickedItem]
+//            item?.isSelectListItem = true
+//            this@NotificationAdapterNew.notifyDataSetChanged()
+//            false
+//        }
         binding.root.setOnLongClickListener {
             clickedItem = position
             val item = list[clickedItem]
@@ -89,27 +90,27 @@ class NotificationAdapterNew(
             item?.isSelectListItem = item?.isSelectListItem != true
             this@NotificationAdapterNew.notifyItemChanged(clickedItem)
         }
-        binding.message.setOnClickListener {
-            clickedItem = position
-            val item = list[clickedItem]
-            if (item?.isSelectListItem == true) {
-                item.isSelectListItem = false
-            } else {
-                item?.isSelectListItem = true
-            }
-            this@NotificationAdapterNew.notifyItemChanged(clickedItem)
-        }
-        binding.notificationDate.setOnClickListener {
-            clickedItem = position
-            val item4 = list[clickedItem]
-            if (item4?.isSelectListItem == true) {
-                item4.isSelectListItem = false
-            } else {
-                item4?.isSelectListItem = true
-            }
-            this@NotificationAdapterNew.notifyItemChanged(clickedItem)
-        }
-        binding.message.movementMethod = LinkMovementMethod.getInstance()
+//        binding.message.setOnClickListener {
+//            clickedItem = position
+//            val item = list[clickedItem]
+//            if (item?.isSelectListItem == true) {
+//                item.isSelectListItem = false
+//            } else {
+//                item?.isSelectListItem = true
+//            }
+//            this@NotificationAdapterNew.notifyItemChanged(clickedItem)
+//        }
+//        binding.notificationDate.setOnClickListener {
+//            clickedItem = position
+//            val item4 = list[clickedItem]
+//            if (item4?.isSelectListItem == true) {
+//                item4.isSelectListItem = false
+//            } else {
+//                item4?.isSelectListItem = true
+//            }
+//            this@NotificationAdapterNew.notifyItemChanged(clickedItem)
+//        }
+//        binding.message.movementMethod = LinkMovementMethod.getInstance()
         if (item?.isViewed != null && item.isViewed.equals("Y")) {
             holder.itemView.isFocusable = false
             holder.itemView.isEnabled = false
