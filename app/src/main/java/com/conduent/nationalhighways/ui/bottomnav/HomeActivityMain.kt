@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.bottomnav
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -610,4 +611,5 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         worker.schedule(task, 1, TimeUnit.SECONDS)
     }
+
 }

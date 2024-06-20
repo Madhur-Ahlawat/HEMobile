@@ -1453,7 +1453,7 @@ object Utils {
         val lastLoggedInEmail =
             sessionManager.fetchStringData(SessionManager.LAST_LOGGEDIN_EMAIL) ?: ""
         Log.e("TAG", "checkLastLoggedInEmail: "+email+" lastLoggedInEmail ->"+lastLoggedInEmail )
-        return if (email == "lastLoggedInEmail") {
+        return if (email == lastLoggedInEmail) {
             true
         } else {
             false

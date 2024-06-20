@@ -1179,29 +1179,32 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 replenishmentInformation = status.data?.replenishmentInformation
                 accountStatus = status.data?.accountInformation?.status ?: ""
 
-                    if ((!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) && !Utils.checkLastLoggedInEmail(sessionManager,personalInformation?.emailAddress?:"")) {
-                        sessionManager.saveHasAskedForBiometric(true)
-                        if (hasTouchBiometric && hasFaceBiometric) {
-                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+                if ((!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) && !Utils.checkLastLoggedInEmail(
+                        sessionManager,
+                        personalInformation?.emailAddress ?: ""
+                    )
+                ) {
+                    sessionManager.saveHasAskedForBiometric(true)
+                    if (hasTouchBiometric && hasFaceBiometric) {
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
 
-                        } else if (hasFaceBiometric) {
-                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
+                    } else if (hasFaceBiometric) {
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
 
-                        } else {
-                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
-
-                        }
                     } else {
-                        if (accountStatus.equals(Constants.SUSPENDED, true)) {
-                            crossingHistoryApi()
-                        }else {
-                            requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                            }
+                        displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+                    }
+                } else {
+                    if (accountStatus.equals(SUSPENDED, true)) {
+                        crossingHistoryApi()
+                    } else {
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                         }
                     }
-
+                }
 
 
             }
@@ -1246,15 +1249,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     intent.putExtra(TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
                     intent.putExtra(Constants.NAV_FLOW_KEY, navFlowFrom)
-                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount)
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
                     intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                    intent.putExtra(Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance)
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE,
+                        replenishmentInformation?.currentBalance
+                    )
 
                     startActivity(intent)
-
-
-                    //dialog.dismiss()
 
                 }
             },
@@ -1262,7 +1265,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 override fun negativeBtnClick(dialog: DialogInterface) {
                     if (accountStatus.equals(SUSPENDED, true)) {
                         crossingHistoryApi()
-                    }else {
+                    } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                             putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                             putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
@@ -1290,7 +1293,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    if (accountStatus.equals(Constants.SUSPENDED, true)) {
+                    if (accountStatus.equals(SUSPENDED, true)) {
                         navigateWithCrossing(it.transactionList?.count ?: 0)
                     } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
@@ -1310,7 +1313,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
-                    if (accountStatus.equals(Constants.SUSPENDED, true)) {
+                    if (accountStatus.equals(SUSPENDED, true)) {
                         navigateWithCrossing(0)
                     } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
@@ -1329,7 +1332,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun navigateWithCrossing(count: Int) {
         val intent = Intent(requireActivity(), AuthActivity::class.java)
-        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+        intent.putExtra(Constants.NAV_FLOW_KEY, SUSPENDED)
         intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
         intent.putExtra(Constants.PERSONALDATA, personalInformation)
         intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
