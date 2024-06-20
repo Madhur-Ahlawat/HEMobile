@@ -102,7 +102,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 R.string.account_status
             ) + ", " + binding.indicatorAccountStatus.text.toString()
 
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     private fun initUI() {
@@ -217,7 +219,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
         })
 
-
     }
 
     private fun checkLinesLength() {
@@ -225,7 +226,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             if (accountNumberLinesCount > 2 || indicatorAccountStatusLineCount >= 2) {
                 binding.llAccountNumberLargefont.visible()
                 binding.llAccountStatusLargefont.visible()
-
                 binding.llAccountNumber.gone()
                 binding.llAccountStatus.gone()
             } else {
@@ -270,12 +270,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             (requireActivity() as HomeActivityMain).setTitle(getString(R.string.txt_my_account))
             (requireActivity() as HomeActivityMain).refreshTokenApi()
         }
-
         super.onResume()
     }
 
     override fun initCtrl() {
-        Log.e("TAG", "onAttach: -**>" )
         binding.apply {
             profileManagement.setOnClickListener(this@AccountFragment)
             paymentManagement.setOnClickListener(this@AccountFragment)
@@ -285,7 +283,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             closeAcount.setOnClickListener(this@AccountFragment)
             contactUs.setOnClickListener(this@AccountFragment)
         }
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     override fun observer() {
@@ -420,13 +420,10 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     override fun onAttach(context: Context) {
-        Log.e("TAG", "onAttach: ->" )
         super.onAttach(context)
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
         }
-
-
     }
 
     override fun onBackButtonPressed() {
@@ -434,6 +431,5 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             (requireActivity() as HomeActivityMain).backPressLogic()
         }
     }
-
 
 }
