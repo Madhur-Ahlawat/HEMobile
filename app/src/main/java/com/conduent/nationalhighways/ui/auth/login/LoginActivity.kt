@@ -99,10 +99,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 handleSaveCardResponse(it)
             }
         }
-
-
     }
-
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
         when (status) {
             is Resource.Success -> {
@@ -121,7 +118,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 }
 
                 checkAccountIsTwoFA(callLRDSAPI = true)
-
             }
 
             is Resource.DataError -> {
@@ -137,7 +133,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
         }
     }
-
 
     private fun handleLrdsResponse(resource: Resource<LRDSResponse?>?) {
 
@@ -195,6 +190,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
                     intent.putExtra(Constants.SUSPENDED, accountInformation?.status.equals(Constants.SUSPENDED, true))
                     intent.putExtra(
+                        Constants.SUSPENDED,
+                        accountInformation?.status.equals(Constants.SUSPENDED, true)
+                    )
+                    intent.putExtra(
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                     )
@@ -208,6 +207,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                             paymentList as ArrayList
                         )
                     }
+
                     intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
                     intent.putExtra(Constants.PERSONALDATA, personalInformation)
                     intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
@@ -551,7 +551,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
     private fun launchIntent(response: Resource.Success<LoginResponse?>) {
-        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString().trim()) {
+        if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                .trim()
+        ) {
+
             sessionManager.saveTouchIdEnabled(false)
             sessionManager.saveHasAskedForBiometric(false)
         }
@@ -807,5 +810,3 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     }
 
 }
-
-
