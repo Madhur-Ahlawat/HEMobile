@@ -43,6 +43,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
     private var personalInformation: PersonalInformation? = null
     private var accountInformation: AccountInformation? = null
     private lateinit var navFlow: String// create account , forgot password
+    private var lrdsAccount: Boolean = false
+    private var crossingCount: String = ""
     private var cardValidationRequired: Boolean = false
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
 
@@ -73,6 +75,9 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
+        }
+        if (arguments?.containsKey(Constants.CROSSINGCOUNT) == true) {
+            crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""
         }
 
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
@@ -209,6 +214,8 @@ class ChooseOptionForgotFragment : BaseFragment<FragmentForgotChooseOptionchange
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentList as ArrayList)
                 bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
+                bundle.putString(Constants.CROSSINGCOUNT, crossingCount)
+                bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
                 if (requireActivity() is AuthActivity) {
                     AdobeAnalytics.setActionTrack2(
                         "continue",

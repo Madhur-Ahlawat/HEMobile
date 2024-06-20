@@ -64,6 +64,7 @@ import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE
+import com.conduent.nationalhighways.utils.common.Constants.SUSPENDED
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Logg
@@ -111,6 +112,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     private var accountStatus: String = ""
     private var hasFaceBiometric = false
     private var hasTouchBiometric = false
+    private var crossingCount: String = ""
 
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
 
@@ -191,7 +193,9 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
 
-
+        if (arguments?.containsKey(Constants.CROSSINGCOUNT) == true) {
+            crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""
+        }
         if (arguments?.containsKey(Constants.IS_MOBILE_NUMBER) == true) {
             isItMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER) ?: false
         }
@@ -593,6 +597,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)
+                bundle.putString(Constants.CROSSINGCOUNT, crossingCount)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
@@ -1181,7 +1186,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
 
     private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
-        Log.e("TAG", "handleAccountDetails: status "+status )
+
         dismissLoaderDialog()
 
         when (status) {
@@ -1214,14 +1219,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                     } else {
                         if(cardValidationRequired){
                             redirectToAuthForRevalidate()
-                        }else {
+                        }else if (accountStatus.equals(SUSPENDED, true)) {
+                            crossingHistoryApi()
+                        } else {
                             requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                                 putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                                 putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                             }
                         }
                     }
-
                 }
 
 
@@ -1263,21 +1269,30 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             object : DialogPositiveBtnListener {
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(requireActivity(), BiometricActivity::class.java)
+                    intent.putExtra(SUSPENDED, accountStatus.equals(SUSPENDED, true))
                     intent.putExtra(TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.NAV_FLOW_FROM, navFlowCall)
                     intent.putExtra(Constants.NAV_FLOW_KEY, navFlowFrom)
                     intent.putExtra(Constants.CARD_VALIDATION_REQUIRED,cardValidationRequired)
                     intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount)
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE,
+                        replenishmentInformation?.currentBalance
+                    )
+
                     startActivity(intent)
-                    //dialog.dismiss()
 
                 }
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-
                     if (cardValidationRequired) {
                         redirectToAuthForRevalidate()
+                    } else if (accountStatus.equals(SUSPENDED, true)) {
+                        crossingHistoryApi()
                     } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                             putString(Constants.NAV_FLOW_FROM, navFlowFrom)
@@ -1324,7 +1339,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    if (accountStatus.equals(Constants.SUSPENDED, true)) {
+                    if (accountStatus.equals(SUSPENDED, true)) {
                         navigateWithCrossing(it.transactionList?.count ?: 0)
                     } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
@@ -1344,7 +1359,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
                 } else {
-                    if (accountStatus.equals(Constants.SUSPENDED, true)) {
+                    if (accountStatus.equals(SUSPENDED, true)) {
                         navigateWithCrossing(0)
                     } else {
                         requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
@@ -1363,7 +1378,7 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
     private fun navigateWithCrossing(count: Int) {
         val intent = Intent(requireActivity(), AuthActivity::class.java)
-        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+        intent.putExtra(Constants.NAV_FLOW_KEY, SUSPENDED)
         intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
         intent.putExtra(Constants.PERSONALDATA, personalInformation)
         intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)

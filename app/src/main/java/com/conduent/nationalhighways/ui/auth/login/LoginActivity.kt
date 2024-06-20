@@ -193,6 +193,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
                     intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+                    intent.putExtra(Constants.SUSPENDED, accountInformation?.status.equals(Constants.SUSPENDED, true))
                     intent.putExtra(
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
@@ -207,6 +208,11 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                             paymentList as ArrayList
                         )
                     }
+                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+                    intent.putExtra(Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance)
+
                     if (from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                         intent.putExtra(
                             Constants.NAV_FLOW_FROM,
@@ -220,7 +226,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                    if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                        redirectToSuspend()
+                    } else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
                         redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
                     } else {
                         redirectToHome()
@@ -261,13 +269,16 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
                         }
                     } else {
-
                         if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
                             redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
-                        } else {
-                            redirectToHome()
+                        } else if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                            redirectToSuspend()
+                        }else {
+                            startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                                putString(Constants.NAV_FLOW_FROM, from)
+                                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                            }
                         }
-
                     }
 
                 }
@@ -297,6 +308,19 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
+
+    private fun redirectToSuspend() {
+        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+        intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+        intent.putExtra(Constants.PERSONALDATA, personalInformation)
+        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+        intent.putExtra(Constants.NAV_FLOW_FROM, from)
+        intent.putExtra(
+            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+        )
+        startActivity(intent)
+    }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
         when (resource) {
@@ -781,7 +805,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
         }
     }
-
 
 }
 

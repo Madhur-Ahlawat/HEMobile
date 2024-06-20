@@ -127,9 +127,6 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
         val inflater = navHostFragment.navController.navInflater
         val graph = inflater.inflate(R.navigation.navigation_auth)
 
-
-
-
         val bundle = Bundle()
         when (navFlow) {
             Constants.FORGOT_PASSWORD_FLOW -> {
@@ -152,6 +149,8 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
             Constants.TWOFA -> {
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                bundle.putString(Constants.CROSSINGCOUNT, crossingCount)
+                bundle.putBoolean(Constants.LRDS_ACCOUNT, lrdsAccount)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)

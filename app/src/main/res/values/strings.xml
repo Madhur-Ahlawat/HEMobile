@@ -1785,5 +1785,6 @@
     <string name="str_we_could_not_add_this_card">We could not add this card</string>
     <string name="str_we_could_not_add_this_card_desc1">Try to validate the payment card again.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="str_we_could_not_add_this_card_desc2">Add a different card or contact your bank for more details.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
+    <string name="concatenate_two_strings_with_newline">%1$s\n%2$s</string>
 
 </resources>

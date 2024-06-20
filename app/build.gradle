@@ -136,7 +136,6 @@ android {
 
     dependencies {
 
-        def hiltLifeCycleVersion = '1.0.0-alpha03'
         def lifecycle_version = "2.7.0"
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
