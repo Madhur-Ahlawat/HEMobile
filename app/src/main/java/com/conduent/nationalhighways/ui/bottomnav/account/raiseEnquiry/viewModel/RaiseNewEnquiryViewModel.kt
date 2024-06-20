@@ -20,10 +20,8 @@ class RaiseNewEnquiryViewModel @Inject constructor(
     var enquiryDetailsModel = MutableLiveData<ServiceRequest>()
     var enquiry_status_number = MutableLiveData<String>()
     var enquiry_last_name = MutableLiveData<String>()
-
     val apiState = MutableLiveData<String>()
     val apiEndTime = MutableLiveData<String>()
-
     init {
         enquiryModel.value = EnquiryModel()
         edit_enquiryModel.value = EnquiryModel()
