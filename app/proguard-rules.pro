@@ -22,7 +22,7 @@
 
 # If you want to keep models of request and responses of retrofit.
 -keep class com.conduent.nationalhighways.data.model.** { *; }
-\
+
 
 # Rules for retrofit
 -keep class com.squareup.okhttp.** { *; }
