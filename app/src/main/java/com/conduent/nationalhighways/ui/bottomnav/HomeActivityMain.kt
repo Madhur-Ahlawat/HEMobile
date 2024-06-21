@@ -70,6 +70,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     var dataBinding: ActivityHomeMainBinding? = null
 
     lateinit var profileDetailModel: ProfileDetailModel
+    private var focusToolBarType:Int=0
 
     companion object {
         var dateRangeModel: PaymentDateRangeModel? = null
@@ -593,23 +594,27 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding?.backButton?.requestFocus()
     }
 
-    fun focusToolBarHome() {
-        Log.e("TAG", "focusToolBarHome: ")
-        dataBinding?.backButton?.requestFocus() // Focus on the backButton
-        val task = Runnable {
-            if (dataBinding?.backButton?.isVisible == true) {
-                Log.e("TAG", "focusToolBarHome:--> ")
-                dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-                dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
-            } else {
-                Log.e("TAG", "focusToolBarHome:**> ")
-                dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-                dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+    fun focusToolBarHome(type:Int=0) {
+        if(focusToolBarType==0||focusToolBarType!=type) {
+            Log.e("TAG", "focusToolBarHome:@@ $type  focusToolBarType $focusToolBarType")
+            dataBinding?.backButton?.requestFocus() // Focus on the backButton
+            val task = Runnable {
+                if (dataBinding?.backButton?.isVisible == true) {
+                    Log.e("TAG", "focusToolBarHome:--> ")
+                    dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                    dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                } else {
+                    Log.e("TAG", "focusToolBarHome:**> ")
+                    dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                    dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                }
             }
+            Log.e("TAG", "focusToolBarHome:(()) ")
+            val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+            worker.schedule(task, 1, TimeUnit.SECONDS)
         }
-        Log.e("TAG", "focusToolBarHome:(()) ")
-        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
-        worker.schedule(task, 1, TimeUnit.SECONDS)
+        focusToolBarType=type
+
     }
 
 }

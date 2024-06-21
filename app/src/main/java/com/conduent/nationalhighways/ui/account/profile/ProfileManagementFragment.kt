@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.account.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,9 +80,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.profile_management))
         }
 
-        callFocusToolBarHome()
-//        binding.scrollView.accessibilityDelegate = CustomScrollAccessibilityDelegate(binding.scrollView)
-
     }
 
     override fun initCtrl() {
@@ -147,6 +145,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
         dismissLoaderDialog()
+        Log.e("TAG", "handleAccountDetail:profile " )
+        callFocusToolBarHome()
+
         when (status) {
             is Resource.Success -> {
                 status.data?.run {
@@ -242,7 +243,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     private fun callFocusToolBarHome() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
+            (requireActivity() as HomeActivityMain).focusToolBarHome(-2)
             (requireActivity() as HomeActivityMain).requestFocusBackIcon()
         }
 
