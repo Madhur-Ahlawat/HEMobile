@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
@@ -102,9 +101,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 R.string.account_status
             ) + ", " + binding.indicatorAccountStatus.text.toString()
 
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }
     }
 
     private fun initUI() {
@@ -117,8 +113,9 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             } else {
                 paymentManagement.visible()
             }
-            if (isSecondaryUser)
+            if (isSecondaryUser) {
                 contactUs.gone()
+            }
 
             if (accountType.equals(
                     Constants.PERSONAL_ACCOUNT,
@@ -145,7 +142,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             )
             profilePic.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
             profilePic.isScreenReaderFocusable = false
-            Log.e("TAG", "initUI: accountNumber " + accountNumber)
             tvAccountNumberValue.text = accountNumber
             tvAccountNumberValueLargefont.text = accountNumber
             DashboardUtils.setAccountStatusNew(
@@ -198,10 +194,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
-                Log.e("TAG", "onGlobalLayout: accountNumberLinesCount -> $accountNumberLinesCount")
                 checkLinesLength()
                 binding.tvAccountStatusHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
-
             }
         })
 
@@ -209,13 +203,8 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 indicatorAccountStatusLineCount = binding.indicatorAccountStatus.lineCount
-                Log.e(
-                    "TAG",
-                    "onGlobalLayout: indicatorAccountStatusLineCount -> $indicatorAccountStatusLineCount"
-                )
                 checkLinesLength()
                 binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(this)
-
             }
         })
 
@@ -235,12 +224,6 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 binding.llAccountStatus.visible()
             }
         }
-
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }
-
-
     }
 
     private fun setPaymentsVisibility() {
@@ -283,14 +266,16 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             closeAcount.setOnClickListener(this@AccountFragment)
             contactUs.setOnClickListener(this@AccountFragment)
         }
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }
     }
 
     override fun observer() {
         lifecycleScope.launch {
             observe(logOutViewModel.logout, ::handleLogout)
+        }
+        dashboardViewModel.accountType.observe(this@AccountFragment) {
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).focusToolBarHome(-1)
+            }
         }
     }
 
