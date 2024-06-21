@@ -61,6 +61,7 @@ class RevalidatePaymentCardDetailsFragment :
         binding.btnContinue.setOnClickListener {
             val bundle = Bundle()
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
             bundle.putInt(Constants.POSITION, position)
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
             bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)

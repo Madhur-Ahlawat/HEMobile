@@ -266,6 +266,9 @@
         <action
             android:id="@+id/action_reValidateExistingPaymentFragment_to_reValidateInfoFragment"
             app:destination="@+id/reValidateInfoFragment" />
+        <action
+            android:id="@+id/action_reValidateExistingPaymentFragment_to_threeDSWebiewFragment"
+            app:destination="@+id/threeDSWebiewFragment" />
     </fragment>
     <fragment
         android:id="@+id/reValidateInfoFragment"
@@ -275,7 +278,7 @@
         <action
             android:id="@+id/action_reValidateInfoFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
-     <action
+        <action
             android:id="@+id/action_reValidateInfoFragment_to_reValidateExistingPaymentFragment"
             app:destination="@id/reValidateExistingPaymentFragment" />
     </fragment>
@@ -284,11 +287,11 @@
         android:id="@+id/paygtermsandconditions"
         android:name="com.conduent.nationalhighways.ui.landing.PayGTermsAndConditionsFragment"
         android:label="EnquiryStatusFragment"
-        tools:layout="@layout/fragment_payg_terms_and_conditions"/>
+        tools:layout="@layout/fragment_payg_terms_and_conditions" />
     <fragment
         android:id="@+id/generalTermsAndConditionsFragment"
         android:name="com.conduent.nationalhighways.ui.landing.GeneralTermsAndConditionsFragment"
         android:label="EnquiryStatusFragment"
-        tools:layout="@layout/fragment_general_terms_and_conditions"/>
+        tools:layout="@layout/fragment_general_terms_and_conditions" />
 
 </navigation>

@@ -89,7 +89,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
-        if (intent.hasExtra(Constants.PAYMENT_LIST_DATA) && intent.getParcelableArrayListExtra<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+        if (intent.hasExtra(Constants.PAYMENT_LIST_DATA) && intent.getParcelableArrayListExtra<CardListResponseModel>(
+                Constants.PAYMENT_LIST_DATA
+            ) != null
+        ) {
             paymentList =
                 intent.getParcelableArrayListExtra(Constants.PAYMENT_LIST_DATA)
         }
@@ -134,9 +137,9 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
 
         twoFA = intent.getBooleanExtra(Constants.TWOFA, false)
-        suspended = intent.getBooleanExtra(Constants.SUSPENDED, false)
+        suspended = accountInformation?.status.equals(Constants.SUSPENDED, true)
 
-        Log.e("TAG", "initCtrl: suspended "+suspended )
+        Log.e("TAG", "initCtrl: suspended " + suspended)
         binding.apply {
             toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
@@ -403,11 +406,10 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private fun goToHomeActivity() {
         if (cardValidationRequired) {
             redirectToAuthForRevalidate()
-        } else if(suspended){
-                showLoaderDialog()
-                crossingHistoryApi()
-        }
-        else {
+        } else if (suspended) {
+            showLoaderDialog()
+            crossingHistoryApi()
+        } else {
             startNewActivityByClearingStack(HomeActivityMain::class.java) {
                 if (navFlowFrom == (Constants.TWOFA) || navFlowFrom == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) || navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
 
@@ -487,19 +489,18 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private fun navigateWithCrossing(count: Int) {
 
 
+        val intent = Intent(this, AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+        intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+        intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
+        intent.putExtra(Constants.PERSONALDATA, personalInformation)
 
-            val intent = Intent(this, AuthActivity::class.java)
-            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-            intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
-            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-            intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
-            intent.putExtra(Constants.PERSONALDATA, personalInformation)
 
-
-            intent.putExtra(
-                Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-            )
-            startActivity(intent)
+        intent.putExtra(
+            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+        )
+        startActivity(intent)
 
     }
 

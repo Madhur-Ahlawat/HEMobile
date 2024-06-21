@@ -51,23 +51,39 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
                 "PRIVATE", true
             )))
         ) {
+
             //private account
             binding.radioGroupYesNo.visible()
             binding.desc2Tv.text = resources.getString(R.string.str_wantto_validate_card_now)
             binding.descTv.text =
                 resources.getString(R.string.str_revalidate_payment_card_details_prepay)
             binding.desc3Tv.visible()
+
+
             checkContinueButton()
         } else {
             //payg account
-
             binding.radioGroupYesNo.gone()
-            binding.desc2Tv.text =
-                resources.getString(R.string.str_revalidate_payment_card_details_desc2)
-            binding.descTv.text =
-                resources.getString(R.string.str_revalidate_payment_card_details_payg)
             binding.desc3Tv.gone()
             binding.btnContinue.enable()
+            if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                binding.titleTv.text =
+                    resources.getString(R.string.str_provide_payment_card_details)
+
+                binding.descTv.text =
+                    resources.getString(R.string.str_suspend_revalidate_desc)
+                binding.desc2Tv.text =
+                    resources.getString(R.string.str_revalidate_payment_card_details_desc4)
+            } else {
+                binding.titleTv.text =
+                    resources.getString(R.string.str_revalidate_payment_card_details)
+
+                binding.desc2Tv.text =
+                    resources.getString(R.string.str_revalidate_payment_card_details_desc2)
+                binding.descTv.text =
+                    resources.getString(R.string.str_revalidate_payment_card_details_payg)
+
+            }
         }
 
 

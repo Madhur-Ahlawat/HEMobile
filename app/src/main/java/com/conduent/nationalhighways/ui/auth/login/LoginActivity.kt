@@ -100,6 +100,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
         }
     }
+
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
         when (status) {
             is Resource.Success -> {
@@ -188,11 +189,8 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
                     intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
                     intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                    intent.putExtra(Constants.SUSPENDED, accountInformation?.status.equals(Constants.SUSPENDED, true))
-                    intent.putExtra(
-                        Constants.SUSPENDED,
-                        accountInformation?.status.equals(Constants.SUSPENDED, true)
-                    )
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+
                     intent.putExtra(
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
@@ -209,9 +207,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     }
 
                     intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                    intent.putExtra(Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance)
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE,
+                        replenishmentInformation?.currentBalance
+                    )
 
                     if (from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                         intent.putExtra(
@@ -226,10 +225,10 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                        redirectToSuspend()
-                    } else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                    if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
                         redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
+                    } else if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                        redirectToAuth(Constants.SUSPENDED)
                     } else {
                         redirectToHome()
                     }
@@ -251,36 +250,35 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     sessionManager.saveBooleanData(SessionManager.CARD_VALIDATION_REQUIRED, false)
                 }
 
-                if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                    redirectToAuth(Constants.SUSPENDED)
+                if ((!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) && !Utils.checkLastLoggedInEmail(
+                        sessionManager,
+                        binding.edtEmail.editText.text.toString().trim()
+                    )
+                ) {
+                    sessionManager.saveHasAskedForBiometric(true)
+                    if (hasTouchBiometric && hasFaceBiometric) {
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+                    } else if (hasFaceBiometric) {
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+                    } else {
+                        displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+                    }
                 } else {
-                    if ((!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) && !Utils.checkLastLoggedInEmail(
-                            sessionManager,
-                            binding.edtEmail.editText.text.toString().trim()
+                    if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                        redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
+                    } else if (status.data?.accountInformation?.status.equals(
+                            Constants.SUSPENDED,
+                            true
                         )
                     ) {
-                        sessionManager.saveHasAskedForBiometric(true)
-                        if (hasTouchBiometric && hasFaceBiometric) {
-                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
-                        } else if (hasFaceBiometric) {
-                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
-                        } else {
-                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
-
-                        }
+                        redirectToAuth(Constants.SUSPENDED)
                     } else {
-                        if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
-                            redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
-                        } else if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                            redirectToSuspend()
-                        }else {
-                            startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                                putString(Constants.NAV_FLOW_FROM, from)
-                                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                            }
+                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, from)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                         }
                     }
-
                 }
 
 
@@ -308,19 +306,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
-
-    private fun redirectToSuspend() {
-        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-        intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
-        intent.putExtra(Constants.PERSONALDATA, personalInformation)
-        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-        intent.putExtra(Constants.NAV_FLOW_FROM, from)
-        intent.putExtra(
-            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-        )
-        startActivity(intent)
-    }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
         when (resource) {

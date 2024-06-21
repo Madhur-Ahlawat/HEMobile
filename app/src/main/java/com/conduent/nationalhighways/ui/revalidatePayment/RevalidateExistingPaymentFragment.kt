@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentRevalidateExistingPaymentBinding
 import com.conduent.nationalhighways.ui.auth.suspended.ManualTopUpViewModel
@@ -25,6 +26,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistingPaymentBinding>() {
     private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
     private var paymentList: ArrayList<CardListResponseModel> = ArrayList()
     private var position: Int = 0
     private val manualTopUpViewModel: ManualTopUpViewModel by viewModels()
@@ -42,6 +44,10 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
+        }
+        if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
         if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
             paymentList =
@@ -91,20 +97,36 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
 
     override fun initCtrl() {
         binding.nextBtn.setOnClickListener {
+
             val bundle = Bundle()
+            bundle.putDouble(Constants.PAYMENT_TOP_UP, 0.0)
+            bundle.putInt(Constants.POSITION, 0)
+            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
             bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+            bundle.putParcelableArrayList(Constants.DATA, paymentList)
+            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.size)
             bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, cardValidationFirstTime)
             bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, cardValidationSecondTime)
             bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
             bundle.putBoolean(Constants.CARD_VALIDATION_EXISTING_CARD, true)
-            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.size)
-            bundle.putInt(Constants.POSITION,position)
-            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-            bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList)
             findNavController().navigate(
-                R.id.action_reValidateExistingPaymentFragment_to_reValidateInfoFragment,
+                R.id.action_reValidateExistingPaymentFragment_to_threeDSWebiewFragment,
                 bundle
             )
+//
+//            val bundle = Bundle()
+//            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+//
+//            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.size)
+//            bundle.putInt(Constants.POSITION,position)
+//            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+//            bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList)
+//            findNavController().navigate(
+//                R.id.action_reValidateExistingPaymentFragment_to_reValidateInfoFragment,
+//                bundle
+//            )
         }
     }
 

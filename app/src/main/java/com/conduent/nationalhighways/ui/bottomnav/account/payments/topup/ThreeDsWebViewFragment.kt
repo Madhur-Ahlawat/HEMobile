@@ -96,15 +96,15 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
     inner class JsObject {
 
-     /*   @JavascriptInterface
-        fun showKeyboard() {
-            // Code to show the keyboard
-            Log.e("appInterface", "showKeyboard called")
-            requireActivity().runOnUiThread {
-                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
-            }
-        }*/
+        /*   @JavascriptInterface
+           fun showKeyboard() {
+               // Code to show the keyboard
+               Log.e("appInterface", "showKeyboard called")
+               requireActivity().runOnUiThread {
+                   val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                   imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+               }
+           }*/
         @JavascriptInterface
         fun postMessage(data: String) {
             Log.i("WebView", "postMessage data=$data")
@@ -214,42 +214,59 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-               /* view?.loadUrl(
-                    "javascript:(function() { " +
-                            "document.addEventListener('DOMContentLoaded', function() { " +
-                            "console.log('Page loaded'); " +
-                            "var inputs = document.getElementsByTagName('input'); " +
-                            "console.log('Found ' + inputs.length + ' input elements'); " +
-                            "for (var i = 0; i < inputs.length; i++) { " +
-                            "inputs[i].addEventListener('focus', function() { " +
-                            "console.log('Input focused'); " +
-                            "window.appInterface.showKeyboard(); " +
-                            "}); " +
-                            "} " +
-                            "}); " +
-                            "})()"
-                )*/
+                /* view?.loadUrl(
+                     "javascript:(function() { " +
+                             "document.addEventListener('DOMContentLoaded', function() { " +
+                             "console.log('Page loaded'); " +
+                             "var inputs = document.getElementsByTagName('input'); " +
+                             "console.log('Found ' + inputs.length + ' input elements'); " +
+                             "for (var i = 0; i < inputs.length; i++) { " +
+                             "inputs[i].addEventListener('focus', function() { " +
+                             "console.log('Input focused'); " +
+                             "window.appInterface.showKeyboard(); " +
+                             "}); " +
+                             "} " +
+                             "}); " +
+                             "})()"
+                 )*/
 
                 val amount: Double = topUpAmount
                 val doubleAmount = String.format("%.2f", amount)
 
                 hideLoader()
-                view?.loadUrl(
-                    "javascript:(function(){document.getElementById('customerVaultId').innerText = '${
-                        paymentList?.get(
-                            position
-                        )?.customerVaultId
-                    }';})()"
-                )
-                view?.loadUrl("javascript:(function(){document.getElementById('amount').innerText = '$doubleAmount';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('email').innerText = '${personalInformation?.emailAddress}';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('phone').innerText = '${personalInformation?.phoneNumber}';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('city').innerText = '${personalInformation?.city}';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('address1').innerText = '${personalInformation?.addressLine1}';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('firstName').innerText = '${personalInformation?.firstName}';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('lastName').innerText = '${personalInformation?.lastName}';})()")
-                view?.loadUrl("javascript:(function(){document.getElementById('postalCode').innerText = '${personalInformation?.zipCode}';})()")
+                if (navFlowCall == Constants.CARD_VALIDATION_REQUIRED) {
+                    view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = '${"GBP"}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('amount').innerText = '${"0"}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('customerVaultId').innerText = '${ paymentList?.get(
+                        position
+                    )?.customerVaultId}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('email').innerText = '${personalInformation?.emailAddress}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('city').innerText = '${personalInformation?.city}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('address1').innerText = '${personalInformation?.addressLine1}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('firstName').innerText = '${personalInformation?.firstName}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('lastName').innerText = '${personalInformation?.lastName}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('postalCode').innerText = '${personalInformation?.zipCode}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('country').innerText = '${personalInformation?.country}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('challengeIndicator').innerText = '${""}';})()")
 
+                } else {
+
+                    view?.loadUrl(
+                        "javascript:(function(){document.getElementById('customerVaultId').innerText = '${
+                            paymentList?.get(
+                                position
+                            )?.customerVaultId
+                        }';})()"
+                    )
+                    view?.loadUrl("javascript:(function(){document.getElementById('amount').innerText = '$doubleAmount';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('email').innerText = '${personalInformation?.emailAddress}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('phone').innerText = '${personalInformation?.phoneNumber}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('city').innerText = '${personalInformation?.city}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('address1').innerText = '${personalInformation?.addressLine1}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('firstName').innerText = '${personalInformation?.firstName}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('lastName').innerText = '${personalInformation?.lastName}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('postalCode').innerText = '${personalInformation?.zipCode}';})()")
+                }
 
                 binding.webView.loadUrl("javascript:loaded()")
 

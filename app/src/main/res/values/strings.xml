@@ -1764,6 +1764,7 @@
     <string name="str_revalidate_payment_card_details_payg">We changed our service provider recently.\n\nNew banking regulations means that to continue using your account, you have to re-validate your payment card.\n\nIf you do not revalidate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
     <string name="str_revalidate_payment_card_details_prepay">We changed our service provider recently.\n\nNew banking regulations means that to continue using your account, you have to re-validate your payment card.</string>
     <string name="str_revalidate_payment_card_details_desc2">Continue to validate your payment card</string>
+    <string name="str_revalidate_payment_card_details_desc4">Continue to provide your payment card details</string>
     <string name="str_wantto_validate_card_now">Do you want to validate your card now?</string>
     <string name="str_revalidate_provide_payment_card_details">Provide your payment card details</string>
     <string name="str_which_card_want_to_use">Which card do you want to use on your account?</string>
@@ -1785,6 +1786,7 @@
     <string name="str_we_could_not_add_this_card">We could not add this card</string>
     <string name="str_we_could_not_add_this_card_desc1">Try to validate the payment card again.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="str_we_could_not_add_this_card_desc2">Add a different card or contact your bank for more details.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
+    <string name="str_suspend_revalidate_desc">Payment could not be taken for 2 crossings and your account has been suspended.\n\nTo continue using your account, you have to provide your payment card details. If you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
     <string name="concatenate_two_strings_with_newline">%1$s\n%2$s</string>
 
 </resources>
