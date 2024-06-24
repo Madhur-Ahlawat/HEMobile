@@ -153,7 +153,9 @@ class RevalidateInfoFragment : BaseFragment<FragmentRevalidateInfoBinding>() {
                 )
             }
         }
-
+        if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
     }
 
     override fun initCtrl() {

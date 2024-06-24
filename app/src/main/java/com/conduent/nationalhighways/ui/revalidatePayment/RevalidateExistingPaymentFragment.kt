@@ -1,7 +1,9 @@
 package com.conduent.nationalhighways.ui.revalidatePayment
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.Html
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,12 +16,18 @@ import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteRespo
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentRevalidateExistingPaymentBinding
+import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.suspended.ManualTopUpViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -93,11 +101,66 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
                 }.toString()
             )
 
+
+        binding.cardSecurityEt.editText.addTextChangedListener(GenericTextWatcher())
+        binding.checkBoxTerms.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                binding.cardSecurityEt.setText(binding.cardSecurityEt.editText.text.toString())
+            } else {
+                binding.nextBtn.disable()
+            }
+        }
+        binding.cardSecurityEt.editText.setAccessibilityDelegateForDigits()
+        binding.checkBoxTerms.setAccessibilityDelegate()
+
+        if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
     }
+
+    inner class GenericTextWatcher : TextWatcher {
+        override fun beforeTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(
+            charSequence: CharSequence?,
+            start: Int,
+            before: Int,
+            count: Int
+        ) {
+            if (charSequence.toString().trim().isEmpty()) {
+                binding.cardSecurityEt.removeError()
+                binding.nextBtn.disable()
+            } else if (charSequence.toString().trim().length < 3) {
+                binding.nextBtn.disable()
+                binding.cardSecurityEt.setErrorText(resources.getString(R.string.card_security_code_more_3characters))
+            } else {
+                binding.cardSecurityEt.removeError()
+                checkEnableButton()
+            }
+        }
+
+        override fun afterTextChanged(editable: Editable?) {
+
+        }
+    }
+
+    private fun checkEnableButton() {
+        if (binding.checkBoxTerms.isChecked) {
+            binding.nextBtn.enable()
+        } else {
+            binding.nextBtn.disable()
+        }
+    }
+
 
     override fun initCtrl() {
         binding.nextBtn.setOnClickListener {
-
             val bundle = Bundle()
             bundle.putDouble(Constants.PAYMENT_TOP_UP, 0.0)
             bundle.putInt(Constants.POSITION, 0)
@@ -107,6 +170,10 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
             bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
             bundle.putParcelableArrayList(Constants.DATA, paymentList)
             bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.size)
+            bundle.putString(
+                Constants.CARD_SECURITY_CODE,
+                binding.cardSecurityEt.editText.text.toString()
+            )
             bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, cardValidationFirstTime)
             bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, cardValidationSecondTime)
             bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
@@ -115,102 +182,10 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
                 R.id.action_reValidateExistingPaymentFragment_to_threeDSWebiewFragment,
                 bundle
             )
-//
-//            val bundle = Bundle()
-//            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-//
-//            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.size)
-//            bundle.putInt(Constants.POSITION,position)
-//            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-//            bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList)
-//            findNavController().navigate(
-//                R.id.action_reValidateExistingPaymentFragment_to_reValidateInfoFragment,
-//                bundle
-//            )
         }
     }
 
     override fun observer() {
-        lifecycleScope.launch {
-            observe(
-                manualTopUpViewModel.paymentWithExistingCard,
-                ::handlePaymentWithExistingCardResponse
-            )
-        }
     }
-
-
-    private fun handlePaymentWithExistingCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
-        dismissLoaderDialog()
-        when (status) {
-            is Resource.Success -> {
-
-            }
-
-            is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel)
-                ) {
-                    displaySessionExpireDialog(status.errorModel)
-                } else {
-                    if (status.errorModel?.message.equals("Something went wrong. Try again later")) {
-                    } else {
-                        val bundle = Bundle()
-                        bundle.putString(
-                            Constants.NAV_FLOW_FROM,
-                            navFlowFrom
-                        )
-                        bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, true)
-                        bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, false)
-                        bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
-                        bundle.putBoolean(Constants.CARD_VALIDATION_EXISTING_CARD, true)
-                        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.size)
-                        bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList)
-                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                        findNavController().navigate(
-                            R.id.action_reValidateExistingPaymentFragment_to_reValidateInfoFragment,
-                            bundle
-                        )
-
-                    }
-                }
-            }
-
-            else -> {
-            }
-        }
-    }
-
-
-    private fun payWithExistingCard() {
-//        val model = PaymentWithExistingCardModel(
-//            addressline1 = personalInformation?.addressLine1.toString().replace(" ", ""),
-//            addressline2 = personalInformation?.addressLine2.toString().replace(" ", ""),
-//            transactionAmount = "",
-//            cardType = "",
-//            cardNumber = "",
-//            cvv = "",
-//            rowId = paymentList[position].rowId,
-//            saveCard = "",
-//            useAddressCheck = "N",
-//            firstName = paymentList[position].firstName,
-//            middleName = paymentList[position].middleName,
-//            lastName = paymentList[position].lastName,
-//            paymentType = "",
-//            primaryCard = "",
-//            maskedCardNumber = "",
-//            easyPay = "",
-//            cavv = paymentSuccessResponse?.cavv,
-//            xid = paymentSuccessResponse?.xid,
-//            threeDsVersion = paymentSuccessResponse?.threeDsVersion,
-//            directoryServerId = paymentSuccessResponse?.directoryServerId,
-//            cardHolderAuth = paymentSuccessResponse?.cardHolderAuth,
-//            eci = paymentSuccessResponse?.eci
-//
-//
-//        )
-//        Log.d("paymentRequest", Gson().toJson(model))
-//        manualTopUpViewModel.paymentWithExistingCard(model)
-    }
-
 
 }

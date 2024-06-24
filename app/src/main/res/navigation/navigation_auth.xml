@@ -121,6 +121,12 @@
             android:id="@+id/action_threeDSWebViewFragment_to_accountSuspendedFinalPayFragment"
             app:destination="@+id/accountSuspendedFinalPayFragment" />
 
+
+        <action
+            android:id="@+id/action_threeDSWebViewFragment_to_reValidateInfoFragment"
+            app:destination="@+id/reValidateInfoFragment" />
+
+
     </fragment>
     <fragment
         android:id="@+id/accountSuspendedFinalPayFragment"

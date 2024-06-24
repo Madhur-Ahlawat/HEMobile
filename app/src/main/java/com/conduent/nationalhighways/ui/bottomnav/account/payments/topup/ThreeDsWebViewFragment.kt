@@ -1,35 +1,42 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.payments.topup
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.webkit.JavascriptInterface
-import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
+import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
+import com.conduent.nationalhighways.data.model.revalidate.RevalidateCardModel
 import com.conduent.nationalhighways.databinding.FragmentThreeDSWebviewBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.ui.auth.suspended.ManualTopUpViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.revalidatePayment.RevalidateViewModel
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.observe
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), View.OnClickListener {
 
 
@@ -39,9 +46,12 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
     private var accountInformation: AccountInformation? = null
     private var paymentListSize: Int = 0
     private var flow: String = ""
+    private var cardSecurityCode: String = ""
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var position: Int = 0
-
+    private var cardValidationFirstTime: Boolean = true
+    private var cardValidationSecondTime: Boolean = false
+    private val revalidateViewModel: RevalidateViewModel by viewModels()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -55,6 +65,10 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             paymentList = arguments?.getParcelableArrayList(Constants.DATA)
         }
 
+        if (arguments?.containsKey(Constants.CARD_SECURITY_CODE) == true) {
+            cardSecurityCode = arguments?.getString(Constants.CARD_SECURITY_CODE) ?: ""
+        }
+
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
         topUpAmount = arguments?.getDouble(Constants.PAYMENT_TOP_UP) ?: 0.0
 
@@ -62,6 +76,15 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
+
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_FIRST_TIME) == true) {
+            cardValidationFirstTime =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_FIRST_TIME) ?: true
+        }
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_SECOND_TIME) == true) {
+            cardValidationSecondTime =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_SECOND_TIME) ?: false
         }
 
         binding.webView.settings.javaScriptEnabled = true
@@ -84,6 +107,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
 
     }
+
 
     //    val a11yDelegate = object : AccessibilityDelegateCompat() {
 //        override fun onInitializeAccessibilityNodeInfo(
@@ -123,28 +147,45 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                             val paymentSuccessResponse =
                                 gson.fromJson(data, PaymentSuccessResponse::class.java)
 
-                            if (paymentSuccessResponse.cardHolderAuth.equals("verified", true)) {
-                                val bundle = Bundle()
-                                bundle.putParcelable(Constants.NEW_CARD, paymentSuccessResponse)
-                                bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
-                                bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount)
-                                bundle.putInt(Constants.POSITION, position)
-                                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                                bundle.putParcelable(
-                                    Constants.ACCOUNTINFORMATION,
-                                    accountInformation
-                                )
-                                bundle.putString(Constants.CURRENTBALANCE, currentBalance)
-                                bundle.putString(Constants.NAV_FLOW_KEY, flow)
-                                bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                                bundle.putParcelableArrayList(
-                                    Constants.DATA,
-                                    paymentList as ArrayList
-                                )
-                                findNavController().navigate(
-                                    R.id.action_threeDSWebViewFragment_to_accountSuspendedFinalPayFragment,
-                                    bundle
-                                )
+                            if (navFlowCall == Constants.CARD_VALIDATION_REQUIRED) {
+                                if (paymentSuccessResponse.cardHolderAuth.equals(
+                                        "verified",
+                                        true
+                                    )
+                                ) {
+                                    payWithExistingCard(paymentSuccessResponse)
+                                }
+                            } else {
+                                if (paymentSuccessResponse.cardHolderAuth.equals(
+                                        "verified",
+                                        true
+                                    )
+                                ) {
+                                    val bundle = Bundle()
+                                    bundle.putParcelable(Constants.NEW_CARD, paymentSuccessResponse)
+                                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+                                    bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount)
+                                    bundle.putInt(Constants.POSITION, position)
+                                    bundle.putParcelable(
+                                        Constants.PERSONALDATA,
+                                        personalInformation
+                                    )
+                                    bundle.putParcelable(
+                                        Constants.ACCOUNTINFORMATION,
+                                        accountInformation
+                                    )
+                                    bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+                                    bundle.putString(Constants.NAV_FLOW_KEY, flow)
+                                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                                    bundle.putParcelableArrayList(
+                                        Constants.DATA,
+                                        paymentList as ArrayList
+                                    )
+                                    findNavController().navigate(
+                                        R.id.action_threeDSWebViewFragment_to_accountSuspendedFinalPayFragment,
+                                        bundle
+                                    )
+                                }
                             }
                         }
 
@@ -214,22 +255,6 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                /* view?.loadUrl(
-                     "javascript:(function() { " +
-                             "document.addEventListener('DOMContentLoaded', function() { " +
-                             "console.log('Page loaded'); " +
-                             "var inputs = document.getElementsByTagName('input'); " +
-                             "console.log('Found ' + inputs.length + ' input elements'); " +
-                             "for (var i = 0; i < inputs.length; i++) { " +
-                             "inputs[i].addEventListener('focus', function() { " +
-                             "console.log('Input focused'); " +
-                             "window.appInterface.showKeyboard(); " +
-                             "}); " +
-                             "} " +
-                             "}); " +
-                             "})()"
-                 )*/
-
                 val amount: Double = topUpAmount
                 val doubleAmount = String.format("%.2f", amount)
 
@@ -237,9 +262,13 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                 if (navFlowCall == Constants.CARD_VALIDATION_REQUIRED) {
                     view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = '${"GBP"}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('amount').innerText = '${"0"}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('customerVaultId').innerText = '${ paymentList?.get(
-                        position
-                    )?.customerVaultId}';})()")
+                    view?.loadUrl(
+                        "javascript:(function(){document.getElementById('customerVaultId').innerText = '${
+                            paymentList?.get(
+                                position
+                            )?.customerVaultId
+                        }';})()"
+                    )
                     view?.loadUrl("javascript:(function(){document.getElementById('email').innerText = '${personalInformation?.emailAddress}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('city').innerText = '${personalInformation?.city}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('address1').innerText = '${personalInformation?.addressLine1}';})()")
@@ -247,10 +276,9 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                     view?.loadUrl("javascript:(function(){document.getElementById('lastName').innerText = '${personalInformation?.lastName}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('postalCode').innerText = '${personalInformation?.zipCode}';})()")
                     view?.loadUrl("javascript:(function(){document.getElementById('country').innerText = '${personalInformation?.country}';})()")
-                    view?.loadUrl("javascript:(function(){document.getElementById('challengeIndicator').innerText = '${""}';})()")
+                    view?.loadUrl("javascript:(function(){document.getElementById('challengeIndicator').innerText = '${"04"}';})()")
 
                 } else {
-
                     view?.loadUrl(
                         "javascript:(function(){document.getElementById('customerVaultId').innerText = '${
                             paymentList?.get(
@@ -293,10 +321,123 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
 
     override fun observer() {
 
+        lifecycleScope.launch {
+            observe(
+                revalidateViewModel.paymentWithExistingCard,
+                ::handlePaymentWithExistingCardResponse
+            )
+        }
     }
 
     override fun onClick(p0: View?) {
     }
 
 
+    private fun payWithExistingCard(paymentSuccessResponse: PaymentSuccessResponse) {
+        showLoader()
+        val paymentModel = paymentList?.get(
+            position
+        )
+        val model = RevalidateCardModel(
+            cardType = paymentList?.get(
+                position
+            )?.cardType ?: "",
+            cvv = cardSecurityCode,
+            rowId = paymentModel?.rowId ?: "",
+            cardVerify = "Y",
+            source = "MOBILEAPP",
+            saveCard = "Y",
+            firstName = paymentModel?.firstName ?: "",
+            lastName = paymentModel?.lastName ?: "",
+            addressline1 = personalInformation?.addressLine1.toString().replace(" ", "").replace("null",""),
+            city = personalInformation?.city?:"",
+            state = personalInformation?.state?:"",
+            country = personalInformation?.country?:"",
+            zipcode1 = personalInformation?.zipcode?:"",
+            customerVaultId = paymentModel?.customerVaultId ?: "",
+            paymentType = "card",
+            primaryCard = "Y",
+            easyPay = "Y",
+            cardCVV = cardSecurityCode,
+            cavv = paymentSuccessResponse.cavv ?: "",
+            xid = paymentSuccessResponse.xid ?: "",
+            directoryServerId = paymentSuccessResponse.directoryServerId ?: "",
+            eci = paymentSuccessResponse.eci ?: "",
+            cardholderAuth = paymentSuccessResponse.cardHolderAuth ?: "",
+            threeDsVer = paymentSuccessResponse.threeDsVersion ?: "",
+
+
+            )
+        Log.d("paymentRequest", Gson().toJson(model))
+        revalidateViewModel.paymentWithExistingCard(model)
+    }
+
+    private fun handlePaymentWithExistingCardResponse(resource: Resource<PaymentMethodDeleteResponseModel?>?) {
+        hideLoader()
+        when (resource) {
+            is Resource.Success -> {
+                if (resource.data?.statusCode == "0") {
+                    val bundle = Bundle()
+                    bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+
+                    bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
+                    bundle.putInt(Constants.POSITION, position)
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                    bundle.putParcelableArrayList(
+                        Constants.PAYMENT_LIST_DATA,
+                        paymentList as ArrayList
+                    )
+                    findNavController().navigate(
+                        R.id.action_threeDSWebViewFragment_to_reValidateInfoFragment,
+                        bundle
+                    )
+                }else{
+                    redirectToErrorPage()
+                }
+            }
+
+            is Resource.DataError -> {
+                if (checkSessionExpiredOrServerError(resource.errorModel)
+                ) {
+                    displaySessionExpireDialog(resource.errorModel)
+                } else {
+                    if (resource.errorModel?.message.equals("Something went wrong. Try again later")) {
+                    } else {
+                       redirectToErrorPage()
+                    }
+                }
+            }
+
+            is Resource.Loading -> {
+
+            }
+
+            else -> {
+
+            }
+        }
+    }
+
+    private fun redirectToErrorPage() {
+        val bundle = Bundle()
+        bundle.putString(
+            Constants.NAV_FLOW_FROM,
+            navFlowFrom
+        )
+        bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, cardValidationFirstTime)
+        bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, cardValidationSecondTime)
+        bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
+        bundle.putBoolean(Constants.CARD_VALIDATION_EXISTING_CARD, true)
+        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
+        bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)
+        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+        findNavController().navigate(
+            R.id.action_threeDSWebViewFragment_to_reValidateInfoFragment,
+            bundle
+        )
+
+    }
+
 }
+
+

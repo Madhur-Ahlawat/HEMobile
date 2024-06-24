@@ -9,10 +9,13 @@ import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentRevalidatePaymentCardBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
+import com.google.android.gms.auth.api.Auth
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -77,13 +80,19 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
             } else {
                 binding.titleTv.text =
                     resources.getString(R.string.str_revalidate_payment_card_details)
-
                 binding.desc2Tv.text =
                     resources.getString(R.string.str_revalidate_payment_card_details_desc2)
                 binding.descTv.text =
                     resources.getString(R.string.str_revalidate_payment_card_details_payg)
-
             }
+        }
+
+        binding.radioButtonYes.setAccessibilityDelegate()
+        binding.radioButtonNo.setAccessibilityDelegate()
+
+
+        if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
 
 

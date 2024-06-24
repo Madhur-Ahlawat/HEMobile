@@ -118,6 +118,7 @@ object Constants {
     const val PAYMENT_RESPONSE = "payment_resp"
     const val PAYMENT_DATA = "payment_data"
     const val PAYMENT_METHOD_SIZE = "payment_method_size"
+    const val CARD_SECURITY_CODE = "card_security_code"
     const val VEHICLE_DATA = "vehicle_data"
     const val VEHICLE_SCREEN_TYPE_LIST = 1
     const val VEHICLE_SCREEN_TYPE_ADD = 2

@@ -40,6 +40,7 @@ import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryListResponse
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryStatusRequest
+import com.conduent.nationalhighways.data.model.revalidate.RevalidateCardModel
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.model.vehicle.*
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
@@ -378,6 +379,11 @@ interface ApiService {
     @POST(PAYMENT_WITH_EXISTING_CARD)
     suspend fun paymentWithExistingCard(
         @Body model: PaymentWithExistingCardModel?
+    ): Response<PaymentMethodDeleteResponseModel?>?
+
+    @POST(EDIT_CARD)
+    suspend fun paymentWithExistingCard(
+        @Body model: RevalidateCardModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 
     @GET(VIEW_ACCOUNT_BALANCE)

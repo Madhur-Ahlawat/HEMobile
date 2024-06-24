@@ -95,19 +95,19 @@ class SuspendPaymentMethodAdapter(
             model.isSelected = true
         }
 
-        holder.binding.layout.setOnClickListener {
-            pos = position
-            if (list?.get(pos)?.isSelected == true) {
-                list?.get(pos)?.isSelected = false
-                holder.binding.radioButtonPaymentMethod.isChecked = false
-
-            } else {
-                list?.get(pos)?.isSelected = true
-                holder.binding.radioButtonPaymentMethod.isChecked = true
-            }
-            notifyDataSetChanged()
-            paymentMethod.paymentMethodCallback(pos)
-        }
+//        holder.binding.layout.setOnClickListener {
+//            pos = position
+//            if (list?.get(pos)?.isSelected == true) {
+//                list?.get(pos)?.isSelected = false
+//                holder.binding.radioButtonPaymentMethod.isChecked = false
+//
+//            } else {
+//                list?.get(pos)?.isSelected = true
+//                holder.binding.radioButtonPaymentMethod.isChecked = true
+//            }
+//            notifyDataSetChanged()
+//            paymentMethod.paymentMethodCallback(pos)
+//        }
         holder.binding.radioButtonPaymentMethod.setOnClickListener {
             pos = position
             if (list?.get(pos)?.isSelected == true) {

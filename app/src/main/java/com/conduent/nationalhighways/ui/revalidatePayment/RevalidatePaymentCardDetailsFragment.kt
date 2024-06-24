@@ -12,6 +12,7 @@ import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentRevalidatePaymentCardDetailsBinding
 import com.conduent.nationalhighways.ui.auth.adapter.SuspendPaymentMethodAdapter
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
@@ -86,6 +87,10 @@ class RevalidatePaymentCardDetailsFragment :
                 R.id.action_reValidatePaymentCardDetailsFragment_to_nmiPaymentFragment,
                 bundle
             )
+        }
+
+        if(requireActivity() is AuthActivity){
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
     }
 

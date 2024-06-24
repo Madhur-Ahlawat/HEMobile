@@ -94,14 +94,15 @@
                     android:importantForAccessibility="yes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="50"
+                    android:maxLength="4"
                     app:imeOptions="actionNext"
-                    app:inputType="text"
+                    app:drawableRight="@drawable/credit_card_image"
+                    app:inputType="number"
                     app:labelText="@string/str_card_security_code"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView"
-                    app:maxLength="50" />
+                    app:maxLength="4" />
 
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -112,6 +113,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardSecurityEt"/>
+
+
+
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkBoxTerms"
@@ -127,8 +131,9 @@
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/next_btn"
                     style="@style/PrimaryButton"
-                    android:layout_marginTop="@dimen/margin_25dp"
+                    android:layout_marginTop="@dimen/margin_30dp"
                     android:fontFamily="@font/roboto_bold"
+                    android:enabled="false"
                     android:text="@string/str_continue"
                     android:textSize="@dimen/font_16sp"
                     app:layout_constraintEnd_toEndOf="parent"
