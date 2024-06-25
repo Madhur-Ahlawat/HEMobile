@@ -798,6 +798,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').checked = true; document.getElementById('cardChecked').style.pointerEvents = 'none';})()")
+
                         view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='PROCEED WITH PAYMENT';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
