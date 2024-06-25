@@ -23,29 +23,41 @@
             android:paddingBottom="@dimen/margin_18dp"
             tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
-            <ImageView
-                android:id="@+id/warningIcon"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="100dp"
-                android:src="@drawable/ic_red_warning_icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/maximumVehicleAdded"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/titleCl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_23dp"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="center"
-                android:text="@string/str_your_account_has_been_suspended"
-                android:textColor="@color/new_btn_color"
-                android:textSize="@dimen/font_16sp"
+                android:layout_marginTop="100dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+                app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:id="@+id/warningIcon"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:src="@drawable/ic_red_warning_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/maximumVehicleAdded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_23dp"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/str_your_account_has_been_suspended"
+                    android:textColor="@color/new_btn_color"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
                 android:id="@+id/textMaximumVehicle"
@@ -58,7 +70,7 @@
                 android:text="@string/str_you_will_need_to_pay"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_14sp"
-                app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded" />
+                app:layout_constraintTop_toBottomOf="@id/titleCl" />
 
             <TextView
                 android:id="@+id/maximumVehicleAddedNote"
