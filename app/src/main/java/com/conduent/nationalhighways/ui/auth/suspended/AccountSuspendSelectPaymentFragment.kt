@@ -64,11 +64,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initCtrl() {
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        } else if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBarAuth()
-        }
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
 
         if (!isViewCreated) {
@@ -123,7 +118,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         Selection.setSelection(binding.topBalance.editText.text, (edtLength?:0) - 1)
         if (navFlowCall == Constants.PAYMENT_TOP_UP && requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_top_up))
+        }
 
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
     }
 
