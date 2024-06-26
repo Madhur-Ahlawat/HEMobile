@@ -310,7 +310,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                 error: WebResourceError?
             ) {
                 super.onReceivedError(view, request, error)
-
+                Log.e("TAG", "onReceivedError: ", )
             }
         }
         binding.webView.webViewClient = webViewClient

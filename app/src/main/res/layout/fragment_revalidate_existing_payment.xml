@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:maxLength="4"
                     app:imeOptions="actionNext"
-                    app:drawableRight="@drawable/credit_card_image"
+                    app:drawableRight="@drawable/new_credit_card"
                     app:inputType="number"
                     app:labelText="@string/str_card_security_code"
                     app:layout_constraintEnd_toEndOf="parent"

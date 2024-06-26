@@ -343,7 +343,15 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         }
 
                         "termsClick"->{
-                            if (NewCreateAccountRequestModel.prePay) {
+                            if (accountInformation?.accountType.equals(
+                                    "BUSINESS",
+                                    true
+                                ) || ((accountInformation?.accSubType.equals(
+                                    "STANDARD", true
+                                ) && accountInformation?.accountType.equals(
+                                    "PRIVATE", true
+                                )))
+                            ) {
                                 findNavController().navigate(R.id.action_nmiPaymentFragment_to_generalTermsAndConditions)
                             } else {
                                 findNavController().navigate(R.id.action_nmiPaymentFragment_to_paygtermsandconditions)
