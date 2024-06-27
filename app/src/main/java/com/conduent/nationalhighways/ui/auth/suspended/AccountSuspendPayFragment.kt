@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -105,14 +104,15 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 binding.ivCardType.setImageResource(R.drawable.mastercard)
 
             }
-            val htmlText =
-                Html.fromHtml(responseModel?.card?.type?.uppercase() + "<br>" + responseModel?.card?.number?.let {
+
+            binding.tvSelectPaymentMethod.text = resources.getString(
+                R.string.concatenate_two_strings_with_space,
+                responseModel?.card?.type?.uppercase(),
+                responseModel?.card?.number?.let {
                     Utils.maskCardNumber(
                         it
                     )
-                }, Html.FROM_HTML_MODE_COMPACT)
-
-            binding.tvSelectPaymentMethod.text = htmlText
+                })
 
             binding.cardView.contentDescription =
                 responseModel?.card?.type?.uppercase() + " " + Utils.accessibilityForNumbers(
@@ -157,14 +157,13 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 )
             )
 
-            val htmlText = Html.fromHtml(
-                paymentList[position].cardType + "<br>" + Utils.maskCardNumber(
+            binding.tvSelectPaymentMethod.text = resources.getString(
+                R.string.concatenate_two_strings_with_space,
+                paymentList[position].cardType,
+                Utils.maskCardNumber(
                     paymentList[position].cardNumber
-                ),
-                Html.FROM_HTML_MODE_COMPACT
+                )
             )
-
-            binding.tvSelectPaymentMethod.text = htmlText
             if (requireActivity() is MakeOffPaymentActivity) {
                 (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
             }

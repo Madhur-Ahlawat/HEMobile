@@ -98,14 +98,14 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                 binding.ivCardType.setImageResource(R.drawable.mastercard)
 
             }
-            val htmlText =
-                Html.fromHtml(responseModel?.card?.type?.uppercase() + "<br>" + responseModel?.card?.number?.let {
-                    Utils.maskCardNumber(
-                        it
-                    )
-                }, Html.FROM_HTML_MODE_COMPACT)
 
-            binding.tvSelectPaymentMethod.text = htmlText
+
+            binding.tvSelectPaymentMethod.text = resources.getString(R.string.concatenate_two_strings_with_space,responseModel?.card?.type?.uppercase(), responseModel?.card?.number?.let {
+                Utils.maskCardNumber(
+                    it
+                )
+            })
+
             binding.cardView.contentDescription =
                 responseModel?.card?.type?.uppercase() + "." + Utils.accessibilityForNumbers(
                     responseModel?.card?.number?.let {
