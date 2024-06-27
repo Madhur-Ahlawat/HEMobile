@@ -70,7 +70,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     var dataBinding: ActivityHomeMainBinding? = null
 
     lateinit var profileDetailModel: ProfileDetailModel
-    private var focusToolBarType:Int=0
+    private var focusToolBarType:String=""
 
     companion object {
         var dateRangeModel: PaymentDateRangeModel? = null
@@ -594,8 +594,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding?.backButton?.requestFocus()
     }
 
-    fun focusToolBarHome(type:Int=0) {
-        if(focusToolBarType==0||focusToolBarType!=type) {
+    fun focusToolBarHome(type:String="") {
+        if(focusToolBarType==""||focusToolBarType!=type) {
             Log.e("TAG", "focusToolBarHome:@@ $type  focusToolBarType $focusToolBarType")
             dataBinding?.backButton?.requestFocus() // Focus on the backButton
             val task = Runnable {

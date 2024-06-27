@@ -243,7 +243,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     private fun callFocusToolBarHome() {
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome(-2)
+            (requireActivity() as HomeActivityMain).focusToolBarHome(Constants.ProfileManagemnt)
             (requireActivity() as HomeActivityMain).requestFocusBackIcon()
         }
 

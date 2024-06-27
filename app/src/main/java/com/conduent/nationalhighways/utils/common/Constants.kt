@@ -313,5 +313,10 @@ object Constants {
     const val FOREGROUND_SERVICE_NOTIFICATIONID = 12334
 
 
+    const val threeDSWeb="threeDSWeb"
+    const val AccountSuspendPay="AccountSuspendPay"
+    const val AccountSuspendSelect="AccountSuspendSelect"
+    const val ProfileManagemnt="ProfileManagemnt"
+    const val AccountFrag="AccountFrag"
 
 }
