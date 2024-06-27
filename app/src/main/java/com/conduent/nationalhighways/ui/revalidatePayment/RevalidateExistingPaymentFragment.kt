@@ -84,7 +84,7 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
 
         }
         val htmlText =
-            Html.fromHtml(responseModel?.cardType?.uppercase() + "<br>" + responseModel?.cardNumber?.let {
+            Html.fromHtml(responseModel?.cardType?.uppercase()+" " + responseModel?.cardNumber?.let {
                 Utils.maskCardNumber(
                     it
                 )

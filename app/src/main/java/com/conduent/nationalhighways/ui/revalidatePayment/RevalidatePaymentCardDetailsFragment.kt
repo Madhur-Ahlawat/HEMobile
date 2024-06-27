@@ -57,6 +57,23 @@ class RevalidatePaymentCardDetailsFragment :
             paymentList?.add(model)
         }
 
+        if (accountInformation?.accountType.equals(
+                "BUSINESS",
+                true
+            ) || ((accountInformation?.accSubType.equals(
+                "STANDARD", true
+            ) && accountInformation?.accountType.equals(
+                "PRIVATE", true
+            )))
+        ) {
+            //prepay
+            binding.descTv.text=resources.getString(R.string.str_to_continue_use_account_prepay)
+
+        }else{
+            //payg
+            binding.descTv.text=resources.getString(R.string.str_to_continue_use_account)
+
+        }
         initAdapter()
 
         binding.btnContinue.setOnClickListener {
