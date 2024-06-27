@@ -274,7 +274,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         }
         dashboardViewModel.accountType.observe(this@AccountFragment) {
             if (requireActivity() is HomeActivityMain) {
-                (requireActivity() as HomeActivityMain).focusToolBarHome(-1)
+                (requireActivity() as HomeActivityMain).focusToolBarHome(Constants.AccountFrag)
             }
         }
     }

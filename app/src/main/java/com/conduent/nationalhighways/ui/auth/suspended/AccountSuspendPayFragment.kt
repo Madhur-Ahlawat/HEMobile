@@ -70,11 +70,6 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun initCtrl() {
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        } else if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBarAuth()
-        }
         val receivedList = arguments?.getParcelableArrayList<CardListResponseModel>(Constants.DATA)
 
 
@@ -182,6 +177,11 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
                 )
 
 
+        }
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome(Constants.AccountSuspendPay)
+        } else if (requireActivity() is AuthActivity) {
+//            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
     }
 

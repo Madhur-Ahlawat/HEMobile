@@ -59,9 +59,9 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         topUpAmount = arguments?.getDouble(Constants.PAYMENT_TOP_UP) ?: 0.0
 
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
+            (requireActivity() as HomeActivityMain).focusToolBarHome(Constants.threeDSWeb)
         } else if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBarAuth()
+//            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
 
         binding.webView.settings.javaScriptEnabled = true
