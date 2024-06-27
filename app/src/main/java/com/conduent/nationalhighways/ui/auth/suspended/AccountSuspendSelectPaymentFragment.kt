@@ -120,11 +120,6 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_top_up))
         }
 
-        if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).focusToolBarHome()
-        } else if (requireActivity() is AuthActivity) {
-            (requireActivity() as AuthActivity).focusToolBarAuth()
-        }
     }
 
     private fun topBalanceDecimal(b: Boolean) {
@@ -324,6 +319,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             else -> {
             }
+        }
+
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome(Constants.AccountSuspendSelect)
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth(Constants.AccountSuspendSelect)
         }
     }
 

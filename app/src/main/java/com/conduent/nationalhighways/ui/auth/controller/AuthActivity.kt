@@ -45,6 +45,7 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
     private var navFlowFrom: String = ""
     private var lrdsAccount: Boolean = false
 
+    private var focusToolBarType: String = ""
     private var cardValidationRequired: Boolean = false
     private var paymentList: ArrayList<CardListResponseModel?>? = ArrayList()
 
@@ -251,19 +252,21 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
         super.onDestroy()
     }
 
-    fun focusToolBarAuth() {
-        val task = Runnable {
-            if (binding.toolBarLyt.backButton.isVisible) {
-                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
-                binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
-            } else {
-                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
-                binding.toolBarLyt.titleTxt.requestFocus() // Focus on the backButton
+    fun focusToolBarAuth(type: String = "") {
+        if (focusToolBarType == "" || focusToolBarType != type) {
+            binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+            val task = Runnable {
+                if (binding.toolBarLyt.backButton.isVisible) {
+                    binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                    binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                } else {
+                    binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                    binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                }
             }
+            val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+            worker.schedule(task, 1, TimeUnit.SECONDS)
         }
-        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
-        worker.schedule(task, 1, TimeUnit.SECONDS)
+        focusToolBarType = type
     }
 }
