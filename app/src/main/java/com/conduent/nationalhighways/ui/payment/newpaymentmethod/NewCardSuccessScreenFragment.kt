@@ -195,7 +195,17 @@ class NewCardSuccessScreenFragment : BaseFragment<FragmentNewCardSuccessScreenBi
             binding.feedbackBt.gone()
         }
 
+        if (binding.textDefault.visibility == View.GONE) {
+            binding.tvSelectPaymentMethod.text = resources.getString(
+                R.string.concatenate_two_strings_with_space,
+                responseModel?.card?.type?.uppercase(),
+                responseModel?.card?.number?.let {
+                    Utils.maskCardNumber(it)
+                })
+        }
         setContentDescriptionForCard()
+
+
     }
 
     private fun setContentDescriptionForCard() {

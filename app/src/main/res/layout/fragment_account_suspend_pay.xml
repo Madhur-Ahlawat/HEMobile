@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_18dp"
                         android:fontFamily="@font/open_sans"
-                        android:textColor="@color/gray_707070"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/font_16sp"
                         android:importantForAccessibility="no"
                         app:layout_constraintBottom_toBottomOf="parent"

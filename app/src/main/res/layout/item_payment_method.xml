@@ -52,7 +52,7 @@
             android:importantForAccessibility="no"
             android:layout_marginStart="@dimen/margin_8dp"
             tools:text="Mastercard\n*****3456"
-            android:textColor="@color/gray_707070"
+            android:textColor="@color/black"
             android:fontFamily="@font/open_sans"
             android:textSize="@dimen/font_16sp"
             app:layout_constraintBottom_toBottomOf="parent"

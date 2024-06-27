@@ -39,7 +39,7 @@ class SuspendPaymentMethodAdapter(
     ) {
         var pos: Int
         val model = list?.get(position)
-        var htmlText: Spanned? = null
+        var htmlText = ""
 
         if (model?.bankAccount == false) {
             holder.binding.ivCardType.setImageResource(
@@ -48,12 +48,12 @@ class SuspendPaymentMethodAdapter(
                 )
             )
             htmlText =
-                Html.fromHtml(model.cardType + "<br>" + model.cardNumber.let {
+                model.cardType + " " + model.cardNumber.let {
                     Utils.setStarmaskcardnumber(
                         context,
                         it
                     )
-                }, Html.FROM_HTML_MODE_COMPACT)
+                }
 
             holder.binding.radioButtonPaymentMethod.contentDescription =
                 model.cardType + ", " + "${
@@ -67,12 +67,11 @@ class SuspendPaymentMethodAdapter(
         } else {
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             htmlText =
-                Html.fromHtml(
-                    context.getString(R.string.direct_debit) + "<br>" + model?.bankAccountNumber?.let {
+                    context.getString(R.string.direct_debit) + " " + model?.bankAccountNumber?.let {
                         Utils.maskCardNumber(
                             it
                         )
-                    })
+                    }
             holder.binding.radioButtonPaymentMethod.contentDescription =
                 context.getString(R.string.direct_debit) + ", " + "${
                     Utils.accessibilityForNumbers(
