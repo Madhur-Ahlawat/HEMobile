@@ -22,14 +22,14 @@
             android:id="@+id/radioButton_payment_method"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:minWidth="@dimen/margin_48dp"
+            android:layout_marginStart="@dimen/margin_20dp"
+            android:buttonTint="@color/new_btn_color"
             android:importantForAccessibility="yes"
+            android:minWidth="@dimen/margin_48dp"
             android:screenReaderFocusable="true"
             android:textColor="@color/transparent"
-            android:layout_marginStart="@dimen/margin_20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:buttonTint="@color/new_btn_color"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -45,18 +45,22 @@
         <TextView
             android:id="@+id/tv_select_payment_method"
             style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8dp"
-            android:screenReaderFocusable="true"
-            tools:text="Mastercard *****3456"
-            android:importantForAccessibility="yes"
-            android:textColor="@color/black"
             android:fontFamily="@font/open_sans"
+            android:importantForAccessibility="yes"
+            android:paddingTop="@dimen/margin_5dp"
+            android:paddingBottom="@dimen/margin_5dp"
+            android:screenReaderFocusable="true"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_16sp"
+            android:layout_marginEnd="@dimen/margin_15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivCardType"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Mastercard*****" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
