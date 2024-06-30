@@ -196,7 +196,7 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                     binding.toolBarLyt.materialToolbar.visible()
                 }
             }
-
+            Log.e("TAG", "initViewBinding: check back " )
             if(destination.id==R.id.reValidatePaymentCardFragment || destination.id ==R.id.reValidateInfoFragment){
                 binding.toolBarLyt.backButton.gone()
             }else{
@@ -268,5 +268,11 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
             worker.schedule(task, 1, TimeUnit.SECONDS)
         }
         focusToolBarType = type
+    }
+
+    fun showBackButton() {
+        Log.e("TAG", "initViewBinding: check back- " )
+        binding.toolBarLyt.backButton.visible()
+
     }
 }

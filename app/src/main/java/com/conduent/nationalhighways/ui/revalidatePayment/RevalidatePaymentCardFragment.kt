@@ -125,7 +125,7 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
                 if (binding.radioButtonNo.isChecked) {
 
                     val bundle = Bundle()
-                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, true)
                     bundle.putString(Constants.NAV_FLOW_FROM, Constants.CARD_VALIDATION_LATER_DATE)
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_LATER_DATE)
                     bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
