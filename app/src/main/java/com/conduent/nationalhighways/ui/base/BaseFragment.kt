@@ -94,33 +94,19 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         observer()
         initCtrl()
         init()
+        callOnBackListener()
+    }
 
+    private fun callOnBackListener() {
         if(onBackPressedCallback==null) {
             onBackPressedCallback = object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     backPressListener?.onBackButtonPressed()
-                    Log.e("TAG", "handleOnBackPressed: handleOnBackPressed $backButton")
                     if (backButton) {
                         isEnabled = false
-                        requireActivity().onBackPressedDispatcher.onBackPressed()
                     } else {
                         Utils.vibrate(requireActivity())
                     }
-                }
-
-                override fun handleOnBackStarted(backEvent: BackEventCompat) {
-                    super.handleOnBackStarted(backEvent)
-                    Log.e("TAG", "handleOnBackPressed: handleOnBackStarted $backButton")
-                }
-
-                override fun handleOnBackCancelled() {
-                    super.handleOnBackCancelled()
-                    Log.e("TAG", "handleOnBackPressed: handleOnBackCancelled $backButton")
-                }
-
-                override fun handleOnBackProgressed(backEvent: BackEventCompat) {
-                    super.handleOnBackProgressed(backEvent)
-                    Log.e("TAG", "handleOnBackPressed: handleOnBackProgressed $backButton")
                 }
             }
             requireActivity().onBackPressedDispatcher.addCallback(
@@ -140,40 +126,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     }
 
 
-    override fun onStart() {
-        super.onStart()
-//        backClickListener()
-    }
 
-    override fun onStop() {
-        super.onStop()
-//        onBackPressedCallback?.remove()
-//        onBackPressedCallback = null
-    }
-
-
-    /*private fun backClickListener() {
-        Log.e("TAG", "backClickListener: onBackPressedCallback "+onBackPressedCallback )
-        onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-
-                backPressListener?.onBackButtonPressed()
-                Log.e("TAG", "handleOnBackPressed: backButton "+backButton )
-                if (backButton) {
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                    // Implement your custom back navigation logic
-                } else {
-                    Utils.vibrate(requireActivity())
-                }
-            }
-        }
-        Log.e("TAG", "backClickListener: onBackPressedCallback-> "+onBackPressedCallback )
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
-            onBackPressedCallback as OnBackPressedCallback
-        )
-    }*/
 
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B
     abstract fun init()
@@ -186,9 +139,6 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
-
-//        onBackPressedCallback?.isEnabled = true
-
     }
 
     fun checkBackIcon() {
@@ -203,9 +153,6 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     override fun onPause() {
         super.onPause()
         AdobeAnalytics.setLifeCycleCallAdobe(false)
-
-//        onBackPressedCallback?.isEnabled = false
-
     }
 
     fun checkSessionExpiredOrServerError(errorResponsModel: ErrorResponseModel?): Boolean {
@@ -437,7 +384,6 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.e("TAG","onDestroyView basefragment")
         onBackPressedCallback?.remove()
         onBackPressedCallback = null
         if (loaderDialog?.isVisible == true) {
