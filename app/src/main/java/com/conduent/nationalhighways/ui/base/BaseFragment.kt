@@ -15,6 +15,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.BackEventCompat
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -57,6 +58,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     private var backPressListener: BackPressListener? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
     private var loaderDialog: LoaderDialog? = null
+    private var onBackPressedCallback: OnBackPressedCallback? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,6 +86,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         if ((requireActivity() is HomeActivityMain) && !backButton) {
             (requireActivity() as HomeActivityMain).hideBackIcon()
         }
+
         return _binding?.root
     }
 
@@ -91,8 +94,27 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         observer()
         initCtrl()
         init()
+        callOnBackListener()
+    }
 
-        backClickListener()
+    private fun callOnBackListener() {
+        if(onBackPressedCallback==null) {
+            onBackPressedCallback = object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    backPressListener?.onBackButtonPressed()
+                    if (backButton) {
+                        isEnabled = false
+                    } else {
+                        Utils.vibrate(requireActivity())
+                    }
+                }
+            }
+            requireActivity().onBackPressedDispatcher.addCallback(
+                viewLifecycleOwner,
+                onBackPressedCallback!!
+            )
+
+        }
     }
 
     fun setBackPressListener(listener: BackPressListener) {
@@ -104,27 +126,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     }
 
 
-    private fun backClickListener() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
 
-                backPressListener?.onBackButtonPressed()
-
-                if (backButton) {
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                    // Implement your custom back navigation logic
-                } else {
-                    Utils.vibrate(requireActivity())
-                }
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-        if (navData != null && navData is CrossingDetailsModelsResponse) {
-            Log.e("EXPIRY", (navData as CrossingDetailsModelsResponse).expirationDate)
-        }
-    }
 
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B
     abstract fun init()
@@ -137,8 +139,6 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
-
-
     }
 
     fun checkBackIcon() {
@@ -384,6 +384,9 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.e("TAG","onDestroyView basefragment")
+        onBackPressedCallback?.remove()
+        onBackPressedCallback = null
         if (loaderDialog?.isVisible == true) {
             loaderDialog?.dismiss()
         }
