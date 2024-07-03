@@ -123,7 +123,7 @@
                     style="@style/CheckBoxStyle"
                     android:layout_marginTop="@dimen/margin_25dp"
                     android:gravity="start|center"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/open_sans"
                     android:minHeight="@dimen/margin_48dp"
                     android:text="@string/str_make_default_payment_method"
                     app:layout_constraintEnd_toEndOf="parent"
