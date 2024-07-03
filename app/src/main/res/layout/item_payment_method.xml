@@ -60,7 +60,7 @@
             app:layout_constraintStart_toEndOf="@+id/ivCardType"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Mastercard*****" />
+          />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
