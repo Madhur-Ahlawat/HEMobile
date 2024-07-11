@@ -83,7 +83,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         HomeActivityMain.accountDetailsData = null
         HomeActivityMain.checkedCrossing = null
         HomeActivityMain.crossing = null
-        HomeActivityMain.dateRangeModel = null
         HomeActivityMain.paymentHistoryListData = mutableListOf()
         HomeActivityMain.paymentHistoryListDataCheckedCrossings = mutableListOf()
 

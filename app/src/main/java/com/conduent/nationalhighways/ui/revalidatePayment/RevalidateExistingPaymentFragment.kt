@@ -3,33 +3,26 @@ package com.conduent.nationalhighways.ui.revalidatePayment
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
-import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentRevalidateExistingPaymentBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.suspended.ManualTopUpViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
-import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.Utils
-import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistingPaymentBinding>() {
@@ -70,21 +63,11 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
                 arguments?.getBoolean(Constants.CARD_VALIDATION_SECOND_TIME) ?: false
         }
         position = arguments?.getInt(Constants.POSITION, 0) ?: 0
-        Log.e("TAG", "init: position " + position)
-        Log.e("TAG", "init: paymentList " + paymentList)
         responseModel = paymentList[position]
-
-        if (responseModel?.cardType.equals("visa", true)) {
-            binding.ivCardType.setImageResource(R.drawable.visablue)
-        } else if (responseModel?.cardType.equals("maestro", true)) {
-            binding.ivCardType.setImageResource(R.drawable.maestro)
-
-        } else {
-            binding.ivCardType.setImageResource(R.drawable.mastercard)
-
-        }
+        binding.cardSecurityEt.editText.filters = arrayOf(InputFilter.LengthFilter(4))
+        binding.ivCardType.setImageResource(Utils.setCardImage(responseModel?.cardType ?: ""))
         val htmlText =
-            Html.fromHtml(responseModel?.cardType?.uppercase()+" " + responseModel?.cardNumber?.let {
+            Html.fromHtml(responseModel?.cardType?.uppercase() + " " + responseModel?.cardNumber?.let {
                 Utils.maskCardNumber(
                     it
                 )
@@ -101,7 +84,6 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
                 }.toString()
             )
 
-
         binding.cardSecurityEt.editText.addTextChangedListener(GenericTextWatcher())
         binding.checkBoxTerms.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -113,9 +95,10 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
         binding.cardSecurityEt.editText.setAccessibilityDelegateForDigits()
         binding.checkBoxTerms.setAccessibilityDelegate()
 
-        if(requireActivity() is AuthActivity){
+        if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
+        binding.cardSecurityEt.isDisplayClearIcon = false
     }
 
     inner class GenericTextWatcher : TextWatcher {

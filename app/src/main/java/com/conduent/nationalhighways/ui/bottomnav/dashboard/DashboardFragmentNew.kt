@@ -28,7 +28,6 @@ import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dateRangeModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsInnerAdapterDashboard
@@ -391,7 +390,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 )
             }
         }
-        getPaymentHistoryList(startIndex, Constants.TOLL_TRANSACTION)
+        getPaymentHistoryList(startIndex)
     }
 
     private fun setGuideLinePercent(percent: Float, margin0dp: Int) {
@@ -614,18 +613,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun getPaymentHistoryList(
         index: Int? = 0,
-        transactionType: String? = Constants.ALL_TRANSACTION
     ) {
-        dateRangeModel = PaymentDateRangeModel(
-            filterType = Constants.PAYMENT_FILTER_SPECIFIC,
-            DateUtils.lastPriorDate(-30),
-            DateUtils.currentDate(),
-            ""
-        )
+        var priorDays = 90
+        val searchDate = "Transaction Date"
+        if (dashboardViewModel.accountInformationData.value?.accSubType == "BUSINESS"
+            || dashboardViewModel.accountInformationData.value?.accSubType === "NONREVENUE"
+        ) {
+            priorDays = 30
+        }
+
         val request = AccountPaymentHistoryRequest(
-            index, transactionType, countPerPage,
+            index, Constants.TOLL_TRANSACTION, countPerPage,
             endDate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
-            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
+            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy,priorDays),searchDate=searchDate
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }

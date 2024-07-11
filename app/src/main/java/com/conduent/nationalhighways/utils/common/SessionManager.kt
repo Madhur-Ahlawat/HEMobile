@@ -225,7 +225,6 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         prefs.edit().clear().apply()
         HomeActivityMain.accountDetailsData = null
         HomeActivityMain.crossing = null
-        HomeActivityMain.dateRangeModel = null
         HomeActivityMain.paymentHistoryListData = mutableListOf()
         saveStringData(LAST_LOGGEDIN_EMAIL, lastLoggedInEmail)
         saveStringData(LAST_RATING_TIME, lastRatingTime)

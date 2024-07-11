@@ -163,11 +163,6 @@ class CrossingDetailsFragment : BaseFragment<FragmentCrossingDetailsBinding>(),
 
     private fun getPaymentHistoryList() {
         showLoaderDialog()
-        HomeActivityMain.dateRangeModel =
-            PaymentDateRangeModel(
-                filterType = Constants.PAYMENT_FILTER_SPECIFIC,
-                DateUtils.lastPriorDate(-30), DateUtils.currentDate(), ""
-            )
         val request = CheckedCrossingTransactionsRequestModel(transactionType = "Toll_Transaction")
         viewModel.paymentHistoryDetailsCheckCrossings(request)
     }

@@ -871,15 +871,15 @@ object Utils {
     }
 
     fun setCardImage(paymentTypeInfo: String): Int {
-        return if (paymentTypeInfo.contains("CURRENT")) {
+        return if (paymentTypeInfo.uppercase().contains("CURRENT")) {
             R.drawable.directdebit
-        } else if (paymentTypeInfo.contains("SAVINGS")) {
+        } else if (paymentTypeInfo.uppercase().contains("SAVINGS")) {
             R.drawable.directdebit
-        } else if (paymentTypeInfo.contains("MASTERCARD")) {
+        } else if (paymentTypeInfo.uppercase().contains("MASTERCARD")) {
             R.drawable.mastercard
-        } else if (paymentTypeInfo.contains(Constants.MAESTRO)) {
+        } else if (paymentTypeInfo.uppercase().contains(Constants.MAESTRO)) {
             R.drawable.maestro
-        } else if (paymentTypeInfo.contains("VISA")) {
+        } else if (paymentTypeInfo.uppercase().contains("VISA")) {
             R.drawable.visablue
         } else {
             R.color.white

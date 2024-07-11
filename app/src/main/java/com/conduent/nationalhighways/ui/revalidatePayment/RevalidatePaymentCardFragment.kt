@@ -15,7 +15,6 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
-import com.google.android.gms.auth.api.Auth
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -91,7 +90,7 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
         binding.radioButtonNo.setAccessibilityDelegate()
 
 
-        if(requireActivity() is AuthActivity){
+        if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
 

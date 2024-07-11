@@ -73,7 +73,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     private var focusToolBarType:String=""
 
     companion object {
-        var dateRangeModel: PaymentDateRangeModel? = null
         var accountDetailsData: ProfileDetailModel? = null
         var crossing: TransactionData? = null
         var checkedCrossing: CheckedCrossingRecentTransactionsResponseModelItem? = null

@@ -30,9 +30,9 @@ object DateUtils {
         return SimpleDateFormat(dateFormat, Locale.US).format(Calendar.getInstance().time)
     }
 
-    fun getLast90DaysDate(dateFormat: String): String {
+    fun getLast90DaysDate(dateFormat: String, priorDays: Int = 30): String {
         val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, -31) // Subtract 90 days
+        calendar.add(Calendar.DAY_OF_YEAR, -priorDays) // Subtract 90 days
 
         val dateFormat = SimpleDateFormat(dateFormat, Locale.US) // Define the date format
         return dateFormat.format(calendar.time) // Format the date and return as a string
@@ -118,11 +118,9 @@ object DateUtils {
         val dfDate = SimpleDateFormat("dd MMM yyyy hh:mm a")
         var b = false
         try {
-            b = if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
-                true // If start date is before end date.
-            } else {
-                false // If start date is after the end date.
-            }
+            b =// If start date is after the end date.
+                    // If start date is before end date.
+                dfDate.parse(startDate).before(dfDate.parse(endDate))
 
         } catch (e: ParseException) {
             e.printStackTrace()

@@ -145,7 +145,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         setupWebView()
         if (navFlowCall == Constants.PAYMENT_TOP_UP && paymentListSize == 0) {
             if (requireActivity() is HomeActivityMain) {
-                (requireActivity() as HomeActivityMain).setTitle("Top Up New Payment Method")
+                (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.top_up))
             }
         }
     }
@@ -548,7 +548,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             maskedCardNumber = Utils.maskSixteenDigitCardNumber(responseModel?.card?.number.toString()),
             paymentType = "card",
             primaryCard = s,
-            saveCard = "",
+            saveCard = "Y",
             state = "HE",
             useAddressCheck = "N",
             zipcode1 = personalInformation?.zipcode.toString().replace(" ", ""),
@@ -560,8 +560,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             eci = paymentSuccessResponse?.eci.toString(),
             customerVaultId = null
         )
+        Log.e("TAG", "saveNewCard: addCardModel "+addCardModel.toString() )
 
-        paymentMethodViewModel.saveNewCard(addCardModel)
+//        paymentMethodViewModel.saveNewCard(addCardModel)
 
 
     }
@@ -805,10 +806,10 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
-                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
-                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').checked = true; document.getElementById('cardChecked').style.pointerEvents = 'none';})()")
-
                         view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').checked = true; document.getElementById('cardChecked').style.pointerEvents = 'none';  document.getElementById('cardChecked').className = 'custom-checkbox';})()")
+
                         view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='PROCEED WITH PAYMENT';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
@@ -816,7 +817,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
-                        view?.loadUrl("javascript:(function(){document.getElementById('checkboxHint').innerText  ='Make this my default payment method.';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('checkboxHintRevalidate').innerText  ='Make this my default payment method.';})()")
 
                     }
 

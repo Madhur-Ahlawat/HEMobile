@@ -33,8 +33,8 @@
                     android:layout_marginTop="@dimen/margin_12dp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/str_enter_security_code_existing_card"
-                    android:textSize="@dimen/font_16sp"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/font_16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,13 +43,13 @@
                     android:id="@+id/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/margin_74dp"
+                    android:layout_marginHorizontal="1dp"
                     android:layout_marginTop="30dp"
-                    app:cardCornerRadius="@dimen/margin_5dp"
+                    android:layout_marginBottom="1dp"
                     android:elevation="3dp"
                     android:importantForAccessibility="yes"
-                    android:layout_marginHorizontal="1dp"
-                    android:layout_marginBottom="1dp"
+                    android:minHeight="@dimen/margin_74dp"
+                    app:cardCornerRadius="@dimen/margin_5dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/titleTv">
 
@@ -57,53 +57,55 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:importantForAccessibility="no"
-                        >
+                        android:importantForAccessibility="no">
 
                         <ImageView
                             android:id="@+id/ivCardType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_18dp"
+                            android:importantForAccessibility="no"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:importantForAccessibility="no" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/tv_select_payment_method"
                             style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_18dp"
                             android:fontFamily="@font/open_sans"
+                            android:importantForAccessibility="no"
                             android:textColor="@color/black"
                             android:textSize="@dimen/font_16sp"
-                            android:importantForAccessibility="no"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/ivCardType"
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
-
                 <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                     android:id="@+id/cardSecurityEt"
                     style="@style/input_text"
-                    android:importantForAccessibility="yes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:importantForAccessibility="yes"
                     android:maxLength="4"
-                    app:imeOptions="actionNext"
                     app:drawableRight="@drawable/new_credit_card"
+                    app:imeOptions="actionDone"
+                    app:type="zip"
                     app:inputType="number"
+                    app:isDisplayClearIcon="false"
                     app:labelText="@string/str_card_security_code"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView"
                     app:maxLength="4" />
-
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/securityDescTv"
@@ -113,17 +115,15 @@
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardSecurityEt"/>
-
-
+                    app:layout_constraintTop_toBottomOf="@+id/cardSecurityEt" />
 
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkBoxTerms"
                     style="@style/CheckBoxStyle"
                     android:layout_marginTop="@dimen/margin_25dp"
-                    android:gravity="start|center"
                     android:fontFamily="@font/open_sans"
+                    android:gravity="start|center"
                     android:minHeight="@dimen/margin_48dp"
                     android:text="@string/str_make_default_payment_method"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -134,8 +134,8 @@
                     android:id="@+id/next_btn"
                     style="@style/PrimaryButton"
                     android:layout_marginTop="@dimen/margin_30dp"
-                    android:fontFamily="@font/roboto_bold"
                     android:enabled="false"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/str_continue"
                     android:textSize="@dimen/font_16sp"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -78,9 +78,11 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
             adapter = transactionsAdapter
         }
 
-        if (dashboardViewModel.accountInformationData.value?.accSubType.equals(Constants.PAYG)) {
-            transactionType = Constants.TOLL_TRANSACTION
-        }
+//        if (dashboardViewModel.accountInformationData.value?.accSubType.equals(Constants.PAYG)) {
+//            transactionType = Constants.TOLL_TRANSACTION
+//        }
+        transactionType = Constants.TOLL_TRANSACTION
+
         getPaymentHistoryList()
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).showHideToolbar(true)
@@ -156,12 +158,23 @@ class ViewAllTransactionsFragment : BaseFragment<AllTransactionsBinding>(), Back
     ) {
         showLoaderDialog()
         Log.e("TAG", "getPaymentHistoryList: showLoaderDialog ")
+        var priorDays = 90
+        var searchDate = "Transaction Date"
+        if (dashboardViewModel.accountInformationData.value?.accSubType == "BUSINESS"
+            || dashboardViewModel.accountInformationData.value?.accSubType === "NONREVENUE"
+        ) {
+            priorDays = 30
+        }
+        if(transactionType ==Constants.ALL_TRANSACTION){
+            searchDate=""
+        }
         val request = AccountPaymentHistoryRequest(
             1,
             transactionType,
             20,
             endDate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
-            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
+            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy, priorDays),
+            searchDate=searchDate
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }
