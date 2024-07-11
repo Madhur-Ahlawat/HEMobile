@@ -57,7 +57,8 @@
         android:id="@+id/resetFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResetForgotPassword"
         android:label="ResetFragment"
-        tools:layout="@layout/fragment_forgot_reset"></fragment>
+        tools:layout="@layout/fragment_forgot_reset"/>
+
     <fragment
         android:id="@+id/resenedCodeFragment"
         android:name="com.conduent.nationalhighways.ui.auth.forgot.password.ResendCodeFragment"
@@ -299,5 +300,38 @@
         android:name="com.conduent.nationalhighways.ui.landing.GeneralTermsAndConditionsFragment"
         android:label="EnquiryStatusFragment"
         tools:layout="@layout/fragment_general_terms_and_conditions" />
+
+    <fragment
+        android:id="@+id/inActiveDetailsFragment"
+        android:name="com.conduent.nationalhighways.ui.inActive.InActiveDetailsFragment"
+        android:label="InActiveDetailsFragment"
+        tools:layout="@layout/fragment_in_active_details">
+        <action
+            android:id="@+id/action_inActiveDetailsFragment_to_closeAccountFragment"
+            app:destination="@id/closeAccountFragment" />
+
+        <action
+            android:id="@+id/action_inActiveDetailsFragment_to_inActiveNotSureFragment"
+            app:destination="@id/inActiveNotSureFragment" />
+
+        <action
+            android:id="@+id/action_inActiveDetailsFragment_to_resetForgotPassword"
+            app:destination="@id/resetFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/inActiveNotSureFragment"
+        android:name="com.conduent.nationalhighways.ui.inActive.InActiveNotSureFragment"
+        android:label="InActiveNotSureFragment"
+        tools:layout="@layout/fragment_in_active_not_sure">
+
+    </fragment>
+    <fragment
+        android:id="@+id/closeAccountFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.close_account.CloseAccountFragment"
+        android:label="Close Account"
+        tools:layout="@layout/fragment_close_account">
+
+    </fragment>
 
 </navigation>

@@ -1294,7 +1294,6 @@
     <string name="mobile_change_successful">Mobile number change successful</string>
     <string name="telephone_change_successful">Telephone number change successful</string>
     <string name="two_factor_change_successful">Two Factor Authentication \n change successful</string>
-    <string name="we_ve_sent_a_confirmation_email_to_s">We\'ve sent a confirmation email to <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
     <string name="you_will_receive_a_confirmation_email">You\'ll receive a confirmation email at <Data><![CDATA[<b><br>%s</b>]]></Data> </string>
     <string name="profile_name">Profile Name</string>
     <string name="profile_address">Profile Address</string>
@@ -1790,5 +1789,19 @@
     <string name="concatenate_two_strings_with_newline">%1$s\n%2$s</string>
     <string name="card_security_code_more_3characters">Card security code must be 3 characters or more</string>
     <string name="select_this_box_to_continue">Select this box to continue</string>
+    <string name="str_dart_charge_account_open">Do you want to keep your Dart Charge account open?</string>
+    <string name="str_dart_charge_account_open_desc">You have not used your account in the last 12 months. It will close on %1$s if you do not choose to keep it open.</string>
+    <string name="str_or">Or</string>
+    <string name="str_i_am_not_sure">I am not sure</string>
+    <string name="str_yes_want_to_keep_account">Yes, I want to keep using my account</string>
+    <string name="str_not_want_to_close_account">No, I want to close my account</string>
+    <string name="str_i_am_not_sure_desc">This will keep your account in an active state. It will close on %1$s if you do not take any further action.</string>
+    <string name="str_account_close_on">Your account will close on %1$s</string>
+    <string name="str_account_close_on_desc">To reactivate your account before this date.\nyou must:</string>
+    <string name="str_complete_crossing">Complete a crossing</string>
+    <string name="str_make_a_payment_or">Make a payment, or</string>
+    <string name="str_opt_in_another_12_months">Opt in another 12 months.</string>
+    <string name="str_account_inactive">Account Inactive</string>
+    <string name="str_account_active_another_12months">Your account will be active for another 12 months.</string>
 
 </resources>

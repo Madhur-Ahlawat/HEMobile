@@ -580,4 +580,9 @@ interface ApiService {
     ): Response<LRDSResponse?>?
 
 
+    @PUT(INACTIVESTATUS)
+    suspend fun inActiveStatusApi(): Response<EmptyApiResponse?>?
+
+
+
 }

@@ -73,10 +73,13 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
-        if (intent.hasExtra(Constants.PAYMENT_LIST_DATA) && intent.getParcelableArrayListExtra<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+        if (intent.hasExtra(Constants.PAYMENT_LIST_DATA) && intent.getParcelableArrayListExtra<CardListResponseModel>(
+                Constants.PAYMENT_LIST_DATA
+            ) != null
+        ) {
             paymentList =
                 intent.getParcelableArrayListExtra(Constants.PAYMENT_LIST_DATA)
-            Log.e("TAG", "initViewBinding: paymentList "+paymentList?.size )
+            Log.e("TAG", "initViewBinding: paymentList " + paymentList?.size)
         }
         if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -147,6 +150,15 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
             }
 
+            Constants.IN_ACTIVE -> {
+                binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_inactive)
+                graph.setStartDestination(R.id.inActiveDetailsFragment)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putString(Constants.NAV_FLOW_KEY, Constants.IN_ACTIVE)
+                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+            }
+
             Constants.TWOFA -> {
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
@@ -196,10 +208,11 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                     binding.toolBarLyt.materialToolbar.visible()
                 }
             }
-            Log.e("TAG", "initViewBinding: check back " )
-            if(destination.id==R.id.reValidatePaymentCardFragment || destination.id ==R.id.reValidateInfoFragment){
+            Log.e("TAG", "initViewBinding: check back ")
+            if (destination.id == R.id.reValidatePaymentCardFragment || destination.id == R.id.reValidateInfoFragment
+                || destination.id == R.id.inActiveDetailsFragment) {
                 binding.toolBarLyt.backButton.gone()
-            }else{
+            } else {
                 binding.toolBarLyt.backButton.visible()
             }
         }
@@ -271,8 +284,10 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
     }
 
     fun showBackButton() {
-        Log.e("TAG", "initViewBinding: check back- " )
+        Log.e("TAG", "initViewBinding: check back- ")
         binding.toolBarLyt.backButton.visible()
-
+    }
+    fun hideBackIcon() {
+        binding.toolBarLyt.backButton.gone()
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
+import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.account.ThresholdAmountApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
@@ -63,6 +64,9 @@ class DashboardViewModel @Inject constructor(
 
     private val _lrdsVal = MutableLiveData<Resource<LRDSResponse?>?>()
     val lrdsVal: MutableLiveData<Resource<LRDSResponse?>?> get() = _lrdsVal
+
+    private val _changeInActiveStatusVal = MutableLiveData<Resource<EmptyApiResponse?>?>()
+    val changeInActiveStatusVal: MutableLiveData<Resource<EmptyApiResponse?>?> get() = _changeInActiveStatusVal
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _thresholdAmountVal = MutableLiveData<Resource<ThresholdAmountApiResponse?>?>()
@@ -221,6 +225,18 @@ class DashboardViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 _lrdsVal.postValue(ResponseHandler.failure(e))
+            }
+        }
+    }
+
+    fun changeInActiveStatusApi() {
+        viewModelScope.launch {
+            try {
+                _changeInActiveStatusVal.postValue(
+                    ResponseHandler.success(repository.changeInActiveStatusApi(), errorManager)
+                )
+            } catch (e: Exception) {
+                _changeInActiveStatusVal.postValue(ResponseHandler.failure(e))
             }
         }
     }

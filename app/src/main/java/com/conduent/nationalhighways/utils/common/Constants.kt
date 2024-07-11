@@ -303,6 +303,7 @@ object Constants {
     const val CARD_VALIDATION_SECOND_TIME = "cardValidationSecondTime"
     const val CARD_VALIDATION_PAYMENT_FAIL = "cardValidationPaymentFail"
     const val CARD_VALIDATION_EXISTING_CARD = "cardValidationExistingCard"
+    const val IN_ACTIVE = "inActive"
     const val READ_STORAGE_REQUEST_CODE: Int = 1001
     const val TIME_OUT_SEC = 80L
 

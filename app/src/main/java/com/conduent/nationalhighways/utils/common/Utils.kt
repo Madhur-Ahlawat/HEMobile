@@ -346,6 +346,12 @@ object Utils {
         val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.US)
         return outputFormat.format(date ?: Date())
     }
+  fun convertOneFormatDateToAnotherFormat(inputDate: String?,fromFormat:String,anotherFormat:String): String {
+        val inputFormat = SimpleDateFormat(fromFormat, Locale.US)
+        val date: Date? = inputFormat.parse(inputDate.toString())
+        val outputFormat = SimpleDateFormat(anotherFormat, Locale.US)
+        return outputFormat.format(date ?: Date())
+    }
 
     fun removeAllCharacters(charsToBeRemoved: String, input: String): String {
         var input1 = input

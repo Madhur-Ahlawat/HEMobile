@@ -11,11 +11,13 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.BIOMETRIC_CHANGE
+import com.conduent.nationalhighways.utils.common.Constants.IN_ACTIVE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED
@@ -59,6 +61,21 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
         binding.signinBt.setOnClickListener(this)
         title = requireActivity().findViewById(R.id.title_txt)
         when (navFlowCall) {
+            IN_ACTIVE -> {
+                binding.feedbackBt.invisible()
+                binding.title.text = getString(R.string.str_account_active_another_12months)
+                binding.subTitle.text =
+                    Html.fromHtml(
+                        getString(
+                            R.string.str_we_have_sent_confirmation,
+                            personalInformation?.emailAddress
+                        ), Html.FROM_HTML_MODE_COMPACT
+                    )
+                if (requireActivity() is AuthActivity) {
+                    (requireActivity() as AuthActivity).hideBackIcon()
+                }
+                binding.btnSubmit.text = getString(R.string.str_go_to_dashboard)
+            }
 
             Constants.FORGOT_PASSWORD_FLOW -> {
                 binding.subTitle.gone()
@@ -249,6 +266,13 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
                     PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         findNavController().navigate(R.id.action_resetFragment_to_accountManagementFragment)
+                    }
+
+                    IN_ACTIVE -> {
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                        }
                     }
 
                     else -> {

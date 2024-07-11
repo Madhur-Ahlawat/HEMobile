@@ -225,7 +225,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                    if (accountInformation?.inactiveStatus==true) {
+                        redirectToAuth(Constants.IN_ACTIVE)
+                    }else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
                         redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
                     } else if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
                         redirectToAuth(Constants.SUSPENDED)
@@ -265,7 +267,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
                     }
                 } else {
-                    if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                    if (status.data?.accountInformation?.inactiveStatus==true) {
+                        redirectToAuth(Constants.IN_ACTIVE)
+                    }else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
                         redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
                     } else if (status.data?.accountInformation?.status.equals(
                             Constants.SUSPENDED,
@@ -644,6 +648,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             intent.putExtra(
                 Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
             )
+        }else if (navFlowKey == Constants.IN_ACTIVE) {
+            intent.putExtra(Constants.PERSONALDATA, personalInformation)
+            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
         }
         startActivity(intent)
     }

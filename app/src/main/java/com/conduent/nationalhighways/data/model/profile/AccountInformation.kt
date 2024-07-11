@@ -53,6 +53,8 @@ data class AccountInformation(
     var mfaEnabled: String?,
     val ncId: String? = "",
     val correspDeliveryFrequency: String? = "",
+    val accountToBeClosedDate: String? = "",
+    val inactiveStatus : Boolean? = false,
 ) : Parcelable
 
 

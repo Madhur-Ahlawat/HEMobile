@@ -28,6 +28,7 @@ class DashBoardRepo @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getAccountDetailsApiCall() = apiService.getAccountDetailsData()
     suspend fun getLrdsStatusApi() = apiService.getLrdsStatus()
+    suspend fun changeInActiveStatusApi() = apiService.inActiveStatusApi()
     suspend fun getThresholdAmountApiCAll() = apiService.getThresholdValue()
 
 }

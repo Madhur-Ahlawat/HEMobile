@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.inActive.InActiveDetailsFragment">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:padding="@dimen/margin_20dp">
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/titleTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/warningicon"
+                    android:drawablePadding="@dimen/margin_23dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:text="@string/str_dart_charge_account_open"
+                    android:textColor="@color/new_btn_color"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/descTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:lineSpacingExtra="@dimen/margin_2dp"
+                    android:text="@string/str_dart_charge_account_open_desc"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleTv" />
+
+
+
+
+                <RadioGroup
+                    android:id="@+id/radioGroupYesNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/descTv">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radioButtonYes"
+                        style="@style/RadioButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:contentDescription=""
+                        android:minHeight="@dimen/margin_48dp"
+                        android:text="@string/str_yes_want_to_keep_account" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:id="@+id/radioButtonNo"
+                        style="@style/RadioButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:contentDescription=""
+                        android:minHeight="@dimen/margin_48dp"
+                        android:text="@string/str_not_want_to_close_account" />
+
+                </RadioGroup>
+
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/desc3Tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_20dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="left"
+                    android:text="@string/str_or"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioGroupYesNo" />
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/radioButtonNotSure"
+                    style="@style/RadioButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:contentDescription=""
+                    android:minHeight="@dimen/margin_48dp"
+                    android:text="@string/str_i_am_not_sure"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/desc3Tv"/>
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/notSureDescTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_50dp"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="start"
+                    android:lineSpacingExtra="@dimen/margin_2dp"
+                    android:text="@string/str_i_am_not_sure_desc"
+                    android:textColor="@color/black"
+                    android:alpha="0.5"
+                    android:textSize="@dimen/font_16sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButtonNotSure" />
+
+
+
+                <com.conduent.apollo.ui.CMButton
+                    android:id="@+id/btnContinue"
+                    style="@style/PrimaryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_30dp"
+                    android:layout_marginBottom="@dimen/margin_20dp"
+                    android:text="@string/str_continue"
+                    android:textSize="@dimen/font_14sp"
+                    app:isEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/notSureDescTv" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
