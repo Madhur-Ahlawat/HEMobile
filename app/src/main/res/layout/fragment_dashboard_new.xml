@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:importantForAccessibility="no"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.1" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -102,6 +102,32 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/reactivateAccountLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/margin_3dp"
+                android:visibility="invisible"
+                android:layout_marginHorizontal="@dimen/margin_25dp"
+                android:importantForAccessibility="no"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reactivate_or_close_your_account"
+                    android:fontFamily="@font/open_sans"
+                    android:background="@drawable/bg_rounded_corner_10dp"
+                    android:backgroundTint="@color/red"
+                    android:textColor="@color/white"
+                    android:padding="@dimen/margin_15dp"
+                    android:drawableRight="@drawable/ic_right_arrow"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/box_accountInformation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,7 +142,7 @@
                 android:paddingBottom="@dimen/margin_15dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/reactivateAccountLl">
 
                 <LinearLayout
                     android:id="@+id/normalfont_ll"

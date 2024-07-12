@@ -156,7 +156,11 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.IN_ACTIVE)
-                bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                if(navFlowFrom==Constants.DASHBOARD){
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, true)
+                }else{
+                    bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                }
             }
 
             Constants.TWOFA -> {
@@ -210,7 +214,7 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
             }
             Log.e("TAG", "initViewBinding: check back ")
             if (destination.id == R.id.reValidatePaymentCardFragment || destination.id == R.id.reValidateInfoFragment
-                || destination.id == R.id.inActiveDetailsFragment) {
+                || (destination.id == R.id.inActiveDetailsFragment && !navFlowFrom.equals(Constants.DASHBOARD))) {
                 binding.toolBarLyt.backButton.gone()
             } else {
                 binding.toolBarLyt.backButton.visible()

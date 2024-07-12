@@ -64,6 +64,14 @@ object DashboardUtils {
             viewGroup.run {
                 setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514))
             }
+        }else if (status.uppercase().equals("INACTIVE", true)) {
+            tvTitle.text = tvTitle.context.getString(R.string.str_inactive)
+            tvTitle.run {
+                setTextColor(viewGroup.context.resources.getColor(R.color.white_color, null))
+            }
+            viewGroup.run {
+                setCardBackgroundColor(viewGroup.context.resources.getColor(R.color.color_942514))
+            }
         } else {
             tvTitle.text = status
             tvTitle.run {

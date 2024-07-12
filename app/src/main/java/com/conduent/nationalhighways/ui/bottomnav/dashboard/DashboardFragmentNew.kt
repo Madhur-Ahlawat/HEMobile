@@ -20,10 +20,10 @@ import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHis
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
-import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -40,6 +40,7 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
@@ -151,7 +152,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
 
         if (arguments?.containsKey(Constants.GO_TO_SUCCESS_PAGE) == true) {
-            goToSuccessPage = arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE, false)?:false
+            goToSuccessPage = arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE, false) ?: false
         }
         binding.labelViewAll.setOnClickListener {
             (requireActivity() as HomeActivityMain).viewAllTransactions()
@@ -163,9 +164,32 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             findNavController().navigate(R.id.action_dashBoardFragment_to_notificationsFrament)
         }
 
+        binding.reactivateAccountLl.setOnClickListener {
+            redirectToAuth()
+        }
         focusToolBarDashboard()
 
     }
+
+    private fun redirectToAuth() {
+
+        val intent = Intent(this@DashboardFragmentNew.requireActivity(), AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.IN_ACTIVE)
+        intent.putExtra(
+            Constants.CARD_VALIDATION_REQUIRED,
+            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+        )
+        intent.putExtra(Constants.NAV_FLOW_FROM, Constants.DASHBOARD)
+
+        intent.putExtra(Constants.PERSONALDATA, dashboardViewModel.personalInformationData.value)
+        intent.putExtra(
+            Constants.ACCOUNTINFORMATION,
+            dashboardViewModel.accountInformationData.value
+        )
+
+        startActivity(intent)
+    }
+
 
     override fun observer() {
         observe(dashboardViewModel.logout, ::handleLogout)
@@ -194,7 +218,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun handleAccountType(profileDetailModel: ProfileDetailModel) {
 
-        sessionManager.saveStringData(SessionManager.LAST_LOGGEDIN_EMAIL,profileDetailModel.personalInformation?.emailAddress?:"")
+
+        sessionManager.saveStringData(
+            SessionManager.LAST_LOGGEDIN_EMAIL,
+            profileDetailModel.personalInformation?.emailAddress ?: ""
+        )
         binding.tvAccountNumberHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -415,6 +443,11 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun showExemptPartnerUI(data: ProfileDetailModel) {
         HomeActivityMain.accountDetailsData = data
+        if(data.accountInformation?.inactiveStatus == true){
+            binding.reactivateAccountLl.visible()
+        }else{
+            binding.reactivateAccountLl.invisible()
+        }
 
         binding.apply {
             accountBalanceRl.visible()
@@ -487,6 +520,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun showNonPayGUI(data: ProfileDetailModel) {
+
+        if(data.accountInformation?.inactiveStatus == true){
+            binding.reactivateAccountLl.visible()
+        }else{
+            binding.reactivateAccountLl.invisible()
+        }
+
         binding.apply {
             accountBalanceRl.visible()
             tvAvailableBalance.apply {
@@ -623,9 +663,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
 
         val request = AccountPaymentHistoryRequest(
-            index, Constants.TOLL_TRANSACTION, countPerPage,
+            index,
+            Constants.TOLL_TRANSACTION,
+            countPerPage,
             endDate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
-            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy,priorDays),searchDate=searchDate
+            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy, priorDays),
+            searchDate = searchDate
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }
