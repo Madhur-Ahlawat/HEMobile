@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/margin_3dp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:layout_marginHorizontal="@dimen/margin_25dp"
                 android:importantForAccessibility="no"
                 android:orientation="vertical"

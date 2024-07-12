@@ -443,11 +443,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun showExemptPartnerUI(data: ProfileDetailModel) {
         HomeActivityMain.accountDetailsData = data
-        if(data.accountInformation?.inactiveStatus == true){
-            binding.reactivateAccountLl.visible()
-        }else{
-            binding.reactivateAccountLl.invisible()
-        }
+
 
         binding.apply {
             accountBalanceRl.visible()
@@ -472,7 +468,15 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             setHorizontalStrains()
 
             buttonTopup.gone()
-            setGuideLinePercent(0.25F, R.dimen.margin_15dp)
+
+            if(data.accountInformation?.inactiveStatus == true){
+                setGuideLinePercent(0.1F, R.dimen.margin_15dp)
+                reactivateAccountLl.visible()
+            }else{
+                setGuideLinePercent(0.25F, R.dimen.margin_15dp)
+                reactivateAccountLl.gone()
+            }
+
 
             accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
@@ -521,11 +525,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     private fun showNonPayGUI(data: ProfileDetailModel) {
 
-        if(data.accountInformation?.inactiveStatus == true){
-            binding.reactivateAccountLl.visible()
-        }else{
-            binding.reactivateAccountLl.invisible()
-        }
+
 
         binding.apply {
             accountBalanceRl.visible()
@@ -548,7 +548,13 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             boxTopupAmount.visible()
             valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
             valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
-            setGuideLinePercent(0.2F, R.dimen.margin_0dp)
+            if(data.accountInformation?.inactiveStatus == true){
+                setGuideLinePercent(0.1F, R.dimen.margin_0dp)
+                binding.reactivateAccountLl.visible()
+            }else{
+                setGuideLinePercent(0.2F, R.dimen.margin_0dp)
+                binding.reactivateAccountLl.gone()
+            }
 
             binding.buttonTopup.setOnClickListener {
                 val bundle = Bundle()
