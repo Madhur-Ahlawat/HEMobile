@@ -35,7 +35,11 @@
                     threeDSsecureInterface.on('failure', function(e) {
                         window.appInterface.postMessage("cancelClicked");
                     });
-                    
+
+                    threeDSsecureInterface.on('error', function(e) {
+                        window.appInterface.postMessage("3DSFailed");
+                    });
+
                     gateway.on('error', function (e) {
                         window.appInterface.postMessage("errorMessage","{\"error\":"+JSON.stringify(e, null, "")+"}");
                     });
