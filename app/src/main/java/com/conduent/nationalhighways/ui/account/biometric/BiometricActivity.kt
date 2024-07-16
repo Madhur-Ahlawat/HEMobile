@@ -20,7 +20,6 @@ import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryR
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityBiometricBinding
@@ -31,7 +30,6 @@ import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -390,22 +388,24 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
     }
 
-    private fun redirectToAuthForRevalidate() {
+    private fun redirectToAuthForRevalidate(from: String) {
         val intent = Intent(this@BiometricActivity, AuthActivity::class.java)
-        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
         intent.putExtra(
             Constants.CARD_VALIDATION_REQUIRED,
             sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
         )
+        intent.putExtra(Constants.NAV_FLOW_KEY, from)
+        intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
         intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
         intent.putParcelableArrayListExtra(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)
-        intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
         startActivity(intent)
     }
 
     private fun goToHomeActivity() {
-        if (cardValidationRequired) {
-            redirectToAuthForRevalidate()
+        if (accountInformation?.inactiveStatus == true) {
+            redirectToAuthForRevalidate(Constants.IN_ACTIVE)
+        } else if (cardValidationRequired) {
+            redirectToAuthForRevalidate(Constants.CARD_VALIDATION_REQUIRED)
         } else if (suspended) {
             showLoaderDialog()
             crossingHistoryApi()

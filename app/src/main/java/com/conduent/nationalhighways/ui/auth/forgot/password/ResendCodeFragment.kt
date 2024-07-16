@@ -22,6 +22,8 @@ import com.conduent.nationalhighways.databinding.FragmentResendCodeBinding
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.CARD_VALIDATION_REQUIRED
+import com.conduent.nationalhighways.utils.common.Constants.IN_ACTIVE
 import com.conduent.nationalhighways.utils.common.Constants.TWOFA
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -287,6 +289,11 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                     TWOFA ->{
                         bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentList as ArrayList)
                         bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
+                    }
+
+                    IN_ACTIVE, CARD_VALIDATION_REQUIRED ->{
+                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                        bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
                     }
                 }
 

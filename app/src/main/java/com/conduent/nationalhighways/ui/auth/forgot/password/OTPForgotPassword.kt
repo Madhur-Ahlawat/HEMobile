@@ -1217,8 +1217,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
 
                         }
                     } else {
-                        if(cardValidationRequired){
-                            redirectToAuthForRevalidate()
+                        if(accountInformation?.inactiveStatus==true){
+                            redirectToAuthForRevalidate(Constants.IN_ACTIVE)
+                        } else if(cardValidationRequired){
+                            redirectToAuthForRevalidate(Constants.CARD_VALIDATION_REQUIRED)
                         }else if (accountStatus.equals(SUSPENDED, true)) {
                             crossingHistoryApi()
                         } else {
@@ -1289,8 +1291,10 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    if (cardValidationRequired) {
-                        redirectToAuthForRevalidate()
+                    if(accountInformation?.inactiveStatus==true){
+                        redirectToAuthForRevalidate(Constants.IN_ACTIVE)
+                    }else if (cardValidationRequired) {
+                        redirectToAuthForRevalidate(Constants.CARD_VALIDATION_REQUIRED)
                     } else if (accountStatus.equals(SUSPENDED, true)) {
                         crossingHistoryApi()
                     } else {
@@ -1304,13 +1308,15 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
     }
 
 
-    private fun redirectToAuthForRevalidate() {
+    private fun redirectToAuthForRevalidate(from:String) {
         val intent = Intent(requireActivity(), AuthActivity::class.java)
-        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
-        intent.putExtra(
-            Constants.CARD_VALIDATION_REQUIRED,
-            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
-        )
+        intent.putExtra(Constants.NAV_FLOW_KEY, from)
+        if(from==Constants.CARD_VALIDATION_REQUIRED) {
+            intent.putExtra(
+                Constants.CARD_VALIDATION_REQUIRED,
+                sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+            )
+        }
         if(cardValidationRequired){
             intent.putParcelableArrayListExtra(
                 Constants.PAYMENT_LIST_DATA,
@@ -1318,7 +1324,8 @@ class OTPForgotPassword : BaseFragment<FragmentForgotOtpchangesBinding>(), View.
             )
         }
         intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-        intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+        intent.putExtra(Constants.PERSONALDATA, personalInformation)
+        intent.putExtra(Constants.NAV_FLOW_FROM, from)
         startActivity(intent)
     }
 
