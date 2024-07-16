@@ -137,6 +137,10 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                     when (data) {
                         "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt" -> hideLoader()
                         "threeDSStarted" -> showLoader()
+                        "3DSFailed"->{
+                            hideLoader()
+                            redirectToErrorPage()
+                        }
                         "cancelClicked" -> {
                             hideLoader()
                             findNavController().popBackStack()
