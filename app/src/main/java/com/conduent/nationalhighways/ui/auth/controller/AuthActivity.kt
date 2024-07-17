@@ -73,10 +73,13 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
-        if (intent.hasExtra(Constants.PAYMENT_LIST_DATA) && intent.getParcelableArrayListExtra<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+        if (intent.hasExtra(Constants.PAYMENT_LIST_DATA) && intent.getParcelableArrayListExtra<CardListResponseModel>(
+                Constants.PAYMENT_LIST_DATA
+            ) != null
+        ) {
             paymentList =
                 intent.getParcelableArrayListExtra(Constants.PAYMENT_LIST_DATA)
-            Log.e("TAG", "initViewBinding: paymentList "+paymentList?.size )
+            Log.e("TAG", "initViewBinding: paymentList " + paymentList?.size)
         }
         if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
@@ -128,6 +131,11 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
         val inflater = navHostFragment.navController.navInflater
         val graph = inflater.inflate(R.navigation.navigation_auth)
 
+        if (navFlow == Constants.SUSPENDED) {
+            if (accountInformation?.accSubType.equals(Constants.PAYG)) {
+                navFlow = Constants.CARD_VALIDATION_REQUIRED
+            }
+        }
         val bundle = Bundle()
         when (navFlow) {
             Constants.FORGOT_PASSWORD_FLOW -> {
@@ -196,10 +204,10 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                     binding.toolBarLyt.materialToolbar.visible()
                 }
             }
-            Log.e("TAG", "initViewBinding: check back " )
-            if(destination.id==R.id.reValidatePaymentCardFragment || destination.id ==R.id.reValidateInfoFragment){
+            Log.e("TAG", "initViewBinding: check back ")
+            if (destination.id == R.id.reValidatePaymentCardFragment || destination.id == R.id.reValidateInfoFragment) {
                 binding.toolBarLyt.backButton.gone()
-            }else{
+            } else {
                 binding.toolBarLyt.backButton.visible()
             }
         }
@@ -271,7 +279,7 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
     }
 
     fun showBackButton() {
-        Log.e("TAG", "initViewBinding: check back- " )
+        Log.e("TAG", "initViewBinding: check back- ")
         binding.toolBarLyt.backButton.visible()
 
     }
