@@ -560,11 +560,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             eci = paymentSuccessResponse?.eci.toString(),
             customerVaultId = null
         )
-        Log.e("TAG", "saveNewCard: addCardModel "+addCardModel.toString() )
-
-//        paymentMethodViewModel.saveNewCard(addCardModel)
-
-
+        paymentMethodViewModel.saveNewCard(addCardModel)
     }
 
     private fun showLoader() {
@@ -988,6 +984,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         )
                     } else if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
                         bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                         findNavController().navigate(
                             R.id.action_nmiPaymentFragment_to_reValidateInfoFragment,
                             bundle

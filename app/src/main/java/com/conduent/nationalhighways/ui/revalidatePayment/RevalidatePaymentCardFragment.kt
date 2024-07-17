@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.revalidatePayment
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
@@ -53,6 +54,7 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
                 "PRIVATE", true
             )))
         ) {
+            binding.desc2Tv.gravity = Gravity.START
 
             //private account
             binding.radioGroupYesNo.visible()
@@ -65,6 +67,7 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
             checkContinueButton()
         } else {
             //payg account
+            binding.desc2Tv.gravity = Gravity.CENTER
             binding.radioGroupYesNo.gone()
             binding.desc3Tv.gone()
             binding.btnContinue.enable()
@@ -143,7 +146,7 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
                     }
                 }
             } else {
-                redirectToDetailsPage()
+                redirectToNMIPage()
             }
         }
     }

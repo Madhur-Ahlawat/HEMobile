@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.revalidatePayment
 
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -40,9 +41,9 @@ class RevalidateInfoFragment : BaseFragment<FragmentRevalidateInfoBinding>() {
         FragmentRevalidateInfoBinding.inflate(inflater, container, false)
 
     override fun init() {
-        if (cardValidationPaymentFail) {
-            binding.warningIcon.setImageResource(R.drawable.warningicon)
 
+        if (cardValidationPaymentFail) {
+            binding.titleTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.warningicon, 0, 0)
             binding.titleTv.text =
                 resources.getString(R.string.str_we_could_not_add_this_card)
             binding.cancelBtn.gone()
@@ -60,18 +61,25 @@ class RevalidateInfoFragment : BaseFragment<FragmentRevalidateInfoBinding>() {
         } else {
 
             if (navFlowFrom == Constants.CARD_VALIDATION_LATER_DATE) {
-                binding.warningIcon.setImageResource(R.drawable.warningicon)
-                binding.titleTv.text =
-                    resources.getString(R.string.str_important)
-                binding.descTv.text =
-                    resources.getString(R.string.str_donot_have_valid_payment_method)
+                binding.titleTv.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.warningicon, 0, 0)
+                binding.titleTv.text = resources.getString(R.string.str_important)
+                binding.descTv.text = resources.getString(R.string.str_donot_have_valid_payment_method)
                 binding.cancelBtn.visible()
                 binding.btnContinue.visible()
             } else if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
-                binding.titleTv.text =
-                    resources.getString(R.string.str_payment_card_details_confirmed)
-                binding.descTv.text =
-                    resources.getString(R.string.str_payment_card_details_confirmed_desc1)
+                if (accountInformation?.accSubType.equals(Constants.PAYG)){
+                    binding.titleTv.text = resources.getString(R.string.str_account_reopened)
+                    binding.descTv.text =  Html.fromHtml(
+                        getString(
+                            R.string.str_we_have_sent_confirmation,
+                            personalInformation?.emailAddress
+                        ), Html.FROM_HTML_MODE_COMPACT
+                    )
+                }else{
+                    binding.titleTv.text = resources.getString(R.string.str_payment_card_details_confirmed)
+                    binding.descTv.text = resources.getString(R.string.str_payment_card_details_confirmed_desc1)
+                }
+
                 binding.cancelBtn.gone()
                 binding.btnContinue.visible()
             }

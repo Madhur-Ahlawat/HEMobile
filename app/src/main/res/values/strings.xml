@@ -1786,7 +1786,7 @@
     <string name="str_we_could_not_add_this_card">We could not add this card</string>
     <string name="str_we_could_not_add_this_card_desc1">Try to validate the payment method again.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
     <string name="str_we_could_not_add_this_card_desc2">Add a different card or contact your bank for more details.\n\nYou may receive a fine (Penalty Charge Notice) for any late payment.</string>
-    <string name="str_suspend_revalidate_desc">Payment could not be taken for your crossing(s) and your account has been suspended.\n\nTo continue using your account, you have to provide your payment card details. If you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
+    <string name="str_suspend_revalidate_desc">Payment could not be taken for your crossing(s) and your account has been suspended.\n\nTo continue using your account, you have to provide your payment card details.\n\nIf you do not validate your payment card you may receive a fine (Penalty Charge Notice) for every crossing you make.</string>
     <string name="concatenate_two_strings_with_newline">%1$s\n%2$s</string>
     <string name="card_security_code_more_3characters">Card security code must be 3 characters or more</string>
     <string name="select_this_box_to_continue">Select this box to continue</string>

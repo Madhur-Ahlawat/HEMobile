@@ -146,7 +146,11 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
             }
 
             Constants.CARD_VALIDATION_REQUIRED -> {
-                binding.toolBarLyt.titleTxt.text = getString(R.string.str_revalidate_payment)
+                if (accountInformation?.accSubType.equals(Constants.PAYG)) {
+                    binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
+                }else{
+                    binding.toolBarLyt.titleTxt.text = getString(R.string.str_revalidate_payment)
+                }
                 graph.setStartDestination(R.id.reValidatePaymentCardFragment)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                 bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)
