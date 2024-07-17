@@ -107,7 +107,7 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
 
     override fun initCtrl() {
 
-        binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId ->
+        binding.radioGroupYesNo.setOnCheckedChangeListener { _, _ ->
             checkContinueButton()
         }
 
@@ -115,6 +115,7 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
             if (accountInformation?.accountType.equals(
                     "BUSINESS",
                     true
+
                 ) || ((accountInformation?.accSubType.equals(
                     "STANDARD", true
                 ) && accountInformation?.accountType.equals(
@@ -138,31 +139,35 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
                     if (paymentList.orEmpty().isNotEmpty()) {
                         redirectToDetailsPage()
                     } else {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
-                        bundle.putString(
-                            Constants.NAV_FLOW_FROM,
-                            Constants.CARD_VALIDATION_REQUIRED
-                        )
-                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
-                        bundle.putDouble(Constants.DATA, 0.0)
-                        bundle.putInt(Constants.POSITION, position)
-                        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
-                        bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, true)
-                        bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, false)
-
-                        findNavController().navigate(
-                            R.id.action_reValidatePaymentCardFragment_to_nmiPaymentFragment,
-                            bundle
-                        )
+                        redirectToNMIPage()
                     }
-
                 }
             } else {
                 redirectToDetailsPage()
             }
         }
+    }
+
+    private fun redirectToNMIPage() {
+        val bundle = Bundle()
+        bundle.putString(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
+        bundle.putString(
+            Constants.NAV_FLOW_FROM,
+            Constants.CARD_VALIDATION_REQUIRED
+        )
+        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+        bundle.putDouble(Constants.DATA, 0.0)
+        bundle.putInt(Constants.POSITION, position)
+        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
+        bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, true)
+        bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, false)
+
+        findNavController().navigate(
+            R.id.action_reValidatePaymentCardFragment_to_nmiPaymentFragment,
+            bundle
+        )
+
     }
 
     private fun redirectToDetailsPage() {

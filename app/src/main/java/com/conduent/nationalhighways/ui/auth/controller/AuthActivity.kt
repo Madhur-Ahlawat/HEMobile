@@ -131,6 +131,11 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
         val inflater = navHostFragment.navController.navInflater
         val graph = inflater.inflate(R.navigation.navigation_auth)
 
+        if (navFlow == Constants.SUSPENDED) {
+            if (accountInformation?.accSubType.equals(Constants.PAYG)) {
+                navFlow = Constants.CARD_VALIDATION_REQUIRED
+            }
+        }
         val bundle = Bundle()
         when (navFlow) {
             Constants.FORGOT_PASSWORD_FLOW -> {
@@ -212,7 +217,6 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
                     binding.toolBarLyt.materialToolbar.visible()
                 }
             }
-            Log.e("TAG", "initViewBinding: check back ")
             if (destination.id == R.id.reValidatePaymentCardFragment || destination.id == R.id.reValidateInfoFragment
                 || (destination.id == R.id.inActiveDetailsFragment && !navFlowFrom.equals(Constants.DASHBOARD))) {
                 binding.toolBarLyt.backButton.gone()
@@ -288,7 +292,6 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
     }
 
     fun showBackButton() {
-        Log.e("TAG", "initViewBinding: check back- ")
         binding.toolBarLyt.backButton.visible()
     }
     fun hideBackIcon() {
