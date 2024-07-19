@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.databinding.FragmentInActiveNotSureBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
@@ -40,6 +41,9 @@ class InActiveNotSureFragment : BaseFragment<FragmentInActiveNotSureBinding>() {
                 putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                 putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
             }
+        }
+        if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
     }
 

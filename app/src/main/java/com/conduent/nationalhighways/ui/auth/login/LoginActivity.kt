@@ -225,9 +225,18 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    if (accountInformation?.inactiveStatus==true) {
+                    if (accountInformation?.inactiveStatus == true &&
+                        (accountInformation?.accSubType.equals(Constants.EXEMPT_PARTNER) || (accountInformation?.accountType.equals(
+                            "BUSINESS",
+                            true
+                        ) || ((accountInformation?.accSubType.equals(
+                            "STANDARD", true
+                        ) && accountInformation?.accountType.equals(
+                            "PRIVATE", true
+                        )))))
+                    ) {
                         redirectToAuth(Constants.IN_ACTIVE)
-                    }else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                    } else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
                         redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
                     } else if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
                         redirectToAuth(Constants.SUSPENDED)
@@ -267,9 +276,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
                     }
                 } else {
-                    if (status.data?.accountInformation?.inactiveStatus==true) {
+                    if (status.data?.accountInformation?.inactiveStatus == true) {
                         redirectToAuth(Constants.IN_ACTIVE)
-                    }else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                    } else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
                         redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
                     } else if (status.data?.accountInformation?.status.equals(
                             Constants.SUSPENDED,
@@ -648,7 +657,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             intent.putExtra(
                 Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
             )
-        }else if (navFlowKey == Constants.IN_ACTIVE) {
+        } else if (navFlowKey == Constants.IN_ACTIVE) {
             intent.putExtra(Constants.PERSONALDATA, personalInformation)
             intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
         }

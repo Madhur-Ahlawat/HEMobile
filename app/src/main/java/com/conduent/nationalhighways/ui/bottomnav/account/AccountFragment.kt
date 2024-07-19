@@ -182,7 +182,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
             bundle.putParcelable(
                 Constants.PERSONALDATA,
-                HomeActivityMain.accountDetailsData?.personalInformation
+                dashboardViewModel.personalInformationData.value
             )
             findNavController().navigate(
                 R.id.action_accountFragment_to_profileManagementFragment,
@@ -320,7 +320,19 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                     if (requireActivity() is HomeActivityMain) {
                         (requireActivity() as HomeActivityMain).setTitle(getString(R.string.str_close_account))
                     }
-                    findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
+                    val bundle = Bundle()
+                    bundle.putParcelable(
+                        Constants.PERSONALDATA,
+                        dashboardViewModel.personalInformationData.value
+                    )
+                    bundle.putParcelable(
+                        Constants.ACCOUNTINFORMATION,
+                        dashboardViewModel.accountInformationData.value
+                    )
+                    findNavController().navigate(
+                        R.id.action_accountFragment_to_closeAccountFragment,
+                        bundle
+                    )
                 }
             }
 

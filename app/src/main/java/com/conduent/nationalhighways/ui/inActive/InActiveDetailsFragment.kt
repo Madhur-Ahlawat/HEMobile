@@ -11,6 +11,7 @@ import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentInActiveDetailsBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.utils.common.Constants
@@ -85,7 +86,11 @@ class InActiveDetailsFragment : BaseFragment<FragmentInActiveDetailsBinding>() {
                 showLoaderDialog()
                 dashboardViewModel.changeInActiveStatusApi()
             } else if (binding.radioButtonNo.isChecked) {
-                findNavController().navigate(R.id.action_inActiveDetailsFragment_to_closeAccountFragment)
+                val bundle = Bundle()
+                bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION,accountInformation)
+
+                findNavController().navigate(R.id.action_inActiveDetailsFragment_to_closeAccountFragment,bundle)
             } else if (binding.radioButtonNotSure.isChecked) {
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
@@ -95,6 +100,9 @@ class InActiveDetailsFragment : BaseFragment<FragmentInActiveDetailsBinding>() {
                     bundle
                 )
             }
+        }
+        if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
         }
     }
 
