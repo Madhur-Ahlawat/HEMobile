@@ -1790,5 +1790,6 @@
     <string name="concatenate_two_strings_with_newline">%1$s\n%2$s</string>
     <string name="card_security_code_more_3characters">Card security code must be 3 characters or more</string>
     <string name="select_this_box_to_continue">Select this box to continue</string>
+    <string name="root_array">This app cannot run on this phone. This phone appears to have been rooted or jailbroken</string>
 
 </resources>
