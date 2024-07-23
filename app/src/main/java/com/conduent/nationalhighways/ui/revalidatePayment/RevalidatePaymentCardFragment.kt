@@ -146,7 +146,15 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
                     }
                 }
             } else {
-                redirectToNMIPage()
+                if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                    redirectToNMIPage()
+                }else{
+                    if (paymentList.orEmpty().isNotEmpty()) {
+                        redirectToDetailsPage()
+                    } else {
+                        redirectToNMIPage()
+                    }
+                }
             }
         }
     }
