@@ -146,7 +146,8 @@ class AuthActivity : BaseActivity<Any?>(), LogoutListener {
             }
 
             Constants.CARD_VALIDATION_REQUIRED -> {
-                if (accountInformation?.accSubType.equals(Constants.PAYG)) {
+                if (accountInformation?.accSubType.equals(Constants.PAYG) &&
+                    accountInformation?.status.equals(Constants.SUSPENDED,true)) {
                     binding.toolBarLyt.titleTxt.text = getString(R.string.str_account_suspended)
                 }else{
                     binding.toolBarLyt.titleTxt.text = getString(R.string.str_revalidate_payment)

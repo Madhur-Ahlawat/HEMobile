@@ -1805,5 +1805,6 @@
     <string name="str_account_active_another_12months">Your account will be active for another 12 months.</string>
     <string name="reactivate_or_close_your_account">Reactivate or close your account</string>
     <string name="str_inactive">Inactive</string>
+    <string name="root_array">This app cannot run on this phone. This phone appears to have been rooted or jailbroken</string>
 
 </resources>
