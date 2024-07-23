@@ -1,5 +1,6 @@
 package com.conduent.nationalhighways.ui.landing
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -14,6 +15,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivitySplashNewBinding
 import com.conduent.nationalhighways.databinding.CustomDialogBinding
@@ -23,6 +25,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
+import com.scottyab.rootbeer.RootBeer
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -105,6 +108,16 @@ class CustomSplashActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
+
+
+        val rootBeer = RootBeer(this)
+        if (rootBeer.isRooted && BuildConfig.ROOT_CHECKER=="true") {
+            val alertBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+            alertBuilder.setMessage(R.string.root_array)
+                .setPositiveButton("OK") { _, _ -> finishAndRemoveTask() }
+            val dialog: AlertDialog = alertBuilder.create()
+            dialog.show()
+        }
     }
 
     override fun onPause() {
