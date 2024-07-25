@@ -1806,5 +1806,18 @@
     <string name="reactivate_or_close_your_account">Reactivate or close your account</string>
     <string name="str_inactive">Inactive</string>
     <string name="root_array">This app cannot run on this phone. This phone appears to have been rooted or jailbroken</string>
+    <string name="str_register_reminders_desc">After enabling Geo location below, select Always when prompted to ensure you receive the reminder.</string>
+    <string name="str_register_reminder_delay">It is recommended that the reminders are delayed following a crossing, to increase the likelihood that they are not issued whilst you are driving.</string>
+    <string name="str_daily_reminder">Daily Reminder</string>
+    <string name="str_1hr_after_crossing">1 hour after crossing</string>
+    <string name="str_2hr_after_crossing">2 hours after crossing</string>
+    <string name="str_3hr_after_crossing">3 hours after crossing</string>
+    <string name="str_4hr_after_crossing">4 hours after crossing</string>
+    <string name="str_5hr_after_crossing">5 hours after crossing</string>
+    <string name="str_6hr_after_crossing">6 hours after crossing</string>
+    <string name="str_7hr_after_crossing">7 hours after crossing</string>
+    <string name="str_8hr_after_crossing">8 hours after crossing</string>
+    <string name="str_notifications_disabled">Register to receive notifications disabled</string>
+    <string name="str_notifications_enabled">Register to receive notifications enabled</string>
 
 </resources>

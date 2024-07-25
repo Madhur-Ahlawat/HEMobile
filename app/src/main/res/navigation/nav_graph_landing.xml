@@ -159,6 +159,29 @@
         <action
             android:id="@+id/action_registerReminderFragment_to_gpsSettingsFragment"
             app:destination="@id/gpsSettingsFragment" />
+        <action
+            android:id="@+id/action_registerReminderFragment_to_registerDailyReminderFragment"
+            app:destination="@id/registerDailyReminderFragment" />
+ <action
+            android:id="@+id/action_registerReminderFragment_to_reminderStatusFragment"
+            app:destination="@id/reminderStatusFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/registerDailyReminderFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.RegisterDailyReminderFragment"
+        android:label="RegisterDailyReminderFragment"
+        tools:layout="@layout/fragment_register_daily_reminder">
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reminderStatusFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.ReminderStatusFragment"
+        android:label="ReminderStatusFragment"
+        tools:layout="@layout/fragment_reminder_status">
+
 
     </fragment>
     <fragment
@@ -169,8 +192,8 @@
         <action
             android:id="@+id/action_gpsSettingsFragment_to_registerReminderFragment"
             app:destination="@id/registerReminderFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/registerReminderFragment" />
+            app:popUpTo="@id/registerReminderFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 

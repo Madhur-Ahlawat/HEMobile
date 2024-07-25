@@ -73,7 +73,6 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                    startActivityForResult(intent, 1000)
                }*/
         }
-
     }
 
     override fun onResume() {
@@ -83,6 +82,30 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             Log.e("TAG", "isLocationServiceRunning-->  ")
         }
 
+      checkNotificationGeoEnabledOrNot()
+
+        if (sessionManager.fetchStringData("SAVED_FILE").isNotEmpty()) {
+            /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                 if (Environment.isExternalStorageManager()) {
+                     // All files access permission is granted
+                     // Your code here
+                 } else {
+                     val intent = Intent(
+                         ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                         Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+                     )
+                     startActivityForResult(intent, 1948)
+                 }
+             } else {
+                 // For versions lower than Android 11, handle permissions accordingly
+                 // You may request WRITE_EXTERNAL_STORAGE permission or other relevant permissions
+             }*/
+        }
+
+
+    }
+
+    private fun checkNotificationGeoEnabledOrNot() {
         if (!Utils.areNotificationsEnabled(requireContext())) {
             binding.switchNotification.isChecked = false
             sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
@@ -136,26 +159,6 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 startLocationServiceGeofence(2)
             }
         }
-
-        if (sessionManager.fetchStringData("SAVED_FILE").isNotEmpty()) {
-            /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                 if (Environment.isExternalStorageManager()) {
-                     // All files access permission is granted
-                     // Your code here
-                 } else {
-                     val intent = Intent(
-                         ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
-                         Uri.parse("package:" + BuildConfig.APPLICATION_ID)
-                     )
-                     startActivityForResult(intent, 1948)
-                 }
-             } else {
-                 // For versions lower than Android 11, handle permissions accordingly
-                 // You may request WRITE_EXTERNAL_STORAGE permission or other relevant permissions
-             }*/
-        }
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, dataIntent: Intent?) {
@@ -184,9 +187,16 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     override fun initCtrl() {
         binding.gotoStartMenuBt.setOnClickListener {
-            requireActivity().startNormalActivityWithFinish(LandingActivity::class.java)
+            if(binding.switchGeoLocation.isChecked && binding.switchNotification.isChecked){
+                findNavController().navigate(R.id.action_registerReminderFragment_to_registerDailyReminderFragment)
+            }else{
+                val bundle=Bundle()
+                bundle.putBoolean(Constants.GEO_FENCE_NOTIFICATION,false)
+                findNavController().navigate(R.id.action_registerReminderFragment_to_reminderStatusFragment,bundle)
+            }
         }
         binding.switchGeoLocation.setOnCheckedChangeListener { _, isChecked ->
+            Log.e("TAG", "initCtrl: Geolocation " )
             if (isChecked) {
                 GeofenceUtils.startGeofence(this.requireContext())
             }
@@ -198,6 +208,11 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         binding.switchGeoLocation.setOnClickListener {
             if (!binding.switchGeoLocation.isChecked) {
                 stopForeGroundService()
+                binding.switchNotification.isChecked=false
+                binding.gotoStartMenuBt.isEnabled=true
+                sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
+                sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
+
             } else {
                 if (Utils.checkLocationPermission(requireContext())) {
                     sessionManager.saveBooleanData(
@@ -245,6 +260,13 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                     },
                     View.VISIBLE
                 )
+            }
+            if(!binding.switchNotification.isChecked){
+                binding.switchGeoLocation.isChecked=false
+                binding.gotoStartMenuBt.isEnabled=true
+                sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
+                sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
+
             }
         }
 
