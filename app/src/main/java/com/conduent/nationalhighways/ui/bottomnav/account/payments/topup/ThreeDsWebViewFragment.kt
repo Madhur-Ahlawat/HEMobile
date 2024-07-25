@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.account.payment.PaymentSuccessResponse
-import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
@@ -24,7 +23,6 @@ import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.revalidate.RevalidateCardModel
 import com.conduent.nationalhighways.databinding.FragmentThreeDSWebviewBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
-import com.conduent.nationalhighways.ui.auth.suspended.ManualTopUpViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.revalidatePayment.RevalidateViewModel
@@ -137,10 +135,11 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                     when (data) {
                         "NMILoaded", "ValidationFailed", "3DSLoaded", "timedOUt" -> hideLoader()
                         "threeDSStarted" -> showLoader()
-                        "3DSFailed"->{
+                        "3DSFailed" -> {
                             hideLoader()
                             redirectToErrorPage()
                         }
+
                         "cancelClicked" -> {
                             hideLoader()
                             findNavController().popBackStack()
@@ -314,7 +313,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                 error: WebResourceError?
             ) {
                 super.onReceivedError(view, request, error)
-                Log.e("TAG", "onReceivedError: ", )
+                Log.e("TAG", "onReceivedError: ")
             }
         }
         binding.webView.webViewClient = webViewClient
@@ -353,11 +352,12 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             saveCard = "Y",
             firstName = paymentModel?.firstName ?: "",
             lastName = paymentModel?.lastName ?: "",
-            addressline1 = personalInformation?.addressLine1.toString().replace(" ", "").replace("null",""),
-            city = personalInformation?.city?:"",
-            state = personalInformation?.state?:"",
-            country = personalInformation?.country?:"",
-            zipcode1 = personalInformation?.zipcode?:"",
+            addressline1 = personalInformation?.addressLine1.toString().replace(" ", "")
+                .replace("null", ""),
+            city = personalInformation?.city ?: "",
+            state = personalInformation?.state ?: "",
+            country = personalInformation?.country ?: "",
+            zipcode1 = personalInformation?.zipcode ?: "",
             customerVaultId = paymentModel?.customerVaultId ?: "",
             paymentType = "card",
             primaryCard = "Y",
@@ -395,7 +395,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                         R.id.action_threeDSWebViewFragment_to_reValidateInfoFragment,
                         bundle
                     )
-                }else{
+                } else {
                     redirectToErrorPage()
                 }
             }
@@ -407,7 +407,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
                 } else {
                     if (resource.errorModel?.message.equals("Something went wrong. Try again later")) {
                     } else {
-                       redirectToErrorPage()
+                        redirectToErrorPage()
                     }
                 }
             }
@@ -432,6 +432,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, cardValidationSecondTime)
         bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
         bundle.putBoolean(Constants.CARD_VALIDATION_EXISTING_CARD, true)
+        bundle.putInt(Constants.POSITION, position)
         bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
         bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)
         bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)

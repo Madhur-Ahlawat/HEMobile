@@ -146,7 +146,7 @@ class RevalidateExistingPaymentFragment : BaseFragment<FragmentRevalidateExistin
         binding.nextBtn.setOnClickListener {
             val bundle = Bundle()
             bundle.putDouble(Constants.PAYMENT_TOP_UP, 0.0)
-            bundle.putInt(Constants.POSITION, 0)
+            bundle.putInt(Constants.POSITION, position)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
             bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
