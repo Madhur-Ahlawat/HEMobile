@@ -1539,23 +1539,14 @@ object Utils {
 
     fun checkLastLoggedInEmail(sessionManager: SessionManager, email: String): Boolean {
         val lastLoggedInEmail =
-            sessionManager.fetchStringData(SessionManager.LAST_LOGGEDIN_EMAIL) ?: ""
-        Log.e(
-            "TAG",
-            "checkLastLoggedInEmail: " + email + " lastLoggedInEmail ->" + lastLoggedInEmail
-        )
-        return if (email == lastLoggedInEmail) {
-            true
-        } else {
-            false
-        }
-
+            sessionManager.fetchStringData(SessionManager.LAST_LOGGEDIN_EMAIL)
+        return email == lastLoggedInEmail
     }
 
     fun checkReValidationPayment(
         paymentList: MutableList<CardListResponseModel?>?,
         accountInformation: AccountInformation?
-    ): Pair<Boolean, CardListResponseModel?> {
+    ): Pair<Boolean, ArrayList<CardListResponseModel>?> {
         if (paymentList?.isNotEmpty() == true) {
             val cardResult: ArrayList<CardListResponseModel> =
                 paymentList.filter { it?.isValidated == false && it.bankAccount == false } as ArrayList<CardListResponseModel>
@@ -1570,12 +1561,12 @@ object Utils {
             return if (cardResult.isNotEmpty()) {
                 if (accountInformation?.accSubType == "PAYG") {
                     if (paymentCard != null) {
-                        Pair(paymentCard?.primaryCard == true, paymentCard)
+                        Pair(paymentCard?.primaryCard == true, cardResult)
                     } else {
                         Pair(false, null)
                     }
                 } else {
-                    Pair((paymentCard != null), paymentCard)
+                    Pair((paymentCard != null), cardResult)
                 }
             } else {
                 Pair(false, null)

@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.revalidatePayment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
@@ -16,6 +15,8 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,15 +47,23 @@ class RevalidatePaymentCardDetailsFragment :
         if (arguments?.getParcelableArrayList<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
             realPaymentList =
                 arguments?.getParcelableArrayList(Constants.PAYMENT_LIST_DATA)
+
+            position = realPaymentList?.indexOfFirst { it?.primaryCard == true } ?: 0
+
+            if (realPaymentList.orEmpty().size < 2) {
+                binding.btnAddNewPayment.visible()
+            } else {
+                binding.btnAddNewPayment.gone()
+            }
             paymentList = realPaymentList?.let { ArrayList(it) }
         }
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation = arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
-        if(paymentList?.isNotEmpty() == true){
-            val model = Utils.checkReValidationPayment(paymentList,accountInformation).second
+        if (paymentList?.isNotEmpty() == true) {
+            val model = Utils.checkReValidationPayment(paymentList, accountInformation).second
             paymentList?.clear()
-            paymentList?.add(model)
+            model?.let { paymentList?.addAll(it) }
         }
 
         if (accountInformation?.accountType.equals(
@@ -67,11 +76,11 @@ class RevalidatePaymentCardDetailsFragment :
             )))
         ) {
             //prepay
-            binding.descTv.text=resources.getString(R.string.str_to_continue_use_account_prepay)
+            binding.descTv.text = resources.getString(R.string.str_to_continue_use_account_prepay)
 
-        }else{
+        } else {
             //payg
-            binding.descTv.text=resources.getString(R.string.str_to_continue_use_account)
+            binding.descTv.text = resources.getString(R.string.str_to_continue_use_account)
 
         }
         initAdapter()
@@ -87,7 +96,10 @@ class RevalidatePaymentCardDetailsFragment :
                 Constants.PAYMENT_LIST_DATA,
                 paymentList as ArrayList
             )
-            findNavController().navigate(R.id.action_reValidatePaymentCardDetailsFragment_to_reValidateExistingPaymentFragment,bundle)
+            findNavController().navigate(
+                R.id.action_reValidatePaymentCardDetailsFragment_to_reValidateExistingPaymentFragment,
+                bundle
+            )
 
         }
 
@@ -106,7 +118,7 @@ class RevalidatePaymentCardDetailsFragment :
             )
         }
 
-        if(requireActivity() is AuthActivity){
+        if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
     }
