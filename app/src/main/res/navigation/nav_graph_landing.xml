@@ -162,7 +162,7 @@
         <action
             android:id="@+id/action_registerReminderFragment_to_registerDailyReminderFragment"
             app:destination="@id/registerDailyReminderFragment" />
- <action
+        <action
             android:id="@+id/action_registerReminderFragment_to_reminderStatusFragment"
             app:destination="@id/reminderStatusFragment" />
 

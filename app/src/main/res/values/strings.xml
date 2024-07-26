@@ -951,7 +951,7 @@
     <string name="enablenow">ENABLE NOW</string>
     <string name="enablelater">ENABLE LATER</string>
     <string name="biometric_has_not_been_setup">Biometrics has not been set up on this device.  Please go to your phone\u0027s settings menu to set up Biometrics.</string>
-    <string name="goto_settings">Go to settings</string>
+    <string name="goto_settings">Go to Settings</string>
     <string name="str_three_address_found">0 Addresses Found</string>
     <string name="str_address_found">%1$s Addresses Found</string>
     <string name="str_select_your_address">Select your address</string>
@@ -1566,7 +1566,7 @@
     <string name="click_here_to_register_your_number_plate_and_create_an_automatic_top_up_account"><i>Click here to register your number plate and create an automatic top up account</i></string>
     <string name="click_here_to_receive_notifications_when_you_cross"><i>Click here to receive notifications when you cross</i></string>
     <string name="str_register_reminders">Register to receive reminders from Dart Charge after you cross to help ensure you never miss another payment.</string>
-    <string name="str_geo_location_enabled">Geo location enabled</string>
+    <string name="str_geo_location_enabled">Geo Location Enabled</string>
     <string name="str_register_to_receive_notifications">Register to Receive Notifications</string>
     <string name="receive_notifications">Receive Notifications</string>
     <string name="dart_charge_guidance_and_documents">DART CHARGE GUIDANCE AND\nDOCUMENTS</string>
@@ -1644,7 +1644,7 @@
     <string name="str_responsible_paying">Click here if you are responsible for paying the charge. You have until midnight tomorrow to pay.</string>
     <string name="submit_feedback">Submit</string>
     <string name="enter_your_mobile_number">Enter your mobile number</string>
-    <string name="str_push_notifications">Push notifications</string>
+    <string name="str_push_notifications">Push Notifications</string>
     <string name="str_receive_reminders_push_notification">To receive the reminders you will need to enable notifications in the Settings of your phone and also below.</string>
     <string name="str_enjoying_dart_charge">Enjoying Dart Charge?</string>
     <string name="str_enjoying_dart_charge_desc">Tap a star to rate it on the Play Store.</string>
@@ -1662,7 +1662,7 @@
     <string name="str_crossing_data">%1$s crossing</string>
     <string name="str_crossings_data">%1$s crossings</string>
     <string name="str_allow_location_title">Allow "\"Dart Charge\"" to use your location when you are not using the app?</string>
-    <string name="str_allow_location_desc">Change the setting to Always to ensure you receive the Dart Charge reminders.</string>
+    <string name="str_allow_location_desc">Change the setting to <b>Allow all the time</b> to ensure you receive the Dart Charge reminders.</string>
     <string name="str_opt_out">Opt Out</string>
     <string name="str_change_to_always_allow">Go To Settings</string>
 
@@ -1704,7 +1704,6 @@
     <string name="str_you_can">You can:</string>
     <string name="str_change_gps_settings_to_always">Change GPS settings to Always</string>
     <string name="str_change_gps_settings_to_always_desc">Select Always to ensure we send the notifications to you. To change this setting go to settings.\n\nWe do not track your location we only detect if you cross Dart Charge.</string>
-    <string name="go_to_settings">Go to settings</string>
     <string name="str_enable_location_services">Enable Location Services</string>
     <string name="str_enable_push_notification">Enable Push Notifications</string>
     <string name="str_enable_location_services_desc">Go to Settings on your device to enable Location Services for the Dart Charge app</string>
@@ -1806,9 +1805,10 @@
     <string name="reactivate_or_close_your_account">Reactivate or close your account</string>
     <string name="str_inactive">Inactive</string>
     <string name="root_array">This app cannot run on this phone. This phone appears to have been rooted or jailbroken</string>
-    <string name="str_register_reminders_desc">After enabling Geo location below, select Always when prompted to ensure you receive the reminder.</string>
+    <string name="str_register_reminders_desc">After enabling Geo location below, select <b>Allow all the time</b> when prompted to ensure you receive the reminder.</string>
     <string name="str_register_reminder_delay">It is recommended that the reminders are delayed following a crossing, to increase the likelihood that they are not issued whilst you are driving.</string>
     <string name="str_daily_reminder">Daily Reminder</string>
+    <string name="str_until_10pm">Until 10 PM</string>
     <string name="str_1hr_after_crossing">1 hour after crossing</string>
     <string name="str_2hr_after_crossing">2 hours after crossing</string>
     <string name="str_3hr_after_crossing">3 hours after crossing</string>

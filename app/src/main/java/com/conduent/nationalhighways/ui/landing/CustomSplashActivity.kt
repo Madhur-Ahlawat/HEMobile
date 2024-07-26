@@ -38,6 +38,7 @@ class CustomSplashActivity : AppCompatActivity() {
 
     @Inject
     lateinit var sessionManager: SessionManager
+    var notificationPermission: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +46,7 @@ class CustomSplashActivity : AppCompatActivity() {
         setContentView(binding?.root)
         mIsRooted = checkIfRootConditionAndDisplayMessage()
         Log.e("Signature", AppSignatureHelper(this).appSignatures.toString())
-        sessionManager.saveBooleanData(
-            SessionManager.NOTIFICATION_PERMISSION,
-            Utils.areNotificationsEnabled(this)
-        )
+        notificationPermission = Utils.areNotificationsEnabled(this)
 
         if (!mIsRooted) {
             if (!Utils.areNotificationsEnabled(this)) {
@@ -101,7 +99,6 @@ class CustomSplashActivity : AppCompatActivity() {
 
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, it)
             redirectNextScreenWithHandler()
         }
 
@@ -111,7 +108,7 @@ class CustomSplashActivity : AppCompatActivity() {
 
 
         val rootBeer = RootBeer(this)
-        if (rootBeer.isRooted && BuildConfig.ROOT_CHECKER=="true") {
+        if (rootBeer.isRooted && BuildConfig.ROOT_CHECKER == "true") {
             val alertBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
             alertBuilder.setMessage(R.string.root_array)
                 .setPositiveButton("OK") { _, _ -> finishAndRemoveTask() }
@@ -126,6 +123,13 @@ class CustomSplashActivity : AppCompatActivity() {
     }
 
     private fun navigateLandingActivity() {
+        if (!notificationPermission) {
+            sessionManager.saveBooleanData(
+                SessionManager.NOTIFICATION_PERMISSION,
+                Utils.areNotificationsEnabled(this)
+            )
+        }
+
         startActivity(
             Intent(this, LandingActivity::class.java)
         )

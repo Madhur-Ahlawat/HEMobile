@@ -142,10 +142,13 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
         initCtrl()
-        sessionManager.saveBooleanData(
-            SessionManager.NOTIFICATION_PERMISSION,
-            Utils.areNotificationsEnabled(this)
-        )
+        if (!Utils.areNotificationsEnabled(this)) {
+            sessionManager.saveBooleanData(
+                SessionManager.NOTIFICATION_PERMISSION,
+                Utils.areNotificationsEnabled(this)
+            )
+        }
+
 
         Log.e("TAG", "onResume: fontScale " + getResources().configuration.fontScale)
 
