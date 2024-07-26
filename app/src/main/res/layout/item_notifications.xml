@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/cl_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_6dp"
         android:layout_marginTop="@dimen/margin_5dp"
@@ -42,13 +42,14 @@
             android:importantForAccessibility="no"
             android:paddingTop="@dimen/margin_10dp"
             android:paddingBottom="@dimen/margin_5dp"
+            android:paddingRight="@dimen/margin_10dp"
             android:screenReaderFocusable="false"
             android:textColor="@color/black"
             android:textSize="@dimen/font_16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/arrow_notification"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="9 Jan 2023 11:00 AM" />
+            tools:text="9 JanananJanananJanananJaaaaaaananJanananaa" />
 
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -70,7 +71,7 @@
             app:layout_constraintRight_toLeftOf="@id/arrow_notification"
             app:layout_constraintTop_toBottomOf="@+id/notification_date"
             app:layout_goneMarginEnd="@dimen/margin_10dp"
-            tools:text="Auto-topup payment successfulsuccessfulsuccessful" />
+            tools:text="Auto-topuppaymentsuccessfulsuccessfulsuccessful" />
 
         <ImageView
             android:id="@+id/arrow_notification"
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_19dp"
             android:src="@drawable/ic_right_arrow"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
