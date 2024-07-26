@@ -1,9 +1,12 @@
 package com.conduent.nationalhighways.ui.landing
 
+import android.opengl.Visibility
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentReminderStatusBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
@@ -29,6 +32,10 @@ class ReminderStatusFragment : BaseFragment<FragmentReminderStatusBinding>() {
 
         binding.btnContinue.setOnClickListener {
             requireActivity().startNormalActivityWithFinish(LandingActivity::class.java)
+        }
+
+        if(requireActivity() is LandingActivity){
+            (requireActivity() as LandingActivity).setBackIcon(View.GONE)
         }
     }
 

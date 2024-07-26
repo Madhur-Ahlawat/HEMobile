@@ -125,12 +125,13 @@
             </androidx.core.widget.NestedScrollView>
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
-                android:id="@+id/gotoStartMenuBt"
+                android:id="@+id/continueBt"
                 style="@style/PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_20dp"
-                android:text="@string/back_to_main_menu"
+                android:text="@string/str_continue"
+                android:enabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

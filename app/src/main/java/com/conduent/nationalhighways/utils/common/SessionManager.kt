@@ -70,6 +70,7 @@ class SessionManager @Inject constructor(private val prefs: SharedPreferences) {
         val NotificationSettingsClick = "NotificationSettingsClick"
         val CARD_VALIDATION_REQUIRED = "CARD_VALIDATION_REQUIRED"
         const val LAST_LOGGEDIN_EMAIL = "lastLoggedInEmail"
+        const val DAILY_REMINDER_TYPE = "DAILY_REMINDER_TYPE"
 
     }
 

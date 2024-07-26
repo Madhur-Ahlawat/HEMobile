@@ -173,6 +173,9 @@
         android:label="RegisterDailyReminderFragment"
         tools:layout="@layout/fragment_register_daily_reminder">
 
+        <action
+            android:id="@+id/action_registerDailyReminderFragment_to_reminderStatusFragment"
+            app:destination="@id/reminderStatusFragment" />
 
     </fragment>
 
