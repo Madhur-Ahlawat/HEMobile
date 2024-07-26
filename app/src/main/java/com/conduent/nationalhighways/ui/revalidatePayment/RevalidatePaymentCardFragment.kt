@@ -171,8 +171,8 @@ class RevalidatePaymentCardFragment : BaseFragment<FragmentRevalidatePaymentCard
         bundle.putDouble(Constants.DATA, 0.0)
         bundle.putInt(Constants.POSITION, position)
         bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
-        bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, true)
-        bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, false)
+        bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, false)
+        bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, true)
 
         findNavController().navigate(
             R.id.action_reValidatePaymentCardFragment_to_nmiPaymentFragment,
