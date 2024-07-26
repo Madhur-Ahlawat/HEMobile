@@ -1,6 +1,7 @@
 package com.conduent.nationalhighways.ui.inActive
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
@@ -9,7 +10,6 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.databinding.FragmentInActiveDetailsBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -61,19 +61,27 @@ class InActiveDetailsFragment : BaseFragment<FragmentInActiveDetailsBinding>() {
         binding.radioGroupYesNo.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radioButtonYes -> {
-                    // Yes RadioButton is selected
-                    binding.radioButtonNotSure.isChecked = false
+                    if (binding.radioButtonYes.isChecked) {
+                        Log.e("TAG", "init: isChecked ->")
+                        // Yes RadioButton is selected
+                        binding.radioButtonNotSure.isChecked = false
+                    }
                 }
 
                 R.id.radioButtonNo -> {
-                    // No RadioButton is selected
-                    binding.radioButtonNotSure.isChecked = false
+                    if (binding.radioButtonNo.isChecked) {
+                        Log.e("TAG", "init: isChecked -->")
+                        // No RadioButton is selected
+                        binding.radioButtonNotSure.isChecked = false
+                    }
+
                 }
             }
             checkContinueButton()
         }
 
         binding.radioButtonNotSure.setOnCheckedChangeListener { buttonView, isChecked ->
+            Log.e("TAG", "init: isChecked " + isChecked)
             if (isChecked) {
                 binding.radioButtonNo.isChecked = false
                 binding.radioButtonYes.isChecked = false
@@ -88,9 +96,12 @@ class InActiveDetailsFragment : BaseFragment<FragmentInActiveDetailsBinding>() {
             } else if (binding.radioButtonNo.isChecked) {
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                bundle.putParcelable(Constants.ACCOUNTINFORMATION,accountInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
 
-                findNavController().navigate(R.id.action_inActiveDetailsFragment_to_closeAccountFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_inActiveDetailsFragment_to_closeAccountFragment,
+                    bundle
+                )
             } else if (binding.radioButtonNotSure.isChecked) {
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)

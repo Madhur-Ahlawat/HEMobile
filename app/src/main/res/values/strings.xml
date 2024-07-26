@@ -1796,8 +1796,8 @@
     <string name="str_yes_want_to_keep_account">Yes, I want to keep using my account</string>
     <string name="str_not_want_to_close_account">No, I want to close my account</string>
     <string name="str_i_am_not_sure_desc">This will keep your account in an active state. It will close on %1$s if you do not take any further action.</string>
-    <string name="str_account_close_on">Your account will close on %1$s</string>
-    <string name="str_account_close_on_desc">To reactivate your account before this date.\nyou must:</string>
+    <string name="str_account_close_on">Your account will close on\n%1$s</string>
+    <string name="str_account_close_on_desc">To reactivate your account before this date, you must:</string>
     <string name="str_complete_crossing">Complete a crossing</string>
     <string name="str_make_a_payment_or">Make a payment, or</string>
     <string name="str_opt_in_another_12_months">Opt in another 12 months.</string>
