@@ -130,6 +130,7 @@
     <color name="buttonBorderColor">#0000005C</color>
     <color name="buttonTextColorSecondary">#073165</color>
     <color name="radioButtonIconColor">#0047BA</color>
+    <color name="radioButtonUnIconColor">#9F9F9F</color>
     <color name="forgotPasswordColor">#257EBE</color>
     <color name="green_status">#80BA27</color>
     <color name="doItLaterColour">#AC352F</color>
