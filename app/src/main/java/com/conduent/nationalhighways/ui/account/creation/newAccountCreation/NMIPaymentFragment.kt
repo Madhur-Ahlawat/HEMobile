@@ -130,9 +130,9 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 arguments?.getBoolean(Constants.CARD_VALIDATION_SECOND_TIME) ?: false
         }
 
-       if (arguments?.containsKey(Constants.CURRENTBALANCE) == true) {
-           currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
-       }
+        if (arguments?.containsKey(Constants.CURRENTBALANCE) == true) {
+            currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
+        }
 
 
 
@@ -342,7 +342,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             findNavController().popBackStack()
                         }
 
-                        "termsClick"->{
+                        "termsClick" -> {
                             if (accountInformation?.accountType.equals(
                                     "BUSINESS",
                                     true
@@ -566,7 +566,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private fun showLoader() {
         try {
             binding.progressBar.visibility = View.VISIBLE
-        }catch (e:Exception){
+        } catch (e: Exception) {
 
         }
 
@@ -1079,8 +1079,29 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private fun redirectToTryAgainPaymentScreen() {
 
-        if (navFlowFrom == Constants.PAYG_SUSPENDED) {
-            val bundle = Bundle()
+        val bundle = Bundle()
+
+        if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
+            bundle.putString(
+                Constants.NAV_FLOW_FROM,
+                navFlowFrom
+            )
+            bundle.putBoolean(
+                Constants.CARD_VALIDATION_FIRST_TIME,
+                cardValidationFirstTime
+            )
+            bundle.putBoolean(
+                Constants.CARD_VALIDATION_SECOND_TIME,
+                cardValidationSecondTime
+            )
+            bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
+            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+            findNavController().navigate(
+                R.id.action_nmiPaymentFragment_to_reValidateInfoFragment,
+                bundle
+            )
+        } else if (navFlowFrom == Constants.PAYG_SUSPENDED) {
 
             bundle.putString(
                 Constants.NAV_FLOW_FROM,
@@ -1095,7 +1116,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 bundle
             )
         } else {
-            val bundle = Bundle()
             bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
             bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
