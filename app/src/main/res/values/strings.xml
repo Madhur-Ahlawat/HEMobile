@@ -1568,7 +1568,7 @@
     <string name="str_register_reminders">Register to receive reminders from Dart Charge after you cross to help ensure you never miss another payment.</string>
     <string name="str_geo_location_enabled">Geo Location Enabled</string>
     <string name="str_register_to_receive_notifications">Register to Receive Notifications</string>
-    <string name="receive_notifications">Receive Notifications</string>
+    <string name="receive_notifications">Receive Notifications without an account</string>
     <string name="dart_charge_guidance_and_documents">DART CHARGE GUIDANCE AND\nDOCUMENTS</string>
     <string name="dartford_crossing_is_a_free_flow_crossing"><b>Dartford Crossing</b> is a free flow crossing which means that you do not pay charges at a booth when crossing but you can pay charges for crossing in various ways.</string>
     <string name="learn_more_about_dartford_crossing_amp_dart_charge"><u>Learn more about Dartford Crossing &amp; Dart Charge</u></string>
@@ -1640,8 +1640,8 @@
     <string name="str_rooted_device">This app can not run on a rooted device.</string>
     <string name="str_alert">Alert</string>
     <string name="str_password_match_current_password">Password must match current password</string>
-    <string name="str_did_you_cross_today">Did you cross today?</string>
-    <string name="str_responsible_paying">Click here if you are responsible for paying the charge. You have until midnight tomorrow to pay.</string>
+    <string name="str_did_you_cross_today">Did you make a crossing?</string>
+    <string name="str_responsible_paying">As a reminder if you are responsible for paying the charge, you have until midnight the day after the crossing to pay.</string>
     <string name="submit_feedback">Submit</string>
     <string name="enter_your_mobile_number">Enter your mobile number</string>
     <string name="str_push_notifications">Push Notifications</string>
@@ -1805,9 +1805,9 @@
     <string name="str_inactive">Inactive</string>
     <string name="root_array">This app cannot run on this phone. This phone appears to have been rooted or jailbroken</string>
     <string name="str_register_reminders_desc">After enabling Geo location below, select <b>Allow all the time</b> when prompted to ensure you receive the reminder.</string>
-    <string name="str_register_reminder_delay">It is recommended that the reminders are delayed following a crossing, to increase the likelihood that they are not issued whilst you are driving.</string>
-    <string name="str_daily_reminder">Daily Reminder</string>
-    <string name="str_until_10pm">Until 10 PM</string>
+    <string name="str_register_reminder_delay">We\'ll delay sending reminders of your crossing to avoid disturbing you while driving. Please choose the delay duration</string>
+    <string name="str_daily_reminder">Set Reminder</string>
+    <string name="str_until_10pm">At 10 PM</string>
     <string name="str_1hr_after_crossing">1 hour after crossing</string>
     <string name="str_2hr_after_crossing">2 hours after crossing</string>
     <string name="str_3hr_after_crossing">3 hours after crossing</string>

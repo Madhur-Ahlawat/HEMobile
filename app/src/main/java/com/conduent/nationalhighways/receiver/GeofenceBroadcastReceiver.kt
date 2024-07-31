@@ -274,6 +274,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
     private fun scheduleFor10PM(context: Context) {
         val currentTime = Calendar.getInstance()
+        currentTime.time= Date()
         val targetTime = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 22)
             set(Calendar.MINUTE, 0)
@@ -284,9 +285,11 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             // If the target time is before the current time, add a day to the target time
             targetTime.add(Calendar.DAY_OF_MONTH, 1)
         }
+        Log.e(TAG, "scheduleFor10PM: targetTime "+targetTime.timeInMillis )
+        Log.e(TAG, "scheduleFor10PM: currentTime "+currentTime.timeInMillis )
 
         val delay = targetTime.timeInMillis - currentTime.timeInMillis
-
+        Log.e(TAG, "scheduleFor10PM: delay "+delay )
         val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .build()

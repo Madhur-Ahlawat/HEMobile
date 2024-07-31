@@ -20,6 +20,7 @@ class NotificationWorker (val context: Context, workerParams: WorkerParameters) 
     }
 
     private fun showNotificationForGeofence() {
+
         notificationUtils.showNotification(
             context.resources.getString(R.string.str_did_you_cross_today),
             context.resources.getString(R.string.str_responsible_paying),

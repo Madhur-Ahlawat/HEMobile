@@ -107,6 +107,8 @@ class RevalidatePaymentCardDetailsFragment :
             val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, Constants.CARD_VALIDATION_REQUIRED)
             bundle.putString(Constants.NAV_FLOW_FROM, Constants.CARD_VALIDATION_REQUIRED)
+            bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, false)
+            bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, true)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
             bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
             bundle.putDouble(Constants.DATA, 0.0)

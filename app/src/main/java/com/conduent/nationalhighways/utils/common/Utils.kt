@@ -981,7 +981,6 @@ object Utils {
             val millisecondsInDay = 1000L * 60 * 60 * 24
             val days = differenceInMillis / millisecondsInDay
 
-            Log.e("TAG", "getTimeDifference:hours "+hours+" *minutes* "+minutes )
 //            Triple(hours, minutes, months)
             Triple(hours, minutes, days)
         } catch (e: Exception) {

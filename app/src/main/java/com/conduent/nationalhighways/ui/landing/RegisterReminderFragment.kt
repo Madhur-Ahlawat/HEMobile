@@ -32,6 +32,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.isVisible
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
@@ -112,6 +113,10 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             if (!Utils.areNotificationsEnabled(requireContext())) {
                 previousNotificationPermission = false
             } else {
+
+                binding.notificationTv.gone()
+                binding.switchNotification.gone()
+                binding.pushLineLl.gone()
                 previousNotificationPermission =
                     sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)
                 if (landingViewModel.fromReminderPage.value == true) {
@@ -160,6 +165,9 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             binding.switchNotification.isChecked = false
             sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
         } else {
+            binding.notificationTv.gone()
+            binding.switchNotification.gone()
+            binding.pushLineLl.gone()
             if (arguments?.containsKey(Constants.NOTIFICATION_STATUS) == true) {
                 binding.switchNotification.isChecked =
                     arguments?.getBoolean(Constants.NOTIFICATION_STATUS) ?: false
@@ -190,6 +198,9 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             sessionManager.saveBooleanData(SessionManager.NotificationSettingsClick, false)
             binding.switchNotification.isChecked = Utils.areNotificationsEnabled(requireContext())
             selectedNotificationPermission = Utils.areNotificationsEnabled(requireContext())
+            binding.notificationTv.visible()
+            binding.switchNotification.visible()
+            binding.pushLineLl.visible()
         } else if (sessionManager.fetchBooleanData(SessionManager.SettingsClick) && arguments?.containsKey(
                 Constants.GpsSettings
             ) != false
@@ -210,6 +221,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 } else {
                 }*/
             }
+
+
         }
     }
 
@@ -218,7 +231,6 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 //            binding.alwaysDescTv.gone()
 //        }else{
 //        }
-
 //        binding.alwaysDescTv.visible()
 
     }
@@ -278,7 +290,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         binding.switchGeoLocation.setOnClickListener {
             if (!binding.switchGeoLocation.isChecked) {
                 visibleAlwaysDesc()
-                binding.switchNotification.isChecked = false
+//                binding.switchNotification.isChecked = false
                 selectedLocationPermission = false
                 checkContinueButton()
             } else {
@@ -329,7 +341,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             }
             if (!binding.switchNotification.isChecked) {
                 visibleAlwaysDesc()
-                binding.switchGeoLocation.isChecked = false
+//                binding.switchGeoLocation.isChecked = false
                 selectedNotificationPermission = false
                 checkContinueButton()
             } else {
@@ -344,19 +356,35 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
     }
 
     private fun checkContinueButton() {
-        if (landingViewModel.fromReminderPage.value == true) {
-            binding.continueBt.enable()
-        } else if ((previousLocationPermission == binding.switchGeoLocation.isChecked) && (previousNotificationPermission == binding.switchNotification.isChecked)) {
-            binding.continueBt.disable()
-        } else {
-            if (((previousLocationPermission != binding.switchGeoLocation.isChecked) || (previousNotificationPermission != binding.switchNotification.isChecked))
-                && (binding.switchGeoLocation.isChecked == binding.switchNotification.isChecked)
-            ) {
+        if(binding.switchNotification.visibility==View.VISIBLE){
+            if (landingViewModel.fromReminderPage.value == true) {
                 binding.continueBt.enable()
-            } else {
+            } else if ((previousLocationPermission == binding.switchGeoLocation.isChecked)
+                && (previousNotificationPermission == binding.switchNotification.isChecked)) {
                 binding.continueBt.disable()
+            } else {
+                if (((previousLocationPermission != binding.switchGeoLocation.isChecked) || (previousNotificationPermission != binding.switchNotification.isChecked))
+                    && (binding.switchGeoLocation.isChecked == binding.switchNotification.isChecked)
+                ) {
+                    binding.continueBt.enable()
+                } else {
+                    binding.continueBt.disable()
+                }
+            }
+        }else{
+            if (landingViewModel.fromReminderPage.value == true) {
+                binding.continueBt.enable()
+            } else if (previousLocationPermission == binding.switchGeoLocation.isChecked) {
+                binding.continueBt.disable()
+            } else {
+                if ((previousLocationPermission != binding.switchGeoLocation.isChecked)) {
+                    binding.continueBt.enable()
+                } else {
+                    binding.continueBt.disable()
+                }
             }
         }
+
     }
 
     private fun stopForeGroundService() {
