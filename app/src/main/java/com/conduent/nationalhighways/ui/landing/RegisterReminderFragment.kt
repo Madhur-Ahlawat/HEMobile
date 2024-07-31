@@ -18,15 +18,16 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.landing.LandingViewModel
 import com.conduent.nationalhighways.databinding.FragmentRegisterReminderBinding
 import com.conduent.nationalhighways.databinding.LocationPermissionDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.service.PlayLocationService
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.utils.GeofenceUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -47,6 +48,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
     private var previousNotificationPermission: Boolean = false
     private var selectedLocationPermission: Boolean = false
     private var selectedNotificationPermission: Boolean = false
+    private val landingViewModel: LandingViewModel by activityViewModels()
+
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -54,7 +57,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         FragmentRegisterReminderBinding.inflate(inflater, container, false)
 
     override fun init() {
-        Log.e(TAG, "init: " )
+        Log.e(TAG, "init: ")
         if (requireActivity() is LandingActivity) {
             (requireActivity() as LandingActivity).showToolBar(true)
             (requireActivity() as LandingActivity).setToolBarTitle(resources.getString(R.string.str_register_to_receive_notifications))
@@ -87,18 +90,23 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
         if (arguments?.containsKey(Constants.SERVICE_RUN) == null) {
             if (!Utils.checkLocationPermission(requireContext())) {
-                Log.e(TAG, "init: previousLocationPermission** "+previousLocationPermission )
+                Log.e(TAG, "init: previousLocationPermission** " + previousLocationPermission)
                 previousLocationPermission = false
                 binding.alwaysDescTv.visible()
             } else {
+
                 previousLocationPermission =
                     sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION)
-                Log.e(TAG, "init: previousLocationPermission "+previousLocationPermission )
+                if (landingViewModel.fromReminderPage.value == true) {
+                    previousLocationPermission = true
+                }
+                Log.e(TAG, "init: previousLocationPermission " + previousLocationPermission)
                 if (previousLocationPermission) {
                     binding.alwaysDescTv.gone()
                 } else {
                     binding.alwaysDescTv.visible()
                 }
+
             }
 
             if (!Utils.areNotificationsEnabled(requireContext())) {
@@ -106,7 +114,11 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             } else {
                 previousNotificationPermission =
                     sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)
+                if (landingViewModel.fromReminderPage.value == true) {
+                    previousNotificationPermission = true
+                }
             }
+
 
             selectedLocationPermission = previousLocationPermission
             selectedNotificationPermission = previousNotificationPermission
@@ -117,10 +129,11 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     override fun onResume() {
         super.onResume()
-        Log.e(TAG, "onResume: " )
+        Log.e(TAG, "onResume: ")
         checkNotificationGeoEnabledOrNot()
-        checkContinueButton()
 
+        checkContinueButton()
+        landingViewModel.fromReminderPage.value = false
         if (sessionManager.fetchStringData("SAVED_FILE").isNotEmpty()) {
             /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                  if (Environment.isExternalStorageManager()) {
@@ -152,7 +165,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                     arguments?.getBoolean(Constants.NOTIFICATION_STATUS) ?: false
             } else {
                 binding.switchNotification.isChecked =
-                   selectedNotificationPermission
+                    selectedNotificationPermission
             }
         }
 
@@ -236,15 +249,18 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
 
     override fun initCtrl() {
         binding.continueBt.setOnClickListener {
-            sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,
-                binding.switchNotification.isChecked
-            )
-            sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION,
-                binding.switchGeoLocation.isChecked
-            )
+
             if (binding.switchGeoLocation.isChecked && binding.switchNotification.isChecked) {
                 findNavController().navigate(R.id.action_registerReminderFragment_to_registerDailyReminderFragment)
             } else {
+                sessionManager.saveBooleanData(
+                    SessionManager.NOTIFICATION_PERMISSION,
+                    binding.switchNotification.isChecked
+                )
+                sessionManager.saveBooleanData(
+                    SessionManager.LOCATION_PERMISSION,
+                    binding.switchGeoLocation.isChecked
+                )
                 stopForeGroundService()
                 val bundle = Bundle()
                 bundle.putBoolean(Constants.GEO_FENCE_NOTIFICATION, false)
@@ -263,12 +279,12 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             if (!binding.switchGeoLocation.isChecked) {
                 visibleAlwaysDesc()
                 binding.switchNotification.isChecked = false
-                selectedLocationPermission =false
+                selectedLocationPermission = false
                 checkContinueButton()
             } else {
 
                 if (Utils.checkLocationPermission(requireContext())) {
-                    selectedLocationPermission =true
+                    selectedLocationPermission = true
 //                    startLocationServiceGeofence(3, true)
                     checkContinueButton()
                 } else if (binding.switchGeoLocation.isChecked) {
@@ -292,7 +308,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                     object : DialogPositiveBtnListener {
                         override fun positiveBtnClick(dialog: DialogInterface) {
                             binding.switchNotification.isChecked = true
-                            sessionManager.saveBooleanData(SessionManager.NotificationSettingsClick,
+                            sessionManager.saveBooleanData(
+                                SessionManager.NotificationSettingsClick,
                                 true
                             )
                             Utils.redirectToNotificationPermissionSettings(requireContext())
@@ -301,7 +318,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                     object : DialogNegativeBtnListener {
                         override fun negativeBtnClick(dialog: DialogInterface) {
                             binding.switchNotification.isChecked = false
-                            sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION,
+                            sessionManager.saveBooleanData(
+                                SessionManager.LOCATION_PERMISSION,
                                 false
                             )
                         }
@@ -326,7 +344,9 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
     }
 
     private fun checkContinueButton() {
-        if ((previousLocationPermission == binding.switchGeoLocation.isChecked) && (previousNotificationPermission == binding.switchNotification.isChecked)) {
+        if (landingViewModel.fromReminderPage.value == true) {
+            binding.continueBt.enable()
+        } else if ((previousLocationPermission == binding.switchGeoLocation.isChecked) && (previousNotificationPermission == binding.switchNotification.isChecked)) {
             binding.continueBt.disable()
         } else {
             if (((previousLocationPermission != binding.switchGeoLocation.isChecked) || (previousNotificationPermission != binding.switchNotification.isChecked))
@@ -383,14 +403,16 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             }
 
             else -> {
-                sessionManager.saveBooleanData(SessionManager.FOREGROUND_LOCATION_SHOWN,
+                sessionManager.saveBooleanData(
+                    SessionManager.FOREGROUND_LOCATION_SHOWN,
                     true
                 )
                 // No location access granted.
             }
         }
 
-        sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION,
+        sessionManager.saveBooleanData(
+            SessionManager.LOCATION_PERMISSION,
             Utils.checkLocationPermission(requireContext())
         )
 
@@ -441,7 +463,8 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         ) //Controlling width and height.
 
         binding.cancelBtn.setOnClickListener {
-            sessionManager.saveBooleanData(SessionManager.FOREGROUND_LOCATION_SHOWN,
+            sessionManager.saveBooleanData(
+                SessionManager.FOREGROUND_LOCATION_SHOWN,
                 true
             )
             this.binding.switchGeoLocation.isChecked = false
@@ -453,6 +476,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
             sessionManager.saveBooleanData(SessionManager.SettingsClick, true)
             dialog.dismiss()
         }
+        dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
 

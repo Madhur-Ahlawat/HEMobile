@@ -83,7 +83,7 @@
                         android:minHeight="@dimen/margin_50dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
-                        android:text="@string/str_change_to_always_allow"
+                        android:text="@string/goto_settings"
                         android:textAlignment="center"
                         android:textColor="@color/hyperlink_blue2"
                         android:textSize="@dimen/font_17sp"

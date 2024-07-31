@@ -1664,7 +1664,6 @@
     <string name="str_allow_location_title">Allow "\"Dart Charge\"" to use your location when you are not using the app?</string>
     <string name="str_allow_location_desc">Change the setting to <b>Allow all the time</b> to ensure you receive the Dart Charge reminders.</string>
     <string name="str_opt_out">Opt Out</string>
-    <string name="str_change_to_always_allow">Go To Settings</string>
 
 
     <string name="str_disable_notifications">Click here to disable notifications when you cross</string>

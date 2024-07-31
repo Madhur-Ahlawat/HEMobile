@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavArgument
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.landing.LandingViewModel
 import com.conduent.nationalhighways.databinding.ActivityLandingBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
@@ -44,6 +45,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
     private var countryCode: String = ""
     private var screenType: String = ""
     val viewModel: WebSiteServiceViewModel by viewModels()
+    val landingViewModel: LandingViewModel by viewModels()
     private lateinit var binding: ActivityLandingBinding
 
 
@@ -109,7 +111,7 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
             }
         }
         binding.btnBack.setOnClickListener {
-            finish()
+            onBackPressedDispatcher.onBackPressed()
         }
         backClickListener()
         sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, false)
@@ -148,7 +150,6 @@ class LandingActivity : BaseActivity<ActivityLandingBinding>() {
                 Utils.areNotificationsEnabled(this)
             )
         }
-
 
         Log.e("TAG", "onResume: fontScale " + getResources().configuration.fontScale)
 

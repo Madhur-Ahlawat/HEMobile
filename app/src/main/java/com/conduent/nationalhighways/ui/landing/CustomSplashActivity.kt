@@ -48,6 +48,8 @@ class CustomSplashActivity : AppCompatActivity() {
         Log.e("Signature", AppSignatureHelper(this).appSignatures.toString())
         notificationPermission = Utils.areNotificationsEnabled(this)
 
+        sessionManager.saveBooleanData(SessionManager.SettingsClick,false)
+        sessionManager.saveBooleanData(SessionManager.NotificationSettingsClick,false)
         if (!mIsRooted) {
             if (!Utils.areNotificationsEnabled(this)) {
                 // Notifications are not enabled, request the user to enable them

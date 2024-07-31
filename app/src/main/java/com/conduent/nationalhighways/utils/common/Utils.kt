@@ -346,7 +346,12 @@ object Utils {
         val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.US)
         return outputFormat.format(date ?: Date())
     }
-  fun convertOneFormatDateToAnotherFormat(inputDate: String?,fromFormat:String,anotherFormat:String): String {
+
+    fun convertOneFormatDateToAnotherFormat(
+        inputDate: String?,
+        fromFormat: String,
+        anotherFormat: String
+    ): String {
         val inputFormat = SimpleDateFormat(fromFormat, Locale.US)
         val date: Date? = inputFormat.parse(inputDate.toString())
         val outputFormat = SimpleDateFormat(anotherFormat, Locale.US)
@@ -976,6 +981,7 @@ object Utils {
             val millisecondsInDay = 1000L * 60 * 60 * 24
             val days = differenceInMillis / millisecondsInDay
 
+            Log.e("TAG", "getTimeDifference:hours "+hours+" *minutes* "+minutes )
 //            Triple(hours, minutes, months)
             Triple(hours, minutes, days)
         } catch (e: Exception) {
@@ -1578,5 +1584,53 @@ object Utils {
 
         }
 
+    }
+
+    fun checkCrossedInTime(): Boolean {
+        val date = Date()
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+
+        // Get the current hour and minute
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        if ((hour >= 6 && minute >= 2) && (hour <= 21 && minute <= 58)) {
+            return true
+        }
+        return false
+    }
+
+    fun getDelayHours(sessionManager: SessionManager, context: Context): Long {
+        val type=sessionManager.fetchStringData(SessionManager.DAILY_REMINDER_TYPE)
+
+
+        when (type) {
+            context.resources.getString(R.string.str_1hr_after_crossing) -> {
+                return 1
+            }
+            context.resources.getString(R.string.str_2hr_after_crossing) -> {
+                return 2
+            }
+            context.resources.getString(R.string.str_3hr_after_crossing) -> {
+                return 3
+            }
+            context.resources.getString(R.string.str_4hr_after_crossing) -> {
+                return 4
+            }
+            context.resources.getString(R.string.str_5hr_after_crossing) -> {
+                return 5
+            }
+            context.resources.getString(R.string.str_6hr_after_crossing) -> {
+                return 6
+            }
+            context.resources.getString(R.string.str_7hr_after_crossing) -> {
+                return 7
+            }
+            context.resources.getString(R.string.str_8hr_after_crossing) -> {
+                return 8
+            }
+            else -> return 0
+        }
     }
 }
