@@ -163,6 +163,16 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
+                        Log.e(
+                            TAG,
+                            "checkNotification: DAILY_REMINDER_TYPE** " + sessionManager.fetchStringData(
+                                SessionManager.DAILY_REMINDER_TYPE
+                            )
+                        )
+                        Log.e(
+                            TAG,
+                            "checkNotification: checkCrossedInTime** " + Utils.checkCrossedInTime()
+                        )
                         if (Utils.checkCrossedInTime()) {
 
                             Log.e(
@@ -175,28 +185,9 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                                     R.string.str_until_10pm
                                 ))
                             ) {
-                                val calendar = Calendar.getInstance()
-                                calendar.set(Calendar.HOUR_OF_DAY, 22)
-                                calendar.set(Calendar.MINUTE, 0)
-                                calendar.set(Calendar.SECOND, 0)
-
-                                val diffTo10PM = Utils.getTimeDifference(Date(), calendar.time)
-
-                                if (diffTo10PM.first == 0L && diffTo10PM.second < 15) {
-                                    Log.e(TAG, "checkNotification: 1 minutes ")
-                                    val workRequest =
-                                        OneTimeWorkRequestBuilder<NotificationWorker>()
-                                            .setInitialDelay(diffTo10PM.second, TimeUnit.MINUTES)
-                                            .build()
-
-                                    WorkManager.getInstance(context).enqueue(workRequest)
-                                } else {
-                                    Log.e(TAG, "checkNotification: 1 minute ")
-                                    scheduleFor10PM(context)
-                                }
-
+                                Log.e(TAG, "checkNotification: 1 minute ")
+                                scheduleFor10PM(context)
                             } else {
-
                                 val delayHours = Utils.getDelayHours(sessionManager, context)
                                 val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
                                     .setInitialDelay(delayHours, TimeUnit.HOURS)
@@ -204,16 +195,11 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
                                 WorkManager.getInstance(context).enqueue(workRequest)
 
-//                            notificationUtils.showNotification(
-//                                context.resources.getString(R.string.str_did_you_cross_today),
-//                                context.resources.getString(R.string.str_responsible_paying),
-//                                Constants.GEO_FENCE_NOTIFICATION
-//                            )
                             }
+                            Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
                         } else {
-
+                            Toast.makeText(context, "Location exit but crossed time between 6:02AM & 10:58PM", Toast.LENGTH_SHORT).show()
                         }
-                        Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
                     }
 
                     sessionManager.saveStringData(
@@ -274,7 +260,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
     private fun scheduleFor10PM(context: Context) {
         val currentTime = Calendar.getInstance()
-        currentTime.time= Date()
+        currentTime.time = Date()
         val targetTime = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 22)
             set(Calendar.MINUTE, 0)
@@ -285,11 +271,11 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             // If the target time is before the current time, add a day to the target time
             targetTime.add(Calendar.DAY_OF_MONTH, 1)
         }
-        Log.e(TAG, "scheduleFor10PM: targetTime "+targetTime.timeInMillis )
-        Log.e(TAG, "scheduleFor10PM: currentTime "+currentTime.timeInMillis )
+        Log.e(TAG, "scheduleFor10PM: targetTime " + targetTime.timeInMillis)
+        Log.e(TAG, "scheduleFor10PM: currentTime " + currentTime.timeInMillis)
 
         val delay = targetTime.timeInMillis - currentTime.timeInMillis
-        Log.e(TAG, "scheduleFor10PM: delay "+delay )
+        Log.e(TAG, "scheduleFor10PM: delay " + delay)
         val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .build()

@@ -1593,11 +1593,8 @@ object Utils {
         // Get the current hour and minute
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
-
-        if ((hour >= 6 && minute >= 2) && (hour <= 21 && minute <= 58)) {
-            return true
-        }
-        return false
+        Log.e("TAG", "checkCrossedInTime: hour "+hour+" minute* "+minute )
+        return (hour > 6 || (hour == 6 && minute >= 2)) && (hour < 21 || (hour == 21 && minute <= 58))
     }
 
     fun getDelayHours(sessionManager: SessionManager, context: Context): Long {
