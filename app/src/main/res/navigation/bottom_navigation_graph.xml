@@ -693,6 +693,12 @@
             android:id="@+id/action_threeDSWebViewFragment_to_accountSuspendedFinalPayFragment"
             app:destination="@+id/accountSuspendedFinalPayFragment" />
 
+        <action
+            android:id="@+id/action_threeDSWebViewFragment_to_tryPaymentAgainFragment"
+            app:destination="@id/tryPaymentAgainFragment" />
+
+
+
     </fragment>
 
     <fragment
@@ -863,6 +869,7 @@
             app:destination="@id/paymentMethodFragment"
             app:popUpTo="@id/paymentMethodFragment"
             app:popUpToInclusive="true" />
+
 
     </fragment>
 

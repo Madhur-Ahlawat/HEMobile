@@ -86,6 +86,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         if ((requireActivity() is HomeActivityMain) && !backButton) {
             (requireActivity() as HomeActivityMain).hideBackIcon()
         }
+        Log.e("TAG", "onCreateView: navFlowCall -> "+navFlowCall+" navFlowFrom -> "+navFlowFrom )
 
         return _binding?.root
     }

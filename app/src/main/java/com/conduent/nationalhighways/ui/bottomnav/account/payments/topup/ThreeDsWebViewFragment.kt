@@ -369,9 +369,7 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             eci = paymentSuccessResponse.eci ?: "",
             cardholderAuth = paymentSuccessResponse.cardHolderAuth ?: "",
             threeDsVer = paymentSuccessResponse.threeDsVersion ?: "",
-
-
-            )
+        )
         Log.d("paymentRequest", Gson().toJson(model))
         revalidateViewModel.paymentWithExistingCard(model)
     }
@@ -428,6 +426,10 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
             Constants.NAV_FLOW_FROM,
             navFlowFrom
         )
+        bundle.putString(
+            Constants.NAV_FLOW_KEY,
+            navFlowCall
+        )
         bundle.putBoolean(Constants.CARD_VALIDATION_FIRST_TIME, cardValidationFirstTime)
         bundle.putBoolean(Constants.CARD_VALIDATION_SECOND_TIME, cardValidationSecondTime)
         bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
@@ -436,10 +438,24 @@ class ThreeDsWebViewFragment : BaseFragment<FragmentThreeDSWebviewBinding>(), Vi
         bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList.orEmpty().size)
         bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)
         bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-        findNavController().navigate(
-            R.id.action_threeDSWebViewFragment_to_reValidateInfoFragment,
-            bundle
-        )
+        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+        bundle.putString(Constants.CURRENTBALANCE, currentBalance)
+
+
+        if (navFlowCall == Constants.CARD_VALIDATION_REQUIRED || navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
+            findNavController().navigate(
+                R.id.action_threeDSWebViewFragment_to_reValidateInfoFragment,
+                bundle
+            )
+        } else {
+            bundle.putBoolean(Constants.FromThreeDS,true)
+            findNavController().navigate(
+                R.id.action_threeDSWebViewFragment_to_tryPaymentAgainFragment,
+                bundle
+            )
+        }
+
 
     }
 

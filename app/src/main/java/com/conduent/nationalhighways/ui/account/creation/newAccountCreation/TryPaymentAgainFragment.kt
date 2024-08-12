@@ -32,8 +32,7 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
 
     private val dashboardViewModel: DashboardViewModel by activityViewModels()
     private var accountInformation: AccountInformation? = null
-
-
+    private var fromThreeDs: Boolean = false
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -45,6 +44,9 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
             (requireActivity() as HomeActivityMain).focusToolBarHome()
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
+        if (arguments?.containsKey(Constants.FromThreeDS) == true) {
+            fromThreeDs = arguments?.getBoolean(Constants.FromThreeDS) ?: false
         }
         if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
             paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
@@ -89,10 +91,15 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
         when (v?.id) {
 
             R.id.cancel_bt -> {
+
                 if (navFlowCall == Constants.PAYMENT_TOP_UP) {
-                    findNavController().navigate(
-                        R.id.action_tryPaymentAgainFragment_to_paymentMethodFragment
-                    )
+                    if (requireActivity() is HomeActivityMain && fromThreeDs) {
+                        (requireActivity() as HomeActivityMain).selectToAccountFragment()
+                    } else {
+                        findNavController().navigate(
+                            R.id.action_tryPaymentAgainFragment_to_paymentMethodFragment
+                        )
+                    }
                 } else if (navFlowCall == Constants.SUSPENDED) {
                     requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
                         putString(Constants.NAV_FLOW_FROM, navFlowFrom)
@@ -106,32 +113,35 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
 
             R.id.tryPaymentAgain -> {
                 if (navFlowCall == Constants.PAYMENT_TOP_UP || navFlowCall == Constants.SUSPENDED) {
-
-                    if (paymentListSize == 0) {
-
-                        val bundle = Bundle()
-                        bundle.putDouble(Constants.DATA, paymentTopup)
-                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
-                        bundle.putString(Constants.CURRENTBALANCE, currentbalance)
-                        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
-
-                        findNavController().navigate(
-                            R.id.action_tryPaymentAgainFragment_to_nmiPaymentFragment,
-                            bundle
-                        )
+                    if (fromThreeDs) {
+                        redirectToTopUpDetailsFromDashboard()
                     } else {
-                        val bundle = Bundle()
-                        bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
-                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
-                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
-                        bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
-                        findNavController().navigate(
-                            R.id.action_tryPaymentAgainFragment_to_accountSuspendedPaymentFragment,
-                            bundle
-                        )
+                        if (paymentListSize == 0) {
+
+                            val bundle = Bundle()
+                            bundle.putDouble(Constants.DATA, paymentTopup)
+                            bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                            bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                            bundle.putString(Constants.CURRENTBALANCE, currentbalance)
+                            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+
+                            findNavController().navigate(
+                                R.id.action_tryPaymentAgainFragment_to_nmiPaymentFragment,
+                                bundle
+                            )
+                        } else {
+                            val bundle = Bundle()
+                            bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+                            bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                            bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+                            findNavController().navigate(
+                                R.id.action_tryPaymentAgainFragment_to_accountSuspendedPaymentFragment,
+                                bundle
+                            )
+                        }
                     }
 
 
@@ -167,4 +177,29 @@ class TryPaymentAgainFragment : BaseFragment<FragmentTryPaymentAgainBinding>(),
         }
     }
 
+    private fun redirectToTopUpDetailsFromDashboard() {
+        val bundle = Bundle()
+        if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+            bundle.putString(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+            bundle.putString(
+                Constants.CURRENTBALANCE, currentbalance
+            )
+        } else {
+            bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYMENT_TOP_UP)
+        }
+
+        bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+        bundle.putParcelable(
+            Constants.PERSONALDATA,
+            personalInformation
+        )
+        bundle.putParcelable(
+            Constants.ACCOUNTINFORMATION,
+            accountInformation
+        )
+
+        findNavController().navigate(
+            R.id.action_tryPaymentAgainFragment_to_accountSuspendedPaymentFragment, bundle
+        )
+    }
 }

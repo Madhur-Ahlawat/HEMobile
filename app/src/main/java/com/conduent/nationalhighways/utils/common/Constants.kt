@@ -332,5 +332,7 @@ object Constants {
     const val GEOLOCATION_STATUS="GEOLOCATION_STATUS"
     const val NOTIFICATION_STATUS="NOTIFICATION_STATUS"
     const val SERVICE_RUN="SERVICE_RUN"
+    const val FromThreeDS="FromThreeDS"
+    const val REDIRECTTOPAYMENTPAGE="REDIRECTTOPAYMENTPAGE"
 
 }
