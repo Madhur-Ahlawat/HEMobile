@@ -1290,6 +1290,21 @@ object Utils {
         ) != PERMISSION_DENIED
 
     }
+ fun checkAllLocationPermission(context: Context): Boolean {
+        return (ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        ) == PERMISSION_DENIED &&
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PERMISSION_DENIED &&
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PERMISSION_DENIED)
+
+    }
 
     fun checkAccessFineLocationPermission(context: Context): Boolean {
         return !((ContextCompat.checkSelfPermission(

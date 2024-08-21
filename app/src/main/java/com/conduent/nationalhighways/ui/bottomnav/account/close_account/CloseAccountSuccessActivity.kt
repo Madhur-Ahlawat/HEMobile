@@ -41,18 +41,19 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
     }
 
     private fun setView() {
-        if(intent.hasExtra(Constants.NAV_FLOW_FROM)){
-            navFlowFrom= intent.getStringExtra(Constants.NAV_FLOW_FROM)?:""
+        if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
+            navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
         sessionManager.clearAll()
         binding.toolbar.backButton.gone()
-        if(navFlowFrom == Constants.IN_ACTIVE){
+        if (navFlowFrom == Constants.IN_ACTIVE) {
             binding.toolbar.titleTxt.text = resources.getString(R.string.str_account_inactive)
-        }else{
+        } else {
             binding.toolbar.titleTxt.text = resources.getString(R.string.str_close_account)
         }
         if (intent.hasExtra(Constants.EMAIL)) {
             email = intent.getStringExtra(Constants.EMAIL).toString()
+            email = email.replace("-", "‐")
         }
         if (intent.hasExtra(Constants.ACCOUNT_SUBTYPE)) {
             accountSubType = intent.getStringExtra(Constants.ACCOUNT_SUBTYPE).toString()

@@ -131,7 +131,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             context.resources.getColor(R.color.hyperlink_blue2, null)
         )
         dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-            context.resources.getColor(R.color.hyperlink_blue2, null)
+            context.resources.getColor(R.color.blue_color, null)
         )
     }
 

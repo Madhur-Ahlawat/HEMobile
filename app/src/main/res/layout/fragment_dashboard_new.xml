@@ -40,7 +40,7 @@
             android:layout_marginStart="@dimen/margin_18dp"
             android:contentDescription="@string/logout"
             android:importantForAccessibility="yes"
-            android:paddingHorizontal="@dimen/margin_15dp"
+            android:background="@color/transparent"
             android:src="@drawable/ic_logout"
             app:layout_constraintBottom_toBottomOf="@id/logo"
             app:layout_constraintStart_toStartOf="parent"

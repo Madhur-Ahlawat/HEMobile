@@ -20,7 +20,7 @@ android {
         minSdkVersion 29
         targetSdkVersion 34
         applicationId "com.conduent.nationalhighways"
-        versionCode 1
+        versionCode 2
         versionName "0.1"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -54,10 +54,10 @@ android {
     signingConfigs {
         conduentdev {
 
-            storeFile file("C:\\Users\\52409756\\StudioProjects\\HE-MAPP-Android\\app\\keystore.jks")
-            storePassword "Conduent@123"
-            keyAlias "conduent"
-            keyPassword "Conduent@123"
+            storeFile file("C:\\Users\\52409756\\StudioProjects\\HE-MAPP-Android\\app\\NH.jks")
+            storePassword "NH@1234"
+            keyAlias "nh"
+            keyPassword "NH@1234"
 
             v1SigningEnabled true
             v2SigningEnabled true

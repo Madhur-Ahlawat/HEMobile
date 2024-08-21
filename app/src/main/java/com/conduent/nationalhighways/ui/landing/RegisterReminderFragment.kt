@@ -210,7 +210,9 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 if (!Utils.checkAccessFineLocationPermission(requireContext())) {
                     sessionManager.saveBooleanData(SessionManager.FOREGROUND_LOCATION_SHOWN, true)
                 }
-                displayLocationAlwaysAllowPopup()
+                if(!Utils.checkAllLocationPermission(requireContext())){
+                    displayLocationAlwaysAllowPopup()
+                }
             } else {
                 sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
                 binding.switchGeoLocation.isChecked = true
@@ -221,6 +223,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 } else {
                 }*/
             }
+
 
 
         }
