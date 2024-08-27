@@ -20,7 +20,7 @@ android {
         minSdkVersion 29
         targetSdkVersion 34
         applicationId "com.conduent.nationalhighways"
-        versionCode 2
+        versionCode 3
         versionName "0.1"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

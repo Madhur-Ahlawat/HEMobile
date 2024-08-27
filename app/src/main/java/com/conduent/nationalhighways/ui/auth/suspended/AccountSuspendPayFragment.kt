@@ -291,7 +291,10 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         if (paymentListSize == 0) {
             primaryCard = "Y"
+        }
 
+        if(easyPay == "N"){
+            primaryCard = "N"
         }
         cardModel = PaymentWithNewCardModel(
             addressLine1 = personalInformation?.addressLine1.toString(),
