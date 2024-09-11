@@ -13,10 +13,8 @@
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <!--    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />-->
 
-
-    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+<!--    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />-->
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -24,8 +22,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-<!--    <uses-permission android:name="android.permission.RECEIVE_SMS" />-->
-<!--    <uses-permission android:name="android.permission.READ_SMS" />-->
+    <!--    <uses-permission android:name="android.permission.RECEIVE_SMS" />-->
+    <!--    <uses-permission android:name="android.permission.READ_SMS" />-->
     <!--    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>-->
     <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -135,6 +133,7 @@
              See README(https://goo.gl/l4GJaQ) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
+
             android:resource="@drawable/ic_dart_charge_app_icon" />
         <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more. -->
@@ -178,10 +177,12 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".utils.OTPReceiver" android:exported="true"
+        <receiver
+            android:name=".utils.OTPReceiver"
+            android:exported="true"
             android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
             <intent-filter>
-                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED"/>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
     </application>

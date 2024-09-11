@@ -276,7 +276,7 @@
                                     android:layout_width="@dimen/margin_63dp"
                                     android:layout_height="@dimen/margin_63dp"
                                     android:layout_centerVertical="true"
-                                    android:src="@drawable/ic_receive_notifications"
+                                    android:src="@drawable/ic_receive_notification"
                                     android:importantForAccessibility="no" />
 
 

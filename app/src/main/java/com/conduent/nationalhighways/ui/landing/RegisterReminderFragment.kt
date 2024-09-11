@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -32,7 +33,6 @@ import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.isVisible
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
@@ -210,9 +210,15 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 if (!Utils.checkAccessFineLocationPermission(requireContext())) {
                     sessionManager.saveBooleanData(SessionManager.FOREGROUND_LOCATION_SHOWN, true)
                 }
-                if(!Utils.checkAllLocationPermission(requireContext())){
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        requireActivity(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                ) {
+                } else {
                     displayLocationAlwaysAllowPopup()
                 }
+
             } else {
                 sessionManager.saveBooleanData(SessionManager.SettingsClick, false)
                 binding.switchGeoLocation.isChecked = true
@@ -223,7 +229,6 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                 } else {
                 }*/
             }
-
 
 
         }
@@ -359,11 +364,12 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
     }
 
     private fun checkContinueButton() {
-        if(binding.switchNotification.visibility==View.VISIBLE){
+        if (binding.switchNotification.visibility == View.VISIBLE) {
             if (landingViewModel.fromReminderPage.value == true) {
                 binding.continueBt.enable()
             } else if ((previousLocationPermission == binding.switchGeoLocation.isChecked)
-                && (previousNotificationPermission == binding.switchNotification.isChecked)) {
+                && (previousNotificationPermission == binding.switchNotification.isChecked)
+            ) {
                 binding.continueBt.disable()
             } else {
                 if (((previousLocationPermission != binding.switchGeoLocation.isChecked) || (previousNotificationPermission != binding.switchNotification.isChecked))
@@ -374,7 +380,7 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
                     binding.continueBt.disable()
                 }
             }
-        }else{
+        } else {
             if (landingViewModel.fromReminderPage.value == true) {
                 binding.continueBt.enable()
             } else if (previousLocationPermission == binding.switchGeoLocation.isChecked) {

@@ -841,8 +841,11 @@ object Utils {
 
 
         binding.signinTv.setOnClickListener {
+            if (activity is LoginActivity) {
 
-            activity.startNewActivityByClearingStack(LoginActivity::class.java)
+            } else {
+                activity.startNewActivityByClearingStack(LoginActivity::class.java)
+            }
             dialog.cancel()
         }
         dialog.show()
@@ -1043,7 +1046,7 @@ object Utils {
 //            .session(3)
 //            .threshold(3)
             .ratingBarColor(R.color.blue_color)
-            .playstoreUrl("https://play.google.com/store/apps/details?id=com.doctormoney")
+            .playstoreUrl("https://play.google.com/store/apps/details?id=com.conduent.nationalhighways")
             .onThresholdCleared { dialog, rating, thresholdCleared ->
                 Log.e(
                     "TAG",
@@ -1290,7 +1293,8 @@ object Utils {
         ) != PERMISSION_DENIED
 
     }
- fun checkAllLocationPermission(context: Context): Boolean {
+
+    fun checkAllLocationPermission(context: Context): Boolean {
         return (ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_BACKGROUND_LOCATION
