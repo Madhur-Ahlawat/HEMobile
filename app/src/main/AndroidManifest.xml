@@ -44,14 +44,18 @@
         <activity
             android:name=".ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity"
             android:exported="false"
+            android:theme="@style/Theme.HEMobileDark"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bottomnav.account.close_account.CloseAccountSuccessActivity"
             android:exported="false"
+            android:theme="@style/Theme.HEMobileDark"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.account.biometric.BiometricActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.HEMobileDark"
+            />
         <activity
             android:name=".ui.landing.CustomSplashActivity"
             android:exported="true"
@@ -89,16 +93,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount" />
         <activity
-            android:name=".ui.futureModule.InProgressActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.account.creation.controller.CreateAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.payment.MakeOffPaymentActivity"

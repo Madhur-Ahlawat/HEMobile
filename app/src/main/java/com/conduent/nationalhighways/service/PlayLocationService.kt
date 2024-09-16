@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.gson.Gson
+import java.util.Date
 
 class PlayLocationService : Service(), LocationListener {
     private val binder: IBinder = LocalBinder()
@@ -188,7 +189,7 @@ class PlayLocationService : Service(), LocationListener {
 
 
     override fun onTaskRemoved(rootIntent: Intent) {
-        Utils.writeInFile(null, "PlayLocation Task Removed")
+        Utils.writeInFile(null, "PlayLocation Task Removed "+ Date())
         super.onTaskRemoved(rootIntent)
     }
 

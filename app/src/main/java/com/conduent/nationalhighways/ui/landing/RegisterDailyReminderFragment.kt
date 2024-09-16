@@ -3,6 +3,7 @@ package com.conduent.nationalhighways.ui.landing
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +13,7 @@ import com.conduent.nationalhighways.data.model.landing.LandingViewModel
 import com.conduent.nationalhighways.databinding.FragmentRegisterDailyReminderBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.GeofenceUtils
+import com.conduent.nationalhighways.utils.clickActionForDropdown
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -54,6 +56,7 @@ class RegisterDailyReminderFragment : BaseFragment<FragmentRegisterDailyReminder
 //        }
 
 
+        binding.dailyReminderDv.clickActionForDropdown()
         binding.continueBt.setOnClickListener {
             sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION,
                 true
