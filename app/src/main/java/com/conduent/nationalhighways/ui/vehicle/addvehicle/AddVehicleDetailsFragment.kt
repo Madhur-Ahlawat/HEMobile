@@ -24,6 +24,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
+import com.conduent.nationalhighways.utils.clickActionForDropdown
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -93,6 +94,7 @@ class AddVehicleDetailsFragment : BaseFragment<FragmentNewAddVehicleDetailsBindi
         typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_C))
         typeOfVehicle.add(requireActivity().resources.getString(R.string.vehicle_type_D))
         nonUKVehicleModel = arguments?.getParcelable(Constants.VEHICLE_DETAIL)
+        binding.typeVehicle.clickActionForDropdown()
 
         binding.apply {
             typeVehicle.dataSet.addAll(typeOfVehicle)

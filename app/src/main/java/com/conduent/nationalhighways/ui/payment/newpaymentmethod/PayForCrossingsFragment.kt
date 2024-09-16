@@ -18,6 +18,7 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
+import com.conduent.nationalhighways.utils.clickActionForDropdown
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -78,6 +79,8 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             inputCountry.dataSet.clear()
             inputCountry.dataSet.addAll(crossingsList)
             inputCountry.setSelectedValue(unSettledTrips.toString())
+            inputCountry.clickActionForDropdown()
+
             inputTotalAmount.text = getString(
                 R.string.price, "" + String.format(
                     "%.2f",
