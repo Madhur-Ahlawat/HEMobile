@@ -298,14 +298,12 @@ class RegisterReminderFragment : BaseFragment<FragmentRegisterReminderBinding>()
         binding.switchGeoLocation.setOnClickListener {
             if (!binding.switchGeoLocation.isChecked) {
                 visibleAlwaysDesc()
-//                binding.switchNotification.isChecked = false
                 selectedLocationPermission = false
                 checkContinueButton()
             } else {
 
                 if (Utils.checkLocationPermission(requireContext())) {
                     selectedLocationPermission = true
-//                    startLocationServiceGeofence(3, true)
                     checkContinueButton()
                 } else if (binding.switchGeoLocation.isChecked) {
                     if (sessionManager.fetchBooleanData(SessionManager.FOREGROUND_LOCATION_SHOWN)) {
