@@ -1,7 +1,17 @@
 package com.conduent.nationalhighways.utils
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Environment
+import android.provider.Settings
+import androidx.activity.result.ActivityResultLauncher
+import androidx.core.app.ActivityCompat
 import com.conduent.nationalhighways.utils.common.Constants
 import okhttp3.ResponseBody
 import java.io.File
@@ -13,7 +23,7 @@ import java.io.OutputStream
 object StorageHelper {
 
 
-    /*fun checkStoragePermissions(context: Context): Boolean {
+    fun checkStoragePermissions(context: Context): Boolean {
         var ret = true
         if (SDK_INT >= Build.VERSION_CODES.R) {
             ret = Environment.isExternalStorageManager()
@@ -59,7 +69,6 @@ object StorageHelper {
             )
         }
     }
-*/
     fun writeResponseBodyToDisk(
         activity: Activity,
         selectionType: String,

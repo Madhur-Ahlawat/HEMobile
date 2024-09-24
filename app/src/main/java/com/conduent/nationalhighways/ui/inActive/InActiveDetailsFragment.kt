@@ -97,6 +97,7 @@ class InActiveDetailsFragment : BaseFragment<FragmentInActiveDetailsBinding>() {
                 val bundle = Bundle()
                 bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                 bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                bundle.putString(Constants.NAV_FLOW_FROM, Constants.IN_ACTIVE)
 
                 findNavController().navigate(
                     R.id.action_inActiveDetailsFragment_to_closeAccountFragment,

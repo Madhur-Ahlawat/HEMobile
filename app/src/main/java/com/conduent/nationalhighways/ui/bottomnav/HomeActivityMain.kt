@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.bottomnav
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -15,7 +14,6 @@ import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
-import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
@@ -70,7 +68,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     var dataBinding: ActivityHomeMainBinding? = null
 
     lateinit var profileDetailModel: ProfileDetailModel
-    private var focusToolBarType:String=""
+    private var focusToolBarType: String = ""
+    var redirectToPaymentStatus: Boolean = false
 
     companion object {
         var accountDetailsData: ProfileDetailModel? = null
@@ -132,7 +131,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             context.resources.getColor(R.color.hyperlink_blue2, null)
         )
         dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-            context.resources.getColor(R.color.hyperlink_blue2, null)
+            context.resources.getColor(R.color.blue_color, null)
         )
     }
 
@@ -320,15 +319,27 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             (currentDestination?.id == R.id.crossingHistoryFragment)
             || (currentDestination?.id == R.id.accountFragment)
         ) {
+            Log.e("TAG", "backPressLogic: if ")
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
         } else if (currentDestination?.id == R.id.caseEnquiryHistoryListFragment) {
+            Log.e("TAG", "backPressLogic: else if")
             redirectToAccountFragment()
         } else {
+            Log.e("TAG", "backPressLogic: else ")
             onBackPressedDispatcher.onBackPressed()
         }
     }
 
-    private fun accountFragmentClick() {
+    fun changeStatusOfRedirectToPayment() {
+        redirectToPaymentStatus = false
+    }
+
+    fun getRedirectToPayment(): Boolean {
+        return redirectToPaymentStatus
+    }
+
+    private fun accountFragmentClick(redirectToPayment: Boolean = false) {
+        this.redirectToPaymentStatus = redirectToPayment
         if (!this::navController.isInitialized) {
             navController = (supportFragmentManager.findFragmentById(
                 R.id.fragmentContainerView
@@ -379,7 +390,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
-        Log.e("TAG", "handleAlertResponse: " )
+        Log.e("TAG", "handleAlertResponse: ")
         dismissLoaderDialog()
 
         if (this::profileDetailModel.isInitialized) {
@@ -480,7 +491,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handleAccountDetailsResponse(status: Resource<ProfileDetailModel?>?) {
-        Log.e("TAG", "handleAccountDetailsResponse: " )
+        Log.e("TAG", "handleAccountDetailsResponse: ")
         refreshTokenApiCalled = false
 
         communicationPrefsViewModel.getAccountSettingsPrefs()
@@ -585,6 +596,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         accountFragmentClick()
     }
 
+    fun selectToAccountFragment() {
+        dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
+        accountFragmentClick(true)
+    }
+
     fun hideBackIcon() {
         dataBinding?.backButton?.gone()
     }
@@ -593,8 +609,8 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         dataBinding?.backButton?.requestFocus()
     }
 
-    fun focusToolBarHome(type:String="") {
-        if(focusToolBarType==""||focusToolBarType!=type) {
+    fun focusToolBarHome(type: String = "") {
+        if (focusToolBarType == "" || focusToolBarType != type) {
             Log.e("TAG", "focusToolBarHome:@@ $type  focusToolBarType $focusToolBarType")
             dataBinding?.backButton?.requestFocus() // Focus on the backButton
             val task = Runnable {
@@ -612,7 +628,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
             worker.schedule(task, 1, TimeUnit.SECONDS)
         }
-        focusToolBarType=type
+        focusToolBarType = type
 
     }
 

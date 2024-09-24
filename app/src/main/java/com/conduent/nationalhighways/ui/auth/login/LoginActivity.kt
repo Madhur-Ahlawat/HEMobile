@@ -15,6 +15,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.ErrorResponseModel
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
@@ -806,6 +807,17 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     sessionManager.saveTwoFAEnabled(false)
                 }
                 hitAPIs()
+            } else {
+                dismissLoaderDialog()
+                try {
+                    val errorResponseModel = response?.let { ErrorResponseModel.parseError(it) }
+                    errorResponseModel?.errorCode = response?.code()
+                    sessionManager.saveTouchIdEnabled(false)
+                    sessionManager.saveHasAskedForBiometric(false)
+                    displaySessionExpireDialog(errorResponseModel)
+                } catch (e: Exception) {
+
+                }
             }
         }
     }

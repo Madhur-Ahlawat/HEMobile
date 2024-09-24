@@ -327,5 +327,12 @@ object Constants {
     const val AccountSuspendSelect="AccountSuspendSelect"
     const val ProfileManagemnt="ProfileManagemnt"
     const val AccountFrag="AccountFrag"
+    const val PreviousLocationPermission="previousLocationPermission"
+    const val PreviousNotificationPermission="previousNotificationPermission"
+    const val GEOLOCATION_STATUS="GEOLOCATION_STATUS"
+    const val NOTIFICATION_STATUS="NOTIFICATION_STATUS"
+    const val SERVICE_RUN="SERVICE_RUN"
+    const val FromThreeDS="FromThreeDS"
+    const val REDIRECTTOPAYMENTPAGE="REDIRECTTOPAYMENTPAGE"
 
 }

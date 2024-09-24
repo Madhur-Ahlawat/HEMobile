@@ -49,7 +49,7 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
         }
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).focusToolBarHome()
-        }else if (requireActivity() is AuthActivity) {
+        } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
     }
@@ -97,6 +97,10 @@ class CloseAccountFragment : BaseFragment<FragmentCloseAccountBinding>() {
                         putString(
                             Constants.ACCOUNT_SUBTYPE,
                             accountInformation?.accSubType
+                        )
+                        putString(
+                            Constants.NAV_FLOW_FROM,
+                            navFlowFrom
                         )
 
                     }

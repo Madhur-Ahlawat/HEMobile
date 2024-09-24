@@ -346,7 +346,12 @@ object Utils {
         val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.US)
         return outputFormat.format(date ?: Date())
     }
-  fun convertOneFormatDateToAnotherFormat(inputDate: String?,fromFormat:String,anotherFormat:String): String {
+
+    fun convertOneFormatDateToAnotherFormat(
+        inputDate: String?,
+        fromFormat: String,
+        anotherFormat: String
+    ): String {
         val inputFormat = SimpleDateFormat(fromFormat, Locale.US)
         val date: Date? = inputFormat.parse(inputDate.toString())
         val outputFormat = SimpleDateFormat(anotherFormat, Locale.US)
@@ -836,8 +841,11 @@ object Utils {
 
 
         binding.signinTv.setOnClickListener {
+            if (activity is LoginActivity) {
 
-            activity.startNewActivityByClearingStack(LoginActivity::class.java)
+            } else {
+                activity.startNewActivityByClearingStack(LoginActivity::class.java)
+            }
             dialog.cancel()
         }
         dialog.show()
@@ -1038,7 +1046,7 @@ object Utils {
 //            .session(3)
 //            .threshold(3)
             .ratingBarColor(R.color.blue_color)
-            .playstoreUrl("https://play.google.com/store/apps/details?id=com.doctormoney")
+            .playstoreUrl("https://play.google.com/store/apps/details?id=com.conduent.nationalhighways")
             .onThresholdCleared { dialog, rating, thresholdCleared ->
                 Log.e(
                     "TAG",
@@ -1283,6 +1291,22 @@ object Utils {
             context,
             Manifest.permission.ACCESS_BACKGROUND_LOCATION
         ) != PERMISSION_DENIED
+
+    }
+
+    fun checkAllLocationPermission(context: Context): Boolean {
+        return (ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        ) == PERMISSION_DENIED &&
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PERMISSION_DENIED &&
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PERMISSION_DENIED)
 
     }
 
@@ -1551,6 +1575,9 @@ object Utils {
             val cardResult: ArrayList<CardListResponseModel> =
                 paymentList.filter { it?.isValidated == false && it.bankAccount == false } as ArrayList<CardListResponseModel>
 
+            val cardValidatedList: ArrayList<CardListResponseModel> =
+                paymentList.filter { it?.isValidated == true } as ArrayList<CardListResponseModel>
+
             var paymentCard: CardListResponseModel? = null
             cardResult.forEach { card ->
                 if (card.primaryCard == true) {
@@ -1559,7 +1586,9 @@ object Utils {
             }
 
             return if (cardResult.isNotEmpty()) {
-                if (accountInformation?.accSubType == "PAYG") {
+                if (cardValidatedList.size >= 1) {
+                    Pair(false, null)
+                } else if (accountInformation?.accSubType == "PAYG") {
                     if (paymentCard != null) {
                         Pair(paymentCard?.primaryCard == true, cardResult)
                     } else {
@@ -1578,5 +1607,57 @@ object Utils {
 
         }
 
+    }
+
+    fun checkCrossedInTime(): Boolean {
+        //crossing time should between 6:02AM & 9:58PM
+        val date = Date()
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        // Get the current hour and minute
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+        return (hour > 6 || (hour == 6 && minute >= 2)) && (hour < 21 || (hour == 21 && minute <= 58))
+    }
+
+    fun getDelayHours(sessionManager: SessionManager, context: Context): Long {
+        val type = sessionManager.fetchStringData(SessionManager.DAILY_REMINDER_TYPE)
+
+
+        when (type) {
+            context.resources.getString(R.string.str_1hr_after_crossing) -> {
+                return 1
+            }
+
+            context.resources.getString(R.string.str_2hr_after_crossing) -> {
+                return 2
+            }
+
+            context.resources.getString(R.string.str_3hr_after_crossing) -> {
+                return 3
+            }
+
+            context.resources.getString(R.string.str_4hr_after_crossing) -> {
+                return 4
+            }
+
+            context.resources.getString(R.string.str_5hr_after_crossing) -> {
+                return 5
+            }
+
+            context.resources.getString(R.string.str_6hr_after_crossing) -> {
+                return 6
+            }
+
+            context.resources.getString(R.string.str_7hr_after_crossing) -> {
+                return 7
+            }
+
+            context.resources.getString(R.string.str_8hr_after_crossing) -> {
+                return 8
+            }
+
+            else -> return 0
+        }
     }
 }

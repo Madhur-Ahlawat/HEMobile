@@ -11,10 +11,12 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.conduent.nationalhighways.BuildConfig
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.ActivitySplashNewBinding
@@ -38,18 +40,21 @@ class CustomSplashActivity : AppCompatActivity() {
 
     @Inject
     lateinit var sessionManager: SessionManager
+    var notificationPermission: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashNewBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
         mIsRooted = checkIfRootConditionAndDisplayMessage()
         Log.e("Signature", AppSignatureHelper(this).appSignatures.toString())
-        sessionManager.saveBooleanData(
-            SessionManager.NOTIFICATION_PERMISSION,
-            Utils.areNotificationsEnabled(this)
-        )
+        notificationPermission = Utils.areNotificationsEnabled(this)
 
+        sessionManager.saveBooleanData(SessionManager.SettingsClick,false)
+        sessionManager.saveBooleanData(SessionManager.NotificationSettingsClick,false)
         if (!mIsRooted) {
             if (!Utils.areNotificationsEnabled(this)) {
                 // Notifications are not enabled, request the user to enable them
@@ -101,7 +106,6 @@ class CustomSplashActivity : AppCompatActivity() {
 
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, it)
             redirectNextScreenWithHandler()
         }
 
@@ -111,7 +115,7 @@ class CustomSplashActivity : AppCompatActivity() {
 
 
         val rootBeer = RootBeer(this)
-        if (rootBeer.isRooted && BuildConfig.ROOT_CHECKER=="true") {
+        if (rootBeer.isRooted && BuildConfig.ROOT_CHECKER == "true") {
             val alertBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
             alertBuilder.setMessage(R.string.root_array)
                 .setPositiveButton("OK") { _, _ -> finishAndRemoveTask() }
@@ -126,6 +130,13 @@ class CustomSplashActivity : AppCompatActivity() {
     }
 
     private fun navigateLandingActivity() {
+        if (!notificationPermission) {
+            sessionManager.saveBooleanData(
+                SessionManager.NOTIFICATION_PERMISSION,
+                Utils.areNotificationsEnabled(this)
+            )
+        }
+
         startActivity(
             Intent(this, LandingActivity::class.java)
         )

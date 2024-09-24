@@ -26,7 +26,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/gotoStartMenuBt">
+                app:layout_constraintBottom_toTopOf="@+id/continueBt">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -44,26 +44,37 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/always_desc_tv"
+                        style="@style/RegularText"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:text="@string/str_register_reminders_desc"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/desc_tv" />
+
+
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/switchGeoLocation"
                         style="@style/RegularText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_25dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="bottom"
                         android:minHeight="@dimen/margin_48dp"
                         android:text="@string/str_geo_location_enabled"
-                        android:textColor="@color/label_color"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/font_16sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/desc_tv" />
+                        app:layout_constraintTop_toBottomOf="@id/always_desc_tv" />
 
                     <LinearLayout
                         android:id="@+id/line_ll"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_1dp"
-                        android:layout_marginTop="@dimen/margin_3dp"
+                        android:layout_marginTop="@dimen/margin_20dp"
                         android:alpha="0.2"
                         android:background="@color/color_search_grey"
                         android:orientation="vertical"
@@ -87,20 +98,22 @@
                         style="@style/RegularText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_25dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="bottom"
                         android:minHeight="@dimen/margin_48dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
                         android:text="@string/str_push_notifications"
-                        android:textColor="@color/label_color"
                         android:textSize="@dimen/font_16sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/notification_tv" />
 
                     <LinearLayout
+                        android:id="@+id/push_line_ll"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin_1dp"
-                        android:layout_marginTop="@dimen/margin_3dp"
+                        android:layout_marginTop="@dimen/margin_20dp"
                         android:alpha="0.2"
                         android:background="@color/color_search_grey"
                         android:orientation="vertical"
@@ -113,12 +126,13 @@
             </androidx.core.widget.NestedScrollView>
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
-                android:id="@+id/gotoStartMenuBt"
+                android:id="@+id/continueBt"
                 style="@style/PrimaryButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_20dp"
-                android:text="@string/back_to_main_menu"
+                android:text="@string/str_continue"
+                android:enabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

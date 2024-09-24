@@ -67,7 +67,7 @@ class RevalidateInfoFragment : BaseFragment<FragmentRevalidateInfoBinding>() {
                 binding.cancelBtn.visible()
                 binding.btnContinue.visible()
             } else if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
-                if (accountInformation?.accSubType.equals(Constants.PAYG)){
+                if (accountInformation?.accSubType.equals(Constants.PAYG) && accountInformation?.status.equals(Constants.SUSPENDED, true)){
                     binding.titleTv.text = resources.getString(R.string.str_account_reopened)
                     binding.descTv.text =  Html.fromHtml(
                         getString(

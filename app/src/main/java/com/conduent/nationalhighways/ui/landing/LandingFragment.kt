@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
+import com.conduent.nationalhighways.data.model.landing.LandingViewModel
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentNewLandingBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
@@ -38,6 +40,8 @@ import javax.inject.Inject
 class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickListener {
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
+    private val landingViewModel: LandingViewModel by activityViewModels()
+
     private var isChecked = false
     private var isPushNotificationChecked = true
     private var count = 1
@@ -56,8 +60,6 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         container: ViewGroup?
     ): FragmentNewLandingBinding {
         return FragmentNewLandingBinding.inflate(inflater, container, false)
-
-
     }
 
     override fun init() {
@@ -313,6 +315,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         }
 
         binding.receiveNotifications.setOnClickListener {
+            landingViewModel.fromReminderPage.value = false
             findNavController().navigate(R.id.action_landingFragment_to_registerReminderFragment)
         }
     }

@@ -1,0 +1,59 @@
+package com.conduent.nationalhighways.ui.landing
+
+import android.opengl.Visibility
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.landing.LandingViewModel
+import com.conduent.nationalhighways.databinding.FragmentReminderStatusBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
+import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class ReminderStatusFragment : BaseFragment<FragmentReminderStatusBinding>() {
+    @Inject
+    lateinit var sessionManager: SessionManager
+    private var geofenceNotification: Boolean = false
+    private val landingViewModel: LandingViewModel by activityViewModels()
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentReminderStatusBinding =
+        FragmentReminderStatusBinding.inflate(inflater, container, false)
+
+    override fun init() {
+        landingViewModel.fromReminderPage.value = false
+
+        geofenceNotification = arguments?.getBoolean(Constants.GEO_FENCE_NOTIFICATION) ?: false
+        if (geofenceNotification) {
+            binding.titleTv.text = resources.getString(R.string.str_notifications_enabled)
+        } else {
+            binding.titleTv.text = resources.getString(R.string.str_notifications_disabled)
+        }
+
+        binding.btnContinue.setOnClickListener {
+            requireActivity().startNormalActivityWithFinish(LandingActivity::class.java)
+        }
+
+        if(requireActivity() is LandingActivity){
+            (requireActivity() as LandingActivity).setBackIcon(View.GONE)
+        }
+    }
+
+    override fun initCtrl() {
+
+    }
+
+    override fun observer() {
+
+    }
+
+}

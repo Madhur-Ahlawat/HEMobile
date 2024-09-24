@@ -2,12 +2,14 @@ package com.conduent.nationalhighways.utils
 
 import android.content.Context
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.EditText
 import android.widget.RadioButton
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.SwitchCompat
+import com.conduent.apollo.ui.CMDropDownView
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.widgets.NHRadioButton
@@ -128,5 +130,22 @@ fun EditText.setAccessibilityDelegateForDigits() {
                 info.text = Utils.accessibilityForNumbers(text.toString())
             }
         }
+    }
+}
+
+fun CMDropDownView.clickActionForDropdown(){
+    editText.setOnTouchListener { v, event ->
+
+        if (event.action == MotionEvent.ACTION_UP) {
+            val drawableRight = editText.compoundDrawables[2] // index 2 for right drawable
+            drawableRight?.let {
+                if (event.rawX >= (editText.right - editText.compoundPaddingRight)) {
+                    // Perform your action here
+                    showPopUp()
+                    return@setOnTouchListener true
+                }
+            }
+        }
+        return@setOnTouchListener false
     }
 }

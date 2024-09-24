@@ -39,6 +39,7 @@ object GeofenceUtils {
 
     //starting geofence
     fun startGeofence(context1: Context, from: Int = 0) {
+        Log.e(TAG, "startGeofence: --> " )
         Utils.writeInFile(context1, "startgeofence from $from")
         context = context1
         val geofenceIntent: PendingIntent by lazy {
@@ -59,8 +60,8 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceNorthBoundDartCharge)
                 setCircularRegion(
-                    17.453236, 78.562957,
-                    200f
+                    51.45930, 0.25155,
+                    300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
                 setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
@@ -70,8 +71,8 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceSouthBoundDartCharge)
                 setCircularRegion(
-                    17.451766, 78.581487,
-                    200f
+                    51.47027, 0.26257,
+                    300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
                 setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)

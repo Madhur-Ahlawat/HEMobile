@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
@@ -58,6 +59,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     private var accountStatus: String = ""
     private var accountNumberLinesCount: Int = 0
     private var indicatorAccountStatusLineCount: Int = 0
+    private var redirectToPaymentPage:Boolean=false
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -107,6 +109,7 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
             navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY, "").toString()
         }
+
         binding.run {
             if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.EXEMPT_ACCOUNT)) {
                 paymentManagement.gone()
@@ -190,23 +193,35 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             )
         }
 
-        binding.tvAccountStatusHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
-                checkLinesLength()
-                binding.tvAccountStatusHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
 
-        binding.indicatorAccountStatus.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                indicatorAccountStatusLineCount = binding.indicatorAccountStatus.lineCount
-                checkLinesLength()
-                binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+        Log.e("TAG", "initUI: redirectToPaymentPage "+redirectToPaymentPage)
+        if(redirectToPaymentPage){
+            findNavController().navigate(R.id.action_accountFragment_to_paymentMethodFragment)
+
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).setTitle(getString(R.string.payment_management))
             }
-        })
+            redirectToPaymentPage =false
+        }else{
+            binding.tvAccountStatusHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
+                    checkLinesLength()
+                    binding.tvAccountStatusHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
+
+            binding.indicatorAccountStatus.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    indicatorAccountStatusLineCount = binding.indicatorAccountStatus.lineCount
+                    checkLinesLength()
+                    binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
+        }
 
     }
 
@@ -251,12 +266,18 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     override fun onResume() {
         if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(getString(R.string.txt_my_account))
-            (requireActivity() as HomeActivityMain).refreshTokenApi()
+            if(!redirectToPaymentPage){
+                (requireActivity() as HomeActivityMain).refreshTokenApi()
+            }
         }
         super.onResume()
     }
 
     override fun initCtrl() {
+        if(requireActivity() is HomeActivityMain){
+            redirectToPaymentPage = (requireActivity() as HomeActivityMain).getRedirectToPayment()
+            (requireActivity() as HomeActivityMain).changeStatusOfRedirectToPayment()
+        }
         binding.apply {
             profileManagement.setOnClickListener(this@AccountFragment)
             paymentManagement.setOnClickListener(this@AccountFragment)

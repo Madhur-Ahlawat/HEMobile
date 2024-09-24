@@ -25,6 +25,7 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.utils.StorageHelper
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.PicUtils
 import com.conduent.nationalhighways.utils.common.RequestPermissionListener
@@ -240,13 +241,13 @@ class EnquiryCommentsFragment : BaseFragment<FragmentEnquiryCommentsBinding>(), 
     }
 
     private fun checkPermission() {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             checkRuntimePermission(
                 Manifest.permission.READ_MEDIA_IMAGES,
                 Constants.READ_STORAGE_REQUEST_CODE,
                 this as RequestPermissionListener
             )
+//            openFileManager()
         } else {
             checkRuntimePermission(
                 Manifest.permission.READ_EXTERNAL_STORAGE,

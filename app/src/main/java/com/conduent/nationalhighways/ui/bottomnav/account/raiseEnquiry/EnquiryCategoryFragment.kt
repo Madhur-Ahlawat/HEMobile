@@ -17,6 +17,7 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.utils.clickActionForDropdown
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -55,6 +56,8 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
         setBackPressListener(this)
 
+        binding.categoryDropdown.clickActionForDropdown()
+        binding.subcategoryDropdown.clickActionForDropdown()
 
         binding.categoryDropdown.dropDownItemSelectListener = this
         binding.subcategoryDropdown.dropDownItemSelectListener = this

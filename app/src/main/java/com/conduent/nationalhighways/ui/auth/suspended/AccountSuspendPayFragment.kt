@@ -291,7 +291,10 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
 
         if (paymentListSize == 0) {
             primaryCard = "Y"
+        }
 
+        if(easyPay == "N"){
+            primaryCard = "N"
         }
         cardModel = PaymentWithNewCardModel(
             addressLine1 = personalInformation?.addressLine1.toString(),
@@ -332,11 +335,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
     }
 
     private fun payWithExistingCard() {
+        val primaryCardStatus = if (paymentList[position].primaryCard == true) "Y" else "N"
         val model = PaymentWithExistingCardModel(
             addressline1 = personalInformation?.addressLine1.toString().replace(" ", ""),
             addressline2 = personalInformation?.addressLine2.toString().replace(" ", ""),
             transactionAmount = topUpAmount.toString(),
-            cardType = "",
+            cardType = paymentList[position].cardType,
             cardNumber = "",
             cvv = "",
             rowId = paymentList[position].rowId,
@@ -345,8 +349,8 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             firstName = paymentList[position].firstName,
             middleName = paymentList[position].middleName,
             lastName = paymentList[position].lastName,
-            paymentType = "",
-            primaryCard = "",
+            paymentType = "card",
+            primaryCard = primaryCardStatus,
             maskedCardNumber = "",
             easyPay = "",
             cavv = paymentSuccessResponse?.cavv,
@@ -354,7 +358,12 @@ class AccountSuspendPayFragment : BaseFragment<FragmentAccountSuspendPayBinding>
             threeDsVersion = paymentSuccessResponse?.threeDsVersion,
             directoryServerId = paymentSuccessResponse?.directoryServerId,
             cardHolderAuth = paymentSuccessResponse?.cardHolderAuth,
-            eci = paymentSuccessResponse?.eci
+            eci = paymentSuccessResponse?.eci,
+            city = personalInformation?.city,
+            country = personalInformation?.country,
+            zipcode1 = personalInformation?.zipcode,
+            state = "HE",
+
 
 
         )
