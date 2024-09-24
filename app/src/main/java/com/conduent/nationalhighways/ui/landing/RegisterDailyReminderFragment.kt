@@ -21,8 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RegisterDailyReminderFragment : BaseFragment<FragmentRegisterDailyReminderBinding>(),
-    DropDownItemSelectListener {
+class RegisterDailyReminderFragment : BaseFragment<FragmentRegisterDailyReminderBinding>(), DropDownItemSelectListener {
     private var dailyReminderList: MutableList<String> = ArrayList()
     @Inject
     lateinit var sessionManager: SessionManager
