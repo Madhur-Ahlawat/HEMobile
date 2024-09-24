@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -23,10 +21,10 @@ import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltBinding
 import com.conduent.nationalhighways.ui.auth.adapter.SuspendPaymentMethodAdapter
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -45,11 +43,10 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var cursorPosition: Int? = 0
     private lateinit var suspendPaymentMethodAdapter: SuspendPaymentMethodAdapter
     private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
-    private var real_paymentList: MutableList<CardListResponseModel?>? = ArrayList()
+    private var realPaymentList: MutableList<CardListResponseModel?>? = ArrayList()
     private var lowBalance: Boolean = true
     private var cardSelection: Boolean = false
     private val viewModel: PaymentMethodViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var position: Int = 0
     private var isViewCreated: Boolean = false
     private var personalInformation: PersonalInformation? = null
@@ -69,10 +66,8 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     override fun initCtrl() {
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
 
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         if (!isViewCreated) {
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            showLoaderDialog()
             viewModel.saveCardListState()
         }
 
@@ -107,6 +102,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
+
     }
 
     override fun init() {
@@ -119,10 +115,11 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.topBalance.editText.addTextChangedListener(GenericTextWatcher())
         cursorPosition = binding.topBalance.editText.selectionStart
         edtLength = binding.topBalance.editText.text?.length
-        Selection.setSelection(binding.topBalance.editText.text, edtLength!! - 1)
-        if (navFlowCall == Constants.PAYMENT_TOP_UP) {
-            HomeActivityMain.setTitle(resources.getString(R.string.str_top_up))
+        Selection.setSelection(binding.topBalance.editText.text, (edtLength?:0) - 1)
+        if (navFlowCall == Constants.PAYMENT_TOP_UP && requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_top_up))
         }
+
     }
 
     private fun topBalanceDecimal(b: Boolean) {
@@ -137,16 +134,21 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
             mText = mText.replace("$", "").replace("£", "").replace("£.", "").replace(",", "")
                 .replace(" ", "")
-            if (mText.length == 1 && mText.equals(".")) {
+            if (mText.length == 1 && mText == ".") {
                 mText = "0.0"
             }
-            var formatedAmount = formatter.format(mText.toDouble())
-            if (!formatedAmount.isNullOrEmpty() && formatedAmount.equals(".00")) {
-                formatedAmount = "0.00"
+            var formattedAmount = formatter.format(mText.toDouble())
+            if (!formattedAmount.isNullOrEmpty() && formattedAmount.equals(".00")) {
+                formattedAmount = "0.00"
             }
-            binding.topBalance.setText("£" + formatedAmount)
+            binding.topBalance.setText(
+                resources.getString(R.string.price, "" + formattedAmount)
+            )
             // Assuming editText is your EditText view
-            binding.topBalance.setSelection(binding.topBalance.editText.text?.length ?: 0)
+            binding.topBalance.setSelection(
+                binding.topBalance.editText.text?.length
+                    ?: 0
+            )
 
         }
 
@@ -252,21 +254,19 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     }
 
     private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 paymentList?.clear()
-                real_paymentList?.clear()
-                real_paymentList = status.data?.creditCardListType?.cardsList
+                realPaymentList?.clear()
+                realPaymentList = status.data?.creditCardListType?.cardsList
                 for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
                     if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
-                        paymentList?.add(status.data.creditCardListType.cardsList.get(i))
+                        paymentList?.add(status.data.creditCardListType.cardsList[i])
                     }
                 }
                 for (i in 0 until paymentList.orEmpty().size) {
-                    checkNullValuesOfModel(paymentList?.get(i))
+                    Utils.checkNullValuesOfModel(paymentList?.get(i))
                 }
 
                 if (paymentList.orEmpty().size == 1) {
@@ -320,86 +320,14 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             else -> {
             }
         }
+
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome(Constants.AccountSuspendSelect)
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth(Constants.AccountSuspendSelect)
+        }
     }
 
-    private fun checkNullValuesOfModel(model: CardListResponseModel?) {
-        if (model?.check == null) {
-            model?.check = false
-        }
-        if (model?.isSelected == null) {
-            model?.isSelected = false
-        }
-        if (model?.bankRoutingNumber == null) {
-            model?.bankRoutingNumber = ""
-        }
-        if (model?.cardType == null) {
-            model?.cardType = ""
-        }
-        if (model?.cardNumber == null) {
-            model?.cardNumber = ""
-        }
-        if (model?.middleName == null) {
-            model?.middleName = ""
-        }
-        if (model?.expMonth == null) {
-            model?.expMonth = ""
-        }
-        if (model?.expYear == null) {
-            model?.expYear = ""
-        }
-        if (model?.bankAccountNumber == null) {
-            model?.bankAccountNumber = ""
-        }
-        if (model?.bankAccountType == null) {
-            model?.bankAccountType = ""
-        }
-
-        if (model?.bankAccountType == null) {
-            model?.bankAccountType = ""
-        }
-        if (model?.rowId == null) {
-            model?.rowId = ""
-        }
-        if (model?.bankAccountType == null) {
-            model?.bankAccountType = ""
-        }
-        if (model?.bankAccountNumber == null) {
-            model?.bankAccountNumber = ""
-        }
-        if (model?.firstName == null) {
-            model?.firstName = ""
-        }
-        if (model?.lastName == null) {
-            model?.lastName = ""
-        }
-        if (model?.customerVaultId == null) {
-            model?.customerVaultId = ""
-        }
-        if (model?.addressLine1 == null) {
-            model?.addressLine1 = ""
-        }
-        if (model?.city == null) {
-            model?.city = ""
-        }
-        if (model?.state == null) {
-            model?.state = ""
-        }
-        if (model?.zipCode == null) {
-            model?.zipCode = ""
-        }
-        if (model?.country == null) {
-            model?.country = ""
-        }
-        if (model?.emandateStatus == null) {
-            model?.emandateStatus = ""
-        }
-        if (model?.paymentSeqNumber == null) {
-            model?.paymentSeqNumber = 0
-        }
-        if (model?.bankAccount == null) {
-            model?.bankAccount = false
-        }
-    }
 
     override fun paymentMethodCallback(position: Int) {
         this.position = position

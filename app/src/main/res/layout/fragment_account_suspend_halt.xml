@@ -17,7 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="18dp"
+            android:paddingStart="@dimen/margin_18dp"
             android:paddingTop="@dimen/margin_20dp"
             android:paddingEnd="@dimen/margin_18dp"
             android:paddingBottom="@dimen/margin_20dp">
@@ -69,7 +69,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_30dp"
-
                 app:layout_constraintTop_toBottomOf="@id/tv_select_payment_method">
 
 
@@ -93,64 +92,57 @@
                     android:visibility="visible"
                     tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
-                    <ImageView
-                        android:id="@+id/warningIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/warningicon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                     <TextView
                         android:id="@+id/maximumVehicleAdded"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="23dp"
+                        android:layout_marginTop="@dimen/margin_23dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:gravity="center"
+                        android:drawablePadding="@dimen/margin_23dp"
                         android:text="@string/str_you_have_no_payment_method"
                         android:textColor="@color/new_btn_color"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:drawableTopCompat="@drawable/warningicon" />
 
                     <TextView
                         android:id="@+id/textMaximumVehicle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="17dp"
+                        android:layout_marginTop="@dimen/margin_17dp"
                         android:fontFamily="@font/open_sans"
                         android:gravity="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:lineSpacingExtra="2dp"
+                        android:lineSpacingExtra="@dimen/margin_2dp"
                         android:text="@string/str_you_must_pay_the_dart_charge_by_midnight"
                         android:textColor="@color/black"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/font_14sp"
                         app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded" />
 
                     <TextView
                         android:id="@+id/text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="17dp"
+                        android:layout_marginTop="@dimen/margin_17dp"
                         android:fontFamily="@font/open_sans"
                         android:gravity="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:lineSpacingExtra="2dp"
+                        android:lineSpacingExtra="@dimen/margin_2dp"
                         android:text="@string/str_you_must_pay_the_dart_charge_by_midnight"
                         android:textColor="@color/black"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/font_14sp"
                         android:visibility="invisible"
                         app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle" />
 
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btnContinue"
                 style="@style/PrimaryButton"
@@ -176,6 +168,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintTop_toBottomOf="@+id/btnContinue"
                 app:layout_constraintStart_toStartOf="parent">
+
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/btnAddNewPayment"
                     style="@style/secondaryButton"
@@ -191,6 +184,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
+
                 <com.conduent.apollo.ui.CMButton
                     android:id="@+id/btnMainAddNewPayment"
                     style="@style/PrimaryButton"

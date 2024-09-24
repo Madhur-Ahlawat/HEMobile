@@ -41,19 +41,18 @@
             android:id="@+id/action_findVehicleFragment_to_crossingCheckAnswersFragment"
             app:destination="@+id/crossingCheckAnswersFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@+id/crossingCheckAnswersFragment"/>
+            app:popUpTo="@+id/crossingCheckAnswersFragment" />
 
         <action
             android:id="@+id/action_findVehicleFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment"
-            app:destination="@+id/confirmNewVehicleDetailsCheckPaidCrossingsFragment"/>
+            app:destination="@+id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />
 
     </fragment>
     <fragment
         android:id="@+id/generalTermsAndConditionsFragment"
         android:name="com.conduent.nationalhighways.ui.landing.GeneralTermsAndConditionsFragment"
         android:label="EnquiryStatusFragment"
-        tools:layout="@layout/fragment_general_terms_and_conditions">
-    </fragment>
+        tools:layout="@layout/fragment_general_terms_and_conditions"/>
     <fragment
         android:id="@+id/createAccountSummaryFragment"
         android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountSummaryFragment"
@@ -118,8 +117,7 @@
         android:id="@+id/paygtermsandconditions"
         android:name="com.conduent.nationalhighways.ui.landing.PayGTermsAndConditionsFragment"
         android:label="EnquiryStatusFragment"
-        tools:layout="@layout/fragment_payg_terms_and_conditions">
-    </fragment>
+        tools:layout="@layout/fragment_payg_terms_and_conditions"/>
 
 
     <fragment
@@ -157,7 +155,7 @@
             android:id="@+id/action_businessVehicleDetailFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment"
             app:destination="@+id/confirmNewVehicleDetailsCheckPaidCrossingsFragment" />
@@ -225,7 +223,7 @@
             android:id="@+id/action_additionalCrossingsFragment_to_crossingCheckAnswersFragment"
             app:destination="@+id/crossingCheckAnswersFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@+id/crossingCheckAnswersFragment"/>
+            app:popUpTo="@+id/crossingCheckAnswersFragment" />
 
     </fragment>
 
@@ -249,7 +247,7 @@
             android:id="@+id/action_payCrossingsFragment_to_crossingCheckAnswersFragment"
             app:destination="@+id/crossingCheckAnswersFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@+id/crossingCheckAnswersFragment"/>
+            app:popUpTo="@+id/crossingCheckAnswersFragment" />
 
     </fragment>
 
@@ -277,9 +275,9 @@
     </fragment>
     <fragment
         android:id="@+id/crossingRecieptFragment"
-        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentRecieptFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentReceiptFragment"
         android:label="crossingRecieptFragment"
-        tools:layout="@layout/fragment_payment_reciept_method">
+        tools:layout="@layout/fragment_payment_receipt_method">
         <action
             android:id="@+id/action_crossingRecieptFragment_to_crossingCheckAnswersFragment"
             app:destination="@id/crossingCheckAnswersFragment" />
@@ -287,14 +285,13 @@
             android:id="@+id/action_crossingRecieptFragment_editsummary_to_crossingCheckAnswersFragment"
             app:destination="@id/crossingCheckAnswersFragment"
             app:popUpTo="@id/crossingCheckAnswersFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_crossingRecieptFragment_to_nmiPaymentFragment"
             app:destination="@id/nmiPaymentFragment" />
         <action
             android:id="@+id/action_crossingRecieptFragment_to_smsNotSupportFragment"
-            app:destination="@id/smsNotSupportFragment"
-            />
+            app:destination="@id/smsNotSupportFragment" />
     </fragment>
     <fragment
         android:id="@+id/crossingCheckAnswersFragment"
@@ -350,7 +347,7 @@
             android:id="@+id/action_confirmNewVehicleDetailsCheckPaidCrossingsFragment_to_findYourVehicleFragment"
             app:destination="@id/findYourVehicleFragment"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
     </fragment>
     <fragment
@@ -374,7 +371,7 @@
             android:id="@+id/action_vehicleDoesNotMatchCurrentVehicleFragment_to_crossing_details"
             app:destination="@+id/crossing_details"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
     </fragment>
     <fragment
@@ -386,8 +383,7 @@
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountFindVehicleFragment"
             app:destination="@id/findYourVehicleFragment"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true"
-            />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_vehicleDoesNotMatchCurrentVehicleFragment"
             app:destination="@id/vehicleDoesNotMatchCurrentVehicleFragment" />
@@ -405,13 +401,13 @@
             android:id="@+id/action_addVehicleDetailsFragment_to_CreateAccountSummaryFragment"
             app:destination="@id/createAccountSummaryFragment"
             app:popUpTo="@id/createAccountSummaryFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_addVehicleDetailsFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpTo="@+id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addVehicleDetailFragment_to_max_vehicleFragment"
             app:destination="@+id/maximumVehicleFragment" />
@@ -567,9 +563,8 @@
         <action
             android:id="@+id/action_AccountChangeType_forgotPassword_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
-app:popUpTo="@id/HWMobileNumberCaptureVC"
-            app:popUpToInclusive="true"
-          />
+            app:popUpTo="@id/HWMobileNumberCaptureVC"
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_forgotOtpFragment_to_createPasswordFragment"
@@ -630,8 +625,7 @@ app:popUpTo="@id/HWMobileNumberCaptureVC"
             app:destination="@+id/vehicleListFragment" />
         <action
             android:id="@+id/action_AccountChangeType_HWMobileNumberCaptureVC_to_vehicleListFragment"
-            app:destination="@+id/vehicleListFragment"
-            />
+            app:destination="@+id/vehicleListFragment" />
 
 
         <action
@@ -738,20 +732,19 @@ app:popUpTo="@id/HWMobileNumberCaptureVC"
             android:id="@+id/action_maximumFragment_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@+id/vehicleListFragment"/>
+            app:popUpTo="@+id/vehicleListFragment" />
         <action
             android:id="@+id/action_maximumFragment_vehicleListFragment_rucvehicle"
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@+id/findYourVehicleFragment"/>
-
+            app:popUpTo="@+id/findYourVehicleFragment" />
 
 
         <action
             android:id="@+id/action_maximumFragment_to_findYourVehicleFragment"
             app:destination="@+id/findYourVehicleFragment"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_maximumFragment_to_addVehicleFragment"
@@ -767,25 +760,22 @@ app:popUpTo="@id/HWMobileNumberCaptureVC"
             android:id="@+id/action_maximumFragment_to_vehicleListFragment_clearto_findvehiclefragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@id/findYourVehicleFragment"/>
+            app:popUpTo="@id/findYourVehicleFragment" />
         <action
             android:id="@+id/action_maximumFragment_to_businessVehicleDetailFragment"
-            app:destination="@+id/businessVehicleDetailFragment"
-            />
+            app:destination="@+id/businessVehicleDetailFragment" />
 
         <action
             android:id="@+id/action_maximumVehicleFragment_to_accountSummaryFragment"
             app:destination="@+id/createAccountSummaryFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@id/createAccountSummaryFragment"
-            />
+            app:popUpTo="@id/createAccountSummaryFragment" />
 
         <action
             android:id="@+id/action_maximumVehicleFragment_to_vehicleListFragment"
             app:destination="@+id/vehicleListFragment"
             app:popUpTo="@+id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
-
+            app:popUpToInclusive="true" />
 
 
         <action
@@ -795,7 +785,7 @@ app:popUpTo="@id/HWMobileNumberCaptureVC"
             android:id="@+id/action_maximumFragment_to_crossing_details"
             app:destination="@+id/crossing_details"
             app:popUpTo="@id/findYourVehicleFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
     </fragment>
     <fragment

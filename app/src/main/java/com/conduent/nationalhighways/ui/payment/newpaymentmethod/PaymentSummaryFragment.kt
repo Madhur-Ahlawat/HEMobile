@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,11 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentPaymentSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
@@ -31,10 +32,8 @@ import com.conduent.nationalhighways.utils.extn.visible
 class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
     VehicleListAdapter.VehicleListCallBack,
     View.OnClickListener, OnRetryClickListener, DropDownItemSelectListener {
-    private var additionalCrossingsCount: Int? = 0
+    private var additionalCrossingsCount: Int = 0
     private var crossingsList: MutableList<String>? = mutableListOf()
-
-
     private var data: CrossingDetailsModelsResponse? = null
 
     override fun getFragmentBinding(
@@ -50,23 +49,30 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
         setData()
         setClickListeners()
-        /*  val i = Intent(Intent.ACTION_VIEW)
-          i.data = Uri.parse(url)
-          startActivity(i)*/
 
+        if (requireActivity() is CreateAccountActivity) {
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        } else if (requireActivity() is MakeOffPaymentActivity) {
+            (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
+        }
 
     }
 
+
     private fun setData() {
         binding.apply {
-            additionalCrossingsCount = data?.additionalCrossingCount
-            val charge = data?.chargingRate?.toDouble()
+            additionalCrossingsCount = data?.additionalCrossingCount ?: 0
+            val charge = data?.chargingRate?.toDouble() ?: 0.0
             val unSettledTrips = data?.unsettledTripChange
             vehicleRegisration.text = data?.plateNo
-            recentCrossings.text =
-                unSettledTrips.toString()
-            creditAdditionalCrossings.text =
-                additionalCrossingsCount.toString()
+            vehicleRegisration.contentDescription =
+                Utils.accessibilityForNumbers(data?.plateNo ?: "")
+            recentCrossings.text = unSettledTrips.toString()
+            recentCrossings.contentDescription =
+                Utils.accessibilityForNumbers(unSettledTrips.toString())
+            creditAdditionalCrossings.text = additionalCrossingsCount.toString()
+            creditAdditionalCrossings.contentDescription =
+                Utils.accessibilityForNumbers(additionalCrossingsCount.toString())
             if (additionalCrossingsCount == 0) {
                 creditForAdditionalCrossings.gone()
             } else {
@@ -74,14 +80,20 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             }
             if (Utils.isStringOnlyInt(NewCreateAccountRequestModel.mobileNumber ?: "")) {
                 labelMobileNumber.visible()
-                mobileNumber.text = "" + data?.countryCode + " " + NewCreateAccountRequestModel.mobileNumber
+                mobileNumber.text = resources.getString(
+                    R.string.concatenate_two_strings_with_space,
+                    "" + data?.countryCode,
+                    NewCreateAccountRequestModel.mobileNumber
+                )
             } else {
                 labelMobileNumber.gone()
             }
 
+            mobileNumber.contentDescription =
+                Utils.accessibilityForNumbers(mobileNumber.text.toString())
             if (!NewCreateAccountRequestModel.emailAddress.isNullOrEmpty()) {
                 labelEmail.visible()
-                email.text = "" + NewCreateAccountRequestModel.emailAddress
+                email.text = NewCreateAccountRequestModel.emailAddress
             } else {
                 labelEmail.gone()
             }
@@ -98,28 +110,26 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             var recentCrossingsAmount = 0.0
             var additionalCrossingsAmount = 0.0
             if (unSettledTrips != null && unSettledTrips > 0) {
-                recentCrossingsAmount = charge!! * unSettledTrips
+                recentCrossingsAmount = charge * unSettledTrips
             }
-            if (additionalCrossingsCount != null && additionalCrossingsCount!! > 0) {
-                additionalCrossingsAmount = charge!! * additionalCrossingsCount!!
+            if (additionalCrossingsCount > 0) {
+                additionalCrossingsAmount = charge * additionalCrossingsCount
             }
             val total = recentCrossingsAmount + additionalCrossingsAmount
             data?.totalAmount = total
             crossingsList = emptyList<String>().toMutableList()
 
-//            if(additionalCrossings != null && additionalCrossings != 0 && additionalCrossingsCharge != null){
-//                totalAmountOfAdditionalCrossings = totalAmountOfAdditionalCrossings?.plus(additionalCrossings!! * additionalCrossingsCharge!!)
-//
-//            }
-            crossingsList!!.clear()
+            crossingsList?.clear()
             val totalAdditional =
-                (additionalCrossingsCount?.plus(unSettledTrips ?: 0)) ?: additionalCrossingsCount
-            for (i in 0..(totalAdditional ?: 0)) {
-                crossingsList!!.add(i.toString())
+                (additionalCrossingsCount.plus(unSettledTrips ?: 0))
+            for (i in 0..totalAdditional) {
+                crossingsList?.add(i.toString())
             }
-            paymentAmount.text = getString(R.string.currency_symbol) + String.format(
-                "%.2f",
-                total
+            paymentAmount.text = getString(
+                R.string.price, "" + String.format(
+                    "%.2f",
+                    total
+                )
             )
 
 
@@ -136,8 +146,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             editMobileNumber.setOnClickListener(this@PaymentSummaryFragment)
         }
     }
-
-    fun getRequiredText(text: String) = text.substringAfter(' ')
 
     override fun initCtrl() {
         binding.btnNext.setOnClickListener(this)
@@ -176,7 +184,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                     R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
                     enableEditMode()
                 )
-
             }
 
             R.id.editCreditForAdditionalCrossings -> {
@@ -192,23 +199,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
             R.id.editMobileNumber -> {
                 findNavController().popBackStack()
-
             }
-
-//            R.id.editPaymentAmount -> {
-//                if (data?.unSettledTrips!! > 0) {
-//                    findNavController().navigate(
-//                        R.id.action_accountSummaryFragment_to_PayForCrossingsFragment,
-//                        enableEditMode()
-//                    )
-//                } else {
-//                    findNavController().navigate(
-//                        R.id.action_crossingCheckAnswersFragment_to_additionalCrossingsFragment,
-//                        enableEditMode()
-//                    )
-//                }
-//
-//            }
         }
     }
 
@@ -243,7 +234,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
             findNavController().navigate(R.id.action_accountSummaryFragment_to_removeVehicleFragment)
         } else {
             val bundle = Bundle()
-
             if (isDblaAvailable == true) {
                 bundle.putString(PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
@@ -252,7 +242,7 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
                     bundle
                 )
             } else {
-                bundle.putString(Constants.OLD_PLATE_NUMBER, plateNumber)
+                bundle.putString(OLD_PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 if (isDblaAvailable != null) {
                     bundle.putBoolean(Constants.IS_DBLA_AVAILABLE, isDblaAvailable)
@@ -275,5 +265,6 @@ class PaymentSummaryFragment : BaseFragment<FragmentPaymentSummaryBinding>(),
 
     override fun onRetryClick(apiUrl: String) {
     }
+
 
 }

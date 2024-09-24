@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import com.conduent.nationalhighways.databinding.FragmentYourVehicleRegisteredBi
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 
 
 class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegisteredBinding>(),
@@ -39,6 +39,8 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
         if (data == null) {
             data = CrossingDetailsModelsResponse()
         }
+        Utils.setupAccessibilityDelegatesForRadioButtons(binding.radioGroupYesNo)
+
 //        data?.vehicleClass = nonUKVehicleModel?.vehicleClass
     }
 
@@ -62,10 +64,10 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                     data?.plateCountry = Constants.COUNTRY_TYPE_UK
                     data?.veicleUKnonUK = true
                 }
-                if(data?.vehicleClass?.isEmpty() == true){
+                if (data?.vehicleClass?.isEmpty() == true) {
                     data?.vehicleClass = nonUKVehicleModel?.vehicleClass
                 }
-                if(data?.plateNo?.isEmpty() == true){
+                if (data?.plateNo?.isEmpty() == true) {
                     data?.plateNo = nonUKVehicleModel?.plateNumber ?: ""
                 }
                 val bundle = Bundle()
@@ -74,7 +76,7 @@ class YourVehicleRegisteredFragment : BaseFragment<FragmentYourVehicleRegistered
                 bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                if (navFlowCall.equals(Constants.TRANSFER_CROSSINGS)) {
+                if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
                     findNavController().navigate(
                         R.id.action_yourVehicleFragment_to_addVehicleFragment,
                         bundle

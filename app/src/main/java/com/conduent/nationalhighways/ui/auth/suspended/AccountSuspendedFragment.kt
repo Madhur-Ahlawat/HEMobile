@@ -36,14 +36,14 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
         crossingCount = arguments?.getString(Constants.CROSSINGCOUNT) ?: ""
-        if(accountInformation?.accSubType.equals(Constants.PAYG)){
+        if (accountInformation?.accSubType.equals(Constants.PAYG)) {
             binding.textMaximumVehicle.text =
                 getString(R.string.str_provide_payment_card_details_desc)
             binding.maximumVehicleAdded.text =
                 getString(R.string.str_provide_payment_card_details)
             binding.btnTopUpNow.text = getString(R.string.str_continue)
-        }else{
-            if (crossingCount.isNotEmpty() ) {
+        } else {
+            if (crossingCount.isNotEmpty()) {
                 if (crossingCount.toInt() > 0) {
                     binding.maximumVehicleAddedNote.text =
                         getString(R.string.str_you_crossing, "£5.00", crossingCount)
@@ -55,7 +55,6 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
             val balance = currentBalance.replace("£", "").replace(",", "")
             if (balance.isNotEmpty()) {
                 val doubleBalance = balance.toDouble()
-                val intBalance = doubleBalance.toInt()
                 val finalCurrentBalance = 5.00 - doubleBalance
                 binding.textMaximumVehicle.text = getString(
                     R.string.str_you_will_need_to_pay,
@@ -64,8 +63,9 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
             }
 
         }
-
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
 
     }
 
@@ -79,12 +79,12 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
-                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+                arguments?.getParcelable(Constants.PERSONALDATA)
         }
 
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
 
     }
@@ -102,13 +102,13 @@ class AccountSuspendedFragment : BaseFragment<FragmentAccountSuspendHaltTopUpBin
                 bundle.putString(Constants.CURRENTBALANCE, currentBalance)
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                if(accountInformation?.accSubType.equals(Constants.PAYG)){
+                if (accountInformation?.accSubType.equals(Constants.PAYG)) {
                     findNavController().navigate(
                         R.id.action_accountSuspendedFragment_to_paymentMethodFragment,
                         bundle
                     )
 
-                }else {
+                } else {
                     findNavController().navigate(
                         R.id.action_accountSuspendedFragment_to_accountSuspendedPaymentFragment,
                         bundle

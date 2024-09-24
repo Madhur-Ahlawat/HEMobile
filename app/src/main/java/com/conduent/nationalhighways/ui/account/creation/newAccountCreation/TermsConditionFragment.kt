@@ -7,20 +7,14 @@ import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.fragment.app.DialogFragment
-import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentTermsConditionBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TermsConditionFragment : BaseFragment<FragmentTermsConditionBinding>() {
     private var url: String = ""
-    private var loader: LoaderDialog? = null
-
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -29,21 +23,15 @@ class TermsConditionFragment : BaseFragment<FragmentTermsConditionBinding>() {
 
 
     override fun initCtrl() {
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader = LoaderDialog()
-
-
         setupWebView()
-
         url = arguments?.getString(Constants.TERMSCONDITIONURL).toString()
     }
 
     override fun init() {
         binding.webView.settings.javaScriptEnabled = true
-        if(url.isNullOrEmpty()){
+        if (url.isEmpty()) {
             binding.webView.loadUrl("file:///android_asset/termsandconditionspage.html")
-        }
-        else{
+        } else {
             binding.webView.loadUrl(url)
         }
 
@@ -82,11 +70,14 @@ class TermsConditionFragment : BaseFragment<FragmentTermsConditionBinding>() {
     }
 
     private fun showLoader() {
-        binding.progressBar.visibility=View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     private fun hideLoader() {
-       binding.progressBar.visibility= View.GONE
+        try {
+            binding.progressBar.visibility = View.GONE
+        } catch (_: Exception) {
+        }
     }
 
 

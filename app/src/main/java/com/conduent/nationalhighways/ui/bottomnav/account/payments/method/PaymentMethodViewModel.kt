@@ -6,7 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
-import com.conduent.nationalhighways.data.model.payment.*
+import com.conduent.nationalhighways.data.model.payment.AddCardModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodEditModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodEditResponse
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
+import com.conduent.nationalhighways.data.model.payment.SaveNewCardRequest
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.repository.payment.PaymentMethodRepository
 import com.conduent.nationalhighways.utils.common.Resource
@@ -31,7 +37,8 @@ class PaymentMethodViewModel @Inject constructor(
     val savedCardState: StateFlow<Resource<PaymentMethodResponseModel?>?> get() = _savedCardListState
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-     val _saveDirectDebitNewCardState = MutableStateFlow<Resource<PaymentMethodDeleteResponseModel?>?>(null)
+    val _saveDirectDebitNewCardState =
+        MutableStateFlow<Resource<PaymentMethodDeleteResponseModel?>?>(null)
     val saveDirectDebitNewCardState: StateFlow<Resource<PaymentMethodDeleteResponseModel?>?> get() = _saveDirectDebitNewCardState
 
 
@@ -64,7 +71,6 @@ class PaymentMethodViewModel @Inject constructor(
     val saveDirectDebitNewCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _saveDirectDebitNewCard
 
 
-
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private val _deletePrimaryCard = MutableLiveData<Resource<PaymentMethodDeleteResponseModel?>?>()
     val deletePrimaryCard: LiveData<Resource<PaymentMethodDeleteResponseModel?>?> get() = _deletePrimaryCard
@@ -79,13 +85,13 @@ class PaymentMethodViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _savedCardListState.emit(
-                    ResponseHandler.success(
+                    success(
                         repository.savedCard(
                         ), errorManager
                     )
                 )
             } catch (e: Exception) {
-                _savedCardListState.emit(ResponseHandler.failure(e))
+                _savedCardListState.emit(failure(e))
             }
         }
     }
@@ -131,6 +137,7 @@ class PaymentMethodViewModel @Inject constructor(
             }
         }
     }
+
     fun deleteCardState(model: PaymentMethodDeleteModel?) {
         viewModelScope.launch {
             try {

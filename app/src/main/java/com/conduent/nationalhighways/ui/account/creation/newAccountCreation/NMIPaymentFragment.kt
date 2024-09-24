@@ -45,6 +45,7 @@ import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.setPersonalInfoAnnouncement
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
@@ -78,7 +79,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var cardToken: String = ""
     private var isTrusted: Boolean = false
     private var creditCardType: String = ""
-    private var flow: String = ""
     private var responseModel: CardResponseModel? = null
     private var isViewCreated: Boolean = false
 
@@ -88,6 +88,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
     private var checkBox: Boolean = false
     private var paymentListSize: Int = 0
     private var threeDStarted: Boolean = false
+    private var cardValidationFirstTime: Boolean = false
+    private var cardValidationSecondTime: Boolean = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -96,8 +98,14 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
     override fun initCtrl() {
-        paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
-        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT, false) ?: false
+        if (arguments?.containsKey(Constants.PAYMENT_METHOD_SIZE) == true) {
+            paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
+        }
+
+        if (arguments?.containsKey(Constants.IS_DIRECT_DEBIT) == true) {
+            isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT, false) ?: false
+        }
+
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
                 arguments?.getParcelable(Constants.PERSONALDATA)
@@ -111,24 +119,41 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
         if (arguments?.getParcelable<CrossingDetailsModelsResponse>(Constants.NAV_DATA_KEY) != null) {
             crossingDetailModelResponse = arguments?.getParcelable(Constants.NAV_DATA_KEY)
         }
-        currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
-        flow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_FIRST_TIME) == true) {
+            cardValidationFirstTime =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_FIRST_TIME) ?: false
+        }
+
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_SECOND_TIME) == true) {
+            cardValidationSecondTime =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_SECOND_TIME) ?: false
+        }
+
+        if (arguments?.containsKey(Constants.CURRENTBALANCE) == true) {
+            currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
+        }
+
+
 
         topUpAmount = arguments?.getDouble(Constants.DATA).toString()
         thresholdAmount = arguments?.getDouble(Constants.THRESHOLD_AMOUNT).toString()
 
 
+        setPersonalInfoAnnouncement(binding.rootLayout, requireActivity())
 
         setupWebView()
         if (navFlowCall == Constants.PAYMENT_TOP_UP && paymentListSize == 0) {
-            HomeActivityMain.setTitle("Top Up New Payment Method")
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.top_up))
+            }
         }
     }
 
     override fun init() {
-        WebView.setWebContentsDebuggingEnabled(true)
         binding.webView.settings.javaScriptEnabled = true
+        binding.webView.settings.domStorageEnabled = true
+        binding.webView.settings.loadsImagesAutomatically = true
         binding.webView.addJavascriptInterface(JsObject(), "appInterface")
 
         binding.webView.setOnLongClickListener { true }
@@ -317,6 +342,23 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             findNavController().popBackStack()
                         }
 
+                        "termsClick" -> {
+                            if (accountInformation?.accountType.equals(
+                                    "BUSINESS",
+                                    true
+                                ) || ((accountInformation?.accSubType.equals(
+                                    "STANDARD", true
+                                ) && accountInformation?.accountType.equals(
+                                    "PRIVATE", true
+                                )))
+                            ) {
+                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_generalTermsAndConditions)
+                            } else {
+                                findNavController().navigate(R.id.action_nmiPaymentFragment_to_paygtermsandconditions)
+                            }
+
+                        }
+
 
                         else -> {
 
@@ -373,21 +415,23 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         val paymentSuccessResponse =
                             gson.fromJson(data, PaymentSuccessResponse::class.java)
                         if (paymentSuccessResponse.cardHolderAuth.equals("verified", true)) {
-                            if (flow == Constants.NOTSUSPENDED) {
+                            if (navFlowCall == Constants.NOTSUSPENDED) {
                                 callAccountCreationApi(
                                     paymentSuccessResponse.threeDsVersion,
                                     paymentSuccessResponse.cavv,
                                     paymentSuccessResponse.directoryServerId,
                                     paymentSuccessResponse.eci
                                 )
-                            } else if (flow == Constants.ADD_PAYMENT_METHOD) {
+                            } else if (navFlowCall == Constants.CARD_VALIDATION_REQUIRED) {
+                                saveNewCard(responseModel, paymentSuccessResponse, "Y")
+                            } else if (navFlowCall == Constants.ADD_PAYMENT_METHOD) {
                                 if (responseModel?.checkCheckBox == true || paymentListSize == 0) {
                                     saveNewCard(responseModel, paymentSuccessResponse, "Y")
                                 } else {
                                     saveNewCard(responseModel, paymentSuccessResponse, "N")
                                 }
 
-                            } else if (flow == Constants.PAY_FOR_CROSSINGS) {
+                            } else if (navFlowCall == Constants.PAY_FOR_CROSSINGS) {
 
                                 makeOneOffPaymentApi(responseModel, paymentSuccessResponse)
                             } else {
@@ -401,7 +445,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                                     Constants.ACCOUNTINFORMATION,
                                     accountInformation
                                 )
-                                bundle.putString(Constants.NAV_FLOW_KEY, flow)
+                                bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                                 bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
                                 findNavController().navigate(
@@ -452,13 +496,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             (crossingDetailModelResponse?.additionalCrossingCount?.toDouble())?.times(
                 (crossingDetailModelResponse?.chargingRate?.toDouble() ?: 0.00)
             )
-
-
-        /* pending dues =recent crossing selected * charging Rate
-            pendingTxnCount=recent crossing selected
-            futureTollCount =Additional crossing selected
-            future toll payment =Additional Crossing Selected * Charging Rate
-        * */
 
         val vehicleList = VehicleList(
             crossingDetailModelResponse?.plateNo?.uppercase(),
@@ -511,7 +548,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             maskedCardNumber = Utils.maskSixteenDigitCardNumber(responseModel?.card?.number.toString()),
             paymentType = "card",
             primaryCard = s,
-            saveCard = "",
+            saveCard = "Y",
             state = "HE",
             useAddressCheck = "N",
             zipcode1 = personalInformation?.zipcode.toString().replace(" ", ""),
@@ -523,21 +560,24 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
             eci = paymentSuccessResponse?.eci.toString(),
             customerVaultId = null
         )
-
         paymentMethodViewModel.saveNewCard(addCardModel)
-
-
     }
 
     private fun showLoader() {
-        binding.progressBar.visibility = View.VISIBLE
+        try {
+            binding.progressBar.visibility = View.VISIBLE
+        } catch (e: Exception) {
+
+        }
 
 
     }
 
     private fun hideLoader() {
-        binding.progressBar.visibility = View.GONE
-
+        try {
+            binding.progressBar.visibility = View.GONE
+        } catch (_: Exception) {
+        }
     }
 
     private fun callAccountCreationApi(
@@ -720,7 +760,7 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 view?.loadUrl("javascript:(function(){document.getElementById('currency').innerText = 'GBP';})()")
 
 
-                when (flow) {
+                when (navFlowCall) {
                     Constants.SUSPENDED -> {
                         view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
                         view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
@@ -745,6 +785,35 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
                             view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
                         }
+
+                    }
+
+                    Constants.CARD_VALIDATION_REQUIRED -> {
+                        view?.loadUrl("javascript:(function(){document.getElementById('title').style.display = 'block'; document.getElementById('title').innerText = 'How do you want to pay?';})()")
+
+                        view?.loadUrl("javascript:(function(){document.getElementById('headerTable').style.display ='';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('title').innerText  ='Enter new card details';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('subtitle').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('terms').style.display ='';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('termsText').style.display ='';})()")
+
+                        view?.loadUrl("javascript:(function(){document.getElementById('amount').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('paymentAmountTitle').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('currency1').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('amounInput').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('payment').style.display = 'none';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('checkBoxhide').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').style.display = '';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('cardChecked').checked = true; document.getElementById('cardChecked').style.pointerEvents = 'none';  document.getElementById('cardChecked').className = 'custom-checkbox';})()")
+
+                        view?.loadUrl("javascript:(function(){document.getElementById('demoPayButton').innerText  ='PROCEED WITH PAYMENT';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('email').value = '${personalInformation?.emailAddress}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('phone').value = '${personalInformation?.phoneNumber}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('postalCode').value = '${personalInformation?.zipCode}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('city').value = '${personalInformation?.city}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('country').value = '${personalInformation?.country}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('address1').value = '${personalInformation?.addressLine1}';})()")
+                        view?.loadUrl("javascript:(function(){document.getElementById('checkboxHintRevalidate').innerText  ='Make this my default payment method.';})()")
 
                     }
 
@@ -906,11 +975,19 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                     bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                     bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
 
-                    if (navFlowFrom.equals(Constants.PAYG_SUSPENDED)) {
+                    if (navFlowFrom == Constants.PAYG_SUSPENDED) {
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                         bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
                         findNavController().navigate(
                             R.id.action_nmiPaymentFragment_to_accountSuspendReOpenFragment,
+                            bundle
+                        )
+                    } else if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                        bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
+                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                        findNavController().navigate(
+                            R.id.action_nmiPaymentFragment_to_reValidateInfoFragment,
                             bundle
                         )
                     } else {
@@ -922,18 +999,11 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
 
                 } else if (status.data?.statusCode?.equals("1337") == true) {
-                    var bundle = Bundle()
+                    val bundle = Bundle()
                     bundle.putString(
                         Constants.CARD_IS_ALREADY_REGISTERED,
                         Constants.CARD_IS_ALREADY_REGISTERED
                     )
-//                    bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
-//                    bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
-
-//                    findNavController().navigate(
-//                        R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-//                        bundle
-//                    )
                     displayCustomMessage(
                         getString(R.string.str_warning),
                         getString(R.string.the_card_you_are_trying_to_add_is_already),
@@ -941,8 +1011,8 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                         object : DialogPositiveBtnListener {
                             override fun positiveBtnClick(dialog: DialogInterface) {
                                 val fragmentId = findNavController().currentDestination?.id
-                                findNavController().popBackStack(fragmentId!!, true)
-                                findNavController().navigate(fragmentId, arguments)
+                                findNavController().popBackStack(fragmentId ?: 0, true)
+                                findNavController().navigate(fragmentId ?: 0, arguments)
                             }
                         },
                         object : DialogNegativeBtnListener {
@@ -968,14 +1038,34 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                             Constants.NAV_FLOW_FROM,
                             navFlowFrom
                         )
-                        bundle.putString(
-                            Constants.CARD_IS_ALREADY_REGISTERED,
-                            Constants.CREDIT_NOT_SET_UP
-                        )
-                        findNavController().navigate(
-                            R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
-                            bundle
-                        )
+                        if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
+                            bundle.putBoolean(
+                                Constants.CARD_VALIDATION_FIRST_TIME,
+                                cardValidationFirstTime
+                            )
+                            bundle.putBoolean(
+                                Constants.CARD_VALIDATION_SECOND_TIME,
+                                cardValidationSecondTime
+                            )
+                            bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
+                            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+                            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+                            findNavController().navigate(
+                                R.id.action_nmiPaymentFragment_to_reValidateInfoFragment,
+                                bundle
+                            )
+                        } else {
+                            bundle.putString(
+                                Constants.CARD_IS_ALREADY_REGISTERED,
+                                Constants.CREDIT_NOT_SET_UP
+                            )
+                            findNavController().navigate(
+                                R.id.action_nmiPaymentFragment_to_paymentSuccessFragment2,
+                                bundle
+                            )
+                        }
+
+
                     }
 
                 }
@@ -989,8 +1079,29 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
 
     private fun redirectToTryAgainPaymentScreen() {
 
-        if (navFlowFrom.equals(Constants.PAYG_SUSPENDED)) {
-            val bundle = Bundle()
+        val bundle = Bundle()
+
+        if (navFlowFrom == Constants.CARD_VALIDATION_REQUIRED) {
+            bundle.putString(
+                Constants.NAV_FLOW_FROM,
+                navFlowFrom
+            )
+            bundle.putBoolean(
+                Constants.CARD_VALIDATION_FIRST_TIME,
+                cardValidationFirstTime
+            )
+            bundle.putBoolean(
+                Constants.CARD_VALIDATION_SECOND_TIME,
+                cardValidationSecondTime
+            )
+            bundle.putBoolean(Constants.CARD_VALIDATION_PAYMENT_FAIL, true)
+            bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
+            bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
+            findNavController().navigate(
+                R.id.action_nmiPaymentFragment_to_reValidateInfoFragment,
+                bundle
+            )
+        } else if (navFlowFrom == Constants.PAYG_SUSPENDED) {
 
             bundle.putString(
                 Constants.NAV_FLOW_FROM,
@@ -1005,7 +1116,6 @@ class NMIPaymentFragment : BaseFragment<NmiPaymentFragmentBinding>(), View.OnCli
                 bundle
             )
         } else {
-            val bundle = Bundle()
             bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentListSize)
             bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
             bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)

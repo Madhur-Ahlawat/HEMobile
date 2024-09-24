@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
+import com.conduent.nationalhighways.utils.common.Utils
 
 
 class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>(),
@@ -27,7 +27,8 @@ class ChooseAccountTypeFragment : BaseFragment<FragmentChooseAccountTypeBinding>
 
 
     override fun init() {
-      
+        Utils.setupAccessibilityDelegatesForRadioButtons(binding.radioGroup)
+
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             binding.btnAccountType.isEnabled =
                 R.id.radio_personal_account == checkedId || R.id.radio_business_account == checkedId

@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
@@ -20,7 +19,6 @@ import com.conduent.nationalhighways.databinding.FragmentChangePasswordProfileBi
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
 import com.conduent.nationalhighways.utils.common.Resource
@@ -31,6 +29,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasLowerCase
 import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.setPersonalInfoAnnouncement
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import javax.inject.Inject
@@ -43,9 +42,8 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
     private val viewModel: ProfileViewModel by viewModels()
     private var data: SecurityCodeResponseModel? = null
     private var profileDetailModel: ProfileDetailModel? = null
-    private var loader: LoaderDialog? = null
-    private var passwordVisibile: Boolean = false
-    private var confirmPasswordVisibile: Boolean = false
+    private var passwordVisible: Boolean = false
+    private var confirmPasswordVisible: Boolean = false
 
 
     @Inject
@@ -57,22 +55,24 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         FragmentChangePasswordProfileBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navData?.let {
             if (it is ProfileDetailModel) {
                 profileDetailModel = navData as ProfileDetailModel
             }
         }
-
         data = arguments?.getParcelable("data")
-        HomeActivityMain.setTitle(getString(R.string.profile_password))
-        (requireActivity() as HomeActivityMain).showHideToolbar(true)
-        //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_password))
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+
+
     }
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
     override fun initCtrl() {
+        setPersonalInfoAnnouncement(binding.rootLayout, requireActivity())
         binding.btnSubmit.setOnClickListener(this)
         binding.edtCurrentPassword.editText.addTextChangedListener { currentPasswordListener() }
         binding.edtNewPassword.editText.addTextChangedListener { isEnable(it.toString()) }
@@ -82,23 +82,20 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             val right = 2
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= binding.edtNewPassword.right - binding.edtNewPassword.editText.compoundDrawables[right].bounds.width()) {
-
-                    if (passwordVisibile) {
+                    if (passwordVisible) {
                         binding.edtNewPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
                         binding.edtNewPassword.editText.transformationMethod =
                             PasswordTransformationMethod.getInstance()
-                        passwordVisibile = false
+                        passwordVisible = false
                     } else {
-
-
                         binding.edtNewPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_off_24, 0
                         )
                         binding.edtNewPassword.editText.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()
-                        passwordVisibile = true
+                        passwordVisible = true
                     }
                 }
             }
@@ -113,13 +110,13 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= binding.edtConfirmPassword.right - binding.edtConfirmPassword.editText.compoundDrawables[right].bounds.width()) {
 
-                    if (confirmPasswordVisibile) {
+                    if (confirmPasswordVisible) {
                         binding.edtConfirmPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
                         binding.edtConfirmPassword.editText.transformationMethod =
                             PasswordTransformationMethod.getInstance()
-                        confirmPasswordVisibile = false
+                        confirmPasswordVisible = false
                     } else {
 
                         binding.edtConfirmPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
@@ -127,7 +124,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                         )
                         binding.edtConfirmPassword.editText.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()
-                        confirmPasswordVisibile = true
+                        confirmPasswordVisible = true
                     }
                 }
             }
@@ -143,84 +140,60 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             disableButton()
         } else if (binding.edtCurrentPassword.editText.text.toString().isNotEmpty() &&
             binding.edtNewPassword.editText.text.toString()
-                .isNotEmpty() && binding.edtCurrentPassword.editText.text.toString()
-                .equals(binding.edtNewPassword.editText.text.toString())
+                .isNotEmpty() && binding.edtCurrentPassword.editText.text.toString() == binding.edtNewPassword.editText.text.toString()
         ) {
             isNewPasswordValid = false
             binding.edtNewPassword.removeError()
             binding.edtNewPassword.setErrorText(getString(R.string.str_newpassword_cannot_be_same_current_password))
             disableButton()
         } else {
-            isEnable(binding.edtNewPassword.editText.toString())
+            isEnable(binding.edtNewPassword.editText.text.toString())
         }
         binding.edtCurrentPassword.removeError()
     }
 
     override fun observer() {
         observe(viewModel.updatePassword, ::handleResetResponse)
-        //observe(viewModel.verifyRequestCode, ::verifyRequestOtp)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_submit -> {
                 hideKeyboard()
-//                val validation = viewModel.checkPassword(
-//                    newPassword = binding.edtNewPassword.editText.text.toString().trim(),
-//                    currentPassword = binding.edtCurrentPassword.editText.text.toString()
-//                        .trim(),
-//                    confirmPassword = binding.edtConfirmPassword.editText.text.toString()
-//                        .trim()
-//                )
-//                if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    disableButton()
-                    viewModel.updatePassword(
-                        ResetPasswordModel(
-                            currentPassword = binding.edtCurrentPassword.editText.text.toString(),
-                            newPassword = binding.edtNewPassword.editText.text.toString(),
-                            confirmPassword = binding.edtConfirmPassword.editText.text.toString()
-                        )
+                showLoaderDialog()
+                disableButton()
+                viewModel.updatePassword(
+                    ResetPasswordModel(
+                        currentPassword = binding.edtCurrentPassword.editText.text.toString(),
+                        newPassword = binding.edtNewPassword.editText.text.toString(),
+                        confirmPassword = binding.edtConfirmPassword.editText.text.toString()
                     )
-//                } else {
-//                    showError(binding.root, validation.second)
-//                }
+                )
             }
         }
     }
 
-    fun enableButton() {
+    private fun enableButton() {
         binding.btnSubmit.isEnabled = true
         binding.btnSubmit.isFocusable = true
     }
 
-    fun disableButton() {
+    private fun disableButton() {
         binding.btnSubmit.isEnabled = false
         binding.btnSubmit.isFocusable = false
     }
 
     private fun handleResetResponse(status: Resource<ForgotPasswordResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
-                if(status.data?.statusCode=="1308"){
-                    binding.edtCurrentPassword.setErrorText(status.data.message?:"")
+                if (status.data?.statusCode == "1308") {
+                    binding.edtCurrentPassword.setErrorText(status.data.message ?: "")
                     enableButton()
-                }
-               else if (status.data?.statusCode != "1308" && status.data?.message?.lowercase(Locale.ROOT)?.contains("success")==true
+                } else if (status.data?.statusCode != "1308" && status.data?.message?.lowercase(
+                        Locale.ROOT
+                    )?.contains("success") == true
                 ) {
-                    /* AdobeAnalytics.setActionTrack1(
-                         "submit",
-                         "login:forgot password:choose options:otp:new password set",
-                         "forgot password",
-                         "english",
-                         "login",
-                         (requireActivity() as AuthActivity).previousScreen,
-                         "success",
-                         sessionManager.getLoggedInUser()
-                     )*/
                     sessionManager.clearAll()
                     Intent(
                         requireActivity(),
@@ -247,17 +220,6 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                 ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    /*AdobeAnalytics.setActionTrack1(
-                    "submit",
-                    "login:forgot password:choose options:otp:new password set",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )*/
-
                     showError(binding.root, status.errorMsg)
                 }
             }
@@ -270,7 +232,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
     private fun isEnable1() {
         isConfirmPasswordValid = true
 
-        if (binding.edtConfirmPassword.getText().toString().length == 0) {
+        if (binding.edtConfirmPassword.getText().toString().isEmpty()) {
             isConfirmPasswordValid = false
             binding.edtConfirmPassword.removeError()
         } else if (binding.edtNewPassword.getText()
@@ -278,8 +240,7 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
         ) {
             isConfirmPasswordValid = false
             binding.edtConfirmPassword.setErrorText(getString(R.string.str_new_your_password_must_match))
-        } else if (binding.edtCurrentPassword.editText.text.toString()
-                .equals(binding.edtNewPassword.editText.text.toString())
+        } else if (binding.edtCurrentPassword.editText.text.toString() == binding.edtNewPassword.editText.text.toString()
         ) {
             isNewPasswordValid = false
             binding.edtNewPassword.setErrorText(getString(R.string.str_newpassword_cannot_be_same_current_password))
@@ -297,18 +258,16 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                 confirmPassword = binding.edtConfirmPassword.getText().toString(),
                 enable = true
             )
-            isEnable(binding.edtNewPassword.editText.toString())
+            isEnable(binding.edtNewPassword.editText.text.toString())
         }
-
-//        binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
     private fun isEnable(text: String) {
         var filterTextForSpecialChars = ""
-        var commaSeperatedString = ""
+        var commaSeparatedString = ""
         isNewPasswordValid = true
 
-        if (binding.edtNewPassword.getText().toString().length == 0) {
+        if (binding.edtNewPassword.getText().toString().isEmpty()) {
             isNewPasswordValid = false
             binding.edtNewPassword.removeError()
         } else if (Utils.hasSpecialCharacters(
@@ -335,18 +294,21 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
                 binding.edtNewPassword.getText().toString()
             )
             filterTextForSpecialChars.replace(" ", "space ")
-            commaSeperatedString =
+            commaSeparatedString =
                 Utils.makeCommaSeperatedStringForPassword(
                     Utils.removeAllCharacters(
                         Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars
                     )
                 )
-            if (filterTextForSpecialChars.length > 0) {
-                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
-                false
+            if (filterTextForSpecialChars.isNotEmpty()) {
+                binding.edtNewPassword.setErrorText(
+                    resources.getString(
+                        R.string.str_password_must_not_include_disallowed_character,
+                        commaSeparatedString
+                    )
+                )
             } else {
                 binding.edtNewPassword.removeError()
-                true
             }
         } else if (!binding.edtNewPassword.getText().toString().contains(Utils.NUMBER)) {
             isNewPasswordValid = false
@@ -363,14 +325,13 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
             binding.edtNewPassword.setErrorText(getString(R.string.str_new_password_must_be_8_characters))
 
         } else if (binding.edtConfirmPassword.getText().toString()
-                .isNotEmpty() == true && (binding.edtNewPassword.getText().toString()
+                .isNotEmpty() && (binding.edtNewPassword.getText().toString()
                     != binding.edtConfirmPassword.getText().toString())
         ) {
             isNewPasswordValid = false
             binding.edtNewPassword.removeError()
             binding.edtConfirmPassword.setErrorText(getString(R.string.str_new_your_password_must_match))
-        } else if (binding.edtCurrentPassword.editText.text.toString()
-                .equals(binding.edtNewPassword.editText.text.toString())
+        } else if (binding.edtCurrentPassword.editText.text.toString() == binding.edtNewPassword.editText.text.toString()
         ) {
             isNewPasswordValid = false
             binding.edtNewPassword.setErrorText(getString(R.string.str_newpassword_cannot_be_same_current_password))
@@ -392,26 +353,34 @@ class ChangePasswordProfileFragment : BaseFragment<FragmentChangePasswordProfile
 
         if (hasLowerCase(text)) {
             binding.imgDot3.setImageResource(R.drawable.grin_tick)
+            binding.imgDot3.contentDescription = resources.getString(R.string.accessibility_tick_mark)
         } else {
             binding.imgDot3.setImageResource(R.drawable.circle_5dp)
+            binding.imgDot3.contentDescription = resources.getString(R.string.accessibility_bullet)
         }
 
         if (hasUpperCase(text)) {
             binding.imgDot2.setImageResource(R.drawable.grin_tick)
+            binding.imgDot2.contentDescription = resources.getString(R.string.accessibility_tick_mark)
         } else {
             binding.imgDot2.setImageResource(R.drawable.circle_5dp)
+            binding.imgDot2.contentDescription = resources.getString(R.string.accessibility_bullet)
         }
 
         if (text.length >= 8) {
             binding.imgDot1.setImageResource(R.drawable.grin_tick)
+            binding.imgDot1.contentDescription = resources.getString(R.string.accessibility_tick_mark)
         } else {
             binding.imgDot1.setImageResource(R.drawable.circle_5dp)
+            binding.imgDot1.contentDescription = resources.getString(R.string.accessibility_bullet)
         }
 
         if (hasDigits(text)) {
             binding.imgDot4.setImageResource(R.drawable.grin_tick)
+            binding.imgDot4.contentDescription = resources.getString(R.string.accessibility_tick_mark)
         } else {
             binding.imgDot4.setImageResource(R.drawable.circle_5dp)
+            binding.imgDot4.contentDescription = resources.getString(R.string.accessibility_bullet)
         }
 //new password
 

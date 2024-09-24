@@ -16,7 +16,7 @@ import com.conduent.nationalhighways.ui.loader.RetryDialog
 object ErrorUtil {
 
     fun showError(view: View?, message: String?) {
-        Log.e("TAG", "showError: message "+message )
+        Log.e("TAG", "showError: message " + message)
         try {
             val dialog = ErrorDialog()
             val bundle = Bundle()
@@ -29,6 +29,7 @@ object ErrorUtil {
                     (view.context as AppCompatActivity).supportFragmentManager,
                     Constants.ERROR_DIALOG
                 )
+
                 is ContextWrapper -> dialog.show(
                     (((view.context as ContextWrapper).baseContext)
                             as AppCompatActivity).supportFragmentManager,

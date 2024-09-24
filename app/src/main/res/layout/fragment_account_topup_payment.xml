@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/suggestedAmount"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="50"
+                        android:text="@string/_50"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />
@@ -148,7 +148,7 @@
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_toEndOf="@+id/suggestedThreshold"
-                        android:text="15"
+                        android:text="@string/_15"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="normal" />

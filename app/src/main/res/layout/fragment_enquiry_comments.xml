@@ -68,22 +68,25 @@
 
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextInput
+                    style="@style/input_text"
                     android:id="@+id/comments_et"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_230dp"
+                    android:minHeight="@dimen/margin_230dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:background="@drawable/edittext_box"
                     android:gravity="start"
                     android:imeOptions="actionDone"
                     android:maxLength="500"
                     android:padding="@dimen/margin_15dp"
+                    tools:text="vdvsv"
+                    android:fontFamily="@font/open_sans"
                     android:textColor="@color/black"
                     app:inputType="phone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dont_include_personal_tv"
-                    app:maxLength="500"
-                    tools:text="" />
+                    app:maxLength="500" />
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/characters_rem_tv"
@@ -117,6 +120,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
                     android:orientation="horizontal"
+                    android:importantForAccessibility="yes"
+                    android:focusable="true"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/upload_file_tv">
@@ -126,6 +131,7 @@
                         android:layout_width="@dimen/margin_6dp"
                         android:layout_height="@dimen/margin_6dp"
                         android:layout_marginTop="@dimen/margin_6dp"
+                        android:contentDescription="@string/accessibility_bullet"
                         android:src="@drawable/circle_5dp" />
 
                     <TextView
@@ -144,7 +150,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5dp"
+                    android:focusable="true"
                     android:orientation="horizontal"
+                    android:importantForAccessibility="yes"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/allowed_file_types_ll">
@@ -174,8 +182,8 @@
                     android:layout_marginLeft="@dimen/margin_2dp"
                     android:layout_marginTop="@dimen/margin_20dp"
                     android:layout_marginRight="@dimen/margin_2dp"
-                    android:layout_marginBottom="@dimen/margin_20dp"
                     android:visibility="gone"
+                    android:layout_marginBottom="@dimen/margin_20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/filesize_ll">
@@ -190,6 +198,10 @@
                             android:id="@+id/file_name_tv"
                             style="@style/SemiBoldTextBlack"
                             android:layout_width="@dimen/margin_0dp"
+                            tools:text="1.5MB.pdf (1.66 MB)"
+                            android:minHeight="@dimen/margin_48dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@id/barrier"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -203,10 +215,11 @@
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/file_delete_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/margin_0dp"
-                            android:paddingStart="@dimen/margin_10dp"
+                            android:layout_width="@dimen/margin_48dp"
+                            android:layout_height="@dimen/margin_48dp"
+                            android:padding="@dimen/margin_10dp"
                             android:src="@drawable/delete"
+                            android:contentDescription="@string/delete"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintLeft_toRightOf="@id/barrier"
@@ -227,7 +240,7 @@
                     android:fontFamily="@font/open_sans_bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/file_cv"/>
+                    app:layout_constraintTop_toBottomOf="@+id/file_cv" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -298,7 +311,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:radius="@dimen/margin_5dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

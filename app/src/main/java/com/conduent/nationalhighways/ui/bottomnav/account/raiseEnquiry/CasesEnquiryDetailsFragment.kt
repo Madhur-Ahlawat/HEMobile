@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.conduent.nationalhighways.R
@@ -15,7 +14,6 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
@@ -30,17 +28,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBinding>() {
-
     private val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
     private var serviceRequest: ServiceRequest? = null
-
     private val apiViewModel: RaiseAPIViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var isViewCreated: Boolean = false
 
     @Inject
     lateinit var sm: SessionManager
-
     private var categoryList: ArrayList<CaseCategoriesModel> = ArrayList()
     private var subcategoryList: ArrayList<CaseCategoriesModel?>? = ArrayList()
     private var apiCallPos: Int = 0
@@ -51,13 +45,13 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         FragmentCasesEnquiryDetailsBinding.inflate(inflater, container, false)
 
     override fun init() {
-
         if (requireActivity() is RaiseEnquiryActivity) {
             binding.btnNext.text = resources.getString(R.string.back_to_main_menu)
         } else {
             binding.btnNext.text = resources.getString(R.string.str_continue)
+
         }
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(requireActivity().resources.getString(R.string.enquiry_status))
         }
         if (arguments?.containsKey(Constants.EnquiryResponseModel) == true) {
@@ -81,9 +75,12 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
         }
 
         viewModel.enquiryDetailsModel.value = serviceRequest
-
-        binding.categoryDataTv.text = Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.category)
-        binding.subcategoryDataTv.text = Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.subcategory)
+        binding.referenceNumberdataTv.contentDescription =
+            Utils.accessibilityForNumbers(viewModel.enquiryDetailsModel.value?.id ?: "")
+        binding.categoryDataTv.text =
+            Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.category)
+        binding.subcategoryDataTv.text =
+            Utils.capitalizeString(viewModel.enquiryDetailsModel.value?.subcategory)
 
         binding.btnNext.setOnClickListener {
             if (requireActivity() is RaiseEnquiryActivity) {
@@ -110,9 +107,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
     private fun setCategoryData() {
         if (sm.fetchSubCategoriesData().size == 0) {
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+            showLoaderDialog()
             apiViewModel.getCategories()
         } else {
             getCategoryDataFromSession()
@@ -120,8 +115,6 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     }
 
     override fun initCtrl() {
-
-
     }
 
     override fun observer() {
@@ -138,16 +131,13 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
     }
 
     private fun categoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().isNotEmpty()) {
                     categoryList.clear()
                     categoryList = resource.data as ArrayList<CaseCategoriesModel>
                     callSubCategoryApi()
-
                 }
             }
 
@@ -193,6 +183,14 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
             ) {
                 binding.categoryDataTv.text = Utils.capitalizeString(subCategories[i].category)
                 binding.subcategoryDataTv.text = Utils.capitalizeString(subCategories[i].value)
+                binding.categoryCv.contentDescription =
+                    getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
+                binding.categoryCl.contentDescription =
+                    getString(R.string.category) + ", " + Utils.capitalizeString(subCategories[i].category)
+                binding.subcategoryCv.contentDescription =
+                    getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
+                binding.subcategoryCl.contentDescription =
+                    getString(R.string.sub_category) + ", " + Utils.capitalizeString(subCategories[i].value)
                 break
             }
         }
@@ -202,9 +200,7 @@ class CasesEnquiryDetailsFragment : BaseFragment<FragmentCasesEnquiryDetailsBind
 
     private fun subCategoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
         if (categoryList.size <= apiCallPos) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
+            dismissLoaderDialog()
         }
         if (apiCallPos == 1) {
             subcategoryList?.clear()

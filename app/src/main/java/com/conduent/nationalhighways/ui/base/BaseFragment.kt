@@ -15,9 +15,11 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.BackEventCompat
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
@@ -30,6 +32,7 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.account.creation.step5.CreateAccountVehicleViewModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
@@ -44,7 +47,9 @@ import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
-    protected lateinit var binding: B
+    private var _binding: B? = null
+    protected val binding get() = _binding!!
+
     lateinit var navFlowCall: String
     var navFlowFrom: String = ""
     var navData: Any? = null
@@ -52,13 +57,15 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     var edit_summary: Boolean = false
     private var backPressListener: BackPressListener? = null
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
+    private var loaderDialog: LoaderDialog? = null
+    private var onBackPressedCallback: OnBackPressedCallback? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = getFragmentBinding(inflater, container)
+        _binding = getFragmentBinding(inflater, container)
 
         navFlowCall = arguments?.getString(NAV_FLOW_KEY, "").toString()
         if (arguments?.containsKey(NAV_FLOW_FROM) == true) {
@@ -76,48 +83,51 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
             backButton = arguments?.getBoolean(SHOW_BACK_BUTTON, true) ?: true
         }
 
-        if((requireActivity() is HomeActivityMain) && !backButton){
+        if ((requireActivity() is HomeActivityMain) && !backButton) {
             (requireActivity() as HomeActivityMain).hideBackIcon()
         }
-        Log.e("TAG", "onCreateView: navFlowCall --> "+navFlowCall )
-        Log.e("TAG", "onCreateView: navFlowFrom --> "+navFlowFrom )
-        return binding.root
+        Log.e("TAG", "onCreateView: navFlowCall -> "+navFlowCall+" navFlowFrom -> "+navFlowFrom )
+
+        return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        checkBackIcon()
         observer()
         initCtrl()
         init()
+        callOnBackListener()
+    }
 
-        backClickListener()
+    private fun callOnBackListener() {
+        if(onBackPressedCallback==null) {
+            onBackPressedCallback = object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    backPressListener?.onBackButtonPressed()
+                    if (backButton) {
+                        isEnabled = false
+                    } else {
+                        Utils.vibrate(requireActivity())
+                    }
+                }
+            }
+            requireActivity().onBackPressedDispatcher.addCallback(
+                viewLifecycleOwner,
+                onBackPressedCallback!!
+            )
+
+        }
     }
 
     fun setBackPressListener(listener: BackPressListener) {
         backPressListener = listener
     }
 
-    private fun backClickListener() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-
-                backPressListener?.onBackButtonPressed()
-
-                if (backButton) {
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                    // Implement your custom back navigation logic
-                } else {
-                    Utils.vibrate(requireActivity())
-                }
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-        if (navData != null && navData is CrossingDetailsModelsResponse) {
-            Log.e("EXPIRY", (navData as CrossingDetailsModelsResponse).expirationDate)
-        }
+    fun destroyBackPressListener() {
+        backPressListener = null
     }
+
+
+
 
     abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): B
     abstract fun init()
@@ -130,8 +140,6 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     override fun onResume() {
         super.onResume()
         AdobeAnalytics.setLifeCycleCallAdobe(true)
-
-
     }
 
     fun checkBackIcon() {
@@ -149,16 +157,12 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     }
 
     fun checkSessionExpiredOrServerError(errorResponsModel: ErrorResponseModel?): Boolean {
-        if ((errorResponsModel?.errorCode == Constants.TOKEN_FAIL && (errorResponsModel.error != null && errorResponsModel.error.equals(
-                Constants.INVALID_TOKEN
-            ))) || (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR &&
-                    (errorResponsModel.error != null && errorResponsModel.error.equals(
-                Constants.SERVER_ERROR
-            )))
-        ) {
-            return true
-        }
-        return false
+        return (errorResponsModel?.errorCode == Constants.TOKEN_FAIL && (errorResponsModel.error != null && errorResponsModel.error.equals(
+            Constants.INVALID_TOKEN
+        ))) || (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR &&
+                (errorResponsModel.error != null && errorResponsModel.error.equals(
+                    Constants.SERVER_ERROR
+                )))
     }
 
     fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel?) {
@@ -242,7 +246,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         cancelVisibility: Int = View.VISIBLE,
         cancelButtonColor: Int = 0,
         typeFace: Typeface? = null,
-        lineView: Boolean? = false
+        lineView: Boolean? = false,
+        messageContentDesc: String = ""
     ) {
 
         val dialog = Dialog(requireActivity(), R.style.CustomDialogTheme1)
@@ -270,6 +275,10 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         cancel.text = negativeBtnTxt
         ok.text = positiveBtnTxt
         cancel.visibility = cancelVisibility
+
+        if (messageContentDesc.isNotEmpty()) {
+            textMessage.contentDescription = messageContentDesc
+        }
 
         if (lineView == true) {
             firstView.visibility = View.VISIBLE
@@ -341,6 +350,51 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
         }
     }
+
+    fun showLoaderDialog(type: Int = 0) {
+        Log.e(
+            "BaseFragment",
+            "LoaderDialog showLoaderDialog: $type $loaderDialog ${loaderDialog?.isVisible} ${loaderDialog?.isVisible == false}"
+        )
+        val fragmentManager = requireActivity().supportFragmentManager
+        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
+        if (existingFragment != null) {
+            (existingFragment as LoaderDialog).dismiss()
+        }
+        if (loaderDialog == null) {
+            loaderDialog = LoaderDialog()
+            loaderDialog?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+        }
+        if (loaderDialog?.isVisible == null || loaderDialog?.isVisible == false) {
+            loaderDialog?.show(fragmentManager, Constants.LOADER_DIALOG)
+        }
+
+
+    }
+
+    fun dismissLoaderDialog(type: Int = 0) {
+        Log.e(
+            "BaseFragment",
+            "LoaderDialog dismissLoaderDialog: $type $loaderDialog ${loaderDialog?.showsDialog}"
+        )
+        if (loaderDialog != null) {
+            loaderDialog?.dismiss()
+            loaderDialog = null
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        onBackPressedCallback?.remove()
+        onBackPressedCallback = null
+        if (loaderDialog?.isVisible == true) {
+            loaderDialog?.dismiss()
+        }
+        loaderDialog = null
+
+        _binding = null
+    }
+
 
 }
 

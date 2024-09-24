@@ -1,74 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="@dimen/margin_1dp"
         android:layout_marginTop="@dimen/margin_15dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:id="@+id/cardView"
-        app:cardCornerRadius="5dp"
-        android:elevation="3dp">
+        android:layout_marginEnd="@dimen/margin_1dp"
+        android:layout_marginBottom="@dimen/margin_1dp"
+        android:elevation="@dimen/margin_3dp"
+        android:importantForAccessibility="no"
+        app:cardCornerRadius="@dimen/margin_5dp">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:padding="@dimen/margin_15dp"
-        android:minHeight="@dimen/_50sdp"
-        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/account_summary_layer_cl_style"
+            android:minHeight="@dimen/margin_50dp">
 
-        <TextView
-            android:id="@+id/txtPlateNumber"
-            style="@style/MediumTextBlack"
-            android:textSize="14sp"
-            android:visibility="gone"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:text="@string/vehicle_registration_number_plate"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vehicleRegNumCl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/delete_vehicle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
-            style="@style/RegularTextBlack"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/vehiclePlateNumber"
-            android:layout_marginStart="@dimen/_8sdp"
-            app:layout_constraintTop_toTopOf="@id/update_vehicle"
-            app:layout_constraintBottom_toBottomOf="@+id/update_vehicle"
-            android:text="AJ66MHA" />
+                <TextView
+                    android:id="@+id/txtPlateNumber"
+                    style="@style/MediumTextBlack"
+                    android:text="@string/vehicle_registration_number_plate"
+                    android:textSize="@dimen/font_14sp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/edit"
-            android:padding="@dimen/margin_8dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtPlateNumber"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/update_vehicle"
-            android:layout_marginEnd="12dp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_8dp"
-            android:src="@drawable/delete"
-            app:layout_constraintTop_toBottomOf="@id/txtPlateNumber"
-            app:layout_constraintEnd_toStartOf="@id/update_vehicle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/delete_vehicle"
-            android:layout_marginEnd="12dp"/>
+                <com.conduent.nationalhighways.utils.widgets.NHTextView
+                    android:id="@+id/vehiclePlateNumber"
+                    style="@style/RegularTextBlack"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtPlateNumber"
+                    tools:text="AJ66MHAAJ66MHAAJ66MHAAJ66MHAAJ66MHAAJ66MHA" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+            <ImageView
+                android:id="@+id/update_vehicle"
+                android:layout_width="@dimen/margin_48dp"
+                android:layout_height="@dimen/margin_48dp"
+                android:layout_marginEnd="@dimen/margin_6dp"
+                android:contentDescription="@string/str_edit"
+                android:padding="@dimen/margin_13dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/delete_vehicle"
+                android:layout_width="@dimen/margin_48dp"
+                android:layout_height="@dimen/margin_48dp"
+                android:contentDescription="@string/delete"
+                android:padding="@dimen/margin_12dp"
+                android:src="@drawable/delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/update_vehicle" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 </layout>

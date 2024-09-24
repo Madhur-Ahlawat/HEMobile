@@ -29,28 +29,38 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/success_iv"
-                    android:layout_width="@dimen/margin_70dp"
-                    android:layout_height="@dimen/margin_70dp"
-                    android:src="@drawable/tick_mark"
-                    android:layout_marginTop="@dimen/margin_60dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/dark_blue_color" />
-
-                <com.conduent.nationalhighways.utils.widgets.NHTextView
-                    android:id="@+id/title_tv"
-                    style="@style/SemiBoldTextBlack"
-                    android:layout_marginTop="@dimen/margin_20dp"
+                <LinearLayout
+                    android:id="@+id/ll_success_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:lineSpacingExtra="@dimen/margin_8dp"
-                    android:textSize="@dimen/font_18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/success_iv"
-                    tools:text="@string/str_Your_enquiry_submitted" />
+                    android:importantForAccessibility="yes"
+                    android:screenReaderFocusable="true"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/success_iv"
+                        android:layout_width="@dimen/margin_70dp"
+                        android:layout_height="@dimen/margin_70dp"
+                        android:layout_marginTop="@dimen/margin_60dp"
+                        android:src="@drawable/tick_mark"
+                        app:tint="@color/dark_blue_color" />
+
+                    <com.conduent.nationalhighways.utils.widgets.NHTextView
+                        android:id="@+id/title_tv"
+                        style="@style/SemiBoldTextBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_20dp"
+                        android:gravity="center"
+                        android:lineSpacingExtra="@dimen/margin_8dp"
+                        android:textSize="@dimen/font_18sp"
+                        tools:text="@string/str_Your_enquiry_submitted" />
+                </LinearLayout>
 
                 <com.conduent.nationalhighways.utils.widgets.NHTextView
                     android:id="@+id/desc_tv"
@@ -61,7 +71,7 @@
                     android:textSize="@dimen/font_16sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title_tv" />
+                    app:layout_constraintTop_toBottomOf="@id/ll_success_message" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/reference_number_cv"
@@ -69,6 +79,7 @@
                     android:layout_marginLeft="@dimen/margin_2dp"
                     android:layout_marginTop="@dimen/margin_15dp"
                     android:layout_marginRight="@dimen/margin_2dp"
+                    android:importantForAccessibility="yes"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/desc_tv">
@@ -77,6 +88,7 @@
                         android:id="@+id/category_cl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
                         android:padding="@dimen/margin_15dp">
 
 
@@ -92,6 +104,7 @@
                             android:id="@+id/reference_number_tv"
                             style="@style/RegularTextBlack"
                             android:layout_width="0dp"
+                            android:textIsSelectable="true"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/category_tv" />
 
@@ -139,9 +152,9 @@
                 android:id="@+id/check_status_bt"
                 style="@style/secondaryButton"
                 android:layout_width="0dp"
-                android:text="@string/check_enquiry_status"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_20dp"
+                android:text="@string/check_enquiry_status"
                 app:layout_constraintBottom_toTopOf="@id/feedback_bt"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

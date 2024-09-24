@@ -2,7 +2,7 @@ package com.conduent.nationalhighways.utils.extn
 
 import android.webkit.WebView
 
-fun WebView.loadSetting(url : String?){
+fun WebView.loadSetting(url: String?) {
     this.settings.apply {
         javaScriptEnabled = true
         domStorageEnabled = true
@@ -12,12 +12,12 @@ fun WebView.loadSetting(url : String?){
         displayZoomControls = false
         setSupportZoom(true)
         defaultTextEncodingName = "utf-8"
-        loadUrl(url?:"")
+        loadUrl(url ?: "")
     }
 }
 
 
-fun WebView.loadString(url : String?){
+fun WebView.loadString(url: String?) {
     this.settings.apply {
         javaScriptEnabled = true
         domStorageEnabled = true
@@ -27,6 +27,6 @@ fun WebView.loadString(url : String?){
         displayZoomControls = false
         setSupportZoom(true)
         defaultTextEncodingName = "utf-8"
-        loadData(url?:"","text/html; charset=utf-8", "UTF-8")
+        loadData(url ?: "", "text/html; charset=utf-8", "UTF-8")
     }
 }

@@ -10,8 +10,8 @@ data class CrossingDetailsModelsRequest(
     val plateCountry: String?,
     val vehicleMake: String?,
     val vehicleModel: String?,
-    val vehicleColor:String="",
-    val vehicleClass:String="",
-    val dataType:String="",
+    val vehicleColor: String = "",
+    val vehicleClass: String = "",
+    val dataType: String = "",
 
-) : Parcelable
+    ) : Parcelable

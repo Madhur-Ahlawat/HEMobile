@@ -19,7 +19,15 @@ import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
 import javax.security.auth.x500.X500Principal
 
-class KeystoreHelper @Throws(NoSuchPaddingException::class, NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class)
+class KeystoreHelper @Throws(
+    NoSuchPaddingException::class,
+    NoSuchProviderException::class,
+    NoSuchAlgorithmException::class,
+    InvalidAlgorithmParameterException::class,
+    KeyStoreException::class,
+    CertificateException::class,
+    IOException::class
+)
 
 constructor(ctx: Context) {
 
@@ -27,7 +35,15 @@ constructor(ctx: Context) {
     private var secretKey: Key? = null
 
     private val aesKeyFromKS: Key
-        @Throws(NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class, UnrecoverableKeyException::class)
+        @Throws(
+            NoSuchProviderException::class,
+            NoSuchAlgorithmException::class,
+            InvalidAlgorithmParameterException::class,
+            KeyStoreException::class,
+            CertificateException::class,
+            IOException::class,
+            UnrecoverableKeyException::class
+        )
         get() {
             keyStore = KeyStore.getInstance(AndroidKeyStore)
             keyStore!!.load(null)
@@ -37,18 +53,22 @@ constructor(ctx: Context) {
     init {
         this.generateEncryptKey(ctx)
         this.generateRandomIV(ctx)
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
-            try {
-                this.generateAESKey(ctx)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
+        try {
+            this.generateAESKey(ctx)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
 
-    @Throws(NoSuchProviderException::class, NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, KeyStoreException::class, CertificateException::class, IOException::class)
+    @Throws(
+        NoSuchProviderException::class,
+        NoSuchAlgorithmException::class,
+        InvalidAlgorithmParameterException::class,
+        KeyStoreException::class,
+        CertificateException::class,
+        IOException::class
+    )
     private fun generateEncryptKey(ctx: Context) {
 
         keyStore = KeyStore.getInstance(AndroidKeyStore)
@@ -56,15 +76,19 @@ constructor(ctx: Context) {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             if (!keyStore!!.containsAlias(KEY_ALIAS)) {
-                val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, AndroidKeyStore)
+                val keyGenerator =
+                    KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, AndroidKeyStore)
                 keyGenerator.init(
-                        KeyGenParameterSpec.Builder(KEY_ALIAS,
-                                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
-                                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                                .setRandomizedEncryptionRequired(false)
-                                .setDigests(KeyProperties.DIGEST_SHA256)
-                                .build())
+                    KeyGenParameterSpec.Builder(
+                        KEY_ALIAS,
+                        KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                    )
+                        .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                        .setRandomizedEncryptionRequired(false)
+                        .setDigests(KeyProperties.DIGEST_SHA256)
+                        .build()
+                )
                 keyGenerator.generateKey()
             }
         } else {
@@ -74,13 +98,14 @@ constructor(ctx: Context) {
                 val end = Calendar.getInstance()
                 end.add(Calendar.YEAR, 30)
                 val spec = KeyPairGeneratorSpec.Builder(ctx)
-                        .setAlias(KEY_ALIAS)
-                        .setSubject(X500Principal("CN=$KEY_ALIAS"))
-                        .setSerialNumber(BigInteger.TEN)
-                        .setStartDate(start.time)
-                        .setEndDate(end.time)
-                        .build()
-                val kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, AndroidKeyStore)
+                    .setAlias(KEY_ALIAS)
+                    .setSubject(X500Principal("CN=$KEY_ALIAS"))
+                    .setSerialNumber(BigInteger.TEN)
+                    .setStartDate(start.time)
+                    .setEndDate(end.time)
+                    .build()
+                val kpg =
+                    KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, AndroidKeyStore)
                 kpg.initialize(spec)
                 kpg.generateKeyPair()
             }
@@ -110,7 +135,8 @@ constructor(ctx: Context) {
         val output = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL")
         output.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey)
         val cipherInputStream = CipherInputStream(
-                ByteArrayInputStream(encrypted), output)
+            ByteArrayInputStream(encrypted), output
+        )
         val values = ArrayList<Byte>()
         var nextByte: Int
         nextByte = cipherInputStream.read()
@@ -144,18 +170,25 @@ constructor(ctx: Context) {
 
     @Throws(Exception::class)
     private fun getSecretKey(context: Context): Key {
-        if(secretKey==null) {
+        if (secretKey == null) {
             val pref = context.getSharedPreferences(SHARED_PREFENCE_NAME, Context.MODE_PRIVATE)
             val enryptedKeyB64 = pref.getString(ENCRYPTED_KEY, null)
 
             val encryptedKey = Base64.decode(enryptedKeyB64, Base64.DEFAULT)
             val key = rsaDecrypt(encryptedKey)
-            secretKey =  SecretKeySpec(key, "AES")
+            secretKey = SecretKeySpec(key, "AES")
         }
         return secretKey as Key
     }
 
-    @Throws(NoSuchAlgorithmException::class, NoSuchPaddingException::class, NoSuchProviderException::class, BadPaddingException::class, IllegalBlockSizeException::class, UnsupportedEncodingException::class)
+    @Throws(
+        NoSuchAlgorithmException::class,
+        NoSuchPaddingException::class,
+        NoSuchProviderException::class,
+        BadPaddingException::class,
+        IllegalBlockSizeException::class,
+        UnsupportedEncodingException::class
+    )
     fun encrypt(context: Context, input: String): String {
         if (TextUtils.isEmpty(input))
             return ""
@@ -187,7 +220,14 @@ constructor(ctx: Context) {
     }
 
 
-    @Throws(NoSuchAlgorithmException::class, NoSuchPaddingException::class, NoSuchProviderException::class, BadPaddingException::class, IllegalBlockSizeException::class, UnsupportedEncodingException::class)
+    @Throws(
+        NoSuchAlgorithmException::class,
+        NoSuchPaddingException::class,
+        NoSuchProviderException::class,
+        BadPaddingException::class,
+        IllegalBlockSizeException::class,
+        UnsupportedEncodingException::class
+    )
     fun decrypt(context: Context, encrypted: String): String {
         val c: Cipher
         val split = encrypted.split("|")
@@ -268,4 +308,5 @@ constructor(ctx: Context) {
         }
     }
 }
-private const val  BIT_LENGTH = 128
+
+private const val BIT_LENGTH = 128

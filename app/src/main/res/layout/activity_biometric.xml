@@ -26,19 +26,21 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingLeft="24dp"
+            android:paddingLeft="@dimen/margin_24dp"
 
-            android:paddingRight="24dp">
+            android:paddingRight="@dimen/margin_24dp">
 
             <TextView
                 android:id="@+id/txt_fingerprint_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:minHeight="@dimen/margin_48dp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_30dp"
                 android:fontFamily="@font/open_sans"
                 android:text="@string/biometriclogin"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="@dimen/font_16sp" />
 
 
             <!-- <androidx.appcompat.widget.SwitchCompat
@@ -57,14 +59,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="false"
+                android:minHeight="@dimen/margin_48dp"
                 android:fontFamily="@font/open_sans"
-                android:switchPadding="20dp"
+                android:switchPadding="@dimen/margin_20dp"
                 android:text="@string/usefingerprinttologin"
                 android:textColor="@color/black"
-                android:textSize="14dp"
+                android:textSize="@dimen/font_14sp"
                 app:thumbTint="@color/switch_thumb"
                 app:trackTint="@color/switch_track" />
-
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/btn_save"

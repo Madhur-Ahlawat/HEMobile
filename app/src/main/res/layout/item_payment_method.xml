@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,44 +10,57 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_74dp"
-        android:layout_marginHorizontal="2dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/margin_74dp"
+        android:layout_marginHorizontal="@dimen/margin_2dp"
+        android:layout_marginTop="@dimen/margin_5dp"
+        android:importantForAccessibility="no"
+        android:screenReaderFocusable="false"
+        android:layout_marginBottom="@dimen/margin_5dp"
         android:id="@+id/layout"
         android:background="@drawable/bg_card_type">
 
         <com.conduent.nationalhighways.utils.widgets.NHRadioButton
             android:id="@+id/radioButton_payment_method"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/margin_20dp"
+            android:buttonTint="@color/new_btn_color"
+            android:importantForAccessibility="yes"
+            android:minWidth="@dimen/margin_48dp"
+            android:screenReaderFocusable="true"
+            android:textColor="@color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:buttonTint="@color/new_btn_color"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivCardType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_10dp"
+            android:layout_marginStart="@dimen/margin_80dp"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/radioButton_payment_method"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.conduent.nationalhighways.utils.widgets.NHTextView
+        <TextView
             android:id="@+id/tv_select_payment_method"
             style="@style/Widget.HeMobile.TextInputLayout.Dark_Blue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
             android:layout_marginStart="@dimen/margin_8dp"
-            android:textColor="@color/grayColorIcon"
+            tools:text="Mastercard\n*****3456"
+            android:textColor="@color/black"
             android:fontFamily="@font/open_sans"
             android:textSize="@dimen/font_16sp"
+            android:layout_marginEnd="@dimen/margin_15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivCardType"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+          />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

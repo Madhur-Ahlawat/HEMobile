@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.transactions.adapter
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
@@ -18,6 +16,7 @@ import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardFragmentNew
 import com.conduent.nationalhighways.ui.transactions.ViewAllTransactionsFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.visible
 
 
@@ -51,20 +50,14 @@ class TransactionsInnerAdapterDashboard(
         binding?.apply {
             if (accSubType == Constants.PAYG) {
                 balanceCl.gone()
-            }else{
+            } else {
                 balanceCl.visible()
                 valueCurrentBalance.text = recentTransactionItem.balance
             }
             if (recentTransactionItem.activity?.lowercase()?.contains("toll") == false) {
                 indicatorIconEuro.visible()
-                Glide.with(indicatorIconTransactionType.context)
-                    .load(
-                        AppCompatResources.getDrawable(
-                            viewAllTransactionsFragment.requireContext(),
-                            R.drawable.ic_euro_circular_green
-                        )
-                    )
-                    .into(indicatorIconTransactionType)
+                indicatorIconTransactionType.invisible()
+//                indicatorIconEuro.background=ResourcesCompat.getDrawable(indicatorIconEuro.context.resources, R.drawable.ic_euro_circular_green, null)
                 tvTransactionType.text =
                     viewAllTransactionsFragment.resources.getString(R.string.top_up)
                 verticalStripTransactionType.background.setTint(

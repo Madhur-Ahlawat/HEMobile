@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,23 +9,23 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountSummaryBinding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_MOBILE
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_SUMMARY
-import com.conduent.nationalhighways.utils.common.Constants.N
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_FROM
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
-import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.makeLinks
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -82,24 +81,30 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             binding.twoStepVerification.text = getString(R.string.no)
         }
 
-        binding.address.text =
-            dataModel?.addressLine1 + "\n" + dataModel?.townCity + "\n" + dataModel?.zipCode
+        (dataModel?.addressLine1 + "\n" + dataModel?.townCity + "\n" + dataModel?.zipCode).also {
+            binding.address.text = it
+        }
         binding.emailAddress.text = dataModel?.emailAddress
         if ((NewCreateAccountRequestModel.communicationTextMessage || NewCreateAccountRequestModel.twoStepVerification) ||
             NewCreateAccountRequestModel.mobileNumber?.isNotEmpty() == true
         ) {
             binding.phoneCard.visible()
-            binding.mobileNumber.text =
-                dataModel?.countryCode?.let { getRequiredText(it) } + " " + dataModel?.mobileNumber
+            (dataModel?.countryCode?.let { getRequiredText(it) } + " " + dataModel?.mobileNumber).also {
+                binding.mobileNumber.text = it
+            }
         } else {
             if (NewCreateAccountRequestModel.telephoneNumber?.isNotEmpty() == true) {
                 binding.phoneCard.visible()
-                binding.mobileNumber.text =
-                    dataModel?.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel?.telephoneNumber
+                (dataModel?.telephone_countryCode?.let { getRequiredText(it) } + " " + dataModel?.telephoneNumber).also {
+                    binding.mobileNumber.text = it
+                }
             } else {
                 binding.phoneCard.gone()
             }
         }
+
+        binding.mobileNumber.contentDescription =
+            Utils.accessibilityForNumbers(binding.mobileNumber.text.toString())
 
         if (NewCreateAccountRequestModel.notSupportedCountrySaveDetails) {
             binding.phoneCard.visible()
@@ -107,7 +112,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             binding.phoneCard.gone()
         }
 
-        if (dataModel?.personalAccount ?: false) {
+        if (dataModel?.personalAccount == true) {
             binding.accountSubType.visible()
             binding.accountType.text = getString(R.string.personal)
             if (NewCreateAccountRequestModel.prePay) {
@@ -126,6 +131,7 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
         vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this, false)
         binding.recyclerView.adapter = vehicleAdapter
 
+        binding.checkBoxTerms.setAccessibilityDelegate()
         binding.checkBoxTerms.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 binding.btnNext.enable()
@@ -158,7 +164,12 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             }
 
         }))
-
+        if(requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     private fun getRequiredText(text: String) = text.substringAfter('(').replace(")", "")
@@ -170,25 +181,15 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
 
     }
 
-    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
-
-
-    }
-
     override fun onClick(v: View?) {
 
         when (v?.id) {
-
             R.id.btnNext -> {
                 emailHeartBeatApi()
                 smsHeartBeatApi()
 
-
-
-
                 if (!NewCreateAccountRequestModel.prePay) {
                     val bundle = Bundle()
-
                     bundle.putDouble(Constants.DATA, 0.00)
                     bundle.putDouble(Constants.THRESHOLD_AMOUNT, 0.00)
                     bundle.putString(NAV_FLOW_KEY, Constants.NOTSUSPENDED)
@@ -197,10 +198,8 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
                         R.id.action_accountSummaryFragment_to_nmiPaymentFragment,
                         bundle
                     )
-
                 } else {
                     findNavController().navigate(R.id.action_accountSummaryFragment_to_TopUpFragment)
-
                 }
             }
 
@@ -313,13 +312,13 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
             findNavController().navigate(R.id.action_accountSummaryFragment_to_removeVehicleFragment)
         } else {
             val bundle = Bundle()
-            bundle.putString(Constants.NAV_FLOW_KEY, EDIT_SUMMARY)
+            bundle.putString(NAV_FLOW_KEY, EDIT_SUMMARY)
 
             if (isDblaAvailable == true) {
                 bundle.putString(Constants.PLATE_NUMBER, plateNumber)
                 bundle.putInt(Constants.VEHICLE_INDEX, position)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
-                bundle.putBoolean(Constants.EDIT_SUMMARY, true)
+                bundle.putBoolean(EDIT_SUMMARY, true)
 
                 findNavController().navigate(
                     R.id.action_accountSummaryFragment_to_createAccountFindVehicleFragment,
@@ -345,7 +344,6 @@ class CreateAccountSummaryFragment : BaseFragment<FragmentCreateAccountSummaryBi
     override fun onResume() {
         if (requireActivity() is CreateAccountActivity) {
             title.text = getString(R.string.str_create_an_account)
-
         }
         super.onResume()
     }

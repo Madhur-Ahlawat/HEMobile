@@ -31,10 +31,10 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
     View.OnClickListener {
     private var additionalCrossings: Int? = 0
     private var additionalCrossingsCharge: Double? = 0.0
-    var crossingDetailModel: CrossingDetailsModelsResponse? = null
+    private var crossingDetailModel: CrossingDetailsModelsResponse? = null
 
     @Inject
-    lateinit var sessionmanager: SessionManager
+    lateinit var sessionManager: SessionManager
     var token: String = ""
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -84,7 +84,8 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             binding.btnFeedback.text = getString(R.string.continue_with_your_selection)
         } else {
             binding.descTv.text = resources.getString(R.string.vehcile_type_mismatch,
-                crossingDetailModel?.plateNo.toString().uppercase(), crossingDetailModel?.vehicleClass?.let {
+                crossingDetailModel?.plateNo.toString().uppercase(),
+                crossingDetailModel?.vehicleClass?.let {
                     Utils.getVehicleType(
                         requireActivity(),
                         it
@@ -107,10 +108,10 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
     override fun onResume() {
         super.onResume()
         if (token.isEmpty()) {
-            token = sessionmanager.fetchAuthToken() ?: ""
+            token = sessionManager.fetchAuthToken() ?: ""
         } else {
-            sessionmanager.saveAuthToken(token)
-            sessionmanager.saveBooleanData(SessionManager.SendAuthTokenStatus,true)
+            sessionManager.saveAuthToken(token)
+            sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, true)
         }
     }
 
@@ -124,8 +125,6 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
             btnFeedback.setOnClickListener(this@VehicleDoesNotMatchCurrentVehicleFragment)
         }
     }
-
-    fun getRequiredText(text: String) = text.substringAfter(' ')
 
     override fun initCtrl() {
     }
@@ -154,14 +153,6 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
                         )
                     }
                 } else {
-
-//                    requireActivity().startNewActivityByClearingStack(LandingActivity::class.java) {
-//                        putString(Constants.SHOW_SCREEN, Constants.LANDING_SCREEN)
-//                        putString(Constants.NAV_FLOW_FROM, Constants.CHECK_FOR_PAID_CROSSINGS_ONEOFF)
-//                        putString(Constants.PLATE_NUMBER, (navData as CrossingDetailsModelsResponse).plateNo)
-//                    }
-
-
                     bundle.putDouble(
                         Constants.DATA,
                         (navData as CrossingDetailsModelsResponse).totalAmount
@@ -173,8 +164,8 @@ class VehicleDoesNotMatchCurrentVehicleFragment :
                         (navData as CrossingDetailsModelsResponse).plateNo
                     )
 
-                    sessionmanager.saveAuthToken("")
-                    sessionmanager.saveBooleanData(SessionManager.SendAuthTokenStatus,false)
+                    sessionManager.saveAuthToken("")
+                    sessionManager.saveBooleanData(SessionManager.SendAuthTokenStatus, false)
                     findNavController().navigate(
                         R.id.action_vehicleDoesNotMatchCurrentVehicleFragment_to_findYourVehicleFragment,
                         bundle

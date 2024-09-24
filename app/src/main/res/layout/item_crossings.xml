@@ -9,11 +9,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/margin_62dp">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin_62dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_3dp"
             android:layout_marginTop="@dimen/margin_3dp"
             android:layout_marginEnd="@dimen/margin_5dp"
@@ -29,22 +30,24 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_main"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/margin_5dp">
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_5dp">
 
                 <View
                     android:id="@+id/vertical_strip_transaction_type"
                     android:layout_width="@dimen/margin_4dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/margin_62dp"
+
                     android:background="@color/green_status"
+                    android:minHeight="@dimen/margin_62dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/indicator_icon_transaction_type"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/margin_24dp"
+                    android:layout_height="@dimen/margin_24dp"
                     android:layout_marginStart="@dimen/margin_12dp"
                     android:gravity="center"
                     android:nestedScrollingEnabled="false"
@@ -52,56 +55,63 @@
                     android:src="@drawable/ic_euro_circular_green"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/vertical_strip_transaction_type"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="invisible" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/indicator_icon_euro"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:elevation="1dp"
+                    android:layout_width="@dimen/margin_24dp"
+                    android:layout_height="@dimen/margin_24dp"
+                    android:layout_marginStart="@dimen/margin_12dp"
+                    android:elevation="@dimen/margin_1dp"
                     android:gravity="center"
-                    android:text="@string/currency_symbol"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_12sp"
-                    app:layout_constraintBottom_toBottomOf="@id/indicator_icon_transaction_type"
-                    app:layout_constraintEnd_toEndOf="@+id/indicator_icon_transaction_type"
-                    app:layout_constraintStart_toStartOf="@+id/indicator_icon_transaction_type"
-                    app:layout_constraintTop_toTopOf="@id/indicator_icon_transaction_type" />
+                    android:src="@drawable/ic_euro_symbol"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/vertical_strip_transaction_type"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:paddingStart="@dimen/margin_8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/indicator_icon_transaction_type"
                     app:layout_constraintRight_toLeftOf="@id/icon_arrow"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/topup_cl"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
+                        android:layout_height="wrap_content">
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/tv_transaction_type"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/margin_22dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:src="@drawable/ic_car_grey"
                             android:text="@string/top_up"
+                            app:layout_constraintRight_toLeftOf="@id/barrier2"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/barrier2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:importantForAccessibility="no"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.5" />
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/value_top_up_amount"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_14dp"
-                            android:gravity="center"
+                            android:gravity="end"
                             android:textColor="@color/green_status"
+                            app:layout_constraintLeft_toRightOf="@id/barrier2"
                             android:textSize="@dimen/font_14sp"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -113,30 +123,39 @@
                         android:id="@+id/balance_cl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        tools:visibility="gone"
-                        >
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        tools:visibility="visible">
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/tv_transaction_balance"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
-                            android:gravity="center"
+                            android:gravity="start"
                             android:text="@string/balance"
                             android:textColor="@color/black"
+                            app:layout_constraintRight_toLeftOf="@id/barrier1"
                             android:textSize="@dimen/font_12sp"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/barrier1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:importantForAccessibility="no"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.5" />
 
                         <com.conduent.nationalhighways.utils.widgets.NHTextView
                             android:id="@+id/value_current_balance"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/margin_14dp"
-                            android:gravity="center"
+                            android:gravity="end"
                             android:textColor="@color/label_color"
                             android:textSize="@dimen/font_12sp"
+                            app:layout_constraintLeft_toRightOf="@id/barrier1"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="£13.50" />
@@ -148,16 +167,17 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/icon_arrow"
-                    android:layout_width="@dimen/margin_16dp"
-                    android:layout_height="@dimen/margin_16dp"
+                    android:layout_width="@dimen/margin_12dp"
+                    android:layout_height="@dimen/margin_12dp"
                     android:layout_marginStart="@dimen/margin_15dp"
-                    android:src="@drawable/ic_right_arrow_light_gray"
+                    android:src="@drawable/ic_right_arrow_purple"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

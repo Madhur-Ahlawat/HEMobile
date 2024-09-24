@@ -8,12 +8,15 @@ object VehicleClassTypeConverter {
             "A" -> {
                 "1"
             }
+
             "B" -> {
                 "2"
             }
+
             "C" -> {
                 "3"
             }
+
             else -> {
                 return "4"
             }
@@ -25,12 +28,15 @@ object VehicleClassTypeConverter {
             "1" -> {
                 "A"
             }
+
             "2" -> {
                 "B"
             }
+
             "3" -> {
                 "C"
             }
+
             else -> {
                 "D"
             }
@@ -42,12 +48,15 @@ object VehicleClassTypeConverter {
             "A" -> {
                 0.0
             }
+
             "B" -> {
                 2.5
             }
+
             "C" -> {
                 3.0
             }
+
             else -> {
                 6.0
             }

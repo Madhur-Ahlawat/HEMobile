@@ -4,11 +4,9 @@ import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.conduent.apollo.interfaces.DropDownItemSelectListener
 import com.conduent.nationalhighways.R
@@ -16,9 +14,11 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.databinding.FragmentPayForCrossingsBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
+import com.conduent.nationalhighways.utils.clickActionForDropdown
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
@@ -31,15 +31,12 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
     private var totalAmountOfUnsettledTrips: Double? = 0.0
     private var crossingsList: MutableList<String> = mutableListOf()
     private var totalAmountOfAdditionalCrossings: Double? = 0.00
-    private var loader: LoaderDialog? = null
-    private var unsettled_trip_api = 0
+    private var unsettledTripApi = 0
     private var data: CrossingDetailsModelsResponse? = null
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentPayForCrossingsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (arguments?.getParcelable(
                     Constants.NAV_DATA_KEY,
@@ -59,7 +56,7 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             }
         }
         data = navData as CrossingDetailsModelsResponse?
-        unsettled_trip_api = data?.unSettledTrips ?: 0
+        unsettledTripApi = data?.unSettledTrips ?: 0
         if (!edit_summary) {
             data?.unsettledTripChange = data?.unSettledTrips ?: 0
         }
@@ -67,7 +64,6 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
             (navData as CrossingDetailsModelsResponse).additionalCrossingCount
         val additionalCrossingsCharge = (navData as CrossingDetailsModelsResponse).additionalCharge
         binding.apply {
-            inputTotalAmount.isEnabled = false
             val charge = data?.chargingRate?.toDouble()
             val unSettledTrips = data?.unsettledTripChange
             crossingsList = emptyList<String>().toMutableList()
@@ -75,22 +71,22 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
                 totalAmountOfUnsettledTrips = charge * unSettledTrips
             }
 
-            if (additionalCrossingsCharge != null) {
-                totalAmountOfAdditionalCrossings = additionalCrossingsCharge
-
-            }
+            totalAmountOfAdditionalCrossings = additionalCrossingsCharge
             crossingsList.clear()
-            for (i in 1..additionalCrossings.plus(unSettledTrips!!)) {
+            for (i in 1..additionalCrossings.plus(unSettledTrips ?: 0)) {
                 crossingsList.add(i.toString())
             }
             inputCountry.dataSet.clear()
             inputCountry.dataSet.addAll(crossingsList)
             inputCountry.setSelectedValue(unSettledTrips.toString())
-            inputTotalAmount.text = getString(R.string.currency_symbol) + String.format(
-                "%.2f",
-                totalAmountOfUnsettledTrips ?: 0
-            )
+            inputCountry.clickActionForDropdown()
 
+            inputTotalAmount.text = getString(
+                R.string.price, "" + String.format(
+                    "%.2f",
+                    totalAmountOfUnsettledTrips ?: 0
+                )
+            )
 
             binding.titleText2.text = Html.fromHtml(
                 getString(R.string.str_pay_for_crossing_point2,
@@ -102,12 +98,20 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
 
         data?.unsettledTripChange =
             binding.inputCountry.getSelectedValue()?.toInt() ?: 0
+
+        if (requireActivity() is MakeOffPaymentActivity) {
+            (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
     }
+
 
     override fun initCtrl() {
         binding.inputCountry.dropDownItemSelectListener = this
         binding.btnAdditionalCrossing.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
+
     }
 
     override fun observer() {
@@ -194,10 +198,14 @@ class PayForCrossingsFragment : BaseFragment<FragmentPayForCrossingsBinding>(),
         val charge = data?.chargingRate?.toDouble()
         if (charge != null) {
             val total = (data?.unsettledTripChange ?: 0) * charge
-            binding.inputTotalAmount.text = getString(R.string.currency_symbol) + String.format(
-                "%.2f",
-                total.toDouble()
+            binding.inputTotalAmount.text = getString(
+                R.string.price, "" + String.format(
+                    "%.2f",
+                    total
+                )
             )
         }
     }
+
+
 }

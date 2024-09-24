@@ -3,42 +3,35 @@ package com.conduent.nationalhighways.ui.bottomnav.dashboard
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.accessibility.AccessibilityEvent
 import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountPaymentHistoryResponse
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
 import com.conduent.nationalhighways.data.model.auth.login.AuthResponseModel
-import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
-import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.FragmentDashboardNewBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.logout.OnLogOutListener
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.dateRangeModel
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.paymentHistoryListData
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.transactions.adapter.TransactionsInnerAdapterDashboard
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.DateUtils.compareDates
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -47,12 +40,14 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.widgets.RecyclerViewItemDecoratorDashboardParentAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -63,11 +58,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private var paymentHistoryHashMap: MutableMap<String, MutableList<TransactionData>> =
         hashMapOf()
     private var transactionsAdapter: TransactionsInnerAdapterDashboard? = null
-    val dfDate = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
-    private var topup: String? = null
     private var mLayoutManager: LinearLayoutManager? = null
-    private var ProfileDetailModel: ProfileDetailModel? = null
-    private var loader: LoaderDialog? = null
     private val countPerPage = 20
     private var startIndex = 1
     private var noOfPages = 1
@@ -81,7 +72,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity() as HomeActivityMain).showHideToolbar(false)
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).showHideToolbar(false)
+        }
     }
 
     override fun getFragmentBinding(
@@ -89,19 +82,44 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     ) = FragmentDashboardNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        initLoaderDialog()
-        setBackPressListener(this)
     }
 
-    private fun initLoaderDialog() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+    override fun onPause() {
+        super.onPause()
+        destroyBackPressListener()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        destroyBackPressListener()
+    }
+
+    private fun setHorizontalStrains() {
+        val boxTopUpAmountHeight =
+            binding.valueTopupAmount.text.toString().length
+        val boxLowBalanceThresholdHeight =
+            binding.valueLowBalanceThreshold.text.toString().length
+
+        val topUpValue = binding.valueTopupAmount.text.toString()
+        val lowBalanceThresholdValue = binding.valueLowBalanceThreshold.text.toString()
+        if (boxTopUpAmountHeight >= boxLowBalanceThresholdHeight) {
+            binding.valueLowBalanceThresholdDup.text = topUpValue
+            binding.valueAutopayDup.text = topUpValue
+            binding.valueTopupAmountDup.text = topUpValue
+        } else {
+            binding.valueLowBalanceThresholdDup.text = lowBalanceThresholdValue
+            binding.valueAutopayDup.text = lowBalanceThresholdValue
+            binding.valueTopupAmountDup.text = lowBalanceThresholdValue
+        }
+
+        binding.threeBoxCl.visible()
+
     }
 
     private fun initTransactionsRecyclerView() {
         transactionsAdapter = TransactionsInnerAdapterDashboard(
             this@DashboardFragmentNew, paymentHistoryListData,
-            dashboardViewModel.accountInformationData.value?.accSubType?:""
+            dashboardViewModel.accountInformationData.value?.accSubType ?: ""
         )
         mLayoutManager = LinearLayoutManager(requireContext())
         mLayoutManager?.orientation = LinearLayoutManager.VERTICAL
@@ -118,8 +136,12 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as HomeActivityMain).showHideToolbar(false)
-        (requireActivity() as HomeActivityMain).getNotificationApi()
+        showLoaderDialog()
+        setBackPressListener(this)
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).showHideToolbar(false)
+            (requireActivity() as HomeActivityMain).getNotificationApi()
+        }
         dashboardViewModel.getLRDSResponse()
     }
 
@@ -130,37 +152,55 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
 
         if (arguments?.containsKey(Constants.GO_TO_SUCCESS_PAGE) == true) {
-            goToSuccessPage = arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE, false)!!
+            goToSuccessPage = arguments?.getBoolean(Constants.GO_TO_SUCCESS_PAGE, false) ?: false
         }
         binding.labelViewAll.setOnClickListener {
             (requireActivity() as HomeActivityMain).viewAllTransactions()
         }
         binding.logout.setOnClickListener {
-//            LogoutDialog.newInstance(
-//                this
-//            ).show(childFragmentManager, Constants.LOGOUT_DIALOG)
-//            dashboardViewModel.logout()
             logOutOfAccount()
         }
-        binding.tvAvailableBalance.setOnClickListener {
+        binding.accountBalanceRl.setOnClickListener {
             findNavController().navigate(R.id.action_dashBoardFragment_to_notificationsFrament)
         }
 
+        binding.reactivateAccountLl.setOnClickListener {
+            redirectToAuth()
+        }
+        focusToolBarDashboard()
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    private fun redirectToAuth() {
+
+        val intent = Intent(this@DashboardFragmentNew.requireActivity(), AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.IN_ACTIVE)
+        intent.putExtra(
+            Constants.CARD_VALIDATION_REQUIRED,
+            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+        )
+        intent.putExtra(Constants.NAV_FLOW_FROM, Constants.DASHBOARD)
+
+        intent.putExtra(Constants.PERSONALDATA, dashboardViewModel.personalInformationData.value)
+        intent.putExtra(
+            Constants.ACCOUNTINFORMATION,
+            dashboardViewModel.accountInformationData.value
+        )
+
+        startActivity(intent)
+    }
+
+
     override fun observer() {
         observe(dashboardViewModel.logout, ::handleLogout)
         observe(dashboardViewModel.paymentHistoryLiveData, ::handlePaymentResponse)
-        observe(dashboardViewModel.alertLivData, ::handleAlertResponse)
-        observe(dashboardViewModel.lrdsVal, ::handleLrdsResposne)
-        dashboardViewModel.accountType.observe(this@DashboardFragmentNew, Observer { it ->
+        observe(dashboardViewModel.lrdsVal, ::handleLrdsResponse)
+        dashboardViewModel.accountType.observe(this@DashboardFragmentNew) {
             handleAccountType(it)
-        })
+        }
     }
 
-    private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
+    private fun handleLrdsResponse(resource: Resource<LRDSResponse?>?) {
         when (resource) {
             is Resource.Success -> {
                 if (resource.data?.srApprovalStatus?.uppercase().equals("APPROVED")) {
@@ -176,35 +216,35 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
-        loader?.dismiss()
-        when (resource) {
-            is Resource.Success -> {
-                if (resource.data?.messageList?.isNullOrEmpty() == false) {
-//                    setPriorityNotifications()
-//                    setNotificationAlert(resource.data?.messageList)
+    private fun handleAccountType(profileDetailModel: ProfileDetailModel) {
 
+
+        sessionManager.saveStringData(
+            SessionManager.LAST_LOGGEDIN_EMAIL,
+            profileDetailModel.personalInformation?.emailAddress ?: ""
+        )
+        binding.tvAccountNumberHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                // Ensure we only get the line count once
+                binding.tvAccountNumberHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                // Now you can safely get the line count
+                val accountNumberLinesCount = binding.tvAccountNumberHeading.lineCount
+
+                if (accountNumberLinesCount > 2) {
+                    binding.largefontLl.visible()
+                    binding.normalfontLl.gone()
+                } else {
+                    binding.largefontLl.gone()
+                    binding.normalfontLl.visible()
                 }
             }
+        })
 
-            is Resource.DataError -> {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-//                binding.notificationsRecyclerview.gone()
-//                binding.noNotificationsTxt.visible()
-
-            }
-
-            else -> {
-                // do nothing
-            }
-        }
-    }
-
-    private fun handleAccountType(ProfileDetailModel: ProfileDetailModel) {
         HomeActivityMain.accountDetailsData?.personalInformation =
-            ProfileDetailModel.personalInformation
-        HomeActivityMain.accountDetailsData = ProfileDetailModel
-        ProfileDetailModel.apply {
+            profileDetailModel.personalInformation
+        HomeActivityMain.accountDetailsData = profileDetailModel
+        profileDetailModel.apply {
             if (accountInformation?.accountType.equals(
                     "BUSINESS",
                     true
@@ -221,8 +261,10 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 showExemptPartnerUI(this)
             }
         }
+
+
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE && goToSuccessPage) {
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
             bundle.putParcelable(
                 Constants.PERSONALDATA,
@@ -232,18 +274,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 R.id.action_dashBoardFragment_to_accountManagementFragment,
                 bundle
             )
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
+            }
         } else {
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 0)
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 0)
+            }
         }
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun handlePaymentResponse(resource: Resource<AccountPaymentHistoryResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.transactionList?.count?.let {
@@ -298,101 +341,31 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
         }
     }
 
-    fun getDatesList(transactionsList: MutableList<TransactionData>) {
-        var tempDate: String? = null
-
-        var limitedList = 2
-        if (ProfileDetailModel?.accountInformation?.accSubType.equals(Constants.PAYG)) {
-            limitedList = 5
-        }
-        var transactionSize = transactionsList.size
-        if (transactionsList.size > limitedList) {
-            transactionSize = limitedList
-        }
-        for (i in 0 until transactionSize) {
-            val model = transactionsList.get(i)
-            if (tempDate == null) {
-                tempDate = model.transactionDate
-                paymentHistoryDatesList.clear()
-                paymentHistoryDatesList.add(model.transactionDate!!)
-
-            } else {
-                if (!dfDate.parse(tempDate).equals(dfDate.parse(model.transactionDate))) {
-                    paymentHistoryDatesList.add(model.transactionDate!!)
-                    tempDate = model.transactionDate
-                }
-            }
-            var transactionsListTemp =
-                paymentHistoryHashMap.get(model.transactionDate) ?: mutableListOf()
-            var transactionExistesInTempList = false
-            transactionsListTemp.forEach { it2 ->
-                if (it2.transactionNumber.equals(model.transactionNumber)) {
-                    transactionExistesInTempList = true
-                }
-            }
-            if (transactionExistesInTempList == false) {
-                transactionsListTemp.add(model)
-            }
-            paymentHistoryHashMap.remove(model.transactionDate!!)
-            paymentHistoryHashMap.put(model.transactionDate, transactionsListTemp)
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun sortTransactionsDateWiseDescending(transactions: MutableList<TransactionData?>): MutableList<TransactionData> {
-        var transactionListSorted: MutableList<TransactionData> = mutableListOf()
-        for (transaction in transactions) {
-            if (transactionListSorted.isEmpty() == true) {
-                transactionListSorted.add(transaction!!)
-            } else {
-                if (compareDates(
-                        transactionListSorted.last().transactionDate + " " + transactionListSorted.last().exitTime,
-                        transaction?.transactionDate + " " + transaction?.exitTime
-                    )
-                ) {
-                    transactionListSorted.add(transactionListSorted.size - 1, transaction!!)
-
-                } else {
-                    transactionListSorted.add(transaction!!)
-                }
-            }
-        }
-        return transactionListSorted
-    }
-
-    private fun hideNotification() {
-        if (requireActivity() is HomeActivityMain) {
-            HomeActivityMain.dataBinding!!.bottomNavigationView.navigationItems.let { list ->
-                val badgeCountBtn = list[2].view.findViewById<AppCompatButton>(R.id.badge_btn)
-                badgeCountBtn.gone()
-            }
-        }
-    }
 
     private fun showPayGUI(data: ProfileDetailModel) {
         HomeActivityMain.accountDetailsData = data
 
         binding.apply {
-            tvAvailableBalanceHeading.gone()
-            tvAvailableBalance.gone()
+            accountBalanceRl.gone()
+            accountStatusRl.visible()
+            threeBoxCl.gone()
 
-            tvAccountStatusHeading.visible()
-            cardIndicatorAccountStatus.visible()
-
-            boxTopupAmount.gone()
-            boxLowBalanceThreshold.gone()
-
-            boxTopupMethod.gone()
             buttonTopup.gone()
 
             setGuideLinePercent(0.25F, R.dimen.margin_15dp)
 
-            tvAccountNumberHeading.visible()
+            accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
 
-            data.let {
-                it.accountInformation?.let {
-                    it.accountStatus?.let {
+            tvAccountNumberValueLargefont.text = data.personalInformation?.accountNumber
+            tvAccountNumberValueLargefont.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+
+            data.let { itData ->
+                itData.accountInformation?.let { itAccount ->
+                    itAccount.accountStatus?.let {
                         boxCardType.visible()
                         if (data.accountInformation?.paymentTypeInfo.toString().takeLast(4)
                                 .lowercase() == "cash"
@@ -408,16 +381,27 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
 
+                        boxCardType.contentDescription =
+                            Utils.returnCardText(
+                                data.accountInformation?.paymentTypeInfo ?: ""
+                            ) + " " + Utils.accessibilityForNumbers(cardNumber.text.toString())
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 2
                         )
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatusLargefont,
+                            binding.cardIndicatorAccountStatusLargefont,
+                            2
+                        )
+
                     }
-                    it.type?.let {
+                    itAccount.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
                 }
-                it.personalInformation?.emailAddress?.let { email ->
+                itData.personalInformation?.emailAddress?.let { email ->
                     sessionManager.saveAccountEmailId(email)
                 }
             }
@@ -434,7 +418,7 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 )
             }
         }
-        getPaymentHistoryList(startIndex,Constants.TOLL_TRANSACTION)
+        getPaymentHistoryList(startIndex)
     }
 
     private fun setGuideLinePercent(percent: Float, margin0dp: Int) {
@@ -460,9 +444,9 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     private fun showExemptPartnerUI(data: ProfileDetailModel) {
         HomeActivityMain.accountDetailsData = data
 
+
         binding.apply {
-            tvAvailableBalanceHeading.visible()
-            tvAvailableBalance.visible()
+            accountBalanceRl.visible()
 
             tvAvailableBalance.apply {
                 visible()
@@ -470,43 +454,64 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                     get(0) + "" + drop(1)
                 }
             }
+            tvAvailableBalanceLargefont.apply {
+                visible()
+                text = data.replenishmentInformation?.currentBalance?.run {
+                    get(0) + "" + drop(1)
+                }
+            }
 
-
-
-            tvAccountStatusHeading.visible()
-            cardIndicatorAccountStatus.visible()
-
-            boxLowBalanceThreshold.visible()
+            accountStatusRl.visible()
             valueLowBalanceThreshold.text = getString(R.string.str_zero_euro)
-
-            boxTopupAmount.visible()
             valueTopupAmount.text = getString(R.string.str_zero_euro)
-
-            boxTopupMethod.visible()
             valueAutopay.text = getString(R.string.exempt)
+            setHorizontalStrains()
 
             buttonTopup.gone()
-            setGuideLinePercent(0.25F, R.dimen.margin_15dp)
 
-            tvAccountNumberHeading.visible()
+            if(data.accountInformation?.inactiveStatus == true){
+                setGuideLinePercent(0.1F, R.dimen.margin_15dp)
+                reactivateAccountLl.visible()
+            }else{
+                setGuideLinePercent(0.25F, R.dimen.margin_15dp)
+                reactivateAccountLl.gone()
+            }
+
+
+            accountNumberRl.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+
+            tvAccountNumberValueLargefont.text = data.personalInformation?.accountNumber
+            tvAccountNumberValueLargefont.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+
             boxCardType.visible()
             cardNumber.text = getString(R.string.no_payment_method_required)
+            boxCardType.contentDescription =
+                Utils.accessibilityForNumbers(cardNumber.text.toString())
             cardNumber.setTypeface(null, Typeface.BOLD)
-            data.let {
-                it.accountInformation?.let {
-                    it.accountStatus?.let {
+            data.let { itData ->
+                itData.accountInformation?.let { itAccount ->
+                    itAccount.accountStatus?.let {
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 3
                         )
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatusLargefont,
+                            binding.cardIndicatorAccountStatusLargefont,
+                            3
+                        )
                     }
 
-                    it.type?.let {
+                    itAccount.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
                 }
-                it.personalInformation?.emailAddress?.let { email ->
+                itData.personalInformation?.emailAddress?.let { email ->
                     sessionManager.saveAccountEmailId(email)
                 }
             }
@@ -519,10 +524,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun showNonPayGUI(data: ProfileDetailModel) {
+
+
+
         binding.apply {
-            tvAvailableBalanceHeading.visible()
-            tvAvailableBalance.visible()
+            accountBalanceRl.visible()
             tvAvailableBalance.apply {
+                visible()
+                text = data.replenishmentInformation?.currentBalance?.run {
+                    get(0) + "" + drop(1)
+                }
+            }
+            tvAvailableBalanceLargefont.apply {
                 visible()
                 text = data.replenishmentInformation?.currentBalance?.run {
                     get(0) + "" + drop(1)
@@ -530,19 +543,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
             }
 
 
-            tvAccountStatusHeading.visible()
-            cardIndicatorAccountStatus.visible()
+            accountStatusRl.visible()
 
             boxTopupAmount.visible()
             valueTopupAmount.text = data.replenishmentInformation?.replenishAmount
-
-            boxLowBalanceThreshold.visible()
             valueLowBalanceThreshold.text = data.replenishmentInformation?.replenishThreshold
-
-            boxTopupMethod.visible()
-
-            buttonTopup.visible()
-            setGuideLinePercent(0.2F, R.dimen.margin_0dp)
+            if(data.accountInformation?.inactiveStatus == true){
+                setGuideLinePercent(0.1F, R.dimen.margin_0dp)
+                binding.reactivateAccountLl.visible()
+            }else{
+                setGuideLinePercent(0.2F, R.dimen.margin_0dp)
+                binding.reactivateAccountLl.gone()
+            }
 
             binding.buttonTopup.setOnClickListener {
                 val bundle = Bundle()
@@ -574,12 +586,19 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                 )
             }
 
-            tvAccountNumberHeading.visible()
+            accountNumberRl.visible()
+            accountNumberRlLargefont.visible()
             tvAccountNumberValue.text = data.personalInformation?.accountNumber
+            tvAccountNumberValue.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+            tvAccountNumberValueLargefont.text = data.personalInformation?.accountNumber
+            tvAccountNumberValueLargefont.contentDescription =
+                Utils.accessibilityForNumbers(data.personalInformation?.accountNumber ?: "")
+
             val cardType = data.accountInformation?.paymentTypeInfo?.uppercase()
-            data.let {
-                it.accountInformation?.let {
-                    it.accountStatus?.let {
+            data.let { itData ->
+                itData.accountInformation?.let { itAccount ->
+                    itAccount.accountStatus?.let {
                         boxCardType.visible()
                         if (data.accountInformation?.paymentTypeInfo.toString().takeLast(4)
                                 .lowercase() == "cash"
@@ -594,22 +613,35 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
                         }
 
                         cardNumber.setTypeface(null, Typeface.NORMAL)
+                        boxCardType.contentDescription =
+                            Utils.returnCardText(
+                                data.accountInformation?.paymentTypeInfo ?: ""
+                            ) + " " + Utils.accessibilityForNumbers(cardNumber.text.toString())
+
                         DashboardUtils.setAccountStatusNew(
                             it, indicatorAccountStatus, binding.cardIndicatorAccountStatus, 1
+                        )
+                        DashboardUtils.setAccountStatusNew(
+                            it,
+                            indicatorAccountStatusLargefont,
+                            binding.cardIndicatorAccountStatusLargefont,
+                            1
                         )
                     }
 
                     valueAutopay.text = resources.getString(R.string.str_auto_pay)
-                    it.type?.let {
+
+                    itAccount.type?.let {
                         sessionManager.saveSubAccountType(data.accountInformation?.accSubType)
                         sessionManager.saveAccountType(data.accountInformation?.accountType)
                     }
                 }
-                it.personalInformation?.emailAddress?.let { email ->
+                itData.personalInformation?.emailAddress?.let { email ->
                     sessionManager.saveAccountEmailId(email)
                 }
             }
 
+            setHorizontalStrains()
             if (cardType.equals("CASH")) {
                 cardLogo.gone()
             } else {
@@ -626,30 +658,29 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     }
 
     private fun getPaymentHistoryList(
-        index: Int?=0,
-        transactionType:String?=Constants.ALL_TRANSACTION
+        index: Int? = 0,
     ) {
-        if (loader?.isVisible == false && loader?.isAdded == true) {
-            loader?.showsDialog
+        var priorDays = 90
+        val searchDate = "Transaction Date"
+        if (dashboardViewModel.accountInformationData.value?.accSubType == "BUSINESS"
+            || dashboardViewModel.accountInformationData.value?.accSubType === "NONREVENUE"
+        ) {
+            priorDays = 30
         }
-        dateRangeModel = PaymentDateRangeModel(
-            filterType = Constants.PAYMENT_FILTER_SPECIFIC,
-            DateUtils.lastPriorDate(-30),
-            DateUtils.currentDate(),
-            ""
-        )
+
         val request = AccountPaymentHistoryRequest(
-            index, transactionType, countPerPage,
+            index,
+            Constants.TOLL_TRANSACTION,
+            countPerPage,
             endDate = DateUtils.currentDateAs(DateUtils.dd_mm_yyyy),
-            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy)
+            startDate = DateUtils.getLast90DaysDate(DateUtils.dd_mm_yyyy, priorDays),
+            searchDate = searchDate
         )
         dashboardViewModel.paymentHistoryDetails(request)
     }
 
     private fun handleLogout(status: Resource<AuthResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 logOutOfAccount()
@@ -693,6 +724,18 @@ class DashboardFragmentNew : BaseFragment<FragmentDashboardNewBinding>(), OnLogO
     override fun onBackButtonPressed() {
         Utils.onBackPressed(requireContext())
     }
+
+
+    private fun focusToolBarDashboard() {
+        binding.logout.requestFocus() // Focus on the backButton
+        val task = Runnable {
+            binding.logout.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+            binding.logout.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+    }
+
 }
 
 

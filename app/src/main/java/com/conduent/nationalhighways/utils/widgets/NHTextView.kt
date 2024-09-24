@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.utils.widgets
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.TextView
 
 
 /**
@@ -10,5 +9,4 @@ import android.widget.TextView
  */
 open class NHTextView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : androidx.appcompat.widget.AppCompatTextView(context, attrs) {
-}
+) : androidx.appcompat.widget.AppCompatTextView(context, attrs)

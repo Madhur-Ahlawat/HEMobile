@@ -4,8 +4,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/tick_img"
@@ -15,7 +14,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="200dp"/>
+            android:layout_marginTop="200dp" />
 
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
@@ -23,28 +22,26 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:lineSpacingExtra="2dp"
+            android:lineSpacingExtra="@dimen/margin_2dp"
             android:text="@string/str_you_have_signed_out"
             android:textColor="@color/dark_blue_color"
-            android:textSize="15sp"
+            android:textSize="@dimen/font_15sp"
             android:gravity="center"
             android:fontFamily="@font/open_sans_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tick_img"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tick_img" />
 
 
         <com.conduent.apollo.ui.CMButton
             android:id="@+id/btn"
             style="@style/PrimaryButton"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="@dimen/margin_30dp"
             android:text="@string/sign_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

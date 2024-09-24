@@ -10,7 +10,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
-import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
 import android.location.Location
 import android.location.LocationListener
 import android.os.Binder
@@ -18,7 +17,6 @@ import android.os.Build
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -29,8 +27,10 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.gson.Gson
+import java.util.Date
 
 class PlayLocationService : Service(), LocationListener {
     private val binder: IBinder = LocalBinder()
@@ -44,7 +44,7 @@ class PlayLocationService : Service(), LocationListener {
 
     override fun onCreate() {
         super.onCreate()
-        fusedLocationProviderClient = FusedLocationProviderClient(this)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 try {
@@ -64,32 +64,37 @@ class PlayLocationService : Service(), LocationListener {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Utils.writeInFile(context = null,"onStartCommand Called")
+        Utils.writeInFile(context = null, "onStartCommand Called")
         if (intent != null) {
             try {
                 createLocationRequest()
                 startLocationUpdates()
                 try {
-                    Utils.writeInFile(context = null,"onStartCommand Foreground Called")
+                    Utils.writeInFile(context = null, "onStartCommand Foreground Called")
                     ServiceCompat.startForeground(
-                        this,  Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(),
+                        this, Constants.FOREGROUND_SERVICE_NOTIFICATIONID, createNotification(),
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                             FOREGROUND_SERVICE_TYPE_LOCATION
                         } else {
                             0
                         },
                     )
-
                 } catch (e: Exception) {
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
                         && e is ForegroundServiceStartNotAllowedException
                     ) {
-                        Utils.writeInFile(context = null,"onStartCommand Foreground ForegroundServiceStartNotAllowedException Called ${e.message}")
-                    }else  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                        Utils.writeInFile(
+                            context = null,
+                            "onStartCommand Foreground ForegroundServiceStartNotAllowedException Called ${e.message}"
+                        )
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
                         && e is SecurityException
                     ) {
-                        Utils.writeInFile(context = null,"onStartCommand Foreground SecurityException Called ${e.message}")
+                        Utils.writeInFile(
+                            context = null,
+                            "onStartCommand Foreground SecurityException Called ${e.message}"
+                        )
                     } else if (e is NullPointerException) {
 
                     }
@@ -184,7 +189,7 @@ class PlayLocationService : Service(), LocationListener {
 
 
     override fun onTaskRemoved(rootIntent: Intent) {
-        Utils.writeInFile(null,"PlayLocation Task Removed")
+        Utils.writeInFile(null, "PlayLocation Task Removed "+ Date())
         super.onTaskRemoved(rootIntent)
     }
 

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -13,9 +12,10 @@ import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetails
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.databinding.FragmentDeletePaymentMethodBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -29,10 +29,9 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
     View.OnClickListener {
 
     private val viewModel: PaymentMethodViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var paymentList: CardListResponseModel? = null
-    private var data : CrossingDetailsModelsResponse? = null
-    private var accountNumber:String=""
+    private var data: CrossingDetailsModelsResponse? = null
+    private var accountNumber: String = ""
 
 
     override fun getFragmentBinding(
@@ -42,46 +41,50 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         FragmentDeletePaymentMethodBinding.inflate(inflater, container, false)
 
     override fun init() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
     }
 
     override fun initCtrl() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         binding.btnContinue.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
-
-
-        accountNumber=arguments?.getString(Constants.ACCOUNT_NUMBER)?:""
-
-
+        accountNumber = arguments?.getString(Constants.ACCOUNT_NUMBER) ?: ""
         if (arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA) != null) {
-            paymentList = arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA)
-
+            paymentList = arguments?.getParcelable(Constants.PAYMENT_DATA)
         }
 
-        when(navFlowCall) {
+        when (navFlowCall) {
 
             Constants.PAY_FOR_CROSSINGS -> {
                 val data = navData as CrossingDetailsModelsResponse?
-                binding.maximumVehicleAdded.text = getString(R.string.your_type_of_vehicle_does_not_match_what_we_have_on_record)
-                binding.textMaximumVehicle.text = getString(R.string.str_your_balance_will_no_longer_available,
-                    data?.plateNo, data?.dvlaclass?.let { Utils.getVehicleType(
-                        requireActivity(),
-                        it
-                    ) },
+                binding.maximumVehicleAdded.text =
+                    getString(R.string.your_type_of_vehicle_does_not_match_what_we_have_on_record)
+                binding.textMaximumVehicle.text = getString(
+                    R.string.str_your_balance_will_no_longer_available,
+                    data?.plateNo, data?.dvlaclass?.let {
+                        Utils.getVehicleType(
+                            requireActivity(),
+                            it
+                        )
+                    },
                     data?.customerClass?.let { Utils.getVehicleType(requireActivity(), it) },
-                    String.format("%.2f", data?.customerClassRate?.toDouble()))
+                    String.format("%.2f", data?.customerClassRate?.toDouble())
+                )
                 binding.btnContinue.text = getString(R.string.pay_new_amount)
             }
+
             Constants.PAYG -> {
-                binding.textMaximumVehicle.text=getString(R.string.payg_delete_description)
+                binding.textMaximumVehicle.text = getString(R.string.payg_delete_description)
             }
+
             Constants.PRE_PAY_ACCOUNT -> {
-                binding.textMaximumVehicle.text=getString(R.string.str_your_balance_will_no_longer_available)
+                binding.textMaximumVehicle.text =
+                    getString(R.string.str_your_balance_will_no_longer_available)
             }
         }
-
     }
 
     override fun observer() {
@@ -90,9 +93,7 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
     }
 
     private fun handleDeleteCardResponse(status: Resource<PaymentMethodDeleteResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 if (status.data?.statusCode?.equals("500") == true || status.data?.statusCode?.equals(
@@ -104,8 +105,8 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
                 }
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.DELETE_CARD)
-                bundle.putString(Constants.ACCOUNT_NUMBER,accountNumber)
-                bundle.putBoolean(SHOW_BACK_BUTTON,false)
+                bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
+                bundle.putBoolean(SHOW_BACK_BUTTON, false)
 
                 findNavController().navigate(
                     R.id.action_deletePaymentMethodFragment_to_deletePaymentMethodSuccessFragment,
@@ -116,9 +117,9 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
             }
 
             is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel) ) {
+                if (checkSessionExpiredOrServerError(status.errorModel)) {
                     displaySessionExpireDialog(status.errorModel)
-                }else {
+                } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
                 }
             }
@@ -132,15 +133,15 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         when (v?.id) {
 
             R.id.btnContinue -> {
-                when(navFlowCall) {
+                when (navFlowCall) {
 
                     Constants.PAY_FOR_CROSSINGS -> {
-                            handleFlow(true)
+                        handleFlow(true)
                     }
 
-                    else ->{
+                    else -> {
                         viewModel.deletePrimaryCard()
-                        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                        showLoaderDialog()
                     }
                 }
 
@@ -148,13 +149,14 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
             }
 
             R.id.cancel_btn -> {
-                when(navFlowCall) {
+                when (navFlowCall) {
 
                     Constants.PAY_FOR_CROSSINGS -> {
                         handleFlow(false)
 
                     }
-                    else ->{
+
+                    else -> {
                         findNavController().popBackStack()
                     }
                 }
@@ -166,13 +168,13 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
 
     private fun handleFlow(goWithNewAmount: Boolean) {
         data = navData as CrossingDetailsModelsResponse?
-        val unSettledTrips = data?.unSettledTrips?.toInt()
-        if(goWithNewAmount){
+        val unSettledTrips = data?.unSettledTrips
+        if (goWithNewAmount) {
             data?.chargingRate = data?.customerClassRate
         }
         val bundle = Bundle()
-        bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-        bundle.putParcelable(Constants.NAV_DATA_KEY,data)
+        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
         if (unSettledTrips != null && unSettledTrips > 0) {
 

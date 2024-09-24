@@ -4,11 +4,12 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.DialogFragment
+import android.view.ViewTreeObserver
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +27,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.DashboardUtils
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -44,74 +44,120 @@ import javax.inject.Inject
 class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickListener,
     OnLogOutListener, BackPressListener {
 
-    private val raise_viewModel: RaiseNewEnquiryViewModel by viewModels()
-    private val logOutViewModel: LogoutViewModel by viewModels()
+    private val raiseViewmodel: RaiseNewEnquiryViewModel by viewModels()
     private val dashboardViewModel: DashboardViewModel by activityViewModels()
-    private var loader: LoaderDialog? = null
+    private val logOutViewModel: LogoutViewModel by viewModels()
     private var isSecondaryUser: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
-    private var title: TextView? = null
-
-
+    private var accountType: String = ""
+    private var subAccountType: String = ""
+    private var firstName: String = ""
+    private var lastName: String = ""
+    private var accountNumber: String = ""
+    private var accountStatus: String = ""
+    private var accountNumberLinesCount: Int = 0
+    private var indicatorAccountStatusLineCount: Int = 0
+    private var redirectToPaymentPage:Boolean=false
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentAccountNewBinding = FragmentAccountNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
+        accountType = dashboardViewModel.accountInformationData.value?.accountType ?: ""
+        subAccountType = dashboardViewModel.accountInformationData.value?.accSubType ?: ""
+        firstName = dashboardViewModel.personalInformationData.value?.firstName ?: ""
+        lastName = dashboardViewModel.personalInformationData.value?.lastName ?: ""
+        accountNumber = dashboardViewModel.accountInformationData.value?.number ?: ""
+        accountStatus = dashboardViewModel.accountInformationData.value?.status ?: ""
         isSecondaryUser = sessionManager.getSecondaryUser()
         setPaymentsVisibility()
         initUI()
         binding.contactUs.visible()
         setBackPressListener(this)
+        binding.profileManagement.contentDescription = getString(R.string.profile_management)
+        binding.communicationPreferences.contentDescription =
+            getString(R.string.communication_preferences)
+        binding.paymentManagement.contentDescription = getString(R.string.payment_management)
+        binding.vehicleManagement.contentDescription = getString(R.string.vehicle_management)
+        binding.contactUs.contentDescription = getString(R.string.contact_us)
+        binding.closeAcount.contentDescription = getString(R.string.str_close_account)
+        binding.signOut.contentDescription = getString(R.string.sign_out)
+        val builder =
+            Utils.accessibilityForNumbers(dashboardViewModel.accountInformationData.value?.number.toString())
+
+
+        binding.headerParent.contentDescription =
+            Utils.capitalizeString(firstName) + "\n" + Utils.capitalizeString(
+                lastName
+            ) + ", " + getString(R.string.account_number) + ", " + builder + "\n" + getString(
+                R.string.account_status
+            ) + ", " + binding.indicatorAccountStatus.text.toString()
+
+        binding.header.contentDescription =
+            Utils.capitalizeString(firstName) + ", " + Utils.capitalizeString(
+                lastName
+            ) + ", " + getString(R.string.account_number) + ", " + builder + ", " + getString(
+                R.string.account_status
+            ) + ", " + binding.indicatorAccountStatus.text.toString()
+
     }
 
     private fun initUI() {
         if (arguments?.containsKey(Constants.NAV_FLOW_KEY) == true) {
             navFlowFrom = arguments?.getString(Constants.NAV_FLOW_KEY, "").toString()
         }
-        title = requireActivity().findViewById(R.id.title_txt)
+
         binding.run {
             if (HomeActivityMain.accountDetailsData?.accountInformation?.accSubType.equals(Constants.EXEMPT_ACCOUNT)) {
                 paymentManagement.gone()
             } else {
                 paymentManagement.visible()
             }
-            if (isSecondaryUser)
+            if (isSecondaryUser) {
                 contactUs.gone()
+            }
 
-            if (sessionManager.fetchAccountType().equals(
+            if (accountType.equals(
                     Constants.PERSONAL_ACCOUNT,
                     true
-                ) && sessionManager.fetchSubAccountType()
+                ) && subAccountType
                     .equals(Constants.PAYG, true)
             ) {
                 contactUs.gone()
             }
 
-            if (sessionManager.fetchAccountType()
+            if (accountType
                     .equals("NonRevenue", true)
             ) {
                 paymentManagement.gone()
             }
 
-            var firstNameChar: Char = ' '
-            var secondNameChar: Char = ' '
-            firstNameChar = sessionManager.fetchFirstName()?.first() ?: ' '
-            secondNameChar = sessionManager.fetchLastName()?.first() ?: ' '
+            val firstNameChar = firstName.first()
+            val secondNameChar = lastName.first()
 
-            profilePic.text = "" + firstNameChar.toString() + secondNameChar.toString()
-            tvAccountNumberValue.text = sessionManager.fetchAccountNumber()
+            profilePic.text = resources.getString(
+                R.string.concatenate_two_strings,
+                firstNameChar.toString(),
+                secondNameChar.toString()
+            )
+            profilePic.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+            profilePic.isScreenReaderFocusable = false
+            tvAccountNumberValue.text = accountNumber
+            tvAccountNumberValueLargefont.text = accountNumber
             DashboardUtils.setAccountStatusNew(
-                sessionManager.fetchAccountStatus() ?: "",
+                accountStatus,
                 indicatorAccountStatus,
                 binding.cardIndicatorAccountStatus, 4
             )
-            if (sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
+            DashboardUtils.setAccountStatusNew(
+                accountStatus,
+                indicatorAccountStatusLargefont,
+                binding.cardIndicatorAccountStatusLargefont, 4
+            )
+            if (accountStatus.equals("SUSPENDED", true)) {
                 leftIcon6.alpha = 0.5f
                 valueTitle6.alpha = 0.5f
                 iconArrow6.alpha = 0.5f
@@ -121,36 +167,91 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
                 iconArrow6.alpha = 1f
             }
             valueName.text =
-                Utils.capitalizeString(sessionManager.fetchFirstName()) + " " + Utils.capitalizeString(
-                    sessionManager.fetchLastName()
+                resources.getString(
+                    R.string.concatenate_two_strings_with_space,
+                    Utils.capitalizeString(firstName),
+                    Utils.capitalizeString(
+                        lastName
+                    )
                 )
+
 
         }
         if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
-            var bundle = Bundle()
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
+            }
+            val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, navFlowFrom)
             bundle.putParcelable(
                 Constants.PERSONALDATA,
-                HomeActivityMain.accountDetailsData?.personalInformation
+                dashboardViewModel.personalInformationData.value
             )
             findNavController().navigate(
                 R.id.action_accountFragment_to_profileManagementFragment,
                 bundle
             )
         }
+
+
+
+        Log.e("TAG", "initUI: redirectToPaymentPage "+redirectToPaymentPage)
+        if(redirectToPaymentPage){
+            findNavController().navigate(R.id.action_accountFragment_to_paymentMethodFragment)
+
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).setTitle(getString(R.string.payment_management))
+            }
+            redirectToPaymentPage =false
+        }else{
+            binding.tvAccountStatusHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
+                    checkLinesLength()
+                    binding.tvAccountStatusHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
+
+            binding.indicatorAccountStatus.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    indicatorAccountStatusLineCount = binding.indicatorAccountStatus.lineCount
+                    checkLinesLength()
+                    binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
+        }
+
+    }
+
+    private fun checkLinesLength() {
+        if (accountNumberLinesCount >= 1 && indicatorAccountStatusLineCount >= 1) {
+            if (accountNumberLinesCount > 2 || indicatorAccountStatusLineCount >= 2) {
+                binding.llAccountNumberLargefont.visible()
+                binding.llAccountStatusLargefont.visible()
+                binding.llAccountNumber.gone()
+                binding.llAccountStatus.gone()
+            } else {
+                binding.llAccountNumberLargefont.gone()
+                binding.llAccountStatusLargefont.gone()
+                binding.llAccountNumber.visible()
+                binding.llAccountStatus.visible()
+            }
+        }
     }
 
     private fun setPaymentsVisibility() {
-        if (sessionManager.fetchAccountType().equals("BUSINESS", true)
-            || (sessionManager.fetchSubAccountType().equals("STANDARD", true) &&
-                    sessionManager.fetchAccountType().equals("PRIVATE", true))
+
+        if (accountType.equals("BUSINESS", true)
+            || (subAccountType.equals("STANDARD", true) &&
+                    accountType.equals("PRIVATE", true))
         ) {
             binding.paymentManagement.visible()
             binding.contactUs.visible()
         } else {
-            if (sessionManager.fetchSubAccountType().equals(Constants.PAYG, true) &&
-                sessionManager.fetchAccountType().equals("PRIVATE", true)
+            if (subAccountType.equals(Constants.PAYG, true) &&
+                accountType.equals("PRIVATE", true)
             ) {
                 binding.paymentManagement.visible()
 
@@ -163,15 +264,20 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     }
 
     override fun onResume() {
-        title?.text = getString(R.string.txt_my_account)
         if (requireActivity() is HomeActivityMain) {
-            (requireActivity() as HomeActivityMain).refreshTokenApi()
+            (requireActivity() as HomeActivityMain).setTitle(getString(R.string.txt_my_account))
+            if(!redirectToPaymentPage){
+                (requireActivity() as HomeActivityMain).refreshTokenApi()
+            }
         }
-
         super.onResume()
     }
 
     override fun initCtrl() {
+        if(requireActivity() is HomeActivityMain){
+            redirectToPaymentPage = (requireActivity() as HomeActivityMain).getRedirectToPayment()
+            (requireActivity() as HomeActivityMain).changeStatusOfRedirectToPayment()
+        }
         binding.apply {
             profileManagement.setOnClickListener(this@AccountFragment)
             paymentManagement.setOnClickListener(this@AccountFragment)
@@ -179,17 +285,18 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             communicationPreferences.setOnClickListener(this@AccountFragment)
             signOut.setOnClickListener(this@AccountFragment)
             closeAcount.setOnClickListener(this@AccountFragment)
-//            rlCaseAndEnquiry.setOnClickListener(this@AccountFragment)
             contactUs.setOnClickListener(this@AccountFragment)
-//            rlAccountStatement.setOnClickListener(this@AccountFragment)
-//            rlBiometrics.setOnClickListener(this@AccountFragment)
         }
-
     }
 
     override fun observer() {
         lifecycleScope.launch {
             observe(logOutViewModel.logout, ::handleLogout)
+        }
+        dashboardViewModel.accountType.observe(this@AccountFragment) {
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).focusToolBarHome(Constants.AccountFrag)
+            }
         }
     }
 
@@ -197,20 +304,20 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
         when (v?.id) {
 
             R.id.profile_management -> {
-                title?.text = getString(R.string.profile_management)
                 findNavController().navigate(R.id.action_accountFragment_to_profileManagementFragment)
-
             }
 
             R.id.payment_management -> {
-
                 findNavController().navigate(R.id.action_accountFragment_to_paymentMethodFragment)
-                title?.text = getString(R.string.payment_management)
-//                requireActivity().startNormalActivity(AccountPaymentActivity::class.java)
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.payment_management))
+                }
             }
 
             R.id.communication_preferences -> {
-                title?.text = getString(R.string.communication_preferences)
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.communication_preferences))
+                }
                 val bundle = Bundle()
                 bundle.putString(
                     Constants.NAV_FLOW_KEY,
@@ -223,40 +330,43 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             }
 
             R.id.vehicle_management -> {
-                title?.text = getString(R.string.vehicle_management)
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).setTitle(getString(R.string.vehicle_management))
+                }
                 findNavController().navigate(R.id.action_accountFragment_to_vehicleManagementFragment)
-
             }
 
             R.id.close_acount -> {
-                if (!sessionManager.fetchAccountStatus().equals("SUSPENDED", true)) {
-                    title?.text = getString(R.string.str_close_account)
-                    findNavController().navigate(R.id.action_accountFragment_to_closeAccountFragment)
+                if (!accountStatus.equals("SUSPENDED", true)) {
+                    if (requireActivity() is HomeActivityMain) {
+                        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.str_close_account))
+                    }
+                    val bundle = Bundle()
+                    bundle.putParcelable(
+                        Constants.PERSONALDATA,
+                        dashboardViewModel.personalInformationData.value
+                    )
+                    bundle.putParcelable(
+                        Constants.ACCOUNTINFORMATION,
+                        dashboardViewModel.accountInformationData.value
+                    )
+                    findNavController().navigate(
+                        R.id.action_accountFragment_to_closeAccountFragment,
+                        bundle
+                    )
                 }
             }
 
             R.id.contact_us -> {
 
-                raise_viewModel.enquiryModel.value = EnquiryModel()
-                raise_viewModel.edit_enquiryModel.value = EnquiryModel()
+                raiseViewmodel.enquiryModel.value = EnquiryModel()
+                raiseViewmodel.edit_enquiryModel.value = EnquiryModel()
 
 
-                val bundle: Bundle = Bundle()
+                val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_FROM, Constants.ACCOUNT_CONTACT_US)
                 findNavController().navigate(R.id.caseEnquiryHistoryListFragment, bundle)
             }
-
-//            R.id.rl_account_statement -> {
-//                requireActivity().startNormalActivity(AccountStatementActivity::class.java)
-//            }
-//            R.id.rl_biometrics->{
-//                requireActivity().openActivityWithDataBack(BiometricActivity::class.java) {
-//                    putInt(
-//                        Constants.FROM_LOGIN_TO_BIOMETRIC,
-//                        Constants.FROM_ACCOUNT_TO_BIOMETRIC_VALUE
-//                    )
-//                }
-//            }
 
             R.id.sign_out -> {
                 if (sessionManager.fetchTouchIdEnabled()) {
@@ -296,17 +406,12 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
 
     override fun onDestroy() {
         super.onDestroy()
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-
+        dismissLoaderDialog()
     }
 
 
     private fun handleLogout(status: Resource<AuthResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 logOutOfAccount()
@@ -324,26 +429,19 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
     private fun logOutOfAccount() {
         sessionManager.clearAll()
         sessionManager.saveBooleanData(SessionManager.LOGGED_OUT_FROM_DASHBOARD, false)
-        Utils.redirectToSignoutPage(requireActivity())
-
-//        Intent(requireActivity(), LoginActivity::class.java).apply {
-//            putExtra(Constants.SHOW_SCREEN, Constants.LOGOUT_SCREEN)
-//            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//            startActivity(this)
-//        }
+        Utils.redirectToSignOutPage(requireActivity())
     }
 
     override fun onLogOutClick() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         logOutViewModel.logout()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (requireActivity() as HomeActivityMain).showHideToolbar(true)
-
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).showHideToolbar(true)
+        }
     }
 
     override fun onBackButtonPressed() {
@@ -351,6 +449,5 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             (requireActivity() as HomeActivityMain).backPressLogic()
         }
     }
-
 
 }

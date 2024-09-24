@@ -14,11 +14,10 @@ import androidx.activity.viewModels
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
-import androidx.fragment.app.DialogFragment
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
@@ -30,42 +29,49 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
-import com.conduent.nationalhighways.utils.extn.*
+import com.conduent.nationalhighways.utils.extn.gone
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.conduent.nationalhighways.utils.extn.toolbar
+import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClickListener,
     LogoutListener {
 
+    private var biometricToggleButtonState: String? = null
     lateinit var binding: ActivityBiometricBinding
     private var twoFA: Boolean = false
+    private var suspended: Boolean = false
     private val dashboardViewModel: DashboardViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private val toggleDelay: Long = 200
 
     private var personalInformation: PersonalInformation? = null
     private var replenishmentInformation: ReplenishmentInformation? = null
     private var accountInformation: AccountInformation? = null
     private var isScreenLaunchedBefore: Boolean = false
-    private var isAuthenticaed: Boolean = false
+    private var isAuthenticated: Boolean = false
+    private var cardValidationRequired: Boolean = false
+
     @Inject
     lateinit var sessionManager: SessionManager
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     var navFlowFrom: String = ""
     var navFlowCall: String = ""
+    private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
+    private var crossingCount: String = ""
+    private var currentBalance: String = ""
+
     @Inject
     lateinit var api: ApiService
 
@@ -81,33 +87,62 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
             navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
         }
+        if (intent.hasExtra(Constants.PAYMENT_LIST_DATA) && intent.getParcelableArrayListExtra<CardListResponseModel>(
+                Constants.PAYMENT_LIST_DATA
+            ) != null
+        ) {
+            paymentList =
+                intent.getParcelableArrayListExtra(Constants.PAYMENT_LIST_DATA)
+        }
+
+        if (intent.getParcelableExtra<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                intent.getParcelableExtra(Constants.ACCOUNTINFORMATION)
+        }
+
+        if (intent.hasExtra(Constants.CARD_VALIDATION_REQUIRED)) {
+            cardValidationRequired =
+                intent.getBooleanExtra(Constants.CARD_VALIDATION_REQUIRED, false)
+        }
         if (intent.hasExtra(Constants.NAV_FLOW_KEY)) {
             navFlowCall = intent.getStringExtra(Constants.NAV_FLOW_KEY) ?: ""
         }
+        if (intent.hasExtra(Constants.CROSSINGCOUNT)) {
+            crossingCount = intent.getStringExtra(Constants.CROSSINGCOUNT) ?: ""
+        }
+        if (intent.hasExtra(Constants.CURRENTBALANCE)) {
+            currentBalance = intent.getStringExtra(Constants.CURRENTBALANCE) ?: ""
+        }
 
+        if (intent.getParcelableExtra<PersonalInformation>(Constants.PERSONALDATA) != null) {
+            personalInformation =
+                intent.getParcelableExtra(Constants.PERSONALDATA)
 
-        if(navFlowFrom.equals(Constants.TWOFA) || navFlowFrom.equals(Constants.LOGIN)|| navFlowFrom.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
+        }
+        if (intent.getParcelableExtra<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+            accountInformation =
+                intent.getParcelableExtra(Constants.ACCOUNTINFORMATION)
+        }
+
+        if (navFlowFrom == Constants.TWOFA || navFlowFrom == Constants.LOGIN || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
             binding.toolBarLyt.titleTxt.text = getString(R.string.biometrics)
             binding.toolBarLyt.backButton.gone()
             binding.biometricCancel.visible()
-        }
-        else{
+        } else {
             binding.toolBarLyt.titleTxt.text = getString(R.string.str_profile_biometrics)
             binding.toolBarLyt.backButton.visible()
             binding.biometricCancel.gone()
-
         }
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
 
         twoFA = intent.getBooleanExtra(Constants.TWOFA, false)
+        suspended = accountInformation?.status.equals(Constants.SUSPENDED, true)
 
-
+        Log.e("TAG", "initCtrl: suspended " + suspended)
         binding.apply {
             toolBarLyt.backButton.setOnClickListener(this@BiometricActivity)
             btnSave.setOnClickListener(this@BiometricActivity)
             biometricCancel.setOnClickListener(this@BiometricActivity)
+            biometricToggleButtonState = if (switchFingerprintLogin.isChecked) "on" else "off"
         }
 
         initBiometric(this)
@@ -117,6 +152,13 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             binding.biometricCancel.gone()
         }
         binding.switchFingerprintLogin.setOnCheckedChangeListener { _, isChecked ->
+            biometricToggleButtonState =
+                if (binding.switchFingerprintLogin.isChecked) "on" else "off"
+            binding.switchFingerprintLogin.contentDescription = if (isChecked) {
+                biometricToggleButtonState + " Toggle to ${if (biometricToggleButtonState.equals("yes")) "turn off" else "turn on"}"
+            } else {
+                biometricToggleButtonState + " Toggle to ${if (biometricToggleButtonState.equals("yes")) "turn on" else "turn off"}"
+            }
             if (isChecked) {
                 if (!sessionManager.fetchTouchIdEnabled()) {
                     val biometricManager = BiometricManager.from(this)
@@ -178,12 +220,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     binding.btnSave.isEnabled = false
                 }
             } else {
-                if(sessionManager.fetchTouchIdEnabled()){
-                    binding.btnSave.isEnabled = true
-                }
-                else{
-                    binding.btnSave.isEnabled = false
-                }
+                binding.btnSave.isEnabled = sessionManager.fetchTouchIdEnabled()
             }
         }
 
@@ -246,58 +283,6 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
         }
     }
 
-    private fun checkBiometricStatus() {
-        val biometricManager = BiometricManager.from(this)
-        when (biometricManager.canAuthenticate()) {
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                Toast.makeText(this, "No Hardware found", Toast.LENGTH_SHORT).show()
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                Toast.makeText(this, "No Hardware unavailable", Toast.LENGTH_SHORT).show()
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                displayAccountSettingsDialog()
-
-
-            }
-
-            BiometricManager.BIOMETRIC_SUCCESS -> {
-                displayFingerPrintPopup()
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED -> {
-                Toast.makeText(this, "Biometric security update required!", Toast.LENGTH_SHORT)
-                    .show()
-
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-
-            BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
-                Toast.makeText(this, "Biometric unsupported!", Toast.LENGTH_SHORT).show()
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-
-            BiometricManager.BIOMETRIC_STATUS_UNKNOWN -> {
-                Toast.makeText(this, "Biometric status unknown!", Toast.LENGTH_SHORT).show()
-                binding.switchFingerprintLogin.postDelayed({
-                    binding.switchFingerprintLogin.isChecked = false
-                }, toggleDelay)
-            }
-        }
-    }
-
     private fun displayAccountSettingsDialog() {
         displayCustomMessage(getString(R.string.enable_biometric),
             getString(R.string.biometric_has_not_been_setup),
@@ -326,10 +311,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     }
 
     override fun observeViewModel() {
-        observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
         observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
-
-
     }
 
 
@@ -355,14 +337,14 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                         ).show()
                     }
                     binding.switchFingerprintLogin.isChecked = false
-                    isAuthenticaed = false
+                    isAuthenticated = false
                 }
 
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    isAuthenticaed = true
+                    isAuthenticated = true
                     binding.btnSave.isEnabled = true
                 }
 
@@ -389,44 +371,61 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
             }
 
             R.id.btn_save -> {
-                if (binding.switchFingerprintLogin.isChecked && isAuthenticaed) {
+                if (binding.switchFingerprintLogin.isChecked && isAuthenticated) {
                     sessionManager.saveTouchIdEnabled(true)
                     goToHomeActivity()
                 } else if (!binding.switchFingerprintLogin.isChecked) {
                     sessionManager.saveTouchIdEnabled(false)
-                    isAuthenticaed = false
+                    isAuthenticated = false
                     goToHomeActivity()
                 }
 
             }
 
             R.id.biometric_cancel -> {
-
                 goToHomeActivity()
-
             }
         }
     }
 
+    private fun redirectToAuthForRevalidate(from: String) {
+        val intent = Intent(this@BiometricActivity, AuthActivity::class.java)
+        intent.putExtra(
+            Constants.CARD_VALIDATION_REQUIRED,
+            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+        )
+        intent.putExtra(Constants.NAV_FLOW_KEY, from)
+        intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+        intent.putParcelableArrayListExtra(Constants.PAYMENT_LIST_DATA, paymentList as ArrayList)
+        startActivity(intent)
+    }
 
     private fun goToHomeActivity() {
-        startNewActivityByClearingStack(HomeActivityMain::class.java) {
-            if (navFlowFrom.equals(Constants.TWOFA)||navFlowFrom.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)||navFlowCall.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+        if (accountInformation?.inactiveStatus == true) {
+            redirectToAuthForRevalidate(Constants.IN_ACTIVE)
+        } else if (cardValidationRequired) {
+            redirectToAuthForRevalidate(Constants.CARD_VALIDATION_REQUIRED)
+        } else if (suspended) {
+            showLoaderDialog()
+            crossingHistoryApi()
+        } else {
+            startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                if (navFlowFrom == (Constants.TWOFA) || navFlowFrom == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) || navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
 
-               if(navFlowCall.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)){
-                   putString(
-                       Constants.NAV_FLOW_FROM,
-                       Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
-                   )
-               }else {
-                   putString(
-                       Constants.NAV_FLOW_FROM,
-                       navFlowFrom
-                   )
-               }
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-            } else if(navFlowFrom.equals(Constants.LOGIN)){
-
+                    if (navFlowCall == (Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+                        putString(
+                            Constants.NAV_FLOW_FROM,
+                            Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
+                        )
+                    } else {
+                        putString(
+                            Constants.NAV_FLOW_FROM,
+                            navFlowFrom
+                        )
+                    }
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                } else if (navFlowFrom == Constants.LOGIN) {
                     putString(
                         Constants.NAV_FLOW_FROM,
                         Constants.BIOMETRIC_CHANGE
@@ -437,82 +436,22 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
                     )
                     putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
 
-            } else {
-                putString(
-                    Constants.NAV_FLOW_FROM,
-                    Constants.BIOMETRIC_CHANGE
-                )
-                putBoolean(
-                    Constants.GO_TO_SUCCESS_PAGE,
-                    true
-                )
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
-            }
-
-        }
-    }
-
-
-    private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
-
-
-        when (status) {
-            is Resource.Success -> {
-                personalInformation = status.data?.personalInformation
-                accountInformation = status.data?.accountInformation
-                replenishmentInformation = status.data?.replenishmentInformation
-
-
-                if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                    if (loader?.isVisible == true) {
-                        loader?.dismiss()
-                    }
-
-
-                    val intent = Intent(this, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                    intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
-                    intent.putExtra(Constants.CROSSINGCOUNT, "")
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                    intent.putExtra(
-                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-                    )
-                    startActivity(intent)
-
-
                 } else {
-                    crossingHistoryApi()
+                    putString(
+                        Constants.NAV_FLOW_FROM,
+                        Constants.BIOMETRIC_CHANGE
+                    )
+                    putBoolean(
+                        Constants.GO_TO_SUCCESS_PAGE,
+                        true
+                    )
+                    putBoolean(Constants.FIRST_TYM_REDIRECTS, false)
                 }
-
-
-            }
-
-            is Resource.DataError -> {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
-
-
-                AdobeAnalytics.setLoginActionTrackError(
-                    "login",
-                    "login",
-                    "login",
-                    "english",
-                    "login",
-                    "",
-                    "true",
-                    "manual",
-                    sessionManager.getLoggedInUser()
-                )
-            }
-
-            else -> {
 
             }
         }
-
     }
+
 
     private fun crossingHistoryApi() {
         val request = CrossingHistoryRequest(
@@ -527,23 +466,11 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     }
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
-                    if (it.transactionList != null) {
-                        navigateWithCrossing(it.transactionList.count ?: 0)
-
-                    } else {
-                        startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-                        }
-
-                    }
-
+                    navigateWithCrossing(it.transactionList?.count ?: 0)
                 }
             }
 
@@ -562,29 +489,18 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private fun navigateWithCrossing(count: Int) {
 
 
-        if (count > 0) {
+        val intent = Intent(this, AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
+        intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
+        intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+        intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
+        intent.putExtra(Constants.PERSONALDATA, personalInformation)
 
 
-            val intent = Intent(this, AuthActivity::class.java)
-            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-            intent.putExtra(Constants.NAV_FLOW_FROM, navFlowFrom)
-            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-            intent.putExtra(Constants.CROSSINGCOUNT, count.toString())
-            intent.putExtra(Constants.PERSONALDATA, personalInformation)
-
-
-            intent.putExtra(
-                Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
-            )
-            startActivity(intent)
-
-        } else {
-            startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
-                putString(Constants.NAV_FLOW_FROM, navFlowFrom)
-            }
-        }
-
+        intent.putExtra(
+            Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+        )
+        startActivity(intent)
 
     }
 

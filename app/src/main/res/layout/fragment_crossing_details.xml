@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_20sdp"
+            android:importantForAccessibility="no"
             android:gravity="start|top"
             android:orientation="vertical">
 
@@ -23,37 +24,40 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/your_crossing_details"
+                android:importantForAccessibility="yes"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:importantForAccessibility="no"
+                android:elevation="@dimen/margin_3dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layerFullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"
+                    android:focusable="true"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtFullName"
                         style="@style/MediumTextBlack"
                         android:text="@string/payment_reference_number"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/fullName"
                         style="@style/RegularTextBlack"
-
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtFullName" />
@@ -67,24 +71,27 @@
                 android:id="@+id/companyNameCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:importantForAccessibility="no"
+                android:elevation="@dimen/margin_3dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layerCompanyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"
+                    android:focusable="true"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtVehicleRegistrationNumber"
                         style="@style/MediumTextBlack"
-                        android:text="Vehicle Registration (number plate)"
-                        android:textSize="15sp"
+                        android:text="@string/vehicle_registration_number_plate"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,30 +111,33 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
+                android:importantForAccessibility="no"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/credit_remaining_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"
+                    android:focusable="true"
                     android:padding="@dimen/margin_15dp">
 
                     <TextView
                         android:id="@+id/txtAddress"
                         style="@style/MediumTextBlack"
                         android:text="@string/credit_remaining"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/address"
                         style="@style/RegularTextBlack"
-
                         android:layout_marginTop="@dimen/margin_5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtAddress" />
@@ -142,23 +152,27 @@
                 android:id="@+id/emailCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:importantForAccessibility="no"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/credit_expiry_date_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                    android:padding="@dimen/margin_15dp"
+                    android:importantForAccessibility="yes"
+                    android:focusable="true">
 
                     <TextView
                         android:id="@+id/txtEmailAddress"
                         style="@style/MediumTextBlack"
                         android:text="@string/credit_expiry_date"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -182,16 +196,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_15dp"
+                android:importantForAccessibility="yes"
                 android:fontFamily="@font/open_sans_semibold"
                 android:id="@+id/errorTxt"
-                android:text="ssssss"
+                tools:text="@string/app_name"
                 android:textColor="@color/red_color"
                 android:textSize="@dimen/font_16sp" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/vehicleHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:importantForAccessibility="yes"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/previous_crossings_paid_for"
                 android:textColor="@color/black"
@@ -206,6 +223,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
+                    android:importantForAccessibility="yes"
                     android:elevation="0dp"
                     android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
@@ -218,7 +236,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:elevation="1dp"
+                    android:elevation="@dimen/margin_1dp"
+                    android:importantForAccessibility="yes"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/no_crossings_have_been_made_against_this_payment_reference"
                     android:textColor="@color/black"
@@ -229,22 +248,22 @@
             </RelativeLayout>
 
 
-
-
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/btnNext"
                 style="@style/PrimaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:importantForAccessibility="yes"
                 android:enabled="true"
                 android:text="@string/create_account"
-                app:radius="5dp" />
+                app:radius="@dimen/margin_5dp" />
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/transfer_btn"
                 style="@style/secondaryButton"
                 android:layout_marginBottom="@dimen/margin_10dp"
                 android:text="@string/transfer_remaining_credit"
+                android:importantForAccessibility="yes"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -253,12 +272,14 @@
                 style="@style/secondaryButton"
                 android:layout_marginBottom="@dimen/margin_10dp"
                 android:text="@string/str_cancel"
+                android:importantForAccessibility="yes"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <com.conduent.apollo.ui.CMButton
                 style="@style/secondaryButton"
                 android:visibility="invisible"
+                android:importantForAccessibility="yes"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

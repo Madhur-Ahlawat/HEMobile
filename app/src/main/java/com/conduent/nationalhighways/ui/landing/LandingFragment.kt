@@ -1,20 +1,16 @@
 package com.conduent.nationalhighways.ui.landing
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
-import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
-import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
+import com.conduent.nationalhighways.data.model.landing.LandingViewModel
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
 import com.conduent.nationalhighways.databinding.FragmentNewLandingBinding
 import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
@@ -25,7 +21,6 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.ui.checkpaidcrossings.CheckPaidCrossingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
@@ -38,7 +33,6 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.openActivityWithData
 import com.conduent.nationalhighways.utils.extn.startNormalActivity
-import com.conduent.nationalhighways.utils.notification.NotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -46,12 +40,13 @@ import javax.inject.Inject
 class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickListener {
 
     private val webServiceViewModel: WebSiteServiceViewModel by viewModels()
-    private var loader: LoaderDialog? = null
+    private val landingViewModel: LandingViewModel by activityViewModels()
+
     private var isChecked = false
     private var isPushNotificationChecked = true
     private var count = 1
-    var apiState = Constants.UNAVAILABLE
-    var apiEndTime: String = ""
+    private var apiState = Constants.UNAVAILABLE
+    private var apiEndTime: String = ""
     private var plateNumber: String = ""
     private var email: String = ""
     private var mobileNumber: String = ""
@@ -64,13 +59,10 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentNewLandingBinding {
-        binding = FragmentNewLandingBinding.inflate(inflater, container, false)
-
-        return binding
+        return FragmentNewLandingBinding.inflate(inflater, container, false)
     }
 
     override fun init() {
-
         BaseApplication.screenNameAnalytics = ""
         if (arguments?.containsKey(Constants.PLATE_NUMBER) == true) {
             plateNumber = arguments?.getString(Constants.PLATE_NUMBER) ?: ""
@@ -84,24 +76,18 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         if (arguments?.containsKey(Constants.COUNTRY_TYPE) == true) {
             countryCode = arguments?.getString(Constants.COUNTRY_TYPE) ?: ""
         }
-        binding.scrollViewLanding.post(Runnable {
+        binding.scrollViewLanding.post {
             binding.scrollViewLanding.smoothScrollTo(
                 0,
                 binding.scrollViewLanding.bottom
             )
-        })
+        }
         HomeActivityMain.accountDetailsData = null
         HomeActivityMain.checkedCrossing = null
         HomeActivityMain.crossing = null
-        HomeActivityMain.dateRangeModel = null
         HomeActivityMain.paymentHistoryListData = mutableListOf()
         HomeActivityMain.paymentHistoryListDataCheckedCrossings = mutableListOf()
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
 
-        if (isPushNotificationChecked) {
-            //callPushNotificationApi()
-        }
         val backButton: ImageView? = requireActivity().findViewById(R.id.back_button)
 
         backButton?.visibility = View.GONE
@@ -133,12 +119,13 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     private fun setNotificationDescText() {
-        if (Utils.areNotificationsEnabled(requireContext()) == false) {
+        if (!Utils.areNotificationsEnabled(requireContext())) {
             sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
         }
 
-        if (sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION) == true
-            && sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION) == true
+        if (sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION) && sessionManager.fetchBooleanData(
+                SessionManager.LOCATION_PERMISSION
+            )
         ) {
             binding.notificationTv.text = resources.getString(R.string.str_disable_notifications)
         } else {
@@ -154,15 +141,14 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         if (!Utils.areNotificationsEnabled(requireContext())) {
             sessionManager.saveBooleanData(SessionManager.NOTIFICATION_PERMISSION, false)
         }
-        if (!Utils.checkLocationpermission(requireContext())) {
+        if (!Utils.checkLocationPermission(requireContext())) {
             sessionManager.saveBooleanData(SessionManager.LOCATION_PERMISSION, false)
         }
         setNotificationDescText()
 
-//        if (!isChecked) {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         webServiceViewModel.checkServiceStatus()
-//        }
+
         isChecked = true
         if (navFlowFrom != Constants.ONE_OFF_PAYMENT_SUCCESS) {
             resetOneOffData()
@@ -194,9 +180,9 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         NewCreateAccountRequestModel.plateCountry = ""
         NewCreateAccountRequestModel.plateNumber = ""
         NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
-        NewCreateAccountRequestModel.vehicleList = mutableListOf<NewVehicleInfoDetails>()
-        NewCreateAccountRequestModel.addedVehicleList = ArrayList<VehicleResponse?>()
-        NewCreateAccountRequestModel.addedVehicleList2 = ArrayList<VehicleResponse?>()
+        NewCreateAccountRequestModel.vehicleList = mutableListOf()
+        NewCreateAccountRequestModel.addedVehicleList = ArrayList()
+        NewCreateAccountRequestModel.addedVehicleList2 = ArrayList()
         NewCreateAccountRequestModel.isRucEligible = false
         NewCreateAccountRequestModel.isExempted = false
         NewCreateAccountRequestModel.isVehicleAlreadyAdded = false
@@ -210,37 +196,16 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
 
     override fun initCtrl() {
-        LandingActivity.showToolBar(false)
+        if (requireActivity() is LandingActivity) {
+            (requireActivity() as LandingActivity).showToolBar(false)
+        }
         binding.btnGuidanceAndDocuments.setOnClickListener {
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString(Constants.API_STATE, apiState)
             bundle.putString(Constants.API_END_TIME, apiEndTime)
             requireActivity().openActivityWithData(
                 RaiseEnquiryActivity::class.java, bundle
             )
-//            when (apiState) {
-//
-//                Constants.LIVE -> {
-//                    AdobeAnalytics.setActionTrack(
-//                        "dart charge guidance and documents",
-//                        "home",
-//                        "home",
-//                        "english",
-//                        "home",
-//                        "splash",
-//                        sessionManager.getLoggedInUser()
-//                    )
-//
-//                }
-//
-//                else -> {
-//                    findNavController().navigate(
-//                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-//                        getBundleData(apiState, apiEndTime)
-//                    )
-//                }
-//            }
-
         }
         binding.payCrossingLayout.setOnClickListener {
             when (apiState) {
@@ -350,6 +315,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
         }
 
         binding.receiveNotifications.setOnClickListener {
+            landingViewModel.fromReminderPage.value = false
             findNavController().navigate(R.id.action_landingFragment_to_registerReminderFragment)
         }
     }
@@ -361,9 +327,7 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     private fun handlePushNotification(resource: Resource<EmptyApiResponse?>) {
         if (isPushNotificationChecked) {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
+            dismissLoaderDialog()
             when (resource) {
                 is Resource.Success -> {
                     ErrorUtil.showError(
@@ -391,20 +355,11 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
 
     private fun handleMaintenanceNotification(resource: Resource<WebSiteStatus?>) {
 
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 apiState = resource.data?.state ?: Constants.UNAVAILABLE
                 apiEndTime = resource.data?.endTime ?: ""
-                if (resource.data?.state == Constants.LIVE) {
-                } else {
-//                    findNavController().navigate(
-//                        R.id.action_landingFragment_to_serviceUnavailableFragment,
-//                        getBundleData(resource.data?.state,resource.data?.endTime)
-//                    )
-                }
             }
 
             is Resource.DataError -> {
@@ -431,19 +386,12 @@ class LandingFragment : BaseFragment<FragmentNewLandingBinding>(), OnRetryClickL
     }
 
     private fun getBundleData(state: String?, endTime: String? = null): Bundle {
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString(Constants.SERVICE_TYPE, state)
         if (endTime != null && endTime.replace("null", "").isNotEmpty()) {
             bundle.putString(Constants.END_TIME, endTime)
         }
         return bundle
-    }
-
-    private fun openUrlInWebBrowser() {
-        val url = Constants.PCN_RESOLVE_URL
-        Intent(Intent.ACTION_VIEW, Uri.parse(url)).run {
-            startActivity(Intent.createChooser(this, "Browse with"))
-        }
     }
 
     override fun onRetryClick(apiUrl: String) {

@@ -50,7 +50,6 @@ class SmsNotSupportFragment : BaseFragment<FragmentSmsNotSupportBinding>(), View
                 NewCreateAccountRequestModel.isCountryNotSupportForSms = true
 
 
-
                 var res = 0
                 res = if (navFlowCall == Constants.PAY_FOR_CROSSINGS) {
                     bundle.putParcelable(

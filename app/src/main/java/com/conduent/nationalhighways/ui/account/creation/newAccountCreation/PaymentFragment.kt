@@ -9,17 +9,17 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentPaymentBinding
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.setPersonalInfoAnnouncement
 
 
-class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListener {
+class PaymentFragment : BaseFragment<FragmentPaymentBinding>(), View.OnClickListener {
 
 
     private var topUpAmount = ""
-    private var topUpBalance : Boolean = false
+    private var topUpBalance: Boolean = false
     private var requiredName = false
     private var requiredCard = false
     private var requiredCode = false
@@ -38,6 +38,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
     }
 
     override fun initCtrl() {
+        setPersonalInfoAnnouncement(binding.rootLayout, requireActivity())
         binding.proceddWithPayment.setOnClickListener(this)
         binding.paymentAmount.editText.addTextChangedListener(GenericTextWatcher(0))
         binding.expiryDate.editText.addTextChangedListener(GenericTextWatcher(1))
@@ -51,9 +52,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
 
-            R.id.proceddWithPayment->{
+            R.id.proceddWithPayment -> {
                 findNavController().navigate(R.id.action_paymentFragment_to_successfullyFragment)
 
             }
@@ -62,10 +63,10 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
     }
 
     private fun topBalanceDecimal(b: Boolean) {
-        if(b.not()){
+        if (b.not()) {
             val text = binding.paymentAmount.getText().toString().trim()
-            val updatedText = text.replace("£","")
-            if(updatedText.isNotEmpty() && updatedText.contains(".").not()){
+            val updatedText = text.replace("£", "")
+            if (updatedText.isNotEmpty() && updatedText.contains(".").not()) {
                 binding.paymentAmount.setText(String.format("%.2f", updatedText.toDouble()))
             }
         }
@@ -88,11 +89,11 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
             before: Int,
             count: Int
         ) {
-            when(index){
-                0->{
+            when (index) {
+                0 -> {
 
                     val mText = binding.paymentAmount.getText().toString().trim()
-                    val updatedText = mText.replace("£","")
+                    val updatedText = mText.replace("£", "")
                     if (updatedText.isNotEmpty()) {
                         topUpBalance = if (updatedText.length < 6) {
                             if (updatedText.toDouble() < 10) {
@@ -107,17 +108,21 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
                             binding.paymentAmount.setErrorText(getString(R.string.str_top_up_amount_must_be_8_characters))
                             false
                         }
-                    }else{
+                    } else {
                         binding.paymentAmount.removeError()
                     }
                     binding.paymentAmount.editText.removeTextChangedListener(this)
-                    if(updatedText.isNotEmpty())
+                    if (updatedText.isNotEmpty())
                         binding.paymentAmount.setText("£" + updatedText)
-                    Selection.setSelection( binding.paymentAmount.getText(),binding.paymentAmount.getText().toString().length)
+                    Selection.setSelection(
+                        binding.paymentAmount.getText(),
+                        binding.paymentAmount.getText().toString().length
+                    )
                     binding.paymentAmount.editText.addTextChangedListener(this)
 
                 }
-                1->{
+
+                1 -> {
                     if (charSequence.toString() != current) {
                         var clean: String = charSequence.toString().replace("[^\\d.]".toRegex(), "")
                         var formatted = ""
@@ -132,25 +137,28 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
                         }
                         current = formatted
                         binding.expiryDate.setText(formatted)
-                        Selection.setSelection( binding.expiryDate.getText(),binding.expiryDate.getText().toString().length)
+                        Selection.setSelection(
+                            binding.expiryDate.getText(),
+                            binding.expiryDate.getText().toString().length
+                        )
                     }
-                    if(current.length<5){
+                    if (current.length < 5) {
                         binding.expiryDate.setErrorText(getString(R.string.invalid_date_format))
                         requiredDate = false
-                    }else{
+                    } else {
                         val expDate: String = binding.expiryDate.getText().toString()
                         val split = expDate.split("/".toRegex()).dropLastWhile { it.isEmpty() }
                             .toTypedArray()
                         if (split.isNotEmpty()) {
                             val expiryMonth = split[0]
                             val expiryYear = split[1]
-                            if(expiryMonth.toInt()>12 || expiryMonth == "00"){
+                            if (expiryMonth.toInt() > 12 || expiryMonth == "00") {
                                 binding.expiryDate.setErrorText(getString(R.string.invalid_date_format))
                                 requiredDate = false
-                            }else if(expiryYear.toInt()<23){
+                            } else if (expiryYear.toInt() < 23) {
                                 binding.expiryDate.setErrorText(getString(R.string.expiry_date_cannot_be_in_the_past))
                                 requiredDate = false
-                            }else{
+                            } else {
                                 binding.expiryDate.removeError()
                                 requiredDate = true
                             }
@@ -159,10 +167,10 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
                     }
                 }
 
-                2->{
-                    if(binding.nameOnCard.getText()?.isEmpty() == true){
+                2 -> {
+                    if (binding.nameOnCard.getText()?.isEmpty() == true) {
                         requiredName = false
-                    }else{
+                    } else {
                         if (binding.nameOnCard.getText().toString().trim().length < 50) {
 
                             if (binding.nameOnCard.getText().toString().trim()
@@ -190,13 +198,13 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
 
                 }
 
-                3->{
+                3 -> {
                     val length = binding.cardSecurityCode.getText()?.length
                     if (length != null) {
-                        if(length < 3){
+                        if (length < 3) {
                             binding.cardSecurityCode.setErrorText(getString(R.string.card_security_code_must_be_3_digits_or_more))
                             requiredCode = false
-                        }else{
+                        } else {
                             binding.cardSecurityCode.removeError()
                             requiredCode = true
                         }
@@ -204,12 +212,12 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
 
                 }
 
-                4->{
+                4 -> {
                     val length = binding.cardNumber.getText()?.length
                     if (length != null) {
-                        if(length < 16){
+                        if (length < 16) {
                             binding.cardNumber.setErrorText(getString(R.string.card_number_must_be_16_digits_or_more))
-                        }else{
+                        } else {
                             binding.cardNumber.removeError()
                             requiredCard = true
                         }
@@ -229,9 +237,9 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>(),View.OnClickListe
     private fun checkButton() {
 
 
-
         binding.proceddWithPayment.isEnabled = topUpBalance && requiredDate &&
-                binding.nameOnCard.getText()?.isNotEmpty() == true && requiredName && requiredCard && requiredCode
+                binding.nameOnCard.getText()
+                    ?.isNotEmpty() == true && requiredName && requiredCard && requiredCode
 
     }
 

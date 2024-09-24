@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.viewcharges
 
 import androidx.activity.viewModels
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.conduent.nationalhighways.R
@@ -9,8 +8,12 @@ import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityViewChargesBinding
 import com.conduent.nationalhighways.ui.base.BaseActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.visible
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
@@ -24,7 +27,6 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
     private val viewModel: ViewChargeViewModel by viewModels()
 
     private lateinit var binding: ActivityViewChargesBinding
-    private var loader: LoaderDialog? = null
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -34,9 +36,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
     lateinit var api: ApiService
 
     override fun initViewBinding() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         binding = ActivityViewChargesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolBarLyt.titleTxt.text = getString(R.string.str_create_an_account)
@@ -64,7 +64,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
     }
 
     private fun handleTollRateResponse(status: Resource<List<TollRatesResp?>?>?) {
-        loader?.dismiss()
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 binding.topTitle.visible()
@@ -74,49 +74,62 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
 
                     val mTollRatesList = ArrayList<TollRatesResp>()
                     status.data?.forEach {
-                        if (it?.vehicleType == "A") {
-
-                            mTollRatesList.add(
-                                TollRatesResp(
-                                    it?.vehicleId,
-                                    "Motorcycle,\nmopeds,\nquad bikes",
-                                    it?.videoRate,
-                                    it?.etcRate
+                        when (it?.vehicleType) {
+                            "A" -> {
+                                mTollRatesList.add(
+                                    TollRatesResp(
+                                        it.vehicleId,
+                                        resources.getString(R.string.str_motor_cycles),
+                                        it.videoRate,
+                                        it.etcRate,
+                                        resources.getString(R.string.str_motor_cycles_)
+                                    )
                                 )
-                            )
 
-                        } else if (it?.vehicleType == "B") {
-                            mTollRatesList.add(
-                                TollRatesResp(
-                                    it?.vehicleId,
-                                    "Cars,\nmotorhomes,\nminibuses",
-                                    it?.videoRate,
-                                    it?.etcRate
+                            }
+
+                            "B" -> {
+                                mTollRatesList.add(
+                                    TollRatesResp(
+                                        it.vehicleId,
+                                        resources.getString(R.string.str_cars_motor_homes),
+                                        it.videoRate,
+                                        it.etcRate,
+                                        resources.getString(R.string.str_cars_motor_homes_)
+                                    )
                                 )
-                            )
 
-                        } else if (it?.vehicleType == "C") {
-                            mTollRatesList.add(
-                                TollRatesResp(
-                                    it?.vehicleId,
-                                    "Vehicles\nwith 2 axles",
-                                    it?.videoRate,
-                                    it?.etcRate
+                            }
+
+                            "C" -> {
+                                mTollRatesList.add(
+                                    TollRatesResp(
+                                        it.vehicleId,
+                                        resources.getString(R.string.str_vehicles_with_axles),
+                                        it.videoRate,
+                                        it.etcRate,
+                                        resources.getString(R.string.str_vehicles_with_axles_)
+                                    )
                                 )
-                            )
 
-                        } else if (it?.vehicleType == "D") {
-                            mTollRatesList.add(
-                                TollRatesResp(
-                                    it?.vehicleId,
-                                    "Vehicles\nwith more than 2 axles",
-                                    it?.videoRate,
-                                    it?.etcRate
+                            }
+
+                            "D" -> {
+                                mTollRatesList.add(
+                                    TollRatesResp(
+                                        it.vehicleId,
+                                        resources.getString(R.string.str_vehicle_with_more_axles),
+                                        it.videoRate,
+                                        it.etcRate,
+                                        resources.getString(R.string.str_vehicle_with_more_axles_)
+                                    )
                                 )
-                            )
 
-                        } else {
+                            }
 
+                            else -> {
+
+                            }
                         }
 
                     }
@@ -148,8 +161,7 @@ class ViewChargesActivity : BaseActivity<ActivityViewChargesBinding>(), LogoutLi
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-//        sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {

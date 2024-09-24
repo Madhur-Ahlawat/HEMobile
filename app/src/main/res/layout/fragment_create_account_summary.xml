@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -15,6 +16,7 @@
             android:layout_marginHorizontal="@dimen/margin_20dp"
             android:layout_marginTop="@dimen/margin_5dp"
             android:layout_marginBottom="@dimen/margin_20dp"
+            android:importantForAccessibility="no"
             android:gravity="start|top"
             android:orientation="vertical">
 
@@ -25,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_15dp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="@string/check_your_answers_before_making_a_payment"
+                android:text="@string/str_check_your_answer_before_payment"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16sp" />
 
@@ -41,42 +43,60 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:focusable="true"
+                android:importantForAccessibility="no"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layerFullName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtFullName"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/full_name"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/fullName"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editFullName"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtFullName" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txtFullName"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/full_name"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/fullName"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtFullName"
+                            tools:text="scnkjcn" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editFullName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -92,40 +112,56 @@
                 android:id="@+id/companyNameCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:importantForAccessibility="no"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layerCompanyName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtCompanyFullName"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/company_name"
-                        android:textSize="15sp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editCompanyName"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/companyName"
-                        style="@style/RegularTextBlack"
+                        <TextView
+                            android:id="@+id/txtCompanyFullName"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/company_name"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtCompanyFullName" />
+                        <TextView
+                            android:id="@+id/companyName"
+                            style="@style/RegularTextBlack"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtCompanyFullName" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editCompanyName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -140,41 +176,56 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:focusable="true"
+                android:importantForAccessibility="yes"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtAddress"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/address"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/address"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editAddress"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtAddress" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txtAddress"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/address"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/address"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtAddress" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -190,43 +241,59 @@
                 android:id="@+id/emailCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:focusable="true"
+                android:importantForAccessibility="no"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/emailAddressSummary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtEmailAddress"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/email_address"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/emailAddress"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editEmailAddress"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtEmailAddress" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txtEmailAddress"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/email_address"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/emailAddress"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtEmailAddress" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editEmailAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -242,40 +309,55 @@
                 android:id="@+id/phoneCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:importantForAccessibility="no"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtMobileNumber"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/telephone_number"
-                        android:textSize="15sp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editMobileNumber"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/mobileNumber"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:text="Not provided"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />
+                        <TextView
+                            android:id="@+id/txtMobileNumber"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/telephone_number"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/mobileNumber"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:text="@string/not_provided"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtMobileNumber" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editMobileNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -300,39 +382,54 @@
                 android:id="@+id/accountCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:importantForAccessibility="no"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtAccountType"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/type_of_account"
-                        android:textSize="15sp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editAccountType"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/accountType"
-                        style="@style/RegularTextBlack"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:text="Pre-pay"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtAccountType" />
+                        <TextView
+                            android:id="@+id/txtAccountType"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/type_of_account"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/accountType"
+                            style="@style/RegularTextBlack"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:text="@string/pre_pay"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtAccountType" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editAccountType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -348,37 +445,53 @@
                 android:id="@+id/accountSubType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:importantForAccessibility="no"
                 android:minHeight="@dimen/margin_77dp"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:minHeight="@dimen/margin_77dp"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style"
+                    android:minHeight="@dimen/margin_77dp">
 
-                    <TextView
-                        android:id="@+id/textAccountSubType"
-                        style="@style/RegularTextBlack"
-                        android:text="Pre-pay"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editAccountSubType"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/textAccountSubType"
+                            style="@style/RegularTextBlack"
+                            android:text="@string/pre_pay"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <ImageView
                         android:id="@+id/editAccountSubType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
-                        app:layout_constraintBottom_toBottomOf="@id/textAccountSubType"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/textAccountSubType" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -386,88 +499,59 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!--
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/accountTypeCard"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="1dp"
-                            android:layout_marginTop="@dimen/margin_15dp"
-                            android:layout_marginEnd="1dp"
-                            android:layout_marginBottom="1dp"
-                            android:elevation="3dp"
-                            app:cardCornerRadius="5dp"
-                            >
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/margin_15dp">
-
-
-                                <TextView
-                                    android:id="@+id/typeofAccount"
-                                    style="@style/RegularTextBlack"
-                                    android:text="Pre-pay"
-                                    android:layout_marginTop="@dimen/margin_5dp"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    />
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/edit"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    android:layout_marginEnd="@dimen/margin_20dp"
-                                    android:id="@+id/editAccount"/>
-
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                        </androidx.cardview.widget.CardView>
-            -->
-
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/communicationCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:importantForAccessibility="no"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtCommunications"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/text_message_communications"
-                        android:textSize="15sp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editCommunications"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/communications"
-                        style="@style/RegularTextBlack"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:text="No"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtCommunications" />
+                        <TextView
+                            android:id="@+id/txtCommunications"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/text_message_communications"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/communications"
+                            style="@style/RegularTextBlack"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:text="@string/no"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtCommunications" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editCommunications"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -483,42 +567,57 @@
                 android:id="@+id/emailCardProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:importantForAccessibility="no"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/emailProfileManagement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                    style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtEmailAddressProfile"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/email_address"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/emailAddressProfile"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editEmailAddressProfile"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtEmailAddressProfile" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txtEmailAddressProfile"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/email_address"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/emailAddressProfile"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtEmailAddressProfile" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editEmailAddressProfile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -534,43 +633,57 @@
                 android:id="@+id/passwordCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:importantForAccessibility="no"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtPassword"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/password"
-                        android:textSize="15sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/password"
-                        style="@style/RegularTextBlack"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/margin_0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:gravity="left|center"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/editPassword"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtPassword"
-                        tools:text="********" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/txtPassword"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/password"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/password"
+                            style="@style/RegularTextBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:gravity="start|center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtPassword"
+                            tools:text="********" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
                         android:id="@+id/editPassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -585,38 +698,55 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
-                app:cardCornerRadius="5dp">
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:importantForAccessibility="no"
+                app:cardCornerRadius="@dimen/margin_5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtTwoStepVerification"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/two_step_verification"
-                        android:textSize="15sp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/twoStepVerificationCl"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editTwoStepVerification"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/twoStepVerification"
-                        style="@style/RegularTextBlack"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:text="Yes"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtTwoStepVerification" />
+                        <TextView
+                            android:id="@+id/txtTwoStepVerification"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/two_step_verification"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/twoStepVerification"
+                            style="@style/RegularTextBlack"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:text="@string/yes"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtTwoStepVerification" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <ImageView
                         android:id="@+id/editTwoStepVerification"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -632,39 +762,57 @@
                 android:id="@+id/biometricsCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="@dimen/margin_1dp"
                 android:layout_marginTop="@dimen/margin_15dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginBottom="1dp"
-                android:elevation="3dp"
+                android:layout_marginEnd="@dimen/margin_1dp"
+                android:layout_marginBottom="@dimen/margin_1dp"
+                android:elevation="@dimen/margin_3dp"
+                android:importantForAccessibility="no"
                 android:visibility="gone"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp"
+                tools:visibility="visible">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_15dp">
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/account_summary_layer_cl_style">
 
-                    <TextView
-                        android:id="@+id/txtBiometrics"
-                        style="@style/MediumTextBlack"
-                        android:text="@string/biometrics"
-                        android:textSize="15sp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/biometricsCl"
+                        android:layout_width="@dimen/margin_0dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:importantForAccessibility="yes"
+                        android:padding="@dimen/margin_5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/editBiometrics"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/biometrics"
-                        style="@style/RegularTextBlack"
-                        android:layout_marginTop="@dimen/margin_5dp"
-                        android:text="Yes"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txtBiometrics" />
+                        <TextView
+                            android:id="@+id/txtBiometrics"
+                            style="@style/MediumTextBlack"
+                            android:focusable="false"
+                            android:text="@string/biometrics"
+                            android:textSize="@dimen/font_15sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/biometrics"
+                            style="@style/RegularTextBlack"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:focusable="false"
+                            android:text="@string/yes"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtBiometrics" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <ImageView
                         android:id="@+id/editBiometrics"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_20dp"
+                        android:contentDescription="@string/str_edit"
+                        android:minWidth="@dimen/margin_48dp"
+                        android:minHeight="@dimen/margin_48dp"
+                        android:padding="@dimen/margin_20dp"
                         android:src="@drawable/edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -696,12 +844,12 @@
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkBoxTerms"
                 style="@style/CheckBoxStyle"
-                android:textColorLink="@color/black"
-                android:textColor="@color/black"
                 android:layout_marginTop="@dimen/margin_30dp"
                 android:checked="false"
-                android:gravity="center|left"
-                android:text="@string/i_accept_the_terms_conditions" />
+                android:gravity="center|start"
+                android:text="@string/i_accept_the_terms_conditions"
+                android:textColor="@color/black"
+                android:textColorLink="@color/black" />
 
 
             <com.conduent.nationalhighways.utils.widgets.NHButton
@@ -712,7 +860,7 @@
                 android:layout_marginBottom="@dimen/_50sdp"
                 android:enabled="false"
                 android:text="@string/str_continue"
-                app:radius="5dp" />
+                app:radius="@dimen/margin_5dp" />
 
         </LinearLayout>
 

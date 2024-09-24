@@ -3,12 +3,10 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,7 +17,7 @@ import com.conduent.nationalhighways.databinding.FragmentCreateAccountPostCodeNe
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
@@ -35,6 +33,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -42,7 +41,6 @@ import kotlinx.coroutines.launch
 class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBinding>(),
     View.OnClickListener, OnRetryClickListener {
     private var requiredPostCode = false
-    private var loader: LoaderDialog? = null
     private var apiCalled: Boolean = false
     private val viewModel: CreateAccountPostCodeViewModel by viewModels()
     private var postcode: String = ""
@@ -50,9 +48,6 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         FragmentCreateAccountPostCodeNewBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         binding.btnFindAddress.setOnClickListener(this)
         binding.btnEnterAddressManually.setOnClickListener(this)
         binding.btnUpdateAddressManually.setOnClickListener(this)
@@ -72,6 +67,10 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             PROFILE_MANAGEMENT -> {
                 binding.btnEnterAddressManually.gone()
                 binding.btnUpdateAddressManually.visible()
+
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.profile_address))
+                }
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.profile_address)
                 val data = navData as ProfileDetailModel?
@@ -99,7 +98,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
         }
         validatePostCode()
         binding.inputPostCode.editText
-            .addTextChangedListener(GenericTextWatcher(binding.inputPostCode.editText))
+            .addTextChangedListener(GenericTextWatcher())
+        binding.inputPostCode.editText.setAccessibilityDelegateForDigits()
     }
 
     private fun validatePostCode() {
@@ -153,8 +153,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
     }
 
 
-    fun sortData(addressAPIlist: List<DataAddress?>?): List<DataAddress>? {
-        val sortedList = addressAPIlist?.sortedWith(Comparator { address1, address2 ->
+    private fun sortData(addressApiList: List<DataAddress?>?): List<DataAddress?>? {
+        val sortedList = addressApiList?.sortedWith { address1, address2 ->
             val street1 =
                 (address1?.property ?: "") + (address1?.locality ?: "") + (address1?.street ?: "")
             val street2 =
@@ -168,38 +168,21 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             } else {
                 street1.compareTo(street2)
             }
-        })
-        return sortedList as List<DataAddress>?
+        }
+        return sortedList
     }
 
 
     private fun handleAddressApiResponse(response: Resource<List<DataAddress?>?>?) {
         if (apiCalled) {
             apiCalled = false
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
+            dismissLoaderDialog()
             when (response) {
                 is Resource.Success -> {
-
-//                    val dataAddresses: ArrayList<DataAddress?> = ArrayList(response.data?:ArrayList())
                     val addressList = sortData(response.data)
-                    /*  var addressList: List<DataAddress?> =
-                          (dataAddresses.sortedBy{it?.street})
-
-
-                      val dataAddresses1: ArrayList<DataAddress?> = ArrayList(addressList?:ArrayList())
-
-                      dataAddresses1.sortWith(compareBy(
-                          { it?.street?.split(" ")?.get(0)?.toIntOrNull() ?: Int.MAX_VALUE }, // Try to parse as Int, otherwise use Int.MAX_VALUE
-                          { it?.street })
-                      )
-                      addressList = dataAddresses1*/
-
-
                     when (navFlowCall) {
                         EDIT_SUMMARY, EDIT_ACCOUNT_TYPE -> {
-                            addressList?.forEach { it.isSelected = false }
+                            addressList?.forEach { it?.isSelected = false }
                             if (NewCreateAccountRequestModel.selectedAddressId != -1) {
                                 addressList?.get(NewCreateAccountRequestModel.selectedAddressId)?.isSelected =
                                     true
@@ -216,7 +199,8 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
                         binding.inputPostCode.editText.text.toString()
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putParcelableArrayList(Constants.ADDRESS_LIST, ArrayList(addressList))
+                    bundle.putParcelableArrayList(Constants.ADDRESS_LIST,
+                        addressList?.let { ArrayList(it) })
                     if (navFlowCall.equals(PROFILE_MANAGEMENT, true) && navData != null) {
                         val data = navData as ProfileDetailModel?
                         bundle.putParcelable(Constants.NAV_DATA_KEY, data)
@@ -306,7 +290,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
             } else {
                 if (!apiCalled) {
                     apiCalled = true
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    showLoaderDialog()
                     viewModel.fetchAddressState(binding.inputPostCode.editText.text.toString())
                 }
             }
@@ -320,7 +304,7 @@ class CreateAccountPostCodeNew : BaseFragment<FragmentCreateAccountPostCodeNewBi
 
     }
 
-    inner class GenericTextWatcher(private val view: View) : TextWatcher {
+    inner class GenericTextWatcher : TextWatcher {
         override fun beforeTextChanged(
             charSequence: CharSequence?,
             start: Int,

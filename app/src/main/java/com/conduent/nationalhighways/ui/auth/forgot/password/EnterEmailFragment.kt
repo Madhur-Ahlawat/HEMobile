@@ -1,13 +1,11 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -23,7 +21,6 @@ import com.conduent.nationalhighways.ui.account.creation.new_account_creation.mo
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.ACCOUNT_CREATION_EMAIL_FLOW
@@ -53,14 +50,13 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
 
     @Inject
     lateinit var sessionManager: SessionManager
-    private var loader: LoaderDialog? = null
     private val viewModel: ForgotPasswordViewModel by viewModels()
     private val viewModelEmail: CreateAccountEmailViewModel by viewModels()
     private var isCalled = false
     private var isViewCreated: Boolean = false
     private val createAccountViewModel: CreateAccountEmailViewModel by viewModels()
     private var btnEnabled: Boolean = false
-    private var oldEmail :String= ""
+    private var oldEmail: String = ""
 
 
     override fun getFragmentBinding(
@@ -69,25 +65,17 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     ) = FragmentEnterEmailBinding.inflate(inflater, container, false)
 
     override fun init() {
-      
+
         sessionManager.clearAll()
-//        navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
-
-
-        // binding.model = ConfirmOptionModel(identifier = "", enable = false)
         binding.email = ""
         binding.isValid = false
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         binding.edtEmail.editText.addTextChangedListener { isEnable() }
         binding.btnNext.setOnClickListener(this)
         when (navFlowCall) {
 
             EDIT_ACCOUNT_TYPE, EDIT_SUMMARY -> {
-
-                if(!isViewCreated){
-                    oldEmail=NewCreateAccountRequestModel.emailAddress?:""
+                if (!isViewCreated) {
+                    oldEmail = NewCreateAccountRequestModel.emailAddress ?: ""
                 }
                 NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
                 setView()
@@ -106,23 +94,14 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
 
         }
 
-        /*AdobeAnalytics.setScreenTrack(
-            "login:forgot password",
-            "forgot password",
-            "english",
-            "login",
-            (requireActivity() as AuthActivity).previousScreen,
-            "login:forgot password",
-            sessionManager.getLoggedInUser()
-        )*/
+
         isViewCreated = true
 
     }
 
     private fun setView() {
-        if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty()==true){
+        if (NewCreateAccountRequestModel.emailAddress?.isNotEmpty() == true) {
             NewCreateAccountRequestModel.emailAddress?.let { binding.edtEmail.setText(it) }
-
         }
 
         binding.textUsername.visible()
@@ -131,7 +110,6 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     }
 
     override fun initCtrl() {
-        //binding.edtPostcode.addTextChangedListener { isEnable() }
 
     }
 
@@ -157,10 +135,8 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
             )
             createAccountViewModel.emailVerificationApi(request)
         } else {
-            if (loader?.isVisible == true) {
-                loader?.dismiss()
-            }
-            if(navFlowCall==ACCOUNT_CREATION_EMAIL_FLOW){
+            dismissLoaderDialog()
+            if (navFlowCall == ACCOUNT_CREATION_EMAIL_FLOW) {
                 binding.edtEmail.setErrorText(getString(R.string.an_account_with_this_email_address_already_exists))
             }
 
@@ -169,14 +145,12 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     }
 
     private fun handleConfirmOptionResponse(status: Resource<ConfirmOptionResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         if (isCalled) {
             when (status) {
                 is Resource.Success -> {
                     if (status.data?.statusCode?.equals("1054") == true) {
-                        if(navFlowCall==FORGOT_PASSWORD_FLOW){
+                        if (navFlowCall == FORGOT_PASSWORD_FLOW) {
                             status.data.message?.let { binding.edtEmail.setErrorText(getString(R.string.incorrect_email_try_again)) }
                         }
                     } else {
@@ -190,33 +164,35 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                             )
                         }
                     }
-                    AdobeAnalytics.setActionTrackError(
-                        "next",
-                        "login:forgot password",
-                        "forgot password",
-                        "english",
-                        "login",
-                        (requireActivity() as AuthActivity).previousScreen, "success",
-                        sessionManager.getLoggedInUser()
-                    )
-
-                }
-
-                is Resource.DataError -> {
-                    if (checkSessionExpiredOrServerError(status.errorModel) ) {
-                        displaySessionExpireDialog(status.errorModel)
-                    } else {
-                        binding.edtEmail.setErrorText(status.errorMsg)
-
+                    if (requireActivity() is AuthActivity) {
                         AdobeAnalytics.setActionTrackError(
                             "next",
                             "login:forgot password",
                             "forgot password",
                             "english",
                             "login",
-                            (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                            (requireActivity() as AuthActivity).previousScreen, "success",
                             sessionManager.getLoggedInUser()
                         )
+                    }
+                }
+
+                is Resource.DataError -> {
+                    if (checkSessionExpiredOrServerError(status.errorModel)) {
+                        displaySessionExpireDialog(status.errorModel)
+                    } else {
+                        binding.edtEmail.setErrorText(status.errorMsg)
+                        if (requireActivity() is AuthActivity) {
+                            AdobeAnalytics.setActionTrackError(
+                                "next",
+                                "login:forgot password",
+                                "forgot password",
+                                "english",
+                                "login",
+                                (requireActivity() as AuthActivity).previousScreen, status.errorMsg,
+                                sessionManager.getLoggedInUser()
+                            )
+                        }
                     }
 
                 }
@@ -248,10 +224,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                     }
 
                     FORGOT_PASSWORD_FLOW -> {
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
+                        showLoaderDialog()
                         sessionManager.saveAccountNumber(emailText)
                         isCalled = true
                         viewModel.confirmOptionForForgot(emailText)
@@ -303,22 +276,23 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                 if (binding.edtEmail.editText.getText().toString().length > 100) {
                     binding.edtEmail.setErrorText(getString(R.string.email_address_must_be_100_characters_or_fewer))
                     false
-                }
-                else {
+                } else {
                     if (!Utils.isLastCharOfStringACharacter(
                             binding.edtEmail.editText.getText().toString().trim()
-                        ) || Utils.countOccurenceOfChar(
+                        ) || Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.getText().toString().trim(), '@'
                         ) > 1 || binding.edtEmail.editText.getText().toString().trim().contains(
                             Utils.TWO_OR_MORE_DOTS
                         ) || (binding.edtEmail.editText.getText().toString().trim().last()
                             .toString() == "." || binding.edtEmail.editText.text
                             .toString().first().toString() == ".")
-                        || (binding.edtEmail.editText.getText().toString().trim().last().toString() == "-" || binding.edtEmail.editText.getText().toString().first()
+                        || (binding.edtEmail.editText.getText().toString().trim().last()
+                            .toString() == "-" || binding.edtEmail.editText.getText().toString()
+                            .first()
                             .toString() == "-")
-                        || (Utils.countOccurenceOfChar(
+                        || (Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.getText().toString().trim(), '.'
-                        ) < 1) || (Utils.countOccurenceOfChar(
+                        ) < 1) || (Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.getText().toString().trim(), '@'
                         ) < 1)
                     ) {
@@ -349,11 +323,16 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                             commaSeparatedString =
                                 Utils.makeCommaSeperatedStringForPassword(
                                     Utils.removeAllCharacters(
-                                        ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
+                                        ALLOWED_CHARS_EMAIL, filterTextForSpecialChars ?: ""
                                     )
                                 )
-                            if (filterTextForSpecialChars!!.isNotEmpty()) {
-                                binding.edtEmail.setErrorText("Email address must not include $commaSeparatedString")
+                            if (filterTextForSpecialChars?.isNotEmpty() == true) {
+                                binding.edtEmail.setErrorText(
+                                    resources.getString(
+                                        R.string.str_email_disallowed_character,
+                                        commaSeparatedString
+                                    )
+                                )
                                 false
                             } else if (!Patterns.EMAIL_ADDRESS.matcher(
                                     binding.edtEmail.getText().toString()
@@ -365,7 +344,7 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
                                 binding.edtEmail.removeError()
                                 true
                             }
-                        } else if (Utils.countOccurenceOfChar(
+                        } else if (Utils.countOccurrenceOfChar(
                                 binding.edtEmail.editText.getText().toString().trim(), '@'
                             ) !in (1..1)
                         ) {
@@ -391,25 +370,31 @@ class EnterEmailFragment : BaseFragment<FragmentEnterEmailBinding>(), View.OnCli
     }
 
     private fun checkEmailAddress() {
-
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         val request = UserNameCheckReq(binding.edtEmail.getText().toString().trim())
         viewModelEmail.userNameAvailabilityCheck(request)
-
-
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
 
                 val bundle = Bundle()
-                bundle.putParcelable("data", RequestOTPModel(Constants.EMAIL, binding.edtEmail.getText().toString().trim()))
+                bundle.putParcelable(
+                    "data",
+                    RequestOTPModel(Constants.EMAIL, binding.edtEmail.getText().toString().trim())
+                )
 
-                bundle.putParcelable("response", SecurityCodeResponseModel(resource.data?.emailStatusCode, 0L, resource.data?.referenceId, true))
+                bundle.putParcelable(
+                    "response",
+                    SecurityCodeResponseModel(
+                        resource.data?.emailStatusCode,
+                        0L,
+                        resource.data?.referenceId,
+                        true
+                    )
+                )
 
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)

@@ -1,11 +1,10 @@
 package com.conduent.nationalhighways.ui.account.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -17,7 +16,6 @@ import com.conduent.nationalhighways.ui.account.biometric.BiometricActivity
 import com.conduent.nationalhighways.ui.account.creation.step3.CreateAccountPostCodeViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.NAV_DATA_KEY
 import com.conduent.nationalhighways.utils.common.Constants.NAV_FLOW_KEY
@@ -41,7 +39,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
     View.OnClickListener {
 
     private val viewModel: ProfileViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var profileDetailModel: ProfileDetailModel? = null
     private val countryViewModel: CreateAccountPostCodeViewModel by viewModels()
 
@@ -56,7 +53,7 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
     override fun init() {
         if (arguments?.containsKey(NAV_FLOW_KEY) == true) {
-            navFlowFrom = arguments?.getString(NAV_FLOW_KEY,"").toString()
+            navFlowFrom = arguments?.getString(NAV_FLOW_KEY, "").toString()
         }
         binding.accountCard.gone()
         binding.accountSubType.gone()
@@ -73,17 +70,16 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.biometricsCard.visible()
         binding.passwordCard.visible()
 
-
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         if (sessionManager.fetchStringData(SessionManager.COUNTRIES).isEmpty()) {
             countryViewModel.getCountries()
         } else {
             viewModel.accountDetail()
         }
-        val title: TextView? = requireActivity().findViewById(R.id.title_txt)
-        title?.text = getString(R.string.profile_management)
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.profile_management))
+        }
+
     }
 
     override fun initCtrl() {
@@ -104,7 +100,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
         binding.editAccountType.setOnClickListener(this)
         binding.editCompanyName.setOnClickListener(this)
         binding.editPassword.setOnClickListener(this)
-
 
     }
 
@@ -149,7 +144,9 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
 
 
     private fun handleAccountDetail(status: Resource<ProfileDetailModel?>?) {
-        loader?.dismiss()
+        dismissLoaderDialog()
+        Log.e("TAG", "handleAccountDetail:profile " )
+        callFocusToolBarHome()
 
         when (status) {
             is Resource.Success -> {
@@ -157,7 +154,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                     if (status.equals("500")) ErrorUtil.showError(binding.root, message)
                     else {
                         profileDetailModel = status.data
-//                        profileDetailModel?.personalInformation?.phoneCell = ""
                         (Utils.capitalizeString(personalInformation?.firstName) + " " + Utils.capitalizeString(
                             personalInformation?.lastName
                         )).also {
@@ -170,26 +166,35 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                             binding.twoStepVerification.text = getString(R.string.no)
                         }
 
-                      setAddressToView(personalInformation)
+                        setAddressToView(personalInformation)
                         binding.emailAddressProfile.text =
                             personalInformation?.userName?.lowercase()
 
                         if (personalInformation?.phoneCell.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.mobile_phone_number)
                             personalInformation?.phoneCell?.let {
-                                binding.mobileNumber.text =
-                                    personalInformation?.phoneCellCountryCode + " " + it
+                                binding.mobileNumber.text = resources.getString(
+                                    R.string.concatenate_two_strings_with_space, "" +
+                                            personalInformation?.phoneCellCountryCode, it
+                                )
                             }
+
                         } else if (personalInformation?.phoneDay.isNullOrEmpty().not()) {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
 
                             personalInformation?.phoneDay?.let {
                                 binding.mobileNumber.text =
-                                    personalInformation?.phoneDayCountryCode + " " + it
+                                    resources.getString(
+                                        R.string.concatenate_two_strings_with_space, "" +
+                                                personalInformation?.phoneDayCountryCode, it
+                                    )
                             }
                         } else {
                             binding.txtMobileNumber.text = getString(R.string.telephone_number)
                         }
+
+                        binding.mobileNumber.contentDescription =
+                            Utils.accessibilityForNumbers(binding.mobileNumber.text.toString())
                         binding.accountType.text = accountInformation!!.accountType
 
                         if (accountInformation.accountType.equals(
@@ -205,7 +210,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
                         binding.password.text = accountInformation.password
                     }
                 }
-
             }
 
             is Resource.DataError -> {
@@ -220,52 +224,69 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             else -> {
             }
         }
-        if(navFlowFrom == Constants.BIOMETRIC_CHANGE){
-            HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
-            var bundle = Bundle()
-            bundle.putString(NAV_FLOW_KEY,navFlowFrom)
-            bundle.putParcelable(Constants.PERSONALDATA, HomeActivityMain.accountDetailsData?.personalInformation)
-            findNavController()?.navigate(R.id.action_profileManagementFragment_to_resetFragment,bundle)
+        if (navFlowFrom == Constants.BIOMETRIC_CHANGE) {
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).changeBottomIconColors(requireActivity(), 3)
+            }
+            val bundle = Bundle()
+            bundle.putString(NAV_FLOW_KEY, navFlowFrom)
+            bundle.putParcelable(
+                Constants.PERSONALDATA,
+                HomeActivityMain.accountDetailsData?.personalInformation
+            )
+            findNavController().navigate(
+                R.id.action_profileManagementFragment_to_resetFragment,
+                bundle
+            )
         }
+    }
+
+    private fun callFocusToolBarHome() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome(Constants.ProfileManagemnt)
+            (requireActivity() as HomeActivityMain).requestFocusBackIcon()
+        }
+
+
     }
 
     private fun setAddressToView(personalInformation: PersonalInformation?) {
         var address = ""
         if (personalInformation?.addressLine1?.isNotEmpty() == true) {
-            address = address + personalInformation.addressLine1
+            address += personalInformation.addressLine1
         }
         if (personalInformation?.addressLine2?.isNotEmpty() == true) {
-            if (address.isNotEmpty() == true) {
-                address = address + "\n"
+            if (address.isNotEmpty()) {
+                address += "\n"
             }
-            address = address + personalInformation.addressLine2
+            address += personalInformation.addressLine2
         }
         if (personalInformation?.city?.isNotEmpty() == true) {
-            if (address.isNotEmpty() == true) {
-                address = address + "\n"
+            if (address.isNotEmpty()) {
+                address += "\n"
             }
-            address = address + personalInformation.city
+            address += personalInformation.city
         }
         if (personalInformation?.zipcode?.isNotEmpty() == true) {
-            if (address.isNotEmpty() == true) {
-                address = address + "\n"
+            if (address.isNotEmpty()) {
+                address += "\n"
             }
-            address = address + personalInformation.zipcode
+            address += personalInformation.zipcode
         }
         if (Utils.getCountryName(
                 sessionManager,
                 personalInformation?.country ?: ""
             ).isNotEmpty()
         ) {
-            if (address.isNotEmpty() == true) {
-                address = address + "\n"
+            if (address.isNotEmpty()) {
+                address += "\n"
             }
-            address = address + Utils.getCountryName(
+            address += Utils.getCountryName(
                 sessionManager,
                 personalInformation?.country ?: ""
             )
         }
-        if (personalInformation?.addressLine1?.isEmpty() == true && personalInformation?.city?.isEmpty() == true && personalInformation?.zipcode?.isEmpty() == true) {
+        if (personalInformation?.addressLine1?.isEmpty() == true && personalInformation.city?.isEmpty() == true && personalInformation.zipcode?.isEmpty() == true) {
 
         } else {
             binding.address.text = address
@@ -299,7 +320,6 @@ class ProfileManagementFragment : BaseFragment<FragmentCreateAccountSummaryBindi
             }
 
             R.id.editMobileNumber -> {
-
                 bundle.putString(NAV_FLOW_KEY, PROFILE_MANAGEMENT_MOBILE_CHANGE)
                 findNavController().navigate(
                     R.id.action_profileManagementFragment_to_mobileNumberFragment,

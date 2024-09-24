@@ -17,7 +17,7 @@ data class AccountInformation(
     val challengeQuestionThree: String?,
     val challengeQuestionTwo: String?,
     val closeAccount: String?,
-    var communicationPreferences: ArrayList<CommunicationPrefsModel>?=null,
+    var communicationPreferences: ArrayList<CommunicationPrefsModel>? = null,
     val deliveryType: String?,
     val fee: String?,
     val languagePref: String?,
@@ -51,8 +51,10 @@ data class AccountInformation(
     var fein: String?,  // company reg no.
     val accSubType: String?,
     var mfaEnabled: String?,
-    val ncId: String?="",
-    val correspDeliveryFrequency: String?="",
+    val ncId: String? = "",
+    val correspDeliveryFrequency: String? = "",
+    var accountToBeClosedDate: String? = "",
+    val inactiveStatus : Boolean? = false,
 ) : Parcelable
 
 

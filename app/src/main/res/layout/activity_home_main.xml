@@ -8,13 +8,22 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:contentInsetStart="@dimen/margin_0dp"
+            android:contentInsetLeft="@dimen/margin_0dp"
+            android:contentInsetRight="@dimen/margin_0dp"
+            android:contentInsetEnd="@dimen/margin_0dp"
+            app:contentInsetLeft="@dimen/margin_0dp"
+            app:contentInsetStart="@dimen/margin_0dp"
+            app:contentInsetRight="@dimen/margin_0dp"
+            app:contentInsetEnd="@dimen/margin_0dp"
             android:id="@+id/id_tool_bar_lyt"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/margin_50dp"
             android:background="@color/white"
-            android:elevation="3dp"
+            android:elevation="@dimen/margin_3dp"
             android:theme="@style/Theme.ToolBar"
-            android:translationZ="2dp"
+            android:translationZ="@dimen/margin_2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -26,39 +35,31 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/back_button"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/margin_48dp"
+                    android:layout_height="@dimen/margin_48dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
+                    android:contentDescription="@string/str_back"
+                    android:padding="@dimen/margin_11dp"
                     android:tint="@color/black"
                     app:srcCompat="@drawable/ic_back_arrow_white" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btn_backText"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/ic_back_arrow"
-                    android:fontFamily="@font/sfregular"
-                    android:text="Back"
-                    android:textColor="@color/white"
-                    android:textSize="17sp"
-                    android:tint="@color/white"
-                    android:visibility="gone"
-                    app:fontFamily="@font/sfbold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/title_txt"
+                    android:gravity="center"
+                    android:minHeight="@dimen/margin_48dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/margin_50dp"
+                    android:layout_marginEnd="@dimen/margin_50dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/open_sans_semibold"
                     android:maxLines="1"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    tools:text="@string/str_make_one_of_payment" />
+                    android:textSize="@dimen/font_18sp"
+                    tools:text="@string/app_name" />
 
 
             </RelativeLayout>

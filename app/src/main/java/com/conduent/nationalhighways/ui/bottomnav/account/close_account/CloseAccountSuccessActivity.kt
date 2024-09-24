@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.bottomnav.account.close_account
 
-import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCloseAccountSuccessBinding
@@ -20,14 +18,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBinding>(),LogoutListener {
+class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBinding>(),
+    LogoutListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
+
     @Inject
-    lateinit var api:ApiService
-    var email = ""
-    var accountSubType: String = ""
+    lateinit var api: ApiService
+    private var email = ""
+    private var accountSubType: String = ""
+    private var navFlowFrom: String = ""
     lateinit var binding: ActivityCloseAccountSuccessBinding
 
     override fun observeViewModel() {
@@ -40,17 +41,25 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
     }
 
     private fun setView() {
+        if (intent.hasExtra(Constants.NAV_FLOW_FROM)) {
+            navFlowFrom = intent.getStringExtra(Constants.NAV_FLOW_FROM) ?: ""
+        }
         sessionManager.clearAll()
         binding.toolbar.backButton.gone()
-        binding.toolbar.titleTxt.text = resources.getString(R.string.str_close_account)
+        if (navFlowFrom == Constants.IN_ACTIVE) {
+            binding.toolbar.titleTxt.text = resources.getString(R.string.str_account_inactive)
+        } else {
+            binding.toolbar.titleTxt.text = resources.getString(R.string.str_close_account)
+        }
         if (intent.hasExtra(Constants.EMAIL)) {
             email = intent.getStringExtra(Constants.EMAIL).toString()
+            email = email.replace("-", "‐")
         }
         if (intent.hasExtra(Constants.ACCOUNT_SUBTYPE)) {
             accountSubType = intent.getStringExtra(Constants.ACCOUNT_SUBTYPE).toString()
         }
 
-        if (accountSubType.equals(Constants.PAYG)||accountSubType.equals(Constants.EXEMPT_PARTNER)) {
+        if (accountSubType.equals(Constants.PAYG) || accountSubType.equals(Constants.EXEMPT_PARTNER)) {
             binding.titleNext.gone()
             binding.whatHappensNext.gone()
         } else {
@@ -87,7 +96,7 @@ class CloseAccountSuccessActivity : BaseActivity<ActivityCloseAccountSuccessBind
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
 //        sessionManager.clearAll()
-        Utils.sessionExpired(this, this, sessionManager,api)
+        Utils.sessionExpired(this, this, sessionManager, api)
     }
 
     override fun onDestroy() {

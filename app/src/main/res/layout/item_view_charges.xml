@@ -13,6 +13,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
+        android:id="@+id/root_view"
         android:layout_height="wrap_content"
         app:cardElevation="@dimen/margin_3dp">
 
@@ -25,7 +26,7 @@
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/margin_5dp"
                 android:backgroundTint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -50,7 +51,7 @@
                     android:gravity="center|left"
                     android:text="@string/str_type_of_vehicle"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:layout_constraintBottom_toBottomOf="@id/label_vehicle_class"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical1"
                     app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +66,7 @@
                                     android:padding="@dimen/_2sdp"
                                     android:text="@string/str_one_of_payment"
                                     android:textColor="@color/black"
-                                    android:textSize="14sp"
+                                    android:textSize="@dimen/font_14sp"
                                     android:visibility="gone"
                                     android:fontFamily="@font/open_sans_semibold"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -77,26 +78,27 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/label_vehicle_class"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/margin_21dp"
                     android:text="@string/vehicle__class"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical_new"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
                     app:layout_constraintTop_toTopOf="parent" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/label_one_off_payment"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/margin_21dp"
                     android:text="@string/one_off__payment"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical_new"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -107,11 +109,10 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
-
                     android:padding="@dimen/_2sdp"
-                    android:text="If you have\nan account"
+                    android:text="@string/if_you_have_nan_account"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:layout_constraintBottom_toBottomOf="@id/label_vehicle_class"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical3"
@@ -120,10 +121,10 @@
                 <View
                     android:id="@+id/view_footer"
                     android:layout_width="match_parent"
-                    android:layout_height="3dp"
+                    android:layout_height="@dimen/margin_3dp"
                     android:layout_marginTop="@dimen/margin_17dp"
                     android:background="@color/blue_vehicle_charge_heading"
-                    app:layout_constraintTop_toBottomOf="@id/label_vehicle_class" />
+                    app:layout_constraintTop_toBottomOf="@id/label_if_you_have_accoun" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guide_line_vertical1"
@@ -171,25 +172,25 @@
                     android:src="@drawable/ic_truck_black"
                     android:padding="@dimen/_2sdp"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/view_footer"
                     tools:text="Cars,\nMotorhomes,\nMinibuses" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/value_vehicle_class"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/margin_40dp"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
                     android:text="@{data.vehicleClass}"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical_new"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical1"
                     app:layout_constraintTop_toTopOf="@+id/iv_type_of_vehicle"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle"
-                    />
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle" />
 
                 <!--
                         <androidx.appcompat.widget.AppCompatTextView
@@ -198,7 +199,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:fontFamily="@font/open_sans"
-                            android:textSize="14sp"
+                            android:textSize="@dimen/font_14sp"
                             android:padding="@dimen/_2sdp"
                             android:gravity="center"
                             android:visibility="gone"
@@ -219,11 +220,11 @@
                     android:padding="@dimen/_2sdp"
                     android:text="@{data.oneOffPaymentRate}"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:layout_constraintEnd_toStartOf="@id/guide_line_vertical3"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical_new"
                     app:layout_constraintTop_toTopOf="@+id/iv_type_of_vehicle"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_type_of_vehicle" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/value_if_you_have_an_account"
@@ -234,18 +235,19 @@
                     android:padding="@dimen/_2sdp"
                     android:text="@{data.ifYouHaveAccountRate}"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_14sp"
                     app:layout_constraintBottom_toBottomOf="@id/iv_type_of_vehicle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/guide_line_vertical3"
                     app:layout_constraintTop_toTopOf="@id/iv_type_of_vehicle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/grayColorIcon"
+                android:layout_height="@dimen/margin_2dp"
+                android:background="@color/gray_707070"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>

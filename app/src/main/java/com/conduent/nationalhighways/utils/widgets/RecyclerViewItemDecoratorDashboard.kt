@@ -28,7 +28,7 @@ class RecyclerViewItemDecoratorDashboard
         val position = parent.getChildLayoutPosition(view)
         //set right margin to all
         //we only add top margin to the first row
-        if (position >=0) {
+        if (position >= 0) {
             outRect.top = margin
         }
 

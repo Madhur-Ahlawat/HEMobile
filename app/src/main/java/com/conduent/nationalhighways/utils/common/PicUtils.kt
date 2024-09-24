@@ -5,7 +5,6 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -54,17 +53,36 @@ object PicUtils {
                         uri
                     ).startsWith("msf:")
                 ) {
-                    val file: File = File(
-                        context.cacheDir,
+
+                    val hasFileExtension = Utils.checkFileTypeByExtension(
                         getFileNameFromUri(
                             uri,
                             context.contentResolver
-                        ) + "." + Objects.requireNonNull(
-                            context.contentResolver.getType(
-                                uri
-                            )
-                        )?.split("/")?.get(1)
+                        ).toString()
                     )
+                    var file = File("")
+                    if (hasFileExtension) {
+                        file = File(
+                            context.cacheDir,
+                            getFileNameFromUri(
+                                uri,
+                                context.contentResolver
+                            ).toString()
+                        )
+                    } else {
+                        file = File(
+                            context.cacheDir,
+                            getFileNameFromUri(
+                                uri,
+                                context.contentResolver
+                            ) + "." + Objects.requireNonNull(
+                                context.contentResolver.getType(
+                                    uri
+                                )
+                            )?.split("/")?.get(1)
+                        )
+                    }
+
                     Log.e("TAG", "getPath: file " + file)
                     Log.e(
                         "TAG", "getPath: file " + Objects.requireNonNull(
@@ -104,7 +122,7 @@ object PicUtils {
                 } else if ("audio" == type) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
                 } else if ("document".equals(type)) {
-                  return  copyFileToInternal(context,uri)
+                    return copyFileToInternal(context, uri)
 //                    contentUri = MediaStore.Files.getContentUri("external", split[1].toLong());
                 }
                 val selection = "_id=?"
@@ -127,31 +145,29 @@ object PicUtils {
 
     @SuppressLint("Range")
     private fun copyFileToInternal(context: Context, fileUri: Uri): String? {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val cursor: Cursor? = context.contentResolver.query(
-                fileUri,
-                arrayOf<String>(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
-                null,
-                null
-            )
-            cursor?.moveToFirst()
-            val displayName = cursor?.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-            val size = cursor?.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
-            val file: File = File((context.getFilesDir()).toString() + "/" + displayName)
-            try {
-                val fileOutputStream = FileOutputStream(file)
-                val inputStream: InputStream = context.contentResolver.openInputStream(fileUri)!!
-                val buffers = ByteArray(1024)
-                var read: Int
-                while (inputStream.read(buffers).also { read = it } != -1) {
-                    fileOutputStream.write(buffers, 0, read)
-                }
-                inputStream.close()
-                fileOutputStream.close()
-                return file.path
-            } catch (e: IOException) {
-                e.printStackTrace()
+        val cursor: Cursor? = context.contentResolver.query(
+            fileUri,
+            arrayOf<String>(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE),
+            null,
+            null
+        )
+        cursor?.moveToFirst()
+        val displayName = cursor?.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+        val size = cursor?.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
+        val file: File = File((context.filesDir).toString() + "/" + displayName)
+        try {
+            val fileOutputStream = FileOutputStream(file)
+            val inputStream: InputStream = context.contentResolver.openInputStream(fileUri)!!
+            val buffers = ByteArray(1024)
+            var read: Int
+            while (inputStream.read(buffers).also { read = it } != -1) {
+                fileOutputStream.write(buffers, 0, read)
             }
+            inputStream.close()
+            fileOutputStream.close()
+            return file.path
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
         return null
     }

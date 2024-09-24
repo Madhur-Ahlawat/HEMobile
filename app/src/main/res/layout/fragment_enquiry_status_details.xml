@@ -16,7 +16,6 @@
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/margin_23dp">
 
-
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
@@ -29,16 +28,19 @@
                 android:textSize="@dimen/font_16sp" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_reference_number"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
                 android:layout_marginTop="@dimen/margin_14dp"
-                android:layout_marginBottom="3dp"
+                android:layout_marginBottom="@dimen/margin_3dp"
                 android:elevation="@dimen/margin_3dp"
                 android:minHeight="@dimen/margin_74dp"
                 app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:importantForAccessibility="yes"
                     android:id="@+id/layoutVehicleRegistration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -47,13 +49,15 @@
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtReferenceNumber"
                         style="@style/MediumTextBlack"
+                        android:importantForAccessibility="no"
                         android:text="@string/reference_number"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/referenceNumber"
+                        android:importantForAccessibility="no"
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
                         tools:text="AJ66 MHA"
@@ -67,17 +71,19 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_category"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
                 android:layout_marginBottom="@dimen/margin_3dp"
-
                 android:elevation="@dimen/margin_3dp"
                 android:minHeight="@dimen/margin_74dp"
                 app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cardRecentCrossings"
+                    android:importantForAccessibility="yes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
@@ -85,13 +91,15 @@
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtCategory"
                         style="@style/MediumTextBlack"
+                        android:importantForAccessibility="no"
                         android:text="@string/str_category"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/category"
+                        android:importantForAccessibility="no"
                         style="@style/RegularTextBlack"
                         android:layout_marginTop="@dimen/margin_5dp"
                         tools:text="3"
@@ -105,32 +113,35 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/emailCard"
+                android:importantForAccessibility="yes"
+                android:id="@+id/cv_sub_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
                 android:layout_marginBottom="@dimen/margin_3dp"
-
                 android:elevation="@dimen/margin_3dp"
                 android:minHeight="@dimen/margin_74dp"
                 app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtSubcategory"
+                        android:importantForAccessibility="no"
                         style="@style/MediumTextBlack"
                         android:text="@string/sub_category"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/creditAdditionalCrossings"
                         style="@style/RegularTextBlack"
+                        android:importantForAccessibility="no"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
@@ -146,25 +157,28 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_date_and_time_submitted"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
                 android:layout_marginBottom="@dimen/margin_3dp"
-
                 android:elevation="@dimen/margin_3dp"
                 android:minHeight="@dimen/margin_74dp"
                 app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtDateAndTimeSubmitted"
                         style="@style/MediumTextBlack"
+                        android:importantForAccessibility="no"
                         android:text="@string/date_time_submitted"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -172,6 +186,7 @@
                         android:id="@+id/dateAndTimeSubmitted"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
+                        android:importantForAccessibility="no"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
                         android:gravity="left|center"
@@ -186,30 +201,34 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_status_of_enquiry"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
                 android:layout_marginBottom="@dimen/margin_3dp"
-
                 android:elevation="@dimen/margin_3dp"
                 android:minHeight="@dimen/margin_74dp"
                 app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtStatusOfEnquiry"
                         style="@style/MediumTextBlack"
+                        android:importantForAccessibility="no"
                         android:text="@string/status_of_enquiry"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/statusOfEnquiry"
+                        android:importantForAccessibility="no"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -226,32 +245,35 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/labelPaymentAmount"
+                android:importantForAccessibility="yes"
+                android:id="@+id/cv_date_enquiry_closed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
                 android:layout_marginBottom="@dimen/margin_3dp"
-
                 android:elevation="@dimen/margin_3dp"
                 android:minHeight="@dimen/margin_74dp"
                 app:cardCornerRadius="@dimen/margin_5dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtdateEnquiryClose"
                         style="@style/MediumTextBlack"
+                        android:importantForAccessibility="no"
                         android:text="@string/date_enquiry_closed"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/dateAndEnquiry"
                         style="@style/RegularTextBlack"
+                        android:importantForAccessibility="no"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5dp"
@@ -267,6 +289,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_details_of_enquiry"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_3dp"
@@ -276,19 +300,22 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:importantForAccessibility="yes"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_15dp">
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/txtLabelPaymentAmount"
+                        android:importantForAccessibility="no"
                         style="@style/MediumTextBlack"
                         android:text="@string/date_time_submitted"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/font_15sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.conduent.nationalhighways.utils.widgets.NHTextView
                         android:id="@+id/paymentAmount"
+                        android:importantForAccessibility="no"
                         style="@style/RegularTextBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

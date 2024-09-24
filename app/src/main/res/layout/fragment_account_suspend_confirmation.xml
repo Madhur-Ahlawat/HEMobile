@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/margin_20dp"
-    android:paddingStart="18dp"
+    android:paddingStart="@dimen/margin_18dp"
     android:paddingEnd="@dimen/margin_18dp"
-    android:paddingBottom="@dimen/margin_20dp"
-    >
+    android:paddingBottom="@dimen/margin_20dp">
 
     <com.conduent.nationalhighways.utils.widgets.NHTextView
         android:id="@+id/tv_check_your_answers"
@@ -16,11 +15,12 @@
         android:textSize="@dimen/font_16sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_24dp"
-        android:text="@string/str_check_your_answers_before_making_payment"
+        android:text="@string/str_check_your_answer_before_payment"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent" />
+
     <com.conduent.nationalhighways.utils.widgets.NHTextView
         android:id="@+id/tv_personal_details"
         style="@style/Widget.HeMobile.TextInputLayout"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_24dp"
             android:text="@string/str_Mastercard"
-            android:textColor="@color/grayColorIcon"
+            android:textColor="@color/gray_707070"
             android:textStyle="bold"
             android:textSize="@dimen/font_16sp"
             app:layout_constraintBottom_toBottomOf="parent"

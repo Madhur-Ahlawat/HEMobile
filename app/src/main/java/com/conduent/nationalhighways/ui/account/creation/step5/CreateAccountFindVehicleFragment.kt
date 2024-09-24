@@ -1,18 +1,14 @@
 package com.conduent.nationalhighways.ui.account.creation.step5
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.Parcelable
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.BuildConfig
@@ -22,12 +18,10 @@ import com.conduent.nationalhighways.data.model.account.GetPlateInfoResponseMode
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.account.ValidVehicleCheckRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
-import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountFindVehicleBinding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -36,6 +30,7 @@ import com.conduent.nationalhighways.utils.common.Utils.splCharsVehicleRegistrat
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,11 +41,10 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     private var plateNumber = ""
     private var oldPlateNumber = ""
     private val viewModel: CreateAccountVehicleViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var time = (1 * 1000).toLong()
     private var isPayForCrossingFlow = false
     private var isClicked: Boolean = false
-    private var edit_vehicle: Boolean = false
+    private var editVehicle: Boolean = false
     private var totalVehicleCount: Int = -1
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
@@ -58,14 +52,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
 
     override fun init() {
         if (arguments?.containsKey(Constants.EDIT_VEHICLE) == true) {
-            edit_vehicle = arguments?.getBoolean(Constants.EDIT_VEHICLE) ?: false
+            editVehicle = arguments?.getBoolean(Constants.EDIT_VEHICLE) ?: false
         }
         if (arguments?.containsKey(Constants.COUNT) == true) {
             totalVehicleCount = arguments?.getInt(Constants.COUNT) ?: 0
         }
         isPayForCrossingFlow = navFlowCall.equals(Constants.PAY_FOR_CROSSINGS, true)
         if (NewCreateAccountRequestModel.oneOffVehiclePlateNumber.isNotEmpty()) {
-            binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.oneOffVehiclePlateNumber.toString())
+            binding.editNumberPlate.editText.setText(NewCreateAccountRequestModel.oneOffVehiclePlateNumber)
             binding.findVehicle.enable()
         }
 
@@ -88,17 +82,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         binding.editNumberPlate.editText.filters = arrayOf(InputFilter.LengthFilter(10))
         binding.editNumberPlate.editText.inputType =
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
-        if (!plateNumber.isNullOrEmpty()) {
+        if (plateNumber.isNotEmpty()) {
             binding.editNumberPlate.setText(plateNumber.trim().replace(" ", "").replace("-", ""))
 
         }
         if (plateNumber.isNotEmpty()) {
             binding.findVehicle.isEnabled = true
         }
-        loader = LoaderDialog()
-        loader?.setStyle(
-            DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle
-        )
+
 
         NewCreateAccountRequestModel.isExempted = false
         NewCreateAccountRequestModel.isRucEligible = false
@@ -127,16 +118,20 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
         }
 
+        binding.editNumberPlate.editText.setAccessibilityDelegateForDigits()
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+
     }
 
     override fun initCtrl() {
-//        binding.editNumberPlate.setMaxLength(10)
-        binding.editNumberPlate.editText.addTextChangedListener(GenericTextWatcher(0))
+        binding.editNumberPlate.editText.addTextChangedListener(GenericTextWatcher())
         binding.findVehicle.setOnClickListener(this)
         binding.cancelBt.setOnClickListener(this)
     }
 
-    inner class GenericTextWatcher(private val index: Int) : TextWatcher {
+    inner class GenericTextWatcher : TextWatcher {
         override fun beforeTextChanged(
             charSequence: CharSequence?,
             start: Int,
@@ -155,38 +150,25 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
 
         override fun afterTextChanged(s: Editable?) {
-//            val inputText = s.toString()
-//            val capitalizedText = inputText.capitalize() // Capitalize the text
-//
-//            // Remove the TextWatcher to prevent infinite loop
-//            binding.editNumberPlate.editText.removeTextChangedListener(this)
-//
-//            // Set the capitalized text back to the EditText
-//            binding.editNumberPlate.editText.setText(capitalizedText)
-//
-//            // Move the cursor to the end of the text
-//            binding.editNumberPlate.editText.setSelection(capitalizedText.length)
-//
-//            // Add the TextWatcher back
-//            binding.editNumberPlate.editText.addTextChangedListener(this)
+
         }
     }
 
 
     private fun isEnable() {
-        val entered_numberplate =
+        val enteredNumberplate =
             binding.editNumberPlate.editText.text.toString().trim().replace("-", "")
-        if (entered_numberplate.isEmpty()) {
+        if (enteredNumberplate.isEmpty()) {
             binding.findVehicle.isEnabled = false
             binding.editNumberPlate.removeError()
         } else {
-            if (entered_numberplate.trim().last().toString() == "." || entered_numberplate.first()
+            if (enteredNumberplate.trim().last().toString() == "." || enteredNumberplate.first()
                     .toString() == "."
             ) {
                 binding.editNumberPlate.setErrorText(resources.getString(R.string.str_vehicle_registration))
                 binding.findVehicle.isEnabled = false
             } else if (Utils.hasSpecialCharacters(
-                    entered_numberplate.replace(" ", ""),
+                    enteredNumberplate.replace(" ", ""),
                     splCharsVehicleRegistration
                 )
             ) {
@@ -206,7 +188,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     override fun observer() {
         if (!isViewCreated) {
             observe(viewModel.findOneOffVehicleLiveData, ::apiResponseDVRM1)
-//            observe(viewModel.findVehicleLiveData, ::apiResponseDVRM1)
             observe(viewModel.findVehiclePlateLiveData, ::apiResponsePlateInfo)
 
             observe(viewModel.findNewVehicleLiveData, ::apiResponseDVRM)
@@ -248,7 +229,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             bundle
                         )
                     } else {
-                        if (edit_vehicle || navFlowCall == Constants.TRANSFER_CROSSINGS) {
+                        if (editVehicle || navFlowCall == Constants.TRANSFER_CROSSINGS) {
                             val numberPlate =
                                 binding.editNumberPlate.editText.text.toString().trim()
                                     .replace(" ", "")
@@ -270,9 +251,9 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         .replace("-", "")
                 NewCreateAccountRequestModel.plateNumber = numberPlate
 
-                Handler(Looper.getMainLooper()).postDelayed({
-                    binding.findVehicle.isEnabled = true
-                }, time)
+//                Handler(Looper.getMainLooper()).postDelayed({
+                binding.findVehicle.isEnabled = true
+//                }, time)
 
 
                 val addedVehicleList = NewCreateAccountRequestModel.addedVehicleList
@@ -302,7 +283,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     }
                     val vehicleList = NewCreateAccountRequestModel.vehicleList
                     val size = vehicleAddedCount + vehicleList.size
-                    if (navFlowCall.equals(Constants.VEHICLE_MANAGEMENT)) {
+                    if (navFlowCall == Constants.VEHICLE_MANAGEMENT) {
                         val accountType =
                             HomeActivityMain.accountDetailsData?.accountInformation?.accountType
                         val accSubType =
@@ -385,19 +366,12 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         bundle
                     )
                 } else {
-                    loader?.show(
-                        requireActivity().supportFragmentManager,
-                        Constants.LOADER_DIALOG
-                    )
-                    getOneoffApi()
+                    showLoaderDialog()
+                    getOneOffApi()
                 }
             } else {
-
-                loader?.show(
-                    requireActivity().supportFragmentManager,
-                    Constants.LOADER_DIALOG
-                )
-                getOneoffApi()
+                showLoaderDialog()
+                getOneOffApi()
             }
         } else {
 
@@ -415,10 +389,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         bundle
                     )
                 } else {
-                    loader?.show(
-                        requireActivity().supportFragmentManager,
-                        Constants.LOADER_DIALOG
-                    )
+                    showLoaderDialog()
                     viewModel.getVehiclePlateData(
                         numberPlate.uppercase(),
                         Constants.AGENCY_ID.toInt()
@@ -433,7 +404,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         }
     }
 
-    private fun getOneoffApi() {
+    private fun getOneOffApi() {
         viewModel.getOneOffVehicleData(
             binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                 .replace("-", "").uppercase(),
@@ -441,10 +412,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         )
     }
 
-    private fun apiResponseDVRM1(resource: Resource<ArrayList<NewVehicleInfoDetails>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+    private fun apiResponseDVRM1(resource: Resource<List<NewVehicleInfoDetails>?>?) {
+        dismissLoaderDialog()
         val accountData = NewCreateAccountRequestModel
         val vehicleList = accountData.vehicleList
         when (resource) {
@@ -458,9 +427,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         binding.editNumberPlate.editText.text.toString()
                     )
 
-                    if (it.size > 0) {
-
-                        if (it[0].vehicleClass.equals("E", true) == true) {
+                    if (it.isNotEmpty()) {
+                        if (it[0].vehicleClass.equals("E", true)) {
                             NewCreateAccountRequestModel.isExempted = true
                             bundle.putParcelable(Constants.VEHICLE_DETAIL, it[0])
                             bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
@@ -469,7 +437,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 bundle
                             )
 
-                        } else if (it[0].vehicleClass.equals("A", true) == true) {
+                        } else if (it[0].vehicleClass.equals("A", true)) {
                             NewCreateAccountRequestModel.isRucEligible = true
                             if (it.isNotEmpty()) {
                                 bundle.putParcelable(
@@ -502,7 +470,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             }
                             bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                             arguments?.getInt(Constants.VEHICLE_INDEX)
-                                ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                                ?.let { it1 -> bundle.putInt(Constants.VEHICLE_INDEX, it1) }
                             if (binding.editNumberPlate.getText().toString().trim()
                                     .replace(" ", "")
                                     .replace("-", "") != NewCreateAccountRequestModel.plateNumber
@@ -532,11 +500,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 NewCreateAccountRequestModel.plateNumber = ""
                                 NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
                                 NewCreateAccountRequestModel.vehicleList =
-                                    mutableListOf<NewVehicleInfoDetails>()
+                                    mutableListOf()
                                 NewCreateAccountRequestModel.addedVehicleList =
-                                    ArrayList<VehicleResponse?>()
+                                    ArrayList()
                                 NewCreateAccountRequestModel.addedVehicleList2 =
-                                    ArrayList<VehicleResponse?>()
+                                    ArrayList()
                                 NewCreateAccountRequestModel.isRucEligible = false
                                 NewCreateAccountRequestModel.isExempted = false
                                 NewCreateAccountRequestModel.isVehicleAlreadyAdded = false
@@ -606,8 +574,8 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                         bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
                         arguments?.getInt(Constants.VEHICLE_INDEX)
                             ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                        if (!binding.editNumberPlate.getText().toString().trim().replace(" ", "")
-                                .replace("-", "").equals(NewCreateAccountRequestModel.plateNumber)
+                        if (binding.editNumberPlate.getText().toString().trim().replace(" ", "")
+                                .replace("-", "") != NewCreateAccountRequestModel.plateNumber
                         ) {
                             NewCreateAccountRequestModel.referenceId = ""
                             NewCreateAccountRequestModel.emailAddress = ""
@@ -634,11 +602,11 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                             NewCreateAccountRequestModel.plateNumber = ""
                             NewCreateAccountRequestModel.plateNumberIsNotInDVLA = false
                             NewCreateAccountRequestModel.vehicleList =
-                                mutableListOf<NewVehicleInfoDetails>()
+                                mutableListOf()
                             NewCreateAccountRequestModel.addedVehicleList =
-                                ArrayList<VehicleResponse?>()
+                                ArrayList()
                             NewCreateAccountRequestModel.addedVehicleList2 =
-                                ArrayList<VehicleResponse?>()
+                                ArrayList()
                             NewCreateAccountRequestModel.isRucEligible = false
                             NewCreateAccountRequestModel.isExempted = false
                             NewCreateAccountRequestModel.isVehicleAlreadyAdded = false
@@ -672,9 +640,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
         bundle.putBoolean(Constants.EDIT_SUMMARY, edit_summary)
 
         bundle.putString(Constants.PLATE_NUMBER, binding.editNumberPlate.editText.text.toString())
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         val accountData = NewCreateAccountRequestModel
         val vehicleList = accountData.vehicleList
         when (resource) {
@@ -697,7 +663,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                     arguments?.getInt(Constants.VEHICLE_INDEX)
                         ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
 
-                    if (vehicleItem.isExempted.lowercase().equals("y")) {
+                    if (vehicleItem.isExempted.lowercase() == "y") {
                         NewCreateAccountRequestModel.isExempted = true
                         findNavController().navigate(
                             R.id.action_findVehicleFragment_to_maximumVehicleFragment,
@@ -789,9 +755,7 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseDVRM(resource: Resource<List<NewVehicleInfoDetails?>?>) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         val accountData = NewCreateAccountRequestModel
         val vehicleList = accountData.vehicleList
         if (isClicked) {
@@ -872,10 +836,6 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
                                 )
                             }
                             bundle.putString(Constants.NAV_FLOW_FROM, Constants.FIND_VEHICLE)
-//                            findNavController().navigate(
-//                                R.id.action_findYourVehicleFragment_to_businessVehicleDetailFragment,
-//                                bundle
-//                            )
                             findNavController().navigate(
                                 R.id.action_findVehicleFragment_to_maximumVehicleFragment,
                                 bundle
@@ -974,19 +934,14 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
     }
 
     private fun apiResponseValidVehicle(resource: Resource<String?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
-
                 viewModel.getNewVehicleData(
                     binding.editNumberPlate.editText.text.toString().trim().replace(" ", "")
                         .replace("-", "").uppercase(),
                     Constants.AGENCY_ID.toInt()
                 )
-
-
             }
 
             is Resource.DataError -> {
@@ -1014,5 +969,4 @@ class CreateAccountFindVehicleFragment : BaseFragment<FragmentCreateAccountFindV
             }
         }
     }
-
 }

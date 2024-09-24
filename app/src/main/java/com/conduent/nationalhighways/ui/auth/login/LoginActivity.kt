@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -14,14 +13,16 @@ import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.biometric.BiometricPrompt
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.conduent.nationalhighways.R
+import com.conduent.nationalhighways.data.model.ErrorResponseModel
 import com.conduent.nationalhighways.data.model.account.LRDSResponse
 import com.conduent.nationalhighways.data.model.auth.forgot.email.LoginModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryApiResponse
 import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
+import com.conduent.nationalhighways.data.model.payment.PaymentMethodResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -36,18 +37,25 @@ import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
+import com.conduent.nationalhighways.ui.bottomnav.account.payments.method.PaymentMethodViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.DateUtils
-import com.conduent.nationalhighways.utils.common.*
-import com.conduent.nationalhighways.utils.extn.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
-import java.util.*
 import javax.inject.Inject
 
 
@@ -56,7 +64,6 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var commaSeparatedString: String? = null
     private var filterTextForSpecialChars: String? = null
     private val viewModel: LoginViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private var materialToolbar: MaterialToolbar? = null
@@ -72,6 +79,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
     private var crossingCount: Int = 0
     private var hasFaceBiometric = false
     private var hasTouchBiometric = false
+    private val paymentMethodViewModel: PaymentMethodViewModel by viewModels()
+    private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
+
 
     @Inject
     lateinit var api: ApiService
@@ -85,24 +95,56 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             observe(viewModel.login, ::handleLoginResponse)
             observe(dashboardViewModel.accountOverviewVal, ::handleAccountDetails)
             observe(dashboardViewModel.crossingHistoryVal, ::crossingHistoryResponse)
-            observe(dashboardViewModel.lrdsVal, ::handleLrdsResposne)
-
+            observe(dashboardViewModel.lrdsVal, ::handleLrdsResponse)
+            paymentMethodViewModel.savedCardState.collect {
+                handleSaveCardResponse(it)
+            }
         }
-
-
     }
 
-    private fun handleLrdsResposne(resource: Resource<LRDSResponse?>?) {
+    private fun handleSaveCardResponse(status: Resource<PaymentMethodResponseModel?>?) {
+        when (status) {
+            is Resource.Success -> {
+                paymentList?.clear()
+                for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
+                    if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
+                        paymentList?.add(status.data.creditCardListType.cardsList[i])
+                    }
+                }
+                for (i in 0 until paymentList.orEmpty().size) {
+                    Utils.checkNullValuesOfModel(paymentList?.get(i))
+                }
+
+                lifecycleScope.launch {
+                    paymentMethodViewModel._savedCardListState.emit(null)
+                }
+
+                checkAccountIsTwoFA(callLRDSAPI = true)
+            }
+
+            is Resource.DataError -> {
+                if (checkSessionExpiredOrServerError(status.errorModel)
+                ) {
+                    displaySessionExpireDialog(status.errorModel)
+                } else {
+                    ErrorUtil.showError(binding.root, status.errorMsg)
+                }
+            }
+
+            else -> {
+            }
+        }
+    }
+
+    private fun handleLrdsResponse(resource: Resource<LRDSResponse?>?) {
 
         when (resource) {
 
             is Resource.Success -> {
 
                 if (resource.data?.srApprovalStatus?.uppercase().equals("APPROVED")) {
-                    hideLoader()
-                    startNewActivityByClearingStack(LandingActivity::class.java) {
-                        putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
-                    }
+                    dismissLoaderDialog()
+                    redirectToLanding(true)
                 } else {
                     crossingHistoryApi()
                     if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
@@ -112,49 +154,31 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         sessionManager.saveHasAskedForBiometric(false)
                     }
 
-                    if (sessionManager.getTwoFAEnabled()) {
-                        hideLoader()
-                        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                        intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-                        intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                        intent.putExtra(Constants.FIRST_TYM_REDIRECTS, true)
-                        startActivity(intent)
-                    } else {
-                        dashboardViewModel.getAccountDetailsData()
-                    }
+                    checkAccountIsTwoFA(callDetailsAPI = true)
                     sessionManager.saveUserName(binding.edtEmail.getText().toString())
                 }
             }
-            is Resource.DataError ->{
-                hideLoader()
+
+            is Resource.DataError -> {
+//                dismissLoaderDialog()
+                crossingHistoryApi()
+                if (sessionManager.fetchUserName() != binding.edtEmail.getText().toString()
+                        .trim()
+                ) {
+                    sessionManager.saveTouchIdEnabled(false)
+                    sessionManager.saveHasAskedForBiometric(false)
+                }
+
+                checkAccountIsTwoFA(callDetailsAPI = true)
+                sessionManager.saveUserName(binding.edtEmail.getText().toString())
             }
 
             else -> {
-                hideLoader()
+                dismissLoaderDialog()
             }
         }
     }
 
-    private fun showLoader() {
-        val fragmentManager = supportFragmentManager
-        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
-        if (existingFragment != null) {
-            // Dismiss the existing fragment if it exists
-            (existingFragment as LoaderDialog).dismiss()
-        }
-//        if (existingFragment == null) {
-            // Fragment is not added, add it now
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
-            loader?.show(fragmentManager, Constants.LOADER_DIALOG)
-//        }
-    }
-
-    private fun hideLoader() {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-    }
 
     private fun displayBiometricDialog(title: String) {
         displayCustomMessage(title,
@@ -165,11 +189,31 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 override fun positiveBtnClick(dialog: DialogInterface) {
                     val intent = Intent(this@LoginActivity, BiometricActivity::class.java)
                     intent.putExtra(Constants.TWOFA, sessionManager.getTwoFAEnabled())
+                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
+
                     intent.putExtra(
                         Constants.FROM_LOGIN_TO_BIOMETRIC,
                         Constants.FROM_LOGIN_TO_BIOMETRIC_VALUE
                     )
-                    if (from.equals(Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS)) {
+                    intent.putExtra(
+                        Constants.CARD_VALIDATION_REQUIRED,
+                        sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+                    )
+                    if (Utils.checkReValidationPayment(paymentList, accountInformation).first) {
+                        intent.putParcelableArrayListExtra(
+                            Constants.PAYMENT_LIST_DATA,
+                            paymentList as ArrayList
+                        )
+                    }
+
+                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+                    intent.putExtra(
+                        Constants.CURRENTBALANCE,
+                        replenishmentInformation?.currentBalance
+                    )
+
+                    if (from == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                         intent.putExtra(
                             Constants.NAV_FLOW_FROM,
                             Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS
@@ -177,20 +221,28 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     } else {
                         intent.putExtra(Constants.NAV_FLOW_FROM, Constants.LOGIN)
                     }
-
                     startActivity(intent)
-
-
-                    //dialog.dismiss()
-
-
                 }
             },
             object : DialogNegativeBtnListener {
                 override fun negativeBtnClick(dialog: DialogInterface) {
-                    startNewActivityByClearingStack(HomeActivityMain::class.java) {
-                        putString(Constants.NAV_FLOW_FROM, from)
-                        putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                    if (accountInformation?.inactiveStatus == true &&
+                        (accountInformation?.accSubType.equals(Constants.EXEMPT_PARTNER) || (accountInformation?.accountType.equals(
+                            "BUSINESS",
+                            true
+                        ) || ((accountInformation?.accSubType.equals(
+                            "STANDARD", true
+                        ) && accountInformation?.accountType.equals(
+                            "PRIVATE", true
+                        )))))
+                    ) {
+                        redirectToAuth(Constants.IN_ACTIVE)
+                    } else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                        redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
+                    } else if (accountInformation?.status.equals(Constants.SUSPENDED, true)) {
+                        redirectToAuth(Constants.SUSPENDED)
+                    } else {
+                        redirectToHome()
                     }
                 }
             })
@@ -198,7 +250,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun handleAccountDetails(status: Resource<ProfileDetailModel?>?) {
-        hideLoader()
+        dismissLoaderDialog()
 
         when (status) {
             is Resource.Success -> {
@@ -206,45 +258,48 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                 accountInformation = status.data?.accountInformation
                 replenishmentInformation = status.data?.replenishmentInformation
 
-                if (status.data?.accountInformation?.status.equals(Constants.SUSPENDED, true)) {
-                    val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-                    intent.putExtra(Constants.NAV_FLOW_KEY, Constants.SUSPENDED)
-                    intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
-                    intent.putExtra(Constants.PERSONALDATA, personalInformation)
-                    intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
-                    intent.putExtra(Constants.NAV_FLOW_FROM, from)
-                    intent.putExtra(
-                        Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+                if (!Utils.checkReValidationPayment(paymentList, accountInformation).first) {
+                    sessionManager.saveBooleanData(SessionManager.CARD_VALIDATION_REQUIRED, false)
+                }
+
+                if ((!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) && !Utils.checkLastLoggedInEmail(
+                        sessionManager,
+                        binding.edtEmail.editText.text.toString().trim()
                     )
-                    startActivity(intent)
+                ) {
+                    sessionManager.saveHasAskedForBiometric(true)
+                    if (hasTouchBiometric && hasFaceBiometric) {
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
+                    } else if (hasFaceBiometric) {
+                        displayBiometricDialog(getString(R.string.str_enable_face_ID))
+                    } else {
+                        displayBiometricDialog(getString(R.string.str_enable_touch_ID))
+
+                    }
                 } else {
-                    if (!(sessionManager.hasAskedForBiometric() && sessionManager.fetchTouchIdEnabled())) {
-                        sessionManager.saveHasAskedForBiometric(true)
-                        if (hasTouchBiometric && hasFaceBiometric) {
-                            displayBiometricDialog(getString(R.string.str_enable_face_ID_fingerprint))
-
-                        } else if (hasFaceBiometric) {
-                            displayBiometricDialog(getString(R.string.str_enable_face_ID))
-
-                        } else {
-                            displayBiometricDialog(getString(R.string.str_enable_touch_ID))
-
-                        }
+                    if (status.data?.accountInformation?.inactiveStatus == true) {
+                        redirectToAuth(Constants.IN_ACTIVE)
+                    } else if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                        redirectToAuth(Constants.CARD_VALIDATION_REQUIRED)
+                    } else if (status.data?.accountInformation?.status.equals(
+                            Constants.SUSPENDED,
+                            true
+                        )
+                    ) {
+                        redirectToAuth(Constants.SUSPENDED)
                     } else {
                         startNewActivityByClearingStack(HomeActivityMain::class.java) {
                             putString(Constants.NAV_FLOW_FROM, from)
                             putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
                         }
-
                     }
-
                 }
 
 
             }
 
             is Resource.DataError -> {
-                hideLoader()
+                dismissLoaderDialog()
                 AdobeAnalytics.setLoginActionTrackError(
                     "login",
                     "login",
@@ -264,6 +319,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         }
 
     }
+
 
     private fun crossingHistoryResponse(resource: Resource<CrossingHistoryApiResponse?>?) {
         when (resource) {
@@ -341,7 +397,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             emailCheck = if (binding.edtEmail.editText.text.toString().trim().isNotEmpty()) {
                 if (!Utils.isLastCharOfStringACharacter(
                         binding.edtEmail.editText.text.toString().trim()
-                    ) || Utils.countOccurenceOfChar(
+                    ) || Utils.countOccurrenceOfChar(
                         binding.edtEmail.editText.text.toString().trim(), '@'
                     ) > 1 || binding.edtEmail.editText.text.toString().trim().contains(
                         Utils.TWO_OR_MORE_DOTS
@@ -352,9 +408,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         .toString() == "-" || binding.edtEmail.editText.text.toString()
                         .first()
                         .toString() == "-")
-                    || (Utils.countOccurenceOfChar(
+                    || (Utils.countOccurrenceOfChar(
                         binding.edtEmail.editText.text.toString().trim(), '.'
-                    ) < 1) || (Utils.countOccurenceOfChar(
+                    ) < 1) || (Utils.countOccurrenceOfChar(
                         binding.edtEmail.editText.text.toString().trim(), '@'
                     ) < 1)
                 ) {
@@ -385,7 +441,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                         commaSeparatedString =
                             Utils.makeCommaSeperatedStringForPassword(
                                 Utils.removeAllCharacters(
-                                    Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars!!
+                                    Utils.ALLOWED_CHARS_EMAIL, filterTextForSpecialChars ?: ""
                                 )
                             )
                         if (!Patterns.EMAIL_ADDRESS.matcher(
@@ -398,7 +454,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                             binding.edtEmail.removeError()
                             true
                         }
-                    } else if (Utils.countOccurenceOfChar(
+                    } else if (Utils.countOccurrenceOfChar(
                             binding.edtEmail.editText.text.toString().trim(), '@'
                         ) !in (1..1)
                     ) {
@@ -426,12 +482,11 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             tvForgotPassword.setOnClickListener(this@LoginActivity)
             edtEmail.editText.addTextChangedListener { removeError() }
             binding.edtEmail.editText.setOnFocusChangeListener { _, b -> isEnable(b) }
-
             edtPwd.editText.doAfterTextChanged { passwordCheck() }
             btnLogin.setOnClickListener(this@LoginActivity)
             backButton.setOnClickListener(this@LoginActivity)
-
         }
+
     }
 
     private fun removeError() {
@@ -457,20 +512,17 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             is Resource.DataError -> {
-                hideLoader()
+                dismissLoaderDialog()
                 if (status.errorModel?.errorCode == Constants.INTERNAL_SERVER_ERROR) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     binding.btnLogin.isEnabled = true
-
                     if (status.errorModel?.errorCode == 5260) {
                         binding.edtEmail.setErrorText(getString(R.string.str_for_your_security_we_have_locked))
                     } else if (status.errorModel?.error.equals("unauthorized", true)) {
                         binding.edtEmail.setErrorText(getString(R.string.str_incorrect_email_or_password))
-
                     } else {
                         status.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
-
                     }
 
                     AdobeAnalytics.setLoginActionTrackError(
@@ -489,7 +541,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             }
 
             else -> {
-                hideLoader()
+                dismissLoaderDialog()
                 status?.errorModel?.message?.let { binding.edtEmail.setErrorText(it) }
                 binding.btnLogin.isEnabled = true
             }
@@ -515,19 +567,17 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
             isSecondaryUser(response.data?.isSecondary ?: false)
             saveAuthTokenTimeOut(response.data?.expiresIn ?: 0)
             saveAccountType(response.data?.accountType ?: "")
+            saveBooleanData(
+                SessionManager.CARD_VALIDATION_REQUIRED,
+                response.data?.cardValidationRequired ?: false
+            )
             setLoggedInUser(true)
-//            saveUserName(binding.edtEmail.getText().toString())
         }
 
-        if (sessionManager.getTwoFAEnabled()) {
-            hideLoader()
-            val intent = Intent(this@LoginActivity, AuthActivity::class.java)
-            intent.putExtra(Constants.NAV_FLOW_KEY, Constants.TWOFA)
-            intent.putExtra(Constants.NAV_FLOW_FROM, from)
-
-            startActivity(intent)
+        if (response.data?.cardValidationRequired == true) {
+            paymentMethodViewModel.saveCardListState()
         } else {
-            dashboardViewModel.getLRDSResponse()
+            checkAccountIsTwoFA(callLRDSAPI = true)
         }
 
 
@@ -546,6 +596,75 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
     }
 
+    private fun checkAccountIsTwoFA(
+        callLRDSAPI: Boolean = false,
+        callDetailsAPI: Boolean = false
+    ) {
+        if (sessionManager.getTwoFAEnabled()) {
+            dismissLoaderDialog()
+            redirectToAuth(Constants.TWOFA)
+        } else if (callLRDSAPI) {
+            dashboardViewModel.getLRDSResponse()
+        } else if (callDetailsAPI) {
+            dashboardViewModel.getAccountDetailsData()
+        }
+    }
+
+    private fun redirectToLanding(isLRDS: Boolean = false) {
+        if (isLRDS) {
+            startNewActivityByClearingStack(LandingActivity::class.java) {
+                putString(Constants.SHOW_SCREEN, Constants.LRDS_SCREEN)
+            }
+        } else {
+            startNormalActivityWithFinish(LandingActivity::class.java)
+        }
+    }
+
+    private fun redirectToHome() {
+        startNewActivityByClearingStack(HomeActivityMain::class.java) {
+            putString(Constants.NAV_FLOW_FROM, from)
+            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+        }
+    }
+
+    private fun redirectToAuth(navFlowKey: String) {
+
+        val intent = Intent(this@LoginActivity, AuthActivity::class.java)
+        intent.putExtra(Constants.NAV_FLOW_KEY, navFlowKey)
+        intent.putExtra(
+            Constants.CARD_VALIDATION_REQUIRED,
+            sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)
+        )
+        intent.putExtra(Constants.NAV_FLOW_FROM, from)
+        if (navFlowKey == Constants.TWOFA) {
+            if (sessionManager.fetchBooleanData(SessionManager.CARD_VALIDATION_REQUIRED)) {
+                intent.putParcelableArrayListExtra(
+                    Constants.PAYMENT_LIST_DATA,
+                    paymentList as ArrayList
+                )
+            }
+        } else if (navFlowKey == Constants.CARD_VALIDATION_REQUIRED) {
+            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+            if (Utils.checkReValidationPayment(paymentList, accountInformation).first) {
+                intent.putParcelableArrayListExtra(
+                    Constants.PAYMENT_LIST_DATA,
+                    paymentList as ArrayList
+                )
+            }
+        } else if (navFlowKey == Constants.SUSPENDED) {
+            intent.putExtra(Constants.CROSSINGCOUNT, crossingCount.toString())
+            intent.putExtra(Constants.PERSONALDATA, personalInformation)
+            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+            intent.putExtra(
+                Constants.CURRENTBALANCE, replenishmentInformation?.currentBalance
+            )
+        } else if (navFlowKey == Constants.IN_ACTIVE) {
+            intent.putExtra(Constants.PERSONALDATA, personalInformation)
+            intent.putExtra(Constants.ACCOUNTINFORMATION, accountInformation)
+        }
+        startActivity(intent)
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -559,14 +678,14 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     enable = true
                 )
 
-                showLoader()
+                showLoaderDialog()
                 viewModel.login(loginModel)
 
 
             }
 
             R.id.back_button -> {
-                startNormalActivityWithFinish(LandingActivity::class.java)
+                redirectToLanding()
             }
 
 
@@ -582,10 +701,9 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     sessionManager.getLoggedInUser()
                 )
                 NewCreateAccountRequestModel.emailAddress = ""
-                val intent = Intent(this, AuthActivity::class.java)
-                intent.putExtra(Constants.NAV_FLOW_KEY, Constants.FORGOT_PASSWORD_FLOW)
 
-                startActivity(intent)
+                redirectToAuth(Constants.FORGOT_PASSWORD_FLOW)
+
             }
         }
     }
@@ -657,7 +775,7 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
 
 
     private fun onBiometricSuccessful() {
-        showLoader()
+        showLoaderDialog()
         getNewToken(api = api, sessionManager)
     }
 
@@ -666,13 +784,12 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
         return {}
     }
 
-    fun getNewToken(api: ApiService, sessionManager: SessionManager) {
+    private fun getNewToken(api: ApiService, sessionManager: SessionManager) {
         sessionManager.fetchRefreshToken()?.let { refresh ->
-            var responseOK = false
-            var tryCount = 0
+            var responseOK: Boolean
             var response: Response<LoginResponse?>? = null
 
-            BaseApplication.saveDateinSession(sessionManager)
+            BaseApplication.saveDateInSession(sessionManager)
 
             try {
                 response = runBlocking {
@@ -690,10 +807,19 @@ class LoginActivity : BaseActivity<FragmentLoginChangesBinding>(), View.OnClickL
                     sessionManager.saveTwoFAEnabled(false)
                 }
                 hitAPIs()
+            } else {
+                dismissLoaderDialog()
+                try {
+                    val errorResponseModel = response?.let { ErrorResponseModel.parseError(it) }
+                    errorResponseModel?.errorCode = response?.code()
+                    sessionManager.saveTouchIdEnabled(false)
+                    sessionManager.saveHasAskedForBiometric(false)
+                    displaySessionExpireDialog(errorResponseModel)
+                } catch (e: Exception) {
+
+                }
             }
         }
     }
 
 }
-
-

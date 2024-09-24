@@ -32,14 +32,14 @@
                 android:text="@string/str_allow_location_title"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/font_16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="15dp"
-                android:paddingBottom="25dp"
+                android:paddingTop="@dimen/margin_15dp"
+                android:paddingBottom="@dimen/margin_25dp"
 
                 >
 
@@ -47,12 +47,12 @@
                     android:id="@+id/message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginHorizontal="@dimen/margin_10dp"
                     android:fontFamily="@font/open_sans"
                     android:gravity="center"
                     android:text="@string/str_allow_location_desc"
                     android:textColor="@android:color/black"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/font_13sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -64,47 +64,49 @@
                 <View
                     android:layout_width="match_parent"
                     android:id="@+id/firstView"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/margin_1dp"
                     android:background="#8F8F8F"
-                    android:alpha="0.3"/>
+                    android:alpha="0.3" />
 
                 <LinearLayout
                     android:id="@+id/rebooking_back_button_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="@dimen/margin_5dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/ok_btn"
-                        android:layout_height="@dimen/margin_50dp"
+                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
+                        android:minHeight="@dimen/margin_50dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
-                        android:text="@string/str_change_to_always_allow"
+                        android:text="@string/goto_settings"
                         android:textAlignment="center"
                         android:textColor="@color/hyperlink_blue2"
-                        android:textSize="17sp"
+                        android:textSize="@dimen/font_17sp"
 
                         />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="@dimen/margin_1dp"
                         android:background="#8F8F8F"
-                        android:alpha="0.3"/>
+                        android:alpha="0.3" />
 
                     <TextView
                         android:id="@+id/cancel_btn"
+                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/margin_50dp"
+                        android:minHeight="@dimen/margin_50dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:gravity="center"
                         android:text="@string/str_opt_out"
                         android:textAlignment="center"
                         android:textColor="@color/color_E30000"
-                        android:textSize="17sp" />
+                        android:textSize="@dimen/font_17sp" />
 
 
                 </LinearLayout>

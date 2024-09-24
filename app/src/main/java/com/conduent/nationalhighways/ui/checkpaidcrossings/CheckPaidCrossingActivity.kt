@@ -1,6 +1,8 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Bundle
+import android.view.accessibility.AccessibilityEvent
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
@@ -14,6 +16,9 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,7 +47,6 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
             "check crossings",
             sessionManager.getLoggedInUser()
         )
-
     }
 
     private fun init() {
@@ -112,7 +116,6 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager, api)
     }
 
@@ -123,10 +126,26 @@ class CheckPaidCrossingActivity : BaseActivity<ActivityCreateAccountBinding>(), 
         sessionManager.clearAll()
         sessionManager.saveTouchIdEnabled(touchIdEnabled)
         if (touchIdEnabled) {
-            sessionManager.saveRefreshToken(refreshToken?:"")
+            sessionManager.saveRefreshToken(refreshToken ?: "")
             sessionManager.saveHasAskedForBiometric(hasAskedForBiometric)
         }
         LogoutUtil.stopLogoutTimer()
         super.onDestroy()
+    }
+
+    fun focusToolBarCrossingDetails() {
+        val task = Runnable {
+            if (binding.toolBarLyt.backButton.isVisible) {
+                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+            } else {
+                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                binding.toolBarLyt.titleTxt.requestFocus() // Focus on the backButton
+            }
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
     }
 }

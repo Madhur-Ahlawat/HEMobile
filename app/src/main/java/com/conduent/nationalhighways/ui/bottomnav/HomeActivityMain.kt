@@ -2,8 +2,10 @@ package com.conduent.nationalhighways.ui.bottomnav
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.accessibility.AccessibilityEvent
 import androidx.activity.viewModels
-import androidx.fragment.app.DialogFragment
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -11,9 +13,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.accountpayment.CheckedCrossingRecentTransactionsResponseModelItem
 import com.conduent.nationalhighways.data.model.accountpayment.TransactionData
-import com.conduent.nationalhighways.data.model.crossingHistory.CrossingHistoryRequest
 import com.conduent.nationalhighways.data.model.notification.AlertMessageApiResponse
-import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
@@ -26,11 +26,8 @@ import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.bottomnav.notification.NotificationViewModel
 import com.conduent.nationalhighways.ui.customviews.BottomNavigationView
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
-import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
@@ -43,6 +40,9 @@ import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -61,80 +61,84 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     @Inject
     lateinit var api: ApiService
     private lateinit var navController: NavController
-    private var loader: LoaderDialog? = null
     val viewModel: RaiseNewEnquiryViewModel by viewModels()
     var from: String = ""
-    var refreshTokenApiCalled: Boolean = false
+    private var refreshTokenApiCalled: Boolean = false
     private val communicationPrefsViewModel: CommunicationPrefsViewModel by viewModels()
+    var dataBinding: ActivityHomeMainBinding? = null
+
+    lateinit var profileDetailModel: ProfileDetailModel
+    private var focusToolBarType: String = ""
+    var redirectToPaymentStatus: Boolean = false
 
     companion object {
-        var dataBinding: ActivityHomeMainBinding? = null
-        var dateRangeModel: PaymentDateRangeModel? = null
         var accountDetailsData: ProfileDetailModel? = null
         var crossing: TransactionData? = null
         var checkedCrossing: CheckedCrossingRecentTransactionsResponseModelItem? = null
         var paymentHistoryListData: MutableList<TransactionData> = mutableListOf()
         var paymentHistoryListDataCheckedCrossings: MutableList<CheckedCrossingRecentTransactionsResponseModelItem?> =
             mutableListOf()
-
-        fun setTitle(title: String) {
-            dataBinding?.titleTxt?.text = title
-        }
-
-        fun removeBottomBar() {
-            dataBinding?.bottomNavigationView?.gone()
-        }
-
-        fun changeBottomIconColors(context: Context, pos: Int) {
-            if (pos == 0) {
-                setSelectedIcon(context, 0)
-                setDeselectedIcon(context, 1)
-                setDeselectedIcon(context, 2)
-                setDeselectedIcon(context, 3)
-            }
-
-            if (pos == 1) {
-                setSelectedIcon(context, 1)
-                setDeselectedIcon(context, 0)
-                setDeselectedIcon(context, 2)
-                setDeselectedIcon(context, 3)
-            }
-
-            if (pos == 2) {
-                setSelectedIcon(context, 2)
-                setDeselectedIcon(context, 1)
-                setDeselectedIcon(context, 0)
-                setDeselectedIcon(context, 3)
-            }
-
-            if (pos == 3) {
-                setSelectedIcon(context, 3)
-                setDeselectedIcon(context, 1)
-                setDeselectedIcon(context, 2)
-                setDeselectedIcon(context, 0)
-            }
-
-
-        }
-
-        fun setDeselectedIcon(context: Context, i: Int) {
-            dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
-                context.resources.getColor(R.color.new_btn_color)
-            )
-            dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-                context.resources.getColor(R.color.new_btn_color)
-            )
-        }
-
-        fun setSelectedIcon(context: Context, i: Int) {
-            dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
-                context.resources.getColor(R.color.hyperlink_blue2)
-            )
-            dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
-                context.resources.getColor(R.color.hyperlink_blue2)
-            )
-        }
     }
+
+    fun removeBottomBar() {
+        dataBinding?.bottomNavigationView?.gone()
+    }
+
+    fun changeBottomIconColors(context: Context, pos: Int) {
+        if (pos == 0) {
+            setSelectedIcon(context, 0)
+            setDeselectedIcon(context, 1)
+            setDeselectedIcon(context, 2)
+            setDeselectedIcon(context, 3)
+        }
+
+        if (pos == 1) {
+            setSelectedIcon(context, 1)
+            setDeselectedIcon(context, 0)
+            setDeselectedIcon(context, 2)
+            setDeselectedIcon(context, 3)
+        }
+
+        if (pos == 2) {
+            setSelectedIcon(context, 2)
+            setDeselectedIcon(context, 1)
+            setDeselectedIcon(context, 0)
+            setDeselectedIcon(context, 3)
+        }
+
+        if (pos == 3) {
+            setSelectedIcon(context, 3)
+            setDeselectedIcon(context, 1)
+            setDeselectedIcon(context, 2)
+            setDeselectedIcon(context, 0)
+        }
+
+
+    }
+
+    private fun setDeselectedIcon(context: Context, i: Int) {
+        dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
+            context.resources.getColor(R.color.new_btn_color, null)
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
+            context.resources.getColor(R.color.new_btn_color, null)
+        )
+    }
+
+
+    private fun setSelectedIcon(context: Context, i: Int) {
+        dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.imageView?.setColorFilter(
+            context.resources.getColor(R.color.hyperlink_blue2, null)
+        )
+        dataBinding?.bottomNavigationView?.navigationItems?.get(i)?.textView?.setTextColor(
+            context.resources.getColor(R.color.blue_color, null)
+        )
+    }
+
+    fun setTitle(title: String) {
+        dataBinding?.titleTxt?.text = title
+    }
+
 
     fun showHideToolbar(isShown: Boolean) {
         if (isShown) dataBinding?.idToolBarLyt?.visible() else dataBinding?.idToolBarLyt?.gone()
@@ -148,17 +152,6 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
 
-    fun showLoader() {
-        val fragmentManager = supportFragmentManager
-        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
-        if (existingFragment != null) {
-            (existingFragment as LoaderDialog).dismiss()
-        }
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
-        loader?.show(fragmentManager, Constants.LOADER_DIALOG)
-    }
-
     fun viewAllTransactions() {
         dataBinding?.apply {
             bottomNavigationView.setActiveNavigationIndex(1)
@@ -166,21 +159,12 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun getDashBoardAllData() {
-        showLoader()
-        val request = CrossingHistoryRequest(
-            startIndex = 1,
-            count = 5,
-            transactionType = Constants.ALL_TRANSACTION,
-            searchDate = Constants.TRANSACTION_DATE,
-            startDate = DateUtils.lastPriorDate(-90) ?: "", //"11/01/2021" mm/dd/yyyy
-            endDate = DateUtils.currentDate() ?: "" //"11/30/2021" mm/dd/yyyy
-        )
-        dashboardViewModel.getDashboardAllData(request)
+        showLoaderDialog()
+        dashboardViewModel.getDashboardAllData()
     }
 
-    fun hitAPIs(): () -> Unit? {
+    private fun hitAPIs(): () -> Unit? {
         getDashBoardAllData()
-        getNotificationApi()
         return {}
     }
 
@@ -223,7 +207,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             from = ""
 
         } else {
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString(Constants.NAV_FLOW_KEY, from)
             bundle.putBoolean(Constants.GO_TO_SUCCESS_PAGE, goToSuccessPage)
             dataBinding?.idToolBarLyt?.gone()
@@ -235,6 +219,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             navController.navigate(R.id.dashBoardFragment, bundle)
             getDashBoardAllData()
             changeBottomIconColors(this@HomeActivityMain, 0)
+            focusToolBarHome()
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.closeAccountFragment || destination.id == R.id.accountClosedFragment) {
@@ -272,6 +257,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             } else {
                 dataBinding?.backButton?.visible()
             }
+
         }
         dataBinding?.bottomNavigationView?.setOnNavigationItemChangedListener(
             object : OnNavigationItemChangeListener {
@@ -308,7 +294,9 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                                 navController.popBackStack(R.id.bottom_navigation_graph, true)
                                 dataBinding?.fragmentContainerView?.findNavController()
                                     ?.navigate(R.id.notificationFragment)
+
                             }
+
                         }
 
                         3 -> {
@@ -317,11 +305,11 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                                 accountFragmentClick()
                             }
                         }
+
                     }
                 }
             }
         )
-
     }
 
 
@@ -331,15 +319,27 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             (currentDestination?.id == R.id.crossingHistoryFragment)
             || (currentDestination?.id == R.id.accountFragment)
         ) {
+            Log.e("TAG", "backPressLogic: if ")
             dataBinding?.bottomNavigationView?.setActiveNavigationIndex(0)
         } else if (currentDestination?.id == R.id.caseEnquiryHistoryListFragment) {
+            Log.e("TAG", "backPressLogic: else if")
             redirectToAccountFragment()
         } else {
+            Log.e("TAG", "backPressLogic: else ")
             onBackPressedDispatcher.onBackPressed()
         }
     }
 
-    private fun accountFragmentClick() {
+    fun changeStatusOfRedirectToPayment() {
+        redirectToPaymentStatus = false
+    }
+
+    fun getRedirectToPayment(): Boolean {
+        return redirectToPaymentStatus
+    }
+
+    private fun accountFragmentClick(redirectToPayment: Boolean = false) {
+        this.redirectToPaymentStatus = redirectToPayment
         if (!this::navController.isInitialized) {
             navController = (supportFragmentManager.findFragmentById(
                 R.id.fragmentContainerView
@@ -390,10 +390,17 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handleAlertResponse(resource: Resource<AlertMessageApiResponse?>?) {
-        loader?.dismiss()
+        Log.e("TAG", "handleAlertResponse: ")
+        dismissLoaderDialog()
+
+        if (this::profileDetailModel.isInitialized) {
+            dashboardViewModel.setAccountType(profileDetailModel)
+        }
+
+
         when (resource) {
             is Resource.Success -> {
-                if (resource.data?.messageList.isNullOrEmpty() == false) {
+                if (!resource.data?.messageList.isNullOrEmpty()) {
                     val countOfY = resource.data?.messageList?.count { it?.isViewed == "Y" }
                     val countOfN = (resource.data?.messageList?.size ?: 0).minus(countOfY ?: 0)
                     if (countOfN != 0) {
@@ -403,7 +410,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
             }
 
             is Resource.DataError -> {
-
+                dataBinding?.bottomNavigationView?.updateBadgeCount(2, 0)
             }
 
             else -> {
@@ -412,15 +419,13 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         }
     }
 
-    fun setbagdeCount(countOfN: Int) {
-        dataBinding?.bottomNavigationView?.updateBadgeCount(2, countOfN ?: 0)
+    fun setBadgeCount(countOfN: Int) {
+        dataBinding?.bottomNavigationView?.updateBadgeCount(2, countOfN)
 
     }
 
     private fun getCommunicationSettingsPref(resource: Resource<ProfileDetailModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        getNotificationApi()
         when (resource) {
             is Resource.Success -> {
 
@@ -486,6 +491,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     private fun handleAccountDetailsResponse(status: Resource<ProfileDetailModel?>?) {
+        Log.e("TAG", "handleAccountDetailsResponse: ")
         refreshTokenApiCalled = false
 
         communicationPrefsViewModel.getAccountSettingsPrefs()
@@ -523,7 +529,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
                     (applicationContext as BaseApplication).setAccountSavedData(
                         this
                     )
-                    dashboardViewModel.setAccountType(this)
+                    profileDetailModel = this
                 }
             }
 
@@ -548,7 +554,7 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
     }
 
     fun refreshTokenApi() {
-        if (refreshTokenApiCalled == false) {
+        if (!refreshTokenApiCalled) {
             BaseApplication.getNewToken(api = api, sessionManager, hitAPIs())
         }
         refreshTokenApiCalled = true
@@ -590,8 +596,40 @@ class HomeActivityMain : BaseActivity<ActivityHomeMainBinding>(), LogoutListener
         accountFragmentClick()
     }
 
+    fun selectToAccountFragment() {
+        dataBinding?.bottomNavigationView?.setActiveNavigationIndex(3)
+        accountFragmentClick(true)
+    }
+
     fun hideBackIcon() {
         dataBinding?.backButton?.gone()
+    }
+
+    fun requestFocusBackIcon() {
+        dataBinding?.backButton?.requestFocus()
+    }
+
+    fun focusToolBarHome(type: String = "") {
+        if (focusToolBarType == "" || focusToolBarType != type) {
+            Log.e("TAG", "focusToolBarHome:@@ $type  focusToolBarType $focusToolBarType")
+            dataBinding?.backButton?.requestFocus() // Focus on the backButton
+            val task = Runnable {
+                if (dataBinding?.backButton?.isVisible == true) {
+                    Log.e("TAG", "focusToolBarHome:--> ")
+                    dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                    dataBinding?.backButton?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                } else {
+                    Log.e("TAG", "focusToolBarHome:**> ")
+                    dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                    dataBinding?.titleTxt?.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                }
+            }
+            Log.e("TAG", "focusToolBarHome:(()) ")
+            val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+            worker.schedule(task, 1, TimeUnit.SECONDS)
+        }
+        focusToolBarType = type
+
     }
 
 }

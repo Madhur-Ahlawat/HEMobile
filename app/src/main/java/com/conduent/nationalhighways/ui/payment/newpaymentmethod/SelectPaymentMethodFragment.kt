@@ -8,7 +8,9 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentSelectPaymentMethodBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +20,7 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
 
     private var personalInformation: PersonalInformation? = null
     private var paymentListSize: Int = 0
-    private var isDrectDebit: Boolean?=false
+    private var isDrectDebit: Boolean? = false
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -28,8 +30,13 @@ class SelectPaymentMethodFragment : BaseFragment<FragmentSelectPaymentMethodBind
 
 
     override fun initCtrl() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
         paymentListSize = arguments?.getInt(Constants.PAYMENT_METHOD_SIZE) ?: 0
-        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT,false)
+        isDrectDebit = arguments?.getBoolean(Constants.IS_DIRECT_DEBIT, false)
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =

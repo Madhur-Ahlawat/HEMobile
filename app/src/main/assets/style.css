@@ -51,12 +51,12 @@ h3 {
     font-family: 'OpenSans-Semibold';
     font-size: 16;
 }
-#label, #payment {
+#labelNameOnCard, #labelCardNumber, #labelCardSecurityCode, #label, #payment {
     font-family: 'opensans_regular';
     font-size: 16;
     color: #555B5A;
 }
-#hint, #checkboxHint {
+#hint, #checkboxHint, #checkboxHintRevalidate {
     font-family: 'opensans_regular';
     font-size: 16;
     color: #000000;
@@ -91,7 +91,6 @@ table,.separator {
 #checkBoxhide {
     padding-bottom:15px;
     padding-left:-1px;
-
 }
 #title {
     font-family: 'OpenSans-Semibold';
@@ -129,4 +128,43 @@ table,.separator {
 #currency1 {
     font-family: 'OpenSans-Bold';
     font-size: 16;
+}
+
+.opensans_regular_text {
+    font-family: 'opensans_regular';
+    font-size: 16;
+    color :#008BCB;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.custom-checkbox {
+  width: 15px;
+  height: 15px;
+  top: 2;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom-checkbox:checked {
+  background-color: #007AFF;
+  border-color: #007AFF;
+  opacity:0.6;
+}
+
+.custom-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 4px; /* adjust size */
+  height: 8px; /* adjust size */
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg); /* translateX to center horizontally, translateY to adjust vertical position */
 }

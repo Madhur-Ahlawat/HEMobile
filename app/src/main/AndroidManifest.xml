@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.conduent.nationalhighways">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -12,47 +12,52 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+<!--    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />-->
+
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!--    <uses-permission android:name="android.permission.RECEIVE_SMS" />-->
+    <!--    <uses-permission android:name="android.permission.READ_SMS" />-->
+    <!--    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>-->
+    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 
     <application
         android:name=".ui.base.BaseApplication"
         android:allowBackup="false"
         android:icon="@mipmap/appicon"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:resizeableActivity="false"
         android:roundIcon="@mipmap/appicon_round"
-        android:theme="@style/Theme.HEMobile"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:requestLegacyExternalStorage="true">
+        android:theme="@style/Theme.HEMobile">
         <activity
             android:name=".ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity"
             android:exported="false"
+            android:theme="@style/Theme.HEMobileDark"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.bottomnav.account.close_account.CloseAccountSuccessActivity"
             android:exported="false"
+            android:theme="@style/Theme.HEMobileDark"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.account.biometric.BiometricActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.HEMobileDark"
+            />
         <activity
-            android:name=".ui.landing.SplashActivity"
+            android:name=".ui.landing.CustomSplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -88,16 +93,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount" />
         <activity
-            android:name=".ui.futureModule.InProgressActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.account.creation.controller.CreateAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.CreateAccount"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.bottomnav.notification.NotificationViewAllActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.payment.MakeOffPaymentActivity"
@@ -132,6 +131,7 @@
              See README(https://goo.gl/l4GJaQ) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
+
             android:resource="@drawable/ic_dart_charge_app_icon" />
         <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
              notification message. See README(https://goo.gl/6BKBk7) for more. -->
@@ -151,23 +151,36 @@
             android:exported="false" />
         <receiver
             android:name=".receiver.GeofenceBroadcastReceiver"
-            android:exported="true" />
+            android:exported="false" />
 
         <service
             android:name=".service.PlayLocationService"
-            android:exported="false"
-            android:stopWithTask="false"
             android:enabled="true"
-            android:foregroundServiceType="location"/>
+            android:exported="false"
+            android:foregroundServiceType="location"
+            android:stopWithTask="false"
+            tools:node="merge" />
 
-        <receiver android:name=".receiver.BootReceiver"
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
             android:exported="true"
             android:protectionLevel="signature">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+
                 <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".utils.OTPReceiver"
+            android:exported="true"
+            android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
     </application>

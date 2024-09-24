@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp">
+        android:paddingBottom="@dimen/margin_5dp">
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/txtPlaceHolderTop"
@@ -14,24 +14,23 @@
             android:layout_width="0dp"
             android:visibility="gone"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
+            android:layout_marginBottom="@dimen/margin_7dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.conduent.apollo.ui.CMTextInput
             android:id="@+id/inputFirstName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_20dp"
             android:padding="0dp"
             app:maxLength="50"
             android:visibility="gone"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="10dp"
+            android:paddingStart="@dimen/margin_20dp"
+            android:paddingTop="@dimen/margin_10dp"
+            android:paddingEnd="@dimen/margin_20dp"
+            android:paddingBottom="@dimen/margin_10dp"
             app:labelText="@string/primary_account_contact_first_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,11 +38,13 @@
 
         <com.conduent.nationalhighways.utils.widgets.NHTextView
             android:id="@+id/txtError"
+            android:importantForAccessibility="yes"
+            android:screenReaderFocusable="true"
             style="@style/MediumText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/red_color"
-            android:paddingTop="5dp"
+            android:paddingTop="@dimen/margin_5dp"
             android:visibility="gone"
             android:fontFamily="@font/open_sans_bold"
             app:layout_constraintEnd_toEndOf="parent"

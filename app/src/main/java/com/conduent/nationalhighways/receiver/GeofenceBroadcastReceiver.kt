@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -15,8 +17,10 @@ import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.location.GeofencingEvent
 import java.io.BufferedWriter
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     private val TAG = "GeofenceBroadcastReceiv"
@@ -51,15 +55,18 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         intent: Intent,
         bufferedWriter: BufferedWriter?
     ) {
-        val checkLocationPermission: Boolean = if (sessionManager.fetchBooleanData(SessionManager.SettingsClick)) {
-            Utils.checkLocationpermission(context)
+        var checkLocationPermission = false
+        var checkNotificationPermission = false
+        if (sessionManager.fetchBooleanData(SessionManager.SettingsClick)) {
+            checkLocationPermission = Utils.checkLocationPermission(context)
         } else {
-            (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION) && Utils.checkLocationpermission(
-                context
-            ))
+            checkLocationPermission =
+                (sessionManager.fetchBooleanData(SessionManager.LOCATION_PERMISSION) && Utils.checkLocationPermission(
+                    context
+                ))
         }
 
-        val checkNotificationPermission: Boolean = if (Utils.areNotificationsEnabled(context)) {
+        checkNotificationPermission = if (Utils.areNotificationsEnabled(context)) {
             sessionManager.fetchBooleanData(SessionManager.NOTIFICATION_PERMISSION)
         } else {
             false
@@ -157,13 +164,43 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
-                        notificationUtils.showNotification(
-                            context.resources.getString(R.string.str_did_you_cross_today),
-                            context.resources.getString(R.string.str_responsible_paying),
-                            Constants.GEO_FENCE_NOTIFICATION
+                        Log.e(
+                            TAG,
+                            "checkNotification: DAILY_REMINDER_TYPE** " + sessionManager.fetchStringData(
+                                SessionManager.DAILY_REMINDER_TYPE
+                            )
                         )
+                        Log.e(
+                            TAG,
+                            "checkNotification: checkCrossedInTime** " + Utils.checkCrossedInTime()
+                        )
+                        if (Utils.checkCrossedInTime()) {
 
-                        Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
+                            Log.e(
+                                TAG,
+                                "checkNotification: DAILY_REMINDER_TYPE " + sessionManager.fetchStringData(
+                                    SessionManager.DAILY_REMINDER_TYPE
+                                )
+                            )
+                            if (sessionManager.fetchStringData(SessionManager.DAILY_REMINDER_TYPE) == (context.resources.getString(
+                                    R.string.str_until_10pm
+                                ))
+                            ) {
+                                Log.e(TAG, "checkNotification: 1 minute ")
+                                scheduleFor10PM(context)
+                            } else {
+                                val delayHours = Utils.getDelayHours(sessionManager, context)
+                                val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+                                    .setInitialDelay(delayHours, TimeUnit.HOURS)
+                                    .build()
+
+                                WorkManager.getInstance(context).enqueue(workRequest)
+
+                            }
+                            Toast.makeText(context, "Location exit", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Location exit but crossed time between 6:02AM & 10:58PM", Toast.LENGTH_SHORT).show()
+                        }
                     }
 
                     sessionManager.saveStringData(
@@ -204,8 +241,11 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
                 Log.e(TAG, "geofenceTransition- error -> $geofenceTransition")
             }
 
-            bufferedWriter?.write("geofenceTransition $geofenceTransition requestID $requestID \n")
-            bufferedWriter?.newLine()
+//            bufferedWriter?.write("geofenceTransition $geofenceTransition requestID $requestID \n")
+//            bufferedWriter?.newLine()
+
+
+            Log.e(TAG, "onReceive: requestID " + requestID)
 
         } else {
             Toast.makeText(
@@ -215,6 +255,32 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
             ).show()
         }
 
-        bufferedWriter?.close()
+//        bufferedWriter?.close()
+    }
+
+
+    private fun scheduleFor10PM(context: Context) {
+        val currentTime = Calendar.getInstance()
+        currentTime.time = Date()
+        val targetTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 22)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }
+
+        if (currentTime.after(targetTime)) {
+            // If the target time is before the current time, add a day to the target time
+            targetTime.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        Log.e(TAG, "scheduleFor10PM: targetTime " + targetTime.timeInMillis)
+        Log.e(TAG, "scheduleFor10PM: currentTime " + currentTime.timeInMillis)
+
+        val delay = targetTime.timeInMillis - currentTime.timeInMillis
+        Log.e(TAG, "scheduleFor10PM: delay " + delay)
+        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(context).enqueue(workRequest)
     }
 }

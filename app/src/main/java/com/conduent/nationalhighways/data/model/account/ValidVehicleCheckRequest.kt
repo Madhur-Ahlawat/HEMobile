@@ -14,4 +14,4 @@ data class ValidVehicleCheckRequest(
     val vehicleColor: String?,
     val iagCode: String? = "2",
     val plateSate: String? = "HE",
-    ) : Parcelable
+) : Parcelable

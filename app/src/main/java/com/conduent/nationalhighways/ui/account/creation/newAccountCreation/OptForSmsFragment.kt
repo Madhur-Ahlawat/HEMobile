@@ -2,35 +2,32 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.UpdateProfileRequest
-import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsModel
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModelList
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsResp
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
-import com.conduent.nationalhighways.data.model.pushnotification.PushNotificationRequest
 import com.conduent.nationalhighways.databinding.FragmentOptForSmsBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.viewModel.CommunicationPrefsViewModel
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.account.profile.ProfileViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.websiteservice.WebSiteServiceViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.EDIT_ACCOUNT_TYPE
@@ -41,14 +38,13 @@ import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.notification.PushNotificationUtils
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClickListener {
     private var oldCommunicationTextMessage = false
-    private var loader: LoaderDialog? = null
     private val viewModelProfile: ProfileViewModel by viewModels()
     private var oldSmsOption: Boolean = false
     private var oldPushOption: Boolean = false
@@ -93,6 +89,9 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 NewCreateAccountRequestModel.communicationTextMessage = false
             }
         }
+
+        binding.switchCommunication.setAccessibilityDelegate()
+        binding.switchNotification.setAccessibilityDelegate()
 
         binding.switchCommunication.setOnClickListener {
             if (binding.switchCommunication.isChecked) {
@@ -148,7 +147,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 val title: TextView? = requireActivity().findViewById(R.id.title_txt)
                 title?.text = getString(R.string.communication_preferences)
 
-                showLoader()
+                showLoaderDialog()
                 communicationPrefsViewModel.getAccountSettingsPrefs()
 
             }
@@ -156,16 +155,23 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         }
         isViewCreated = true
 
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+        if (requireActivity() is CreateAccountActivity) {
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
     }
+
 
     override fun onResume() {
         super.onResume()
         when (navFlowCall) {
             Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
-                if (Utils.areNotificationsEnabled(requireContext()) == false) {
-                    oldPushOption = false
+                oldPushOption = if (!Utils.areNotificationsEnabled(requireContext())) {
+                    false
                 } else {
-                    oldPushOption = sessionManager.fetchNotificationOption() ?: false
+                    sessionManager.fetchNotificationOption()
                 }
                 binding.switchNotification.isChecked =
                     oldPushOption
@@ -192,9 +198,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
     }
 
     private fun getCommunicationSettingsPref(resource: Resource<ProfileDetailModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 accountInformationModel = resource.data?.accountInformation
@@ -204,18 +208,15 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                 dashboardViewmodel.accountInformationData.value?.communicationPreferences =
                     resource.data?.accountInformation?.communicationPreferences ?: ArrayList()
 
-                /*for (i in 0 until resource.data?.accountInformation?.communicationPreferences.orEmpty().size) {
-                    val communicationModel =
-                        resource.data?.accountInformation?.communicationPreferences?.get(i)
-
-                    if (communicationModel?.category?.lowercase().equals("standard notification")) {
-                        oldSmsOption = communicationModel?.smsFlag?.uppercase().equals("Y")
-                        binding.switchCommunication.isChecked = oldSmsOption
-                        break
-                    }
-                }*/
-
-
+                /* for (i in 0 until resource.data?.accountInformation?.communicationPreferences.orEmpty().size) {
+                     val communicationModel =
+                         resource.data?.accountInformation?.communicationPreferences?.get(i)
+                     if (communicationModel?.category?.lowercase().equals("standard notification")) {
+                         oldSmsOption = communicationModel?.smsFlag?.uppercase().equals("Y")
+                         binding.switchCommunication.isChecked = oldSmsOption
+                         break
+                     }
+                 }*/
                 oldSmsOption = resource.data?.accountInformation?.smsOption?.uppercase().equals("Y")
                 binding.switchCommunication.isChecked = oldSmsOption
 
@@ -243,9 +244,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
             is Resource.DataError -> {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
+                dismissLoaderDialog()
                 if (checkSessionExpiredOrServerError(resource.errorModel)
                 ) {
                     displaySessionExpireDialog(resource.errorModel)
@@ -256,17 +255,13 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
             }
 
             else -> {
-                if (loader?.isVisible == true) {
-                    loader?.dismiss()
-                }
+                dismissLoaderDialog()
             }
         }
     }
 
     private fun handlePushNotificationResponse(resource: Resource<EmptyApiResponse?>) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
 
         when (resource) {
             is Resource.Success -> {
@@ -313,9 +308,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
 
     private fun handleUpdateProfileDetail(resource: Resource<EmptyApiResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 when (navFlowCall) {
@@ -377,7 +370,8 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                         if (binding.switchCommunication.isChecked == oldCommunicationTextMessage) {
                             findNavController().popBackStack()
                         } else if ((NewCreateAccountRequestModel.communicationTextMessage || binding.switchCommunication.isChecked) &&
-                            (NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true || NewCreateAccountRequestModel.isCountryNotSupportForSms)) {
+                            (NewCreateAccountRequestModel.mobileNumber?.isEmpty() == true || NewCreateAccountRequestModel.isCountryNotSupportForSms)
+                        ) {
                             findNavController().navigate(
                                 R.id.action_optForSmsFragment_to_mobileVerificationFragment,
                                 bundle()
@@ -400,7 +394,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
                                 verifyMobileNumber()
                             } else {
                                 if (Utils.isSupportedCountry(personalInformationModel?.phoneCellCountryCode.toString())) {
-                                    showLoader()
+                                    showLoaderDialog()
                                     val model = CommunicationPrefsRequestModel(ArrayList())
                                     var smsOption = "N"
                                     if (binding.switchCommunication.isChecked) {
@@ -473,24 +467,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
         }
     }
 
-    private fun callPushNotificationApi() {
-        var optInStatus = "N"
-        if (binding.switchNotification.isChecked) {
-            optInStatus = "Y"
-        }
-        sessionManager.getFirebaseToken()?.let { firebaseToken ->
-            val request = PushNotificationRequest(
-                deviceToken = firebaseToken,
-                osName = PushNotificationUtils.getOSName(),
-                osVersion = PushNotificationUtils.getOSVersion(),
-                appVersion = PushNotificationUtils.getAppVersion(requireContext()),
-                optInStatus = optInStatus
-            )
-            webServiceViewModel.allowPushNotification(request)
-        }
-    }
-
-
     private fun bundle(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
@@ -510,7 +486,7 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
 
     private fun updateSmsOption() {
-        showLoader()
+        showLoaderDialog()
         var smsOption = "N"
         if (binding.switchCommunication.isChecked) {
             smsOption = "Y"
@@ -541,20 +517,6 @@ class OptForSmsFragment : BaseFragment<FragmentOptForSmsBinding>(), View.OnClick
 
             viewModelProfile.updateUserDetails(request)
         }
-    }
-
-    fun showLoader() {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
-
-        if (existingFragment != null) {
-            (existingFragment as LoaderDialog).dismiss()
-        }
-
-        // Fragment is not added, add it now
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
-        loader?.show(fragmentManager, Constants.LOADER_DIALOG)
     }
 
 }

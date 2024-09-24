@@ -23,24 +23,25 @@ class OTPReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.e("OTPReceiver", "onReceive: action "+intent?.action )
+        Log.e("OTPReceiver", "onReceive: action " + intent?.action)
         if (SmsRetriever.SMS_RETRIEVED_ACTION == intent?.action) {
             val extras: Bundle? = intent!!.extras
             val status: Status = extras?.get(SmsRetriever.EXTRA_STATUS) as Status
-            Log.e("OTPReceiver", "onReceive: statusCode "+status.statusCode )
+            Log.e("OTPReceiver", "onReceive: statusCode " + status.statusCode)
 
             when (status.statusCode) {
                 CommonStatusCodes.SUCCESS -> {
-                        // Get SMS message contents
-                        val msg: String = extras.get(SmsRetriever.EXTRA_SMS_MESSAGE) as String
+                    // Get SMS message contents
+                    val msg: String = extras.get(SmsRetriever.EXTRA_SMS_MESSAGE) as String
 
-                        // extract the 6-digit code from the SMS
-                        val smsCode = msg.let { "[0-9]{6}".toRegex().find(it) }
-                        Log.e("OTPReceiver", "onReceive: smsCode $smsCode")
-                        smsCode?.value?.let { otpReceiveListener?.onOTPReceived(it) }
+                    // extract the 6-digit code from the SMS
+                    val smsCode = msg.let { "[0-9]{6}".toRegex().find(it) }
+                    Log.e("OTPReceiver", "onReceive: smsCode $smsCode")
+                    smsCode?.value?.let { otpReceiveListener?.onOTPReceived(it) }
                 }
+
                 CommonStatusCodes.TIMEOUT -> {
-                    Log.e("OTPReceiver", "onReceive: smsCode timeout " )
+                    Log.e("OTPReceiver", "onReceive: smsCode timeout ")
                     otpReceiveListener?.onOTPTimeOut()
                 }
             }

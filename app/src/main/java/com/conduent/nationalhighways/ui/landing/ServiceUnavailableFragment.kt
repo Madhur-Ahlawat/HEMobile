@@ -2,7 +2,6 @@ package com.conduent.nationalhighways.ui.landing
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +11,11 @@ import com.conduent.nationalhighways.databinding.FragmentServiceUnavailableBindi
 import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
-import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
+
 import com.conduent.nationalhighways.utils.DateUtils
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
@@ -50,7 +50,7 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
         }
 
         if (requireActivity() is LandingActivity) {
-            showToolBar(true)
+            (requireActivity() as LandingActivity).showToolBar(true)
         }
         setBackPressListener(this)
 
@@ -60,11 +60,17 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
         when (serviceType) {
             Constants.MAINTENANCE -> {
                 if (requireActivity() is LandingActivity) {
-                    LandingActivity.setBackIcon(View.GONE)
-                    LandingActivity.setToolBarTitle(resources.getString(R.string.str_service_is_unavailable))
+                    if (requireActivity() is LandingActivity) {
+                        (requireActivity() as LandingActivity).setBackIcon(View.GONE)
+                        (requireActivity() as LandingActivity).setToolBarTitle(resources.getString(R.string.str_service_is_unavailable))
+                    }
                 } else if (requireActivity() is RaiseEnquiryActivity) {
-                    RaiseEnquiryActivity.setBackIcon(View.GONE)
-                    RaiseEnquiryActivity.setToolBarTitle(resources.getString(R.string.str_service_is_unavailable))
+                    (requireActivity() as RaiseEnquiryActivity).setBackIcon(View.GONE)
+                    (requireActivity() as RaiseEnquiryActivity).setToolBarTitle(
+                        resources.getString(
+                            R.string.str_service_is_unavailable
+                        )
+                    )
                 }
                 val convertedEndDate = DateUtils.convertStringDatetoAnotherFormat(
                     endTime,
@@ -86,11 +92,15 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
 
             Constants.UNAVAILABLE -> {
                 if (requireActivity() is RaiseEnquiryActivity) {
-                    RaiseEnquiryActivity.setBackIcon(View.GONE)
-                    RaiseEnquiryActivity.setToolBarTitle(resources.getString(R.string.failed_problem_with_service))
+                    (requireActivity() as RaiseEnquiryActivity).setBackIcon(View.GONE)
+                    (requireActivity() as RaiseEnquiryActivity).setToolBarTitle(
+                        resources.getString(
+                            R.string.failed_problem_with_service
+                        )
+                    )
                 } else if (requireActivity() is LandingActivity) {
-                    LandingActivity.setBackIcon(View.GONE)
-                    LandingActivity.setToolBarTitle(resources.getString(R.string.failed_problem_with_service))
+                    (requireActivity() as LandingActivity).setBackIcon(View.GONE)
+                    (requireActivity() as LandingActivity).setToolBarTitle(resources.getString(R.string.failed_problem_with_service))
                 }
                 binding.decs1Tv.text =
                     resources.getString(R.string.try_again_later_did_not_save_changes)
@@ -119,6 +129,10 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
             }
         }
 
+        binding.decs3Tv.contentDescription =
+            Utils.accessibilityForNumbers(binding.decs3Tv.text.toString())
+        binding.decs4Tv.contentDescription =
+            Utils.accessibilityForNumbers(binding.decs4Tv.text.toString())
         binding.btnGoToWebsite.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
@@ -139,6 +153,9 @@ class ServiceUnavailableFragment : BaseFragment<FragmentServiceUnavailableBindin
 
         }
 
+        if (requireActivity() is LandingActivity) {
+            (requireActivity() as LandingActivity).focusToolBarLanding()
+        }
     }
 
     override fun observer() {

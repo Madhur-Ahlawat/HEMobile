@@ -2,18 +2,13 @@ package com.conduent.nationalhighways.ui.transactions
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.payment.PaymentDateRangeModel
 import com.conduent.nationalhighways.databinding.FragmentEmailRecieptSuccessBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.dashboard.DashboardViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,17 +34,18 @@ class EmailRecieptSuccessFragment : BaseFragment<FragmentEmailRecieptSuccessBind
 //        binding.tvVehicleRegistrationValue.text=DashboardFragmentNew.dateRangeModel?.vehicleNumber
 //        binding.tvTimeValue.text=DashboardFragmentNew.crossing?.entryTime
 //        binding.tvLocationValue.text=DashboardFragmentNew.crossing?.entryPlaza
-
     }
 
     override fun initCtrl() {
-        binding.emailTv.text = HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
+        binding.emailTv.text =
+            HomeActivityMain.accountDetailsData?.personalInformation?.emailAddress
 
         binding.btnContinue.setOnClickListener {
             findNavController().popBackStack(R.id.crossingHistoryFragment, false)
         }
-        HomeActivityMain.setTitle(resources.getString(R.string.payment_details))
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.payment_details))
+        }
     }
 
     override fun observer() {

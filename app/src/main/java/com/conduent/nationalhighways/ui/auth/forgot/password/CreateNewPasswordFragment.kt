@@ -8,23 +8,22 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
-import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ForgotPasswordResponseModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.ResetPasswordModel
 import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCodeResponseModel
-import com.conduent.nationalhighways.data.model.auth.forgot.password.VerifyRequestOtpResp
 import com.conduent.nationalhighways.databinding.FragmentForgotCreateNewPasswordBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil.showError
-import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -35,6 +34,7 @@ import com.conduent.nationalhighways.utils.common.Utils.hasUpperCase
 import com.conduent.nationalhighways.utils.common.Utils.splCharsPassword
 import com.conduent.nationalhighways.utils.common.observe
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.setPersonalInfoAnnouncement
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -46,9 +46,8 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
     private val viewModel: ForgotPasswordViewModel by viewModels()
 
     private var data: SecurityCodeResponseModel? = null
-    private var loader: LoaderDialog? = null
-    private var passwordVisibile: Boolean = false
-    private var confirmPasswordVisibile: Boolean = false
+    private var passwordVisible: Boolean = false
+    private var confirmPasswordVisible: Boolean = false
     private lateinit var navFlow: String
 
 
@@ -61,12 +60,14 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         FragmentForgotCreateNewPasswordBinding.inflate(inflater, container, false)
 
     override fun init() {
+        setPersonalInfoAnnouncement(binding.rootLayout, requireActivity())
+        if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
+        if (requireActivity() is CreateAccountActivity) {
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
         navFlow = arguments?.getString(Constants.NAV_FLOW_KEY).toString()
-
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
-
         data = arguments?.getParcelable("data")
         binding.model = ResetPasswordModel(
             code = data?.code,
@@ -75,34 +76,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             confirmPassword = "",
             enable = false
         )
-
-        if (navFlow == Constants.ACCOUNT_CREATION_EMAIL_FLOW) {
-//            binding.btnSubmit.text = getString(R.string.str_continue)
-            /* AdobeAnalytics.setScreenTrack(
-                 "createAccount:email_setPassword",
-                 "set password",
-                 "english",
-                 "create Account",
-                 "createAccount_email",
-                 "login:forgot password:choose options:otp:new password set",
-                 sessionManager.getLoggedInUser()
-             )*/
-        } else if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-//            binding.btnSubmit.text = getString(R.string.str_submit)
-
-            /* AdobeAnalytics.setScreenTrack(
-                 "login:forgot password:choose options:otp:new password set",
-                 "forgot password",
-                 "english",
-                 "login",
-                 (requireActivity() as AuthActivity).previousScreen,
-                 "login:forgot password:choose options:otp:new password set",
-                 sessionManager.getLoggedInUser()
-             )*/
-        }
-
-
-        //  viewModel.verifyRequestCode(mVerifyRequestOtpReq)
     }
 
     @SuppressLint("SetTextI18n", "ClickableViewAccessibility")
@@ -111,7 +84,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         binding.edtNewPassword.editText.addTextChangedListener {
             isEnable(it.toString())
         }
-        binding.edtConformPassword.editText.addTextChangedListener { isEnable1(it.toString()) }
+        binding.edtConformPassword.editText.addTextChangedListener { isEnable1() }
 
 
 
@@ -121,13 +94,13 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= binding.edtNewPassword.right - binding.edtNewPassword.editText.compoundDrawables[right].bounds.width()) {
 
-                    if (passwordVisibile) {
+                    if (passwordVisible) {
                         binding.edtNewPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
                         binding.edtNewPassword.editText.transformationMethod =
                             PasswordTransformationMethod.getInstance()
-                        passwordVisibile = false
+                        passwordVisible = false
                     } else {
 
 
@@ -136,10 +109,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         )
                         binding.edtNewPassword.editText.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()
-                        passwordVisibile = true
+                        passwordVisible = true
                     }
                 }
-                var text = binding.edtConformPassword.editText.text.toString()
+                val text = binding.edtConformPassword.editText.text.toString()
                 isEnable(text)
             }
 
@@ -153,13 +126,13 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             if (event.action == MotionEvent.ACTION_UP) {
                 if (event.rawX >= binding.edtConformPassword.right - binding.edtConformPassword.editText.compoundDrawables[right].bounds.width()) {
 
-                    if (confirmPasswordVisibile) {
+                    if (confirmPasswordVisible) {
                         binding.edtConformPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
                             0, 0, R.drawable.ic_baseline_visibility_24, 0
                         )
                         binding.edtConformPassword.editText.transformationMethod =
                             PasswordTransformationMethod.getInstance()
-                        confirmPasswordVisibile = false
+                        confirmPasswordVisible = false
                     } else {
 
                         binding.edtConformPassword.editText.setCompoundDrawablesRelativeWithIntrinsicBounds(
@@ -167,11 +140,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                         )
                         binding.edtConformPassword.editText.transformationMethod =
                             HideReturnsTransformationMethod.getInstance()
-                        confirmPasswordVisibile = true
+                        confirmPasswordVisible = true
                     }
                 }
-                var text = binding.edtConformPassword.editText.text.toString()
-                isEnable1(text)
+                isEnable1()
             }
 
             false
@@ -204,8 +176,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 }
                 val validation = viewModel.checkPassword(binding.model)
                 if (validation.first) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-                    Logg.logging("NewPassword", "binding.model ${binding.model}")
+                    showLoaderDialog()
                     viewModel.resetPassword(binding.model)
                 } else {
                     showError(binding.root, validation.second)
@@ -214,75 +185,16 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
     }
 
-
-    private fun verifyRequestOtp(status: Resource<VerifyRequestOtpResp?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-        when (status) {
-            is Resource.Success -> {
-                /* AdobeAnalytics.setActionTrack1(
-                     "verify",
-                     "login:forgot password:choose options:otp:new password set",
-                     "forgot password",
-                     "english",
-                     "login",
-                     (requireActivity() as AuthActivity).previousScreen, "success",
-                     sessionManager.getLoggedInUser()
-                 )*/
-
-            }
-
-            is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel)
-                ) {
-                    displaySessionExpireDialog(status.errorModel)
-                } else {
-                    Logg.logging("NewPassword", "status.errorMsg ${status.errorMsg}")
-
-                    /* AdobeAnalytics.setActionTrack1(
-                     "verify",
-                     "login:forgot password:choose options:otp:new password set",
-                     "forgot password",
-                     "english",
-                     "login",
-                     (requireActivity() as AuthActivity).previousScreen,
-                     status.errorMsg,
-                     sessionManager.getLoggedInUser()
-                 )
- */
-
-                    showError(binding.root, status.errorMsg)
-                }
-            }
-
-            else -> {
-            }
-        }
-    }
-
     private fun handleResetResponse(status: Resource<ForgotPasswordResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 if (status.data?.success == true) {
-                    /* AdobeAnalytics.setActionTrack1(
-                         "submit",
-                         "login:forgot password:choose options:otp:new password set",
-                         "forgot password",
-                         "english",
-                         "login",
-                         (requireActivity() as AuthActivity).previousScreen,
-                         "success",
-                         sessionManager.getLoggedInUser()
-                     )*/
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
                     bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
                     if (navFlow == Constants.FORGOT_PASSWORD_FLOW) {
-                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON,false)
+                        bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
                         findNavController().navigate(
                             R.id.action_createPasswordFragment_to_resetFragment,
                             bundle
@@ -303,17 +215,6 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 ) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
-                    /*AdobeAnalytics.setActionTrack1(
-                    "submit",
-                    "login:forgot password:choose options:otp:new password set",
-                    "forgot password",
-                    "english",
-                    "login",
-                    (requireActivity() as AuthActivity).previousScreen,
-                    status.errorMsg,
-                    sessionManager.getLoggedInUser()
-                )*/
-
                     showError(binding.root, status.errorMsg)
                 }
             }
@@ -323,10 +224,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
     }
 
-    private fun isEnable1(text: String) {
+    private fun isEnable1() {
         isConfirmPasswordValid = true
 
-        if (binding.edtConformPassword.getText().toString().length == 0) {
+        if (binding.edtConformPassword.getText().toString().isEmpty()) {
             isConfirmPasswordValid = false
             binding.edtConformPassword.removeError()
         } else if (binding.edtConformPassword.getText().toString()
@@ -337,25 +238,15 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
             binding.edtConformPassword.setErrorText(getString(R.string.str_your_password_must_match))
 
         } else {
-//            isConfirmPasswordValid = true
-//            isNewPasswordValid = true
             binding.edtConformPassword.removeError()
-//            binding.edtNewPassword.removeError()
             binding.edtNewPassword.editText.setText(binding.edtNewPassword.editText.text.toString())
-//            binding.model = ResetPasswordModel(
-//                code = data?.code,
-//                referenceId = data?.referenceId,
-//                newPassword = binding.edtNewPassword.getText().toString(),
-//                confirmPassword = binding.edtConformPassword.getText().toString(),
-//                enable = true
-//            )
         }
         binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
     private fun isEnable(text: String) {
         var filterTextForSpecialChars = ""
-        var commaSeperatedString = ""
+        var commaSeparatedString = ""
         isNewPasswordValid = true
 
         if (binding.edtNewPassword.getText().toString().isEmpty()) {
@@ -385,18 +276,21 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
                 binding.edtNewPassword.getText().toString()
             )
             filterTextForSpecialChars.replace(" ", "space ")
-            commaSeperatedString =
+            commaSeparatedString =
                 Utils.makeCommaSeperatedStringForPassword(
                     Utils.removeAllCharacters(
                         Utils.ALLOWED_CHARS_PASSWORD, filterTextForSpecialChars
                     )
                 )
             if (filterTextForSpecialChars.isNotEmpty()) {
-                binding.edtNewPassword.setErrorText("Password must not include $commaSeperatedString")
-                false
+                binding.edtNewPassword.setErrorText(
+                    resources.getString(
+                        R.string.str_password_must_not_include_disallowed_character,
+                        commaSeparatedString
+                    )
+                )
             } else {
                 binding.edtNewPassword.removeError()
-                true
             }
         } else if (!binding.edtNewPassword.getText().toString().contains(Utils.NUMBER)) {
             isNewPasswordValid = false
@@ -448,36 +342,62 @@ class CreateNewPasswordFragment : BaseFragment<FragmentForgotCreateNewPasswordBi
         }
 
         if (hasLowerCase(text)) {
-            binding.imgDot3.setImageResource(R.drawable.grin_tick)
+            setTickBackground(
+                binding.imgDot3
+            )
         } else {
-            binding.imgDot3.setImageResource(R.drawable.circle_5dp)
+            setDotBackground(
+                binding.imgDot3
+            )
         }
 
         if (hasUpperCase(text)) {
-            binding.imgDot2.setImageResource(R.drawable.grin_tick)
+            setTickBackground(
+                binding.imgDot2
+            )
         } else {
-            binding.imgDot2.setImageResource(R.drawable.circle_5dp)
+            setDotBackground(
+                binding.imgDot2
+            )
         }
 
         if (text.length >= 8) {
-            binding.imgDot1.setImageResource(R.drawable.grin_tick)
+            setTickBackground(
+                binding.imgDot1
+            )
         } else {
-            binding.imgDot1.setImageResource(R.drawable.circle_5dp)
+            setDotBackground(
+                binding.imgDot1
+            )
         }
 
         if (hasDigits(text)) {
-            binding.imgDot4.setImageResource(R.drawable.grin_tick)
+            setTickBackground(
+                binding.imgDot4
+            )
         } else {
-            binding.imgDot4.setImageResource(R.drawable.circle_5dp)
+            setDotBackground(
+                binding.imgDot4
+            )
         }
-//new password
 
         binding.btnSubmit.isEnabled = isNewPasswordValid && isConfirmPasswordValid
     }
 
-    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
-
+    private fun setDotBackground(view: View) {
+        view.contentDescription =
+            resources.getString(R.string.accessibility_bullet)
+        view.background = ContextCompat.getDrawable(requireContext(), R.drawable.circle_5dp)
     }
+
+    private fun setTickBackground(view: View) {
+        view.contentDescription =
+            resources.getString(R.string.accessibility_tick_mark)
+        view.background = ContextCompat.getDrawable(requireContext(), R.drawable.grin_tick)
+    }
+
+
+
 
 }
 

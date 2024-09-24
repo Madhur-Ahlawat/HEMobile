@@ -13,8 +13,8 @@ import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.gone
-import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.startNormalActivityWithFinish
 import com.conduent.nationalhighways.utils.extn.visible
 
@@ -65,12 +65,18 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
                 requireActivity().startNormalActivityWithFinish(LandingActivity::class.java)
             }
         }
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is RaiseEnquiryActivity) {
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
+        }
     }
 
 
     private fun setData() {
         binding.referenceNumberTv.text = enquiryModel?.srNumber ?: ""
+        binding.referenceNumberTv.contentDescription =
+            Utils.accessibilityForNumbers(enquiryModel?.srNumber ?: "")
         binding.descTv.text =
             resources.getString(R.string.sent_email_line, enquiryModel?.email ?: "")
         if (enquiryModel?.category.toString().contains("enquiry")) {
@@ -96,7 +102,7 @@ class EnquirySuccessFragment : BaseFragment<FragmentEnquirySuccessBinding>() {
     }
 
     private fun getBundleData(): Bundle {
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_FROM, navFlowFrom)
         return bundle
     }

@@ -10,6 +10,7 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.databinding.ItemPaymentMethodBinding
 import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.setAccessibilityDelegate
 
 
 class SuspendPaymentMethodAdapter(
@@ -38,7 +39,7 @@ class SuspendPaymentMethodAdapter(
     ) {
         var pos: Int
         val model = list?.get(position)
-        var htmlText: Spanned? = null
+        var htmlText = ""
 
         if (model?.bankAccount == false) {
             holder.binding.ivCardType.setImageResource(
@@ -47,26 +48,45 @@ class SuspendPaymentMethodAdapter(
                 )
             )
             htmlText =
-                Html.fromHtml(model.cardType + "<br>" + model.cardNumber.let {
+                model.cardType + " " + model.cardNumber.let {
                     Utils.setStarmaskcardnumber(
                         context,
                         it
                     )
-                }, Html.FROM_HTML_MODE_COMPACT)
+                }
+
+            holder.binding.radioButtonPaymentMethod.contentDescription =
+                model.cardType + ", " + "${
+                    Utils.accessibilityForNumbers(model?.cardNumber?.let {
+                        Utils.setStarmaskcardnumber(
+                            context,
+                            it
+                        )
+                    }.toString())
+                }"
         } else {
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             htmlText =
-                Html.fromHtml(
-                    "Direct Debit" + "<br>" + model?.bankAccountNumber?.let {
+                    context.getString(R.string.direct_debit) + " " + model?.bankAccountNumber?.let {
                         Utils.maskCardNumber(
                             it
                         )
-                    })
-
+                    }
+            holder.binding.radioButtonPaymentMethod.contentDescription =
+                context.getString(R.string.direct_debit) + ", " + "${
+                    Utils.accessibilityForNumbers(
+                        model?.bankAccountNumber?.let {
+                            Utils.maskCardNumber(
+                                it
+                            )
+                        }.toString()
+                    )
+                }"
         }
 
-
         holder.binding.tvSelectPaymentMethod.text = htmlText
+
+        holder.binding.radioButtonPaymentMethod.setAccessibilityDelegate()
 
         if (model?.bankAccount == false) {
             holder.binding.radioButtonPaymentMethod.isChecked =
@@ -74,25 +94,19 @@ class SuspendPaymentMethodAdapter(
             model.isSelected = true
         }
 
-
-
-
-
-        holder.binding.layout.setOnClickListener {
-            pos = position
-            if (list?.get(pos)?.isSelected == true) {
-                list?.get(pos)?.isSelected = false
-                holder.binding.radioButtonPaymentMethod.isChecked = false
-
-            } else {
-                list?.get(pos)?.isSelected = true
-                holder.binding.radioButtonPaymentMethod.isChecked = true
-
-
-            }
-            notifyDataSetChanged()
-            paymentMethod.paymentMethodCallback(pos)
-        }
+//        holder.binding.layout.setOnClickListener {
+//            pos = position
+//            if (list?.get(pos)?.isSelected == true) {
+//                list?.get(pos)?.isSelected = false
+//                holder.binding.radioButtonPaymentMethod.isChecked = false
+//
+//            } else {
+//                list?.get(pos)?.isSelected = true
+//                holder.binding.radioButtonPaymentMethod.isChecked = true
+//            }
+//            notifyDataSetChanged()
+//            paymentMethod.paymentMethodCallback(pos)
+//        }
         holder.binding.radioButtonPaymentMethod.setOnClickListener {
             pos = position
             if (list?.get(pos)?.isSelected == true) {
@@ -118,7 +132,6 @@ class SuspendPaymentMethodAdapter(
         this.list = paymentList
         this.navFlow = navFlow
         notifyDataSetChanged()
-
     }
 
     class SuspendedViewHolder(val binding: ItemPaymentMethodBinding) :

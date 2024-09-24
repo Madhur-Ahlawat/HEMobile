@@ -10,45 +10,49 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
-            android:elevation="3dp"
-            android:translationZ="2dp"
+            android:minHeight="@dimen/margin_48dp"
+            android:elevation="@dimen/margin_3dp"
+            android:translationZ="@dimen/margin_2dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-            <ImageView
-                app:layout_constraintStart_toStartOf="parent"
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btnBack"
-                android:padding="@dimen/margin_15dp"
-                android:src="@drawable/ic_back_black"
+                android:layout_width="@dimen/margin_48dp"
+                android:layout_height="@dimen/margin_48dp"
                 android:backgroundTint="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
+                android:contentDescription="@string/str_back"
+                android:padding="@dimen/margin_11dp"
+                android:src="@drawable/ic_back_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:ellipsize="end"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/margin_5dp"
+                android:paddingRight="@dimen/margin_5dp"
+                android:layout_marginLeft="@dimen/margin_48dp"
+                android:layout_marginRight="@dimen/margin_48dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:fontFamily="@font/open_sans_semibold"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textSize="18sp"
                 tools:text="@string/app_name" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--
-                <include
-                    android:id="@+id/toolbar"
-                    layout="@layout/tool_bar_with_title_back" />
-        -->
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.fragment.app.FragmentContainerView

@@ -14,8 +14,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -52,11 +52,11 @@
 
             <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                 android:id="@+id/firstname_et"
+                style="@style/input_text"
+                android:importantForAccessibility="yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20dp"
                 android:maxLength="50"
-                android:textColor="@color/black"
                 app:imeOptions="actionNext"
                 app:inputType="text"
                 app:labelText="@string/first_name"
@@ -66,10 +66,10 @@
                 app:maxLength="50" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                style="@style/input_text"
                 android:id="@+id/lastname_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20dp"
                 android:maxLength="50"
                 android:textColor="@color/black"
                 app:imeOptions="actionNext"
@@ -81,10 +81,10 @@
                 app:maxLength="50" />
 
             <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
+                style="@style/input_text"
                 android:id="@+id/email_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_15dp"
                 android:textColor="@color/black"
                 app:imeOptions="actionNext"
                 app:maxLength="64"
@@ -98,36 +98,43 @@
                 android:id="@+id/label_country_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_3dp"
                 android:layout_marginTop="@dimen/margin_20dp"
                 android:text="@string/str_country_code"
+                android:layout_marginLeft="@dimen/margin_2dp"
                 android:textColor="@color/label_color"
-                android:textSize="12sp"
+                android:importantForAccessibility="no"
+                android:textSize="@dimen/font_12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/email_et" />
 
             <com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
+                style="@style/input_text"
                 android:id="@+id/countrycode_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/str_country_code"
+                android:layout_marginTop="0dp"
+                android:minHeight="@dimen/margin_48dp"
+                android:paddingLeft="2dp"
+                android:fontFamily="@font/open_sans"
+                android:textSize="@dimen/font_16sp"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_country_code" />
 
+
             <com.conduent.nationalhighways.utils.widgets.NHTextInputCell
                 android:id="@+id/mobileNumber_et"
+                style="@style/input_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_15dp"
                 android:maxLength="15"
-                android:textColor="@color/black"
+                android:gravity="center_vertical"
                 app:imeOptions="actionNext"
                 app:inputType="phone"
-                app:labelText="@string/str_mobile_number_optional"
+                android:textSize="@dimen/font_16sp"
+                app:labelText="@string/mobile_number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/countrycode_et"
@@ -141,6 +148,7 @@
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:text="@string/str_continue"
+                android:focusable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mobileNumber_et"

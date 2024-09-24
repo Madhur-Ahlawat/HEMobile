@@ -9,7 +9,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import com.conduent.nationalhighways.R
 
-fun <A : Activity> Activity.startNewActivityByClearingStack(activity: Class<A>, extras: Bundle.() -> Unit = {}) {
+fun <A : Activity> Activity.startNewActivityByClearingStack(
+    activity: Class<A>,
+    extras: Bundle.() -> Unit = {}
+) {
     Intent(this, activity).run {
         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -32,6 +35,7 @@ fun <A : Activity> Activity.openActivityWithDataBack(it: Class<A>, extras: Bundl
         startActivity(this)
     }
 }
+
 fun <A : Activity> Activity.openActivityWithData(it: Class<A>, extras: Bundle) {
     Intent(this, it).run {
         putExtras(extras)
@@ -44,6 +48,7 @@ fun <A : Activity> Activity.startNormalActivity(activity: Class<A>) {
         startActivity(this)
     }
 }
+
 fun <A : Activity> Activity.startNormalActivityWithFinish(activity: Class<A>) {
     Intent(this, activity).run {
         startActivity(this)
@@ -51,10 +56,10 @@ fun <A : Activity> Activity.startNormalActivityWithFinish(activity: Class<A>) {
     }
 }
 
-fun Activity.toolbar(title: String?, isBackWithText : Boolean = false) {
-    val imgBack : ImageView? = findViewById(R.id.btn_back)
-    val txtBack : AppCompatTextView? = findViewById(R.id.btn_backText)
-    if (isBackWithText){
+fun Activity.toolbar(title: String?, isBackWithText: Boolean = false) {
+    val imgBack: ImageView? = findViewById(R.id.btn_back)
+    val txtBack: AppCompatTextView? = findViewById(R.id.btn_backText)
+    if (isBackWithText) {
         txtBack?.visibility = View.VISIBLE
         imgBack?.visibility = View.GONE
         txtBack?.setOnClickListener {
@@ -72,11 +77,11 @@ fun Activity.toolbar(title: String?, isBackWithText : Boolean = false) {
 
 }
 
-fun Activity.customToolbar(title: String?, isBackWithText : Boolean = false) {
+fun Activity.customToolbar(title: String?, isBackWithText: Boolean = false) {
 
-    val imgBack : ImageView? = findViewById(R.id.back_button)
-    val txtBack : AppCompatTextView? = findViewById(R.id.btn_backText)
-    if (isBackWithText){
+    val imgBack: ImageView? = findViewById(R.id.back_button)
+    val txtBack: AppCompatTextView? = findViewById(R.id.btn_backText)
+    if (isBackWithText) {
         txtBack?.visibility = View.VISIBLE
         imgBack?.visibility = View.GONE
         txtBack?.setOnClickListener {

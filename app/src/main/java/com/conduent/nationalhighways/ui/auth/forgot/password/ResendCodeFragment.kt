@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -14,6 +13,7 @@ import com.conduent.nationalhighways.data.model.auth.forgot.password.SecurityCod
 import com.conduent.nationalhighways.data.model.communicationspref.CommunicationPrefsRequestModel
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationRequest
 import com.conduent.nationalhighways.data.model.createaccount.EmailVerificationResponse
+import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
@@ -21,8 +21,10 @@ import com.conduent.nationalhighways.data.model.profile.ReplenishmentInformation
 import com.conduent.nationalhighways.databinding.FragmentResendCodeBinding
 import com.conduent.nationalhighways.ui.account.creation.step1.CreateAccountEmailViewModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.Constants.CARD_VALIDATION_REQUIRED
+import com.conduent.nationalhighways.utils.common.Constants.IN_ACTIVE
+import com.conduent.nationalhighways.utils.common.Constants.TWOFA
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -34,7 +36,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnClickListener {
 
-    private var loader: LoaderDialog? = null
     private var data: RequestOTPModel? = null
     private var isViewCreated: Boolean = false
     private val viewModel: ForgotPasswordViewModel by viewModels()
@@ -50,6 +51,8 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     @Inject
     lateinit var sessionManager: SessionManager
     private var isItMobileNumber: Boolean = false
+    private var cardValidationRequired: Boolean = false
+    private var paymentList: MutableList<CardListResponseModel?>? = ArrayList()
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -58,7 +61,14 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
 
     override fun initCtrl() {
-
+        if (arguments?.containsKey(Constants.CARD_VALIDATION_REQUIRED) == true) {
+            cardValidationRequired =
+                arguments?.getBoolean(Constants.CARD_VALIDATION_REQUIRED, false) ?: false
+        }
+        if (arguments?.containsKey(Constants.PAYMENT_LIST_DATA) == true && arguments?.getParcelableArrayList<CardListResponseModel>(Constants.PAYMENT_LIST_DATA) != null) {
+            paymentList =
+                arguments?.getParcelableArrayList(Constants.PAYMENT_LIST_DATA)
+        }
         if (arguments?.containsKey(Constants.PHONE_COUNTRY_CODE) == true) {
             phoneCountryCode = arguments?.getString(Constants.PHONE_COUNTRY_CODE, "").toString()
         }
@@ -73,7 +83,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
@@ -81,51 +91,38 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
         if (arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION) != null) {
             replenishmentInformation =
-                arguments?.getParcelable<ReplenishmentInformation>(Constants.REPLENISHMENTINFORMATION)
+                arguments?.getParcelable(Constants.REPLENISHMENTINFORMATION)
         }
     }
 
     override fun init() {
-
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
         }
-
-
-
         if (navFlowCall == Constants.ACCOUNT_CREATION_EMAIL_FLOW || navFlowCall == Constants.ACCOUNT_CREATION_MOBILE_FLOW) {
             if (data?.optionType == Constants.EMAIL) {
                 binding.subTitle.text = getString(
                     R.string.resend_code_email,
                     Utils.hiddenEmailText(data?.optionValue.toString())
                 )
-
             } else {
                 binding.subTitle.text = getString(
                     R.string.resend_code_text,
                     Utils.maskPhoneNumber(data?.optionValue.toString())
                 )
-
             }
-
         } else {
             if (data?.optionType == Constants.EMAIL) {
                 binding.subTitle.text = getString(
                     R.string.resend_code_email,
                     Utils.hiddenEmailText(data?.optionValue.toString())
                 )
-
             } else {
                 binding.subTitle.text = getString(
                     R.string.resend_code_text,
                     Utils.maskPhoneNumber(data?.optionValue.toString())
                 )
-
             }
-
         }
         binding.apply {
             btnVerify.setOnClickListener(this@ResendCodeFragment)
@@ -150,10 +147,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
                 when (navFlowCall) {
                     Constants.FORGOT_PASSWORD_FLOW -> {
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
+                        showLoaderDialog()
                         viewModel.requestOTP(data)
                     }
 
@@ -175,28 +169,15 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
                     else -> {
                         hitApi()
-
-                        /* val bundle = Bundle()
-                         bundle.putParcelable("data", data)
-                         bundle.putString(Constants.NAV_FLOW_KEY,navFlowCall)
-
-                         findNavController().navigate(
-                             R.id.action_resenedCodeFragment_to_otpFragment,
-                             bundle
-                         )*/
                     }
                 }
-
-
             }
         }
     }
 
     private fun handleOTPResponse(status: Resource<SecurityCodeResponseModel?>?) {
 
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (status) {
             is Resource.Success -> {
                 response = status.data
@@ -213,7 +194,8 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                 bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
                 bundle.putString(Constants.PHONE_COUNTRY_CODE, phoneCountryCode)
                 bundle.putBoolean(Constants.IS_MOBILE_NUMBER, isItMobileNumber)
-
+                bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentList as ArrayList)
+                bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
                 findNavController().navigate(
                     R.id.action_resenedCodeFragment_to_otpFragment,
                     bundle
@@ -239,10 +221,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
 
 
     private fun hitApi() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-
+        showLoaderDialog()
         var optionValue = data?.optionValue
         if (phoneCountryCode.isNotEmpty()) {
             optionValue = phoneCountryCode + data?.optionValue
@@ -257,9 +236,7 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
     }
 
     private fun handleEmailVerification(resource: Resource<EmailVerificationResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
 
@@ -276,34 +253,50 @@ class ResendCodeFragment : BaseFragment<FragmentResendCodeBinding>(), View.OnCli
                     )
                 )
 
-                if (navFlowCall == Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE) {
-                    val data = navData as ProfileDetailModel?
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                when (navFlowCall) {
+                    Constants.PROFILE_MANAGEMENT_MOBILE_CHANGE -> {
+                        val data = navData as ProfileDetailModel?
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
 
-                } else if (navFlowCall == Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED) {
-                    val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        arguments?.getParcelable(
-                            Constants.NAV_DATA_KEY,
-                            CommunicationPrefsRequestModel::class.java
-                        )
-                    } else {
-                        arguments?.getParcelable(Constants.NAV_DATA_KEY)
                     }
 
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    Constants.PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
+                        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            arguments?.getParcelable(
+                                Constants.NAV_DATA_KEY,
+                                CommunicationPrefsRequestModel::class.java
+                            )
+                        } else {
+                            arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                        }
 
-                } else if (navFlowCall == Constants.PROFILE_MANAGEMENT_2FA_CHANGE) {
-                    val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        arguments?.getParcelable(
-                            Constants.NAV_DATA_KEY,
-                            ProfileDetailModel::class.java
-                        )
-                    } else {
-                        arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+
                     }
 
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    Constants.PROFILE_MANAGEMENT_2FA_CHANGE -> {
+                        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            arguments?.getParcelable(
+                                Constants.NAV_DATA_KEY,
+                                ProfileDetailModel::class.java
+                            )
+                        } else {
+                            arguments?.getParcelable(Constants.NAV_DATA_KEY)
+                        }
+
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                    }
+                    TWOFA ->{
+                        bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentList as ArrayList)
+                        bundle.putBoolean(Constants.CARD_VALIDATION_REQUIRED, cardValidationRequired)
+                    }
+
+                    IN_ACTIVE, CARD_VALIDATION_REQUIRED ->{
+                        bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
+                        bundle.putParcelable(Constants.REPLENISHMENTINFORMATION, replenishmentInformation)
+                    }
                 }
+
 
                 bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
                 bundle.putString(Constants.Edit_REQUEST_KEY, editRequest)

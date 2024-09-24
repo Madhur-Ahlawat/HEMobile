@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,9 +15,10 @@ import com.conduent.nationalhighways.data.model.accountpayment.AccountGetThresho
 import com.conduent.nationalhighways.data.model.accountpayment.AccountTopUpUpdateThresholdRequest
 import com.conduent.nationalhighways.data.model.accountpayment.AccountTopUpUpdateThresholdResponse
 import com.conduent.nationalhighways.databinding.FragmentTopUpBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.payments.topup.AccountTopUpPaymentViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.SHOW_BACK_BUTTON
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -37,7 +37,6 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     private var navFlow: String = ""
     private var isViewCreated: Boolean = false
     private val viewModel: AccountTopUpPaymentViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var paymentListSize: Int = 0
     private var apiLowBalanceAmount: String = "5"
     private var apiTopUpAmountBalance: String = "10"
@@ -53,9 +52,11 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     ): FragmentTopUpBinding = FragmentTopUpBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -107,7 +108,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
             count: Int
         ) {
             if (isTopUp) {
-                if (binding.top.getText().toString().trim().isNullOrEmpty()) {
+                if (binding.top.getText().toString().trim().isEmpty()) {
                     binding.top.setErrorText(getString(R.string.enter_a_top_up_amount))
                 } else {
                     binding.top.removeError()
@@ -141,7 +142,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     }
 
     private fun getThresholdAmount() {
-        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         viewModel.getThresholdAmount()
     }
 
@@ -256,9 +257,7 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
     }
 
     private fun getThresholdApiResponse(resource: Resource<AccountGetThresholdResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.apply {
@@ -271,7 +270,8 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                             }
                             minimumAMountTopUp.text = (getString(
                                 R.string.str_minimum_amount,
-                                this@TopUpFragment.apiTopUpAmountBalance.toDouble().toInt().toString()
+                                this@TopUpFragment.apiTopUpAmountBalance.toDouble().toInt()
+                                    .toString()
                             ))
                             minimumAmount.text = (getString(
                                 R.string.str_minimum_amount,
@@ -284,90 +284,88 @@ class TopUpFragment : BaseFragment<FragmentTopUpBinding>(), View.OnClickListener
                 }
             }
 
-        is Resource.DataError -> {
-            if (checkSessionExpiredOrServerError(resource.errorModel)
-            ) {
-                displaySessionExpireDialog(resource.errorModel)
-            } else {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
-            }
-        }
-
-        else -> {
-        }
-    }
-    checkButton()
-}
-
-private fun updateThresholdApiResponse(resource: Resource<AccountTopUpUpdateThresholdResponse?>?) {
-    if (loader?.isVisible == true) {
-        loader?.dismiss()
-    }
-    when (resource) {
-        is Resource.Success -> {
-            binding.topUpBtn.isEnabled = true
-
-            if (resource.data?.statusCode == "0") {
-                val bundle = Bundle()
-
-
-                val amount = binding.top.editText.text.toString().trim().replace("£", "")
-                val thresholdAmount =
-                    binding.lowBalance.editText.text.toString().trim().replace("£", "")
-
-
-                if (navFlow != Constants.THRESHOLD && apiLowBalanceAmount.toInt()
-                        .toString() == thresholdAmount.toInt().toString()
-                        .trim()
+            is Resource.DataError -> {
+                if (checkSessionExpiredOrServerError(resource.errorModel)
                 ) {
-                    bundle.putString(Constants.THRESHOLD_AMOUNT, "")
-
+                    displaySessionExpireDialog(resource.errorModel)
                 } else {
-                    bundle.putString(
-                        Constants.THRESHOLD_AMOUNT,
-                        binding.lowBalance.editText.text.toString().trim()
-                    )
-
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
                 }
+            }
 
-
-                if (navFlow != Constants.THRESHOLD && apiTopUpAmountBalance == amount) {
-                    bundle.putString(Constants.TOP_UP_AMOUNT, "")
-
-                } else {
-                    bundle.putString(
-                        Constants.TOP_UP_AMOUNT,
-                        binding.top.editText.text.toString().trim()
-                    )
-
-                }
-                bundle.putBoolean(SHOW_BACK_BUTTON, false)
-                bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
-
-                if (isClick) {
-                    findNavController().navigate(
-                        R.id.action_topUpFragment_to_deletePaymentMethodSuccessFragment,
-                        bundle
-                    )
-
-                }
-                isClick = false
-
+            else -> {
             }
         }
+        checkButton()
+    }
 
-        is Resource.DataError -> {
-            if (checkSessionExpiredOrServerError(resource.errorModel)) {
-                displaySessionExpireDialog(resource.errorModel)
-            } else {
-                ErrorUtil.showError(binding.root, resource.errorMsg)
+    private fun updateThresholdApiResponse(resource: Resource<AccountTopUpUpdateThresholdResponse?>?) {
+        dismissLoaderDialog()
+        when (resource) {
+            is Resource.Success -> {
+                binding.topUpBtn.isEnabled = true
+
+                if (resource.data?.statusCode == "0") {
+                    val bundle = Bundle()
+
+
+                    val amount = binding.top.editText.text.toString().trim().replace("£", "")
+                    val thresholdAmount =
+                        binding.lowBalance.editText.text.toString().trim().replace("£", "")
+
+
+                    if (navFlow != Constants.THRESHOLD && apiLowBalanceAmount.toInt()
+                            .toString() == thresholdAmount.toInt().toString()
+                            .trim()
+                    ) {
+                        bundle.putString(Constants.THRESHOLD_AMOUNT, "")
+
+                    } else {
+                        bundle.putString(
+                            Constants.THRESHOLD_AMOUNT,
+                            binding.lowBalance.editText.text.toString().trim()
+                        )
+
+                    }
+
+
+                    if (navFlow != Constants.THRESHOLD && apiTopUpAmountBalance == amount) {
+                        bundle.putString(Constants.TOP_UP_AMOUNT, "")
+
+                    } else {
+                        bundle.putString(
+                            Constants.TOP_UP_AMOUNT,
+                            binding.top.editText.text.toString().trim()
+                        )
+
+                    }
+                    bundle.putBoolean(SHOW_BACK_BUTTON, false)
+                    bundle.putString(Constants.NAV_FLOW_KEY, navFlow)
+
+                    if (isClick) {
+                        findNavController().navigate(
+                            R.id.action_topUpFragment_to_deletePaymentMethodSuccessFragment,
+                            bundle
+                        )
+
+                    }
+                    isClick = false
+
+                }
             }
-        }
 
-        else -> {
+            is Resource.DataError -> {
+                if (checkSessionExpiredOrServerError(resource.errorModel)) {
+                    displaySessionExpireDialog(resource.errorModel)
+                } else {
+                    ErrorUtil.showError(binding.root, resource.errorMsg)
+                }
+            }
+
+            else -> {
+            }
         }
     }
-}
 
 
 }

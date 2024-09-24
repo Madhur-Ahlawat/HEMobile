@@ -1,11 +1,11 @@
 package com.conduent.nationalhighways.ui.account.creation.controller
 
-import android.util.Log
+import android.view.accessibility.AccessibilityEvent
+import androidx.core.view.isVisible
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.databinding.ActivityCreateAccountBinding
 import com.conduent.nationalhighways.ui.account.creation.newAccountCreation.AccountSuccessfullyCreationFragment
-import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseActivity
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -13,6 +13,9 @@ import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.conduent.nationalhighways.utils.logout.LogoutUtil
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -50,9 +53,36 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
 
     }
 
+    fun focusToolBarCreateAccount() {
+        val task = Runnable {
+            if (binding.toolBarLyt.backButton.isVisible) {
+                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+            } else {
+                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+                binding.toolBarLyt.titleTxt.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                binding.toolBarLyt.titleTxt.requestFocus() // Focus on the backButton
+            }
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+    }
 
     override fun observeViewModel() {}
 
+    override fun onPostResume() {
+        super.onPostResume()
+        binding.toolBarLyt.backButton.requestFocus() // Focus on the backButton
+
+        val task = Runnable {
+            if (!binding.toolBarLyt.backButton.isAccessibilityFocused) {
+                binding.toolBarLyt.backButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+            }
+        }
+        val worker: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        worker.schedule(task, 1, TimeUnit.SECONDS)
+    }
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -82,7 +112,6 @@ class CreateAccountActivity : BaseActivity<Any>(), LogoutListener {
 
     override fun onLogout() {
         LogoutUtil.stopLogoutTimer()
-//        sessionManager.clearAll()
         Utils.sessionExpired(this, this, sessionManager, api)
     }
 

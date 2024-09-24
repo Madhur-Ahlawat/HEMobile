@@ -3,11 +3,9 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,13 +19,14 @@ import com.conduent.nationalhighways.ui.base.BackPressListener
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.payment.MakeOffPaymentActivity
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import com.conduent.nationalhighways.utils.widgets.NHAutoCompleteTextview
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -39,13 +38,12 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
     @Inject
     lateinit var sm: SessionManager
-    private val createaccountViewmodel: CreateAccountPostCodeViewModel by viewModels()
+    private val createAccountViewmodel: CreateAccountPostCodeViewModel by viewModels()
     val viewModel: RaiseNewEnquiryViewModel by activityViewModels()
 
     private var fullCountryNameWithCode: MutableList<String> = ArrayList()
     private var requiredCountryCode = false
     private var countriesCodeList: MutableList<String> = ArrayList()
-    private var loader: LoaderDialog? = null
     private var requiredFirstName = false
     private var requiredLastName = false
     private var requiredEmail = false
@@ -70,7 +68,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
         setBackPressListener(this)
 
-        createaccountViewmodel.getCountries()
+        createAccountViewmodel.getCountries()
         binding.btnNext.setOnClickListener {
 
             saveData()
@@ -115,6 +113,11 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             }
         }
 
+        binding.mobileNumberEt.contentDescription =
+            Utils.accessibilityForNumbers(sm.fetchUserCountryCode() ?: "")
+                .toString() + " " + Utils.accessibilityForNumbers(
+                sm.fetchUserMobileNUmber() ?: ""
+            )
     }
 
     private fun saveData() {
@@ -231,7 +234,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                     } else {
                         if (!Utils.isLastCharOfStringACharacter(
                                 binding.emailEt.editText.text.toString().trim()
-                            ) || Utils.countOccurenceOfChar(
+                            ) || Utils.countOccurrenceOfChar(
                                 binding.emailEt.editText.text.toString().trim(), '@'
                             ) > 1 || binding.emailEt.editText.text.toString().trim().contains(
                                 Utils.TWO_OR_MORE_DOTS
@@ -241,9 +244,9 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                 .toString() == ".") || (binding.emailEt.editText.text.toString()
                                 .trim().last()
                                 .toString() == "-" || binding.emailEt.editText.text.toString()
-                                .first().toString() == "-") || (Utils.countOccurenceOfChar(
+                                .first().toString() == "-") || (Utils.countOccurrenceOfChar(
                                 binding.emailEt.editText.text.toString().trim(), '.'
-                            ) < 1) || (Utils.countOccurenceOfChar(
+                            ) < 1) || (Utils.countOccurrenceOfChar(
                                 binding.emailEt.editText.text.toString().trim(), '@'
                             ) < 1)
                         ) {
@@ -295,7 +298,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
                                     binding.emailEt.removeError()
                                     true
                                 }
-                            } else if (Utils.countOccurenceOfChar(
+                            } else if (Utils.countOccurrenceOfChar(
                                     binding.emailEt.editText.text.toString().trim(), '@'
                                 ) !in (1..1)
                             ) {
@@ -344,10 +347,10 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
                     }
 
-                }else{
+                } else {
                     binding.mobileNumberEt.removeError()
-                    requiredCountryCode=true
-                    requiredMobileNumber=true
+                    requiredCountryCode = true
+                    requiredMobileNumber = true
                 }
 
                 checkButton()
@@ -365,7 +368,13 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     override fun initCtrl() {
+        binding.mobileNumberEt.contentDescription =
+            Utils.accessibilityForNumbers(sm.fetchUserCountryCode() ?: "")
+                .toString() + " " + Utils.accessibilityForNumbers(
+                sm.fetchUserMobileNUmber() ?: ""
+            )
 
+        binding.mobileNumberEt.editText.setAccessibilityDelegateForDigits()
     }
 
     override fun observer() {
@@ -373,24 +382,20 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             binding.viewModel = viewModel
             binding.lifecycleOwner = this
 
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-            loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
-            observe(createaccountViewmodel.countriesCodeList, ::getCountryCodesList)
-            observe(createaccountViewmodel.countriesList, ::getCountriesList)
+            showLoaderDialog()
+            observe(createAccountViewmodel.countriesCodeList, ::getCountryCodesList)
+            observe(createAccountViewmodel.countriesList, ::getCountriesList)
         }
         isViewCreated = true
 
     }
 
-    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {/* if (loader?.isVisible == true) {
-             loader?.dismiss()
-         }*/
+    private fun getCountriesList(response: Resource<List<CountriesModel?>?>?) {
         when (response) {
             is Resource.Success -> {
                 countriesList.clear()
                 countriesModel = response.data
-                createaccountViewmodel.getCountryCodesList()
+                createAccountViewmodel.getCountryCodesList()
 
                 response.data?.forEach {
                     it?.countryName?.let { it1 -> countriesList.add(it1) }
@@ -418,10 +423,16 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
         }
     }
 
-    private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
+    private fun focusContactDetailsToolBar() {
+        if (requireActivity() is MakeOffPaymentActivity) {
+            (requireActivity() as MakeOffPaymentActivity).focusMakeOffToolBar()
+        } else if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
         }
+    }
+
+    private fun getCountryCodesList(response: Resource<List<CountryCodes?>?>?) {
+        dismissLoaderDialog()
         when (response) {
             is Resource.Success -> {
                 fullCountryNameWithCode.clear()
@@ -471,11 +482,12 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
                 binding.countrycodeEt.clearFocus()
                 binding.countrycodeEt.setDropDownItemSelectListener(this)
-
+                focusContactDetailsToolBar()
             }
 
             is Resource.DataError -> {
                 ErrorUtil.showError(binding.root, response.errorMsg)
+                focusContactDetailsToolBar()
             }
 
             else -> {
@@ -485,11 +497,10 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
     }
 
     private fun checkRequireCountryCode() {
-        if (binding.mobileNumberEt.getText().toString().trim().isNotEmpty()) {
-            requiredCountryCode =
-                fullCountryNameWithCode.any { it == binding.countrycodeEt.selectedItemDescription }
+        requiredCountryCode = if (binding.mobileNumberEt.getText().toString().trim().isNotEmpty()) {
+            fullCountryNameWithCode.any { it == binding.countrycodeEt.selectedItemDescription }
         } else {
-            requiredCountryCode = true
+            true
         }
     }
 
@@ -500,21 +511,18 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
             binding.emailEt.setText(viewModel.edit_enquiryModel.value?.email ?: "")
             binding.countrycodeEt.setSelectedValue(
                 viewModel.edit_enquiryModel.value?.fullcountryCode ?: ""
-
             )
             binding.mobileNumberEt.setText(viewModel.edit_enquiryModel.value?.mobileNumber ?: "")
-
         } else {
             if (navFlowFrom == Constants.ACCOUNT_CONTACT_US || navFlowFrom == Constants.DART_CHARGE_GUIDANCE_AND_DOCUMENTS) {
                 binding.firstnameEt.setText(Utils.capitalizeString(sm.fetchFirstName()) ?: "")
                 binding.lastnameEt.setText(Utils.capitalizeString(sm.fetchLastName()) ?: "")
                 binding.emailEt.setText(sm.fetchAccountEmailId() ?: "")
-
                 val userCountryCode = sm.fetchUserCountryCode()
                 var fullCountryNameToSave = ""
                 fullCountryNameWithCode.forEachIndexed { _, fullCountryName ->
-                    val countrycode = getCountryCode(fullCountryName)
-                    if (countrycode == userCountryCode) {
+                    val countryCode = getCountryCode(fullCountryName)
+                    if (countryCode == userCountryCode) {
                         fullCountryNameToSave = fullCountryName
                         binding.countrycodeEt.setSelectedValue(fullCountryName)
                         return@forEachIndexed
@@ -609,7 +617,7 @@ class EnquiryContactDetailsFragment : BaseFragment<FragmentEnquiryContactDetails
 
     }
 
-    fun saveCountryCodeToViewModel(item: String) {
+    private fun saveCountryCodeToViewModel(item: String) {
         viewModel.edit_enquiryModel.value?.countryCode = getCountryCode(item)
         viewModel.edit_enquiryModel.value?.fullcountryCode = item
 

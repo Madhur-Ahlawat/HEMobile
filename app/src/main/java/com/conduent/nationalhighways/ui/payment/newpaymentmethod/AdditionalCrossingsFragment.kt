@@ -5,9 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +18,6 @@ import com.conduent.nationalhighways.databinding.FragmentAdditionalCrossingsBind
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.landing.LandingActivity
 import com.conduent.nationalhighways.ui.loader.ErrorDialog
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.extn.gone
@@ -34,21 +31,19 @@ import dagger.hilt.android.AndroidEntryPoint
 class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBinding>(),
     View.OnClickListener, OnRetryClickListener {
 
-    private var loader: LoaderDialog? = null
     private var data: CrossingDetailsModelsResponse? = null
     var requiredNoAdditionalCrossings: Boolean = false
-    var viewCreated:Boolean=false
-    var haveRecentCrossings:Boolean=false
+    private var viewCreated: Boolean = false
+    private var haveRecentCrossings: Boolean = false
 
 
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentAdditionalCrossingsBinding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-        if(arguments?.containsKey(Constants.HAVE_RECENT_CROSSINGS)==true){
-            haveRecentCrossings=arguments?.getBoolean(Constants.HAVE_RECENT_CROSSINGS)?:false
+
+        if (arguments?.containsKey(Constants.HAVE_RECENT_CROSSINGS) == true) {
+            haveRecentCrossings = arguments?.getBoolean(Constants.HAVE_RECENT_CROSSINGS) ?: false
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (arguments?.getParcelable(
@@ -68,20 +63,18 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                 )
             }
         }
-        
+
         navData = data
 
-        if(haveRecentCrossings){
+        if (haveRecentCrossings) {
             binding.backToMainMenu.gone()
-        }else{
+        } else {
             binding.backToMainMenu.visible()
         }
         if (data?.unsettledTripChange == 0) {
-            binding.recentCrossingHelper.gone()
-            binding.recentCrossing.gone()
+            binding.paymentAmountRecentLl.gone()
         } else {
-            binding.recentCrossing.visible()
-            binding.recentCrossing.visible()
+            binding.paymentAmountRecentLl.visible()
         }
         binding.apply {
             if ((data?.additionalCrossingCount ?: 0) > 0) {
@@ -105,30 +98,39 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                     additionalCrossingsAmount = charge * additionalCrossingsCount
                 }
                 val total = recentCrossingsAmount + additionalCrossingsAmount
-                recentCrossing.text = getString(R.string.currency_symbol) + String.format(
-                    "%.2f",
-                    recentCrossingsAmount
+                recentCrossing.text = getString(
+                    R.string.price, "" + String.format(
+                        "%.2f",
+                        recentCrossingsAmount
+                    )
                 )
-                paymentCrossing.text = getString(R.string.currency_symbol) + String.format(
-                    "%.2f",
-                    additionalCrossingsAmount
+                paymentCrossing.text = getString(
+                    R.string.price, "" + String.format(
+                        "%.2f",
+                        additionalCrossingsAmount
+                    )
                 )
-                totalAmount.text = getString(R.string.currency_symbol) + String.format(
-                    "%.2f",
-                    total
+                totalAmount.text = getString(
+                    R.string.price, "" + String.format(
+                        "%.2f",
+                        total
+                    )
                 )
                 data?.totalAmount = total
             }
-
 
         }
 
         checkButton()
 
-        binding.numberAdditionalCrossings.editText.addTextChangedListener(GenericTextWatcher(1))
+        binding.numberAdditionalCrossings.editText.addTextChangedListener(GenericTextWatcher())
+        binding.numberAdditionalCrossings.editText.contentDescription = getString(
+            R.string.editing_future_crossings,
+            binding.numberAdditionalCrossings.editText.text.toString()
+        )
     }
 
-    inner class GenericTextWatcher(private val index: Int) : TextWatcher {
+    inner class GenericTextWatcher : TextWatcher {
         override fun beforeTextChanged(
             charSequence: CharSequence?,
             start: Int,
@@ -165,25 +167,38 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
 
                         val total = recentCrossingsAmount + additionalCrossingsAmount
 
-                        binding.recentCrossing.text = getString(R.string.currency_symbol) + String.format(
-                            "%.2f",
-                            recentCrossingsAmount
-                        )
+                        binding.recentCrossing.text =
+                            getString(
+                                R.string.price, "" + String.format(
+                                    "%.2f",
+                                    recentCrossingsAmount
+                                )
+                            )
                         data?.totalAmount = total
                         data?.additionalCharge = additionalCrossingsAmount
 
-                        binding.paymentCrossing.text = getString(R.string.currency_symbol) + String.format(
-                            "%.2f",
-                            data?.additionalCharge
-                        )
+                        binding.paymentCrossing.text =
+                            getString(
+                                R.string.price, "" + String.format(
+                                    "%.2f",
+                                    data?.additionalCharge
+                                )
+                            )
 
-                        binding.totalAmount.text = getString(R.string.currency_symbol) + String.format(
-                            "%.2f",
-                            data?.totalAmount
-                        )
+                        binding.totalAmount.text =
+                            getString(
+                                R.string.price, "" + String.format(
+                                    "%.2f",
+                                    data?.totalAmount
+                                )
+                            )
 
                     }
                     binding.numberAdditionalCrossings.removeError()
+                    binding.numberAdditionalCrossings.editText.contentDescription = getString(
+                        R.string.editing_future_crossings,
+                        binding.numberAdditionalCrossings.editText.text.toString()
+                    )
                     true
                 } else {
                     if (charSequence.toString().trim().isEmpty()) {
@@ -217,15 +232,14 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
     }
 
     override fun observer() {
-        if(!viewCreated){
+        if (!viewCreated) {
             displayCustomMessage(
                 getString(R.string.additional_crossings_txt),
                 getString(R.string.only_use_this_option_for_crossings_planned),
                 getString(R.string.str_continue), "", null, null, View.GONE
             )
         }
-        viewCreated=true
-
+        viewCreated = true
 
 
     }
@@ -245,9 +259,12 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                         .replace(".", "").toDouble()
                 )
                 bundle.putParcelable(Constants.NAV_DATA_KEY, data as Parcelable?)
-                if(edit_summary){
-                    findNavController().navigate(R.id.action_additionalCrossingsFragment_to_crossingCheckAnswersFragment,bundle)
-                }else {
+                if (edit_summary) {
+                    findNavController().navigate(
+                        R.id.action_additionalCrossingsFragment_to_crossingCheckAnswersFragment,
+                        bundle
+                    )
+                } else {
 
                     findNavController().navigate(
                         R.id.action_additionalCrossingsFragment_to_crossingRecieptFragment,
@@ -291,9 +308,10 @@ class AdditionalCrossingsFragment : BaseFragment<FragmentAdditionalCrossingsBind
                 )
             }
 
-        } catch (e: Exception) {
+        } catch (_: Exception) {
 
         }
     }
+
 
 }

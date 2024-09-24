@@ -4,5 +4,6 @@ data class TollRatesResp(
     val vehicleId: Int?,
     val vehicleType: String?,
     val videoRate: Double?,
-    val etcRate: Double?
+    val etcRate: Double?,
+    val vehicleTypeDesc: String?
 )

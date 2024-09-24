@@ -26,17 +26,19 @@ import com.google.android.gms.location.Priority
 
 @SuppressLint("StaticFieldLeak")
 object GeofenceUtils {
-    private const val TAG = "GeofenceUtils"
+    private val TAG = "GeofenceUtils"
 
+    private const val gadgetQ = true
     private val geofenceList = ArrayList<Geofence>()
 
-    private lateinit var geoClient: GeofencingClient
-    private lateinit var geofenceCircularIntent: PendingIntent
+    lateinit var geoClient: GeofencingClient
+    lateinit var geofenceCircularIntent: PendingIntent
 
     lateinit var context: Context
 
     //starting geofence
     fun startGeofence(context1: Context, from: Int = 0) {
+        Log.e(TAG, "startGeofence: --> " )
         Utils.writeInFile(context1, "startgeofence from $from")
         context = context1
         val geofenceIntent: PendingIntent by lazy {
@@ -57,7 +59,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceNorthBoundDartCharge)
                 setCircularRegion(
-                    17.463311, 78.561253,
+                    51.45930, 0.25155,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -68,7 +70,7 @@ object GeofenceUtils {
             Geofence.Builder().apply {
                 setRequestId(Constants.geofenceSouthBoundDartCharge)
                 setCircularRegion(
-                    17.473612, 78.570747,
+                    51.47027, 0.26257,
                     300f
                 )
                 setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -108,9 +110,11 @@ object GeofenceUtils {
     }
 
     //specify the Geofence to monitor and the initial trigger
-    private fun seekGeofencing(geofenceList: ArrayList<Geofence>): GeofencingRequest {
+    private fun seekGeofencing(list: ArrayList<Geofence>): GeofencingRequest {
+        Log.e(TAG, "seekGeofencing: list:$list")
         return GeofencingRequest.Builder().apply {
-            addGeofences(geofenceList)
+//            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            addGeofences(list)
         }.build()
     }
 
@@ -151,22 +155,20 @@ object GeofenceUtils {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ))
         val formalizeBackground =
-            PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
-                context, Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            )
-
+            if (gadgetQ) {
+                PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+                    context, Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                )
+            } else {
+                true
+            }
         return (formalizeForeground || coarseForeground) && formalizeBackground
     }
 
     private fun validateGadgetAreaInitiateGeofence(resolve: Boolean = true) {
-
-        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000L).apply {
-            setWaitForAccurateLocation(true)
-            setMinUpdateIntervalMillis(5000L)
-            setMaxUpdateDelayMillis(10000L)
-        }.build()
-
-
+        val locationRequest = LocationRequest.create().apply {
+            priority = Priority.PRIORITY_HIGH_ACCURACY
+        }
         val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
         val client = LocationServices.getSettingsClient(context)
         val locationResponses =

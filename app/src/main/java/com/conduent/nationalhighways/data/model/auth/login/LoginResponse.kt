@@ -62,6 +62,9 @@ data class LoginResponse(
     @SerializedName("require2FA")
     var require2FA: String?,
 
+   @SerializedName("cardValidationRequired")
+    var cardValidationRequired: Boolean?,
+
     var mfaEnabled:String?,
 
 )

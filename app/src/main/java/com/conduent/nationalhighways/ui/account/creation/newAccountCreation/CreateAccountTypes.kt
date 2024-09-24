@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentCreateAccountTypesBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.loader.OnRetryClickListener
@@ -31,6 +32,9 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun init() {
+        if (requireActivity() is CreateAccountActivity) {
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
         binding.crossingCharges.setOnClickListener(this)
     }
 
@@ -46,7 +50,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         hideKeyboard()
         when (v?.id) {
             R.id.prePayCard -> {
-                if (navFlowCall.equals(EDIT_SUMMARY) && NewCreateAccountRequestModel.prePay) {
+                if (navFlowCall == EDIT_SUMMARY && NewCreateAccountRequestModel.prePay) {
                     findNavController().popBackStack()
                 } else {
                     NewCreateAccountRequestModel.prePay = true
@@ -55,7 +59,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
             }
 
             R.id.payCard -> {
-                if (navFlowCall.equals(EDIT_SUMMARY) && !NewCreateAccountRequestModel.prePay) {
+                if (navFlowCall == EDIT_SUMMARY && !NewCreateAccountRequestModel.prePay) {
                     findNavController().popBackStack()
                 } else {
                     NewCreateAccountRequestModel.prePay = false
@@ -75,7 +79,7 @@ class CreateAccountTypes : BaseFragment<FragmentCreateAccountTypesBinding>(),
         when (navFlowCall) {
 
             EDIT_SUMMARY -> {
-                bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_ACCOUNT_TYPE)
+                bundle.putString(Constants.NAV_FLOW_KEY, EDIT_ACCOUNT_TYPE)
                 findNavController().navigate(
                     R.id.action_createAccountTypes_to_forgotPasswordFragment,
                     bundle

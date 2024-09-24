@@ -1,16 +1,29 @@
 package com.conduent.nationalhighways.utils
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Environment
+import android.provider.Settings
+import androidx.activity.result.ActivityResultLauncher
+import androidx.core.app.ActivityCompat
 import com.conduent.nationalhighways.utils.common.Constants
 import okhttp3.ResponseBody
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 
 object StorageHelper {
 
 
-
-    /*fun checkStoragePermissions(context: Context): Boolean {
+    fun checkStoragePermissions(context: Context): Boolean {
         var ret = true
         if (SDK_INT >= Build.VERSION_CODES.R) {
             ret = Environment.isExternalStorageManager()
@@ -56,7 +69,6 @@ object StorageHelper {
             )
         }
     }
-*/
     fun writeResponseBodyToDisk(
         activity: Activity,
         selectionType: String,
@@ -141,26 +153,26 @@ object StorageHelper {
             input.close()
         }
     }
-/*
-    fun createFile(context: Context, format:String,) : File {
-        var path=""
-        val capture_dir: String = context.getExternalFilesDir("")?.absolutePath + "/"+ FOLDER_NAME  +"/"
-        val file = File(capture_dir,System.currentTimeMillis() + format)
-        if (!file.exists()) {
-            file.mkdirs()}
-        val fos =  FileOutputStream(file);//Get OutputStream for NewFile Location
-        InputStream is = c.getInputStream();//Get InputStream for connection
-        byte[] buffer = new byte[1024];//Set buffer type
-        int len1 = 0;//init length
-        while ((len1 = is.read(buffer)) != -1) {
-            fos.write(buffer, 0, len1);//Write new file
+    /*
+        fun createFile(context: Context, format:String,) : File {
+            var path=""
+            val capture_dir: String = context.getExternalFilesDir("")?.absolutePath + "/"+ FOLDER_NAME  +"/"
+            val file = File(capture_dir,System.currentTimeMillis() + format)
+            if (!file.exists()) {
+                file.mkdirs()}
+            val fos =  FileOutputStream(file);//Get OutputStream for NewFile Location
+            InputStream is = c.getInputStream();//Get InputStream for connection
+            byte[] buffer = new byte[1024];//Set buffer type
+            int len1 = 0;//init length
+            while ((len1 = is.read(buffer)) != -1) {
+                fos.write(buffer, 0, len1);//Write new file
+            }
+            fos.close();
+            is.close
+
+
+
+            return path
         }
-        fos.close();
-        is.close
-
-
-
-        return path
-    }
-*/
+    */
 }

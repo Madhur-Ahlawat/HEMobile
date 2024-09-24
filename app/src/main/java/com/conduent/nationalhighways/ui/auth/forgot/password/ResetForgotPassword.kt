@@ -1,7 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.forgot.password
 
 import android.text.Html
-import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -12,12 +11,13 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentForgotResetBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.auth.login.LoginActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
-import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain.Companion.removeBottomBar
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.BIOMETRIC_CHANGE
+import com.conduent.nationalhighways.utils.common.Constants.IN_ACTIVE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_2FA_CHANGE
 import com.conduent.nationalhighways.utils.common.Constants.PROFILE_MANAGEMENT_ADDRESS_CHANGED
@@ -61,6 +61,21 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
         binding.signinBt.setOnClickListener(this)
         title = requireActivity().findViewById(R.id.title_txt)
         when (navFlowCall) {
+            IN_ACTIVE -> {
+                binding.feedbackBt.invisible()
+                binding.title.text = getString(R.string.str_account_active_another_12months)
+                binding.subTitle.text =
+                    Html.fromHtml(
+                        getString(
+                            R.string.str_we_have_sent_confirmation,
+                            personalInformation?.emailAddress
+                        ), Html.FROM_HTML_MODE_COMPACT
+                    )
+                if (requireActivity() is AuthActivity) {
+                    (requireActivity() as AuthActivity).hideBackIcon()
+                }
+                binding.btnSubmit.text = getString(R.string.str_go_to_dashboard)
+            }
 
             Constants.FORGOT_PASSWORD_FLOW -> {
                 binding.subTitle.gone()
@@ -82,15 +97,21 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
             BIOMETRIC_CHANGE -> {
                 if (requireActivity() is HomeActivityMain) {
                     (requireActivity() as HomeActivityMain).hideBackIcon()
+                    (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_profile_biometrics))
                 }
                 binding.feedbackBt.invisible()
                 binding.cardViewPlateNumber.gone()
                 binding.deleteTitle.gone()
-                HomeActivityMain.setTitle(resources.getString(R.string.str_profile_biometrics))
+
                 binding.title.text = getString(R.string.biometric_changed_successfully)
                 binding.subTitle.gone()
                 binding.btnSubmit.text = getString(R.string.str_continue)
-                HomeActivityMain.changeBottomIconColors(requireActivity(), 3)
+                if (requireActivity() is HomeActivityMain) {
+                    (requireActivity() as HomeActivityMain).changeBottomIconColors(
+                        requireActivity(),
+                        3
+                    )
+                }
             }
 
             PROFILE_MANAGEMENT -> {
@@ -98,7 +119,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 if (arguments?.getString(Constants.NAV_FLOW_FROM)
                         .equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)
                 ) {
-                    removeBottomBar()
+                    if (requireActivity() is HomeActivityMain) {
+                        (requireActivity() as HomeActivityMain).removeBottomBar()
+                    }
                     if (requireActivity() is HomeActivityMain && !backButton) {
                         (requireActivity() as HomeActivityMain).hideBackIcon()
                     }
@@ -121,7 +144,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     binding.title.text = getString(R.string.name_change_successful)
                     var email = personalInformation?.emailAddress
 
-                    if (navData is PersonalInformation && (email == null || email.isEmpty() == true)) {
+                    if (navData is PersonalInformation && (email == null || email.isEmpty())) {
                         email = (navData as PersonalInformation).emailAddress
                     }
                     binding.subTitle.text = Html.fromHtml(
@@ -167,13 +190,15 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 val isMobileNumber = arguments?.getBoolean(Constants.IS_MOBILE_NUMBER, true)
                 if (isMobileNumber == false) {
                     binding.title.text = getString(R.string.phone_number_change_successful)
-                    HomeActivityMain.setTitle(getString(R.string.profile_phone_number))
+                    if (requireActivity() is HomeActivityMain) {
+                        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_phone_number))
+                    }
                 } else {
                     if (requireActivity() is HomeActivityMain) {
                         (requireActivity() as HomeActivityMain).hideBackIcon()
+                        (requireActivity() as HomeActivityMain).setTitle(getString(R.string.profile_mobile_number))
                     }
                     binding.title.text = getString(R.string.mobile_change_successful)
-                    HomeActivityMain.setTitle(getString(R.string.profile_mobile_number))
                 }
                 binding.subTitle.text = Html.fromHtml(
                     getString(
@@ -199,7 +224,9 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                 binding.btnSubmit.text = getString(R.string.str_continue)
             }
         }
-
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
 
     }
 
@@ -229,7 +256,7 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
                     }
 
                     PROFILE_MANAGEMENT_2FA_CHANGE, PROFILE_MANAGEMENT_MOBILE_CHANGE, PROFILE_MANAGEMENT, PROFILE_MANAGEMENT_ADDRESS_CHANGED -> {
-                        if (navFlowFrom.equals(Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE)) {
+                        if (navFlowFrom == Constants.PROFILE_MANAGEMENT_EMAIL_CHANGE) {
                             requireActivity().startNewActivityByClearingStack(LoginActivity::class.java)
                         } else {
                             findNavController().navigate(R.id.action_resetFragment_to_profileManagementFragment)
@@ -239,6 +266,13 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
 
                     PROFILE_MANAGEMENT_COMMUNICATION_CHANGED -> {
                         findNavController().navigate(R.id.action_resetFragment_to_accountManagementFragment)
+                    }
+
+                    IN_ACTIVE -> {
+                        requireActivity().startNewActivityByClearingStack(HomeActivityMain::class.java) {
+                            putString(Constants.NAV_FLOW_FROM, navFlowFrom)
+                            putBoolean(Constants.FIRST_TYM_REDIRECTS, true)
+                        }
                     }
 
                     else -> {
@@ -261,7 +295,4 @@ class ResetForgotPassword : BaseFragment<FragmentForgotResetBinding>(), View.OnC
         }
     }
 
-    private fun getSpannedText(text: String): Spanned? {
-        return Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
-    }
 }

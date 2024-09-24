@@ -3,91 +3,10 @@ package com.conduent.nationalhighways.utils.common
 import com.conduent.nationalhighways.BuildConfig
 
 object Constants {
-    const val landingPageName: String = "Android Dart Charge: Landing Page"
-    const val contactPageName: String = "Android Dart Charge: Contact Dart Charge"
-    const val chargesAndFinesPageName: String = "Android Dart Charge: Charges and fines"
-    const val aboutServicePageName: String = "Android Dart Charge: About this service"
-    const val generalTermsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
-    const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions - General"
-    const val paygTermsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions - PAYG"
     const val TWOFA_ENABLED: String = "TWOFA_ENABLED"
     const val HAS_ASKED_FOR_BIOMETRIC: String = "HAS_ASKED_FOR_BIOMETRIC"
-    const val privacyPolicyPageName: String = "Android Dart Charge: Privacy Policy"
     const val BIOMETRIC_CHANGE: String = "BIOMETRIC_CHANGE"
-    const val otherWaysToPayPageName: String = "Android Dart Charge: Other ways to pay your charge"
-    const val doYouHaveDartAccountPageName: String = "Android Dart Charge Non-Account Holder: Have a Dart Charge account?"
-//    const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
-//    const val termsAndConditionsPageName: String = "Android Dart Charge: Terms and Conditions"
 
-    //About us
-//    case otherWaysToPay = "iOS Dart Charge: Other ways to pay your charge"
-//    case thirdPartySoftware = "iOS Dart Charge: Third party software"
-//
-//    //Raise a new enquiry
-//    case doYouHaveDartAccount = "iOS Dart Charge Non-Account Holder: Have a Dart Charge account?"
-//    case categoryAndSubCategoryNonAccount = "iOS Dart Charge Non-Account Holder: Category and Sub-category type"
-//    case moreDetailsNonAccount = "iOS Dart Charge Non-Account Holder: More detail"
-//    case enquiryContactDetailsNonAccount = "iOS Dart Charge Non-Account Holder: Enquiry contact details"
-//    case summeryPageNonAccount = "iOS Dart Charge Non-Account Holder: Summary page"
-//    case enquiryStatusNonAccount = "iOS Dart Charge Non-Account Holder: Enquiry status"
-//    case enquirySuccessNonAccount = "iOS Dart Charge Non-Account Holder: Enquiry success"
-//    case enquiryHistory = "iOS Dart Charge Account Holder: Enquiry History"
-//    case categoryAndSubCategoryAccount = "iOS Dart Charge Account Holder: Category and Sub-category type"
-//    case moreDetailsAccount = "iOS Dart Charge Account Holder: More detail"
-//    case enquiryContactDetailsAccount = "iOS Dart Charge Account Holder: Enquiry contact details"
-//    case summeryPageAccount = "iOS Dart Charge Account Holder: Summary page"
-//    case enquirySuccessAccount = "iOS Dart Charge Account Holder: Enquiry success"
-//
-//    //Acccount creation
-//    case beforeYouStart = "iOS Dart Charge: Account Creation: Before you start"
-//    case typeOfAccount = "iOS Dart Charge: Account Creation: Type of account"
-//    case creationName = "iOS Dart Charge: Account Creation: Name"
-//    case addressPostCode = "iOS Dart Charge: Account Creation: Address postcode"
-//    case selectAddress = "iOS Dart Charge: Account Creation: Select address"
-//    case selectOfficeAddress = "iOS Dart Charge: Account Creation: Select office address"
-//    case manualAddress = "iOS Dart Charge: Account Creation: Manual address"
-//    case officeManualAddress = "iOS Dart Charge: Account Creation: Office manual address"
-//    case ldrsEligible = "iOS Dart Charge: Account Creation: LRDS eligible"
-//    case prePayOrPayG = "iOS Dart Charge: Account Creation: Prepay or PAYG"
-//    case crossigCharges = "iOS Dart Charge: Account Creation: Crossing charges"
-//    case createEmail = "iOS Dart Charge: Account Creation: Email"
-//    case verifyEmail = "iOS Dart Charge: Account Creation: Verify email"
-//    case requestEmailCode = "iOS Dart Charge: Account Creation: Request email code"
-//    case createPassword = "iOS Dart Charge: Account Creation: Create password"
-//    case optInTp2FA = "iOS Dart Charge: Account Creation: Opt in to 2FA"
-//    case captureWhetherOnOrOff = "iOS Dart Charge: Account Creation: Text message communications - Capture whether on/ off"
-//    case captureWhetherOn = "iOS Dart Charge: Account Creation: Text message communications - Capture whether on"
-//    case captureWhetherOff = "iOS Dart Charge: Account Creation: Text message communications - Capture whether off"
-//    case mobileNumber = "iOS Dart Charge: Account Creation: Mobile number"
-//    case verifyMobile = "iOS Dart Charge: Account Creation: Verify mobile"
-//    case requestPhoneCode = "iOS Dart Charge: Account Creation: Request phone code"
-//    case landLineNumber = "iOS Dart Charge: Account Creation: Landline number"
-//    case numberPlate = "iOS Dart Charge: Account Creation: Number plate"
-//    case vehicleExempt = "iOS Dart Charge: Account Creation: Vehicle exempt"
-//    case vehicleZeroRate = "iOS Dart Charge: Account Creation: Vehicle zero rate"
-//    case vehicleAlredyToAnotherAccoount = "iOS Dart Charge: Account Creation: Vehicle already on another account"
-//    case vehicleAlreadyAdded = "iOS Dart Charge: Account Creation: Vehicle already added"
-//    case maximumVehicleAdded = "iOS Dart Charge: Account Creation: Maximum vehicles added"
-//    case vehicleLookingFor = "iOS Dart Charge: Account Creation: Vehicle looking for?"
-//    case vehicleAddedSummery = "iOS Dart Charge: Account Creation: Vehicle added/ summary"
-//    case removeVehicleQuestion = "iOS Dart Charge: Account Creation: Remove vehicle?"
-//    case vehicleMoreInformationNotFount = "iOS Dart Charge: Account Creation: Vehicle more information - not found"
-//    case vehicleMoreInformationUK = "iOS Dart Charge: Account Creation: Vehicle more information - UK"
-//    case vehicleMoreInformationNonUK = "iOS Dart Charge: Account Creation: Vehicle more information - non-UK"
-//    case vehicleUkNon_UK = "iOS Dart Charge: Account Creation: Vehicle UK/ Non-UK"
-//    case mustRegisterAtLeast1Vehicle = "iOS Dart Charge: Account Creation: Must register at least 1 vehicle"
-//    case payment = "iOS Dart Charge: Account Creation: Payment"
-//    case paymentPayG = "iOS Dart Charge: Account Creation: Payment PAYG"
-//    case checkYourAnswer = "iOS Dart Charge: Account Creation: Check your answers"
-//    case topUpAmount = "iOS Dart Charge: Account Creation: Top up amount"
-//    case accountConfirmationPAYG = "iOS Dart Charge: Account Creation: Account confirmation PAYG"
-//    case accountConfirmationPrePay = "iOS Dart Charge: Account Creation: Account confirmation Pre-Pay"
-//    case paymentError = "iOS Dart Charge: Account Creation: Payment error"
-//
-//    //dashboard
-//    case dashbooardSuspendAccoout = "iOS Dart Charge: Dashboard: Suspended account"
-//    case dashbooardActiveAccoout = "iOS Dart Charge: Dashboard: Active account"
-//    case accountManagement = "iOS Dart Charge: Account Management"
 
     const val DIRECT_DEBIT: String = "directdebit"
     const val IS_DIRECT_DEBIT: String = "IS_DIRECT_DEBIT"
@@ -97,103 +16,39 @@ object Constants {
     const val CREDIT_NOT_SET_UP = "credit_not_set_up"
     const val ACCOUNT_CLOSURE = "ACCOUNT CLOSURE"
     const val ACCOUNT_HOLDER_REQUEST = "ACCOUNT HOLDER REQUEST"
-    const val Mobile_App = "Mobile App"
     const val NEW_CARD = "newcard"
     const val IS_EDIT_EMAIL = "isEditEmail"
-    const val MONTHLY = "MONTHLY"
-    const val ACTIVE = "ACTIVE"
     const val MAKE_DEFAULT = "make_default"
-    const val FROM_ALL_TRANSACTIONS_TO_DETAILS = "FROM_ALL_TRANSACTIONS_TO_DETAILS"
     const val PERSONALDATA = "personaldata"
     const val ACCOUNTINFORMATION = "accountinformation"
     const val REPLENISHMENTINFORMATION = "ReplenishmentInformation"
-    const val EXISTING_CARD = "existing_card"
-    const val EXPIRED = "EXPIRED"
-    const val CURRENT = "CURRENT"
-    const val SAVINGS = "SAVINGS"
-    const val MASTERCARD = "MASTERCARD"
     const val MAESTRO = "MAESTRO"
-    const val CASH = "CASH"
-    const val VISA = "VISA"
-    const val RETRY_COUNT = 3
     const val ITEM_COUNT: Long = 20
-    const val LOCAL_APP_SESSION_TIMEOUT = 1000 * 60 * 15L
 
     const val SPLASH_TIME_OUT = 500L
     const val COUNTRY_TYPE = "country_type"
-    const val CHECK_PAID_CROSSING_VRM_ENTERED = "CHECK_PAID_CROSSING_VRM_ENTERED"
-    const val CHECK_PAID_CROSSING_VRM_EXISTS = "CHECK_PAID_CROSSING_VRM_EXISTS"
-    const val CHECK_PAID_CROSSINGS_VRM_DETAILS = "CHECK_PAID_CROSSINGS_VRM_DETAILS"
-    const val CHECK_PAID_CHARGE_DATA_KEY = "from_check_paid_ref_data_to_check_list"
-    const val CHECK_PAID_REF_VRM_DATA_KEY = "from_check_paid_ref_data_to_ref_vrm"
-    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT =
-        "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT"
-    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL =
-        "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL"
-    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE =
-        "FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE"
-    const val FROM_DASHBOARD_TO_CROSSING_HISTORY = 1001
-    const val FROM = "from"
-    const val UK_VEHICLE_DATA_NOT_FOUND_KEY = "uk_vehicle_data_not_found_key"
     const val ONE_OF_PAYMENTS_PAY_RESP = "one_of_payments_model_res"
-    const val OPTIONS_TYPE = "Options_type"
-    const val NOMINATED_ACCOUNT_DATA = "nominee_data"
-    const val NOMINATED_ACCOUNT = "NOMINATED"
     const val PENDING_STATUS = "PENDING"
-    const val CATEGORY_RECEIPTS = "Standard Notification"
     const val LRDS_ELIGIBILITY_CHECK = "lrdsEligibilityCheck"
 
     const val COUNTRY_TYPE_UK = "UK"
     const val COUNTRY_TYPE_NON_UK = "NON UK"
-    const val CASE_COMMENTS_KEY = "case_comments_key"
-    const val CASES_CATEGORY = "cases_category"
-    const val CASES_SUB_CATEGORY = "cases_sub_category"
     const val PAYG = "PAYG"
     const val EXEMPT_PARTNER = "EXEMPT PARTNER"
-    const val PAYMENT_HISTORY = "payment_history"
-    const val PAYMENT_METHOD = "payment_method"
     const val ADD_PAYMENT_METHOD = "add_payment_method"
     const val PAYMENT_TOP_UP = "payment_top_up"
     const val DASHBOARD = "dashboard"
     const val TOP_UP_AMOUNT = "top_up_amount"
-    const val PERSONAL_TYPE = "personal_type_pre_pay_or_pay_as_go"
     const val FROM_DART_CHARGE_FLOW = "from_dart_charge_flow"
-    const val NORMAL_LOGIN_FLOW_CODE = 1001
     const val DART_CHARGE_FLOW_CODE: Int = 1002
-    const val FROM_LOGIN_TO_CASES_VALUE = 1003
-    const val FROM_CASES_TO_CASES_VALUE = 1004
-    const val FROM_ANSWER_TO_CASE_VALUE = 1012
-
-    const val PERSONAL_TYPE_PREPAY = 1005
-    const val PERSONAL_TYPE_PAY_AS_U_GO = 1006
-    const val UK_VEHICLE_DATA_NOT_FOUND = 1007
-    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_PAYMENT_KEY = 1008
-    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_EMAIL_KEY = 1009
-    const val FROM_CREATE_ACCOUNT_SUMMARY_TO_EDIT_ACCOUNT_TYPE_KEY = 1010
-    const val FROM_CREATE_ACCOUNT_DETAILS_FRAG_TO_CREATE_ACCOUNT_FIND_VEHICLE = 1011
-
-
-    const val FILE_NAMES_KEY = " file_names_key"
-
-    const val CASES_PROVIDE_DETAILS_KEY = "provide_case_details"
-
-    const val FROM_LOGIN_TO_CASES = "FROM_LOGIN_TO_CASES"
-    const val PERSONAL_DETAILS = "personal_details"
-    const val POST_CODE_ADDRESS = "post_code_address"
-    const val PASSWORD = "password"
-    const val PIN = "pin"
     const val LRDS_SCREEN = "lrds_screen"
-    const val STATUS_TERMINATED = "TERMINATED"
 
     const val TRANSACTION_DATE = "Transaction Date"
-    const val MAIN_ACCOUNT = "main_account"
-    const val SUB_ACCOUNT = "sub_account"
     const val VPN_ERROR = "Check your network connection."
     const val API_TIME_OUT = "Api timeout"
     const val REFRESH_TOKEN = "refresh_token_to_start"
     const val TYPE = "type"
     const val LOGIN = "login"
-    const val START_NOW = "start_now"
     const val SESSION_TIME_OUT = "session_time_out"
     const val START_NOW_SCREEN = "start_now"
     const val LOGOUT_SCREEN = "log_out"
@@ -225,6 +80,7 @@ object Constants {
     const val POST_CODE = "post_code"
     const val EDIT_POST_CODE = "edit_post_code"
     const val DATA = "data"
+    const val PAYMENT_LIST_DATA = "PAYMENT_LIST_DATA"
     const val ALLOWED_CHARACTERS_IN_PASSWORD = "~!@#\$%^&*_-+=`|\\(){}[]:;\"'<>,.?/"
     const val LOWER_CASE_ALPHABETS = "qwertyuiopasdfghjklzxcvbnm"
     const val UPPER_CASE_ALPHABETS = "QWERTYUIOPASDFGHJKLZXCVBNM"
@@ -262,6 +118,7 @@ object Constants {
     const val PAYMENT_RESPONSE = "payment_resp"
     const val PAYMENT_DATA = "payment_data"
     const val PAYMENT_METHOD_SIZE = "payment_method_size"
+    const val CARD_SECURITY_CODE = "card_security_code"
     const val VEHICLE_DATA = "vehicle_data"
     const val VEHICLE_SCREEN_TYPE_LIST = 1
     const val VEHICLE_SCREEN_TYPE_ADD = 2
@@ -440,6 +297,13 @@ object Constants {
     const val SERVER_ERROR = "server_error"
     const val API_STATE = "API_STATE"
     const val API_END_TIME = "API_END_TIME"
+    const val CARD_VALIDATION_REQUIRED = "cardValidationRequired"
+    const val CARD_VALIDATION_LATER_DATE = "cardValidationLaterDate"
+    const val CARD_VALIDATION_FIRST_TIME = "cardValidationFirstTime"
+    const val CARD_VALIDATION_SECOND_TIME = "cardValidationSecondTime"
+    const val CARD_VALIDATION_PAYMENT_FAIL = "cardValidationPaymentFail"
+    const val CARD_VALIDATION_EXISTING_CARD = "cardValidationExistingCard"
+    const val IN_ACTIVE = "inActive"
     const val READ_STORAGE_REQUEST_CODE: Int = 1001
     const val TIME_OUT_SEC = 80L
 
@@ -455,6 +319,20 @@ object Constants {
     const val geofenceNorthBoundDartCharge = "geofenceNorthBoundDartCharge"
     const val geofenceSouthBoundDartCharge = "geofenceSouthBoundDartCharge"
 
-    const val FOREGROUND_SERVICE_NOTIFICATIONID=12334
+    const val FOREGROUND_SERVICE_NOTIFICATIONID = 12334
+
+
+    const val threeDSWeb="threeDSWeb"
+    const val AccountSuspendPay="AccountSuspendPay"
+    const val AccountSuspendSelect="AccountSuspendSelect"
+    const val ProfileManagemnt="ProfileManagemnt"
+    const val AccountFrag="AccountFrag"
+    const val PreviousLocationPermission="previousLocationPermission"
+    const val PreviousNotificationPermission="previousNotificationPermission"
+    const val GEOLOCATION_STATUS="GEOLOCATION_STATUS"
+    const val NOTIFICATION_STATUS="NOTIFICATION_STATUS"
+    const val SERVICE_RUN="SERVICE_RUN"
+    const val FromThreeDS="FromThreeDS"
+    const val REDIRECTTOPAYMENTPAGE="REDIRECTTOPAYMENTPAGE"
 
 }

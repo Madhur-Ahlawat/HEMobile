@@ -14,4 +14,4 @@ data class BillingInfo(
     val phone: String?,
     val postalCode: String?,
     val state: String?
-):Parcelable
+) : Parcelable

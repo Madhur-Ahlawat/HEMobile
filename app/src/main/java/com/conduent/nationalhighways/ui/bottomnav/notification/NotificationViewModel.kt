@@ -1,6 +1,5 @@
 package com.conduent.nationalhighways.ui.bottomnav.notification
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -47,6 +46,7 @@ class NotificationViewModel @Inject constructor(
             }
         }
     }
+
     fun readAlertItem(cssLookUpKey: String) {
         viewModelScope.launch {
             try {
@@ -61,6 +61,7 @@ class NotificationViewModel @Inject constructor(
             }
         }
     }
+
     fun getAlertsApi(lang: String) {
         viewModelScope.launch {
             try {

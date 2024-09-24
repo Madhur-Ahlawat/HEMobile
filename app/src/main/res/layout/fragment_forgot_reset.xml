@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,33 +15,32 @@
             android:orientation="vertical">
 
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/tick_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/checkicon" />
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:drawableTop="@drawable/checkicon"
+                android:drawablePadding="@dimen/margin_20dp"
+                android:paddingLeft="@dimen/margin_20dp"
+                android:paddingRight="@dimen/margin_20dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
                 android:text="@string/str_password_reset_successfull"
                 android:textColor="@color/re_send_color"
-                android:textSize="16sp" />
+                android:textSize="@dimen/font_16sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/subTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_9sdp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:fontFamily="@font/open_sans"
+                android:paddingLeft="@dimen/margin_20dp"
+                android:paddingRight="@dimen/margin_20dp"
                 android:gravity="center"
                 android:text="@string/you_will_receive_a_confirmation_email"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/font_14sp" />
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/signin_bt"
@@ -59,10 +59,10 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_bold"
-                android:gravity="start"
+                android:gravity="center"
                 android:text="@string/vehicle_deleted"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16sp"
                 android:visibility="gone" />
 
             <androidx.cardview.widget.CardView
@@ -70,9 +70,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_20sdp"
-                android:elevation="3dp"
+                android:elevation="@dimen/margin_3dp"
                 android:visibility="gone"
-                app:cardCornerRadius="5dp">
+                app:cardCornerRadius="@dimen/margin_5dp">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,7 +86,8 @@
                         style="@style/MediumTextBlack"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:text="@string/vehicle_registration_number_plate"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/font_14sp"
+                        android:gravity="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,7 +95,7 @@
                         android:id="@+id/vehiclePlateNumber"
                         style="@style/RegularTextBlack"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
                         android:text="AJ66MHA"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/txtPlateNumber" />

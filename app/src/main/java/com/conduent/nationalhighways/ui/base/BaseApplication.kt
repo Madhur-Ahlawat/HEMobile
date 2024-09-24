@@ -5,25 +5,32 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
-import com.adobe.marketing.mobile.*
+import com.adobe.marketing.mobile.Analytics
+import com.adobe.marketing.mobile.Identity
+import com.adobe.marketing.mobile.Lifecycle
+import com.adobe.marketing.mobile.LoggingMode
+import com.adobe.marketing.mobile.MobileCore
+import com.adobe.marketing.mobile.MobilePrivacyStatus
+import com.adobe.marketing.mobile.Signal
+import com.adobe.marketing.mobile.UserProfile
 import com.conduent.nationalhighways.BuildConfig.ADOBE_ENVIRONMENT_KEY
-import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.model.auth.login.LoginResponse
+import com.conduent.nationalhighways.data.model.profile.ProfileDetailModel
 import com.conduent.nationalhighways.data.remote.ApiService
 import com.conduent.nationalhighways.receiver.BootReceiver
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Logg
 import com.conduent.nationalhighways.utils.common.SessionManager
-import com.conduent.nationalhighways.utils.logout.LogoutListener
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -36,13 +43,10 @@ class BaseApplication : Application() {
     lateinit var api: ApiService //ms
 
 
-    private var ProfileDetailModel: ProfileDetailModel? = null
-    fun getAccountSavedData(): ProfileDetailModel {
-        return ProfileDetailModel!!
-    }
+    private var profileDetailModel: ProfileDetailModel? = null
 
-    fun setAccountSavedData(ProfileDetailModel: ProfileDetailModel) {
-        this.ProfileDetailModel = ProfileDetailModel
+    fun setAccountSavedData(profileDetailModel1: ProfileDetailModel) {
+        this.profileDetailModel = profileDetailModel1
     }
 
     companion object {
@@ -52,31 +56,20 @@ class BaseApplication : Application() {
 
 
         var INSTANCE: BaseApplication? = null
-        var logoutListener: LogoutListener? = null
-        var timer: Timer? = null
         fun setFlowNameAnalytics1(flowName: String) {
             flowNameAnalytics = flowName
-        }
-
-        fun getFlowNameAnalytics1(): String? {
-            return flowNameAnalytics
         }
 
         fun setScreenNameAnalytics1(screenName: String) {
             screenNameAnalytics = screenName
         }
 
-        fun getScreenNameAnalytics1(): String? {
-            return screenNameAnalytics
-        }
-
         fun getNewToken(api: ApiService, sessionManager: SessionManager, delegate: () -> Unit?) {
             sessionManager.fetchRefreshToken()?.let { refresh ->
-                var responseOK = false
-                var tryCount = 0
+                var responseOK: Boolean
                 var response: Response<LoginResponse?>? = null
 
-                saveDateinSession(sessionManager)
+                saveDateInSession(sessionManager)
 
                 try {
                     response = runBlocking {
@@ -98,7 +91,7 @@ class BaseApplication : Application() {
             }
         }
 
-        fun saveDateinSession(sessionManager: SessionManager) {
+        fun saveDateInSession(sessionManager: SessionManager) {
             val dateFormat = SimpleDateFormat(Constants.dd_mm_yyyy_hh_mm_ss, Locale.getDefault())
             val dateString = dateFormat.format(Date())
             sessionManager.saveStringData(SessionManager.LAST_TOKEN_TIME, dateString)
@@ -145,7 +138,6 @@ class BaseApplication : Application() {
         super.onCreate()
         getFireBaseToken()
         setAdobeAnalytics()
-
         registerBootReceiver()
     }
 
@@ -207,7 +199,7 @@ class BaseApplication : Application() {
             sessionManager.setFirebasePushToken(task.result)
             Log.e("PUSHTOKENTAG", "Receiver firebase token is ->: ${task.result}")
 
-        }).addOnFailureListener(OnFailureListener {
+        }).addOnFailureListener({
             Log.e("PUSHTOKENTAG", "Receiver firebase exception is ->: ${it.localizedMessage}")
 
         })

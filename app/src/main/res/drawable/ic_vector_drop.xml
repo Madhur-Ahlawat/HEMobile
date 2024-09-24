@@ -3,8 +3,8 @@
     android:height="10dp"
     android:viewportWidth="16"
     android:viewportHeight="10">
-  <path
-      android:pathData="M2,0L8,6L14,0L16,2L8,10L0,2L2,0Z"
-      android:fillColor="#000000"
-      android:fillType="evenOdd"/>
+    <path
+        android:pathData="M2,0L8,6L14,0L16,2L8,10L0,2L2,0Z"
+        android:fillColor="#000000"
+        android:fillType="evenOdd" />
 </vector>

@@ -21,7 +21,7 @@ interface RetryCallback {
     fun onTimeOut(
         request: Request,
         dispatchRetry: () -> Unit,
-        retryCount:Int
+        retryCount: Int
     ) {
     }
 
@@ -30,12 +30,11 @@ interface RetryCallback {
         override fun onTimeOut(
             request: Request,
             dispatchRetry: () -> Unit,
-            retryCount:Int
-        ){
+            retryCount: Int
+        ) {
             Log.e("TAG", "onRetryClick:--> ")
             runOnUiThread {
                 BaseApplication.CurrentContext?.let {
-
                     showRetryDialog(it, dispatchRetry)
                 }
             }
@@ -48,7 +47,8 @@ interface RetryCallback {
             if (context is Activity && !context.isFinishing) {
                 val dialog = Dialog(context)
                 dialog.setCancelable(false)
-                val binding: DialogRetryBinding = DialogRetryBinding.inflate(LayoutInflater.from(context))
+                val binding: DialogRetryBinding =
+                    DialogRetryBinding.inflate(LayoutInflater.from(context))
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 dialog.setCanceledOnTouchOutside(false)
@@ -60,7 +60,7 @@ interface RetryCallback {
 
 
                 binding.retryBtn.setOnClickListener {
-                    BaseApplication.CurrentContext?.let { it1 -> Utils.showProgressBar(it1,true) }
+                    BaseApplication.CurrentContext?.let { it1 -> Utils.showProgressBar(it1, true) }
 //                    BaseApplication.CurrentContext.showToast()
                     dispatchRetry.invoke()
                     dialog.cancel()

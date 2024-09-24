@@ -6,9 +6,11 @@
     <data>
 
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/rootLayout">
 
         <WebView
             android:id="@+id/webView"
@@ -18,6 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +31,7 @@
             android:progressTint="@color/new_btn_color"
             android:backgroundTint="@color/new_btn_color"
             android:indeterminateTint="@color/new_btn_color"
-            android:id="@+id/progressBar"/>
+            android:id="@+id/progressBar" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

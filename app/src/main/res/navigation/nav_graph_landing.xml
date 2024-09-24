@@ -20,6 +20,107 @@
             app:popUpTo="@id/serviceUnavailableFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/crossingCheckAnswersFragment"
+        android:name="com.conduent.nationalhighways.ui.payment.newpaymentmethod.PaymentSummaryFragment"
+        android:label="crossingCheckAnswersFragment"
+        tools:layout="@layout/fragment_payment_summary">
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_PayForCrossingsFragment"
+            app:destination="@id/payCrossingsFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_AdditionalCrossingsFragment"
+            app:destination="@id/additionalCrossingsFragment" />
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_findYourVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_additionalCrossingsFragment"
+            app:destination="@id/additionalCrossingsFragment" />
+        <action
+            android:id="@+id/action_crossingCheckAnswersFragment_to_crossingRecieptFragment"
+            app:destination="@id/crossingRecieptFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enquirySummaryFragment"
+        android:name="com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.SummaryEnquiryFragment"
+        android:label="SummaryEnquiryFragment"
+        tools:layout="@layout/fragment_summary_enquiry">
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryCategoryFragment"
+            app:destination="@id/enquiryCategoryFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryCommentsFragment"
+            app:destination="@id/enquiryCommentsFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquiryContactDetailsFragment"
+            app:destination="@id/enquiryContactDetailsFragment" />
+        <action
+            android:id="@+id/action_enquirySummaryFragment_to_enquirySuccessFragment"
+            app:destination="@id/enquirySuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountSummaryFragment"
+        android:name="com.conduent.nationalhighways.ui.account.creation.newAccountCreation.CreateAccountSummaryFragment"
+        android:label="AccountSummaryFragment"
+        tools:layout="@layout/fragment_create_account_summary">
+        <action
+            android:id="@+id/action_createAccountSummaryFragment_to_generalTermsAndConditions"
+            app:destination="@id/generalTermsAndConditionsFragment" />
+        <action
+            android:id="@+id/action_createAccountSummaryFragment_to_paygtermsandconditions"
+            app:destination="@id/paygtermsandconditions" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_addNewVehicleDetailsFragment"
+            app:destination="@id/addNewVehicleDetailsFragment" />
+
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_createAccountFindVehicleFragment"
+            app:destination="@id/findYourVehicleFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_removeVehicleFragment"
+            app:destination="@id/removeVehicleFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_TopUpFragment"
+            app:destination="@id/topUpFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_personalInfoFragment"
+            app:destination="@id/createAccountPersonalInfo" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_postCodeFragment"
+            app:destination="@id/createAccountPostCodeNew" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_manualAddressFragment"
+            app:destination="@id/fragment_manual_address" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_emailAddressFragment"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_mobileNumberFragment"
+            app:destination="@id/HWMobileNumberCaptureVC" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_typeAccountFragment"
+            app:destination="@id/fragment_choose_account_type" />
+
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_createAccountTypesFragment"
+            app:destination="@id/createAccountTypes" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_communicationFragment"
+            app:destination="@id/optForSmsFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_twoStepCommunicationFragment"
+            app:destination="@id/twoStepVerificationFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_termsConditionFragment"
+            app:destination="@id/termsConditionFragment" />
+        <action
+            android:id="@+id/action_accountSummaryFragment_to_nmiPaymentFragment"
+            app:destination="@id/nmiPaymentFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/logoutFragment"
@@ -54,22 +155,48 @@
         android:id="@+id/registerReminderFragment"
         android:name="com.conduent.nationalhighways.ui.landing.RegisterReminderFragment"
         android:label="RegisterReminderFragment"
-        tools:layout="@layout/fragment_register_reminder" >
+        tools:layout="@layout/fragment_register_reminder">
         <action
             android:id="@+id/action_registerReminderFragment_to_gpsSettingsFragment"
             app:destination="@id/gpsSettingsFragment" />
+        <action
+            android:id="@+id/action_registerReminderFragment_to_registerDailyReminderFragment"
+            app:destination="@id/registerDailyReminderFragment" />
+        <action
+            android:id="@+id/action_registerReminderFragment_to_reminderStatusFragment"
+            app:destination="@id/reminderStatusFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/registerDailyReminderFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.RegisterDailyReminderFragment"
+        android:label="RegisterDailyReminderFragment"
+        tools:layout="@layout/fragment_register_daily_reminder">
+
+        <action
+            android:id="@+id/action_registerDailyReminderFragment_to_reminderStatusFragment"
+            app:destination="@id/reminderStatusFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reminderStatusFragment"
+        android:name="com.conduent.nationalhighways.ui.landing.ReminderStatusFragment"
+        android:label="ReminderStatusFragment"
+        tools:layout="@layout/fragment_reminder_status">
+
 
     </fragment>
     <fragment
         android:id="@+id/gpsSettingsFragment"
         android:name="com.conduent.nationalhighways.ui.landing.GpsSettingsFragment"
         android:label="GpsSettingsFragment"
-        tools:layout="@layout/fragment_gps_settings" >
+        tools:layout="@layout/fragment_gps_settings">
         <action
             android:id="@+id/action_gpsSettingsFragment_to_registerReminderFragment"
             app:destination="@id/registerReminderFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/registerReminderFragment"/>
+            app:popUpTo="@id/registerReminderFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 

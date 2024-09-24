@@ -2,10 +2,8 @@ package com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,7 +17,7 @@ import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseAPIViewModel
 import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.viewModel.RaiseNewEnquiryViewModel
 import com.conduent.nationalhighways.ui.landing.LandingActivity
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.utils.clickActionForDropdown
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.observe
@@ -39,7 +37,6 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     private var previousCategory: String = ""
     private var previousSubCategory: String = ""
 
-    private var loader: LoaderDialog? = null
     private var isViewCreated: Boolean = false
 
     private var editRequest: String = ""
@@ -53,13 +50,14 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
         if (arguments?.containsKey(Constants.Edit_REQUEST_KEY) == true) {
             editRequest = arguments?.getString(Constants.Edit_REQUEST_KEY, "").toString()
         }
-        if(requireActivity() is HomeActivityMain){
+        if (requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(requireActivity().resources.getString(R.string.str_raise_new_enquiry))
         }
 
         setBackPressListener(this)
 
-        saveEditData()
+        binding.categoryDropdown.clickActionForDropdown()
+        binding.subcategoryDropdown.clickActionForDropdown()
 
         binding.categoryDropdown.dropDownItemSelectListener = this
         binding.subcategoryDropdown.dropDownItemSelectListener = this
@@ -103,10 +101,21 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
             }
         }
 
+
+        binding.categoryDropdown.contentDescription = getString(R.string.category_accessibility)
+        binding.subcategoryDropdown.contentDescription =
+            getString(R.string.sub_category_accessibility)
+
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+        if (requireActivity() is RaiseEnquiryActivity) {
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
+        }
     }
 
     private fun getBundleData(): Bundle {
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         if (editRequest == Constants.EDIT_SUMMARY) {
             bundle.putString(Constants.Edit_REQUEST_KEY, Constants.EDIT_CATEGORY_DATA)
         }
@@ -147,14 +156,12 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     }
 
     private fun getCategoriesApiCall() {
-//        loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+        showLoaderDialog()
         apiViewModel.getCategories()
     }
 
     override fun observer() {
         if (!isViewCreated) {
-            loader = LoaderDialog()
-            loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
             getCategoriesApiCall()
             observe(apiViewModel.categoriesLiveData, ::categoriesData)
             observe(apiViewModel.subcategoriesLiveData, ::subCategoriesData)
@@ -163,9 +170,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
     }
 
     private fun subCategoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().size > 0) {
@@ -204,9 +209,7 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
 
     private fun categoriesData(resource: Resource<List<CaseCategoriesModel?>?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 if (resource.data.orEmpty().size > 0) {
@@ -217,35 +220,47 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
                         categoryDropdown.dataSet.addAll(categoryNameList)
                     }
                     if (editRequest == Constants.EDIT_SUMMARY) {
-                        var selectedCategoryName=""
-                        var selectedCategoryPos=0
-                        for (i in 0 until categoryList.size){
-                            if(categoryList[i].value==binding.categoryDropdown.getSelectedValue().toString()){
-                                selectedCategoryName=categoryList[i].name?:""
-                                selectedCategoryPos=i
+                        var selectedCategoryName = ""
+                        var selectedCategoryPos = 0
+                        for (i in 0 until categoryList.size) {
+                            if (categoryList[i].value == binding.categoryDropdown.getSelectedValue()
+                                    .toString()
+                            ) {
+                                selectedCategoryName = categoryList[i].name ?: ""
+                                selectedCategoryPos = i
                                 break
                             }
                         }
                         apiViewModel.getSubCategories(selectedCategoryName)
-                        viewModel.edit_enquiryModel.value?.category = categoryList.get(selectedCategoryPos)
+                        viewModel.edit_enquiryModel.value?.category =
+                            categoryList.get(selectedCategoryPos)
                         binding.apply {
                             subcategoryDropdown.dataSet.clear()
                         }
                     }
-
-
                 }
+                focusTooolBar()
             }
 
             is Resource.DataError -> {
                 if (checkSessionExpiredOrServerError(resource.errorModel)) {
                     displaySessionExpireDialog(resource.errorModel)
                 }
+                focusTooolBar()
             }
 
             else -> {
-
+                focusTooolBar()
             }
+        }
+    }
+
+    fun focusTooolBar() {
+        saveEditData()
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is RaiseEnquiryActivity) {
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
         }
     }
 
@@ -253,9 +268,9 @@ class EnquiryCategoryFragment : BaseFragment<FragmentEnquiryCategoryBinding>(),
 
     }
 
-    fun isCategory(selectedItem: String):Boolean{
-        for (i in 0 until categoryList.size){
-            if(selectedItem.equals(categoryList[i].value)){
+    fun isCategory(selectedItem: String): Boolean {
+        for (i in 0 until categoryList.size) {
+            if (selectedItem.equals(categoryList[i].value)) {
                 return true
             }
         }

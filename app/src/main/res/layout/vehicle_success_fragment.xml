@@ -31,35 +31,28 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingTop="18dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="18dp"
+                    android:paddingStart="@dimen/margin_20dp"
+                    android:paddingTop="@dimen/margin_18dp"
+                    android:paddingEnd="@dimen/margin_20dp"
+                    android:paddingBottom="@dimen/margin_18dp"
                     tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
 
-                    <ImageView
-                        android:id="@+id/warningIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/checkicon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/maximumVehicleAdded"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="23dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:gravity="center"
+                        android:drawablePadding="@dimen/margin_20dp"
                         android:text="@string/vehicle_added_to_your_account"
                         android:textColor="@color/new_btn_color"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/warningIcon" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:drawableTopCompat="@drawable/checkicon" />
 
                     <TextView
                         android:id="@+id/vehicleAddedNote"
@@ -67,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_15dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:gravity="center|left"
+                        android:gravity="center|start"
                         android:text="@string/vehicles_added"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_14sp"
@@ -81,26 +74,19 @@
                         android:nestedScrollingEnabled="false"
                         app:layout_constraintTop_toBottomOf="@id/vehicleAddedNote" />
 
-
-                    <ImageView
-                        android:id="@+id/warningIcon2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/warningicon"
-                        app:layout_constraintTop_toBottomOf="@id/recyclerViewSuccess" />
-
                     <TextView
                         android:id="@+id/vehicleNotAdded"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:gravity="center|left"
+                        android:gravity="center|start"
+                        android:drawablePadding="@dimen/margin_15dp"
                         android:text="@string/vehicles_not_added"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_14sp"
-                        app:layout_constraintTop_toBottomOf="@id/warningIcon2" />
+                        app:layout_constraintTop_toBottomOf="@id/recyclerViewSuccess"
+                        app:drawableTopCompat="@drawable/warningicon" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewFaied"
@@ -126,6 +112,7 @@
             app:layout_constraintBottom_toTopOf="@id/feedback_bt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
+
         <com.conduent.apollo.ui.CMButton
             android:id="@+id/feedback_bt"
             style="@style/secondaryButton"

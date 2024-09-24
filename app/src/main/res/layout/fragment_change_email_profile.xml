@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <data>
@@ -34,11 +33,11 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/enter_details_txt"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_22dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/what_is_your_email_address"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,11 +56,10 @@
                 app:imeOptions="actionDone" />
 
 
-
             <com.conduent.nationalhighways.utils.widgets.NHTextView
                 android:id="@+id/label_message"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/margin_40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_13dp"
                 android:gravity="center_vertical"
                 android:text="@string/this_will_be_your_username_when_you_log_in_to_your_account"

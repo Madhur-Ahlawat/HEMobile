@@ -11,6 +11,7 @@ import com.conduent.nationalhighways.data.model.payment.CardResponseModel
 import com.conduent.nationalhighways.data.model.profile.AccountInformation
 import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentAccountSuspendHaltReopenedBinding
+import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
 import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.utils.common.Constants
@@ -21,6 +22,7 @@ import com.conduent.nationalhighways.utils.extn.invisible
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
 import com.conduent.nationalhighways.utils.extn.visible
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,6 +36,7 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
     private var navFlow: String = ""
     private var topUpAmount: String = ""
     private var newCard: Boolean = false
+    private val formatter = DecimalFormat("#,###.00")
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -46,14 +49,15 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
 
     override fun initCtrl() {
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        } else if (requireActivity() is AuthActivity) {
+            (requireActivity() as AuthActivity).focusToolBarAuth()
+        }
         Utils.validationsToShowRatingDialog(requireActivity(), sessionManager)
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
         transactionId = arguments?.getString(Constants.TRANSACTIONID).toString()
         topUpAmount = arguments?.getString(Constants.TOP_UP_AMOUNT) ?: ""
-
-        if(topUpAmount.isNotEmpty() && !Utils.isDecimal(topUpAmount.toDouble())){
-            topUpAmount=topUpAmount.toDouble().toInt().toString()
-        }
 
 
         if (arguments?.containsKey(Constants.NEW_CARD) == true) {
@@ -62,17 +66,17 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
             personalInformation =
-                arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA)
+                arguments?.getParcelable(Constants.PERSONALDATA)
         }
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
             accountInformation =
-                arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION)
+                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
 
         }
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
 
         if (arguments?.getParcelable<CardResponseModel>(Constants.DATA) != null) {
-            responseModel = arguments?.getParcelable<CardResponseModel>(Constants.DATA)
+            responseModel = arguments?.getParcelable(Constants.DATA)
             if (navFlowFrom == Constants.PAYG_SUSPENDED) {
                 binding.cardView.gone()
                 binding.succesfulCardAdded.gone()
@@ -94,15 +98,22 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
                 binding.ivCardType.setImageResource(R.drawable.mastercard)
 
             }
-            val htmlText =
-                Html.fromHtml(responseModel?.card?.type?.uppercase() + "<br>" + responseModel?.card?.number?.let {
-                    Utils.maskCardNumber(
-                        it
-                    )
-                }, Html.FROM_HTML_MODE_COMPACT)
 
-            binding.tvSelectPaymentMethod.text = htmlText
 
+            binding.tvSelectPaymentMethod.text = resources.getString(R.string.concatenate_two_strings_with_space,responseModel?.card?.type?.uppercase(), responseModel?.card?.number?.let {
+                Utils.maskCardNumber(
+                    it
+                )
+            })
+
+            binding.cardView.contentDescription =
+                responseModel?.card?.type?.uppercase() + "." + Utils.accessibilityForNumbers(
+                    responseModel?.card?.number?.let {
+                        Utils.maskCardNumber(
+                            it
+                        )
+                    }.toString()
+                )
 
         } else {
             /* binding.succesfulCardAdded.gone()
@@ -142,15 +153,19 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
 
         binding.referenceNumberTv.text = transactionId
 
+        binding.referenceNumberTv.contentDescription = Utils.accessibilityForNumbers(transactionId)
+
         if (navFlowCall == Constants.PAYMENT_TOP_UP) {
             binding.tvAccountSuspended.text = getString(
                 R.string.str_balance_topped_up_with,
-                getString(R.string.pound_symbol) + topUpAmount
+                "£" + formatter.format(topUpAmount.toDouble())
             )
             binding.tvYouWillNeedToPay.gone()
             binding.tvYouWillAlsoNeed.gone()
             binding.btnTopUpNow.text = getString(R.string.str_continue)
-            HomeActivityMain.setTitle(getString(R.string.top_up_success))
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).setTitle(getString(R.string.top_up_success))
+            }
             binding.layoutPaymentReferenceNumber.visible()
         } else {
             binding.btnTopUpNow.text = getString(R.string.str_go_to_dashboard)
@@ -166,12 +181,15 @@ class AccountSuspendReOpenFragment : BaseFragment<FragmentAccountSuspendHaltReop
             }
         }
 
-        if(arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED).equals(Constants.CARD_IS_ALREADY_REGISTERED)){
+        if (arguments?.getString(Constants.CARD_IS_ALREADY_REGISTERED)
+                .equals(Constants.CARD_IS_ALREADY_REGISTERED)
+        ) {
             binding.layoutCardAlreadyExists.visible()
+            binding.layoutCardAlreadyExists.contentDescription =
+                binding.labelCardAlreadyExists.text.toString()
             binding.succesfulCardAdded.gone()
             binding.cardView.gone()
-        }
-        else{
+        } else {
             binding.layoutCardAlreadyExists.gone()
         }
     }

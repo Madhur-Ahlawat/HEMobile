@@ -5,13 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.error.errorUsecase.ErrorManager
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithExistingCardModel
 import com.conduent.nationalhighways.data.model.manualtopup.PaymentWithNewCardModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
 import com.conduent.nationalhighways.data.repository.manualtopup.ManualTopUpRepository
-import com.conduent.nationalhighways.ui.base.BaseApplication
 import com.conduent.nationalhighways.utils.common.Resource
 import com.conduent.nationalhighways.utils.common.ResponseHandler.failure
 import com.conduent.nationalhighways.utils.common.ResponseHandler.success
@@ -59,12 +57,4 @@ class ManualTopUpViewModel @Inject constructor(
     }
 
 
-    fun validation(model: String?): Pair<Boolean, String> {
-        var ret = Pair(true, "")
-        if (model?.isEmpty() == true) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.enter_amount_top_up) ?: "")
-        if (model?.equals("0") == true) ret =
-            Pair(false, BaseApplication.INSTANCE?.getString(R.string.validation_manual_top_up) ?: "")
-        return ret
-    }
 }

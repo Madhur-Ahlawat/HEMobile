@@ -1,11 +1,9 @@
 package com.conduent.nationalhighways.ui.account.creation.step5.businessaccount
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
@@ -14,9 +12,10 @@ import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsRequest
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentBusinessVehicleDetailChangesBinding
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.payment.MakeOneOfPaymentViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.ErrorUtil
@@ -30,7 +29,6 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     View.OnClickListener {
 
     private val viewModel: MakeOneOfPaymentViewModel by viewModels()
-    private var loader: LoaderDialog? = null
     private var isViewCreated = false
     override fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentBusinessVehicleDetailChangesBinding.inflate(inflater, container, false)
@@ -40,8 +38,6 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
     private var nonUKVehicleModel: NewVehicleInfoDetails? = null
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         navData?.let {
             data = it as CrossingDetailsModelsResponse
         }
@@ -73,8 +69,16 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
         }
 
-
+        binding.regNum.contentDescription =
+            Utils.accessibilityForNumbers(binding.regNum.text.toString())
+        if(requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
+
 
     override fun initCtrl() {
         binding.confirmBtn.setOnClickListener(this@BusinessVehicleDetailFragment)
@@ -91,9 +95,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
 
     private fun getUnSettledCrossings(resource: Resource<CrossingDetailsModelsResponse?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         when (resource) {
             is Resource.Success -> {
                 resource.data?.let {
@@ -102,12 +104,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                             it.vehicleModel = data?.vehicleModel
                             it.vehicleMake = data?.vehicleMake
                             it.vehicleColor = data?.vehicleColor
-                            it.accountNo=it.accountNumber?:""
+                            it.accountNo = it.accountNumber ?: ""
                         } else {
                             it.vehicleModel = nonUKVehicleModel?.vehicleModel
                             it.vehicleMake = nonUKVehicleModel?.vehicleMake
                             it.vehicleColor = nonUKVehicleModel?.vehicleColor
-                            it.accountNo=it.accountNumber?:""
+                            it.accountNo = it.accountNumber ?: ""
                         }
 
                         resource.data.plateNo = data?.plateNo ?: ""
@@ -167,10 +169,7 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
 
                     Constants.PAY_FOR_CROSSINGS -> {
                         nonUKVehicleModel?.let { vehicleList.add(it) }
-                        loader?.show(
-                            requireActivity().supportFragmentManager,
-                            Constants.LOADER_DIALOG
-                        )
+                        showLoaderDialog()
 
                         val model = CrossingDetailsModelsRequest(
                             data?.plateNo?.uppercase(),
@@ -197,12 +196,12 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                                 R.id.action_businessVehicleDetailFragment_to_vehicleIsExemptFromDartChargesFragment,
                                 bundle
                             )
-                        } else if(!data?.vehicleClassBalanceTransfer.equals(data?.vehicleClass)){
+                        } else if (!data?.vehicleClassBalanceTransfer.equals(data?.vehicleClass)) {
                             findNavController().navigate(
                                 R.id.action_businessVehicleDetailFragment_to_vehicleDoesNotMatchCurrentVehicleFragment,
                                 bundle
                             )
-                        }else {
+                        } else {
                             findNavController().navigate(
                                 R.id.action_businessVehicleDetailFragment_to_confirmNewVehicleDetailsCheckPaidCrossingsFragment,
                                 bundle
@@ -214,32 +213,32 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
                     else -> {
 
 
-                            val oldPlateNumber =
-                                arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
-                            if (oldPlateNumber.isNotEmpty()) {
-                                val index = arguments?.getInt(Constants.VEHICLE_INDEX)
-                                if (index != null) {
-                                    vehicleList.removeAt(index)
-                                }
-                            }
-                            nonUKVehicleModel?.let {
-
-                                vehicleList.add(it)
-                                val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
-                                if (editCall) {
-                                    findNavController().navigate(
-                                        R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment,
-                                        bundle
-                                    )
-                                } else {
-                                    findNavController().navigate(
-                                        R.id.action_businessVehicleDetailFragment_to_vehicleListFragment,
-                                        bundle
-                                    )
-                                }
-
+                        val oldPlateNumber =
+                            arguments?.getString(Constants.OLD_PLATE_NUMBER, "").toString()
+                        if (oldPlateNumber.isNotEmpty()) {
+                            val index = arguments?.getInt(Constants.VEHICLE_INDEX)
+                            if (index != null) {
+                                vehicleList.removeAt(index)
                             }
                         }
+                        nonUKVehicleModel?.let {
+
+                            vehicleList.add(it)
+                            val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)
+                            if (editCall) {
+                                findNavController().navigate(
+                                    R.id.action_businessVehicleDetailFragment_to_accountSummaryFragment,
+                                    bundle
+                                )
+                            } else {
+                                findNavController().navigate(
+                                    R.id.action_businessVehicleDetailFragment_to_vehicleListFragment,
+                                    bundle
+                                )
+                            }
+
+                        }
+                    }
 
 
                 }
@@ -248,30 +247,37 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
 
             R.id.notVehicle -> {
-                if (navFlowCall == Constants.TRANSFER_CROSSINGS) {
-                    bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
-                    bundle.putParcelable(
-                        Constants.NAV_DATA_KEY,
-                      data)
-                    arguments?.getInt(Constants.VEHICLE_INDEX)
-                        ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
-                    findNavController().navigate(
-                        R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
-                        bundle
-                    )
+                when (navFlowCall) {
+                    Constants.TRANSFER_CROSSINGS -> {
+                        bundle.putString(Constants.NAV_FLOW_KEY, navFlowCall)
+                        bundle.putParcelable(
+                            Constants.NAV_DATA_KEY,
+                            data
+                        )
+                        arguments?.getInt(Constants.VEHICLE_INDEX)
+                            ?.let { bundle.putInt(Constants.VEHICLE_INDEX, it) }
+                        findNavController().navigate(
+                            R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
+                            bundle
+                        )
 
-                } else if (navFlowCall == Constants.PAY_FOR_CROSSINGS) {
-                    bundle.putParcelable(Constants.NAV_DATA_KEY, data)
-                    findNavController().navigate(
-                        R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
-                        bundle
-                    )
-                } else {
-                    bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
-                    findNavController().navigate(
-                        R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
-                        bundle
-                    )
+                    }
+
+                    Constants.PAY_FOR_CROSSINGS -> {
+                        bundle.putParcelable(Constants.NAV_DATA_KEY, data)
+                        findNavController().navigate(
+                            R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
+                            bundle
+                        )
+                    }
+
+                    else -> {
+                        bundle.putParcelable(Constants.VEHICLE_DETAIL, nonUKVehicleModel)
+                        findNavController().navigate(
+                            R.id.action_businessVehicleDetailFragment_to_yourVehicleFragment,
+                            bundle
+                        )
+                    }
                 }
             }
 

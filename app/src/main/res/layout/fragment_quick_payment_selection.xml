@@ -67,23 +67,24 @@
                 android:id="@+id/rg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <RadioButton
                     android:id="@+id/rb_apple_pay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txt_apple_pay"/>
+                    android:text="@string/txt_apple_pay" />
 
                 <RadioButton
                     android:id="@+id/rb_pay_pal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txt_pay_pal"/>
+                    android:text="@string/txt_pay_pal" />
 
                 <RadioButton
                     android:id="@+id/rb_bank_google_pay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txt_google_pay"/>
+                    android:text="@string/txt_google_pay" />
             </RadioGroup>
 
         </LinearLayout>

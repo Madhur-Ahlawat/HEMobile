@@ -18,17 +18,17 @@ class ResponseInterceptor @Inject constructor(private val mContext: Context) :
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        Log.e("TAG", "intercept: --Response> ", )
+        Log.e("TAG", "intercept: --Response> ")
         val response = chain.proceed(chain.request())
-        return try{
+        return try {
             if (!response.isSuccessful) {
                 showDialog(mContext, chain)
                 response
             } else {
                 response
             }
-        } catch (e : Exception){
-            Log.e("TAG", "intercept excepion: "+e )
+        } catch (e: Exception) {
+            Log.e("TAG", "intercept excepion: " + e)
             response
         }
     }

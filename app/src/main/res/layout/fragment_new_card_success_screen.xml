@@ -7,168 +7,206 @@
     <data>
 
     </data>
-    <ScrollView
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:overScrollMode="never">
+        android:paddingStart="@dimen/margin_20dp"
+        android:paddingTop="@dimen/margin_18dp"
+        android:paddingEnd="@dimen/margin_20dp"
+        android:paddingBottom="@dimen/margin_18dp"
+        tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingTop="18dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="18dp"
-            tools:context=".ui.account.creation.newAccountCreation.MaximumVehicleNumberFragment">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/bottom_cl"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/constraintLayout"
+                android:fillViewport="true"
+                android:overScrollMode="never"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/warningIcon"
-                android:layout_width="@dimen/margin_74dp"
-                android:layout_height="@dimen/margin_74dp"
-                android:layout_marginTop="100dp"
-                android:src="@drawable/checkicon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/maximumVehicleAdded"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="23dp"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="center"
-                android:text="@string/str_payment_method_deleted"
-                android:textColor="@color/new_btn_color"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/warningIcon" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
-                android:text="@string/str_you_must_pay"
-                android:lineSpacingExtra="2dp"
-                android:gravity="center"
-                android:fontFamily="@font/open_sans"
-                android:textColor="@color/black"
-                android:layout_marginTop="17dp"
-                android:textSize="14sp"
-                android:id="@+id/textMaximumVehicle" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_74dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginBottom="5dp"
-                app:cardCornerRadius="@dimen/margin_5dp"
-                android:elevation="3dp"
-                android:layout_marginHorizontal="1dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
-
-                >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/ivCardType"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/title_ll"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_18dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:src="@drawable/visablue"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.conduent.nationalhighways.utils.widgets.NHTextView
-                        android:id="@+id/tv_select_payment_method"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_18dp"
-                        android:layout_marginEnd="18dp"
-                        android:fontFamily="@font/open_sans"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_16sp"
-                        app:layout_constraintEnd_toStartOf="@id/text_default"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivCardType"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/str_default"
-                        android:textColor="@color/label_color"
-                        android:fontFamily="@font/open_sans"
-                        android:textSize="14sp"
-                        android:layout_marginEnd="@dimen/margin_18dp"
+                        android:layout_marginTop="100dp"
+                        android:importantForAccessibility="yes"
+                        android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:id="@+id/text_default"
-                        android:visibility="gone"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/warningIcon"
+                            android:layout_width="@dimen/margin_74dp"
+                            android:layout_height="@dimen/margin_74dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/checkicon" />
+
+                        <TextView
+                            android:id="@+id/maximumVehicleAdded"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_23dp"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:gravity="center"
+                            android:importantForAccessibility="no"
+                            android:text="@string/str_payment_method_deleted"
+                            android:textColor="@color/new_btn_color"
+                            android:textSize="@dimen/font_16sp" />
+                    </LinearLayout>
 
 
+                    <TextView
+                        android:id="@+id/textMaximumVehicle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_17dp"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center"
+                        android:lineSpacingExtra="@dimen/margin_2dp"
+                        android:text="@string/str_you_must_pay"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_14sp"
+                        app:layout_constraintTop_toBottomOf="@id/title_ll" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_1dp"
+                        android:layout_marginTop="@dimen/margin_18dp"
+                        android:layout_marginBottom="@dimen/margin_5dp"
+                        android:elevation="@dimen/margin_3dp"
+                        android:importantForAccessibility="yes"
+                        android:minHeight="@dimen/margin_74dp"
+                        app:cardCornerRadius="@dimen/margin_5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textMaximumVehicle"
+
+                        >
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no">
+
+                            <ImageView
+                                android:id="@+id/ivCardType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_18dp"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/visablue"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.conduent.nationalhighways.utils.widgets.NHTextView
+                                android:id="@+id/tv_select_payment_method"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_18dp"
+                                android:layout_marginEnd="@dimen/margin_18dp"
+                                android:fontFamily="@font/open_sans"
+                                android:importantForAccessibility="no"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/font_16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/text_default"
+                                app:layout_constraintStart_toEndOf="@+id/ivCardType"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/text_default"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/margin_18dp"
+                                android:fontFamily="@font/open_sans"
+                                android:importantForAccessibility="no"
+                                android:text="@string/str_default"
+                                android:textColor="@color/label_color"
+                                android:textSize="@dimen/font_14sp"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
 
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_5dp"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bottom_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
             <com.conduent.apollo.ui.CMButton
+                android:id="@+id/btnContinue"
                 style="@style/PrimaryButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/cancel_btn"
+                android:layout_marginBottom="@dimen/margin_20dp"
                 android:text="@string/str_continue"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="@dimen/margin_70dp"
-                android:id="@+id/btnContinue"/>
+                app:layout_constraintBottom_toTopOf="@id/cancel_btn"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.conduent.apollo.ui.CMButton
-                style="@style/secondaryButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/feedback_bt"
-                android:text="@string/cancel"
-
-
                 android:id="@+id/cancel_btn"
-                android:layout_marginTop="@dimen/margin_30dp"
-                android:layout_marginBottom="@dimen/margin_30dp"
-                />
+                style="@style/secondaryButton"
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:text="@string/cancel"
+                app:layout_constraintBottom_toTopOf="@id/feedback_bt"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <com.conduent.nationalhighways.utils.widgets.NHButton
                 android:id="@+id/feedback_bt"
                 style="@style/secondaryButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_30dp"
-                android:textColor="@color/new_btn_color"
-                app:borderColor="@color/new_btn_color"
-                android:textColorLink="@color/new_btn_color"
+                android:layout_marginBottom="@dimen/margin_20dp"
                 android:text="@string/feed_back_to_improve_service"
+                android:textColor="@color/new_btn_color"
+                android:textColorLink="@color/new_btn_color"
+                app:borderColor="@color/new_btn_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

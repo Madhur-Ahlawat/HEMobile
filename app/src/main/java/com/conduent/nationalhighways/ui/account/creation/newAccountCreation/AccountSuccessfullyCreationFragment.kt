@@ -33,7 +33,7 @@ class AccountSuccessfullyCreationFragment :
         FragmentAccountSuccessfullyCreationBinding.inflate(inflater, container, false)
 
     override fun init() {
-        Utils.validationsToShowRatingDialog(requireActivity(),sessionManager)
+        Utils.validationsToShowRatingDialog(requireActivity(), sessionManager)
         binding.signIn.setOnClickListener(this)
     }
 
@@ -42,9 +42,13 @@ class AccountSuccessfullyCreationFragment :
             createProfileDetailModelModel = arguments?.getParcelable(Constants.DATA)
         }
 
-        if (createProfileDetailModelModel!=null){
-            binding.accountNumber.text=createProfileDetailModelModel?.accountNumber
-            binding.paymentReferenceNumber.text=createProfileDetailModelModel?.referenceNumber
+        if (createProfileDetailModelModel != null) {
+            binding.accountNumber.text = createProfileDetailModelModel?.accountNumber
+            binding.accountNumber.contentDescription =
+                Utils.accessibilityForNumbers(createProfileDetailModelModel?.accountNumber ?: "")
+            binding.paymentReferenceNumber.text = createProfileDetailModelModel?.referenceNumber
+            binding.paymentReferenceNumber.contentDescription =
+                Utils.accessibilityForNumbers(createProfileDetailModelModel?.referenceNumber ?: "")
         }
         binding.feedbackBt.movementMethod = LinkMovementMethod.getInstance()
 

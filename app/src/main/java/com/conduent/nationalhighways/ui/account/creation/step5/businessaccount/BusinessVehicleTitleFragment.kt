@@ -11,7 +11,7 @@ import com.conduent.nationalhighways.utils.common.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BusinessVehicleTitleFragment: BaseFragment<FragmentBusinessVehicleTitleFragmentBinding>(),
+class BusinessVehicleTitleFragment : BaseFragment<FragmentBusinessVehicleTitleFragmentBinding>(),
     View.OnClickListener {
 
     private var requestModel: CreateAccountRequestModel? = null
@@ -19,7 +19,7 @@ class BusinessVehicleTitleFragment: BaseFragment<FragmentBusinessVehicleTitleFra
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) =  FragmentBusinessVehicleTitleFragmentBinding.inflate(inflater, container, false)
+    ) = FragmentBusinessVehicleTitleFragmentBinding.inflate(inflater, container, false)
 
     override fun init() {
         requestModel = arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
@@ -32,10 +32,13 @@ class BusinessVehicleTitleFragment: BaseFragment<FragmentBusinessVehicleTitleFra
     override fun observer() {
     }
 
-    override fun onClick(view: View?){
+    override fun onClick(view: View?) {
 
         val bundle = Bundle()
-        bundle.putParcelable(Constants.CREATE_ACCOUNT_DATA, arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA))
+        bundle.putParcelable(
+            Constants.CREATE_ACCOUNT_DATA,
+            arguments?.getParcelable(Constants.CREATE_ACCOUNT_DATA)
+        )
 //        findNavController().navigate(R.id.action_businessVehicleTitleFragment_to_businessVehicleUKFragment, bundle)
     }
 }

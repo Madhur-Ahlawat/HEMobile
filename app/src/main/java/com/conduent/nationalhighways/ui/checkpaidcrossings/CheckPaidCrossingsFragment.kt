@@ -1,11 +1,11 @@
 package com.conduent.nationalhighways.ui.checkpaidcrossings
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.DialogFragment
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,9 +15,17 @@ import com.conduent.nationalhighways.data.model.checkpaidcrossings.CheckPaidCros
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.databinding.FragmentPaidPreviousCrossingsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
-import com.conduent.nationalhighways.utils.common.*
+import com.conduent.nationalhighways.utils.common.AdobeAnalytics
+import com.conduent.nationalhighways.utils.common.Constants
+import com.conduent.nationalhighways.utils.common.ErrorUtil
+import com.conduent.nationalhighways.utils.common.Resource
+import com.conduent.nationalhighways.utils.common.SessionManager
+import com.conduent.nationalhighways.utils.common.Utils
+import com.conduent.nationalhighways.utils.common.observe
+import com.conduent.nationalhighways.utils.extn.gone
 import com.conduent.nationalhighways.utils.extn.hideKeyboard
+import com.conduent.nationalhighways.utils.extn.visible
+import com.conduent.nationalhighways.utils.setAccessibilityDelegateForDigits
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,13 +35,12 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
     View.OnClickListener {
 
     private val viewModel: CheckPaidCrossingViewModel by activityViewModels()
-    private var loader: LoaderDialog? = null
     private var isCalled = false
 
     @Inject
     lateinit var sessionManager: SessionManager
-    var paymentRefereceNumberRegex = "^[a-zA-Z0-9-]+$"
-    var plateNumberREgex = "[0-9a-zA-Z -]{1,10}$"
+    private var paymentReferenceNumberRegex = "^[a-zA-Z0-9-]+$"
+    private var plateNumberRegex = "[0-9a-zA-Z -]{1,10}$"
     override fun getFragmentBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -50,24 +57,21 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
             "check crossings:login",
             sessionManager.getLoggedInUser()
         )
+        binding.editNumberPlate.editText.doAfterTextChanged {
+            isEnable(it)
+        }
 
-//        binding.model = CheckPaidCrossingsOptionsModel(ref = "", vrm = "", enable = false)
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
-//        binding.editReferenceNumber.setText("1-99352459")
-//        binding.editNumberPlate.setText("ERR")
-        binding.editNumberPlate.editText.addTextChangedListener {
-            isEnable()
+        binding.editReferenceNumber.editText.setAccessibilityDelegateForDigits()
+
+        binding.editReferenceNumber.editText.doAfterTextChanged {
+            isEnable(it)
         }
-        binding.editReferenceNumber.editText.addTextChangedListener {
-            isEnable()
-        }
-//        isEnable()
+        binding.referenceNumberHint.contentDescription =
+            Utils.accessibilityForNumbers(resources.getString(R.string.for_example_hd542321725_or_1_898008009))
     }
 
     override fun initCtrl() {
-        binding.editReferenceNumber.editText.addTextChangedListener { isEnable() }
-        binding.editNumberPlate.editText.addTextChangedListener { isEnable() }
+        binding.editNumberPlate.editText.doAfterTextChanged { isEnable(it) }
         binding.findVehicle.setOnClickListener(this)
     }
 
@@ -77,52 +81,44 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
         }
     }
 
-    private fun isEnable() {
-        var isReferenceNumberValid=true
-        var isPlateNumberValid=true
-        if (binding.editReferenceNumber.getText().toString().trim().isNullOrEmpty()) {
-            binding.editReferenceNumber.removeError()
-            isReferenceNumberValid=false
-        }
-        else {
-            if (!Regex(paymentRefereceNumberRegex).matches(
+    private fun isEnable(editable: Editable?) {
+        var isReferenceNumberValid = true
+        var isPlateNumberValid = true
+        if (binding.editReferenceNumber.getText().toString().trim().isEmpty()) {
+            binding.errorMobileNumber.gone()
+            isReferenceNumberValid = false
+        } else {
+            if (!Regex(paymentReferenceNumberRegex).matches(
                     binding.editReferenceNumber.getText().toString()
                 )
             ) {
-                isReferenceNumberValid=false
-                binding.editReferenceNumber.setErrorText(getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9))
-
-            }
-            else{
-                binding.editReferenceNumber.removeError()
+                isReferenceNumberValid = false
+                binding.errorMobileNumber.visible()
+                binding.errorMobileNumber.text =
+                    getString(R.string.payment_reference_number_must_only_include_letters_a_to_z_and_numbers_0_to_9)
+            } else {
+                binding.errorMobileNumber.gone()
             }
         }
 
-        if (binding.editNumberPlate.getText().toString().trim().isNullOrEmpty()) {
-            isPlateNumberValid=false
+        if (binding.editNumberPlate.getText().toString().trim().isEmpty()) {
+            isPlateNumberValid = false
             binding.editNumberPlate.removeError()
         } else {
-            if (!Regex(plateNumberREgex).matches(binding.editNumberPlate.getText().toString())) {
-                isPlateNumberValid=false
+            if (!Regex(plateNumberRegex).matches(binding.editNumberPlate.getText().toString())) {
+                isPlateNumberValid = false
                 binding.editNumberPlate.setErrorText(getString(R.string.str_vehicle_registration))
-            }
-            else{
+            } else {
                 binding.editNumberPlate.removeError()
             }
         }
-        if(isPlateNumberValid && isReferenceNumberValid){
+        if (isPlateNumberValid && isReferenceNumberValid) {
             binding.findVehicle.isEnabled = true
-        }
-        else{
+        } else {
             binding.findVehicle.isEnabled = false
-
         }
 
-//        else if(Regex(paymentRefereceNumberRegex).matches(binding.editReferenceNumber.getText().toString()) && Regex(plateNumberREgex).matches(binding.editNumberPlate.getText().toString())){
-//            binding.findVehicle.isEnabled = true
-//            binding.editReferenceNumber.removeError()
-//            binding.editNumberPlate.removeError()
-//        }
+        binding.editNumberPlate.binding.inputFirstName.contentDescription = editable?.toString()
     }
 
     override fun onClick(v: View?) {
@@ -141,7 +137,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 
                 hideKeyboard()
                 isCalled = true
-                loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                showLoaderDialog()
                 val checkPaidCrossingReq = CheckPaidCrossingsRequest(
                     referenceNumber =
                     binding.editReferenceNumber.getText().toString(),
@@ -154,9 +150,7 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
     }
 
     private fun loginWithRefHeader(status: Resource<LoginWithPlateAndReferenceNumberResponseModel?>?) {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
+        dismissLoaderDialog()
         if (isCalled) {
             when (status) {
                 is Resource.Success -> {
@@ -165,15 +159,15 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
                         putString(Constants.NAV_FLOW_KEY, navFlowCall)
                         val crossingDetailsModelsResponse = CrossingDetailsModelsResponse().apply {
                             referenceNumber = binding.editReferenceNumber.getText().toString()
-                            accountActStatus = dataObj?.get(0)?.accountActStatus?:""
-                            accountBalance = dataObj?.get(0)?.accountBalance?:""
-                            accountNo = dataObj?.get(0)?.accountNo?:""
-                            accountTypeCd = dataObj?.get(0)?.accountStatusCd?:""
-                            expirationDate = dataObj?.get(0)?.expirationDate?:""
+                            accountActStatus = dataObj?.get(0)?.accountActStatus ?: ""
+                            accountBalance = dataObj?.get(0)?.accountBalance ?: ""
+                            accountNo = dataObj?.get(0)?.accountNo ?: ""
+                            accountTypeCd = dataObj?.get(0)?.accountStatusCd ?: ""
+                            expirationDate = dataObj?.get(0)?.expirationDate ?: ""
                             plateCountry = dataObj?.get(0)?.plateCountry
                             plateCountryToTransfer = dataObj?.get(0)?.plateCountry
-                            plateNumberToTransfer = dataObj?.get(0)?.plateNo?:""
-                            unusedTrip = dataObj?.get(0)?.unusedTrip?:""
+                            plateNumberToTransfer = dataObj?.get(0)?.plateNo ?: ""
+                            unusedTrip = dataObj?.get(0)?.unusedTrip ?: ""
                             vehicleClassBalanceTransfer = dataObj?.get(0)?.vehicleClass
                         }
                         putParcelable(Constants.NAV_DATA_KEY, crossingDetailsModelsResponse)
@@ -186,9 +180,11 @@ class CheckPaidCrossingsFragment : BaseFragment<FragmentPaidPreviousCrossingsBin
 
                 is Resource.DataError -> {
                     if (status.errorMsg.contains("401")) {
-                        binding.editReferenceNumber.setErrorText(getString(R.string.error_check_paid_crossings))
+                        binding.errorMobileNumber.visible()
+                        binding.errorMobileNumber.text =
+                            getString(R.string.error_check_paid_crossings)
                     } else {
-                        binding.editReferenceNumber.removeError()
+                        binding.errorMobileNumber.gone()
                         ErrorUtil.showError(binding.root, status.errorMsg)
                     }
                 }

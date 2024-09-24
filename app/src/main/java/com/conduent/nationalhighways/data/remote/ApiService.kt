@@ -40,6 +40,7 @@ import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryListResponse
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryRequest
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryResponseModel
 import com.conduent.nationalhighways.data.model.raiseEnquiry.EnquiryStatusRequest
+import com.conduent.nationalhighways.data.model.revalidate.RevalidateCardModel
 import com.conduent.nationalhighways.data.model.tollrates.TollRatesResp
 import com.conduent.nationalhighways.data.model.vehicle.*
 import com.conduent.nationalhighways.data.model.webstatus.WebSiteStatus
@@ -51,7 +52,6 @@ import com.conduent.nationalhighways.utils.common.Constants.PHONE_COUNTRY_CODE
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -132,7 +132,8 @@ interface ApiService {
         @Query("startIndex") startIndex: String?,
         @Query("count") count: String?
     ): Response<List<VehicleResponse?>?>?
-  @GET(VEHICLELIST)
+
+    @GET(VEHICLELIST)
     suspend fun getVehicleListData(
         @Query("startIndex") startIndex: String?,
         @Query("count") count: String?
@@ -254,7 +255,7 @@ interface ApiService {
     suspend fun getOneOffAccountFindVehicle(
         @Path("vehicleNumber") vehicleNumber: String?,
         @Query("agencyId") agencyId: Int?
-    ): Response<ArrayList<NewVehicleInfoDetails>?>?
+    ): Response<List<NewVehicleInfoDetails>?>?
 
     @GET(FIND_VEHICLE_ACCOUNT)
     suspend fun getVehiclePlateInfo(
@@ -380,6 +381,11 @@ interface ApiService {
         @Body model: PaymentWithExistingCardModel?
     ): Response<PaymentMethodDeleteResponseModel?>?
 
+    @POST(EDIT_CARD)
+    suspend fun paymentWithExistingCard(
+        @Body model: RevalidateCardModel?
+    ): Response<PaymentMethodDeleteResponseModel?>?
+
     @GET(VIEW_ACCOUNT_BALANCE)
     suspend fun getThresholdValuePayment(): Response<AccountGetThresholdResponse?>?
 
@@ -466,7 +472,7 @@ interface ApiService {
     @POST(GET_CROSSING_DETAILS)
     suspend fun getCrossingDetails(
         @Body model: CrossingDetailsModelsRequest?,
-        @Path("agencyId") agencyId: String=AGENCY_ID
+        @Path("agencyId") agencyId: String = AGENCY_ID
     ): Response<CrossingDetailsModelsResponse?>?
 
     @POST(ONE_OF_PAYMENTS_PAY)
@@ -494,7 +500,7 @@ interface ApiService {
     @POST(BALANCE_TRANSFER)
     suspend fun balanceTransfer(
         @Body request: BalanceTransferRequest?,
-        @Path("agencyId") agencyId: String=AGENCY_ID
+        @Path("agencyId") agencyId: String = AGENCY_ID
     ): Response<BalanceTransferResponse?>?
 
     @POST(SEARCH_PROCESS_PARAMETERS)
@@ -506,7 +512,7 @@ interface ApiService {
     @POST(LOGIN_WITH_REFERENCE_AND_PLATE_NUMBER)
     suspend fun loginWithRefAndPlateNumber(
         @Body request: CheckPaidCrossingsRequest?,
-        @Path("agencyId") agencyId: String=AGENCY_ID,
+        @Path("agencyId") agencyId: String = AGENCY_ID,
         @Query("returnReferenceInformation") value: Boolean? = true,
     ): Response<LoginWithPlateAndReferenceNumberResponseModel?>?
 
@@ -537,7 +543,7 @@ interface ApiService {
     suspend fun allowPushNotification(
         @Body request: PushNotificationRequest,
         @Query("agencyId") agencyId: String? = AGENCY_ID
-        ): Response<EmptyApiResponse?>?
+    ): Response<EmptyApiResponse?>?
 
 
     @GET(CATEGORY_LIST)
@@ -572,6 +578,11 @@ interface ApiService {
     @GET(LRDS_VERIFICATION_SR)
     suspend fun getLrdsStatus(
     ): Response<LRDSResponse?>?
+
+
+    @PUT(INACTIVESTATUS)
+    suspend fun inActiveStatusApi(): Response<EmptyApiResponse?>?
+
 
 
 }

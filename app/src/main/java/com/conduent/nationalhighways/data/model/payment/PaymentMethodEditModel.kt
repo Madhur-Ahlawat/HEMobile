@@ -1,6 +1,6 @@
 package com.conduent.nationalhighways.data.model.payment
 
-data class PaymentMethodEditModel   (
+data class PaymentMethodEditModel(
     val cardType: String?,
     val easyPay: String?,
     val paymentType: String?,

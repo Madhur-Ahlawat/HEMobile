@@ -3,7 +3,6 @@ package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -73,7 +72,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             when (navFlowCall) {
 
                 Constants.PAY_FOR_CROSSINGS -> {
-                    binding.btnContinue.text=getString(R.string.back_to_main_menu)
+                    binding.btnContinue.text = getString(R.string.back_to_main_menu)
                     binding.descTv.text = getString(
                         R.string.crossing_vehicle_exempt_detail_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()
@@ -107,7 +106,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
                     binding.cancelBtn.visibility = View.GONE
-                    binding.btnContinue.text=getString(R.string.str_continue)
+                    binding.btnContinue.text = getString(R.string.str_continue)
                     binding.inCorrectVehicleNumber.gone()
                 }
             }
@@ -120,7 +119,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                 Constants.PAY_FOR_CROSSINGS -> {
                     binding.cancelBtn.gone()
                     binding.inCorrectVehicleNumber.visible()
-                    binding.btnContinue.text=getString(R.string.back_to_main_menu)
+                    binding.btnContinue.text = getString(R.string.back_to_main_menu)
                     binding.textMaximumVehicle.text =
                         getString(R.string.str_no_ruc_desc_pay_for_crossing)
                     binding.textMaximumVehicle.gravity = Gravity.CENTER
@@ -128,7 +127,7 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         R.string.str_vehicle_exempt_message,
                         NewCreateAccountRequestModel.plateNumber.uppercase()
                     )
-                    binding.btnContinue.text=getString(R.string.back_to_main_menu)
+                    binding.btnContinue.text = getString(R.string.back_to_main_menu)
                 }
 
                 else -> {
@@ -176,7 +175,9 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
         }
 
         if (NewCreateAccountRequestModel.isMaxVehicleAdded) {
-            HomeActivityMain.dataBinding?.backButton?.gone()
+            if (requireActivity() is HomeActivityMain) {
+                (requireActivity() as HomeActivityMain).hideBackIcon()
+            }
             binding.maximumVehicleAdded.text =
                 getString(R.string.maximum_number_of_vehicles_have_been_registered_against_the_account)
             binding.textMaximumVehicle.text =
@@ -192,6 +193,12 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
             } else {
                 vehicleMgmtViewModel.getVehicleInformationApi("0", "20")
             }
+        }
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
+        if(requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
         }
     }
 
@@ -302,12 +309,12 @@ class MaximumVehicleNumberFragment : BaseFragment<FragmentMaximumVehicleNumberBi
                         .lowercase() -> {
                         val accountData = NewCreateAccountRequestModel
                         val vehicleList = accountData.vehicleList
-                        if(nonUKVehicleModel?.isDblaAvailable==true){
+                        if (nonUKVehicleModel?.isDblaAvailable == true) {
                             findNavController().navigate(
                                 R.id.action_maximumFragment_to_businessVehicleDetailFragment,
                                 bundle()
                             )
-                        }else{
+                        } else {
                             nonUKVehicleModel?.let {
                                 vehicleList.add(it)
                                 val editCall = navFlowCall.equals(Constants.EDIT_SUMMARY, true)

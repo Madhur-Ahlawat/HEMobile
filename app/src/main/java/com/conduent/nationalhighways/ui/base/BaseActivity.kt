@@ -15,6 +15,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.ErrorResponseModel
@@ -23,12 +24,14 @@ import com.conduent.nationalhighways.databinding.CustomDialogBinding
 import com.conduent.nationalhighways.listener.DialogNegativeBtnListener
 import com.conduent.nationalhighways.listener.DialogPositiveBtnListener
 import com.conduent.nationalhighways.ui.landing.LandingActivity
+import com.conduent.nationalhighways.ui.loader.LoaderDialog
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
 import com.conduent.nationalhighways.utils.extn.startNewActivityByClearingStack
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
@@ -46,6 +49,8 @@ abstract class BaseActivity<T> : AppCompatActivity() {
     @Inject
     lateinit var apiServiceBa: ApiService
 
+    private val activityScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private var loaderDialog: LoaderDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,30 +172,29 @@ abstract class BaseActivity<T> : AppCompatActivity() {
             dialog.dismiss()
         }
         dialog.show()
-
+        dialog.setOnDismissListener {
+            // Cleanup any resources here if needed
+        }
 
     }
 
     override fun onUserInteraction() {
         super.onUserInteraction()
-        GlobalScope.launch(Dispatchers.IO){
-            val lastTokenTime = Utils.convertStringToDate(
-                smBa.fetchStringData(SessionManager.LAST_TOKEN_TIME),
-                Constants.dd_mm_yyyy_hh_mm_ss
-            )
-            if (lastTokenTime != null) {
-                val diff = Utils.getTimeDifference(lastTokenTime, Date())
-                if (diff.first >= 1 || (diff.first == 0L && diff.second > 13)) {
-                    BaseApplication.getNewToken(apiServiceBa, smBa)
-                    BaseApplication.saveDateinSession(smBa)
+        activityScope.launch {
+            withContext(Dispatchers.IO) {
+                val lastTokenTime = Utils.convertStringToDate(
+                    smBa.fetchStringData(SessionManager.LAST_TOKEN_TIME),
+                    Constants.dd_mm_yyyy_hh_mm_ss
+                )
+                if (lastTokenTime != null) {
+                    val diff = Utils.getTimeDifference(lastTokenTime, Date())
+                    if (diff.first >= 1 || (diff.first == 0L && diff.second > 13)) {
+                        BaseApplication.getNewToken(apiServiceBa, smBa)
+                        BaseApplication.saveDateInSession(smBa)
+                    }
                 }
             }
-
-            withContext(Dispatchers.Main) {
-                // Update UI with the result
-            }
         }
-
     }
 
 
@@ -205,16 +209,12 @@ abstract class BaseActivity<T> : AppCompatActivity() {
     }
 
     fun checkSessionExpiredOrServerError(errorResponsModel: ErrorResponseModel?): Boolean {
-        if ((errorResponsModel?.errorCode == Constants.TOKEN_FAIL && (errorResponsModel.error != null && errorResponsModel.error.equals(
-                Constants.INVALID_TOKEN
-            ))) || (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR &&
-                    (errorResponsModel.error != null && errorResponsModel.error.equals(
-                        Constants.SERVER_ERROR
-                    )))
-        ) {
-            return true
-        }
-        return false
+        return (errorResponsModel?.errorCode == Constants.TOKEN_FAIL && (errorResponsModel.error != null && errorResponsModel.error.equals(
+            Constants.INVALID_TOKEN
+        ))) || (errorResponsModel?.errorCode == Constants.INTERNAL_SERVER_ERROR &&
+                (errorResponsModel.error != null && errorResponsModel.error.equals(
+                    Constants.SERVER_ERROR
+                )))
     }
 
     fun displaySessionExpireDialog(errorResponsModel: ErrorResponseModel?) {
@@ -234,6 +234,35 @@ abstract class BaseActivity<T> : AppCompatActivity() {
         }
     }
 
+    fun showLoaderDialog() {
+        Log.e(
+            "BaseActivity",
+            "LoaderDialog showLoaderDialog: $loaderDialog ${loaderDialog?.isVisible} ${loaderDialog?.isVisible == false}"
+        )
+        val fragmentManager = supportFragmentManager
+        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
+        if (existingFragment != null) {
+            (existingFragment as LoaderDialog).dismiss()
+        }
+        if (loaderDialog == null) {
+            loaderDialog = LoaderDialog()
+            loaderDialog?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
+        }
+        if (loaderDialog?.isVisible == null || loaderDialog?.isVisible == false) {
+            loaderDialog?.show(fragmentManager, Constants.LOADER_DIALOG)
+        }
+    }
+
+    fun dismissLoaderDialog() {
+        Log.e(
+            "BaseActivity",
+            "LoaderDialog dismissLoaderDialog: $loaderDialog ${loaderDialog?.showsDialog}"
+        )
+        if (loaderDialog != null) {
+            loaderDialog?.dismiss()
+            loaderDialog = null
+        }
+    }
 
 }
 

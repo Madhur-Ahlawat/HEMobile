@@ -1,11 +1,9 @@
 package com.conduent.nationalhighways.ui.account.creation.newAccountCreation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,9 +13,10 @@ import com.conduent.nationalhighways.data.model.EmptyApiResponse
 import com.conduent.nationalhighways.data.model.account.NewVehicleInfoDetails
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.adapter.VehicleListAdapter
+import com.conduent.nationalhighways.ui.account.creation.controller.CreateAccountActivity
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.ui.vehicle.newVehicleManagement.AddVehicleRequest
 import com.conduent.nationalhighways.utils.common.Constants
@@ -33,8 +32,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     private lateinit var vehicleList: ArrayList<NewVehicleInfoDetails>
     private lateinit var vehicleAdapter: VehicleListAdapter
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
-
-    private var loader: LoaderDialog? = null
     private var apiRequestCount = 0
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -42,9 +39,14 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     ): FragmentVehicleList2Binding = FragmentVehicleList2Binding.inflate(inflater, container, false)
 
     override fun init() {
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        if(requireActivity() is CreateAccountActivity){
+            (requireActivity() as CreateAccountActivity).focusToolBarCreateAccount()
+        }
+        if(requireActivity() is HomeActivityMain){
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
 
     }
 
@@ -56,10 +58,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     override fun observer() {
         observe(vehicleMgmtViewModel.addVehicleApiVal, ::addVehicleApiCall)
-
-    }
-
-    private fun heartBeatApiResponse(resource: Resource<EmptyApiResponse?>?) {
 
     }
 
@@ -97,7 +95,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             if (apiRequestCount < vehicleList.size) {
                 apiCall(apiRequestCount)
             } else {
-                loader?.dismiss()
+                dismissLoaderDialog()
                 val bundle = Bundle()
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.EDIT_SUMMARY)
                 bundle.putBoolean(Constants.SHOW_BACK_BUTTON, false)
@@ -109,7 +107,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         }
     }
 
-    fun indexExists(list: List<*>, index: Int): Boolean {
+    private fun indexExists(list: List<*>, index: Int): Boolean {
         return index >= 0 && index < list.size
     }
 
@@ -161,11 +159,13 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
         vehicleAdapter = VehicleListAdapter(requireContext(), vehicleList, this)
         val size = vehicleAdapter.itemCount
-        var text = "vehicle"
         if (size > 1) {
-            text = "vehicles"
+            binding.youHaveAddedVehicle.text =
+                resources.getString(R.string.str_you_have_added_vehicles, size.toString())
+        } else {
+            binding.youHaveAddedVehicle.text =
+                resources.getString(R.string.str_you_have_added_vehicle, size.toString())
         }
-        binding.youHaveAddedVehicle.text = "You've added $size $text"
         if (size == 0) {
             binding.btnNext.disable()
         }
@@ -230,7 +230,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
             R.id.btnNext -> {
                 if (navCall) {
-                    loader?.show(requireActivity().supportFragmentManager, Constants.LOADER_DIALOG)
+                    showLoaderDialog()
                     if (vehicleList.size > 0) {
                         apiCall(apiRequestCount)
                     }
@@ -312,7 +312,7 @@ class VehicleListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         if (obj.vehicleClass.isNullOrEmpty()) {
             data.vehicleInfo?.vehicleClassDesc = "2"
         } else {
-            data.vehicleInfo?.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass?:"")
+            data.vehicleInfo?.vehicleClassDesc = Utils.getVehicleTypeNumber(obj.vehicleClass ?: "")
         }
 
 

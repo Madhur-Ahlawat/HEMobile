@@ -10,6 +10,7 @@ import android.webkit.WebViewClient
 import androidx.webkit.WebViewAssetLoader
 import com.conduent.nationalhighways.databinding.FragmentGeneralTermsAndConditionsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
+import com.conduent.nationalhighways.ui.bottomnav.account.raiseEnquiry.RaiseEnquiryActivity
 import com.conduent.nationalhighways.utils.LocalContentWebViewClient
 import com.conduent.nationalhighways.utils.common.AdobeAnalytics
 import com.conduent.nationalhighways.utils.common.SessionManager
@@ -27,9 +28,7 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentGeneralTermsAndConditionsBinding {
-        binding = FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
-
-        return binding
+        return FragmentGeneralTermsAndConditionsBinding.inflate(inflater, container, false)
     }
 
     override fun init() {
@@ -51,12 +50,13 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
                     startActivity(intent)
                     return true
                 }
-                return super.shouldOverrideUrlLoading(view, request)            }
+                return super.shouldOverrideUrlLoading(view, request)
+            }
 
         })
 
 //        if (NewCreateAccountRequestModel.prePay) {
-            binding.webView.loadUrl("file:///android_res/raw/termsandconditionspage.html")
+        binding.webView.loadUrl("file:///android_res/raw/termsandconditionspage.html")
 //        } else {
 //            binding.webView.loadUrl("file:///android_res/raw/paygtermsandcondition.html")
 //        }
@@ -70,8 +70,11 @@ class GeneralTermsAndConditionsFragment : BaseFragment<FragmentGeneralTermsAndCo
             "home",
             sessionManager.getLoggedInUser()
         )
-
+        if (requireActivity() is RaiseEnquiryActivity) {
+            (requireActivity() as RaiseEnquiryActivity).focusToolBarRaiseEnquiry()
+        }
     }
+
     override fun initCtrl() {
     }
 

@@ -1,8 +1,8 @@
 <html>
-    <body>
-        <script src="https://secure.nmi.com/js/v1/Gateway.js"></script>
-        <meta name="viewport" content="user-scalable=no; width=device-width;  initial-scale=1.0">
-            <script>
+<body>
+<script src="https://secure.nmi.com/js/v1/Gateway.js"></script>
+<meta name="viewport" content="user-scalable=no, width=device-width,  initial-scale=1.0">
+<script>
                 function loaded() {
                     window.appInterface.postMessage("threeDSStarted");
                     const gateway = Gateway.create('checkout_public_GYQ9D49Eq589t5BbEGQJ4R4QQ9Ame798');
@@ -35,21 +35,26 @@
                     threeDSsecureInterface.on('failure', function(e) {
                         window.appInterface.postMessage("cancelClicked");
                     });
-                    
+
+                    threeDSsecureInterface.on('error', function(e) {
+                        window.appInterface.postMessage("3DSFailed");
+                    });
+
                     gateway.on('error', function (e) {
                         window.appInterface.postMessage("errorMessage","{\"error\":"+JSON.stringify(e, null, "")+"}");
                     });
                 }
-            </script>
-            <label id="firstName" style="display: none;">Name on card</label>
-            <label id="lastName" style="display: none;">Name on card</label>
-            <label id="customerVaultId" style="display: none;">Name on card</label>
-            <label id="amount" style="display: none;">Name on card</label>
-            <label id="email" style="display: none;">Name on card</label>
-            <label id="phone" style="display: none;">Name on card</label>
-            <label id="city" style="display: none;">Name on card</label>
-            <label id="address1" style="display: none;">Name on card</label>
-            <label id="country" style="display: none;">Name on card</label>
-            <label id="postalCode" style="display: none;">Name on card</label>
-    </body>
+
+</script>
+<label id="firstName" style="display: none;">Name on card</label>
+<label id="lastName" style="display: none;">Name on card</label>
+<label id="customerVaultId" style="display: none;">Name on card</label>
+<label id="amount" style="display: none;">Name on card</label>
+<label id="email" style="display: none;">Name on card</label>
+<label id="phone" style="display: none;">Name on card</label>
+<label id="city" style="display: none;">Name on card</label>
+<label id="address1" style="display: none;">Name on card</label>
+<label id="country" style="display: none;">Name on card</label>
+<label id="postalCode" style="display: none;">Name on card</label>
+</body>
 </html>

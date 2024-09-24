@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,7 @@ import com.conduent.nationalhighways.data.model.vehicle.VehicleResponse
 import com.conduent.nationalhighways.databinding.FragmentVehicleList2Binding
 import com.conduent.nationalhighways.ui.account.creation.new_account_creation.model.NewCreateAccountRequestModel
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.loader.LoaderDialog
+import com.conduent.nationalhighways.ui.bottomnav.HomeActivityMain
 import com.conduent.nationalhighways.ui.vehicle.VehicleMgmtViewModel
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.Constants.BUSINESS_ACCOUNT
@@ -38,7 +37,6 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     private val mList: ArrayList<VehicleResponse?> = ArrayList()
     private val vehicleMgmtViewModel: VehicleMgmtViewModel by viewModels()
     private lateinit var mAdapter: VrmHistoryAdapter
-    private var loader: LoaderDialog? = null
     private var startIndex: Long = 1
     private val count: Long = Constants.ITEM_COUNT
     private var totalCount: Int = 0
@@ -64,8 +62,6 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     override fun init() {
         binding.includeNoData.messageTv.text = resources.getString(R.string.no_vehicle_found)
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.Dialog_NoTitle)
         binding.btnNext.setOnClickListener(this)
         binding.btnNextNovehicles.setOnClickListener(this)
         binding.btnNext.text = getString(R.string.add_a_vehicle)
@@ -73,7 +69,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.recyclerView.adapter = mAdapter
         sessionManager.fetchAccountType()?.let {
-            if (it == Constants.BUSINESS_ACCOUNT) {
+            if (it == BUSINESS_ACCOUNT) {
                 isBusinessAccount = true
             }
         }
@@ -81,6 +77,9 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
         NewCreateAccountRequestModel.vehicleList.clear()
         endlessScroll()
+        if (requireActivity() is HomeActivityMain) {
+            (requireActivity() as HomeActivityMain).focusToolBarHome()
+        }
     }
 
     override fun initCtrl() {}
@@ -92,7 +91,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
     override fun onResume() {
         super.onResume()
         if (needRefresh) {
-            showLoader()
+            showLoaderDialog()
             isVehicleHistory = true
             needRefresh = false
             vehicleMgmtViewModel.getVehicleListApi(startIndex.toString(), count.toString())
@@ -102,7 +101,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     private fun handleVehicleHistoryListData(resource: Resource<VehicleListResponse?>?) {
         binding.recyclerView.visible()
-        hideLoader()
+        dismissLoaderDialog()
         if (isVehicleHistory) {
             when (resource) {
                 is Resource.Success -> {
@@ -137,7 +136,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                         mList.clear()
                     }
                     mAdapter.setList(mList)
-                    hideLoader()
+                    dismissLoaderDialog()
                     checkData()
                 }
 
@@ -153,10 +152,10 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
             binding.dataCl.gone()
             binding.noDataCl.visible()
             binding.includeNoData.noDataCl.visible()
-            hideLoader()
+            dismissLoaderDialog()
         } else {
             binding.dataCl.visible()
-            hideLoader()
+            dismissLoaderDialog()
             binding.noDataCl.gone()
             binding.includeNoData.noDataCl.gone()
         }
@@ -179,7 +178,7 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
                                 isVehicleHistory = true
                                 startIndex += count
                                 isLoading = true
-                                showLoader()
+                                showLoaderDialog()
                                 vehicleMgmtViewModel.getVehicleListApi(
                                     startIndex.toString(),
                                     count.toString()
@@ -215,27 +214,6 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
         )
     }
 
-    fun showLoader() {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val existingFragment = fragmentManager.findFragmentByTag(Constants.LOADER_DIALOG)
-        if (existingFragment != null) {
-            // Dismiss the existing fragment if it exists
-            (existingFragment as LoaderDialog).dismiss()
-        }
-//        if (existingFragment == null) {
-        // Fragment is not added, add it now
-        loader = LoaderDialog()
-        loader?.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.CustomLoaderDialog)
-        loader?.show(fragmentManager, Constants.LOADER_DIALOG)
-//        }
-    }
-
-    private fun hideLoader() {
-        if (loader?.isVisible == true) {
-            loader?.dismiss()
-        }
-    }
-
     private fun bundle(): Bundle {
         val bundle = Bundle()
         bundle.putString(Constants.NAV_FLOW_KEY, VEHICLE_MANAGEMENT)
@@ -260,13 +238,12 @@ class VehicleHistoryListFragment : BaseFragment<FragmentVehicleList2Binding>(),
 
     private fun addVehicleRedirection() {
 
-        var maxCount = 0
-        if (sessionManager.fetchSubAccountType().equals(Constants.EXEMPT_PARTNER)) {
-            maxCount = BuildConfig.EXEMPT.toInt()
+        val maxCount = if (sessionManager.fetchSubAccountType().equals(Constants.EXEMPT_PARTNER)) {
+            BuildConfig.EXEMPT.toInt()
         } else if (sessionManager.fetchAccountType().equals(BUSINESS_ACCOUNT)) {
-            maxCount = BuildConfig.BUSINESS.toInt()
+            BuildConfig.BUSINESS.toInt()
         } else {
-            maxCount = BuildConfig.PERSONAL.toInt()
+            BuildConfig.PERSONAL.toInt()
         }
 
         if (totalCount >= maxCount) {

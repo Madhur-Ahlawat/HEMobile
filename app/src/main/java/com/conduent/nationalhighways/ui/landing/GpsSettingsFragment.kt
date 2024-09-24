@@ -7,8 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.databinding.FragmentGpsSettingsBinding
 import com.conduent.nationalhighways.ui.base.BaseFragment
-import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.setToolBarTitle
-import com.conduent.nationalhighways.ui.landing.LandingActivity.Companion.showToolBar
+
 import com.conduent.nationalhighways.utils.common.Constants
 import com.conduent.nationalhighways.utils.common.SessionManager
 import com.conduent.nationalhighways.utils.common.Utils
@@ -18,7 +17,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class GpsSettingsFragment : BaseFragment<FragmentGpsSettingsBinding>() {
     @Inject
-    lateinit var sessionManager:SessionManager
+    lateinit var sessionManager: SessionManager
 
     override fun getFragmentBinding(
         inflater: LayoutInflater,
@@ -27,8 +26,11 @@ class GpsSettingsFragment : BaseFragment<FragmentGpsSettingsBinding>() {
 
 
     override fun init() {
-        showToolBar(true)
-        setToolBarTitle(resources.getString(R.string.str_register_to_receive_notifications))
+        if (requireActivity() is LandingActivity) {
+            (requireActivity() as LandingActivity).showToolBar(true)
+            (requireActivity() as LandingActivity).setToolBarTitle(resources.getString(R.string.str_register_to_receive_notifications))
+        }
+
     }
 
     override fun initCtrl() {
@@ -40,19 +42,25 @@ class GpsSettingsFragment : BaseFragment<FragmentGpsSettingsBinding>() {
                 SessionManager.FOREGROUND_LOCATION_SHOWN,
                 true
             )
-            val bundle=Bundle()
-            bundle.putBoolean(Constants.GpsSettings,true)
-            findNavController().navigate(R.id.action_gpsSettingsFragment_to_registerReminderFragment,bundle)
+            val bundle = Bundle()
+            bundle.putBoolean(Constants.GpsSettings, true)
             sessionManager.saveBooleanData(SessionManager.SettingsClick, true)
+            findNavController().navigate(
+                R.id.action_gpsSettingsFragment_to_registerReminderFragment,
+                bundle
+            )
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if(Utils.checkLocationpermission(requireContext())){
-            val bundle=Bundle()
-            bundle.putBoolean(Constants.GpsSettings,true)
-            findNavController().navigate(R.id.action_gpsSettingsFragment_to_registerReminderFragment,bundle)
+        if (Utils.checkLocationPermission(requireContext())) {
+            val bundle = Bundle()
+            bundle.putBoolean(Constants.GpsSettings, true)
+            findNavController().navigate(
+                R.id.action_gpsSettingsFragment_to_registerReminderFragment,
+                bundle
+            )
             sessionManager.saveBooleanData(SessionManager.SettingsClick, true)
         }
     }
