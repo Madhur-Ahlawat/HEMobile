@@ -134,6 +134,7 @@
     <color name="forgotPasswordColor">#257EBE</color>
     <color name="green_status">#80BA27</color>
     <color name="doItLaterColour">#AC352F</color>
+    <color name="redButtonColor">#AC352F</color>
     <color name="red_status">#CA2A1F</color>
     <color name="grey_cccccc">#CCCCCC</color>
     <color name="red_error_color">#DC0814</color>

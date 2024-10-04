@@ -61,6 +61,7 @@ class BiometricActivity : BaseActivity<ActivityBiometricBinding>(), View.OnClick
     private var isScreenLaunchedBefore: Boolean = false
     private var isAuthenticated: Boolean = false
     private var cardValidationRequired: Boolean = false
+    private var navigateFrom:String=""
 
     @Inject
     lateinit var sessionManager: SessionManager

@@ -384,6 +384,17 @@
         <item name="android:textColor">@color/new_btn_color</item>
     </style>
 
+ <style name="secondaryRedButton" parent="button">
+        <item name="isPrimary">false</item>
+        <item name="android:layout_marginTop">@dimen/margin_20dp</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="borderColor">@color/redButtonColor</item>
+        <item name="borderWidth_">1dp</item>
+        <item name="radius">2dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/redButtonColor</item>
+    </style>
+
 
     <style name="button">
         <item name="android:layout_width">match_parent</item>

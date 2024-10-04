@@ -1,8 +1,6 @@
 package com.conduent.nationalhighways.ui.auth.adapter
 
 import android.app.Activity
-import android.text.Html
-import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -18,24 +16,19 @@ class SuspendPaymentMethodAdapter(
     var list: MutableList<CardListResponseModel?>?,
     private val paymentMethod: PaymentMethodSelectCallBack,
     var navFlow: String
-) :
-    RecyclerView.Adapter<SuspendPaymentMethodAdapter.SuspendedViewHolder>() {
+) : RecyclerView.Adapter<SuspendPaymentMethodAdapter.SuspendedViewHolder>() {
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+        parent: ViewGroup, viewType: Int
     ): SuspendedViewHolder = SuspendedViewHolder(
         ItemPaymentMethodBinding.inflate(
-            LayoutInflater.from(context),
-            parent,
-            false
+            LayoutInflater.from(context), parent, false
         )
     )
 
 
     override fun onBindViewHolder(
-        holder: SuspendedViewHolder,
-        position: Int
+        holder: SuspendedViewHolder, position: Int
     ) {
         var pos: Int
         val model = list?.get(position)
@@ -47,31 +40,27 @@ class SuspendPaymentMethodAdapter(
                     model.cardType
                 )
             )
-            htmlText =
-                model.cardType + " " + model.cardNumber.let {
-                    Utils.setStarmaskcardnumber(
-                        context,
-                        it
-                    )
-                }
+            htmlText = model.cardType + " " + model.cardNumber.let {
+                Utils.setStarmaskcardnumber(
+                    context, it
+                )
+            }
 
-            holder.binding.radioButtonPaymentMethod.contentDescription =
-                model.cardType + ", " + "${
-                    Utils.accessibilityForNumbers(model?.cardNumber?.let {
-                        Utils.setStarmaskcardnumber(
-                            context,
-                            it
-                        )
-                    }.toString())
-                }"
+            holder.binding.radioButtonPaymentMethod.contentDescription = model.cardType + ", " + "${
+                Utils.accessibilityForNumbers(model.cardNumber?.let {
+                    Utils.setStarmaskcardnumber(
+                        context, it
+                    )
+                }.toString())
+            }"
         } else {
             holder.binding.ivCardType.setImageResource(R.drawable.directdebit)
             htmlText =
-                    context.getString(R.string.direct_debit) + " " + model?.bankAccountNumber?.let {
-                        Utils.maskCardNumber(
-                            it
-                        )
-                    }
+                context.getString(R.string.direct_debit) + " " + model?.bankAccountNumber?.let {
+                    Utils.maskCardNumber(
+                        it
+                    )
+                }
             holder.binding.radioButtonPaymentMethod.contentDescription =
                 context.getString(R.string.direct_debit) + ", " + "${
                     Utils.accessibilityForNumbers(
@@ -88,36 +77,16 @@ class SuspendPaymentMethodAdapter(
 
         holder.binding.radioButtonPaymentMethod.setAccessibilityDelegate()
 
-        if (model?.bankAccount == false) {
-            holder.binding.radioButtonPaymentMethod.isChecked =
-                model.primaryCard == true
-            model.isSelected = true
-        }
+        holder.binding.radioButtonPaymentMethod.isChecked = model?.isSelected == true
 
-//        holder.binding.layout.setOnClickListener {
-//            pos = position
-//            if (list?.get(pos)?.isSelected == true) {
-//                list?.get(pos)?.isSelected = false
-//                holder.binding.radioButtonPaymentMethod.isChecked = false
-//
-//            } else {
-//                list?.get(pos)?.isSelected = true
-//                holder.binding.radioButtonPaymentMethod.isChecked = true
-//            }
-//            notifyDataSetChanged()
-//            paymentMethod.paymentMethodCallback(pos)
-//        }
         holder.binding.radioButtonPaymentMethod.setOnClickListener {
             pos = position
             if (list?.get(pos)?.isSelected == true) {
                 list?.get(pos)?.isSelected = false
                 holder.binding.radioButtonPaymentMethod.isChecked = false
-
             } else {
                 list?.get(pos)?.isSelected = true
                 holder.binding.radioButtonPaymentMethod.isChecked = true
-
-
             }
             notifyDataSetChanged()
             paymentMethod.paymentMethodCallback(pos)

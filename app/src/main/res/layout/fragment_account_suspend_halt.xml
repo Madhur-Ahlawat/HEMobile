@@ -118,7 +118,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:lineSpacingExtra="@dimen/margin_2dp"
-                        android:text="@string/str_you_must_pay_the_dart_charge_by_midnight"
+                        android:text="@string/str_you_must_pay"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_14sp"
                         app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded" />
@@ -133,7 +133,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:lineSpacingExtra="@dimen/margin_2dp"
-                        android:text="@string/str_you_must_pay_the_dart_charge_by_midnight"
+                        android:text="@string/str_you_must_pay"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_14sp"
                         android:visibility="invisible"

@@ -207,18 +207,26 @@ class AccountFragment : BaseFragment<FragmentAccountNewBinding>(), View.OnClickL
             binding.tvAccountStatusHeading.viewTreeObserver.addOnGlobalLayoutListener(object :
                 ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
-                    checkLinesLength()
-                    binding.tvAccountStatusHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    try {
+                        accountNumberLinesCount = binding.tvAccountStatusHeading.lineCount
+                        checkLinesLength()
+                        binding.tvAccountStatusHeading.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }catch (_:Exception){
+
+                    }
                 }
             })
 
             binding.indicatorAccountStatus.viewTreeObserver.addOnGlobalLayoutListener(object :
                 ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    indicatorAccountStatusLineCount = binding.indicatorAccountStatus.lineCount
-                    checkLinesLength()
-                    binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    try {
+                        indicatorAccountStatusLineCount = binding.indicatorAccountStatus.lineCount
+                        checkLinesLength()
+                        binding.indicatorAccountStatus.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }catch (_:Exception){
+
+                    }
                 }
             })
         }

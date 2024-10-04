@@ -855,6 +855,7 @@
     <string name="str_street_name">Street Name</string>
     <string name="failed_problem_with_service">Problem with the service</string>
     <string name="str_country"><b>Country</b></string>
+    <string name="str_country_">Country</string>
     <string name="failed_retry_title">Sorry, there is a problem with the service.</string>
     <string name="failed_retry_desc">Your requested action may not have completed successfully.</string>
     <string name="failed_retry_desc2">If you need help with your account or want to make a payment, you can call us on :</string>
@@ -1243,7 +1244,6 @@
     <string name="str_no_I_will_do_it_later">NO I\'LL DO IT LATER</string>
     <string name="str_new_payment_method">+ NEW PAYMENT METHOD</string>
     <string name="str_you_have_no_payment_method">You have no payment methods on file</string>
-    <string name="str_you_must_pay_the_dart_charge_by_midnight">You must pay the Dart Charge by midnight the\n day after you cross, otherwise you may get a fine\n (Penalty Charge Notice).</string>
     <string name="str_pay">PAY</string>
     <string name="str_check_your_answer_before_payment">Check your answers before making a payment.</string>
     <string name="str_you_have_less_than">You have less than %s credit left on your account. You will need to top up again soon.</string>
@@ -1367,7 +1367,6 @@
     <string name="str_you_are_removing_all_the_registered_payment_now">You are removing all the payment methods registered on the account</string>
     <string name="str_your_balance_will_no_longer_available">Your balance will no longer be topped up automatically.\nIf you do not have enough credit to pay for crossings, your account will be suspended and you will have to pay standard Dart Charge rates for crossings separately.\n\nIf you do not pay the Road User Charge on time, you may get a fine (Penalty Charge Notice).</string>
     <string name="str_you_must_pay">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
-    <string name="str_you_must_pay_crossing">You must pay the Dart Charge by midnight the day after you cross, otherwise you may get a fine (Penalty Charge Notice).</string>
     <string name="str_your_new_direct">Your new Direct Debit will take up to 4 days to get setup</string>
     <string name="str_while_your_new_direct_debit">While your new Direct Debit gets set up, we’ll still use your current default payment method.</string>
     <string name="str_your_direct_debit_for">Your Direct Debit for %s is pending. While it gets set up, we’ll use your current default payment method.</string>
@@ -1529,7 +1528,7 @@
     <string name="no_crossings_have_been_made_against_this_payment_reference">No crossings have been made against this payment reference.</string>
     <string name="str_terms_condition">Terms &amp; Conditions</string>
     <string name="str_remove_payment_method">Remove Payment Method</string>
-    <string name="str_are_you_sure_you_want_to_remove_payment_method">Are you sure you want to remove\n payment method %s with expiry date %s?</string>
+    <string name="str_are_you_sure_you_want_to_remove_payment_method">Are you sure you want to remove\n payment method, %s with expiry date %s?</string>
     <string name="str_are_you_sure_you_want_to_remove_direct_payment_method">Are you sure you want to remove\npayment method %s?</string>
     <string name="str_signed_out">Signed out</string>
     <string name="str_you_have_signed_out">You\'ve signed out of your account</string>

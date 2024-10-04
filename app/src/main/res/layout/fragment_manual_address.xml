@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -102,7 +103,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_25dp"
-                android:text="@string/country_code"
+                android:text="@string/str_country_"
+                android:visibility="invisible"
+                tools:visibility="visible"
                 android:layout_marginStart="@dimen/margin_20dp"
                 android:textColor="@color/label_color"
                 android:textSize="@dimen/font_12sp"
@@ -116,7 +119,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_3dp"
-                android:hint="@string/country_code"
+                android:hint="@string/str_country_"
                 android:minHeight="@dimen/margin_48dp"
                 android:backgroundTint="@color/label_color"
                 android:layout_marginStart="@dimen/margin_16dp"

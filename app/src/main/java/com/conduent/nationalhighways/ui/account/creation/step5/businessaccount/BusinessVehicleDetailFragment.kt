@@ -282,6 +282,9 @@ class BusinessVehicleDetailFragment : BaseFragment<FragmentBusinessVehicleDetail
             }
 
             R.id.inCorrectVehicleNumber -> {
+                bundle.putString(Constants.PLATE_NUMBER,binding.regNum.text.toString())
+                bundle.putBoolean(Constants.INCORRECT_VEHICLE,true)
+                bundle.putParcelable(Constants.NAV_DATA_KEY, data)
                 findNavController().navigate(
                     R.id.action_businessVehicleDetailFragment_to_findYourVehicleFragment,
                     bundle

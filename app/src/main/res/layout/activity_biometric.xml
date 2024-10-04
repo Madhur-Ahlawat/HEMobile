@@ -40,6 +40,7 @@
                 android:fontFamily="@font/open_sans"
                 android:text="@string/biometriclogin"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="@dimen/font_16sp" />
 
 

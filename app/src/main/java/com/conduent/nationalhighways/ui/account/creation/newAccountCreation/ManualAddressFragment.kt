@@ -121,6 +121,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                 binding.address2.setText(NewCreateAccountRequestModel.addressLine2)
                 binding.townCity.setText(NewCreateAccountRequestModel.townCity)
                 binding.country.setSelectedValue(NewCreateAccountRequestModel.country)
+                binding.labelCountryCode.visible()
                 requiredCountry = true
 
                 binding.postCode.setText(NewCreateAccountRequestModel.zipCode)
@@ -141,6 +142,7 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                         binding.address2.editText.setText(it.addressLine2)
                         binding.townCity.editText.setText(it.city)
                         binding.country.setSelectedValue(it.country ?: "")
+                        binding.labelCountryCode.visible()
                         requiredAddress = true
                         requiredAddress2 = true
                         requiredCountry = true
@@ -305,6 +307,8 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                     country.dataSet.clear()
                     country.dataSet.addAll(countriesList)
                 }
+                requiredCountry = true
+
                 if (navFlowCall == PROFILE_MANAGEMENT) {
                     binding.country.setSelectedValue(
                         getCountryCodeName(
@@ -312,14 +316,17 @@ class ManualAddressFragment() : BaseFragment<FragmentManualAddressBinding>(),
                                 ?: UK_COUNTRY
                         )
                     )
+                    binding.labelCountryCode.visible()
                 } else if ((navFlowCall == EDIT_ACCOUNT_TYPE) or (navFlowCall == EDIT_SUMMARY)) {
                     binding.country.setSelectedValue(
                         NewCreateAccountRequestModel.country
                     )
+                    binding.labelCountryCode.visible()
                 } else {
-                    binding.country.setSelectedValue(UK_COUNTRY)
+                    binding.labelCountryCode.invisible()
+                    requiredCountry = false
+//                    binding.country.setSelectedValue(UK_COUNTRY)
                 }
-                requiredCountry = true
 
                 binding.country.clearFocus()
                 binding.country.setDropDownItemSelectListener(this)

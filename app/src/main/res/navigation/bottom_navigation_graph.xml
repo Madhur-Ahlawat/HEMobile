@@ -791,6 +791,13 @@
             app:destination="@id/paymentMethodFragment"
             app:popUpTo="@id/paymentMethodFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/deletePaymentMethodSuccessFragment_to_nmiPaymentFragment"
+            app:destination="@+id/nmiPaymentFragment"/>
+        <action
+            android:id="@+id/deletePaymentMethodSuccessFragment_to_selectPaymentMethodFragment"
+            app:destination="@+id/selectPaymentMethodFragment"/>
     </fragment>
 
     <fragment

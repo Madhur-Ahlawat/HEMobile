@@ -334,5 +334,6 @@ object Constants {
     const val SERVICE_RUN="SERVICE_RUN"
     const val FromThreeDS="FromThreeDS"
     const val REDIRECTTOPAYMENTPAGE="REDIRECTTOPAYMENTPAGE"
+    const val INCORRECT_VEHICLE="INCORRECT_VEHICLE"
 
 }

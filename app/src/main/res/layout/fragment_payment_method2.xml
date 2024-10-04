@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/maximumVehicleAdded"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/str_you_must_pay_crossing"
+                    android:text="@string/str_you_must_pay"
                     android:lineSpacingExtra="@dimen/margin_2dp"
                     android:gravity="center"
                     android:visibility="gone"

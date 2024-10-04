@@ -90,9 +90,10 @@
 
             <com.conduent.apollo.ui.CMButton
                 android:id="@+id/cancel_btn"
-                style="@style/secondaryButton"
+                style="@style/secondaryRedButton"
                 android:layout_marginBottom="@dimen/margin_20dp"
                 android:text="@string/add_new_payment_method"
+
                 app:layout_constraintBottom_toTopOf="@+id/feedback_bt"
                 app:layout_constraintStart_toStartOf="parent" />
 

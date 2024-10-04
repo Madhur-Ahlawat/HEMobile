@@ -261,7 +261,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 } else {
                     val bundle = Bundle()
                     bundle.putString(Constants.NAV_FLOW_KEY, Constants.ADD_PAYMENT_METHOD)
-                    if (navFlowCall.equals(Constants.SUSPENDED)) {
+                    if (navFlowCall == Constants.SUSPENDED) {
                         bundle.putString(Constants.NAV_FLOW_FROM, Constants.PAYG_SUSPENDED)
                         bundle.putParcelable(Constants.PERSONALDATA, personalInformation)
                         bundle.putParcelable(Constants.ACCOUNTINFORMATION, accountInformation)
@@ -402,9 +402,13 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                 )
             } else {
                 if (paymentList.orEmpty().size == 1) {
+                    bundle.putParcelable(Constants.ACCOUNTINFORMATION,accountInformation)
+                    bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                    bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentList as ArrayList)
                     if (accountInformation?.accSubType.equals(Constants.PAYG)) {
 
                         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PAYG)
+                        bundle.putString(Constants.NAV_FLOW_FROM, Constants.DELETE_CARD)
                         bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
                         bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
 
@@ -413,7 +417,7 @@ class NewPaymentMethodFragment : BaseFragment<FragmentPaymentMethod2Binding>(),
                             bundle
                         )
                     } else {
-
+                        bundle.putString(Constants.NAV_FLOW_FROM, Constants.DELETE_CARD)
                         bundle.putString(Constants.NAV_FLOW_KEY, Constants.PRE_PAY_ACCOUNT)
                         bundle.putParcelable(Constants.PAYMENT_DATA, paymentList?.get(position))
                         bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)

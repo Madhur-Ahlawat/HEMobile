@@ -2,6 +2,7 @@ package com.conduent.nationalhighways.ui.payment.newpaymentmethod
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import com.conduent.nationalhighways.R
 import com.conduent.nationalhighways.data.model.makeoneofpayment.CrossingDetailsModelsResponse
 import com.conduent.nationalhighways.data.model.payment.CardListResponseModel
 import com.conduent.nationalhighways.data.model.payment.PaymentMethodDeleteResponseModel
+import com.conduent.nationalhighways.data.model.profile.AccountInformation
+import com.conduent.nationalhighways.data.model.profile.PersonalInformation
 import com.conduent.nationalhighways.databinding.FragmentDeletePaymentMethodBinding
 import com.conduent.nationalhighways.ui.auth.controller.AuthActivity
 import com.conduent.nationalhighways.ui.base.BaseFragment
@@ -29,9 +32,11 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
     View.OnClickListener {
 
     private val viewModel: PaymentMethodViewModel by viewModels()
-    private var paymentList: CardListResponseModel? = null
     private var data: CrossingDetailsModelsResponse? = null
     private var accountNumber: String = ""
+    private var personalInformation: PersonalInformation? = null
+    private var accountInformation: AccountInformation? = null
+    private var paymentArrayList: MutableList<CardListResponseModel?>? = ArrayList()
 
 
     override fun getFragmentBinding(
@@ -46,14 +51,35 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
         } else if (requireActivity() is AuthActivity) {
             (requireActivity() as AuthActivity).focusToolBarAuth()
         }
+
+
+        if (arguments?.containsKey(Constants.PERSONALDATA) == true) {
+            if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
+                personalInformation =
+                    arguments?.getParcelable(Constants.PERSONALDATA)
+            }
+
+        }
+        if (arguments?.containsKey(Constants.ACCOUNTINFORMATION) == true) {
+            if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
+                accountInformation =
+                    arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
+            }
+
+        }
     }
 
     override fun initCtrl() {
         binding.btnContinue.setOnClickListener(this)
         binding.cancelBtn.setOnClickListener(this)
         accountNumber = arguments?.getString(Constants.ACCOUNT_NUMBER) ?: ""
-        if (arguments?.getParcelable<CardListResponseModel>(Constants.PAYMENT_DATA) != null) {
-            paymentList = arguments?.getParcelable(Constants.PAYMENT_DATA)
+
+        if (arguments?.containsKey(Constants.PAYMENT_LIST_DATA) == true && arguments?.getParcelableArrayList<CardListResponseModel>(
+                Constants.PAYMENT_LIST_DATA
+            ) != null
+        ) {
+            paymentArrayList =
+                arguments?.getParcelableArrayList(Constants.PAYMENT_LIST_DATA)
         }
 
         when (navFlowCall) {
@@ -85,6 +111,13 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
                     getString(R.string.str_your_balance_will_no_longer_available)
             }
         }
+        if(navFlowFrom== Constants.DELETE_CARD){
+          binding.cancelBtn.setBorderColor(resources.getColor(R.color.redButtonColor))
+          binding.cancelBtn.setTextColor(resources.getColor(R.color.redButtonColor))
+        }else{
+            binding.cancelBtn.setBorderColor(resources.getColor(R.color.new_btn_color))
+            binding.cancelBtn.setTextColor(resources.getColor(R.color.new_btn_color))
+        }
     }
 
     override fun observer() {
@@ -107,6 +140,9 @@ class DeletePaymentMethodFragment : BaseFragment<FragmentDeletePaymentMethodBind
                 bundle.putString(Constants.NAV_FLOW_KEY, Constants.DELETE_CARD)
                 bundle.putString(Constants.ACCOUNT_NUMBER, accountNumber)
                 bundle.putBoolean(SHOW_BACK_BUTTON, false)
+                bundle.putParcelable(Constants.PERSONALDATA,personalInformation)
+                bundle.putParcelable(Constants.ACCOUNTINFORMATION,accountInformation)
+                bundle.putParcelableArrayList(Constants.PAYMENT_LIST_DATA,paymentArrayList as ArrayList)
 
                 findNavController().navigate(
                     R.id.action_deletePaymentMethodFragment_to_deletePaymentMethodSuccessFragment,

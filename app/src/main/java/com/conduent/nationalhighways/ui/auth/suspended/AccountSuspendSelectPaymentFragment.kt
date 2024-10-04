@@ -56,8 +56,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     private var paymentListSize: Int = 0
 
     override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
+        inflater: LayoutInflater, container: ViewGroup?
     ): FragmentAccountSuspendHaltBinding =
         FragmentAccountSuspendHaltBinding.inflate(inflater, container, false)
 
@@ -91,13 +90,11 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
 
         if (arguments?.getParcelable<PersonalInformation>(Constants.PERSONALDATA) != null) {
-            personalInformation =
-                arguments?.getParcelable(Constants.PERSONALDATA)
+            personalInformation = arguments?.getParcelable(Constants.PERSONALDATA)
         }
 
         if (arguments?.getParcelable<AccountInformation>(Constants.ACCOUNTINFORMATION) != null) {
-            accountInformation =
-                arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
+            accountInformation = arguments?.getParcelable(Constants.ACCOUNTINFORMATION)
         }
 
         currentBalance = arguments?.getString(Constants.CURRENTBALANCE) ?: ""
@@ -115,7 +112,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         binding.topBalance.editText.addTextChangedListener(GenericTextWatcher())
         cursorPosition = binding.topBalance.editText.selectionStart
         edtLength = binding.topBalance.editText.text?.length
-        Selection.setSelection(binding.topBalance.editText.text, (edtLength?:0) - 1)
+        Selection.setSelection(binding.topBalance.editText.text, (edtLength ?: 0) - 1)
         if (navFlowCall == Constants.PAYMENT_TOP_UP && requireActivity() is HomeActivityMain) {
             (requireActivity() as HomeActivityMain).setTitle(resources.getString(R.string.str_top_up))
         }
@@ -126,8 +123,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         if (!b) {
             var mText =
                 binding.topBalance.getText().toString().trim().replace("$", "").replace("£", "")
-                    .replace("£.", "").replace(",", "")
-                    .replace(" ", "")
+                    .replace("£.", "").replace(",", "").replace(" ", "")
             if (mText.isEmpty()) {
                 mText = "£0.0"
             }
@@ -146,8 +142,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             )
             // Assuming editText is your EditText view
             binding.topBalance.setSelection(
-                binding.topBalance.editText.text?.length
-                    ?: 0
+                binding.topBalance.editText.text?.length ?: 0
             )
 
         }
@@ -166,18 +161,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
     inner class GenericTextWatcher : TextWatcher {
 
         override fun beforeTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            count: Int,
-            after: Int
+            charSequence: CharSequence?, start: Int, count: Int, after: Int
         ) {
         }
 
         override fun onTextChanged(
-            charSequence: CharSequence?,
-            start: Int,
-            before: Int,
-            count: Int
+            charSequence: CharSequence?, start: Int, before: Int, count: Int
         ) {
             lowBalance = Utils.validateAmount(binding.topBalance, 10.00, true)
             checkButton()
@@ -204,8 +193,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             R.id.btnContinue -> {
                 topBalanceDecimal(false)
                 val topUpAmount = binding.topBalance.getText().toString().trim().replace("£", "")
-                    .replace("£.", "")
-                    .replace("$", "").replace(",", "").replace(" ", "").toDouble()
+                    .replace("£.", "").replace("$", "").replace(",", "").replace(" ", "").toDouble()
                 val bundle = Bundle()
                 bundle.putDouble(Constants.PAYMENT_TOP_UP, topUpAmount)
                 bundle.putInt(Constants.POSITION, position)
@@ -217,8 +205,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 bundle.putParcelableArrayList(Constants.DATA, paymentList as ArrayList)
                 bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
                 findNavController().navigate(
-                    R.id.action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment,
-                    bundle
+                    R.id.action_accountSuspendedPaymentFragment_to_threeDSWebiewFragment, bundle
                 )
 
             }
@@ -235,8 +222,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
 
     private fun addPayment() {
         val topUpAmount =
-            binding.topBalance.getText().toString().trim().replace("£", "")
-                .replace(".00", "")
+            binding.topBalance.getText().toString().trim().replace("£", "").replace(".00", "")
                 .replace("$", "").replace(",", "")
         val bundle = Bundle()
         bundle.putDouble(Constants.DATA, topUpAmount.toDouble())
@@ -248,8 +234,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
         bundle.putInt(Constants.PAYMENT_METHOD_SIZE, paymentList?.size ?: 0)
 
         findNavController().navigate(
-            R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment,
-            bundle
+            R.id.action_accountSuspendedPaymentFragment_to_nmiPaymentFragment, bundle
         )
     }
 
@@ -260,11 +245,30 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 paymentList?.clear()
                 realPaymentList?.clear()
                 realPaymentList = status.data?.creditCardListType?.cardsList
-                for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
-                    if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
-                        paymentList?.add(status.data.creditCardListType.cardsList[i])
+//                for (i in 0 until status.data?.creditCardListType?.cardsList.orEmpty().size) {
+//                    if (status.data?.creditCardListType?.cardsList?.get(i)?.bankAccount == false) {
+//                        paymentList?.add(status.data.creditCardListType.cardsList[i])
+//                    }
+//                }
+
+                status.data?.let {
+                    it.creditCardListType?.let { it1 ->
+                        it1.cardsList?.let { it2 ->
+                            it2.forEach { it3 ->
+                                if (it3?.bankAccount == false) {
+                                    if ((it3.bankAccountType == "CURRENT" && it3.emandateStatus == "ACTIVE" || it3.primaryCard == true)
+                                    ) {
+                                        paymentList?.add(0, it3)
+                                    } else {
+                                        paymentList?.add(it3)
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
+
+
                 for (i in 0 until paymentList.orEmpty().size) {
                     Utils.checkNullValuesOfModel(paymentList?.get(i))
                 }
@@ -274,16 +278,12 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
                 }
                 if (paymentList?.isNotEmpty() == true) {
 
-                    for (i in 0 until (paymentList?.size ?: 0)) {
-                        if (paymentList?.get(i)?.primaryCard == true && paymentList?.get(i)?.bankAccount == false) {
-                            position = i
-                            cardSelection = true
-                            checkButton()
-                            break
-                        }
-
+                    if (paymentList?.size == 1) {
+                        position = 0
+                        cardSelection = true
+                        paymentList?.get(0)?.isSelected = true
+                        checkButton()
                     }
-
 
 
                     suspendPaymentMethodAdapter.updateList(paymentList, navFlowCall)
@@ -309,8 +309,7 @@ class AccountSuspendSelectPaymentFragment : BaseFragment<FragmentAccountSuspendH
             }
 
             is Resource.DataError -> {
-                if (checkSessionExpiredOrServerError(status.errorModel)
-                ) {
+                if (checkSessionExpiredOrServerError(status.errorModel)) {
                     displaySessionExpireDialog(status.errorModel)
                 } else {
                     ErrorUtil.showError(binding.root, status.errorMsg)
