@@ -13,6 +13,7 @@ fun <A : Activity> Activity.startNewActivityByClearingStack(
     activity: Class<A>,
     extras: Bundle.() -> Unit = {}
 ) {
+
     Intent(this, activity).run {
         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
