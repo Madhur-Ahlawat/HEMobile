@@ -20,6 +20,7 @@ fun <A : Activity> Activity.startNewActivityByClearingStack(
         putExtras(Bundle().apply(extras))
         startActivity(this)
     }
+
 }
 
 fun <A : Activity> Activity.openActivityWithData(it: Class<A>, extras: Bundle.() -> Unit = {}) {
